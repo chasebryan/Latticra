@@ -324,6 +324,16 @@ typedef struct {
     size_t lat_lir_first_edge_from_index;
     size_t lat_lir_first_edge_to_index;
     latticra_lir_edge_kind_t lat_lir_first_edge_kind;
+    latticra_lir_node_kind_t lat_lir_first_edge_from_node_kind;
+    char lat_lir_first_edge_from_node_name[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_edge_from_node_value[LATTICRA_LIR_VALUE_MAX];
+    char lat_lir_first_edge_from_node_operator[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_edge_from_node_binding[LATTICRA_LIR_BINDING_MAX];
+    latticra_lir_node_kind_t lat_lir_first_edge_to_node_kind;
+    char lat_lir_first_edge_to_node_name[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_edge_to_node_value[LATTICRA_LIR_VALUE_MAX];
+    char lat_lir_first_edge_to_node_operator[LATTICRA_LIR_NAME_MAX];
+    char lat_lir_first_edge_to_node_binding[LATTICRA_LIR_BINDING_MAX];
     latticra_l_ui_source_span_t lat_lir_first_edge_span;
     int lat_lir_has_first_transition_source_edge;
     size_t lat_lir_first_transition_source_edge_index;

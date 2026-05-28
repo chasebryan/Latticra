@@ -137,6 +137,6 @@ The Seal Panel dashboard view-model contract is now represented by `docs/LATTICR
 
 The Seal Panel dashboard view-model implementation plan is now represented by `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md`, with status in `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`.
 
-The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
+The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

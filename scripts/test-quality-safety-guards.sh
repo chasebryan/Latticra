@@ -306,9 +306,12 @@ check_workflow() {
   workflow="$1"
   workflow_basename="$(basename "$workflow")"
   workflow_basename_length="$(printf '%s' "$workflow_basename" | awk '{ print length($0) }')"
+  workflow_path_length="$(printf '%s' "$workflow" | awk '{ print length($0) }')"
 
   [ "$workflow_basename_length" -le 247 ] ||
     fail "$workflow filename must be 247 characters or fewer for CodeQL trap output"
+  [ "$workflow_path_length" -le 255 ] ||
+    fail "$workflow path must be 255 characters or fewer for GitHub Actions runner compatibility"
 
   grep -q '^name:' "$workflow" ||
     fail "$workflow must declare a workflow name"
@@ -343,13 +346,13 @@ check_workflow() {
     in_jobs && /^  [A-Za-z0-9_-]+:[[:space:]]*$/ {
       id = $1
       sub(/:$/, "", id)
-      if (length(id) > 100) {
+      if (length(id) >= 100) {
         print id
       }
     }
   ' "$workflow")"
   [ -z "$long_job_ids" ] ||
-    fail "$workflow job ids must be 100 characters or fewer:
+    fail "$workflow job ids must be fewer than 100 characters:
 $long_job_ids"
 
   long_timeouts="$(awk '
@@ -556,6 +559,27 @@ check_makefile_script_refs() {
     [ -f "$script_ref" ] ||
       fail "Makefile references missing guard script $script_ref"
   done
+}
+
+check_no_duplicate_make_phony_targets() {
+  duplicate_targets="$(awk '
+    /^\.PHONY:/ {
+      for (i = 2; i <= NF; i++) {
+        count[$i] += 1
+        if (count[$i] == 1) {
+          first_line[$i] = FNR
+        } else if (count[$i] == 2) {
+          printf "%s first_line=%d duplicate_line=%d\n", $i, first_line[$i], FNR
+        } else {
+          printf "%s duplicate_line=%d\n", $i, FNR
+        }
+      }
+    }
+  ' Makefile)"
+
+  [ -z "$duplicate_targets" ] ||
+    fail "Makefile has duplicate .PHONY targets:
+$duplicate_targets"
 }
 
 check_shell_script() {
@@ -880,6 +904,8 @@ done
 
 progress "checking Makefile script references"
 check_makefile_script_refs
+progress "checking Makefile phony target uniqueness"
+check_no_duplicate_make_phony_targets
 
 progress "checking Makefile and workflow quality contracts"
 require_contains "quality-worktree-stability:" "Makefile"
@@ -904,6 +930,7 @@ require_contains "sh ./scripts/test-installer-engine-log-sanitization.sh" "Makef
 require_contains "sh ./scripts/test-installer-engine-event-boundary.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-ui-event-ingestion-sanitization.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-ui-status-boundary.sh" "Makefile"
+require_contains "sh ./scripts/test-installer-ui-blocked-plan-sanitization.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-config-authority-allowlist.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-ui-artifact-authority.sh" "Makefile"
 require_contains "sh ./scripts/test-installer-console-output-authority.sh" "Makefile"
@@ -920,6 +947,7 @@ require_contains "sh ./scripts/test-secure-configuration-change-management-basel
 require_contains "sh ./scripts/test-network-exposure-remote-access-baseline.sh" "Makefile"
 require_contains "sh ./scripts/test-data-classification-protection-baseline.sh" "Makefile"
 require_contains "sh ./scripts/test-ai-agentic-automation-security-baseline.sh" "Makefile"
+require_contains "sh ./scripts/test-platform-boot-firmware-integrity-baseline.sh" "Makefile"
 require_contains "high-assurance-security-baseline:" "Makefile"
 require_contains "memory-safety-roadmap:" "Makefile"
 require_contains "supply-chain-security-baseline:" "Makefile"
@@ -929,6 +957,7 @@ require_contains "installer-engine-log-sanitization:" "Makefile"
 require_contains "installer-engine-event-boundary:" "Makefile"
 require_contains "installer-ui-event-ingestion-sanitization:" "Makefile"
 require_contains "installer-ui-status-boundary:" "Makefile"
+require_contains "installer-ui-blocked-plan-sanitization:" "Makefile"
 require_contains "installer-config-authority-allowlist:" "Makefile"
 require_contains "installer-ui-artifact-authority:" "Makefile"
 require_contains "installer-console-output-authority:" "Makefile"
@@ -945,6 +974,7 @@ require_contains "secure-configuration-change-management-baseline:" "Makefile"
 require_contains "network-exposure-remote-access-baseline:" "Makefile"
 require_contains "data-classification-protection-baseline:" "Makefile"
 require_contains "ai-agentic-automation-security-baseline:" "Makefile"
+require_contains "platform-boot-firmware-integrity-baseline:" "Makefile"
 require_contains "cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check" "Makefile"
 require_contains "cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml" "Makefile"
 require_contains "python3 scripts/check_latticra_panel_ui_design.py" "Makefile"
@@ -993,15 +1023,18 @@ require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-mani
 require_contains "sh ./scripts/test-seabios-grub-boot-preview-boot-artifact-manifest-validate.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-os-image-release-readiness-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-os-image-artifact-manifest-template.sh" "Makefile"
+require_contains "sh ./scripts/test-latticra-os-image-artifact-manifest-from-files.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-os-image-artifact-manifest-validate.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-os-image-usb-write-command.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-os-image-vm-test-command.sh" "Makefile"
-require_contains ".PHONY: os-image-release-readiness os-image-release-preflight os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command" "Makefile"
+require_contains ".PHONY: os-image-release-readiness os-image-release-preflight os-image-toolchain-preflight os-image-build-preflight os-image-input-source-template os-image-input-source-validate os-image-input-bundle-template os-image-input-bundle-from-files os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-from-files os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command" "Makefile"
 require_contains "os-image-release-readiness:" "Makefile"
 require_contains "os-image-release-preflight:" "Makefile"
 require_contains "sh ./scripts/latticra-os-image-release-preflight.sh" "Makefile"
 require_contains "os-image-artifact-manifest-template:" "Makefile"
 require_contains "sh ./scripts/latticra-os-image-artifact-manifest-template.sh" "Makefile"
+require_contains "os-image-artifact-manifest-from-files:" "Makefile"
+require_contains "sh ./scripts/latticra-os-image-artifact-manifest-from-files.sh" "Makefile"
 require_contains "os-image-artifact-manifest-validate:" "Makefile"
 require_contains "sh ./scripts/latticra-os-image-artifact-manifest-validate.sh" "Makefile"
 require_contains "os-image-usb-write-command:" "Makefile"
@@ -1361,10 +1394,16 @@ require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance
   require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition.sh" "Makefile"
   require_contains "macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review:" "Makefile"
   require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review.sh" "Makefile"
+  require_contains "macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout:" "Makefile"
+  require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout.sh" "Makefile"
   require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh" "Makefile"
 require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh" "Makefile"
+require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition:" "Makefile"
+require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh" "Makefile"
 require_contains "quality-macos:" "Makefile"
 require_contains "sh ./scripts/test-macos-readme-installer-usage.sh" "Makefile"
 require_contains "sh ./scripts/test-macos-integration-transferability.sh" "Makefile"
@@ -1401,6 +1440,7 @@ require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-re
 require_contains "sh ./scripts/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-latticra-console-foundation.sh" "Makefile"
 require_contains "sh ./scripts/test-cpp-authority-layer.sh" "Makefile"
+require_contains "sh ./scripts/test-cpp-authority-layer-build-policy.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-timer-source-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-scheduler-tick.sh" "Makefile"
@@ -1477,6 +1517,8 @@ require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-d
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-observation-view-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-observation-view-report-runner.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view.sh" "Makefile"
+require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-report-runner.sh" "Makefile"
 require_contains "quality-status:" "Makefile"
 require_contains "sh ./scripts/test-current-estimate-table-source-alignment.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"

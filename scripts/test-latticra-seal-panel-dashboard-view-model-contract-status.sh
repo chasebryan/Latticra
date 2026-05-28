@@ -87,7 +87,7 @@ require_contains 'operator_review_required_for_any_missing_source=1' "$status_fi
 require_contains 'authority_absent_for_all_rows=1' "$status_file"
 require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md' "$status_file"
 require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md' "$status_file"
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
+require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-contract-status.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-contract-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-contract-status.yml
 

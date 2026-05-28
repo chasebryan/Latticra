@@ -58,6 +58,9 @@ typedef struct {
     unsigned vector_fixture_lock_bound;
     unsigned vector_fixture_digest_ledger_bound;
     unsigned replay_transcript_gate_bound;
+    unsigned acvp_verdict_receipt_gate_bound;
+    unsigned validation_claim_gate_bound;
+    unsigned module_boundary_gate_bound;
     unsigned negative_test_evidence_bound;
     unsigned memory_safety_evidence_bound;
     unsigned api_misuse_resistance_bound;

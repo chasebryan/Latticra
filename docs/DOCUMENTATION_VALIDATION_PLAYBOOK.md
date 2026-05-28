@@ -2,13 +2,13 @@
 
 Status: active documentation validation playbook
 Last updated: 2026-05-27 CDT
-Scope: documentation-only validation commands, link checks, public-entry checks, status-record checks, impact-radius checks, freshness and lifecycle checks, estimate checks, subsystem guards, platform guards, and failure handling.
+Scope: documentation-only validation commands, command-example checks, link checks, public-entry checks, status-record checks, impact-radius checks, freshness and lifecycle checks, estimate checks, subsystem guards, platform guards, and failure handling.
 
 ## Purpose
 
 This playbook explains which validation checks to run for documentation-only changes.
 
-Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
 
 Validation should prove only the documentation claim being made. It should not be used to imply production readiness, security guarantees, installer authority, package approval, runtime authority, or product readiness.
 
@@ -18,6 +18,7 @@ Validation should prove only the documentation claim being made. It should not b
 | --- | --- | --- |
 | Hygiene | Any documentation file changes. | `git diff --check`, trailing-whitespace check. |
 | Local links | New or changed Markdown links. | Local Markdown link sanity check over touched files. |
+| Command examples | Runnable command snippets, validation command lists, install/update/reset/uninstall commands, platform prerequisites, or public HTML command examples change. | Apply [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), local link or href checks, public-entry guard when public examples change, and exact command guard when the example names validation. |
 | Status records | Status record, status-index entry, current-status mirror, estimate source, or public-entry alignment status note changes. | Apply [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), local link check, public-entry guard when public mirrors change, estimate guard when values change, and exact source guard when named. |
 | Impact radius | A change might affect mirrors, source records, public HTML, status, non-claims, validation paths, or reader routes. | Apply [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) and run the checks for the selected radius. |
 | Public entry | README, docs hub, map, public site pages, status index, project notes, or strategy docs change. | `sh scripts/test-project-strategy-status-framework.sh` plus [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) review when static HTML changes. |
@@ -138,6 +139,8 @@ Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFE
 Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when deciding whether validation should stay at hygiene/link level or expand to public-entry, estimate, platform, security, Seal, subsystem, or exact source guards.
 
 Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when validating status record shape, status-index discoverability, current-status mirrors, public-entry alignment, non-claims, and boundary language.
+
+Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when validating that command examples state working directory, effect boundary, expected output, cleanup, and blocked adjacent claims.
 
 ## Boundary
 

@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+UNAME_S=$(uname -s 2>/dev/null || printf 'unknown')
+UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
+
+cat <<REPORT
+MACOS RESET UNINSTALL LIVE RUNNER CLOSEOUT AUDIT5 REVIEW DISPOSITION CLOSEOUT AUDIT CONTRACT
+
+closeout_audit5_review_disposition_closeout_audit_contract_status=ok
+macos_reset_uninstall_live_runner_closeout_audit5_review_disposition_closeout_audit_contract_present=1
+repo_root=$ROOT
+host_kernel_name=$UNAME_S
+host_arch=$UNAME_M
+live_runner_closeout_audit5_review_disposition_closeout_audit_contract_state=audited-closed-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_disposition_closeout_audit_contract_decision=no-effect-closeout-audit5-review-disposition-closeout-audit-keeps-dispatch-closed
+live_runner_closeout_audit5_review_disposition_closeout_audit_completed=1
+live_runner_closeout_audit5_review_disposition_closeout_audit_recorded=1
+live_runner_closeout_audit5_review_disposition_closeout_audit_stdout_only=1
+live_runner_closeout_audit5_review_disposition_closeout_audit_file_write_enabled=0
+live_runner_closeout_audit5_review_disposition_closeout_audit_dispatch_enabled=0
+live_runner_closeout_audit5_review_disposition_closeout_audit_dispatch_performed=0
+live_runner_closeout_audit5_review_disposition_closeout_audit_deletion_enabled=0
+live_runner_closeout_audit5_review_disposition_closeout_audit_audit_review_opened=0
+live_runner_closeout_audit5_review_disposition_closeout_audit_source_contract=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout-contract
+live_runner_closeout_audit5_review_disposition_closeout_audit_closeout_present=1
+live_runner_closeout_audit5_review_disposition_closeout_audit_closeout_state=closed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition
+live_runner_closeout_audit5_review_disposition_closeout_audit_result_no_dispatch=met
+live_runner_closeout_audit5_review_disposition_closeout_audit_result_no_deletion=met
+live_runner_closeout_audit5_review_disposition_closeout_audit_result_audit_review_handoff=met
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+file_delete_performed=0
+directory_delete_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+next_lane=macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit-review
+REPORT

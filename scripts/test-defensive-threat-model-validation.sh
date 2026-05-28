@@ -128,6 +128,10 @@ for external in \
   'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4496698/nsa-releases-security-design-considerations-for-ai-driven-automation-leveraging/' \
   'NSA/partners Careful Adoption of Agentic AI Services' \
   'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4475134/nsa-joins-the-asds-acsc-and-others-to-release-guidance-on-agentic-artificial-in/' \
+  'NIST Summary Analysis of Responses to the RFI Regarding Security Considerations for AI Agents' \
+  'https://www.nist.gov/publications/summary-analysis-responses-request-information-regarding-security-considerations-ai' \
+  'NIST NCCoE concept paper on identity and authority of software agents' \
+  'https://www.nist.gov/news-events/news/2026/02/new-concept-paper-identity-and-authority-software-agents' \
   'CISA The Case for Memory Safe Roadmaps' \
   'https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps' \
   'CISA Secure by Design' \
@@ -185,6 +189,7 @@ for validation in \
   'command-boundary tests' \
   'workload/service identity zero-trust tests' \
   'mcp/tool-boundary and context-sharing tests' \
+  'software-agent identity and authorization tests' \
   'status/non-claim guard tests'
 do
   require_contains "$validation" "$doc"
@@ -230,6 +235,7 @@ for gap in \
   'external advisory-by-advisory mapping is not complete' \
   'workload/service identity and host-integrity prerequisites are not yet profiled for future authority' \
   'mcp/tool-boundary and context-sharing prerequisites are not yet profiled for future authority' \
+  'software-agent identity and authorization prerequisites are not yet profiled for future authority' \
   'no certification or compliance mapping exists'
 do
   require_contains "$gap" "$doc"

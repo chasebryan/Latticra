@@ -50,6 +50,9 @@ expect_fixture_denies() {
   stdout="$tmpdir/$label.out"
   stderr="$tmpdir/$label.err"
 
+  : >"$stdout"
+  : >"$stderr"
+
   if (cd "$fixture" && env -i /bin/sh "$runner") >"$stdout" 2>"$stderr"; then
     fail "runner accepted forbidden authority source fixture: $label"
   fi
@@ -57,7 +60,11 @@ expect_fixture_denies() {
   if ! grep -Fq -- "$pattern" "$stderr"; then
     printf 'cpp authority layer build policy: missing source denial for %s: %s\n' \
       "$label" "$pattern" >&2
-    sed -n '1,20p' "$stderr" >&2
+    if [ -f "$stderr" ]; then
+      sed -n '1,20p' "$stderr" >&2
+    else
+      printf 'cpp authority layer build policy: missing stderr capture for %s\n' "$label" >&2
+    fi
     exit 1
   fi
 }
@@ -70,6 +77,9 @@ expect_runner_denies() {
   stdout="$tmpdir/$label.out"
   stderr="$tmpdir/$label.err"
 
+  : >"$stdout"
+  : >"$stderr"
+
   if env -i "$@" /bin/sh "$runner" >"$stdout" 2>"$stderr"; then
     fail "runner accepted forbidden build input: $label"
   fi
@@ -77,7 +87,11 @@ expect_runner_denies() {
   if ! grep -Fq -- "$pattern" "$stderr"; then
     printf 'cpp authority layer build policy: missing denial for %s: %s\n' \
       "$label" "$pattern" >&2
-    sed -n '1,20p' "$stderr" >&2
+    if [ -f "$stderr" ]; then
+      sed -n '1,20p' "$stderr" >&2
+    else
+      printf 'cpp authority layer build policy: missing stderr capture for %s\n' "$label" >&2
+    fi
     exit 1
   fi
 }
@@ -88,6 +102,9 @@ expect_runner_fixture_denies() {
   fixture="$tmpdir/$label.runner"
   stdout="$tmpdir/$label.out"
   stderr="$tmpdir/$label.err"
+
+  : >"$stdout"
+  : >"$stderr"
 
   cp "$runner" "$fixture"
 
@@ -120,7 +137,11 @@ expect_runner_fixture_denies() {
     if ! grep -Fq -- "$pattern" "$stderr"; then
       printf 'cpp authority layer build policy: missing runner fixture denial for %s: %s\n' \
         "$label" "$pattern" >&2
-      sed -n '1,20p' "$stderr" >&2
+      if [ -f "$stderr" ]; then
+        sed -n '1,20p' "$stderr" >&2
+      else
+        printf 'cpp authority layer build policy: missing stderr capture for %s\n' "$label" >&2
+      fi
       exit 1
     fi
 
@@ -134,7 +155,11 @@ expect_runner_fixture_denies() {
   if ! grep -Fq -- "$pattern" "$stderr"; then
     printf 'cpp authority layer build policy: missing runner fixture denial for %s: %s\n' \
       "$label" "$pattern" >&2
-    sed -n '1,20p' "$stderr" >&2
+    if [ -f "$stderr" ]; then
+      sed -n '1,20p' "$stderr" >&2
+    else
+      printf 'cpp authority layer build policy: missing stderr capture for %s\n' "$label" >&2
+    fi
     exit 1
   fi
 }

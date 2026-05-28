@@ -88,6 +88,10 @@ signed_updater_state_transition_denial_disposition_closeout_audit_review_present
 signed_updater_state_transition_denial_disposition_closeout_audit_review_decision=uphold-accept-closeout-boundary
 signed_updater_state_transition_denial_disposition_closeout_audit_review_stdout_only=1
 signed_updater_state_transition_denial_disposition_closeout_audit_review_file_write_enabled=0
+signed_updater_state_transition_denial_disposition_closeout_audit_review_disposition_present=1
+signed_updater_state_transition_denial_disposition_closeout_audit_review_disposition_decision=retain-reviewed-closeout-audit-boundary
+signed_updater_state_transition_denial_disposition_closeout_audit_review_disposition_stdout_only=1
+signed_updater_state_transition_denial_disposition_closeout_audit_review_disposition_file_write_enabled=0
 current_update_state=blocked
 state_transition_execution_allowed=0
 state_transition_execution_performed=0
@@ -96,7 +100,7 @@ signed_updater_manifest_fixture_valid_for_apply=0
 trusted_signed_manifest_present=0
 ```
 
-The local signed updater manifest fixture validation only checks shape and closed-authority fields. The local signed updater state fixture validation only checks the state catalog and closed transition fields without making the blocked fixture executable. The local signed updater state transition denial transcript records the blocked decision to stdout only, without transcript file writes or execution. The local signed updater state transition denial review upholds the denial without review file writes or execution. The local signed updater state transition denial disposition retains the blocked state without disposition file writes or execution. The local signed updater state transition denial disposition review upholds that retained blocked state without review file writes or execution. The local signed updater state transition denial disposition closeout closes the retained blocked-state disposition without closeout file writes or execution. The local signed updater state transition denial disposition closeout audit audits the no-effect closeout without audit file writes or execution. The local signed updater state transition denial disposition closeout audit review upholds that audit without review file writes or execution. This is not a signed updater, not a remote update client, not a network self-update path, not update state execution, and not production update readiness.
+The local signed updater manifest fixture validation only checks shape and closed-authority fields. The local signed updater state fixture validation only checks the state catalog and closed transition fields without making the blocked fixture executable. The local signed updater state transition denial transcript records the blocked decision to stdout only, without transcript file writes or execution. The local signed updater state transition denial review upholds the denial without review file writes or execution. The local signed updater state transition denial disposition retains the blocked state without disposition file writes or execution. The local signed updater state transition denial disposition review upholds that retained blocked state without review file writes or execution. The local signed updater state transition denial disposition closeout closes the retained blocked-state disposition without closeout file writes or execution. The local signed updater state transition denial disposition closeout audit audits the no-effect closeout without audit file writes or execution. The local signed updater state transition denial disposition closeout audit review upholds that audit without review file writes or execution. The local signed updater state transition denial disposition closeout audit review disposition retains the reviewed closeout-audit boundary without disposition file writes or execution. This is not a signed updater, not a remote update client, not a network self-update path, not update state execution, and not production update readiness.
 
 ## Update channels
 
@@ -257,6 +261,7 @@ local signed updater state transition denial disposition review
 local signed updater state transition denial disposition closeout
 local signed updater state transition denial disposition closeout audit
 local signed updater state transition denial disposition closeout audit review
+local signed updater state transition denial disposition closeout audit review disposition
 signature-required marker
 rollback visibility marker
 validation test

@@ -13,7 +13,7 @@ kernel subsystem registry
 nucleus-kernel coupling gate
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -48,17 +48,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 lifecycle_complete=1
-lifecycle_step_count=52
-lifecycle_state_change_count=52
+lifecycle_step_count=54
+lifecycle_state_change_count=54
 external_effect_performed=0
 registry_no_effect=1
 nucleus_coupling_status=nucleus-kernel-coupling-ready
@@ -66,6 +66,7 @@ os_readiness_status=os-metadata-ready
 nucleus_coupling_ready=1
 nucleus_no_effect_chain_ok=1
 no_external_effect_chain=1
+evidence_level=57
 ```
 
 ## Subsystem posture
@@ -75,7 +76,7 @@ Expected readiness examples:
 ```text
 boot -> boot-sequence-seeded
 scheduler -> scheduler-run-entry-ready
-runtime -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+runtime -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -90,6 +91,8 @@ Authority remains denied:
 runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0
 runtime_entry_recovery_audit_review_observation_view_allowed=0
@@ -134,6 +137,10 @@ recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed=0
 recovery_audit_review_disposition_review_allowed=0
 recovery_audit_review_disposition_review_observation_allowed=0
 recovery_audit_review_disposition_allowed=0
@@ -259,11 +266,11 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
-summary reaches runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+default request targets runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
+summary reaches runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
-runtime recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view metadata is ready while runtime remains not entered
-runtime entry recovery-audit-review-disposition-review-closeout archive-gate review observation view, recovery-audit-review-disposition-review-closeout archive-gate observation view, recovery-audit-review-disposition-review-closeout observation view, recovery-audit-review-disposition-review observation view, recovery-audit-review-disposition observation view, recovery-audit-review observation view, recovery-audit observation view, recovery-closeout observation view, recovery-outcome observation view, recovery-disposition observation view, recovery-plan observation view, recovery-boundary observation view, persistence-boundary observation view, quiescent-return observation view, idle-return observation view, process-return observation view, scheduler-return observation view, post-resume observation view, user-mode-resume view, syscall-exit view, syscall-return view, syscall-dispatch view, syscall-gate view, privilege-level view, address-space view, stack view, register view, frame, admission, and runtime entry remain denied
+runtime recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view metadata is ready while runtime remains not entered
+runtime entry recovery-audit-review-disposition-review-closeout archive-gate review-disposition closeout observation view, recovery-audit-review-disposition-review-closeout archive-gate review observation view, recovery-audit-review-disposition-review-closeout archive-gate observation view, recovery-audit-review-disposition-review-closeout observation view, recovery-audit-review-disposition-review observation view, recovery-audit-review-disposition observation view, recovery-audit-review observation view, recovery-audit observation view, recovery-closeout observation view, recovery-outcome observation view, recovery-disposition observation view, recovery-plan observation view, recovery-boundary observation view, persistence-boundary observation view, quiescent-return observation view, idle-return observation view, process-return observation view, scheduler-return observation view, post-resume observation view, user-mode-resume view, syscall-exit view, syscall-return view, syscall-dispatch view, syscall-gate view, privilege-level view, address-space view, stack view, register view, frame, admission, and runtime entry remain denied
 nucleus-kernel coupling reports os-metadata-ready only with no-effect evidence
 nucleus boot, runtime entry, scheduler run entry, context switch, register save, register restore, and host effect remain denied
 scheduler execution remains denied

@@ -37,6 +37,9 @@ typedef struct {
     unsigned implementation_binding_manifest_required;
     unsigned implementation_binding_manifest_bound;
     unsigned replay_transcript_gate_bound;
+    unsigned acvp_verdict_receipt_gate_bound;
+    unsigned validation_claim_gate_bound;
+    unsigned module_boundary_gate_bound;
     unsigned kat_acvp_gate_passing_recorded;
     unsigned constant_time_gate_passing_recorded;
     unsigned memory_safety_gate_passing_recorded;

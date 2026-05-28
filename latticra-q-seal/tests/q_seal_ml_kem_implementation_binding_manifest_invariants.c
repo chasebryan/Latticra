@@ -71,6 +71,9 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.vector_fixture_lock_bound == 1u, "fixture lock");
     EXPECT_TRUE(manifest.vector_fixture_digest_ledger_bound == 1u, "fixture digest ledger");
     EXPECT_TRUE(manifest.replay_transcript_gate_bound == 1u, "transcript gate");
+    EXPECT_TRUE(manifest.acvp_verdict_receipt_gate_bound == 1u, "verdict receipt");
+    EXPECT_TRUE(manifest.validation_claim_gate_bound == 1u, "validation claim");
+    EXPECT_TRUE(manifest.module_boundary_gate_bound == 1u, "module boundary");
     EXPECT_TRUE(manifest.negative_test_evidence_bound == 1u, "negative");
     EXPECT_TRUE(manifest.memory_safety_evidence_bound == 1u, "memory");
     EXPECT_TRUE(manifest.api_misuse_resistance_bound == 1u, "api");
@@ -94,8 +97,8 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(manifest.fips_claim_allowed == 0u, "fips");
     EXPECT_TRUE(manifest.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(manifest.required_binding_items_total == 45u, "total");
-    EXPECT_TRUE(manifest.required_binding_items_satisfied == 40u, "satisfied");
+    EXPECT_TRUE(manifest.required_binding_items_total == 48u, "total");
+    EXPECT_TRUE(manifest.required_binding_items_satisfied == 43u, "satisfied");
     EXPECT_TRUE(manifest.error == LATTICRA_Q_SEAL_ML_KEM_BINDING_MANIFEST_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_implementation_binding_manifest_is_clean_room_no_effect(
@@ -175,6 +178,15 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(
         strstr(rendered, "replay_transcript_gate_bound=1") != 0,
         "transcript gate report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_verdict_receipt_gate_bound=1") != 0,
+        "verdict receipt report");
+    EXPECT_TRUE(
+        strstr(rendered, "validation_claim_gate_bound=1") != 0,
+        "validation claim report");
+    EXPECT_TRUE(
+        strstr(rendered, "module_boundary_gate_bound=1") != 0,
+        "module boundary report");
     EXPECT_TRUE(
         strstr(rendered, "implementation_code_present=0") != 0,
         "code report");

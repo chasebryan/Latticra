@@ -36,7 +36,7 @@ publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
 static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
 readiness='docs/UBUNTU_READINESS_PLAN.md'
 status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
-workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml'
+workflow='.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition.yml'
 
 for file in \
   "$contract" \

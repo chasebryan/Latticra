@@ -82,6 +82,8 @@ cc $CFLAGS \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

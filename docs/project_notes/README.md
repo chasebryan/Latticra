@@ -68,6 +68,10 @@ Latest Seal product-surface note: Latticra Seal Panel dashboard view-model imple
 
 Latest Seal product-surface note: Latticra Seal Panel dashboard view-model surface/status uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md` with predecessor `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`.
 
+Latest Seal product-surface note: Latticra Seal signed receipt proof path contract uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal signed receipt proof path implementation uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`.
+
 Latest Seal predecessor note: Latticra Seal capability gate predecessor status alignment uses `docs/status/SEAL_CAPABILITY_GATE_STATUS.md` with predecessor `docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`.
 
 - `STATUS.md`
@@ -137,7 +141,7 @@ Latest Seal predecessor note: Latticra Seal capability gate predecessor status a
 - `docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`
 - `docs/status/SEAL_README_STATUS_ROW_ALIGNMENT.md`
 - `docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`
-- `docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`
+- `docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`
 - `docs/status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`
 - `docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`
 - `docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`

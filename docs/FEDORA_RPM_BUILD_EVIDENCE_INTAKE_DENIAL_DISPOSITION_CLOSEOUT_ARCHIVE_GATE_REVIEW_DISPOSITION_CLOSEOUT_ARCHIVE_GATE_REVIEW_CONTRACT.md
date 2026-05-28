@@ -329,6 +329,23 @@ fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review
 Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
+## Follow-On Guard Handoff
+
+The archive gate review disposition follow-on lane is recorded as a no-effect disposition handoff:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1
+```
+
+```text
+docs/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+docs/status/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md
+scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+.github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml
+```
+
+That follow-on lane records the reviewed closeout archive gate review as disposed while preserving RPM build and readiness blockers.
+
 ## Non-claims
 
 This contract is not Fedora build evidence, not `mock` evidence, not `rpmlint` evidence, not RPM artifact evidence, not Fedora package review evidence, not Bugzilla evidence, not reviewer approval, not dist-git evidence, not Koji evidence, not Bodhi evidence, not Rawhide evidence, not official package evidence, not Fedora approval, not Fedora distribution readiness, not production installer readiness, not host mutation, and not production readiness.

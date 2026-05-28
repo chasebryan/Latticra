@@ -79,7 +79,7 @@ require_contains 'can_read_host=0' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL
 require_contains 'can_write_host=0' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
 require_contains 'can_use_network=0' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
 require_contains 'grants_runtime_authority=0' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
+require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md
 require_contains 'latticra_seal_panel_dashboard_view_model_implementation_present=1' README.md
 require_contains 'seal_panel_dashboard_view_model_implementation_present=1' README.md
 require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md' README.md

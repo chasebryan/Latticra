@@ -33,6 +33,7 @@ root_authority=0
 network_authority=0
 host_mutation_authority=0
 runtime_enforcement_authority=0
+firmware_mutation_authority=0
 firmware_mutation_allowed=0
 bootloader_write_allowed=0
 partition_mutation_allowed=0

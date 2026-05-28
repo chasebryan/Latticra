@@ -37,6 +37,9 @@ workflow='.github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-
 next_disposition_contract='docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md'
 next_disposition_script='scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh'
 next_disposition_workflow='.github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition.yml'
+next_closeout_contract='docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md'
+next_closeout_script='scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh'
+next_closeout_workflow='.github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout.yml'
 
 for file in \
   "$contract" \
@@ -132,6 +135,10 @@ require_contains "$next_disposition_contract" "$contract"
 require_contains "$next_disposition_script" "$contract"
 require_contains "$next_disposition_workflow" "$contract"
 require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract' "$contract"
+require_contains "$next_closeout_contract" "$contract"
+require_contains "$next_closeout_script" "$contract"
+require_contains "$next_closeout_workflow" "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract' "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract: ok' "$contract"
 
 for file in \

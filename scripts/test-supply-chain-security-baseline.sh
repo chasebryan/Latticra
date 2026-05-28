@@ -44,6 +44,7 @@ require_file scripts/test-installer-engine-log-sanitization.sh
 require_file scripts/test-installer-engine-event-boundary.sh
 require_file scripts/test-installer-ui-event-ingestion-sanitization.sh
 require_file scripts/test-installer-ui-status-boundary.sh
+require_file scripts/test-installer-ui-blocked-plan-sanitization.sh
 require_file scripts/test-installer-config-authority-allowlist.sh
 require_file scripts/test-installer-ui-artifact-authority.sh
 require_file scripts/test-installer-console-output-authority.sh
@@ -90,6 +91,8 @@ for field in \
   'installer_ui_status_event_sanitization_required=1' \
   'installer_ui_status_boundary_required=1' \
   'installer_ui_direct_status_assignment_forbidden=1' \
+  'installer_ui_blocked_plan_sanitization_required=1' \
+  'installer_ui_blocked_plan_error_injection_guard_required=1' \
   'installer_config_authority_slug_allowlist_required=1' \
   'installer_command_wrapper_strict_name_required=1' \
   'installer_ui_artifact_authority_guard_required=1' \
@@ -188,6 +191,11 @@ require_contains 'installer_ui_status_boundary: ok' scripts/test-installer-ui-st
 require_contains 'status_setter_redacts_and_escapes_direct_status_updates' installer/latticra-installer/src/ui.rs
 require_contains 'sh ./scripts/test-installer-ui-status-boundary.sh' Makefile
 require_contains 'installer-ui-status-boundary:' Makefile
+require_contains 'installer_ui_blocked_plan_sanitization: ok' scripts/test-installer-ui-blocked-plan-sanitization.sh
+require_contains 'blocked_ui_plan_sanitizes_error_record_value' installer/latticra-installer/src/ui.rs
+require_contains 'blocked_ui_plan_truncates_oversized_error_value' installer/latticra-installer/src/ui.rs
+require_contains 'sh ./scripts/test-installer-ui-blocked-plan-sanitization.sh' Makefile
+require_contains 'installer-ui-blocked-plan-sanitization:' Makefile
 require_contains 'installer_config_authority_allowlist: ok' scripts/test-installer-config-authority-allowlist.sh
 require_contains 'validate_authority_slug("LC install profile"' installer/latticra-installer/src/config.rs
 require_contains 'valid_authority_slug()' installer/scripts/latticra-installer-apply.sh

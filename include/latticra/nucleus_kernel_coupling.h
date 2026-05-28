@@ -9,7 +9,7 @@
 #include "latticra/kernel_runtime_entry_recovery_boundary_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_observation_view.h"
-#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_review_disposition_review_observation_view.h"
 #include "latticra/kernel_runtime_entry_recovery_audit_review_observation_view.h"
@@ -78,7 +78,11 @@ typedef enum {
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_BLOCKED = 40,
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_MISSING = 41,
     LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_BLOCKED = 42,
-    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_INTERNAL_ERROR = 43
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_MISSING = 43,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_BLOCKED = 44,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_MISSING = 45,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_BLOCKED = 46,
+    LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_INTERNAL_ERROR = 47
 } latticra_nucleus_kernel_coupling_denial_t;
 
 typedef struct {
@@ -133,6 +137,12 @@ typedef struct {
     const
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_result_t
         *runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_result_t
+        *runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view;
     const char *source_identity;
     size_t source_identity_len;
     latticra_l_ui_source_span_t source_span;
@@ -190,6 +200,10 @@ typedef struct {
         LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
     char runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_status[
         LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
+    char runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_status[
+        LATTICRA_NUCLEUS_KERNEL_COUPLING_LABEL_MAX];
     size_t task_count;
     size_t accepted_task_count;
     size_t blocked_task_count;
@@ -216,6 +230,8 @@ typedef struct {
     size_t recovery_audit_review_disposition_review_closeout_observation_view_count;
     size_t recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_count;
     size_t recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_count;
+    size_t recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_count;
+    size_t recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_count;
     int prerequisites_satisfied;
     int no_effect_chain_ok;
     int lifecycle_complete;
@@ -251,6 +267,8 @@ typedef struct {
     int runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed;
     int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed;
     int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed;
     int scheduler_return_observation_allowed;
     int process_return_observation_allowed;
     int process_return_allowed;
@@ -287,6 +305,10 @@ typedef struct {
     int recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed;
     int process_state_read_allowed;
     int scheduler_execution_allowed;
     int scheduler_dispatch_allowed;
@@ -335,6 +357,8 @@ typedef struct {
     int runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed;
     int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed;
     int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed;
+    int runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed;
     int scheduler_return_observation_allowed;
     int process_return_observation_allowed;
     int process_return_allowed;
@@ -371,6 +395,10 @@ typedef struct {
     int recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed;
     int process_state_read_allowed;
     int scheduler_execution_allowed;
     int scheduler_dispatch_allowed;

@@ -193,6 +193,12 @@ static int provider_self_test_passes(void) {
     EXPECT_TRUE(
         self_test.hybrid_envelope_no_legacy_crypto_fallback_cases_total == 3u,
         "envelope no legacy fallback cases");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_successful_record_tail_cleared_cases_total == 3u,
+        "envelope record tail cleared cases");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_successful_plaintext_tail_cleared_cases_total == 3u,
+        "envelope plaintext tail cleared cases");
     EXPECT_TRUE(self_test.hybrid_transcript_aad_bound == 1u, "transcript aad bound");
     EXPECT_TRUE(
         self_test.hybrid_transcript_cases_bound_total == 3u,
@@ -313,6 +319,12 @@ static int provider_self_test_passes(void) {
     EXPECT_TRUE(
         strstr(rendered, "hybrid_envelope_no_legacy_crypto_fallback_cases_total=3") != 0,
         "report no legacy fallback cases");
+    EXPECT_TRUE(
+        strstr(rendered, "hybrid_envelope_successful_record_tail_cleared_cases_total=3") != 0,
+        "report record tail cleared cases");
+    EXPECT_TRUE(
+        strstr(rendered, "hybrid_envelope_successful_plaintext_tail_cleared_cases_total=3") != 0,
+        "report plaintext tail cleared cases");
     EXPECT_TRUE(strstr(rendered, "hybrid_transcript_cases_bound_total=3") != 0, "report transcript total");
     EXPECT_TRUE(
         strstr(rendered, "hybrid_transcript_tampering_rejected_total=3") != 0,

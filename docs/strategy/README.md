@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-28 05:42 CDT
+Last updated: 2026-05-28 07:22 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -324,6 +324,18 @@ Latest X scheduled-post verification runbook:
 
 ```text
 2026-05-28-0606-cdt-x-10am-verification-runbook.md
+```
+
+Latest X scheduled 3pm verification runbook:
+
+```text
+2026-05-28-0720-cdt-x-3pm-verification-runbook.md
+```
+
+Latest X scheduled 8pm verification runbook:
+
+```text
+2026-05-28-0722-cdt-x-8pm-verification-runbook.md
 ```
 
 Latest X scheduled queue verification chain:

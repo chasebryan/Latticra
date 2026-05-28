@@ -822,7 +822,7 @@ impl LatticraInstallerApp {
         match parts.as_slice() {
             ["help"] | ["?"] => {
                 self.push_console(
-                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc packages, lc init, lc services, lc service-schema, lc service-definitions, lc service-plan, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
+                    "panel: help, status, updater status, updater plan, updater dry-run, updater apply, lc commands, lc status, lc install-config, lc session, lc workspace, lc namespace, lc rootfs, lc packages, lc init, lc services, lc service-schema, lc service-definitions, lc service-plan, lc service-runtime, lc profile hosted|panel|standalone|host|os|custom, plan, save, dry-run, reset, uninstall, clear, nadia status, nadia commands",
                 );
                 self.push_console(
                     "nadia: use `nadia commands` for the full Stage-1 through Stage-51 command map",
@@ -1001,6 +1001,12 @@ impl LatticraInstallerApp {
                 self.push_console("service_plan_contract_status=metadata-only-contract");
                 self.push_console("service_plan_contract_present=1");
                 self.push_console(format!(
+                    "service_runtime_contract_profile={}",
+                    self.config.lc.service_runtime_contract_profile
+                ));
+                self.push_console("service_runtime_contract_status=metadata-only-contract");
+                self.push_console("service_runtime_contract_present=1");
+                self.push_console(format!(
                     "command_registry_profile={}",
                     self.config.lc.command_registry_profile
                 ));
@@ -1077,6 +1083,11 @@ impl LatticraInstallerApp {
                     self.config.lc.service_plan_contract_profile
                 ));
                 self.push_console("service_plan_contract_status=metadata-only-contract");
+                self.push_console(format!(
+                    "service_runtime_contract_profile={}",
+                    self.config.lc.service_runtime_contract_profile
+                ));
+                self.push_console("service_runtime_contract_status=metadata-only-contract");
                 self.push_console(format!(
                     "receipt_request_contract_profile={}",
                     self.config.lc.receipt_request_contract_profile
@@ -1213,6 +1224,10 @@ impl LatticraInstallerApp {
                 self.push_console(format!(
                     "service_plan_contract_required={}",
                     self.config.lc.require_service_plan_contract
+                ));
+                self.push_console(format!(
+                    "service_runtime_contract_required={}",
+                    self.config.lc.require_service_runtime_contract
                 ));
                 self.push_console(format!(
                     "receipt_request_contract_required={}",
@@ -1361,7 +1376,7 @@ impl LatticraInstallerApp {
                 self.apply_lc_profile(LatticraConsoleProfile::Custom);
             }
             ["lc", "commands"] | ["console", "commands"] => {
-                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc packages,lc init,lc services,lc service-schema,lc service-definitions,lc service-plan,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
+                self.push_console("lc.commands=help,status,plan,save,dry-run,reset,uninstall,pwd,cd,lc status,lc commands,lc install-config,lc standalone,lc session,lc workspace,lc namespace,lc rootfs,lc packages,lc init,lc services,lc service-schema,lc service-definitions,lc service-plan,lc service-runtime,lc profiles,lc receipts,lc receipt-request,lc receipt-payload,lc receipt-artifact,lc receipt-artifact-review,lc receipt-review-receipt,lc receipt-review-draft,lc receipt-materialization-plan,lc signature-request,lc substrate,lc host,lc host-contract,lc host-inventory,lc host-adapter,lc os-contract,lc vm-evidence,lc os");
                 self.push_console("registry_authority=metadata-only external_host_processes=0");
             }
             ["lc", "standalone"] | ["console", "standalone"] | ["lc", "standalone-contract"] => {
@@ -1599,7 +1614,7 @@ impl LatticraInstallerApp {
                 );
                 self.push_console("service_health_check_allowed=0 process_supervision_allowed=0");
                 self.push_console(
-                    "pid1_claim_allowed=0 service_schema_contract_required=1 service_definitions_contract_required=1 service_plan_contract_required=1 init_contract_required=1",
+                    "pid1_claim_allowed=0 service_schema_contract_required=1 service_definitions_contract_required=1 service_plan_contract_required=1 service_runtime_contract_required=1 init_contract_required=1",
                 );
                 self.push_console(
                     "rootfs_contract_required=1 packages_contract_required=1 namespace_contract_required=1",
@@ -1609,6 +1624,7 @@ impl LatticraInstallerApp {
                 self.push_console("related_service_schema_command=lc service-schema");
                 self.push_console("related_service_definitions_command=lc service-definitions");
                 self.push_console("related_service_plan_command=lc service-plan");
+                self.push_console("related_service_runtime_command=lc service-runtime");
                 self.push_console("related_init_command=lc init");
                 self.push_console(
                     "promotion_gate=lc_services_contract_before_service_registry_or_supervision",
@@ -1730,6 +1746,7 @@ impl LatticraInstallerApp {
                 self.push_console("related_service_schema_command=lc service-schema");
                 self.push_console("related_services_command=lc services");
                 self.push_console("related_service_plan_command=lc service-plan");
+                self.push_console("related_service_runtime_command=lc service-runtime");
                 self.push_console("related_init_command=lc init");
                 self.push_console(
                     "promotion_gate=lc_service_definitions_contract_before_service_definition_materialization",
@@ -1792,9 +1809,73 @@ impl LatticraInstallerApp {
                 self.push_console("related_service_schema_command=lc service-schema");
                 self.push_console("related_services_command=lc services");
                 self.push_console("related_init_command=lc init");
+                self.push_console("related_service_runtime_command=lc service-runtime");
                 self.push_console(
                     "promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation",
                 );
+                self.push_console(
+                    "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
+                );
+            }
+            ["lc", "service-runtime"]
+            | ["console", "service-runtime"]
+            | ["lc", "service-runtime-contract"]
+            | ["lc", "service-runtime-handoff"] => {
+                self.push_console("lc.service_runtime=Latticra Console service runtime contract");
+                self.push_console(format!(
+                    "service_runtime_profile={}",
+                    self.config.lc.service_runtime_contract_profile
+                ));
+                self.push_console("service_runtime_status=metadata-only-contract");
+                self.push_console("service_runtime_contract_present=1");
+                self.push_console("service_runtime_kind=lc-service-runtime-handoff-envelope");
+                self.push_console("service_runtime_root=share/latticra/lc/services");
+                self.push_console("service_runtime_state_source=metadata-only");
+                self.push_console("service_runtime_file=runtime.toml");
+                self.push_console("service_runtime_artifact_present=1");
+                self.push_console("service_runtime_created=0");
+                self.push_console("service_runtime_read_allowed=0 service_runtime_write_allowed=0");
+                self.push_console(
+                    "service_runtime_materialized=0 service_runtime_materialization_allowed=0",
+                );
+                self.push_console("service_runtime_review_required=1");
+                self.push_console("service_plan_input_allowed=0");
+                self.push_console("service_plan_materialized=0");
+                self.push_console("service_dependency_resolution_allowed=0");
+                self.push_console("service_startup_order_resolution_allowed=0");
+                self.push_console(
+                    "service_authority_binding_allowed=0 service_activation_allowed=0",
+                );
+                self.push_console(
+                    "service_runtime_handoff_allowed=0 service_executor_allowed=0 service_process_launch_allowed=0",
+                );
+                self.push_console(
+                    "service_restart_policy_allowed=0 service_health_check_allowed=0 service_supervision_allowed=0",
+                );
+                self.push_console("process_supervision_allowed=0");
+                self.push_console(
+                    "service_plan_contract_required=1 service_definitions_contract_required=1 service_schema_contract_required=1 services_contract_required=1",
+                );
+                self.push_console(
+                    "init_contract_required=1 rootfs_contract_required=1 packages_contract_required=1",
+                );
+                self.push_console(
+                    "namespace_contract_required=1 workspace_contract_required=1 session_contract_required=1",
+                );
+                self.push_console("os_base_contract_required=1 runtime_boundary_required=1");
+                self.push_console("seal_capability_labels_required=1");
+                self.push_console("receipt_required_before_service_runtime=1");
+                self.push_console("command_surface=lc service-runtime");
+                self.push_console("related_service_plan_command=lc service-plan");
+                self.push_console("related_service_definitions_command=lc service-definitions");
+                self.push_console("related_service_schema_command=lc service-schema");
+                self.push_console("related_services_command=lc services");
+                self.push_console("related_init_command=lc init");
+                self.push_console("related_os_contract_command=lc os-contract");
+                self.push_console(
+                    "promotion_gate=lc_service_runtime_contract_before_executor_handoff_or_supervision",
+                );
+                self.push_console("no_effect=1 file_read_allowed=0 file_write_allowed=0");
                 self.push_console(
                     "host_process_launch_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0 production_os_claim=0",
                 );
@@ -1885,6 +1966,12 @@ impl LatticraInstallerApp {
                 self.push_console("service_plan_contract_present=1");
                 self.push_console("service_plan_contract_command=lc service-plan");
                 self.push_console(format!(
+                    "service_runtime_contract_receipt_required={}",
+                    self.config.lc.require_service_runtime_contract
+                ));
+                self.push_console("service_runtime_contract_present=1");
+                self.push_console("service_runtime_contract_command=lc service-runtime");
+                self.push_console(format!(
                     "receipt_request_contract_required={}",
                     self.config.lc.require_receipt_request_contract
                 ));
@@ -1946,7 +2033,7 @@ impl LatticraInstallerApp {
                 self.push_console(
                     "seal_signature_present=0 seal_signing_authority_present=0 receipt_signed=0",
                 );
-                self.push_console("receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary");
+                self.push_console("receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console(
                     "file_write_allowed=0 host_mutation_allowed=0 network_allowed=0 runtime_enforcement_allowed=0 boot_allowed=0",
                 );
@@ -2027,7 +2114,7 @@ impl LatticraInstallerApp {
                 self.push_console("signature_request_profile=latticra-seal-signature-request/0.1");
                 self.push_console("requested_receipt_profile=latticra-seal-verified-receipt/0.1");
                 self.push_console("requested_capability=verified-receipt-report");
-                self.push_console("requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary");
+                self.push_console("requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary");
                 self.push_console("seal_signature_request_ready=0 seal_signature_request_present=0 seal_signing_authority_present=0");
                 self.push_console("seal_signer_handoff_allowed=0 seal_signing_operation_allowed=0 receipt_write_allowed=0 receipt_signed=0");
                 self.push_console(
@@ -4375,7 +4462,7 @@ impl LatticraInstallerApp {
         ui.heading("Choose a starting lane");
         ui.add(
             egui::Label::new(
-                "Pick the closest preset, then use the buttons above or the command deck below. The safe path is always plan, Dry-Install, evidence review, then guarded local writes.",
+                "Pick the closest preset, then follow the first-run path below. A new user only needs four ideas: plan, Dry-Install, evidence review, then guarded local writes.",
             )
             .wrap(),
         );
@@ -4448,11 +4535,15 @@ impl LatticraInstallerApp {
         let local_locked = !self.config.safety.dry_run && !self.guarded_local_ack;
         let plan_blocker = self.panel_can_write_artifacts().err();
         let can_write_plan = plan_blocker.is_none();
+        let install_blocker = self.install_blocker(running);
+        let can_execute = install_blocker.is_none();
+        let local_write_gate_label =
+            local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack);
 
         panel_card_with_stroke(workspace_tab_accent(WorkspaceTab::Procedure)).show(ui, |ui| {
             ui.horizontal_wrapped(|ui| {
                 ui.heading(
-                    egui::RichText::new("Safe-run runway")
+                    egui::RichText::new("First-run path")
                         .size(18.0)
                         .color(ink()),
                 );
@@ -4462,12 +4553,18 @@ impl LatticraInstallerApp {
                     "evidence",
                     if has_evidence { "available" } else { "waiting" },
                 );
-                status_chip(
-                    ui,
-                    "local_ack",
-                    if self.guarded_local_ack { "1" } else { "0" },
-                );
+                status_chip(ui, "local writes", local_write_gate_label);
             });
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(
+                        "This is the shortest safe route through the panel. Each step leaves evidence visible before the next step asks for more authority.",
+                    )
+                    .small()
+                    .color(muted()),
+                )
+                .wrap(),
+            );
             ui.add_space(6.0);
 
             dashboard_runway_step(
@@ -4497,6 +4594,17 @@ impl LatticraInstallerApp {
             dashboard_runway_step(
                 ui,
                 "03",
+                "Review evidence",
+                "Read the plan, engine output, and receipt before enabling writes.",
+                if has_evidence {
+                    ProcedureState::Current
+                } else {
+                    ProcedureState::Pending
+                },
+            );
+            dashboard_runway_step(
+                ui,
+                "04",
                 "Guarded local",
                 "Local-prefix writes stay behind the acknowledgement gate.",
                 if local_ready {
@@ -4523,13 +4631,44 @@ impl LatticraInstallerApp {
                     self.active_tab = WorkspaceTab::Evidence;
                     self.show_plan_over_log = true;
                 }
-                if ui.button("Open next surface").clicked() {
+
+                let run_label = if running {
+                    "Engine running"
+                } else if self.config.safety.dry_run {
+                    "Run Dry-Install"
+                } else {
+                    "Install guarded prefix"
+                };
+                let run_response = ui
+                    .add_enabled(
+                        can_execute,
+                        egui::Button::new(run_label)
+                            .fill(if self.config.safety.dry_run {
+                                soft_blue()
+                            } else {
+                                soft_green()
+                            })
+                            .stroke(egui::Stroke::new(
+                                1.0,
+                                if self.config.safety.dry_run {
+                                    blue()
+                                } else {
+                                    green()
+                                },
+                            )),
+                    )
+                    .on_disabled_hover_text(install_blocker.as_deref().unwrap_or("Run ready"));
+                if run_response.clicked() {
+                    self.start_install();
+                }
+
+                if ui.button("Open recommended step").clicked() {
                     self.open_next_surface();
                 }
                 if ui.button("Review evidence").clicked() {
                     self.active_tab = WorkspaceTab::Evidence;
                 }
-                if ui.button("Authority gates").clicked() {
+                if ui.button("Review authority gates").clicked() {
                     self.active_tab = WorkspaceTab::Authority;
                 }
             });
@@ -4811,7 +4950,7 @@ impl LatticraInstallerApp {
                 status_chip(
                     ui,
                     "contracts",
-                    &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 28),
+                    &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 29),
                 );
                 status_chip(
                     ui,
@@ -5046,6 +5185,11 @@ impl LatticraInstallerApp {
                     );
                     labeled_text_field(
                         ui,
+                        "Service runtime",
+                        &mut self.config.lc.service_runtime_contract_profile,
+                    );
+                    labeled_text_field(
+                        ui,
                         "Receipt request",
                         &mut self.config.lc.receipt_request_contract_profile,
                     );
@@ -5122,7 +5266,7 @@ impl LatticraInstallerApp {
                         status_chip(
                             ui,
                             "enabled",
-                            &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 28),
+                            &format!("{}/{}", selected_lc_contract_count(&self.config.lc), 29),
                         );
                         status_chip(ui, "runtime", "0");
                     });
@@ -5227,6 +5371,12 @@ impl LatticraInstallerApp {
                         &mut self.config.lc.require_service_plan_contract,
                         "Require service plan",
                         "LC service activation planning must prove this metadata contract before dependency resolution, startup ordering, activation, or process supervision can exist.",
+                    );
+                    let _ = behavior_toggle_row(
+                        ui,
+                        &mut self.config.lc.require_service_runtime_contract,
+                        "Require service runtime",
+                        "LC service runtime handoff must prove this metadata contract before executors, service process launch, restart policy, or supervision can exist.",
                     );
                     let _ = behavior_toggle_row(
                         ui,
@@ -5518,8 +5668,8 @@ impl LatticraInstallerApp {
                 status_chip(ui, "mode", self.config.execution_mode_label());
                 status_chip(
                     ui,
-                    "local_ack",
-                    if self.guarded_local_ack { "1" } else { "0" },
+                    "local writes",
+                    local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack),
                 );
                 status_chip(ui, "root", "0");
                 status_chip(ui, "network", "0");
@@ -5663,8 +5813,8 @@ impl LatticraInstallerApp {
                 status_chip(ui, "mode", self.config.execution_mode_label());
                 status_chip(
                     ui,
-                    "local_write_ack",
-                    if self.guarded_local_ack { "1" } else { "0" },
+                    "local writes",
+                    local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack),
                 );
                 status_chip(ui, "root", "0");
                 status_chip(ui, "network", "0");
@@ -6071,8 +6221,8 @@ impl LatticraInstallerApp {
                 );
                 status_chip(
                     ui,
-                    "local_ack",
-                    if self.guarded_local_ack { "1" } else { "0" },
+                    "local writes",
+                    local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack),
                 );
             });
             ui.add_space(6.0);
@@ -6443,8 +6593,8 @@ impl LatticraInstallerApp {
             );
             status_chip(
                 ui,
-                "local_ack",
-                if self.guarded_local_ack { "1" } else { "0" },
+                "local writes",
+                local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack),
             );
         });
         ui.add_space(8.0);
@@ -6548,7 +6698,7 @@ impl LatticraInstallerApp {
 
         ui.add_space(8.0);
         ui.horizontal_wrapped(|ui| {
-            if ui.button("Open next surface").clicked() {
+            if ui.button("Open recommended step").clicked() {
                 self.open_next_surface();
             }
             if ui.button("Review Authority").clicked() {
@@ -6564,23 +6714,44 @@ impl LatticraInstallerApp {
         self.show_run_readiness_panel(ui);
         ui.add_space(8.0);
 
-        panel_card_with_stroke(if self.install_state == InstallState::Running {
-            blue()
-        } else if self.config.safety.dry_run {
-            teal()
-        } else {
-            green()
-        })
-        .show(ui, |ui| {
+        let artifact_blocker = self.panel_can_write_artifacts().err();
+        let can_write_artifacts = artifact_blocker.is_none();
+        let removal_blocker = self.panel_can_reset().err();
+        let deck_accent = command_deck_accent(
+            self.install_state,
+            self.config.safety.dry_run,
+            artifact_blocker.is_some(),
+        );
+
+        panel_card_with_stroke(deck_accent).show(ui, |ui| {
             ui.horizontal_wrapped(|ui| {
-                ui.heading(egui::RichText::new("Command deck").size(18.0).color(ink()));
+                ui.heading(egui::RichText::new("Primary actions").size(18.0).color(ink()));
                 status_chip(ui, "mode", self.config.execution_mode_label());
                 status_chip(ui, "next", self.next_action_label());
+                readiness_chip(
+                    ui,
+                    "artifacts",
+                    if can_write_artifacts {
+                        "ready"
+                    } else {
+                        "blocked"
+                    },
+                );
             });
+            ui.add(
+                egui::Label::new(
+                    egui::RichText::new(
+                        "Save the configuration, write the plan, then run the current mode when the readiness panel is clear.",
+                    )
+                    .small()
+                    .color(muted()),
+                )
+                .wrap(),
+            );
             ui.add_space(6.0);
-            let artifact_blocker = self.panel_can_write_artifacts().err();
-            let can_write_artifacts = artifact_blocker.is_none();
+
             ui.horizontal_wrapped(|ui| {
+                colored_status_chip(ui, "lane", "artifacts", blue());
                 let save_response =
                     ui.add_enabled(can_write_artifacts, egui::Button::new("Save configuration"));
                 if save_response.clicked() {
@@ -6593,29 +6764,57 @@ impl LatticraInstallerApp {
                     self.active_tab = WorkspaceTab::Evidence;
                     self.show_plan_over_log = true;
                 }
+            });
+            ui.add_space(4.0);
+            ui.horizontal_wrapped(|ui| {
+                colored_status_chip(ui, "lane", "review", teal());
                 if ui.button("Open evidence").clicked() {
                     self.active_tab = WorkspaceTab::Evidence;
                 }
-                if ui.button("Open next surface").clicked() {
+                if ui.button("Open recommended step").clicked() {
                     self.open_next_surface();
+                }
+                if ui.button("Open procedure").clicked() {
+                    self.active_tab = WorkspaceTab::Procedure;
                 }
             });
             if let Some(reason) = artifact_blocker.as_deref() {
-                warning_note(ui, "Artifact writes locked", reason);
+                readiness_blocker_line(ui, "artifacts", reason, amber());
             }
 
             ui.add_space(10.0);
+            ui.horizontal_wrapped(|ui| {
+                colored_status_chip(
+                    ui,
+                    "lane",
+                    if self.config.safety.dry_run {
+                        "dry-run"
+                    } else {
+                        "guarded-local"
+                    },
+                    if self.config.safety.dry_run {
+                        teal()
+                    } else {
+                        green()
+                    },
+                );
+                status_chip(
+                    ui,
+                    "local writes",
+                    local_write_status_label(self.config.safety.dry_run, self.guarded_local_ack),
+                );
+                status_chip(ui, "root", "0");
+                status_chip(ui, "network", "0");
+            });
+            ui.add_space(6.0);
             self.show_fluid_install_button(ui);
             ui.add_space(8.0);
             self.show_reset_button(ui);
             ui.add_space(6.0);
             self.show_uninstall_button(ui);
 
-            if let Err(err) = self.panel_can_execute() {
-                ui.colored_label(egui::Color32::from_rgb(255, 160, 130), err);
-            }
-            if let Err(err) = self.panel_can_reset() {
-                ui.colored_label(egui::Color32::from_rgb(255, 190, 130), err);
+            if let Some(reason) = removal_blocker.as_deref() {
+                readiness_blocker_line(ui, "reset", reason, amber());
             }
         });
     }
@@ -6653,35 +6852,48 @@ impl LatticraInstallerApp {
             "locked"
         };
 
-        panel_card().show(ui, |ui| {
-            ui.horizontal_wrapped(|ui| {
-                ui.heading(egui::RichText::new("Run readiness").size(18.0).color(ink()));
-                status_chip(ui, "install", install_label);
-                status_chip(ui, "reset", removal_label);
-                status_chip(ui, "writes", write_gate_label);
-                status_chip(ui, "evidence", evidence_label);
-            });
-            ui.add(
-                egui::Label::new(
-                    egui::RichText::new(format!("Status: {}", self.status))
-                        .small()
-                        .color(muted()),
-                )
-                .wrap(),
-            );
-            ui.add_space(6.0);
-            ui.horizontal_wrapped(|ui| {
-                if ui.button("Review gates").clicked() {
-                    self.active_tab = WorkspaceTab::Authority;
+        panel_card_with_stroke(readiness_panel_accent(install_label, evidence_label)).show(
+            ui,
+            |ui| {
+                ui.horizontal_wrapped(|ui| {
+                    ui.heading(egui::RichText::new("Ready to run?").size(18.0).color(ink()));
+                    readiness_chip(ui, "install", install_label);
+                    readiness_chip(ui, "reset", removal_label);
+                    readiness_chip(ui, "local writes", write_gate_label);
+                    readiness_chip(ui, "evidence", evidence_label);
+                    status_chip(ui, "next", self.next_action_label());
+                });
+                ui.add(
+                    egui::Label::new(
+                        egui::RichText::new(format!("Current status: {}", self.status))
+                            .small()
+                            .color(muted()),
+                    )
+                    .wrap(),
+                );
+                if let Some(reason) = install_blocker.as_deref() {
+                    readiness_blocker_line(ui, "install", reason, red());
                 }
-                if ui.button("Review delivery").clicked() {
-                    self.active_tab = WorkspaceTab::Delivery;
+                if let Some(reason) = removal_blocker.as_deref() {
+                    readiness_blocker_line(ui, "reset", reason, amber());
                 }
-                if ui.button("Review evidence").clicked() {
-                    self.active_tab = WorkspaceTab::Evidence;
-                }
-            });
-        });
+                ui.add_space(6.0);
+                ui.horizontal_wrapped(|ui| {
+                    if ui.button("Open recommended step").clicked() {
+                        self.open_next_surface();
+                    }
+                    if ui.button("Review gates").clicked() {
+                        self.active_tab = WorkspaceTab::Authority;
+                    }
+                    if ui.button("Review delivery").clicked() {
+                        self.active_tab = WorkspaceTab::Delivery;
+                    }
+                    if ui.button("Review evidence").clicked() {
+                        self.active_tab = WorkspaceTab::Evidence;
+                    }
+                });
+            },
+        );
     }
 
     fn show_fluid_install_button(&mut self, ui: &mut egui::Ui) {
@@ -7268,7 +7480,10 @@ fn ui_plan_artifact(config: &InstallerConfig) -> Result<(InstallerConfig, String
 }
 
 fn blocked_ui_plan(error: &str) -> String {
-    format!("LATTICRA PANEL INSTALL PLAN\n\nvalidation_status=blocked\nvalidation_error={error}\n")
+    let validation_error = sanitize_status_line(error);
+    format!(
+        "LATTICRA PANEL INSTALL PLAN\n\nvalidation_status=blocked\nvalidation_error={validation_error}\n"
+    )
 }
 
 fn sanitize_console_line(line: &str) -> String {
@@ -7731,6 +7946,66 @@ fn evidence_path_row(ui: &mut egui::Ui, label: &str, path: &str, accent: egui::C
     ui.horizontal_wrapped(|ui| {
         colored_status_chip(ui, label, "latest", accent);
         ui.add(egui::Label::new(egui::RichText::new(path).monospace().small().color(ink())).wrap());
+    });
+}
+
+fn readiness_panel_accent(install_label: &str, evidence_label: &str) -> egui::Color32 {
+    if install_label == "running" {
+        return blue();
+    }
+    if install_label == "blocked" || evidence_label == "needs-review" {
+        return amber();
+    }
+    teal()
+}
+
+fn command_deck_accent(
+    install_state: InstallState,
+    dry_run: bool,
+    artifact_blocked: bool,
+) -> egui::Color32 {
+    if install_state == InstallState::Running {
+        return blue();
+    }
+    if artifact_blocked {
+        return amber();
+    }
+    if dry_run {
+        teal()
+    } else {
+        green()
+    }
+}
+
+fn readiness_chip(ui: &mut egui::Ui, key: &str, value: &str) {
+    colored_status_chip(ui, key, value, readiness_label_color(value));
+}
+
+fn local_write_status_label(dry_run: bool, guarded_local_ack: bool) -> &'static str {
+    if dry_run {
+        "dry-run"
+    } else if guarded_local_ack {
+        "acknowledged"
+    } else {
+        "locked"
+    }
+}
+
+fn readiness_label_color(value: &str) -> egui::Color32 {
+    match value {
+        "ready" | "available" | "acknowledged" => green(),
+        "running" => blue(),
+        "dry-run" => teal(),
+        "waiting" => border_strong(),
+        "locked" | "blocked" | "needs-review" => amber(),
+        _ => border_strong(),
+    }
+}
+
+fn readiness_blocker_line(ui: &mut egui::Ui, label: &str, reason: &str, accent: egui::Color32) {
+    ui.horizontal_wrapped(|ui| {
+        colored_status_chip(ui, label, "blocked", accent);
+        ui.add(egui::Label::new(egui::RichText::new(reason).small().color(ink())).wrap());
     });
 }
 
@@ -8426,6 +8701,7 @@ fn selected_lc_contract_count(lc: &LatticraConsoleConfig) -> usize {
         lc.require_service_schema_contract,
         lc.require_service_definitions_contract,
         lc.require_service_plan_contract,
+        lc.require_service_runtime_contract,
         lc.require_receipt_request_contract,
         lc.require_receipt_payload_schema,
         lc.require_receipt_payload_artifact_draft,
@@ -8850,6 +9126,27 @@ mod tests {
         let plan = blocked_ui_plan(&error);
         assert!(plan.contains("validation_status=blocked"));
         assert!(!plan.contains("../escape"));
+    }
+
+    #[test]
+    fn blocked_ui_plan_sanitizes_error_record_value() {
+        let plan = blocked_ui_plan(&format!(
+            "invalid\n{}{}{}{}",
+            "OPENAI", "_API_KEY=", "sk-proj-", "secret12345678901234567890"
+        ));
+        let lines: Vec<&str> = plan.lines().collect();
+
+        assert_eq!(lines.len(), 4);
+        assert!(plan.contains("\\n"));
+        assert!(!plan.contains("sk-proj-secret"));
+        assert!(plan.contains(&format!("{}{}[redacted]", "OPENAI", "_API_KEY=")));
+    }
+
+    #[test]
+    fn blocked_ui_plan_truncates_oversized_error_value() {
+        let plan = blocked_ui_plan(&"a".repeat(STATUS_MAX_LINE_CHARS + 16));
+
+        assert!(plan.contains("...[truncated]"));
     }
 
     #[test]

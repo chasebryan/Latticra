@@ -1,8 +1,8 @@
 # Latticra Console Foundation Status
 
 Status: active Stage-0 foundation
-Date: 2026-05-27
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Date: 2026-05-28
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -93,6 +93,16 @@ service_plan_contract_command=lc service-plan
 service_plan_contract_profile=lc-service-plan-v0
 service_plan_file=plan.toml
 service_plan_created=0
+service_runtime_contract_status=metadata-only-contract
+service_runtime_contract_present=1
+service_runtime_contract_command=lc service-runtime
+service_runtime_contract_profile=lc-service-runtime-v0
+service_runtime_file=runtime.toml
+service_runtime_created=0
+service_runtime_handoff_allowed=0
+service_executor_allowed=0
+service_process_launch_allowed=0
+service_supervision_allowed=0
 service_definition_validation_allowed=0
 host_path_projection_allowed=0
 namespace_mutation_allowed=0

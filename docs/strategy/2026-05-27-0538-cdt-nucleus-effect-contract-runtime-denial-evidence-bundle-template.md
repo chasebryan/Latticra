@@ -430,16 +430,16 @@ product_readiness_promotion_recommended=0
 Recommended next planning move:
 
 ```text
-create the Nucleus effect-contract and runtime-denial non-claim review template
+create the Nucleus effect-contract and runtime-denial public-entrypoint review template
 ```
 
 Reason:
 
 ```text
 the evidence bundle shape now defines what future evidence would contain; the
-next useful planning artifact is the review form that prevents contract-only
-runtime-denial evidence from becoming execution, runtime, security, or product
-claims
+non-claim review shape is now present, and the next useful planning artifact is
+the review form for deciding whether future evidence can be referenced from
+public entry points without expanding claims
 ```
 
 ## Non-claims

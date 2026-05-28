@@ -58,7 +58,10 @@ require_contains 'acvp_submission_package_contract_bound = 1u' latticra-q-seal/s
 require_contains 'vector_fixture_lock_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 require_contains 'vector_fixture_digest_ledger_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 require_contains 'replay_transcript_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
-require_contains 'required_binding_items_total = 45u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
+require_contains 'acvp_verdict_receipt_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
+require_contains 'validation_claim_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
+require_contains 'module_boundary_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
+require_contains 'required_binding_items_total = 48u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 require_contains 'operation_execution_allowed == 1u' latticra-q-seal/src/q_seal_ml_kem_implementation_binding_manifest.c
 require_contains 'latticra q-seal ml-kem implementation binding manifest invariants: ok' latticra-q-seal/tests/q_seal_ml_kem_implementation_binding_manifest_invariants.c
 require_contains 'ml_kem_implementation_binding_manifest_present=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
@@ -82,6 +85,9 @@ require_contains 'acvp_submission_package_contract_bound=1' latticra-q-seal/evid
 require_contains 'vector_fixture_lock_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'vector_fixture_digest_ledger_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'replay_transcript_gate_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'acvp_verdict_receipt_gate_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'validation_claim_gate_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'module_boundary_gate_bound=1' latticra-q-seal/evidence/ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'implementation_code_present=0' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'source_layout_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'implementation_file_digest_plan_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
@@ -89,7 +95,10 @@ require_contains 'clean_room_author_attestation_gate_bound=1' latticra-q-seal/do
 require_contains 'per_file_standards_trace_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'per_file_test_trace_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 require_contains 'replay_transcript_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
-require_contains 'required_binding_items_total=45' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'acvp_verdict_receipt_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'validation_claim_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'module_boundary_gate_bound=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
+require_contains 'required_binding_items_total=48' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md
 
 cc $CFLAGS -Ilatticra-q-seal/include \
   latticra-q-seal/src/q_seal_ml_kem.c \

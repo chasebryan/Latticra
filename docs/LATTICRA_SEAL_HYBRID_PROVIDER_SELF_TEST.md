@@ -7,7 +7,7 @@ Scope: authority-neutral OpenSSL EVP self-test that derives a classical NIST P-2
 
 This slice closes the gap between the provider-level Q-Seal ML-KEM self-test and the existing Seal hybrid envelope.
 
-The self-test proves that the local substrate can obtain a classical provider-derived 32-byte P-256 ECDH shared secret and provider-derived 32-byte ML-KEM shared secrets for all three FIPS 203 parameter sets, verify that generated and reimported ML-KEM keys retain the requested parameter-set identity, reimport public keys before peer ECDH and ML-KEM encapsulation, bind the P-256 public keys, ML-KEM public encapsulation keys, ML-KEM ciphertext, and algorithm labels into authenticated transcript AAD, pass each pairing into the hybrid envelope, authenticate attached records, reject tampered ML-KEM ciphertext shared secrets and wrong-PQC-secret record opens before plaintext release, reject tampered transcript AAD before plaintext release, confirm the record envelope used provider-backed HKDF-SHA256, AES-256-GCM, HMAC-SHA256 commitments, constant-time commitment comparison, and 256-bit-strength `RAND_bytes_ex` salt/nonce generation without legacy fallback paths, and zeroize all local secret and record buffers before returning.
+The self-test proves that the local substrate can obtain a classical provider-derived 32-byte P-256 ECDH shared secret and provider-derived 32-byte ML-KEM shared secrets for all three FIPS 203 parameter sets, verify that generated and reimported ML-KEM keys retain the requested parameter-set identity, reimport public keys before peer ECDH and ML-KEM encapsulation, bind the P-256 public keys, ML-KEM public encapsulation keys, ML-KEM ciphertext, and algorithm labels into authenticated transcript AAD, pass each pairing into the hybrid envelope, authenticate attached records, reject tampered ML-KEM ciphertext shared secrets and wrong-PQC-secret record opens before plaintext release, reject tampered transcript AAD before plaintext release, confirm the record envelope used provider-backed HKDF-SHA256, AES-256-GCM, HMAC-SHA256 commitments, constant-time commitment comparison, 256-bit-strength `RAND_bytes_ex` salt/nonce generation without legacy fallback paths, and successful record/plaintext output tail cleansing under nonzero sentinels, and zeroize all local secret and record buffers before returning.
 
 ## Current Fields
 
@@ -78,6 +78,8 @@ hybrid_envelope_commitment_constant_time_compare_cases_total=3
 hybrid_envelope_random_bytes_ex_cases_total=3
 hybrid_envelope_random_bytes_strength_bits_requested=256
 hybrid_envelope_no_legacy_crypto_fallback_cases_total=3
+hybrid_envelope_successful_record_tail_cleared_cases_total=3
+hybrid_envelope_successful_plaintext_tail_cleared_cases_total=3
 hybrid_transcript_aad_bound=1
 hybrid_transcript_cases_bound_total=3
 hybrid_transcript_tampering_rejected=1

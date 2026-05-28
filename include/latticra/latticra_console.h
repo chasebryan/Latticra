@@ -28,6 +28,7 @@ extern "C" {
 #define LATTICRA_CONSOLE_SERVICE_SCHEMA_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_SERVICE_DEFINITIONS_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_SERVICE_PLAN_CONTRACT_REPORT_MAX 12000u
+#define LATTICRA_CONSOLE_SERVICE_RUNTIME_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX 12000u
 #define LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX 12000u
@@ -128,6 +129,7 @@ typedef struct {
     char service_schema_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char service_definitions_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char service_plan_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
+    char service_runtime_contract_status[LATTICRA_CONSOLE_LABEL_MAX];
     char substrate_bridge_status[LATTICRA_CONSOLE_LABEL_MAX];
     char panel_install_status[LATTICRA_CONSOLE_LABEL_MAX];
     char host_embedding_status[LATTICRA_CONSOLE_LABEL_MAX];
@@ -165,6 +167,7 @@ typedef struct {
     int service_schema_contract_present;
     int service_definitions_contract_present;
     int service_plan_contract_present;
+    int service_runtime_contract_present;
     int command_registry_present;
     int substrate_bridge_present;
     int host_embeddable;
@@ -272,6 +275,10 @@ latticra_status_t latticra_console_service_definitions_contract_report(
     size_t buffer_len);
 
 latticra_status_t latticra_console_service_plan_contract_report(
+    char *buffer,
+    size_t buffer_len);
+
+latticra_status_t latticra_console_service_runtime_contract_report(
     char *buffer,
     size_t buffer_len);
 

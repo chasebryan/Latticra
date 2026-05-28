@@ -11,6 +11,7 @@ iso_artifact_sha256 = "none"
 iso_signature_path = "none"
 iso_sbom_path = "none"
 os_image_artifact_manifest_template_present = true
+os_image_artifact_manifest_generator_present = true
 os_image_artifact_manifest_validation_present = true
 os_image_artifact_manifest_candidate_present = false
 os_image_build_recipe_contract_present = true

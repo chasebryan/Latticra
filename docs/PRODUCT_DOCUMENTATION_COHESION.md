@@ -35,6 +35,8 @@ Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_
 
 Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when product-facing copy depends on status records, status-index entries, status mirrors, estimate records, or public-entry alignment status notes.
 
+Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when product-facing pages include runnable commands, validation command lists, platform prerequisites, or install, update, reset, uninstall, and cleanup snippets.
+
 ## Cohesion Promise
 
 All product-facing documentation should describe Latticra as:
@@ -114,9 +116,10 @@ Use this route for someone changing documentation or product posture:
 9. [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md)
 10. [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md)
 11. [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md)
-12. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
-13. The relevant subsystem contract and status record
-14. The exact guard named by that record
+12. [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md)
+13. [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md)
+14. The relevant subsystem contract and status record
+15. The exact guard named by that record
 
 The route should prevent documentation from getting ahead of implementation or validation evidence.
 
@@ -188,12 +191,13 @@ Run this review when public wording changes:
 10. Does [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) identify whether any stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked record is involved?
 11. Does [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) identify which public entries, source records, mirrors, validation paths, status records, or non-claims need review?
 12. Does [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) apply because status records, status mirrors, status-index entries, estimates, or public-entry alignment notes changed?
-13. Does the change preserve the documentation-only boundary if no implementation changed?
-14. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
-15. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
-16. Does [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) apply because a subsystem landing page or subsystem public summary changed?
-17. Does [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) apply because a static public HTML page changed?
-18. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
+13. Does [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) apply because runnable commands, validation command lists, platform prerequisites, or install/update/reset/uninstall snippets changed?
+14. Does the change preserve the documentation-only boundary if no implementation changed?
+15. Does the wording follow [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md)?
+16. Does [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) leave every relevant dimension healthy or explicitly handled as a watch/failing item?
+17. Does [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) apply because a subsystem landing page or subsystem public summary changed?
+18. Does [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) apply because a static public HTML page changed?
+19. Does the change need a [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) outcome label?
 
 ## Maintenance Boundary
 

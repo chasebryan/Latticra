@@ -133,7 +133,7 @@ require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'network_behavior_changed=0' "$status_file"
 require_contains 'host_behavior_changed=0' "$status_file"
 require_contains 'seal signer invocation status: ok' "$status_file"
-require_contains 'signing operation status/workflow guard alignment' "$status_file"
+require_contains 'key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata' "$status_file"
 
 require_contains 'DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_signer_invocation.h
 require_contains 'denied-crypto-graduation-gate' src/seal_signer_invocation.c

@@ -51,6 +51,8 @@ require_contains 'NIST SP 800-207 Zero Trust Architecture' "$doc"
 require_contains 'NIST SP 800-207A' "$doc"
 require_contains 'NSA MCP security-design guidance' "$doc"
 require_contains 'careful-adoption guidance' "$doc"
+require_contains 'NIST'\''s May 18, 2026 summary analysis of AI-agent security RFI responses' "$doc"
+require_contains 'identity and authority of software agents' "$doc"
 require_contains 'Pillar Mapping' "$doc"
 require_contains 'Required Runtime Authority Gate' "$doc"
 require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4393480/nsa-releases-phase-one-and-phase-two-of-the-zero-trust-implementation-guidelines/' "$doc"
@@ -100,6 +102,7 @@ for gate in \
   'requested_effect_known=1' \
   'caller_identity_known=1' \
   'operator_or_automation_context_known=1' \
+  'software_agent_identity_known=1' \
   'resource_identity_known=1' \
   'resource_sensitivity_classified=1' \
   'execution_environment_known=1' \

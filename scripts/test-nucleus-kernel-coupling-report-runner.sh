@@ -70,6 +70,8 @@ cc $CFLAGS \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -88,7 +90,7 @@ grep -Fq 'nucleus_plan_status=allow-no-effect-sequence' "$report_txt"
 grep -Fq 'kernel_registry_status=registry-ready' "$report_txt"
 grep -Fq 'kernel_status=initialized-report-only' "$report_txt"
 grep -Fq 'kernel_lifecycle_status=lifecycle-complete' "$report_txt"
-grep -Fq 'kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready' "$report_txt"
+grep -Fq 'kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready' "$report_txt"
 grep -Fq 'runtime_register_view_status=runtime-entry-register-view-seed-ready' "$report_txt"
 grep -Fq 'runtime_entry_frame_status=runtime-entry-frame-seed-ready' "$report_txt"
 grep -Fq 'scheduler_run_entry_status=scheduler-run-entry-seed-ready' "$report_txt"
@@ -110,12 +112,14 @@ grep -Fq 'runtime_recovery_audit_review_disposition_observation_view_status=runt
 grep -Fq 'runtime_recovery_audit_review_disposition_review_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-observation-view-seed-ready' "$report_txt"
 grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-seed-ready' "$report_txt"
 grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-seed-ready' "$report_txt"
 grep -Fq 'task_count=1' "$report_txt"
 grep -Fq 'accepted_task_count=1' "$report_txt"
 grep -Fq 'blocked_task_count=0' "$report_txt"
 grep -Fq 'subsystem_count=9' "$report_txt"
-grep -Fq 'lifecycle_step_count=52' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=52' "$report_txt"
+grep -Fq 'lifecycle_step_count=54' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=54' "$report_txt"
 grep -Fq 'register_view_count=4' "$report_txt"
 grep -Fq 'process_return_observation_view_count=4' "$report_txt"
 grep -Fq 'scheduler_return_observation_view_count=4' "$report_txt"
@@ -135,6 +139,8 @@ grep -Fq 'recovery_audit_review_disposition_observation_view_count=4' "$report_t
 grep -Fq 'recovery_audit_review_disposition_review_observation_view_count=4' "$report_txt"
 grep -Fq 'recovery_audit_review_disposition_review_closeout_observation_view_count=4' "$report_txt"
 grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_count=4' "$report_txt"
 grep -Fq 'prerequisites_satisfied=1' "$report_txt"
 grep -Fq 'no_effect_chain_ok=1' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
@@ -164,6 +170,8 @@ grep -Fq 'runtime_recovery_audit_review_disposition_observation_view_allowed=0' 
 grep -Fq 'runtime_recovery_audit_review_disposition_review_observation_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=0' "$report_txt"
 grep -Fq 'scheduler_return_observation_allowed=0' "$report_txt"
 grep -Fq 'process_return_observation_allowed=0' "$report_txt"
 grep -Fq 'process_return_allowed=0' "$report_txt"
@@ -198,12 +206,16 @@ grep -Fq 'recovery_audit_review_disposition_review_closeout_allowed=0' "$report_
 grep -Fq 'recovery_audit_review_disposition_review_closeout_observation_allowed=0' "$report_txt"
 grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0' "$report_txt"
 grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=0' "$report_txt"
 grep -Fq 'process_state_read_allowed=0' "$report_txt"
 grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
 grep -Fq 'scheduler_dispatch_allowed=0' "$report_txt"
 grep -Fq 'run_queue_mutation_allowed=0' "$report_txt"
 grep -Fq 'process_wake_allowed=0' "$report_txt"
 grep -Fq 'host_effect_allowed=0' "$report_txt"
-grep -Fq 'evidence_level=55' "$report_txt"
+grep -Fq 'evidence_level=57' "$report_txt"
 
 printf 'nucleus_kernel_coupling_report_runner: ok\n'

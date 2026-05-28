@@ -96,6 +96,8 @@ typedef struct {
     unsigned hybrid_envelope_random_bytes_ex_cases_total;
     unsigned hybrid_envelope_random_bytes_strength_bits_requested;
     unsigned hybrid_envelope_no_legacy_crypto_fallback_cases_total;
+    unsigned hybrid_envelope_successful_record_tail_cleared_cases_total;
+    unsigned hybrid_envelope_successful_plaintext_tail_cleared_cases_total;
     unsigned hybrid_transcript_aad_bound;
     unsigned hybrid_transcript_aad_size_bytes;
     unsigned hybrid_transcript_cases_bound_total;

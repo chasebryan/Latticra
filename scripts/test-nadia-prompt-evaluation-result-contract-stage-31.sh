@@ -137,6 +137,12 @@ require_contains 'prompt_evaluated=0' "$result_script"
 require_contains 'token_generation_performed=0' "$result_script"
 require_contains 'inference_performed=0' "$result_script"
 require_contains 'outside Nadia prompt-evaluation-result boundary' "$result_script"
+require_contains 'write_file "$OUT_DIR/latest-prompt-evaluation-result-contract.txt" < "$REPORT"' "$result_script"
+require_contains 'refusing to overwrite symlink report:' "$result_script"
+if grep -Fq 'cp "$REPORT" "$OUT_DIR/latest-prompt-evaluation-result-contract.txt"' "$result_script"; then
+  printf 'nadia prompt evaluation result contract stage 31: latest report must use guarded write_file\n' >&2
+  exit 1
+fi
 
 tmp_root="${TMPDIR:-/tmp}"
 tmp_root="${tmp_root%/}"
@@ -292,6 +298,26 @@ require_contains 'manipulation_resistance=required' "$report"
 require_contains 'network_authority=0' "$report"
 require_contains 'tool_execution_performed=0' "$report"
 require_contains 'source_mutation_authority=0' "$report"
+
+symlink_out="$tmpdir/latticra-nadia-stage31-symlink-out"
+symlink_stdout="$tmpdir/latticra-nadia-stage31-symlink.out"
+symlink_target="$tmpdir/latticra-nadia-stage31-outside-target.txt"
+mkdir -p "$symlink_out"
+printf '%s\n' outside >"$symlink_target"
+ln -s "$symlink_target" "$symlink_out/latest-prompt-evaluation-result-contract.txt"
+
+if NADIA_PROMPT_EVALUATION_RESULT_TIMESTAMP=stage31-symlink sh "$result_script" \
+  --prompt-evaluation-invocation "$invocation" \
+  --request-class awareness-education \
+  --result-family operator-reviewed-prompt-evaluation-result \
+  --result-format contract-only-offline-evaluation-result \
+  --output "$symlink_out" >"$symlink_stdout" 2>&1; then
+  printf 'nadia prompt evaluation result contract stage 31: symlink latest report was overwritten\n' >&2
+  exit 1
+fi
+require_contains 'refusing to overwrite symlink report:' "$symlink_stdout"
+grep -Fqx outside "$symlink_target"
+test -L "$symlink_out/latest-prompt-evaluation-result-contract.txt"
 
 if sh "$result_script" \
   --prompt-evaluation-invocation "$invocation" \

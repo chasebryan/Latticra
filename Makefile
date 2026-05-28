@@ -41,6 +41,7 @@
 .PHONY: fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract
 .PHONY: fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract
 .PHONY: fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract
+.PHONY: fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract
 .PHONY: fedora-production-readiness-evidence-matrix
 .PHONY: fedora-production-readiness-evidence-intake-validator
 .PHONY: production-installer-transcript-evidence-template-contract
@@ -54,11 +55,13 @@
 .PHONY: network-exposure-remote-access-baseline
 .PHONY: data-classification-protection-baseline
 .PHONY: ai-agentic-automation-security-baseline
+.PHONY: platform-boot-firmware-integrity-baseline
 .PHONY: report-redaction-boundary
 .PHONY: installer-engine-log-sanitization
 .PHONY: installer-engine-event-boundary
 .PHONY: installer-ui-event-ingestion-sanitization
 .PHONY: installer-ui-status-boundary
+.PHONY: installer-ui-blocked-plan-sanitization
 .PHONY: installer-config-authority-allowlist
 .PHONY: installer-ui-artifact-authority
 .PHONY: installer-console-output-authority
@@ -95,8 +98,7 @@
 .PHONY: opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract
 .PHONY: opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract
 .PHONY: opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract
-.PHONY: os-image-release-readiness os-image-release-preflight os-image-toolchain-preflight os-image-build-preflight os-image-input-source-template os-image-input-source-validate os-image-input-bundle-template os-image-input-bundle-from-files os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
-.PHONY: os-image-release-readiness os-image-release-preflight os-image-artifact-manifest-template os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
+.PHONY: os-image-release-readiness os-image-release-preflight os-image-toolchain-preflight os-image-build-preflight os-image-input-source-template os-image-input-source-validate os-image-input-bundle-template os-image-input-bundle-from-files os-image-input-bundle-validate os-image-artifact-manifest-template os-image-artifact-manifest-from-files os-image-artifact-manifest-validate os-image-usb-write-command os-image-vm-test-command
 .PHONY: boot-seed-contract boot-seed-build boot-seed-qemu-smoke boot-seed-vm-image boot-seed-vm-qemu-smoke
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-review
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout
@@ -125,8 +127,12 @@
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout
+.PHONY: macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit
 .PHONY: macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-closeout-audit
 .PHONY: macos-reset-uninstall-live-runner-closeout-audit5
+.PHONY: macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review
+.PHONY: macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition
+.PHONY: macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout
 
 .PHONY: latticra-panel-signed-updater-manifest-fixture-contract
 .PHONY: latticra-panel-signed-updater-manifest-fixture-validation
@@ -139,6 +145,7 @@
 .PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout
 .PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit
 .PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review
+.PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition
 .PHONY: hybrid-license-posture
 .PHONY: production-installer-preflight-guard-contract
 .PHONY: production-installer-plan-preview-contract
@@ -164,8 +171,15 @@
 OS_IMAGE_VERSION ?= local-candidate
 OS_IMAGE_ISO ?= artifacts/os-images/$(OS_IMAGE_VERSION)/latticra-x86_64.iso
 OS_IMAGE_VM ?= artifacts/os-images/$(OS_IMAGE_VERSION)/latticra-x86_64.qcow2
+OS_IMAGE_VM_FORMAT ?= qcow2
 OS_IMAGE_USB_DEVICE ?= /dev/sdX
 OS_IMAGE_ARTIFACT_MANIFEST ?=
+OS_IMAGE_ARTIFACT_VERSION ?= $(OS_IMAGE_VERSION)
+OS_IMAGE_SOURCE_TAG ?= none
+OS_IMAGE_ISO_SIGNATURE ?= none
+OS_IMAGE_ISO_SBOM ?= none
+OS_IMAGE_VM_SIGNATURE ?= none
+OS_IMAGE_VM_SBOM ?= none
 OS_IMAGE_INPUT_SOURCE_MANIFEST ?=
 OS_IMAGE_INPUT_MANIFEST ?=
 OS_IMAGE_KERNEL ?= build/os-image/kernel
@@ -215,6 +229,7 @@ quality-security-standards:
 	sh ./scripts/test-installer-engine-event-boundary.sh
 	sh ./scripts/test-installer-ui-event-ingestion-sanitization.sh
 	sh ./scripts/test-installer-ui-status-boundary.sh
+	sh ./scripts/test-installer-ui-blocked-plan-sanitization.sh
 	sh ./scripts/test-installer-config-authority-allowlist.sh
 	sh ./scripts/test-installer-ui-artifact-authority.sh
 	sh ./scripts/test-installer-console-output-authority.sh
@@ -254,6 +269,9 @@ quality-security-standards:
 	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-response-contract.sh
 	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
 	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
+	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+	sh ./scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+	sh ./scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
 	sh ./scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 	sh ./scripts/test-latticra-q-seal-ml-kem-vector-source.sh
 	sh ./scripts/test-latticra-q-seal-ml-kem-vector-fixture-lock.sh
@@ -288,6 +306,7 @@ quality-security-standards:
 	sh ./scripts/test-network-exposure-remote-access-baseline.sh
 	sh ./scripts/test-data-classification-protection-baseline.sh
 	sh ./scripts/test-ai-agentic-automation-security-baseline.sh
+	sh ./scripts/test-platform-boot-firmware-integrity-baseline.sh
 
 quality-rust-installer:
 	cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
@@ -314,6 +333,7 @@ quality-panel-installer:
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh
+	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh
 
 quality-installer-readiness:
 	sh ./scripts/test-production-installer-readiness-contract.sh
@@ -359,6 +379,7 @@ quality-installer-readiness:
 	sh ./scripts/test-latticra-os-image-input-bundle-from-files.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-validate.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-template.sh
+	sh ./scripts/test-latticra-os-image-artifact-manifest-from-files.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-validate.sh
 	sh ./scripts/test-latticra-os-image-usb-write-command.sh
 	sh ./scripts/test-latticra-os-image-vm-test-command.sh
@@ -419,6 +440,7 @@ quality-packaging-static:
 	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
 	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
 	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 	sh ./scripts/test-fedora-production-readiness-evidence-matrix.sh
 	sh ./scripts/test-fedora-production-readiness-evidence-intake-validator.sh
 	sh ./scripts/test-fedora-vm-cli-payload-repeatability-transcript-template.sh
@@ -506,6 +528,7 @@ quality-nadia:
 quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
 	sh ./scripts/test-cpp-authority-layer.sh
+	sh ./scripts/test-cpp-authority-layer-build-policy.sh
 	sh ./scripts/test-kernel-timer-source.sh
 	sh ./scripts/test-kernel-timer-source-report-runner.sh
 	sh ./scripts/test-kernel-scheduler-tick.sh
@@ -586,6 +609,12 @@ quality-c-foundation:
 	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-report-runner.sh
 	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view.sh
 	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-report-runner.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-report-runner.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-report-runner.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view.sh
+	sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-report-runner.sh
 	sh ./scripts/test-nucleus-kernel-coupling.sh
 	sh ./scripts/test-nucleus-kernel-coupling-report-runner.sh
 
@@ -628,8 +657,12 @@ quality-macos:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-5-review-disposition-review.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-closeout-audit.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition.sh
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout.sh
 
 quality-status:
 	sh ./scripts/test-current-estimate-table-source-alignment.sh
@@ -754,6 +787,7 @@ os-image-release-readiness:
 	sh ./scripts/test-latticra-os-image-input-bundle-from-files.sh
 	sh ./scripts/test-latticra-os-image-input-bundle-validate.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-template.sh
+	sh ./scripts/test-latticra-os-image-artifact-manifest-from-files.sh
 	sh ./scripts/test-latticra-os-image-artifact-manifest-validate.sh
 	sh ./scripts/test-latticra-os-image-usb-write-command.sh
 	sh ./scripts/test-latticra-os-image-vm-test-command.sh
@@ -796,6 +830,9 @@ os-image-input-bundle-validate:
 
 os-image-artifact-manifest-template:
 	sh ./scripts/latticra-os-image-artifact-manifest-template.sh
+
+os-image-artifact-manifest-from-files:
+	sh ./scripts/latticra-os-image-artifact-manifest-from-files.sh --artifact-version "$(OS_IMAGE_ARTIFACT_VERSION)" --source-commit "$(OS_IMAGE_SOURCE_COMMIT)" --source-tag "$(OS_IMAGE_SOURCE_TAG)" --build-environment "$(OS_IMAGE_BUILD_ENVIRONMENT)" --iso "$(OS_IMAGE_ISO)" --iso-signature "$(OS_IMAGE_ISO_SIGNATURE)" --iso-sbom "$(OS_IMAGE_ISO_SBOM)" --vm-image "$(OS_IMAGE_VM)" --vm-format "$(OS_IMAGE_VM_FORMAT)" --vm-signature "$(OS_IMAGE_VM_SIGNATURE)" --vm-sbom "$(OS_IMAGE_VM_SBOM)" --operator-recovery-path "$(OS_IMAGE_OPERATOR_RECOVERY_PATH)"
 
 os-image-artifact-manifest-validate:
 	if [ -n "$(OS_IMAGE_ARTIFACT_MANIFEST)" ]; then \
@@ -932,6 +969,9 @@ fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review
 
 fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract:
 	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+
+fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract:
+	sh ./scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 
 fedora-production-readiness-evidence-matrix:
 	sh ./scripts/test-fedora-production-readiness-evidence-matrix.sh
@@ -1167,11 +1207,23 @@ macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-r
 macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout.sh
 
+macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit.sh
+
 macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-closeout-audit:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-closeout-audit.sh
 
 macos-reset-uninstall-live-runner-closeout-audit5:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5.sh
+
+macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review.sh
+
+macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition.sh
+
+macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout:
+	sh ./scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review-disposition-closeout.sh
 
 macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review:
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
@@ -1220,6 +1272,9 @@ installer-ui-event-ingestion-sanitization:
 
 installer-ui-status-boundary:
 	sh ./scripts/test-installer-ui-status-boundary.sh
+
+installer-ui-blocked-plan-sanitization:
+	sh ./scripts/test-installer-ui-blocked-plan-sanitization.sh
 
 installer-config-authority-allowlist:
 	sh ./scripts/test-installer-config-authority-allowlist.sh
@@ -1400,6 +1455,21 @@ latticra-q-seal-ml-kem-acvp-response-fixture:
 latticra-q-seal-ml-kem-acvp-submission-package-contract:
 	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
 
+.PHONY: latticra-q-seal-ml-kem-acvp-verdict-receipt-gate
+
+latticra-q-seal-ml-kem-acvp-verdict-receipt-gate:
+	sh ./scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+
+.PHONY: latticra-q-seal-ml-kem-module-boundary-gate
+
+latticra-q-seal-ml-kem-module-boundary-gate:
+	sh ./scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+
+.PHONY: latticra-q-seal-ml-kem-validation-claim-gate
+
+latticra-q-seal-ml-kem-validation-claim-gate:
+	sh ./scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+
 .PHONY: latticra-q-seal-ml-kem-vector-schema
 
 latticra-q-seal-ml-kem-vector-schema:
@@ -1556,6 +1626,9 @@ data-classification-protection-baseline:
 ai-agentic-automation-security-baseline:
 	sh ./scripts/test-ai-agentic-automation-security-baseline.sh
 
+platform-boot-firmware-integrity-baseline:
+	sh ./scripts/test-platform-boot-firmware-integrity-baseline.sh
+
 latticra-panel-signed-updater-delivery-gate:
 	sh ./scripts/test-latticra-panel-signed-updater-delivery-gate.sh
 
@@ -1591,6 +1664,9 @@ latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit
 
 latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review:
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh
+
+latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition:
+	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh
 
 seal: seal-check
 

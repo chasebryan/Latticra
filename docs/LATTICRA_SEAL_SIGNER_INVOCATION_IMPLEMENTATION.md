@@ -207,6 +207,6 @@ seal signer invocation status: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is signing operation or policy decision report propagation from ready crypto-graduation-gated signer invocation metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal planning slice is key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 The signer invocation status/public-entry alignment, signing operation contract, signing operation metadata implementation, signing operation status/public-entry alignment, key-handling boundary contract, and key-handling metadata implementation now exist as guarded checkpoints. Future work must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

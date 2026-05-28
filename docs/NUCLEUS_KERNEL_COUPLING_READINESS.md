@@ -1,15 +1,15 @@
 # Nucleus Kernel Coupling Readiness
 
 Status: controlled nucleus-first OS-readiness metadata gate
-Scope: report-only coupling from the nucleus task plan to kernel subsystem, kernel lifecycle, runtime-entry register-view, scheduler-return observation, post-resume observation, user-mode-resume, process-return observation, idle-return observation, quiescent-return observation, persistence-boundary observation, recovery-boundary observation, recovery-plan observation, recovery-disposition observation, recovery-outcome observation, recovery-closeout observation, recovery-audit observation, recovery-audit-review observation, recovery-audit-review-disposition observation, recovery-audit-review-disposition-review observation, recovery-audit-review-disposition-review-closeout observation, recovery-audit-review-disposition-review-closeout-archive-gate observation, and recovery-audit-review-disposition-review-closeout-archive-gate-review observation evidence.
+Scope: report-only coupling from the nucleus task plan to kernel subsystem, kernel lifecycle, runtime-entry register-view, scheduler-return observation, post-resume observation, user-mode-resume, process-return observation, idle-return observation, quiescent-return observation, persistence-boundary observation, recovery-boundary observation, recovery-plan observation, recovery-disposition observation, recovery-outcome observation, recovery-closeout observation, recovery-audit observation, recovery-audit-review observation, recovery-audit-review-disposition observation, recovery-audit-review-disposition-review observation, recovery-audit-review-disposition-review-closeout observation, recovery-audit-review-disposition-review-closeout-archive-gate observation, recovery-audit-review-disposition-review-closeout-archive-gate-review observation, and recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout observation evidence.
 
 This slice makes the nucleus the first checkpoint for kernel coupling. It
 accepts only an already-allowed no-effect nucleus task plan, a no-effect kernel
 subsystem registry, a complete no-effect kernel lifecycle, and a no-effect
 runtime observation chain from register-view metadata through
 recovery-audit-review-disposition-review-closeout-archive-gate observation metadata through the final
-recovery-audit-review-disposition-review-closeout-archive-gate-review observation seed. The kernel lifecycle
-must complete to the recovery-audit-review-disposition-review-closeout-archive-gate-review observation endpoint.
+recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition observation seed. The kernel lifecycle
+must complete to the recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition observation endpoint.
 When all required surfaces are present and clean, it emits
 `os_readiness_status=os-metadata-ready`.
 
@@ -21,7 +21,7 @@ recovery-closeout, recovery-audit observation, recovery-audit-review
 observation, recovery-audit-review-disposition observation, and
 recovery-audit-review-disposition-review-closeout observation,
 recovery-audit-review-disposition-review-closeout-archive-gate observation, and
-recovery-audit-review-disposition-review-closeout-archive-gate-review observation
+recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition observation
 before running the same coupling gate.
 
 This is not bootable OS readiness. It does not boot, enter runtime, dispatch
@@ -59,7 +59,7 @@ nucleus_plan_status=allow-no-effect-sequence
 kernel_registry_status=registry-ready
 kernel_status=initialized-report-only
 kernel_lifecycle_status=lifecycle-complete
-kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 runtime_register_view_status=runtime-entry-register-view-seed-ready
 runtime_entry_frame_status=runtime-entry-frame-seed-ready
 scheduler_run_entry_status=scheduler-run-entry-seed-ready
@@ -82,12 +82,14 @@ runtime_recovery_audit_review_disposition_review_observation_view_status=runtime
 runtime_recovery_audit_review_disposition_review_closeout_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-seed-ready
 runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-seed-ready
 runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-seed-ready
+runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-seed-ready
+runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_status=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-seed-ready
 task_count=1
 accepted_task_count=1
 blocked_task_count=0
 subsystem_count=9
-lifecycle_step_count=52
-lifecycle_state_change_count=52
+lifecycle_step_count=54
+lifecycle_state_change_count=54
 register_view_count=4
 process_return_observation_view_count=4
 scheduler_return_observation_view_count=4
@@ -108,10 +110,12 @@ recovery_audit_review_disposition_review_observation_view_count=4
 recovery_audit_review_disposition_review_closeout_observation_view_count=4
 recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_count=4
 recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_count=4
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_count=4
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_count=4
 prerequisites_satisfied=1
 no_effect_chain_ok=1
 lifecycle_complete=1
-evidence_level=55
+evidence_level=57
 ```
 
 The ready report also keeps all OS-effect flags denied:
@@ -148,6 +152,8 @@ runtime_recovery_audit_review_disposition_review_observation_view_allowed=0
 runtime_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
 runtime_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
 runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
+runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=0
+runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed=0
 scheduler_return_observation_allowed=0
 process_return_observation_allowed=0
 process_return_allowed=0
@@ -184,6 +190,10 @@ recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed=0
 process_state_read_allowed=0
 scheduler_execution_allowed=0
 scheduler_dispatch_allowed=0
@@ -240,6 +250,10 @@ reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-ob
 reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-blocked
 reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-missing
 reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-blocked
+reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-missing
+reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-blocked
+reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-missing
+reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-blocked
 ```
 
 The blocked path remains report-only and does not grant the denied authority.

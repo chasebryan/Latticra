@@ -179,6 +179,8 @@ require_contains 'installer_ui_evidence_log_redaction_required=1' docs/SUPPLY_CH
 require_contains 'installer_ui_status_event_sanitization_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_contains 'installer_ui_status_boundary_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_contains 'installer_ui_direct_status_assignment_forbidden=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
+require_contains 'installer_ui_blocked_plan_sanitization_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
+require_contains 'installer_ui_blocked_plan_error_injection_guard_required=1' docs/SUPPLY_CHAIN_SECURITY_BASELINE.md
 require_contains 'evidence_preservation_required=1' docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 require_contains 'audit_record_emitted=1' docs/CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md
 require_contains 'sanitize_log_line(line.as_ref())' scripts/test-report-redaction-boundary.sh

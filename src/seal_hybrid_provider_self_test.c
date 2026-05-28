@@ -53,6 +53,17 @@ static unsigned buffer_is_zero(const unsigned char *buffer, size_t buffer_len) {
     return aggregate == 0u ? 1u : 0u;
 }
 
+static unsigned buffer_tail_is_zero(
+    const unsigned char *buffer,
+    size_t buffer_len,
+    size_t used_len) {
+    if (buffer == NULL || used_len > buffer_len) {
+        return 0u;
+    }
+
+    return buffer_is_zero(buffer + used_len, buffer_len - used_len);
+}
+
 static int append_transcript_bytes(
     unsigned char *buffer,
     size_t buffer_capacity,
@@ -304,6 +315,7 @@ static int record_envelope_provider_crypto_evidence(
     int commitment_constant_time_evidence;
     int random_bytes_ex_evidence;
     int no_legacy_fallback_evidence;
+    int successful_tail_clear_evidence;
 
     if (out == NULL || seal_result == NULL || open_result == NULL) {
         return 0;
@@ -367,6 +379,9 @@ static int record_envelope_provider_crypto_evidence(
         seal_result->commitment_mac_legacy_fallback_used == 0u &&
         open_result->commitment_mac_legacy_fallback_used == 0u &&
         seal_result->random_bytes_manual_fallback_used == 0u;
+    successful_tail_clear_evidence =
+        seal_result->successful_record_tail_cleared == 1u &&
+        open_result->successful_plaintext_tail_cleared == 1u;
 
     if (!hkdf_provider_evidence ||
         !hkdf_sha256_evidence ||
@@ -377,7 +392,8 @@ static int record_envelope_provider_crypto_evidence(
         !commitment_mac_sha256_evidence ||
         !commitment_constant_time_evidence ||
         !random_bytes_ex_evidence ||
-        !no_legacy_fallback_evidence) {
+        !no_legacy_fallback_evidence ||
+        !successful_tail_clear_evidence) {
         return 0;
     }
 
@@ -395,6 +411,8 @@ static int record_envelope_provider_crypto_evidence(
     out->hybrid_envelope_random_bytes_strength_bits_requested =
         LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS;
     out->hybrid_envelope_no_legacy_crypto_fallback_cases_total++;
+    out->hybrid_envelope_successful_record_tail_cleared_cases_total++;
+    out->hybrid_envelope_successful_plaintext_tail_cleared_cases_total++;
     return 1;
 }
 
@@ -584,7 +602,7 @@ static int run_ml_kem_envelope_case(
     unsigned char tampered_transcript_aad
         [LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_TRANSCRIPT_AAD_MAX];
     unsigned char record[LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_RECORD_MAX];
-    unsigned char recovered[sizeof(self_test_plaintext) - 1u];
+    unsigned char recovered[sizeof(self_test_plaintext) + 15u];
     unsigned char wrong_secret_recovered[sizeof(self_test_plaintext) - 1u];
     unsigned char tamper_recovered[sizeof(self_test_plaintext) - 1u];
     size_t ml_kem_sender_secret_len = 0u;
@@ -614,8 +632,8 @@ static int run_ml_kem_envelope_case(
     memset(tampered_ml_kem_secret, 0, sizeof(tampered_ml_kem_secret));
     memset(transcript_aad, 0, sizeof(transcript_aad));
     memset(tampered_transcript_aad, 0, sizeof(tampered_transcript_aad));
-    memset(record, 0, sizeof(record));
-    memset(recovered, 0, sizeof(recovered));
+    memset(record, 0x8c, sizeof(record));
+    memset(recovered, 0x7f, sizeof(recovered));
     memset(wrong_secret_recovered, 0x7f, sizeof(wrong_secret_recovered));
     memset(tamper_recovered, 0x7f, sizeof(tamper_recovered));
     memset(&seal_result, 0, sizeof(seal_result));
@@ -854,6 +872,20 @@ static int run_ml_kem_envelope_case(
     if (open_result.authentication_tag_verified == 1u) {
         out->hybrid_envelope_records_authenticated_total++;
         *envelope_authenticated = 1u;
+    }
+    if (record_len >= sizeof(record) ||
+        seal_result.successful_record_tail_cleared != 1u ||
+        buffer_tail_is_zero(record, sizeof(record), record_len) != 1u ||
+        recovered_len >= sizeof(recovered) ||
+        open_result.successful_plaintext_tail_cleared != 1u ||
+        buffer_tail_is_zero(recovered, sizeof(recovered), recovered_len) != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-success-tail-clear-missing",
+            "provider-backed-envelope-output-tail-not-cleared",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
     }
     if (!record_envelope_provider_crypto_evidence(out, &seal_result, &open_result)) {
         self_test_fail(
@@ -1351,6 +1383,8 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "hybrid_envelope_random_bytes_ex_cases_total=%u\n"
         "hybrid_envelope_random_bytes_strength_bits_requested=%u\n"
         "hybrid_envelope_no_legacy_crypto_fallback_cases_total=%u\n"
+        "hybrid_envelope_successful_record_tail_cleared_cases_total=%u\n"
+        "hybrid_envelope_successful_plaintext_tail_cleared_cases_total=%u\n"
         "hybrid_transcript_aad_bound=%u\n"
         "hybrid_transcript_aad_size_bytes=%u\n"
         "hybrid_transcript_cases_bound_total=%u\n"
@@ -1451,6 +1485,8 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         self_test->hybrid_envelope_random_bytes_ex_cases_total,
         self_test->hybrid_envelope_random_bytes_strength_bits_requested,
         self_test->hybrid_envelope_no_legacy_crypto_fallback_cases_total,
+        self_test->hybrid_envelope_successful_record_tail_cleared_cases_total,
+        self_test->hybrid_envelope_successful_plaintext_tail_cleared_cases_total,
         self_test->hybrid_transcript_aad_bound,
         self_test->hybrid_transcript_aad_size_bytes,
         self_test->hybrid_transcript_cases_bound_total,

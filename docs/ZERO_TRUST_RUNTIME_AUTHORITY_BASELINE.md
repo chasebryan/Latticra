@@ -24,6 +24,11 @@ Follow-on source review, 2026-05-27:
 - NSA MCP security-design guidance is now relevant to future MCP, tool, and agentic-automation authority because Latticra already reserves future server/MCP surfaces.
 - NSA and partners' careful-adoption guidance reinforces treating agentic automation as a system-wide authority and context-sharing problem rather than a narrow tool wrapper.
 
+Follow-on source review, 2026-05-28:
+
+- NIST's May 18, 2026 summary analysis of AI-agent security RFI responses reinforces that agent security needs explicit threat, mitigation, and evaluation planning beyond generic cybersecurity carryover.
+- NIST's February 2026 concept paper on identity and authority of software agents reinforces that future agentic, MCP, and automation surfaces should carry explicit software-agent identity and authorization vocabulary instead of inferring trust from execution context alone.
+
 Authoritative URLs:
 
 ```text
@@ -89,6 +94,7 @@ request_kind_known=1
 requested_effect_known=1
 caller_identity_known=1
 operator_or_automation_context_known=1
+software_agent_identity_known=1
 resource_identity_known=1
 resource_sensitivity_classified=1
 execution_environment_known=1

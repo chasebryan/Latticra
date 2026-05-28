@@ -62,6 +62,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     latticra_q_seal_ml_kem_acvp_response_fixture_t acvp_response_fixture;
     latticra_q_seal_ml_kem_acvp_submission_package_contract_t
         acvp_submission_package_contract;
+    latticra_q_seal_ml_kem_acvp_verdict_receipt_gate_t
+        acvp_verdict_receipt_gate;
     latticra_q_seal_ml_kem_vector_schema_t vector_schema;
     latticra_q_seal_ml_kem_vector_source_t vector_source;
     latticra_q_seal_ml_kem_vector_fixture_lock_t vector_fixture_lock;
@@ -78,6 +80,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     latticra_q_seal_ml_kem_reviewer_identity_fixture_t reviewer_identity_fixture;
     latticra_q_seal_ml_kem_reviewer_role_mapping_t reviewer_role_mapping;
     latticra_q_seal_ml_kem_ci_promotion_evidence_t ci_promotion_evidence;
+    latticra_q_seal_ml_kem_validation_claim_gate_t validation_claim_gate;
+    latticra_q_seal_ml_kem_module_boundary_gate_t module_boundary_gate;
     latticra_q_seal_ml_kem_constant_time_review_t constant_time_review;
     latticra_q_seal_ml_kem_randomness_source_t randomness_source;
     latticra_q_seal_ml_kem_zeroization_evidence_t zeroization_evidence;
@@ -139,6 +143,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_acvp_submission_package_contract_prepare(
             &acvp_submission_package_contract) != LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_acvp_verdict_receipt_gate_prepare(
+            &acvp_verdict_receipt_gate) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_vector_schema_prepare(&vector_schema) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_vector_source_prepare(&vector_source) !=
@@ -170,6 +176,10 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         latticra_q_seal_ml_kem_reviewer_role_mapping_prepare(
             &reviewer_role_mapping) != LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_ci_promotion_evidence_prepare(&ci_promotion_evidence) !=
+            LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_validation_claim_gate_prepare(&validation_claim_gate) !=
+            LATTICRA_Q_SEAL_STATUS_OK ||
+        latticra_q_seal_ml_kem_module_boundary_gate_prepare(&module_boundary_gate) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
         latticra_q_seal_ml_kem_constant_time_review_prepare(&constant_time_review) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
@@ -266,6 +276,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_fixture.acvp_response_fixture_present;
     out->acvp_submission_package_contract_present =
         acvp_submission_package_contract.acvp_submission_package_contract_present;
+    out->acvp_verdict_receipt_gate_present =
+        acvp_verdict_receipt_gate.acvp_verdict_receipt_gate_present;
     out->vector_schema_present = vector_schema.vector_schema_present;
     out->vector_source_intake_present = vector_source.vector_source_intake_present;
     out->vector_fixture_lock_present =
@@ -296,6 +308,10 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         reviewer_role_mapping.reviewer_role_mapping_present;
     out->ci_promotion_evidence_present =
         ci_promotion_evidence.ci_promotion_evidence_present;
+    out->validation_claim_gate_present =
+        validation_claim_gate.validation_claim_gate_present;
+    out->module_boundary_gate_present =
+        module_boundary_gate.module_boundary_gate_present;
     out->constant_time_review_present =
         constant_time_review.constant_time_review_present;
     out->randomness_source_contract_present =
@@ -341,6 +357,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_contract.clean_room_source_boundary_recorded == 1u &&
         acvp_response_fixture.clean_room_source_boundary_recorded == 1u &&
         acvp_submission_package_contract.clean_room_source_boundary_recorded == 1u &&
+        acvp_verdict_receipt_gate.clean_room_source_boundary_recorded == 1u &&
         source_digest_manifest.clean_room_source_boundary_recorded == 1u &&
         source_digest_receipt.clean_room_source_boundary_recorded == 1u &&
         source_digest_verification.clean_room_source_boundary_recorded == 1u &&
@@ -356,6 +373,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         implementation_traceability_matrix.clean_room_source_boundary_recorded == 1u &&
         primitive_source_acceptance_gate.clean_room_source_boundary_recorded == 1u &&
         implementation_frame.clean_room_source_boundary_recorded == 1u &&
+        validation_claim_gate.clean_room_source_boundary_recorded == 1u &&
+        module_boundary_gate.clean_room_source_boundary_recorded == 1u &&
         secret_state_contract.clean_room_source_boundary_recorded == 1u;
     out->apple_corecrypto_code_copied =
         foundation.apple_corecrypto_code_copied |
@@ -374,6 +393,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_contract.apple_corecrypto_code_copied |
         acvp_response_fixture.apple_corecrypto_code_copied |
         acvp_submission_package_contract.apple_corecrypto_code_copied |
+        acvp_verdict_receipt_gate.apple_corecrypto_code_copied |
         source_digest_manifest.apple_corecrypto_code_copied |
         source_digest_receipt.apple_corecrypto_code_copied |
         source_digest_verification.apple_corecrypto_code_copied |
@@ -389,6 +409,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         implementation_traceability_matrix.apple_corecrypto_code_copied |
         primitive_source_acceptance_gate.apple_corecrypto_code_copied |
         implementation_frame.apple_corecrypto_code_copied |
+        validation_claim_gate.apple_corecrypto_code_copied |
+        module_boundary_gate.apple_corecrypto_code_copied |
         secret_state_contract.apple_corecrypto_code_copied;
     out->external_provider_code_copied =
         fips_conformance_matrix.external_provider_code_copied |
@@ -405,6 +427,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_contract.external_provider_code_copied |
         acvp_response_fixture.external_provider_code_copied |
         acvp_submission_package_contract.external_provider_code_copied |
+        acvp_verdict_receipt_gate.external_provider_code_copied |
         source_digest_manifest.external_provider_code_copied |
         source_digest_receipt.external_provider_code_copied |
         source_digest_verification.external_provider_code_copied |
@@ -420,11 +443,13 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         implementation_traceability_matrix.external_provider_code_copied |
         primitive_source_acceptance_gate.external_provider_code_copied |
         implementation_frame.external_provider_code_copied |
+        validation_claim_gate.external_provider_code_copied |
+        module_boundary_gate.external_provider_code_copied |
         secret_state_contract.external_provider_code_copied;
     out->provider_runtime_used =
         foundation.provider_runtime_used |
         provider_differential.provider_runtime_used;
-    out->components_total = 49u;
+    out->components_total = 52u;
     out->components_present =
         one_if(out->foundation_present) +
         one_if(out->ml_kem_parameters_present) +
@@ -444,6 +469,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         one_if(out->acvp_response_contract_present) +
         one_if(out->acvp_response_fixture_present) +
         one_if(out->acvp_submission_package_contract_present) +
+        one_if(out->acvp_verdict_receipt_gate_present) +
         one_if(out->vector_schema_present) +
         one_if(out->vector_source_intake_present) +
         one_if(out->vector_fixture_lock_present) +
@@ -460,6 +486,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         one_if(out->reviewer_identity_fixture_present) +
         one_if(out->reviewer_role_mapping_present) +
         one_if(out->ci_promotion_evidence_present) +
+        one_if(out->validation_claim_gate_present) +
+        one_if(out->module_boundary_gate_present) +
         one_if(out->constant_time_review_present) +
         one_if(out->randomness_source_contract_present) +
         one_if(out->zeroization_evidence_present) +
@@ -511,6 +539,9 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         one_if(
             !latticra_q_seal_ml_kem_acvp_submission_package_contract_allows_package_acceptance(
                 &acvp_submission_package_contract)) +
+        one_if(
+            !latticra_q_seal_ml_kem_acvp_verdict_receipt_gate_allows_verdict_acceptance(
+                &acvp_verdict_receipt_gate)) +
         one_if(!latticra_q_seal_ml_kem_vector_schema_allows_vector_processing(
             &vector_schema)) +
         one_if(!latticra_q_seal_ml_kem_vector_source_allows_bundle_acceptance(
@@ -543,6 +574,10 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
             &reviewer_role_mapping)) +
         one_if(!latticra_q_seal_ml_kem_ci_promotion_evidence_allows_implementation_promotion(
             &ci_promotion_evidence)) +
+        one_if(!latticra_q_seal_ml_kem_validation_claim_gate_allows_validation_claims(
+            &validation_claim_gate)) +
+        one_if(!latticra_q_seal_ml_kem_module_boundary_gate_allows_boundary_acceptance(
+            &module_boundary_gate)) +
         one_if(!latticra_q_seal_ml_kem_constant_time_review_allows_implementation_promotion(
             &constant_time_review)) +
         one_if(!latticra_q_seal_ml_kem_randomness_source_allows_random_generation(
@@ -598,6 +633,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_contract.required_response_contract_items_total +
         acvp_response_fixture.required_response_fixture_items_total +
         acvp_submission_package_contract.required_submission_package_items_total +
+        acvp_verdict_receipt_gate.required_verdict_receipt_items_total +
         vector_schema.required_schema_items_total +
         vector_source.required_source_items_total +
         vector_fixture_lock.required_fixture_lock_items_total +
@@ -614,6 +650,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         reviewer_identity_fixture.required_identity_items_total +
         reviewer_role_mapping.required_role_mapping_items_total +
         ci_promotion_evidence.required_promotion_items_total +
+        validation_claim_gate.required_validation_claim_items_total +
+        module_boundary_gate.required_module_boundary_items_total +
         constant_time_review.required_review_items_total +
         randomness_source.required_randomness_items_total +
         zeroization_evidence.required_zeroization_items_total +
@@ -651,6 +689,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         acvp_response_contract.required_response_contract_items_satisfied +
         acvp_response_fixture.required_response_fixture_items_satisfied +
         acvp_submission_package_contract.required_submission_package_items_satisfied +
+        acvp_verdict_receipt_gate.required_verdict_receipt_items_satisfied +
         vector_schema.required_schema_items_satisfied +
         vector_source.required_source_items_satisfied +
         vector_fixture_lock.required_fixture_lock_items_satisfied +
@@ -667,6 +706,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
         reviewer_identity_fixture.required_identity_items_satisfied +
         reviewer_role_mapping.required_role_mapping_items_satisfied +
         ci_promotion_evidence.required_promotion_items_satisfied +
+        validation_claim_gate.required_validation_claim_items_satisfied +
+        module_boundary_gate.required_module_boundary_items_satisfied +
         constant_time_review.required_review_items_satisfied +
         randomness_source.required_randomness_items_satisfied +
         zeroization_evidence.required_zeroization_items_satisfied +
@@ -701,7 +742,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_prepare(
     copy_literal(
         out->blocked_reason,
         sizeof(out->blocked_reason),
-        "primitive-source-acceptance-source-layout-clean-room-author-attestation-per-file-standards-trace-per-file-test-trace-implementation-file-digest-plan-implementation-traceability-fips-conformance-sp800-227-usage-kat-manifest-kat-runner-contract-replay-transcript-gate-kat-result-schema-kat-result-row-fixture-acvp-parser-response-fixture-submission-package-vector-fixture-negative-memory-api-source-digest-review-ci-binding-randomness-zeroization-side-channel-evidence-missing");
+        "primitive-source-acceptance-source-layout-clean-room-author-attestation-per-file-standards-trace-per-file-test-trace-implementation-file-digest-plan-implementation-traceability-fips-conformance-sp800-227-usage-kat-manifest-kat-runner-contract-replay-transcript-gate-kat-result-schema-kat-result-row-fixture-acvp-parser-response-fixture-submission-package-verdict-receipt-validation-claim-module-boundary-vector-fixture-negative-memory-api-source-digest-review-ci-binding-randomness-zeroization-side-channel-evidence-missing");
     out->error = LATTICRA_Q_SEAL_READINESS_BLOCKED;
     copy_literal(out->status, sizeof(out->status), "q-seal-readiness-profile-blocked");
     return LATTICRA_Q_SEAL_STATUS_OK;
@@ -714,7 +755,7 @@ int latticra_q_seal_readiness_is_design_frame_ready(
     }
 
     return readiness->readiness_profile_present == 1u &&
-           readiness->components_total == 49u &&
+           readiness->components_total == 52u &&
            readiness->components_present == readiness->components_total &&
            readiness->clean_room_boundary_recorded == 1u &&
            readiness->apple_corecrypto_code_copied == 0u &&
@@ -789,6 +830,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         "acvp_response_contract_present=%u\n"
         "acvp_response_fixture_present=%u\n"
         "acvp_submission_package_contract_present=%u\n"
+        "acvp_verdict_receipt_gate_present=%u\n"
         "vector_schema_present=%u\n"
         "vector_source_intake_present=%u\n"
         "vector_fixture_lock_present=%u\n"
@@ -805,6 +847,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         "reviewer_identity_fixture_present=%u\n"
         "reviewer_role_mapping_present=%u\n"
         "ci_promotion_evidence_present=%u\n"
+        "validation_claim_gate_present=%u\n"
+        "module_boundary_gate_present=%u\n"
         "constant_time_review_present=%u\n"
         "randomness_source_contract_present=%u\n"
         "zeroization_evidence_present=%u\n"
@@ -871,6 +915,7 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         readiness->acvp_response_contract_present,
         readiness->acvp_response_fixture_present,
         readiness->acvp_submission_package_contract_present,
+        readiness->acvp_verdict_receipt_gate_present,
         readiness->vector_schema_present,
         readiness->vector_source_intake_present,
         readiness->vector_fixture_lock_present,
@@ -887,6 +932,8 @@ latticra_q_seal_status_t latticra_q_seal_readiness_report(
         readiness->reviewer_identity_fixture_present,
         readiness->reviewer_role_mapping_present,
         readiness->ci_promotion_evidence_present,
+        readiness->validation_claim_gate_present,
+        readiness->module_boundary_gate_present,
         readiness->constant_time_review_present,
         readiness->randomness_source_contract_present,
         readiness->zeroization_evidence_present,

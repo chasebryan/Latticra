@@ -11,6 +11,7 @@
 #include "latticra/q_seal_ml_kem_acvp_response_contract.h"
 #include "latticra/q_seal_ml_kem_acvp_response_fixture.h"
 #include "latticra/q_seal_ml_kem_acvp_submission_package_contract.h"
+#include "latticra/q_seal_ml_kem_acvp_verdict_receipt_gate.h"
 #include "latticra/q_seal_ml_kem_api_misuse_resistance.h"
 #include "latticra/q_seal_ml_kem_ci_promotion_evidence.h"
 #include "latticra/q_seal_ml_kem_code_owner_review.h"
@@ -28,6 +29,7 @@
 #include "latticra/q_seal_ml_kem_kat_result_schema.h"
 #include "latticra/q_seal_ml_kem_kat_runner_contract.h"
 #include "latticra/q_seal_ml_kem_memory_safety_evidence.h"
+#include "latticra/q_seal_ml_kem_module_boundary_gate.h"
 #include "latticra/q_seal_ml_kem_negative_test_evidence.h"
 #include "latticra/q_seal_ml_kem_per_file_standards_trace_gate.h"
 #include "latticra/q_seal_ml_kem_per_file_test_trace_gate.h"
@@ -49,6 +51,7 @@
 #include "latticra/q_seal_ml_kem_vector_fixture_lock.h"
 #include "latticra/q_seal_ml_kem_vector_schema.h"
 #include "latticra/q_seal_ml_kem_vector_source.h"
+#include "latticra/q_seal_ml_kem_validation_claim_gate.h"
 #include "latticra/q_seal_ml_kem_zeroization_evidence.h"
 
 #include <stddef.h>
@@ -97,6 +100,7 @@ typedef struct {
     unsigned acvp_response_contract_present;
     unsigned acvp_response_fixture_present;
     unsigned acvp_submission_package_contract_present;
+    unsigned acvp_verdict_receipt_gate_present;
     unsigned vector_schema_present;
     unsigned vector_source_intake_present;
     unsigned vector_fixture_lock_present;
@@ -113,6 +117,8 @@ typedef struct {
     unsigned reviewer_identity_fixture_present;
     unsigned reviewer_role_mapping_present;
     unsigned ci_promotion_evidence_present;
+    unsigned validation_claim_gate_present;
+    unsigned module_boundary_gate_present;
     unsigned constant_time_review_present;
     unsigned randomness_source_contract_present;
     unsigned zeroization_evidence_present;

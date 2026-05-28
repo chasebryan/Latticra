@@ -29,6 +29,7 @@ LC_SERVICES_CONTRACT="$PREFIX/share/latticra/lc/services/contract.toml"
 LC_SERVICE_SCHEMA_CONTRACT="$PREFIX/share/latticra/lc/services/definition-schema.toml"
 LC_SERVICE_DEFINITIONS_CONTRACT="$PREFIX/share/latticra/lc/services/definitions.toml"
 LC_SERVICE_PLAN_CONTRACT="$PREFIX/share/latticra/lc/services/plan.toml"
+LC_SERVICE_RUNTIME_CONTRACT="$PREFIX/share/latticra/lc/services/runtime.toml"
 LC_PROFILE="$PREFIX/share/latticra/lc/profiles/standalone-console.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-lc-standalone-verify.XXXXXX")"
 failures=0
@@ -98,6 +99,7 @@ check "LC services contract" "$LC_SERVICES_CONTRACT"
 check "LC service schema contract" "$LC_SERVICE_SCHEMA_CONTRACT"
 check "LC service definitions contract" "$LC_SERVICE_DEFINITIONS_CONTRACT"
 check "LC service plan contract" "$LC_SERVICE_PLAN_CONTRACT"
+check "LC service runtime contract" "$LC_SERVICE_RUNTIME_CONTRACT"
 check "LC standalone profile" "$LC_PROFILE"
 check_exec "latticra command" "$USER_BIN/latticra"
 check_exec "LC command wrapper" "$USER_BIN/latticra-lc"
@@ -129,6 +131,8 @@ check_contains "service definitions contract profile" 'service_definitions_contr
 check_contains "service definitions contract present" 'service_definitions_contract_present = true' "$LC_CONFIG"
 check_contains "service plan contract profile" 'service_plan_contract_profile = "lc-service-plan-v0"' "$LC_CONFIG"
 check_contains "service plan contract present" 'service_plan_contract_present = true' "$LC_CONFIG"
+check_contains "service runtime contract profile" 'service_runtime_contract_profile = "lc-service-runtime-v0"' "$LC_CONFIG"
+check_contains "service runtime contract present" 'service_runtime_contract_present = true' "$LC_CONFIG"
 check_contains "Panel embedding disabled" 'panel_embedded_console = false' "$LC_CONFIG"
 check_contains "external host commands disabled" 'allow_external_host_commands = false' "$LC_CONFIG"
 check_contains "standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_REGISTRY"
@@ -142,6 +146,7 @@ check_contains "services registry command" 'name=lc services category=core effec
 check_contains "service schema registry command" 'name=lc service-schema category=core effect=none capability=lc.service.schema.contract' "$LC_REGISTRY"
 check_contains "service definitions registry command" 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' "$LC_REGISTRY"
 check_contains "service plan registry command" 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' "$LC_REGISTRY"
+check_contains "service runtime registry command" 'name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract' "$LC_REGISTRY"
 check_contains "standalone command surface" 'command_surface = "lc standalone"' "$LC_CONTRACT"
 check_contains "standalone host process denial" 'host_process_launch_allowed = false' "$LC_CONTRACT"
 check_contains "standalone network denial" 'network_allowed = false' "$LC_CONTRACT"
@@ -194,6 +199,12 @@ check_contains "service plan file marker" 'service_plan_file = "plan.toml"' "$LC
 check_contains "service plan dependency resolution denied" 'service_dependency_resolution_allowed = false' "$LC_SERVICE_PLAN_CONTRACT"
 check_contains "service plan activation denied" 'service_activation_allowed = false' "$LC_SERVICE_PLAN_CONTRACT"
 check_contains "service plan host process denied" 'host_process_launch_allowed = false' "$LC_SERVICE_PLAN_CONTRACT"
+check_contains "service runtime command surface" 'command_surface = "lc service-runtime"' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "service runtime file marker" 'service_runtime_file = "runtime.toml"' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "service runtime handoff denied" 'service_runtime_handoff_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "service runtime executor denied" 'service_executor_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "service runtime supervision denied" 'service_supervision_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "service runtime host process denied" 'host_process_launch_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
 
 if [ -x "$USER_BIN/latticra-lc" ]; then
   if "$USER_BIN/latticra-lc" install-config > "$TMP_DIR/install-config.txt"; then
@@ -210,6 +221,7 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper service schema contract present" 'service_schema_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper service definitions contract present" 'service_definitions_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper service plan contract present" 'service_plan_contract_present=1' "$TMP_DIR/install-config.txt"
+    check_contains "LC wrapper service runtime contract present" 'service_runtime_contract_present=1' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper Panel embedding disabled" 'panel_embedded_console=false' "$TMP_DIR/install-config.txt"
     check_contains "LC wrapper host process denial" 'host_process_launch_allowed=0' "$TMP_DIR/install-config.txt"
   else
@@ -350,6 +362,19 @@ if [ -x "$USER_BIN/latticra-lc" ]; then
     check_contains "LC wrapper service plan host process denied" 'host_process_launch_allowed=0' "$TMP_DIR/service-plan.txt"
   else
     echo "failed: latticra-lc service-plan" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$USER_BIN/latticra-lc" service-runtime > "$TMP_DIR/service-runtime.txt"; then
+    check_contains "LC wrapper service runtime report" 'LATTICRA CONSOLE SERVICE RUNTIME CONTRACT' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime command surface" 'command_surface=lc service-runtime' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime file" 'service_runtime_file=runtime.toml' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime handoff denied" 'service_runtime_handoff_allowed=0' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime executor denied" 'service_executor_allowed=0' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime supervision denied" 'service_supervision_allowed=0' "$TMP_DIR/service-runtime.txt"
+    check_contains "LC wrapper service runtime host process denied" 'host_process_launch_allowed=0' "$TMP_DIR/service-runtime.txt"
+  else
+    echo "failed: latticra-lc service-runtime" >&2
     failures=$((failures + 1))
   fi
 fi

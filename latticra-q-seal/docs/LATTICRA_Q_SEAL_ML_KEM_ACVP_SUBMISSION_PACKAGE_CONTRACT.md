@@ -69,6 +69,8 @@ status=ml-kem-acvp-submission-package-contract-blocked
 
 This contract keeps ACVP submission disabled until reviewed offline evidence exists. Network submission is also a separate authority boundary; satisfying this contract alone must not open a network session, FIPS claim, production cryptography claim, or runtime operation path.
 
+Validation-server verdict receipts are gated separately by `LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md`; a reviewed package is not the same thing as an accepted ACVP verdict.
+
 ## Validation
 
 ```sh

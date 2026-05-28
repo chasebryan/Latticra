@@ -14,7 +14,7 @@ extern "C" {
 #define LATTICRA_SEAL_SIGNING_OPERATION_ALGORITHM_MAX 32u
 #define LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX 64u
 #define LATTICRA_SEAL_SIGNING_OPERATION_DIGEST_MAX 65u
-#define LATTICRA_SEAL_SIGNING_OPERATION_RENDER_MAX 4096u
+#define LATTICRA_SEAL_SIGNING_OPERATION_RENDER_MAX 8192u
 
 typedef enum {
     LATTICRA_SEAL_SIGNING_OPERATION_OK = 0,
@@ -28,7 +28,8 @@ typedef enum {
     LATTICRA_SEAL_SIGNING_OPERATION_DENIED_PRIVATE_KEY = 8,
     LATTICRA_SEAL_SIGNING_OPERATION_DENIED_RUNTIME_AUTHORITY = 9,
     LATTICRA_SEAL_SIGNING_OPERATION_DENIED_HOST_EFFECT = 10,
-    LATTICRA_SEAL_SIGNING_OPERATION_DENIED_NETWORK_EFFECT = 11
+    LATTICRA_SEAL_SIGNING_OPERATION_DENIED_NETWORK_EFFECT = 11,
+    LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE = 12
 } latticra_seal_signing_operation_error_t;
 
 typedef struct {
@@ -47,6 +48,9 @@ typedef struct {
     char message_digest_algorithm[LATTICRA_SEAL_SIGNING_OPERATION_ALGORITHM_MAX];
     char message_digest_hex[LATTICRA_SEAL_SIGNING_OPERATION_DIGEST_MAX];
     char public_key_identity_label[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
+    char crypto_graduation_profile[LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX];
+    char assurance_baseline_profile[LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX];
+    char crypto_graduation_gate_state[LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX];
     char requested_capability[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
     char requested_effect[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
     char requested_handoff[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
@@ -58,6 +62,12 @@ typedef struct {
     char requested_signer_invocation[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
     char requested_signing_operation[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
     char requested_scope[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
+    unsigned crypto_graduation_gate_present;
+    unsigned crypto_graduation_gate_passed;
+    unsigned standard_expectations_met;
+    unsigned local_verify_graduated;
+    unsigned receipt_promotion_graduated;
+    unsigned authority_promotion_allowed;
     char signing_authorization_state[LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX];
     unsigned signing_authorization_ready;
     char signer_handoff_state[LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX];

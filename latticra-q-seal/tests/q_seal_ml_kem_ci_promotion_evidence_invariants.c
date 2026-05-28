@@ -44,6 +44,9 @@ static int ci_promotion_evidence_is_fail_closed(void) {
     EXPECT_TRUE(evidence.implementation_binding_manifest_required == 1u, "binding required");
     EXPECT_TRUE(evidence.implementation_binding_manifest_bound == 1u, "binding bound");
     EXPECT_TRUE(evidence.replay_transcript_gate_bound == 1u, "transcript gate");
+    EXPECT_TRUE(evidence.acvp_verdict_receipt_gate_bound == 1u, "verdict receipt");
+    EXPECT_TRUE(evidence.validation_claim_gate_bound == 1u, "validation claim");
+    EXPECT_TRUE(evidence.module_boundary_gate_bound == 1u, "module boundary");
     EXPECT_TRUE(evidence.kat_acvp_gate_passing_recorded == 0u, "kat acvp result");
     EXPECT_TRUE(evidence.constant_time_gate_passing_recorded == 0u, "constant result");
     EXPECT_TRUE(evidence.memory_safety_gate_passing_recorded == 0u, "memory result");
@@ -58,8 +61,8 @@ static int ci_promotion_evidence_is_fail_closed(void) {
     EXPECT_TRUE(evidence.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(evidence.fips_claim_allowed == 0u, "fips");
     EXPECT_TRUE(evidence.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(evidence.required_promotion_items_total == 20u, "total");
-    EXPECT_TRUE(evidence.required_promotion_items_satisfied == 10u, "satisfied");
+    EXPECT_TRUE(evidence.required_promotion_items_total == 23u, "total");
+    EXPECT_TRUE(evidence.required_promotion_items_satisfied == 13u, "satisfied");
     EXPECT_TRUE(evidence.error == LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_ci_promotion_evidence_is_no_effect(&evidence) == 1,
@@ -84,6 +87,15 @@ static int ci_promotion_evidence_is_fail_closed(void) {
     EXPECT_TRUE(
         strstr(rendered, "replay_transcript_gate_bound=1") != 0,
         "transcript gate report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_verdict_receipt_gate_bound=1") != 0,
+        "verdict receipt report");
+    EXPECT_TRUE(
+        strstr(rendered, "validation_claim_gate_bound=1") != 0,
+        "validation claim report");
+    EXPECT_TRUE(
+        strstr(rendered, "module_boundary_gate_bound=1") != 0,
+        "module boundary report");
     EXPECT_TRUE(strstr(rendered, "operation_execution_allowed=0") != 0, "operation report");
     EXPECT_TRUE(
         strstr(rendered, "status=ml-kem-ci-promotion-evidence-blocked") != 0,

@@ -463,11 +463,16 @@
             <button class="secondary-button" type="button" data-action="generate-plan">Refresh plan</button>
           </div>
           <div class="delivery-layout">
-            <article class="plan-preview">
+            <article class="plan-preview" id="delivery-plan-preview" data-plan-state="ready" aria-describedby="delivery-plan-boundary">
               <header>
                 <h3>Plan preview</h3>
                 <span class="badge ok" id="plan-badge">current</span>
               </header>
+              <div class="delivery-plan-summary" aria-label="Delivery plan summary">
+                <span><strong id="delivery-plan-components">6</strong><small>components</small></span>
+                <span><strong id="delivery-plan-prefix">accepted</strong><small>prefix</small></span>
+                <span><strong id="delivery-plan-authority">0</strong><small>authority</small></span>
+              </div>
               <pre id="plan-preview">profile=guided-local-panel
 mode=dry-run
 prefix=~/.local
@@ -475,6 +480,7 @@ components=lat,lir,seal,nadia,console,docs
 root_authority=0
 network_authority=0
 production_installer_ready=0</pre>
+              <div class="delivery-plan-boundary" id="delivery-plan-boundary">production=0 / runtime=0 / main=0 / edge=0</div>
             </article>
             <article class="receipt-panel" aria-describedby="receipt-checklist-policy">
               <div class="section-title inline-title">
@@ -502,17 +508,26 @@ production_installer_ready=0</pre>
         </section>
 
         <section class="view" id="view-updater" role="tabpanel" aria-labelledby="tab-updater" aria-hidden="true" data-view="updater">
-          <div class="updater-board">
-            <div class="section-title">
-              <p class="kicker">Signed Updater Gate</p>
-              <h2>Preview exists; signed delivery stays closed.</h2>
+          <div class="updater-board" id="signed-updater-gate" data-updater-state="closed" aria-describedby="signed-updater-boundary">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Signed Updater Gate</p>
+                <h2 id="signed-updater-title">Signed delivery gate closed</h2>
+              </div>
+              <span class="badge stop" id="signed-updater-badge">gate closed</span>
             </div>
-            <div class="gate-row">
-              <article><strong>Manifest</strong><span class="badge stop">missing</span></article>
-              <article><strong>Artifact hash</strong><span class="badge stop">missing</span></article>
-              <article><strong>Rollback plan</strong><span class="badge stop">missing</span></article>
-              <article><strong>Operator confirmation</strong><span class="badge stop">missing</span></article>
+            <div class="signed-updater-summary" aria-label="Signed updater gate summary">
+              <span><strong id="signed-updater-blocked">4</strong><small>blocked</small></span>
+              <span><strong id="signed-updater-preview">available</strong><small>preview</small></span>
+              <span><strong id="signed-updater-apply">false</strong><small>can apply</small></span>
             </div>
+            <div class="gate-row" id="signed-updater-list" aria-label="Signed updater requirements">
+              <article data-updater-gate="manifest" data-updater-status="blocked"><strong>Manifest</strong><small>signed manifest missing</small><span class="badge stop">missing</span></article>
+              <article data-updater-gate="artifact_hash" data-updater-status="blocked"><strong>Artifact hash</strong><small>release hash missing</small><span class="badge stop">missing</span></article>
+              <article data-updater-gate="rollback_plan" data-updater-status="blocked"><strong>Rollback plan</strong><small>rollback receipt missing</small><span class="badge stop">missing</span></article>
+              <article data-updater-gate="operator_confirmation" data-updater-status="blocked"><strong>Operator confirmation</strong><small>production apply not confirmed</small><span class="badge stop">missing</span></article>
+            </div>
+            <div class="signed-updater-boundary" id="signed-updater-boundary">apply=false / production=0 / network=0 / main=0 / edge=0</div>
             <div class="updater-actions">
               <button class="secondary-button" type="button" data-action="updater-preview">Preview update</button>
               <button class="disabled-button" type="button" disabled>Apply signed update</button>
@@ -1167,6 +1182,8 @@ production_installer_ready=0</pre>
             <div><span>dashboard authority</span><strong id="context-dashboard-authority">locked: host 0 / 2 blocked</strong></div>
             <div><span>run monitor</span><strong id="context-run-monitor">ready: 72% / runtime 0</strong></div>
             <div><span>operator workflow</span><strong id="context-operator-workflow">plan_review: 1 complete / 1 blocked</strong></div>
+            <div><span>delivery plan</span><strong id="context-delivery-plan">ready / prefix accepted</strong></div>
+            <div><span>updater gate</span><strong id="context-updater-gate">closed / apply false</strong></div>
             <div><span>promotion gate</span><strong id="context-promotion-gate">artifact integrity</strong></div>
             <div><span>blocker</span><strong id="context-production-blocker">reproducible artifact</strong></div>
             <div><span>acceptance</span><strong id="context-release-acceptance">local UI evidence</strong></div>

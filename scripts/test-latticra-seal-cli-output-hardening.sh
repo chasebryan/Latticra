@@ -65,6 +65,11 @@ require_contains "after_read_st.st_size == before_read_st.st_size" seal/latticra
 require_contains "fd_single_link_regular_size" seal/latticra-seal.c
 require_contains "fd_size_matches" seal/latticra-seal.c
 require_contains "memchr(buf" seal/latticra-seal.c
+require_contains "checked_array_capacity" seal/latticra-seal.c
+require_contains "checked_char_capacity" seal/latticra-seal.c
+require_contains "current > SIZE_MAX / 2" seal/latticra-seal.c
+require_contains "candidate > SIZE_MAX / item_size" seal/latticra-seal.c
+require_contains "part_len > SIZE_MAX - *len - 1" seal/latticra-seal.c
 require_contains "sha256_bytes((const unsigned char *)manifest" seal/latticra-seal.c
 require_contains "uc < 32" seal/latticra-seal.c
 require_contains "uc == 127" seal/latticra-seal.c

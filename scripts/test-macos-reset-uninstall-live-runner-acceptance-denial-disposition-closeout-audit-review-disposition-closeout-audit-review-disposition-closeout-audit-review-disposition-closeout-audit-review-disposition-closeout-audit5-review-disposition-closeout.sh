@@ -21,7 +21,7 @@ done
 output=$(sh "$script")
 printf '%s\n' "$output" | grep -Fq 'closeout_contract_status=ok'
 printf '%s\n' "$output" | grep -Fq 'runtime_authority_granted=0'
-printf '%s\n' "$output" | grep -Fq 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout-audit-contract'
+printf '%s\n' "$output" | grep -Fq 'next_lane=macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit-contract'
 grep -Fq 'audit5-review-disposition-closeout-contract.sh' "$doc"
 grep -Fq 'AUDIT5_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md' "$index"
 grep -Fq 'audit5-review-disposition-closeout-contract.sh' "$readme"

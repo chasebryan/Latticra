@@ -46,6 +46,9 @@ acvp_parser_contract_present=1
 acvp_response_contract_present=1
 acvp_response_fixture_present=1
 acvp_submission_package_contract_present=1
+acvp_verdict_receipt_gate_present=1
+validation_claim_gate_present=1
+module_boundary_gate_present=1
 vector_schema_present=1
 vector_source_intake_present=1
 vector_fixture_lock_present=1
@@ -81,11 +84,11 @@ clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=49
-components_present=49
-runtime_blockers_total=46
-required_readiness_items_total=1356
-required_readiness_items_satisfied=929
+components_total=52
+components_present=52
+runtime_blockers_total=49
+required_readiness_items_total=1487
+required_readiness_items_satisfied=1029
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -101,7 +104,7 @@ status=q-seal-readiness-profile-blocked
 
 ## Runtime Blockers
 
-Runtime cryptography remains blocked by forty-five aggregate blockers:
+Runtime cryptography remains blocked by forty-nine aggregate blockers:
 
 - ML-KEM evidence gate is missing KAT, ACVP, errata, constant-time, side-channel, randomness, zeroization, review, fuzzing, and CI evidence.
 - ML-KEM FIPS 203 conformance matrix has no per-parameter trace, keygen step trace, encapsulation step trace, decapsulation step trace, encoding tests, decapsulation failure-semantics tests, primitive mapping review, errata review, implementation trace acceptance, or conformance matrix acceptance.
@@ -117,6 +120,9 @@ Runtime cryptography remains blocked by forty-five aggregate blockers:
 - ACVP response contract has no response generator implementation, response negative tests, schema review, security review, CI replay, accepted parser output, vector execution evidence, response JSON generation, or accepted response output.
 - ACVP response fixture has no fixture review, fixture-bundle digest binding, accepted parser output, vector-execution evidence, keyGen response fixture, encapsulation response fixture, decapsulation response fixture, key-check response fixture, negative response fixture, response schema review, security review, CI replay, accepted response output, or response-generation evidence.
 - ACVP submission-package contract has no package review, request-bundle digest binding, response-bundle digest binding, vector-execution evidence, accepted response output, local replay transcript, ACVP client-boundary review, submission receipt, validation-server acceptance, local package acceptance, or ACVP response-acceptance record.
+- ACVP verdict receipt gate has no bound submission receipt, validation-server acceptance, pass verdict record, certificate identifier, verified receipt digest, reviewer disposition, or accepted verdict receipt.
+- ML-KEM validation claim gate has no implementation claim evidence, ACVP pass evidence, CMVP certificate, module boundary, security policy, release artifact digest, public claim review, reviewer disposition, or accepted claim gate.
+- ML-KEM module-boundary gate has no cryptographic module name, module version, operational environment, FIPS 140-3 security policy, roles/services/authentication record, self-test policy, approved algorithm inventory, entropy boundary, zeroization boundary review, ACVP algorithm certificate, CMVP submission identifier, boundary review, reviewer disposition, or accepted boundary evidence.
 - ML-KEM vector schema has no reviewed vector source, digest, license review, loader, JSON parser, response generator, vector execution, or ACVP submission authority.
 - ML-KEM vector source intake has no reviewed bundle URL, digest, size, license review, hash verification, schema crosscheck, errata binding, offline storage path, or import review.
 - ML-KEM vector fixture lock has no fixture source digest, license review, storage path, schema crosscheck, parameter coverage, negative-case coverage, import review, loaded bundle, vector execution, or runtime authority.
@@ -137,7 +143,7 @@ Runtime cryptography remains blocked by forty-five aggregate blockers:
 - ML-KEM review disposition ledger has no reviewer identity disposition, code-owner disposition, cryptography disposition, security disposition, standards traceability disposition, side-channel disposition, source-digest disposition, closed findings, or approval receipt.
 - ML-KEM reviewer identity fixture has no imported reviewer identities, cryptography reviewer identity, security reviewer identity, code-owner identity, independence attestation, identity import review, or approval authority.
 - ML-KEM reviewer role mapping has no imported role records, cryptography role mapping, security role mapping, code-owner role mapping, standards traceability role mapping, side-channel role mapping, source-digest role mapping, separation review, or approval-authority mapping.
-- ML-KEM CI promotion evidence has no KAT/ACVP passing record, constant-time passing record, memory-safety passing record, side-channel passing record, negative-test passing record, provider differential passing record, implementation-binding CI result, promotion workflow record, release-claim gate, or signed artifact receipt.
+- ML-KEM CI promotion evidence has no KAT/ACVP passing record, ACVP verdict receipt record, validation-claim gate, constant-time passing record, memory-safety passing record, side-channel passing record, negative-test passing record, provider differential passing record, implementation-binding CI result, promotion workflow record, release-claim gate, or signed artifact receipt.
 - ML-KEM constant-time review has no timing measurement, static-analysis record, assembly review, optimizer review, secret-state binding, negative timing tests, cross-platform review, formal signoff, CI gate, or implementation binding.
 - ML-KEM randomness source has no entropy-source inventory, entropy validation, DRBG selection, security-strength review, seed derivation policy, reseed policy, prediction-resistance policy, health-test policy, failure-mode policy, platform RNG boundary, entropy signoff, or implementation binding.
 - ML-KEM zeroization evidence has no selected wipe primitive, implemented wipe primitive, compiler dead-store review, volatile or intrinsic strategy, stack/heap/register policy, error-path zeroization, decapsulation-failure zeroization, memory-scan test, assembly review, cross-platform review, formal review, or implementation binding.
@@ -174,6 +180,9 @@ latticra-q-seal/evidence/ML_KEM_ACVP_PARSER_CONTRACT.md
 latticra-q-seal/evidence/ML_KEM_ACVP_RESPONSE_CONTRACT.md
 latticra-q-seal/evidence/ML_KEM_ACVP_RESPONSE_FIXTURE.md
 latticra-q-seal/evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
+latticra-q-seal/evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
+latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
+latticra-q-seal/evidence/ML_KEM_MODULE_BOUNDARY_GATE.md
 latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_RECEIPT.md
 latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_VERIFICATION.md
 latticra-q-seal/evidence/ML_KEM_RECEIPT_REPLAY_RESULTS.md
@@ -204,6 +213,7 @@ scripts/test-latticra-q-seal-ml-kem-acvp-parser-contract.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-response-contract.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
+scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 scripts/test-latticra-q-seal-ml-kem-source-digest-receipt.sh
 scripts/test-latticra-q-seal-ml-kem-source-digest-verification.sh
 scripts/test-latticra-q-seal-ml-kem-receipt-replay-results.sh
@@ -220,6 +230,8 @@ scripts/test-latticra-q-seal-readiness.sh
 ```sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
 sh scripts/test-latticra-q-seal-readiness.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 make latticra-q-seal-readiness
 ```
 
@@ -228,4 +240,6 @@ Expected output:
 ```text
 latticra q-seal readiness invariants: ok
 latticra q-seal readiness: ok
+latticra q-seal ml-kem module boundary gate invariants: ok
+latticra q-seal ml-kem module boundary gate: ok
 ```

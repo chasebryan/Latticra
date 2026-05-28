@@ -735,11 +735,56 @@ static int stdout_failure(const char *label) {
     return 1;
 }
 
+static bool checked_array_capacity(size_t current, size_t item_size, size_t *next_cap) {
+    size_t candidate;
+
+    if (item_size == 0) {
+        return false;
+    }
+
+    if (current == 0) {
+        candidate = 64;
+    } else {
+        if (current > SIZE_MAX / 2) {
+            return false;
+        }
+
+        candidate = current * 2;
+    }
+
+    if (candidate > SIZE_MAX / item_size) {
+        return false;
+    }
+
+    *next_cap = candidate;
+    return true;
+}
+
+static bool checked_char_capacity(size_t current, size_t needed, size_t *next_cap) {
+    size_t candidate = current == 0 ? 32 : current;
+
+    while (candidate < needed) {
+        if (candidate > SIZE_MAX / 2) {
+            return false;
+        }
+
+        candidate *= 2;
+    }
+
+    *next_cap = candidate;
+    return true;
+}
+
 static bool pathlist_push(PathList *list, const char *path) {
     size_t len = strlen(path);
 
     if (list->len == list->cap) {
-        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        size_t next_cap;
+
+        if (!checked_array_capacity(list->cap, sizeof(char *), &next_cap)) {
+            return false;
+        }
+
         char **next = realloc(list->items, next_cap * sizeof(char *));
 
         if (!next) {
@@ -767,7 +812,12 @@ static bool collected_filelist_push(
     const struct stat *st
 ) {
     if (list->len == list->cap) {
-        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        size_t next_cap;
+
+        if (!checked_array_capacity(list->cap, sizeof(CollectedFile), &next_cap)) {
+            return false;
+        }
+
         CollectedFile *next = realloc(list->items, next_cap * sizeof(CollectedFile));
 
         if (!next) {
@@ -1922,8 +1972,19 @@ static bool parse_quoted_token(const char **cursor, const char *end, char **out)
             return false;
         }
 
+        if (len > SIZE_MAX - 2) {
+            free(buf);
+            return false;
+        }
+
         if (len + 1 >= cap) {
-            size_t next_cap = cap == 0 ? 32 : cap * 2;
+            size_t next_cap;
+
+            if (!checked_char_capacity(cap, len + 2, &next_cap)) {
+                free(buf);
+                return false;
+            }
+
             char *next = realloc(buf, next_cap);
 
             if (!next) {
@@ -1998,13 +2059,18 @@ static bool parse_string_array(const char *value, size_t value_len, PathList *ou
 
 static bool append_string(char **buf, size_t *len, size_t *cap, const char *part) {
     size_t part_len = strlen(part);
+
+    if (part_len > SIZE_MAX - *len - 1) {
+        return false;
+    }
+
     size_t needed = *len + part_len + 1;
 
     if (needed > *cap) {
-        size_t next_cap = *cap == 0 ? 32 : *cap;
+        size_t next_cap;
 
-        while (next_cap < needed) {
-            next_cap *= 2;
+        if (!checked_char_capacity(*cap, needed, &next_cap)) {
+            return false;
         }
 
         char *next = realloc(*buf, next_cap);
@@ -3272,7 +3338,12 @@ static bool files_equal_fd_pair(int a_fd, int b_fd);
 
 static bool hashlist_push(HashList *list, const char *hash, const char *path) {
     if (list->len == list->cap) {
-        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        size_t next_cap;
+
+        if (!checked_array_capacity(list->cap, sizeof(HashEntry), &next_cap)) {
+            return false;
+        }
+
         HashEntry *next = realloc(list->items, next_cap * sizeof(HashEntry));
 
         if (!next) {

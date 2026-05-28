@@ -82,8 +82,11 @@ require_contains 'panel_dashboard_view_model_implementation_plan_status_present=
 require_contains 'panel_dashboard_view_model_implementation_present=1' "$product_doc"
 require_contains 'panel_dashboard_view_model_surface_present=1' "$product_doc"
 require_contains 'panel_dashboard_view_model_status_present=1' "$product_doc"
+require_contains 'signed_receipt_proof_path_implementation_present=1' "$product_doc"
+require_contains 'signed_receipt_proof_path_status_present=1' "$product_doc"
 require_contains 'seal_panel_dashboard=view-model-report-surface' "$product_doc"
 require_contains 'seal_panel_dashboard_view_model=report-surface' "$product_doc"
+require_contains 'seal_signed_receipt_proof_path=verification-only-implementation' "$product_doc"
 require_contains 'bundled operator receipt report contract, implementation plan, implementation, report surface, and status record' "$status_file"
 require_contains 'local capability registry schema contract, implementation plan, no-effect implementation, report surface, and status record are now current follow-up checkpoints' "$status_file"
 require_contains 'Panel-visible Seal dashboard planning checkpoint and status record are now current follow-up checkpoints' "$status_file"
@@ -91,6 +94,7 @@ require_contains 'Seal Panel dashboard view-model contract and status record are
 require_contains 'Seal Panel dashboard view-model implementation plan and status record are now current follow-up checkpoints' "$status_file"
 require_contains 'Seal Panel dashboard view-model implementation is now a current follow-up checkpoint' "$status_file"
 require_contains 'Seal Panel dashboard view-model surface/status checkpoint is now a current follow-up checkpoint' "$status_file"
-require_contains 'signed receipt proof path' "$status_file"
+require_contains 'Seal signed receipt proof path contract and verification-only implementation are now current follow-up checkpoints' "$status_file"
+require_contains 'signed receipt proof path report surface/status checkpoint' "$status_file"
 
 printf 'latticra seal product spine status: ok\n'

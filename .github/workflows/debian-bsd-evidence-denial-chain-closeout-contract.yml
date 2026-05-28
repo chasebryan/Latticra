@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  dfo-evidence-chain-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout:
+  dfo-evidence-denial-chain-closeout:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

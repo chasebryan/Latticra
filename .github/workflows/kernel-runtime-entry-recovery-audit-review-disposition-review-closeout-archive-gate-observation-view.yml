@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view:
+  kernel-recovery-archive-gate-observation:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

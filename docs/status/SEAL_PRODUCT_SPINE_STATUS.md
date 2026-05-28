@@ -100,6 +100,8 @@ The Seal Panel dashboard view-model implementation is now a current follow-up ch
 
 The Seal Panel dashboard view-model surface/status checkpoint is now a current follow-up checkpoint.
 
-The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.
+The Seal signed receipt proof path contract and verification-only implementation are now current follow-up checkpoints.
 
-That future slice must preserve the no-effect posture and must not perform effects or grant authority.
+The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.
+
+That future slice must preserve the no-effect posture and must not perform effects, verify signatures, create signatures, load trust roots, perform revocation lookup, or grant authority.

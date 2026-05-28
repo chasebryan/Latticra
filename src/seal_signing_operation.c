@@ -90,10 +90,49 @@ static int operation_error_valid(latticra_seal_signing_operation_error_t error) 
     case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_RUNTIME_AUTHORITY:
     case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_HOST_EFFECT:
     case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE:
         return 1;
     default:
         return 0;
     }
+}
+
+static int invocation_crypto_graduation_gate_valid(
+    const latticra_seal_signer_invocation_t *invocation) {
+    if (invocation == NULL) {
+        return 0;
+    }
+    if (invocation->crypto_graduation_gate_present == 0u) {
+        return 1;
+    }
+
+    return invocation->crypto_graduation_gate_passed == 1u &&
+           invocation->standard_expectations_met == 1u &&
+           invocation->local_verify_graduated == 1u &&
+           invocation->receipt_promotion_graduated == 1u &&
+           invocation->authority_promotion_allowed == 0u &&
+           bounded_string_is(invocation->crypto_graduation_gate_state,
+                             LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
+                             "graduated-authority-neutral");
+}
+
+static int operation_crypto_graduation_gate_valid(
+    const latticra_seal_signing_operation_t *operation) {
+    if (operation == NULL) {
+        return 0;
+    }
+    if (operation->crypto_graduation_gate_present == 0u) {
+        return 1;
+    }
+
+    return operation->crypto_graduation_gate_passed == 1u &&
+           operation->standard_expectations_met == 1u &&
+           operation->local_verify_graduated == 1u &&
+           operation->receipt_promotion_graduated == 1u &&
+           operation->authority_promotion_allowed == 0u &&
+           bounded_string_is(operation->crypto_graduation_gate_state,
+                             LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX,
+                             "graduated-authority-neutral");
 }
 
 static int invocation_error_valid(latticra_seal_signer_invocation_error_t error) {
@@ -255,6 +294,7 @@ static int operation_ready_state_valid(
            operation->signing_authorization_ready == 1u &&
            operation->signer_handoff_ready == 1u &&
            operation->signer_invocation_ready == 1u &&
+           operation_crypto_graduation_gate_valid(operation) &&
            bounded_string_is(operation->requested_signature,
                              LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX,
                              "Ed25519-development") &&
@@ -326,6 +366,8 @@ const char *latticra_seal_signing_operation_error_label(
         return "denied-host-effect";
     case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_NETWORK_EFFECT:
         return "denied-network-effect";
+    case LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE:
+        return "denied-crypto-graduation-gate";
     default:
         return "unknown";
     }
@@ -341,6 +383,13 @@ static void operation_init(latticra_seal_signing_operation_t *operation) {
         operation->signing_operation_state,
         sizeof(operation->signing_operation_state),
         "denied-signer-invocation");
+    copy_literal(operation->crypto_graduation_gate_state, sizeof(operation->crypto_graduation_gate_state), "not-required");
+    operation->crypto_graduation_gate_present = 0u;
+    operation->crypto_graduation_gate_passed = 0u;
+    operation->standard_expectations_met = 0u;
+    operation->local_verify_graduated = 0u;
+    operation->receipt_promotion_graduated = 0u;
+    operation->authority_promotion_allowed = 0u;
     copy_literal(operation->mode, sizeof(operation->mode), "metadata-only");
     operation->signing_authorization_ready = 0u;
     operation->signer_handoff_ready = 0u;
@@ -384,6 +433,9 @@ static void copy_invocation_metadata(
     copy_literal(out->message_digest_algorithm, sizeof(out->message_digest_algorithm), invocation->message_digest_algorithm);
     copy_literal(out->message_digest_hex, sizeof(out->message_digest_hex), invocation->message_digest_hex);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), invocation->public_key_identity_label);
+    copy_literal(out->crypto_graduation_profile, sizeof(out->crypto_graduation_profile), invocation->crypto_graduation_profile);
+    copy_literal(out->assurance_baseline_profile, sizeof(out->assurance_baseline_profile), invocation->assurance_baseline_profile);
+    copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), invocation->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), invocation->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), invocation->requested_effect);
     copy_literal(out->requested_handoff, sizeof(out->requested_handoff), invocation->requested_handoff);
@@ -401,6 +453,12 @@ static void copy_invocation_metadata(
         sizeof(out->requested_signing_operation),
         safe_requested_signing_operation_for_copy(requested_signing_operation));
     copy_literal(out->requested_scope, sizeof(out->requested_scope), invocation->requested_scope);
+    out->crypto_graduation_gate_present = invocation->crypto_graduation_gate_present;
+    out->crypto_graduation_gate_passed = invocation->crypto_graduation_gate_passed;
+    out->standard_expectations_met = invocation->standard_expectations_met;
+    out->local_verify_graduated = invocation->local_verify_graduated;
+    out->receipt_promotion_graduated = invocation->receipt_promotion_graduated;
+    out->authority_promotion_allowed = invocation->authority_promotion_allowed;
     copy_literal(
         out->signing_authorization_state,
         sizeof(out->signing_authorization_state),
@@ -454,6 +512,13 @@ latticra_status_t latticra_seal_signing_operation_from_invocation(
         out->error = LATTICRA_SEAL_SIGNING_OPERATION_INVALID_SIGNER_INVOCATION;
         copy_literal(out->signing_operation_state, sizeof(out->signing_operation_state), "denied-signer-invocation");
         copy_literal(out->status, sizeof(out->status), "invalid-signer-invocation");
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (!invocation_crypto_graduation_gate_valid(invocation)) {
+        out->error = LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE;
+        copy_literal(out->signing_operation_state, sizeof(out->signing_operation_state), "denied-crypto-graduation-gate");
+        copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
         return LATTICRA_STATUS_OK;
     }
 
@@ -599,6 +664,12 @@ int latticra_seal_signing_operation_is_metadata_only(
            operation->host_write_performed == 0u &&
            operation->network_performed == 0u &&
            operation_error_valid(operation->error) &&
+           boolean_flag_valid(operation->crypto_graduation_gate_present) &&
+           boolean_flag_valid(operation->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(operation->standard_expectations_met) &&
+           boolean_flag_valid(operation->local_verify_graduated) &&
+           boolean_flag_valid(operation->receipt_promotion_graduated) &&
+           boolean_flag_valid(operation->authority_promotion_allowed) &&
            boolean_flag_valid(operation->signing_authorization_ready) &&
            boolean_flag_valid(operation->signer_handoff_ready) &&
            boolean_flag_valid(operation->signer_invocation_ready) &&
@@ -634,6 +705,13 @@ int latticra_seal_signing_operation_is_metadata_only(
                                  LATTICRA_SEAL_SIGNING_OPERATION_DIGEST_MAX) &&
            text_field_terminated(operation->public_key_identity_label,
                                  LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX) &&
+           text_field_terminated(operation->crypto_graduation_profile,
+                                 LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX) &&
+           text_field_terminated(operation->assurance_baseline_profile,
+                                 LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX) &&
+           text_field_terminated(operation->crypto_graduation_gate_state,
+                                 LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX) &&
+           operation_crypto_graduation_gate_valid(operation) &&
            text_field_terminated(operation->requested_capability,
                                  LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX) &&
            text_field_terminated(operation->requested_effect,
@@ -707,6 +785,9 @@ latticra_status_t latticra_seal_signing_operation_render(
         "message_digest_algorithm=%s\n"
         "message_digest_hex=%s\n"
         "public_key_identity_label=%s\n"
+        "crypto_graduation_profile=%s\n"
+        "assurance_baseline_profile=%s\n"
+        "crypto_graduation_gate_state=%s\n"
         "requested_capability=%s\n"
         "requested_effect=%s\n"
         "requested_handoff=%s\n"
@@ -718,6 +799,12 @@ latticra_status_t latticra_seal_signing_operation_render(
         "requested_signer_invocation=%s\n"
         "requested_signing_operation=%s\n"
         "requested_scope=%s\n"
+        "crypto_graduation_gate_present=%u\n"
+        "crypto_graduation_gate_passed=%u\n"
+        "standard_expectations_met=%u\n"
+        "local_verify_graduated=%u\n"
+        "receipt_promotion_graduated=%u\n"
+        "authority_promotion_allowed=%u\n"
         "signing_authorization_state=%s\n"
         "signing_authorization_ready=%u\n"
         "signer_handoff_state=%s\n"
@@ -757,6 +844,9 @@ latticra_status_t latticra_seal_signing_operation_render(
         operation->message_digest_algorithm,
         operation->message_digest_hex,
         operation->public_key_identity_label,
+        operation->crypto_graduation_profile,
+        operation->assurance_baseline_profile,
+        operation->crypto_graduation_gate_state,
         operation->requested_capability,
         operation->requested_effect,
         operation->requested_handoff,
@@ -768,6 +858,12 @@ latticra_status_t latticra_seal_signing_operation_render(
         operation->requested_signer_invocation,
         operation->requested_signing_operation,
         operation->requested_scope,
+        operation->crypto_graduation_gate_present,
+        operation->crypto_graduation_gate_passed,
+        operation->standard_expectations_met,
+        operation->local_verify_graduated,
+        operation->receipt_promotion_graduated,
+        operation->authority_promotion_allowed,
         operation->signing_authorization_state,
         operation->signing_authorization_ready,
         operation->signer_handoff_state,

@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 ```
 
 The approved sequence is:
@@ -87,6 +87,8 @@ runtime-entry-recovery-audit-review-disposition-observation-view-ready -> runtim
 runtime-entry-recovery-audit-review-disposition-review-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready
 runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready
 runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-ready
+runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-ready -> runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 ```
 
 ## Controlled effect boundary
@@ -96,7 +98,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=52
+state_change_count=54
 lifecycle_complete=1
 ```
 
@@ -130,12 +132,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
-step_count=52
-state_change_count=52
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
+step_count=54
+state_change_count=54
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=52
+machine_log_count=54
 evidence_level=10
 ```
 
@@ -161,7 +163,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+allowed lifecycle reaches runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log

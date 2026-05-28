@@ -52,6 +52,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         readiness.acvp_submission_package_contract_present == 1u,
         "acvp submission package");
+    EXPECT_TRUE(readiness.acvp_verdict_receipt_gate_present == 1u, "acvp verdict receipt");
     EXPECT_TRUE(readiness.vector_schema_present == 1u, "vector schema");
     EXPECT_TRUE(readiness.vector_source_intake_present == 1u, "vector source");
     EXPECT_TRUE(readiness.vector_fixture_lock_present == 1u, "fixture lock");
@@ -68,6 +69,8 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.reviewer_identity_fixture_present == 1u, "identity");
     EXPECT_TRUE(readiness.reviewer_role_mapping_present == 1u, "role mapping");
     EXPECT_TRUE(readiness.ci_promotion_evidence_present == 1u, "ci promotion");
+    EXPECT_TRUE(readiness.validation_claim_gate_present == 1u, "validation claim");
+    EXPECT_TRUE(readiness.module_boundary_gate_present == 1u, "module boundary");
     EXPECT_TRUE(readiness.constant_time_review_present == 1u, "constant time");
     EXPECT_TRUE(readiness.randomness_source_contract_present == 1u, "randomness");
     EXPECT_TRUE(readiness.zeroization_evidence_present == 1u, "zeroization");
@@ -87,11 +90,11 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.apple_corecrypto_code_copied == 0u, "apple code");
     EXPECT_TRUE(readiness.external_provider_code_copied == 0u, "provider code");
     EXPECT_TRUE(readiness.provider_runtime_used == 0u, "provider runtime");
-    EXPECT_TRUE(readiness.components_total == 49u, "components total");
-    EXPECT_TRUE(readiness.components_present == 49u, "components present");
-    EXPECT_TRUE(readiness.runtime_blockers_total == 46u, "runtime blockers");
-    EXPECT_TRUE(readiness.required_readiness_items_total == 1356u, "readiness total");
-    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 929u, "readiness satisfied");
+    EXPECT_TRUE(readiness.components_total == 52u, "components total");
+    EXPECT_TRUE(readiness.components_present == 52u, "components present");
+    EXPECT_TRUE(readiness.runtime_blockers_total == 49u, "runtime blockers");
+    EXPECT_TRUE(readiness.required_readiness_items_total == 1487u, "readiness total");
+    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 1029u, "readiness satisfied");
     EXPECT_TRUE(readiness.design_frame_integration_ready == 1u, "design frame");
     EXPECT_TRUE(readiness.runtime_crypto_ready == 0u, "runtime crypto");
     EXPECT_TRUE(readiness.operations_enabled == 0u, "operations");
@@ -114,7 +117,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
             LATTICRA_Q_SEAL_STATUS_OK,
         "report");
     EXPECT_TRUE(strstr(rendered, "LATTICRA Q-SEAL READINESS PROFILE") != 0, "header");
-    EXPECT_TRUE(strstr(rendered, "components_present=49") != 0, "components report");
+    EXPECT_TRUE(strstr(rendered, "components_present=52") != 0, "components report");
     EXPECT_TRUE(
         strstr(rendered, "fips_conformance_matrix_present=1") != 0,
         "conformance report");
@@ -152,6 +155,9 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
         strstr(rendered, "acvp_submission_package_contract_present=1") != 0,
         "acvp submission package report");
     EXPECT_TRUE(
+        strstr(rendered, "acvp_verdict_receipt_gate_present=1") != 0,
+        "acvp verdict receipt report");
+    EXPECT_TRUE(
         strstr(rendered, "vector_fixture_lock_present=1") != 0,
         "fixture lock report");
     EXPECT_TRUE(
@@ -179,6 +185,12 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
         strstr(rendered, "reviewer_role_mapping_present=1") != 0,
         "role report");
     EXPECT_TRUE(strstr(rendered, "ci_promotion_evidence_present=1") != 0, "ci report");
+    EXPECT_TRUE(
+        strstr(rendered, "validation_claim_gate_present=1") != 0,
+        "validation claim report");
+    EXPECT_TRUE(
+        strstr(rendered, "module_boundary_gate_present=1") != 0,
+        "module boundary report");
     EXPECT_TRUE(strstr(rendered, "constant_time_review_present=1") != 0, "constant report");
     EXPECT_TRUE(
         strstr(rendered, "randomness_source_contract_present=1") != 0,
@@ -209,7 +221,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "primitive_source_acceptance_gate_present=1") != 0,
         "source acceptance report");
-    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=46") != 0, "blockers report");
+    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=49") != 0, "blockers report");
     EXPECT_TRUE(
         strstr(rendered, "design_frame_integration_ready=1") != 0,
         "design report");

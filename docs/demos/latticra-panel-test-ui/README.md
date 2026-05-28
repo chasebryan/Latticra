@@ -78,7 +78,11 @@ The Console command palette searches allowlisted commands, workspace tabs, and s
 
 The Delivery receipt schema map includes field provenance, live/guarded/blocked status, summary counts, safe text rendering, and receipt-bound schema provenance so QA can inspect where each no-effect field comes from.
 
+The Delivery plan preview now reports state from the same local model used for receipts: component count, prefix guard, plan mode, authority boundary, right-context summary, and no-effect receipt rows update together before any installer or guarded Panel migration work is claimed.
+
 The Delivery receipt checklist is stateful, persisted locally, guarded by mode and prefix prerequisites, announced through assistive status, and bound into the no-effect receipt preview as recorded, pending, or blocked evidence.
+
+The Updater signed-delivery gate now renders manifest, artifact hash, rollback, confirmation, preview, apply, and authority state from one local-only gate model. Preview events can be recorded, but signed apply remains closed with zero production, network, main GUI, and edge GUI authority in the context inspector and no-effect receipt.
 
 The Evidence tab saves local no-effect receipt snapshots, keeps a selectable snapshot list, and compares saved event, checklist, schema, mode, and prefix state against the current preview.
 

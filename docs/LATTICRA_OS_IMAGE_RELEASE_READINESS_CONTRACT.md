@@ -14,6 +14,7 @@ It is a release-preparation lane. It does not create an ISO, create a VM image, 
 latticra_os_image_release_readiness_contract_present=1
 iso_artifact_present=0
 os_image_artifact_manifest_template_present=1
+os_image_artifact_manifest_generator_present=1
 os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1
@@ -160,6 +161,12 @@ Generate the artifact manifest template:
 sh scripts/latticra-os-image-artifact-manifest-template.sh
 ```
 
+Generate an artifact manifest from existing ISO and VM image files:
+
+```sh
+sh scripts/latticra-os-image-artifact-manifest-from-files.sh --artifact-version local-candidate --iso artifacts/os-images/<version>/latticra-x86_64.iso --vm-image artifacts/os-images/<version>/latticra-x86_64.qcow2 --vm-format qcow2 --operator-recovery-path docs/recovery.md
+```
+
 Validate the current fixture or a future artifact manifest candidate:
 
 ```sh
@@ -280,6 +287,7 @@ This lane is guarded by:
 ```sh
 sh scripts/test-latticra-os-image-release-readiness-contract.sh
 sh scripts/test-latticra-os-image-artifact-manifest-template.sh
+sh scripts/test-latticra-os-image-artifact-manifest-from-files.sh
 sh scripts/test-latticra-os-image-artifact-manifest-validate.sh
 sh scripts/test-latticra-os-image-usb-write-command.sh
 sh scripts/test-latticra-os-image-vm-test-command.sh
@@ -290,6 +298,7 @@ Expected outputs:
 ```text
 latticra_os_image_release_readiness_contract: ok
 latticra_os_image_artifact_manifest_template: ok
+latticra_os_image_artifact_manifest_from_files: ok
 latticra_os_image_artifact_manifest_validate: ok
 latticra_os_image_usb_write_command: ok
 latticra_os_image_vm_test_command: ok
@@ -302,6 +311,7 @@ os_image_release_readiness_contract_present=1
 os_image_release_manifest_fixture_present=1
 iso_artifact_present=0
 os_image_artifact_manifest_template_present=1
+os_image_artifact_manifest_generator_present=1
 os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
 os_image_build_preflight_present=1

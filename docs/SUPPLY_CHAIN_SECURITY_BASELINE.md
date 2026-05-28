@@ -43,6 +43,8 @@ installer_ui_evidence_log_redaction_required=1
 installer_ui_status_event_sanitization_required=1
 installer_ui_status_boundary_required=1
 installer_ui_direct_status_assignment_forbidden=1
+installer_ui_blocked_plan_sanitization_required=1
+installer_ui_blocked_plan_error_injection_guard_required=1
 installer_config_authority_slug_allowlist_required=1
 installer_command_wrapper_strict_name_required=1
 installer_ui_artifact_authority_guard_required=1
@@ -81,6 +83,7 @@ external_endorsement_claimed=0
 | Installer engine event boundary | internal log and failure events are redacted, escaped, and length-bounded through one engine send boundary | `scripts/test-installer-engine-event-boundary.sh` |
 | Installer UI event ingestion | Panel status and evidence logs redact, escape, and length-bound engine event text before rendering | `scripts/test-installer-ui-event-ingestion-sanitization.sh` |
 | Installer UI status boundary | Panel status updates are routed through one redacting, escaping, length-bounded setter | `scripts/test-installer-ui-status-boundary.sh` |
+| Installer UI blocked plan | blocked plan validation errors are redacted, escaped, and length-bounded before record rendering | `scripts/test-installer-ui-blocked-plan-sanitization.sh` |
 | Installer config authority labels | profile, strategy, channel, and command-wrapper values are constrained to reviewed ASCII slug/name allowlists before rendering or install | `scripts/test-installer-config-authority-allowlist.sh` |
 | Installer UI artifacts | Panel save/plan paths validate and sanitize authority fields before writing config or plan artifacts | `scripts/test-installer-ui-artifact-authority.sh` |
 | Installer console output | Panel console report commands validate authority fields before reflecting config-derived values | `scripts/test-installer-console-output-authority.sh` |
@@ -177,6 +180,7 @@ sh scripts/test-installer-engine-log-sanitization.sh
 sh scripts/test-installer-engine-event-boundary.sh
 sh scripts/test-installer-ui-event-ingestion-sanitization.sh
 sh scripts/test-installer-ui-status-boundary.sh
+sh scripts/test-installer-ui-blocked-plan-sanitization.sh
 sh scripts/test-installer-config-authority-allowlist.sh
 sh scripts/test-installer-ui-artifact-authority.sh
 sh scripts/test-installer-console-output-authority.sh

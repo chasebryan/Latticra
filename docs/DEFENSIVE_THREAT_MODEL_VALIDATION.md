@@ -144,6 +144,13 @@ Follow-on source review, 2026-05-27:
 | NSA MCP Security Design Considerations for AI-Driven Automation | https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4496698/nsa-releases-security-design-considerations-for-ai-driven-automation-leveraging/ | fetched; 2026 MCP CSI visible | future MCP, tool, and agentic automation authority planning | mapped source | MCP-specific tool-boundary, context-sharing, and dynamic-tool-invocation profile | source tracked | NSA endorsement or MCP security guarantee | monthly or before release |
 | NSA/partners Careful Adoption of Agentic AI Services | https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4475134/nsa-joins-the-asds-acsc-and-others-to-release-guidance-on-agentic-artificial-in/ | fetched; 2026 agentic-AI CSI visible | future agentic automation risk posture | mapped source | agentic-automation threat and prerequisite profile beyond source tracking | source tracked | AI-agent safety or protection guarantee | monthly or before release |
 
+Follow-on source review, 2026-05-28:
+
+| Source | Authoritative URL | Check status | Applicability | Current evidence | Missing evidence | Allowed claim | Forbidden claim | Review cadence |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| NIST Summary Analysis of Responses to the RFI Regarding Security Considerations for AI Agents | https://www.nist.gov/publications/summary-analysis-responses-request-information-regarding-security-considerations-ai | official source reviewed | future AI-agent threat and mitigation vocabulary | mapped source | agent-security profile and evaluation-plan mapping | source tracked | NIST endorsement or AI-agent security assurance | monthly or before release |
+| NIST NCCoE concept paper on identity and authority of software agents | https://www.nist.gov/news-events/news/2026/02/new-concept-paper-identity-and-authority-software-agents | official source reviewed | future software-agent identity and authorization vocabulary for agentic and MCP-adjacent surfaces | mapped source | software-agent identity and authorization profile | source tracked | implementation completeness or authorization assurance | monthly or before release |
+
 ## Validation matrix
 
 ```text
@@ -162,6 +169,7 @@ operator confirmation non-override tests -> represented plus runtime gap
 command-boundary tests -> contract-level gap
 workload/service identity zero-trust tests -> future implementation gap
 mcp/tool-boundary and context-sharing tests -> future implementation gap
+software-agent identity and authorization tests -> future implementation gap
 status/non-claim guard tests -> represented
 ```
 
@@ -238,6 +246,7 @@ abuse-case mapping needs broader fixture coverage
 external advisory-by-advisory mapping is not complete
 workload/service identity and host-integrity prerequisites are not yet profiled for future authority
 mcp/tool-boundary and context-sharing prerequisites are not yet profiled for future authority
+software-agent identity and authorization prerequisites are not yet profiled for future authority
 no certification or compliance mapping exists
 ```
 

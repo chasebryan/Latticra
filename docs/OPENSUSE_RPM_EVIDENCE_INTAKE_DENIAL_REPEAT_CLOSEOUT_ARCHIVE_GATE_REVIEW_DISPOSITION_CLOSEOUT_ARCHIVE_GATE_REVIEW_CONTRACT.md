@@ -244,7 +244,9 @@ docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DIS
 
 The local RPM build gate remains closed. This review only records that the closed repeat closeout archive gate review disposition closeout archive gate is upheld while the validation promotion blocker matrix remains closed.
 
-## Next Recommended Lane
+## Completed Follow-On Lane
+
+Completed follow-on lane:
 
 ```text
 Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
@@ -257,6 +259,22 @@ scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-re
 ```
 
 That lane should record the reviewed repeat closeout archive gate review disposition closeout archive gate review as disposed while preserving RPM build and readiness blockers.
+
+## Next Slice
+
+Recommended next slice:
+
+```text
+Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.
+```
+
+```text
+docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+.github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout.yml
+```
+
+That future lane should close out the disposed repeat closeout archive gate review disposition closeout archive gate review disposition while preserving RPM build and readiness blockers.
 
 ## Validation
 

@@ -222,7 +222,7 @@ Current package status:
 workflow_packet_created=1
 acceptance_checklist_created=1
 evidence_bundle_template_created=1
-non_claim_review_template_created=0
+non_claim_review_template_created=1
 public_entrypoint_review_template_created=0
 estimate_impact_review_template_created=0
 review_package_index_created=0
@@ -234,16 +234,17 @@ completion_checkpoint_created=0
 Recommended next planning move:
 
 ```text
-create the Nucleus effect-contract and runtime-denial non-claim review template
+create the Nucleus effect-contract and runtime-denial public-entrypoint review template
 ```
 
 Reason:
 
 ```text
 the workflow, acceptance criteria, and evidence bundle shape are now selected;
-the next useful planning artifact is the review form that prevents
-contract-only runtime-denial evidence from becoming execution, runtime,
-security, or product claims
+the non-claim review shape is now selected; the next useful planning artifact
+is the review form for deciding whether future evidence can be referenced from
+public entry points without changing execution, runtime, security, product, or
+estimate posture
 ```
 
 ## Do not start yet

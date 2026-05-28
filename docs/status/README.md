@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-27
+Last updated: 2026-05-28
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 For reader-facing documentation navigation, start with [`../README.md`](../README.md). This file remains the detailed status index.
@@ -55,6 +55,8 @@ non-claims
 - [`../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md`](../PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md) - no-effect production-installer transcript evidence intake validator that checks future install, uninstall, post-removal absence, review, and evidence bundles without accepting evidence or opening promotion.
 - [`PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer transcript evidence intake validator.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_STATUS.md) - status record for the no-effect macOS reset/uninstall live-runner closeout audit5 contract.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_STATUS.md) - status record for the no-effect macOS reset/uninstall live-runner closeout audit5 review closeout audit review contract.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md) - status record for the no-effect macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition contract.
 - [`../PRODUCTION_INSTALLER_LIFECYCLE_VALIDATION_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_LIFECYCLE_VALIDATION_STATUS_CONTRACT.md) - no-effect production-installer lifecycle validation status contract that records missing upgrade, rollback, downgrade, reinstall idempotence, transcript review, package-manager, and host-mutation evidence.
 - [`../PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md`](../PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md) - no-effect production-installer lifecycle evidence intake validator that checks future upgrade, rollback, reinstall, review, and evidence bundles without accepting evidence or opening promotion.
 - [`PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) - status record for the no-effect production-installer lifecycle evidence intake validator.
@@ -68,6 +70,7 @@ non-claims
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) - current public estimate table source alignment for README, root status, detailed status, foundation index, and project notes.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) - current mathematical planning-estimate rebase after the 2026-05-26 Seal, Panel, Nadia, Lat/LIR, kernel lifecycle, security baseline, and public-entry alignment evidence push.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md) - current mathematical planning-estimate rebase after the 2026-05-27 readiness, Seal, Panel, Nadia, Nucleus, kernel runtime-entry, security baseline, and public-entry alignment push.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md) - current mathematical planning-estimate rebase after the 2026-05-28 Seal, Panel, OS image, platform boot and firmware integrity, supply-chain guard, installer UI, documentation, strategy, and status evidence expansion.
 - [`HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md`](HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md) - High-assurance security baseline status for official-source review requirements before runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, compliance claims, certification claims, production protection claims, or runtime authority.
 - [`CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md`](CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE_STATUS.md) - Cyber incident reporting and response baseline status for vulnerability reports, suspected compromise triage, reporting paths, evidence preservation, communications routing, and incident-response non-claims. Field: `cyber_incident_reporting_response_baseline_present=1`.
 - [`VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md`](VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE_STATUS.md) - Vulnerability management release gate baseline status for CISA KEV review, NVD/CVE review, disclosure handling, release blocking, and no product-security claims. Field: `vulnerability_management_release_gate_baseline_present=1`.
@@ -79,6 +82,7 @@ non-claims
 - [`NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE_STATUS.md`](NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE_STATUS.md) - Network exposure and remote access baseline status for network asset inventory, internet exposure inventory, ingress and egress policy, firewall policy, segmentation, remote access, DNS/TLS lifecycle, network logging, exception ownership, and network non-claims. Field: `network_exposure_remote_access_baseline_present=1`.
 - [`DATA_CLASSIFICATION_PROTECTION_BASELINE_STATUS.md`](DATA_CLASSIFICATION_PROTECTION_BASELINE_STATUS.md) - Data classification and protection baseline status for data inventory, data classification, sensitive-data flow mapping, PII review, data minimization, retention, disposal, encryption and access-control planning, backup data protection, log/report redaction, DLP planning, exception ownership, and data-handling non-claims. Field: `data_classification_protection_baseline_present=1`.
 - [`AI_AGENTIC_AUTOMATION_SECURITY_BASELINE_STATUS.md`](AI_AGENTIC_AUTOMATION_SECURITY_BASELINE_STATUS.md) - AI and agentic automation security baseline status for AI system inventory, model provenance, prompt and context boundaries, tool invocation boundaries, agentic authority gates, adversarial testing, monitoring, incident handoff, rollback planning, human approval, sensitive-data handling, and AI non-claims. Field: `ai_agentic_automation_security_baseline_present=1`.
+- [`PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE_STATUS.md`](PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE_STATUS.md) - Platform boot and firmware integrity baseline status for platform inventory, boot mode, UEFI Secure Boot state, Secure Boot key databases, TPM and PCR measurement planning, firmware version inventory, firmware update provenance, firmware recovery, boot integrity logging, platform administrator access, rollback planning, incident handoff, and platform-integrity non-claims. Field: `platform_boot_firmware_integrity_baseline_present=1`.
 - [`SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md`](SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md) - Supply-chain security baseline status for repository, CI, dependency, package, installer, artifact, SBOM, release, and update-lane posture before release publishing, signing authority, production installer claims, compliance claims, or certification claims.
 - [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md) - zero-trust runtime authority baseline status for future runtime, tool, host I/O, network, server/MCP, update, recovery, boot, hardware, agentic automation, and authority-bearing request paths.
 - [`MEMORY_SAFETY_ROADMAP_STATUS.md`](MEMORY_SAFETY_ROADMAP_STATUS.md) - Memory-safety roadmap status for component inventory, restricted C/C++ profile requirements, fuzzing prerequisites, and no current production protection claims.
@@ -102,6 +106,7 @@ non-claims
 - [`LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_STATUS.md) - Latticra Panel no-effect signed updater state transition denial disposition closeout status for closing the retained blocked update state without transition execution, staging, activation, rollback execution, receipt writes, closeout file writes, review file writes, disposition file writes, or host mutation.
 - [`LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md) - Latticra Panel no-effect signed updater state transition denial disposition closeout audit status for auditing the retained blocked update closeout without transition execution, staging, activation, rollback execution, receipt writes, audit file writes, closeout file writes, or host mutation.
 - [`LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_STATUS.md) - Latticra Panel no-effect signed updater state transition denial disposition closeout audit review status for reviewing the retained blocked update closeout audit without transition execution, staging, activation, rollback execution, receipt writes, review file writes, audit file writes, closeout file writes, or host mutation.
+- [`LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md`](LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md) - Latticra Panel no-effect signed updater state transition denial disposition closeout audit review disposition status for retaining the reviewed closeout audit boundary without transition execution, staging, activation, rollback execution, receipt writes, disposition file writes, review file writes, audit file writes, closeout file writes, or host mutation.
 - [`LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md`](LATTICRA_PANEL_UI_DESIGN_CHECKPOINT.md) - Latticra Panel UI design checkpoint for the current product surface review.
 - [`MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md`](MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md) - macOS integration transferability status for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane.
 - [`MACOS_BUILD_PLATFORM_PROBE_STATUS.md`](MACOS_BUILD_PLATFORM_PROBE_STATUS.md) - macOS build/platform probe status for no-effect toolchain, architecture, Panel-readiness, and C-test-readiness reporting.
@@ -159,10 +164,14 @@ non-claims
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract status for auditing the no-effect closeout while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract status for auditing the no-effect closeout while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review contract status for reviewing the no-effect closeout audit while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md) - macOS reset/uninstall live-runner closeout audit5 review disposition closeout audit contract status for auditing the closed no-effect closeout audit5 review disposition closeout lane while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition contract status for recording the reviewed no-effect closeout audit as a no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, future review opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_5_REVIEW_DISPOSITION_REVIEW_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition review contract status for reviewing the no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, closeout opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT5_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT5_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract status for closing the reviewed no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout audit contract status for auditing the closed no-effect closeout lane while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, audit review, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_STATUS.md) - macOS reset/uninstall live-runner closeout audit5 review closeout audit review status for reviewing the audited no-effect closeout lane while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md) - macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition status for recording the reviewed audited no-effect closeout lane while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition application, and implementation claims.
+- [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_CLOSEOUT_AUDIT5_REVIEW_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md) - macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout status for closing the recorded reviewed audited no-effect closeout lane while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, closeout application, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review contract status for reviewing the no-effect closeout chain while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, disposition opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CONTRACT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition contract status for recording the reviewed no-effect closeout chain as a no-effect disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, future review opening, and implementation claims.
 - [`MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_STATUS.md) - macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract status for closing the reviewed no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition while preserving zero dispatch, deletion, receipts, absence reports, mutation, network, root, runtime authority, runner release, audit opening, and implementation claims.
@@ -231,6 +240,7 @@ non-claims
 - [`SEAL_POLICY_DECISION_STATUS.md`](SEAL_POLICY_DECISION_STATUS.md) — Latticra Seal policy decision status/public-entry alignment.
 - [`SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — Latticra Seal policy decision report surface status.
 - [`SEAL_SIGNED_REQUEST_STATUS.md`](SEAL_SIGNED_REQUEST_STATUS.md) — Latticra Seal signed request status/public-entry alignment.
+- [`SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`](SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md) - Latticra Seal signed receipt proof path contract status for verification-only metadata before signed receipts, signature verification claims, trust-root loading, revocation lookup, key handling, network use, effects, runtime handoff, or production security readiness.
 - [`SEAL_REQUEST_FRESHNESS_STATUS.md`](SEAL_REQUEST_FRESHNESS_STATUS.md) — Latticra Seal request freshness status/public-entry alignment.
 - [`SEAL_PARAMETER_SCHEMA_STATUS.md`](SEAL_PARAMETER_SCHEMA_STATUS.md) — Latticra Seal parameter schema status/public-entry alignment.
 - [`SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — Latticra Seal agentic automation security public-entrypoint alignment.
@@ -257,6 +267,10 @@ non-claims
 - [`../LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`](../LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md) - Latticra Seal Panel dashboard view-model implementation for fixed-capacity report-only rows without Panel UI, report loading, host scanning, network lookup, runtime authority, effects, policy enforcement, capability enforcement, signature verification, or production security claims.
 - [`../LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md`](../LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md) - Latticra Seal Panel dashboard view-model surface for deterministic local report-only rows without Panel UI, report loading, host scanning, network lookup, runtime authority, effects, policy enforcement, capability enforcement, signature verification, or production security claims.
 - [`SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md`](SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md) - Latticra Seal Panel dashboard view-model status for the deterministic local report-only surface without Panel UI, report loading, host scanning, network lookup, runtime authority, effects, policy enforcement, capability enforcement, signature verification, or production security claims.
+- [`../LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT.md`](../LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT.md) - Latticra Seal signed receipt proof path contract for future verification-only receipt evidence without signing, signature verification, trust-root loading, revocation lookup, network lookup, runtime authority, effects, capability enforcement, or production security claims.
+- [`SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`](SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md) - Latticra Seal signed receipt proof path contract status for the verification-only future proof chain without signing, signature verification, trust-root loading, revocation lookup, network lookup, runtime authority, effects, capability enforcement, or production security claims.
+- [`../LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md`](../LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md) - Latticra Seal signed receipt proof path implementation for local verification-only digest/key agreement without production proof, trust-root loading, revocation lookup, signing, network lookup, runtime authority, effects, capability enforcement, or production security claims.
+- [`SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md`](SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md) - Latticra Seal signed receipt proof path implementation status for the verification-only proof-path summary without production proof, trust-root loading, revocation lookup, signing, network lookup, runtime authority, effects, capability enforcement, or production security claims.
 - [`SEAL_STATUS_ROLLUP_STATUS.md`](SEAL_STATUS_ROLLUP_STATUS.md) — Latticra Seal status rollup metadata status and public-entry checkpoint.
 - [`SEAL_RUNTIME_HANDOFF_STATUS.md`](SEAL_RUNTIME_HANDOFF_STATUS.md) — Latticra Seal runtime handoff metadata status and public-entry checkpoint.
 - [`SEAL_EFFECT_DECISION_STATUS.md`](SEAL_EFFECT_DECISION_STATUS.md) — Latticra Seal effect decision metadata status and public-entry checkpoint.
@@ -283,7 +297,7 @@ non-claims
 - [`SEAL_PUBLIC_KEY_PARSING_STATUS.md`](SEAL_PUBLIC_KEY_PARSING_STATUS.md) — Latticra Seal public-key parsing metadata status and public-entry checkpoint.
 - [`SEAL_KEY_MATERIAL_STATUS.md`](SEAL_KEY_MATERIAL_STATUS.md) — Latticra Seal key-material metadata status and public-entry checkpoint.
 - [`SEAL_KEY_HANDLING_STATUS.md`](SEAL_KEY_HANDLING_STATUS.md) — Latticra Seal key-handling metadata status and public-entry checkpoint.
-- [`SEAL_SIGNING_OPERATION_STATUS.md`](SEAL_SIGNING_OPERATION_STATUS.md) — Latticra Seal signing operation metadata status and public-entry checkpoint.
+- [`SEAL_SIGNING_OPERATION_STATUS.md`](SEAL_SIGNING_OPERATION_STATUS.md) — Latticra Seal signing operation metadata status and public-entry checkpoint with crypto graduation evidence carry-forward.
 - [`SEAL_SIGNER_INVOCATION_STATUS.md`](SEAL_SIGNER_INVOCATION_STATUS.md) — Latticra Seal signer invocation metadata status and public-entry checkpoint with crypto graduation evidence carry-forward.
 - [`SEAL_SIGNER_HANDOFF_STATUS.md`](SEAL_SIGNER_HANDOFF_STATUS.md) — Latticra Seal signer handoff metadata status and public-entry checkpoint with crypto graduation evidence carry-forward.
 - [`SEAL_SIGNING_AUTHORIZATION_STATUS.md`](SEAL_SIGNING_AUTHORIZATION_STATUS.md) — Latticra Seal signing authorization metadata status and public-entry checkpoint with crypto graduation evidence carry-forward.
@@ -361,6 +375,7 @@ non-claims
 - [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract.
 - [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract.
 - [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md) — status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract.
+- [`FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md`](FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md) - status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract.
 - [`FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md`](FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md) — status record for the no-effect Fedora production-readiness evidence matrix.
 - [`FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR_STATUS.md`](FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR_STATUS.md) — status record for the no-effect Fedora production-readiness evidence intake validator that checks a future filled matrix without opening production installer or Fedora distribution promotion.
 - [`FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md`](FEDORA_VM_RPM_VALIDATION_ANNOUNCEMENT_STATUS.md) — announcement/status alignment for the disposable Fedora VM local RPM validation milestone.
@@ -443,6 +458,7 @@ non-claims
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract for Debian, FreeBSD, and OpenBSD while the closed-out archive gate review disposition remains unarchived and no-effect.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract for Debian, FreeBSD, and OpenBSD while the closed archive gate remains upheld and no-effect.
 - [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISPOSITION_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISPOSITION_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract for Debian, FreeBSD, and OpenBSD while the upheld archive gate review remains disposed and no-effect.
+- [`../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISP_CLOSEOUT_CONTRACT.md`](../DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISP_CLOSEOUT_CONTRACT.md) - package build-evidence intake denial continuation archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract for Debian, FreeBSD, and OpenBSD while the disposed archive gate review disposition remains closed out and no-effect.
 - [`OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md`](OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md) — status record for the openSUSE compatibility lane, Panel zypper prerequisites, local-only RPM maintenance draft, `rpmlint`/`osc` availability lane, static spec lint lane, findings classification record, source archive reproducibility contract, source archive fixture lane, temporary RPM topdir handoff lane, local RPM build gate contract, local RPM build environment contract, RPM payload inspection, RPM install/remove transcript contract, OBS publication non-claim review, validation promotion blocker matrix, build-evidence intake denial, build-evidence intake denial review, build-evidence intake denial disposition, build-evidence intake denial disposition closeout, build-evidence intake denial disposition closeout archive gate, build-evidence intake denial disposition closeout archive gate review, build-evidence intake denial disposition closeout archive gate review disposition, build-evidence intake denial disposition closeout archive gate review disposition closeout, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout, build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate, and build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review.
 - [`../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md) — closed openSUSE local RPM build evidence gate contract before any `rpmbuild` or `osc build` command can run.
 - [`../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md`](../OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md) — openSUSE local RPM build environment contract for disposable validation environments without `rpmbuild` or `osc build`.
@@ -482,6 +498,7 @@ non-claims
 - [`CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — current public estimate table source alignment across README, root status, and detailed current status.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_26.md) — current mathematical planning-estimate rebase for the 2026-05-26 live public estimate table.
 - [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md) — current mathematical planning-estimate rebase for the live public estimate table.
+- [`CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`](CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md) — current mathematical planning-estimate rebase for the 2026-05-28 live public estimate table.
 - [`COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md`](COMPLETION_ESTIMATE_L_UI_RENDERING_REVIEW.md) — completion-estimate review after the L-UI detailed report refinement.
 - [`COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`](COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md) — README/status alignment for the completion-estimate review after runtime-boundary abuse-case fixtures.
 - [`COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
@@ -570,6 +587,10 @@ seal_signing_operation_contract_present=1
 seal_signing_operation_metadata_present=1
 seal_signing_operation_status_present=1
 signing_operation_predecessor_signer_invocation_status_present=1
+signing_operation_crypto_graduation_gate_present=1
+signing_operation_crypto_graduation_gate_passed=1
+signing_operation_standard_expectations_met=1
+signing_operation_authority_promotion_allowed=0
 seal_key_handling_contract_present=1
 seal_key_handling_metadata_present=1
 seal_key_handling_status_present=1
@@ -644,6 +665,12 @@ panel_dashboard_view_model_predecessor_panel_dashboard_planning_status_present=1
 seal_panel_dashboard_view_model_implementation_present=1
 seal_panel_dashboard_view_model_surface_present=1
 seal_panel_dashboard_view_model_status_present=1
+seal_signed_receipt_proof_path_contract_present=1
+seal_signed_receipt_proof_path_contract_status_present=1
+signed_receipt_proof_path_predecessor_panel_dashboard_view_model_status_present=1
+seal_signed_receipt_proof_path_implementation_present=1
+seal_signed_receipt_proof_path_status_present=1
+signed_receipt_proof_path_predecessor_contract_status_present=1
 defensive_threat_model_validation_refinement_present=1
 high_assurance_security_baseline_present=1
 source_refresh_date=2026-05-26
@@ -690,6 +717,10 @@ ai_agentic_automation_security_baseline_present=1
 ai_agentic_automation_security_guard_present=1
 ai_agentic_automation_security_required_before_model_or_tool_authority=1
 ai_runtime_authority_granted=0
+platform_boot_firmware_integrity_baseline_present=1
+platform_boot_firmware_integrity_guard_present=1
+platform_integrity_review_required_before_bootable_os_claim=1
+platform_integrity_authority_granted=0
 zero_trust_runtime_authority_baseline_present=1
 zero_trust_runtime_authority_guard_present=1
 per_request_authorization_required=1
@@ -2650,6 +2681,120 @@ The current next recommended Fedora lane is:
 Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
 ```
 
+## Current Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract checkpoint
+
+The latest Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract records:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1
+denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_decision=dispose-upheld-closeout-archive-gate-review
+denial_archive_gate_review_disposition_closeout_archive_gate_review_present=1
+denial_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_review_disposition_closeout_archive_gate_present=1
+denial_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect
+denial_archive_gate_review_disposition_closeout_archive_gate_decision=deny-archive-and-re-request
+denial_archive_gate_review_disposition_closeout_present=1
+denial_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect
+denial_archive_gate_review_disposition_closeout_decision=closeout-upheld-archive-gate-review-disposition
+denial_archive_gate_review_disposition_present=1
+denial_archive_gate_review_disposition_state=disposed-upheld-no-effect
+denial_archive_gate_review_disposition_decision=dispose-upheld-closed-archive-gate-review
+denial_archive_gate_review_present=1
+denial_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_closed=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closeout_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_closed_out=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposition_present=1
+fedora_build_evidence_intake_denial_archive_gate_review_disposed=1
+fedora_build_evidence_intake_denial_archive_gate_review_present=1
+fedora_build_evidence_intake_denial_archive_gate_reviewed=1
+fedora_build_evidence_intake_denial_archive_gate_present=1
+fedora_build_evidence_intake_denial_archive_gate_closed=1
+fedora_build_evidence_intake_denial_archived=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_platform_build_evidence_accepted=0
+rpm_build_lane_opened=0
+source_archive_accepted_for_build=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+host_mutation_performed=0
+```
+
+The Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract is present and disposes the reviewed archive gate while archive-record writes and re-request authority remain closed.
+
+The current next recommended Fedora lane is:
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition can be archived or re-requested.
+```
+
 ## Current Fedora RPM install/remove transcript contract checkpoint
 
 The latest Fedora RPM install/remove transcript contract records:
@@ -3628,13 +3773,17 @@ kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-g
 kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view report runner
 kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view guard
 kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view report runner
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view guard
+kernel runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
 kernel syscall table report runner
 kernel lifecycle subsystem summary
 kernel lifecycle rollback plan
-final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready
+final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready
 external_effect_performed=0
 no_external_effect_chain=1
 runtime_entry_recovery_boundary_observation_view_allowed=0
@@ -3649,6 +3798,7 @@ runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=
 runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0
 runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0
+runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=0
 runtime_entry_persistence_boundary_observation_view_allowed=0
 runtime_entry_quiescent_return_observation_view_allowed=0
 runtime_entry_idle_return_observation_view_allowed=0
@@ -3746,6 +3896,8 @@ recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0
 recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=0
+recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -3753,7 +3905,7 @@ hardware_effect_allowed=0
 The current next recommended kernel lane is:
 
 ```text
-Add the next no-effect kernel runtime authority evidence after the recovery-audit-review-disposition-review-closeout-archive-gate-review observation terminal
+Add the next no-effect kernel runtime authority evidence after the recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout observation terminal
 ```
 
 Dedicated kernel runtime-entry lanes:
@@ -3788,6 +3940,8 @@ Dedicated kernel runtime-entry lanes:
 .github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view.yml
 .github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view.yml
 ```
 
 ## Status update rules

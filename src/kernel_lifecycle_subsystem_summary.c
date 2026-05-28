@@ -41,6 +41,9 @@ static void seed_summary_result(
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed = 0;
+    result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed = 0;
+    result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed = 0;
+    result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_observation_view_allowed = 0;
     result->runtime_entry_recovery_closeout_observation_view_allowed = 0;
@@ -84,6 +87,12 @@ static void seed_summary_result(
     result->recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed = 0;
     result->recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed = 0;
     result->recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed = 0;
     result->recovery_audit_review_allowed = 0;
     result->recovery_audit_review_observation_allowed = 0;
     result->recovery_audit_allowed = 0;
@@ -167,7 +176,7 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_default_request(
 
     request->lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request->lifecycle_request.target_state =
-        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY;
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
     request->lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
 }
@@ -212,6 +221,14 @@ static const char *lifecycle_relation_for(
             return state_at_or_after(final_state, LATTICRA_KERNEL_STATE_INITIALIZED) ?
                 "boot-sequence-seeded" : "boot-sequence-not-ready";
         case LATTICRA_KERNEL_SUBSYSTEM_RUNTIME:
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY)) {
+                return "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready";
+            }
+            if (state_at_or_after(final_state,
+                    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY)) {
+                return "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-ready";
+            }
             if (state_at_or_after(final_state,
                     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY)) {
                 return "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view-ready";
@@ -522,6 +539,14 @@ static latticra_status_t evaluate_nucleus_coupling(
         recovery_audit_review_disposition_review_closeout_archive_gate_review_request;
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_result_t
         recovery_audit_review_disposition_review_closeout_archive_gate_review_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_result_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_result_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
     latticra_nucleus_kernel_coupling_request_t coupling_request;
     latticra_status_t status;
 
@@ -687,6 +712,32 @@ static latticra_status_t evaluate_nucleus_coupling(
             &recovery_audit_review_disposition_review_closeout_archive_gate_review_view);
     if (status != LATTICRA_STATUS_OK) return status;
 
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_default_request(
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_request.
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_request =
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_evaluate(
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_request,
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_default_request(
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_request.
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request =
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_evaluate(
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_request,
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
     status = latticra_nucleus_kernel_coupling_default_request(&coupling_request);
     if (status != LATTICRA_STATUS_OK) return status;
 
@@ -743,6 +794,10 @@ static latticra_status_t evaluate_nucleus_coupling(
         &recovery_audit_review_disposition_review_closeout_archive_gate_view;
     coupling_request.runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view =
         &recovery_audit_review_disposition_review_closeout_archive_gate_review_view;
+    coupling_request.runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view =
+        &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view;
+    coupling_request.runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
+        &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
     return latticra_nucleus_kernel_coupling_evaluate(
         &coupling_request, &result->nucleus_coupling);
 }
@@ -784,6 +839,7 @@ static void finalize_summary(
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed = 0;
+    result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_review_observation_view_allowed = 0;
     result->runtime_entry_recovery_audit_observation_view_allowed = 0;
     result->runtime_entry_recovery_closeout_observation_view_allowed = 0;
@@ -827,6 +883,8 @@ static void finalize_summary(
     result->recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed = 0;
     result->recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed = 0;
     result->recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed = 0;
+    result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed = 0;
     result->recovery_audit_review_allowed = 0;
     result->recovery_audit_review_observation_allowed = 0;
     result->recovery_audit_allowed = 0;
@@ -890,6 +948,7 @@ static void finalize_summary(
     result->recovery_authority_allowed = 0;
     result->dma_allowed = 0;
     result->hardware_effect_allowed = 0;
+    result->evidence_level = coupling->evidence_level;
     result->no_external_effect_chain =
         result->external_effect_performed == 0 &&
         result->network_allowed == 0 &&
@@ -907,6 +966,8 @@ static void finalize_summary(
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed == 0 &&
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed == 0 &&
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed == 0 &&
+        result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed == 0 &&
+        result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed == 0 &&
         result->runtime_entry_recovery_audit_review_observation_view_allowed == 0 &&
         result->runtime_entry_recovery_audit_observation_view_allowed == 0 &&
         result->runtime_entry_recovery_closeout_observation_view_allowed == 0 &&
@@ -923,6 +984,10 @@ static void finalize_summary(
         result->recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed == 0 &&
         result->recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed == 0 &&
         result->recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed == 0 &&
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed == 0 &&
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed == 0 &&
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed == 0 &&
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed == 0 &&
         result->recovery_audit_review_allowed == 0 &&
         result->recovery_audit_review_observation_allowed == 0 &&
         result->recovery_audit_allowed == 0 &&
@@ -935,7 +1000,7 @@ static void finalize_summary(
     summary_copy(result->summary_status, sizeof(result->summary_status),
         (result->lifecycle_complete == 1 &&
          result->lifecycle.final_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY &&
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY &&
          result->registry_no_effect == 1 &&
          result->nucleus_coupling_ready == 1 &&
          strcmp(result->os_readiness_status, "os-metadata-ready") == 0 &&
@@ -1078,6 +1143,8 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=%d\n"
         "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=%d\n"
         "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=%d\n"
+        "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=%d\n"
+        "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed=%d\n"
         "runtime_entry_recovery_audit_review_observation_view_allowed=%d\n"
         "runtime_entry_recovery_audit_observation_view_allowed=%d\n"
         "runtime_entry_recovery_closeout_observation_view_allowed=%d\n"
@@ -1114,6 +1181,8 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed,
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed,
         result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed,
+        result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed,
+        result->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed,
         result->runtime_entry_recovery_audit_review_observation_view_allowed,
         result->runtime_entry_recovery_audit_observation_view_allowed,
         result->runtime_entry_recovery_closeout_observation_view_allowed,
@@ -1160,6 +1229,10 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         "recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=%d\n"
         "recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=%d\n"
         "recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=%d\n"
+        "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=%d\n"
+        "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=%d\n"
+        "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed=%d\n"
+        "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed=%d\n"
         "recovery_audit_review_allowed=%d\n"
         "recovery_audit_review_observation_allowed=%d\n"
         "recovery_audit_allowed=%d\n"
@@ -1238,6 +1311,10 @@ latticra_status_t latticra_kernel_lifecycle_subsystem_summary_report(
         result->recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed,
         result->recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed,
         result->recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed,
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed,
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed,
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed,
+        result->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed,
         result->recovery_audit_review_allowed,
         result->recovery_audit_review_observation_allowed,
         result->recovery_audit_allowed,

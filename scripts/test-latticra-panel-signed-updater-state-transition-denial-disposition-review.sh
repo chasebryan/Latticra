@@ -108,7 +108,7 @@ require_contains 'state_transition_disposition_review_decision=uphold-retain-blo
 require_contains 'state_transition_execution_allowed=0' "$script"
 require_contains 'disposition_review_write_performed=0' "$script"
 require_contains 'host_mutation_performed=0' "$script"
-require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$script"
+require_contains 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review' "$script"
 require_not_contains 'rm ' "$script"
 require_not_contains 'curl ' "$script"
 require_not_contains 'wget ' "$script"
@@ -122,13 +122,13 @@ require_contains 'signed_updater_state_transition_denial_disposition_review_deci
 require_contains 'signed_updater_state_transition_denial_disposition_review_file_write_enabled=0' "$self_update"
 require_contains 'local signed updater state transition denial disposition review' "$self_update"
 
-require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$disposition_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$disposition_status"
-require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$review_doc"
-require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition' "$review_status"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$disposition_script"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$disposition_test"
-require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition' "$review_script"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition review' "$disposition_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition review' "$disposition_status"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition review' "$review_doc"
+require_contains 'Panel signed-updater state transition denial disposition closeout audit review disposition review' "$review_status"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review' "$disposition_script"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review' "$disposition_test"
+require_contains 'panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review' "$review_script"
 
 require_contains 'latticra-panel-signed-updater-state-transition-denial-disposition-review:' "$makefile"
 require_contains 'sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh' "$makefile"
@@ -164,7 +164,7 @@ require_output_contains "$output" 'network_fetch_attempted=0'
 require_output_contains "$output" 'disposition_review_write_performed=0'
 require_output_contains "$output" 'host_mutation_performed=0'
 require_output_contains "$output" 'production_update_ready=0'
-require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition'
+require_output_contains "$output" 'next_lane=panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review'
 
 sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh
 

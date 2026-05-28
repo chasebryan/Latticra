@@ -1,13 +1,15 @@
 # Latticra Seal Signing Operation Implementation
 
-Status: initial signing operation metadata implementation
-Scope: bounded C metadata surface for classifying Seal signing operation eligibility after ready signer invocation metadata. This slice does not add cryptographic signing, signature verification, signer invocation behavior, signer process execution, key generation, private-key handling, trust-store loading, revocation lookup, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: signing operation metadata implementation with crypto graduation evidence carry-forward
+Scope: bounded C metadata surface for classifying Seal signing operation eligibility after ready signer invocation metadata, including read-only crypto graduation evidence when the signer invocation carries it. This slice does not add cryptographic signing, signature verification, signer invocation behavior, signer process execution, key generation, private-key handling, trust-store loading, revocation lookup, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document records the first Latticra Seal signing operation metadata implementation.
+This document records the Latticra Seal signing operation metadata implementation.
 
 The implementation consumes ready signer invocation metadata and classifies whether the request remains eligible for a future metadata-only signing operation path.
+
+When signer invocation metadata carries crypto graduation metadata, the signing operation copies that evidence forward and requires it to remain passed, standard-aligned, locally graduated, receipt-promotion graduated, and authority-neutral.
 
 It is signing-operation path classification only.
 
@@ -63,6 +65,13 @@ The implementation:
 accepts signer invocation metadata
 requires signer_invocation_ready=1
 requires signer_invocation_state=invocation-metadata-only
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
+requires crypto_graduation_gate_state=graduated-authority-neutral when crypto_graduation_gate_present=1
 requires requested_signature=Ed25519-development
 requires requested_signing_authorization=metadata-only
 requires requested_signer_handoff=metadata-only
@@ -120,6 +129,27 @@ mode=metadata-only
 status=signing-operation-metadata
 ```
 
+Crypto-bound signing operation metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+signing_operation_state=operation-metadata-only
+signing_operation_ready=1
+signature_performed=0
+verification_performed=0
+signer_invoked=0
+private_key_handling=0
+runtime_authority_granted=0
+```
+
 ## Failure behavior
 
 The implementation fails closed for:
@@ -130,6 +160,8 @@ null signer invocation
 invalid signer invocation
 unterminated signer invocation strings
 invalid signer invocation boolean flags
+failed crypto graduation gate evidence
+authority-bearing crypto graduation evidence
 signer_invocation_ready=0
 signer_invocation_state not invocation-metadata-only
 requested_signer_invocation not metadata-only
@@ -183,6 +215,6 @@ seal signing operation invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
+The next valid Latticra Seal planning slice is key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
 
 The signing operation metadata implementation and its status/public-entry checkpoint are guarded checkpoints. Future work must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

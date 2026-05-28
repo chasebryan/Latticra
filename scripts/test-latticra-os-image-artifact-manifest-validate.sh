@@ -56,7 +56,9 @@ require_file "$manifest"
 require_file "$script"
 
 require_contains 'scripts/latticra-os-image-artifact-manifest-validate.sh' "$doc"
+require_contains 'scripts/latticra-os-image-artifact-manifest-from-files.sh' "$doc"
 require_contains 'artifact_manifest_ready_for_operator_review=<0-or-1>' "$doc"
+require_contains 'os_image_artifact_manifest_generator_present = true' "$manifest"
 require_contains 'os_image_artifact_manifest_validation_present = true' "$manifest"
 
 require_contains 'LATTICRA OS IMAGE ARTIFACT MANIFEST VALIDATION' "$script"

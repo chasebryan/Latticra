@@ -31,6 +31,16 @@ require_contains() {
   grep -Fq -- "$pattern" "$file" || fail "missing required pattern in $file: $pattern"
 }
 
+require_network_floor() {
+  file="$1"
+
+  require_contains 'network_authority=0' "$file"
+  require_contains 'network_authority_denied=1' "$file"
+  require_contains 'network_fetch_authority=0' "$file"
+  require_contains 'network_fetch_authority_denied=1' "$file"
+  require_contains 'network_performed=0' "$file"
+}
+
 write_managed() {
   path="$1"
   mkdir -p "$(dirname "$path")"
@@ -398,10 +408,17 @@ require_contains 'INSTALLER_RESULT: success mode=local-prefix-install' "$TMP_DIR
 require_absent "$APPLY_LEGACY_HOME/.local/share/applications/latticra-installer.desktop"
 require_contains 'LATTICRA_INSTALLER_MANAGED=1' "$APPLY_LEGACY_HOME/.local/share/applications/latticra-panel.desktop"
 APPLY_LEGACY_MARKER="$APPLY_LEGACY_PREFIX/share/latticra/components/latticra-console.installed"
-require_contains 'network_authority_denied=1' "$APPLY_LEGACY_MARKER"
-require_contains 'network_fetch_authority=0' "$APPLY_LEGACY_MARKER"
-require_contains 'network_fetch_authority_denied=1' "$APPLY_LEGACY_MARKER"
-require_contains 'network_performed=0' "$APPLY_LEGACY_MARKER"
+require_network_floor "$APPLY_LEGACY_MARKER"
+HOME="$APPLY_LEGACY_HOME" "$APPLY_LEGACY_HOME/.local/bin/latticra" status > "$TMP_DIR/apply-legacy-status.out"
+require_network_floor "$TMP_DIR/apply-legacy-status.out"
+HOME="$APPLY_LEGACY_HOME" "$APPLY_LEGACY_HOME/.local/bin/lat" > "$TMP_DIR/apply-legacy-lat.out"
+require_network_floor "$TMP_DIR/apply-legacy-lat.out"
+HOME="$APPLY_LEGACY_HOME" "$APPLY_LEGACY_HOME/.local/bin/latticra-lc" status > "$TMP_DIR/apply-legacy-lc.out"
+require_network_floor "$TMP_DIR/apply-legacy-lc.out"
+HOME="$APPLY_LEGACY_HOME" "$APPLY_LEGACY_HOME/.local/bin/latticra-seal" report > "$TMP_DIR/apply-legacy-seal.out"
+require_network_floor "$TMP_DIR/apply-legacy-seal.out"
+HOME="$APPLY_LEGACY_HOME" "$APPLY_LEGACY_HOME/.local/bin/latticra-nadia" status > "$TMP_DIR/apply-legacy-nadia.out"
+require_network_floor "$TMP_DIR/apply-legacy-nadia.out"
 
 APPLY_BLOCK_HOME="$TMP_DIR/apply-block-home"
 APPLY_BLOCK_PREFIX="$APPLY_BLOCK_HOME/.local/share/latticra"

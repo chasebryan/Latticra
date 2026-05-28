@@ -128,6 +128,8 @@ String arrays must use explicit comma separators; missing or doubled separators
 are malformed. Quoted array tokens must not use backslash escapes or raw
 control bytes; the native CLI interprets accepted array tokens as literal
 local metadata.
+Native array parsing and content-marker assembly must fail closed if dynamic
+capacity growth would overflow an allocation size.
 Exclude entries must stay relative to the project root and must not contain
 absolute paths, `.` or `..` path segments, control characters, backslashes, or
 multiple wildcards.
@@ -213,6 +215,8 @@ entries must already be sorted by path; verification must reject empty,
 malformed, unsafe, duplicate, or unsorted baseline entries instead of
 normalizing them. Hash-list parsing, report/hash-list streaming, baseline
 copying, and baseline comparison must require size-stable descriptor reads.
+Hash-list entry parsing must fail closed if dynamic capacity growth would
+overflow an allocation size.
 Native hash-list promotion must refuse symlinked, hard-linked, or non-regular
 final and temporary hash-list paths, and promotion must occur relative to the
 checked report-directory descriptor. Native report and hash-list temporary

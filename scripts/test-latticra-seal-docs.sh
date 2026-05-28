@@ -80,6 +80,7 @@ grep -q "canonical native hash-list paths" docs/latticra-seal/USAGE.md
 grep -q "directories must still match their observed" docs/latticra-seal/USAGE.md
 grep -q "descriptor size after the read" docs/latticra-seal/USAGE.md
 grep -q "Directory read or close failures make traversal incomplete" docs/latticra-seal/USAGE.md
+grep -q "dynamic capacity growth would overflow" docs/latticra-seal/USAGE.md
 grep -q "report-only" docs/latticra-seal/REPORTS.md
 grep -q "reports/latticra-seal-cli-report.txt" docs/latticra-seal/REPORTS.md
 grep -q "reports/latticra-seal-cli-hashes.txt" docs/latticra-seal/REPORTS.md
@@ -117,6 +118,7 @@ grep -q "backslash-free" docs/latticra-seal/REPORTS.md
 grep -q "Recursed directories must still" docs/latticra-seal/REPORTS.md
 grep -q "descriptor size after the read" docs/latticra-seal/REPORTS.md
 grep -q "Directory read or close failures make traversal incomplete" docs/latticra-seal/REPORTS.md
+grep -q "dynamic capacity growth would overflow" docs/latticra-seal/REPORTS.md
 grep -q "reports/latticra-seal-cli-report.txt" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "reports/latticra-seal-report.txt" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "\\[report\\].default_output" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
@@ -173,6 +175,7 @@ grep -q "pattern_parts" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "policy.deny_filenames" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "\\[paths\\].include" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "Quoted array tokens must not use backslash escapes" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
+grep -q "capacity growth would overflow an allocation size" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "content marker part must be non-empty" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "directory patterns ending in" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "fail closed" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
@@ -204,8 +207,11 @@ grep -q "panel_dashboard_view_model_implementation_plan_status_present=1" docs/l
 grep -q "panel_dashboard_view_model_implementation_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "panel_dashboard_view_model_surface_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "panel_dashboard_view_model_status_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "signed_receipt_proof_path_implementation_present=1" docs/latticra-seal/PRODUCT.md
+grep -q "signed_receipt_proof_path_status_present=1" docs/latticra-seal/PRODUCT.md
 grep -q "seal_panel_dashboard=view-model-report-surface" docs/latticra-seal/PRODUCT.md
 grep -q "seal_panel_dashboard_view_model=report-surface" docs/latticra-seal/PRODUCT.md
+grep -q "seal_signed_receipt_proof_path=verification-only-implementation" docs/latticra-seal/PRODUCT.md
 grep -q "seal_operator_receipt_report=1" docs/latticra-seal/REPORTS.md
 
 echo "latticra_seal_docs: ok"

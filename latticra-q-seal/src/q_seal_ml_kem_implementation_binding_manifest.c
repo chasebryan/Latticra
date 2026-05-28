@@ -47,6 +47,9 @@ static unsigned required_items_satisfied(
     satisfied += one_if(manifest->vector_fixture_lock_bound);
     satisfied += one_if(manifest->vector_fixture_digest_ledger_bound);
     satisfied += one_if(manifest->replay_transcript_gate_bound);
+    satisfied += one_if(manifest->acvp_verdict_receipt_gate_bound);
+    satisfied += one_if(manifest->validation_claim_gate_bound);
+    satisfied += one_if(manifest->module_boundary_gate_bound);
     satisfied += one_if(manifest->negative_test_evidence_bound);
     satisfied += one_if(manifest->memory_safety_evidence_bound);
     satisfied += one_if(manifest->api_misuse_resistance_bound);
@@ -138,6 +141,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->vector_fixture_lock_bound = 1u;
     out->vector_fixture_digest_ledger_bound = 1u;
     out->replay_transcript_gate_bound = 1u;
+    out->acvp_verdict_receipt_gate_bound = 1u;
+    out->validation_claim_gate_bound = 1u;
+    out->module_boundary_gate_bound = 1u;
     out->negative_test_evidence_bound = 1u;
     out->memory_safety_evidence_bound = 1u;
     out->api_misuse_resistance_bound = 1u;
@@ -161,7 +167,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_binding_items_total = 45u;
+    out->required_binding_items_total = 48u;
     out->required_binding_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -227,6 +233,9 @@ int latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation
            manifest->vector_fixture_lock_bound == 1u &&
            manifest->vector_fixture_digest_ledger_bound == 1u &&
            manifest->replay_transcript_gate_bound == 1u &&
+           manifest->acvp_verdict_receipt_gate_bound == 1u &&
+           manifest->validation_claim_gate_bound == 1u &&
+           manifest->module_boundary_gate_bound == 1u &&
            manifest->negative_test_evidence_bound == 1u &&
            manifest->memory_safety_evidence_bound == 1u &&
            manifest->api_misuse_resistance_bound == 1u &&
@@ -301,6 +310,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         "vector_fixture_lock_bound=%u\n"
         "vector_fixture_digest_ledger_bound=%u\n"
         "replay_transcript_gate_bound=%u\n"
+        "acvp_verdict_receipt_gate_bound=%u\n"
+        "validation_claim_gate_bound=%u\n"
+        "module_boundary_gate_bound=%u\n"
         "negative_test_evidence_bound=%u\n"
         "memory_safety_evidence_bound=%u\n"
         "api_misuse_resistance_bound=%u\n"
@@ -366,6 +378,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         manifest->vector_fixture_lock_bound,
         manifest->vector_fixture_digest_ledger_bound,
         manifest->replay_transcript_gate_bound,
+        manifest->acvp_verdict_receipt_gate_bound,
+        manifest->validation_claim_gate_bound,
+        manifest->module_boundary_gate_bound,
         manifest->negative_test_evidence_bound,
         manifest->memory_safety_evidence_bound,
         manifest->api_misuse_resistance_bound,

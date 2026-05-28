@@ -121,6 +121,7 @@ Validation:
 
 ```sh
 sh scripts/test-cpp-authority-layer.sh
+sh scripts/test-cpp-authority-layer-build-policy.sh
 sh scripts/test-constrained-cpp-authority-layer-implementation-plan.sh
 sh scripts/test-constrained-cpp-authority-layer-contract.sh
 sh scripts/test-c-cpp-foundation-direction.sh

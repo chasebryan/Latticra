@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_STATE_MACHINE_LABEL_MAX 128u
-#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 52u
+#define LATTICRA_KERNEL_STATE_MACHINE_LOG_MAX 54u
 #define LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX 49152u
 
 typedef struct {
@@ -108,6 +108,10 @@ typedef struct {
         runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_request;
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_request_t
         runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request_t
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
 } latticra_kernel_state_machine_step_request_t;

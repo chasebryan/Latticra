@@ -20,6 +20,9 @@ latticra-q-seal/
   evidence/ML_KEM_ACVP_RESPONSE_CONTRACT.md
   evidence/ML_KEM_ACVP_RESPONSE_FIXTURE.md
   evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
+  evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
+  evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
+  evidence/ML_KEM_MODULE_BOUNDARY_GATE.md
   evidence/ML_KEM_ACVP_INTAKE.md
   evidence/ML_KEM_API_MISUSE_RESISTANCE.md
   evidence/ML_KEM_CODE_OWNER_REVIEW.md
@@ -71,6 +74,9 @@ latticra-q-seal/
   include/latticra/q_seal_ml_kem_acvp_response_contract.h
   include/latticra/q_seal_ml_kem_acvp_response_fixture.h
   include/latticra/q_seal_ml_kem_acvp_submission_package_contract.h
+  include/latticra/q_seal_ml_kem_acvp_verdict_receipt_gate.h
+  include/latticra/q_seal_ml_kem_validation_claim_gate.h
+  include/latticra/q_seal_ml_kem_module_boundary_gate.h
   include/latticra/q_seal_ml_kem_acvp_intake.h
   include/latticra/q_seal_ml_kem_api_misuse_resistance.h
   include/latticra/q_seal_ml_kem_code_owner_review.h
@@ -123,6 +129,9 @@ latticra-q-seal/
   src/q_seal_ml_kem_acvp_response_contract.c
   src/q_seal_ml_kem_acvp_response_fixture.c
   src/q_seal_ml_kem_acvp_submission_package_contract.c
+  src/q_seal_ml_kem_acvp_verdict_receipt_gate.c
+  src/q_seal_ml_kem_validation_claim_gate.c
+  src/q_seal_ml_kem_module_boundary_gate.c
   src/q_seal_ml_kem_acvp_intake.c
   src/q_seal_ml_kem_api_misuse_resistance.c
   src/q_seal_ml_kem_code_owner_review.c
@@ -175,6 +184,9 @@ latticra-q-seal/
   tests/q_seal_ml_kem_acvp_response_contract_invariants.c
   tests/q_seal_ml_kem_acvp_response_fixture_invariants.c
   tests/q_seal_ml_kem_acvp_submission_package_contract_invariants.c
+  tests/q_seal_ml_kem_acvp_verdict_receipt_gate_invariants.c
+  tests/q_seal_ml_kem_validation_claim_gate_invariants.c
+  tests/q_seal_ml_kem_module_boundary_gate_invariants.c
   tests/q_seal_ml_kem_acvp_intake_invariants.c
   tests/q_seal_ml_kem_api_misuse_resistance_invariants.c
   tests/q_seal_ml_kem_code_owner_review_invariants.c
@@ -243,6 +255,9 @@ latticra-q-seal/
   scripts/test-latticra-q-seal-ml-kem-kat-acvp-replay-transcript-gate.sh
   scripts/test-latticra-q-seal-ml-kem-kat-result-schema.sh
   scripts/test-latticra-q-seal-ml-kem-kat-result-row-fixture.sh
+  scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+  scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
   scripts/test-latticra-q-seal-ml-kem-implementation-binding-manifest.sh
   scripts/test-latticra-q-seal-ml-kem-source-layout-gate.sh
   scripts/test-latticra-q-seal-ml-kem-implementation-file-digest-plan.sh
@@ -279,6 +294,9 @@ latticra-q-seal/
   docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_CONTRACT.md
   docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_FIXTURE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md
+  docs/LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_GATE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md
   docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md
@@ -1070,6 +1088,173 @@ required_submission_package_items_satisfied=30
 status=ml-kem-acvp-submission-package-contract-blocked
 ```
 
+## ACVP Verdict Receipt Gate
+
+```text
+acvp_verdict_receipt_gate_present=1
+formal_title=Latticra Q-Seal ML-KEM ACVP Verdict Receipt Gate
+verdict_receipt_profile=latticra-q-seal-ml-kem-acvp-verdict-receipt-gate/0.1
+standards_basis=NIST-FIPS-203,NIST-ACVP-ML-KEM,NIST-SP-800-218-SSDF
+verdict_receipt_scope=ML-KEM-ACVP-validation-server-verdicts-before-validation-claims
+acvp_submission_package_contract_bound=1
+replay_transcript_gate_bound=1
+acvp_response_contract_bound=1
+acvp_response_fixture_bound=1
+acvp_parser_contract_bound=1
+acvp_capability_matrix_bound=1
+vector_fixture_digest_ledger_bound=1
+implementation_binding_manifest_bound=1
+review_disposition_ledger_bound=1
+reviewer_identity_fixture_bound=1
+reviewer_role_mapping_bound=1
+validation_server_receipt_required=1
+acvp_session_identifier_required=1
+vsid_tgid_tcid_verdict_mapping_required=1
+parameter_set_verdicts_required=1
+operation_verdicts_required=1
+pass_fail_verdict_required=1
+receipt_digest_sha256_required=1
+certificate_or_validation_record_required=1
+submission_receipt_bound=0
+validation_server_acceptance_bound=0
+pass_verdict_recorded=0
+certificate_identifier_recorded=0
+receipt_digest_verified=0
+reviewer_disposition_recorded=0
+acvp_verdict_receipt_accepted=0
+network_session_enabled=0
+acvp_submission_allowed=0
+operation_execution_allowed=0
+production_crypto_claim_allowed=0
+fips_claim_allowed=0
+runtime_authority_granted=0
+required_verdict_receipt_items_total=39
+required_verdict_receipt_items_satisfied=32
+status=ml-kem-acvp-verdict-receipt-gate-blocked
+```
+
+## ML-KEM Validation Claim Gate
+
+```text
+validation_claim_gate_present=1
+formal_title=Latticra Q-Seal ML-KEM Validation Claim Gate
+validation_claim_profile=latticra-q-seal-ml-kem-validation-claim-gate/0.1
+standards_basis=NIST-FIPS-203,NIST-ACVP-ML-KEM,NIST-CMVP,NIST-SP-800-218-SSDF
+validation_claim_scope=ML-KEM-public-validation-and-release-claims-before-publication
+validation_claim_state=validation-claim-gate-recorded-claim-evidence-missing
+fips_203_algorithm_bound=1
+acvp_ml_kem_protocol_bound=1
+acvp_verdict_receipt_gate_bound=1
+replay_transcript_gate_bound=1
+acvp_submission_package_contract_bound=1
+ci_promotion_evidence_bound=1
+implementation_binding_manifest_bound=1
+readiness_profile_bound=1
+module_boundary_gate_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+source_digest_verification_bound=1
+provider_differential_bound=1
+clean_room_source_boundary_recorded=1
+public_claim_taxonomy_recorded=1
+no_implicit_fips_claim_policy_recorded=1
+no_implicit_acvp_claim_policy_recorded=1
+module_boundary_required=1
+security_policy_required=1
+acvp_certificate_or_validation_record_required=1
+cmvp_certificate_required=1
+implementation_digest_receipt_required=1
+release_artifact_digest_required=1
+release_notes_claim_review_required=1
+docs_public_surface_review_required=1
+operator_warning_required=1
+rollback_claim_revocation_required=1
+no_secret_material_logging_required=1
+apple_corecrypto_code_copied=0
+external_provider_code_copied=0
+implementation_claim_evidence_recorded=0
+acvp_pass_evidence_recorded=0
+cmvp_certificate_recorded=0
+module_boundary_recorded=0
+security_policy_recorded=0
+release_artifact_digest_recorded=0
+public_claim_review_recorded=0
+reviewer_disposition_recorded=0
+validation_claim_gate_accepted=0
+public_validation_claim_allowed=0
+fips_validation_claim_allowed=0
+post_quantum_migration_claim_allowed=0
+production_crypto_claim_allowed=0
+operation_execution_allowed=0
+runtime_authority_granted=0
+required_validation_claim_items_total=41
+required_validation_claim_items_satisfied=32
+status=ml-kem-validation-claim-gate-blocked
+```
+
+## ML-KEM Module Boundary Gate
+
+```text
+module_boundary_gate_present=1
+formal_title=Latticra Q-Seal ML-KEM Module Boundary Gate
+module_boundary_profile=latticra-q-seal-ml-kem-module-boundary-gate/0.1
+standards_basis=NIST-FIPS-203,NIST-FIPS-140-3,NIST-CMVP,NIST-SP-800-218-SSDF
+module_boundary_scope=ML-KEM-FIPS-module-boundary-and-security-policy-before-CMVP-or-claims
+module_boundary_state=module-boundary-gate-recorded-boundary-evidence-missing
+fips_203_algorithm_bound=1
+fips_140_3_module_security_bound=1
+cmvp_program_bound=1
+validation_claim_gate_bound=1
+acvp_verdict_receipt_gate_bound=1
+ci_promotion_evidence_bound=1
+implementation_binding_manifest_bound=1
+source_layout_gate_bound=1
+implementation_file_digest_plan_bound=1
+source_digest_verification_bound=1
+zeroization_evidence_bound=1
+randomness_source_bound=1
+side_channel_review_bound=1
+code_owner_review_bound=1
+review_disposition_ledger_bound=1
+reviewer_role_mapping_bound=1
+clean_room_source_boundary_recorded=1
+module_boundary_schema_recorded=1
+security_policy_template_recorded=1
+services_roles_columns_recorded=1
+operational_environment_columns_recorded=1
+self_test_policy_columns_recorded=1
+algorithm_certificate_columns_recorded=1
+entropy_boundary_columns_recorded=1
+zeroization_boundary_columns_recorded=1
+source_digest_policy_bound=1
+no_implicit_fips_claim_policy_recorded=1
+apple_corecrypto_code_copied=0
+external_provider_code_copied=0
+module_boundary_evidence_recorded=0
+cryptographic_module_name_recorded=0
+module_version_recorded=0
+operational_environment_recorded=0
+fips_140_3_security_policy_recorded=0
+roles_services_authentication_recorded=0
+self_test_policy_recorded=0
+approved_algorithm_inventory_recorded=0
+entropy_source_boundary_recorded=0
+zeroization_boundary_review_recorded=0
+acvp_algorithm_certificate_bound=0
+cmvp_submission_identifier_recorded=0
+module_boundary_review_recorded=0
+reviewer_disposition_recorded=0
+module_boundary_gate_accepted=0
+production_crypto_claim_allowed=0
+fips_claim_allowed=0
+operation_execution_allowed=0
+runtime_authority_granted=0
+required_module_boundary_items_total=45
+required_module_boundary_items_satisfied=30
+status=ml-kem-module-boundary-gate-blocked
+```
+
 ## Provider Differential
 
 ```text
@@ -1541,6 +1726,9 @@ qseal_subsystem_scripts_recorded=1
 readiness_gate_bound=1
 implementation_binding_manifest_bound=1
 replay_transcript_gate_bound=1
+acvp_verdict_receipt_gate_bound=1
+validation_claim_gate_bound=1
+module_boundary_gate_bound=1
 kat_acvp_gate_passing_recorded=0
 constant_time_gate_passing_recorded=0
 memory_safety_gate_passing_recorded=0
@@ -1552,8 +1740,8 @@ promotion_workflow_recorded=0
 release_claim_gate_recorded=0
 signed_artifact_receipt_recorded=0
 operation_execution_allowed=0
-required_promotion_items_total=20
-required_promotion_items_satisfied=10
+required_promotion_items_total=23
+required_promotion_items_satisfied=13
 status=ml-kem-ci-promotion-evidence-blocked
 ```
 
@@ -1747,6 +1935,9 @@ vector_source_bound=1
 vector_fixture_lock_bound=1
 vector_fixture_digest_ledger_bound=1
 replay_transcript_gate_bound=1
+acvp_verdict_receipt_gate_bound=1
+validation_claim_gate_bound=1
+module_boundary_gate_bound=1
 negative_test_evidence_bound=1
 memory_safety_evidence_bound=1
 api_misuse_resistance_bound=1
@@ -1762,8 +1953,8 @@ keygen_binding_approved=0
 encaps_binding_approved=0
 decaps_binding_approved=0
 operation_execution_allowed=0
-required_binding_items_total=45
-required_binding_items_satisfied=40
+required_binding_items_total=48
+required_binding_items_satisfied=43
 status=ml-kem-implementation-binding-blocked
 ```
 
@@ -2070,6 +2261,9 @@ acvp_parser_contract_present=1
 acvp_response_contract_present=1
 acvp_response_fixture_present=1
 acvp_submission_package_contract_present=1
+acvp_verdict_receipt_gate_present=1
+validation_claim_gate_present=1
+module_boundary_gate_present=1
 vector_schema_present=1
 vector_source_intake_present=1
 vector_fixture_lock_present=1
@@ -2101,11 +2295,11 @@ implementation_traceability_matrix_present=1
 primitive_source_acceptance_gate_present=1
 implementation_frame_present=1
 secret_state_contract_present=1
-components_total=49
-components_present=49
-runtime_blockers_total=46
-required_readiness_items_total=1356
-required_readiness_items_satisfied=929
+components_total=52
+components_present=52
+runtime_blockers_total=49
+required_readiness_items_total=1487
+required_readiness_items_satisfied=1029
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -2158,6 +2352,12 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
 sh scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
 sh scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-source.sh
@@ -2259,6 +2459,12 @@ latticra q-seal ml-kem acvp response fixture invariants: ok
 latticra q-seal ml-kem acvp response fixture: ok
 latticra q-seal ml-kem acvp submission package contract invariants: ok
 latticra q-seal ml-kem acvp submission package contract: ok
+latticra q-seal ml-kem acvp verdict receipt gate invariants: ok
+latticra q-seal ml-kem acvp verdict receipt gate: ok
+latticra q-seal ml-kem validation claim gate invariants: ok
+latticra q-seal ml-kem validation claim gate: ok
+latticra q-seal ml-kem module boundary gate invariants: ok
+latticra q-seal ml-kem module boundary gate: ok
 latticra q-seal ml-kem vector schema invariants: ok
 latticra q-seal ml-kem vector schema: ok
 latticra q-seal ml-kem vector source invariants: ok

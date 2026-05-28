@@ -130,10 +130,13 @@ The runner performs this sequence only after the hard gate passes:
 19. Execute latticra --status without root.
 20. Execute latticra --version without root.
 21. Execute latticra --report without root.
-22. Verify invalid CLI usage exits with code 2.
-23. Remove the RPM from the disposable Fedora VM.
-24. Confirm package, CLI, and README absence after removal.
-25. Emit the repeatability transcript and deterministic report.
+22. Execute latticra --prevention-research without root.
+23. Execute latticra --prevention-boundary without root.
+24. Execute latticra --prevention-method sql without root.
+25. Verify invalid CLI usage exits with code 2.
+26. Remove the RPM from the disposable Fedora VM.
+27. Confirm package, CLI, and README absence after removal.
+28. Emit the repeatability transcript and deterministic report.
 ```
 
 ## Expected payload
@@ -190,6 +193,9 @@ unexpected_runtime_surface_absent=1
 cli_status_output_recorded=1
 cli_version_output_recorded=1
 cli_report_output_recorded=1
+cli_prevention_research_output_recorded=1
+cli_prevention_boundary_output_recorded=1
+cli_prevention_method_output_recorded=1
 cli_invalid_command_exit_recorded=1
 validated_cli_mode_still_no_effect=1
 validated_runtime_behavior_still_disabled=1

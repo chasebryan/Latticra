@@ -30,7 +30,7 @@ require_file docs/project_notes/CURRENT_DIRECTION.md
 require_file docs/project_notes/UPCOMING_WORK.md
 require_file docs/project_notes/README.md
 require_file docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md
-require_file docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md
+require_file docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md
 require_file docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md
 require_file scripts/test-completion-estimate-review-readme-status-alignment.sh
 require_file .github/workflows/current-estimate-table-source-alignment.yml
@@ -57,43 +57,43 @@ require_contains 'capability_enforcement_added=0' "$record"
 require_contains 'security_hardening_changed=0' "$record"
 require_contains 'public_readiness_changed=0' "$record"
 require_contains 'runtime_authority_granted=0' "$record"
-require_contains 'Overall Latticra system: 47%' "$record"
+require_contains 'Overall Latticra system: 48%' "$record"
 require_contains 'Nadia offline AI foundation: 77%' "$record"
-require_contains 'Public product readiness: 12%' "$record"
+require_contains 'Public product readiness: 13%' "$record"
 require_contains 'sh scripts/test-current-estimate-table-source-alignment.sh' "$record"
-require_contains 'weighted_sum=4700' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md
-require_contains 'overall_estimate=round(4700 / 100)=47' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md
-require_contains '| Nadia offline AI foundation | 75% | 77% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md
-require_contains '| Runtime / operating-system-universe direction | 26% | 31% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md
+require_contains 'weighted_sum=4768' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md
+require_contains 'overall_estimate=round(4768 / 100)=48' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md
+require_contains '| Latticra Seal / local evidence layer | 44% | 45% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md
+require_contains '| Runtime / operating-system-universe direction | 31% | 32% |' docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md
 
 require_contains '| Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |' README.md
 require_contains 'Current public estimate table, as summarized by [`STATUS.md`](STATUS.md) and [`docs/status/CURRENT_STATUS.md`](docs/status/CURRENT_STATUS.md):' README.md
 require_contains 'The current estimate table source alignment is [`docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md).' README.md
-require_contains 'The latest mathematical estimate rebase is [`docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md`](docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md).' README.md
+require_contains 'The latest mathematical estimate rebase is [`docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`](docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md).' README.md
 require_contains 'The latest estimate refresh record is [`docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md`](docs/status/CURRENT_ESTIMATE_REFRESH_2026_05_24.md).' README.md
 require_contains 'The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md)' README.md
 
 for file in README.md STATUS.md docs/status/CURRENT_STATUS.md; do
-  require_contains '| Overall Latticra system | 47% |' "$file"
-  require_contains '| Latticra Seal / local evidence layer | 44% |' "$file"
-  require_contains '| Latticra Panel / local control surface | 35% |' "$file"
+  require_contains '| Overall Latticra system | 48% |' "$file"
+  require_contains '| Latticra Seal / local evidence layer | 45% |' "$file"
+  require_contains '| Latticra Panel / local control surface | 37% |' "$file"
   require_contains '| Nadia offline AI foundation | 77% |' "$file"
   require_contains '| L-UI parser / AST / string foundation | 87% |' "$file"
   require_contains '| Foundation documents and contracts | 96% |' "$file"
-  require_contains '| Public documentation posture | 93% |' "$file"
-  require_contains '| Strategy/status/funding framework | 65% |' "$file"
+  require_contains '| Public documentation posture | 94% |' "$file"
+  require_contains '| Strategy/status/funding framework | 67% |' "$file"
   require_contains '| Lat / Latticra Programming Language | 27% |' "$file"
   require_contains '| LIR / Intermediate Representation | 24% |' "$file"
-  require_contains '| C/C++ foundation direction | 24% |' "$file"
+  require_contains '| C/C++ foundation direction | 25% |' "$file"
   require_contains '| Constrained C++ authority layer | 5% |' "$file"
   require_contains '| Nucleus real task execution | 14% |' "$file"
-  require_contains '| Runtime / operating-system-universe direction | 31% |' "$file"
-  require_contains '| Security-hardening implementation | 13% |' "$file"
-  require_contains '| Public product readiness | 12% |' "$file"
+  require_contains '| Runtime / operating-system-universe direction | 32% |' "$file"
+  require_contains '| Security-hardening implementation | 14% |' "$file"
+  require_contains '| Public product readiness | 13% |' "$file"
 done
 
-require_contains 'Latest current estimate table source alignment note: 2026-05-27 CDT' STATUS.md
-require_contains 'Latest current estimate mathematical rebase note: 2026-05-27 CDT' STATUS.md
+require_contains 'Latest current estimate table source alignment note: 2026-05-28 CDT' STATUS.md
+require_contains 'Latest current estimate mathematical rebase note: 2026-05-28 CDT' STATUS.md
 require_contains 'Current estimate table source alignment' STATUS.md
 require_contains 'Current estimate mathematical rebase' STATUS.md
 require_contains 'current_estimate_table_source_alignment_present=1' STATUS.md
@@ -104,11 +104,11 @@ require_contains 'estimate_adjustment_required=0' STATUS.md
 require_contains 'runtime_authority_granted=0' STATUS.md
 
 require_contains 'CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md' docs/status/README.md
-require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md' docs/status/README.md
+require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/status/README.md
 require_contains 'current_estimate_table_source_alignment_present=1' docs/status/README.md
 require_contains 'current_estimate_mathematical_rebase_present=1' docs/status/README.md
 require_contains 'CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md' docs/status/CURRENT_STATUS.md
-require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md' docs/status/CURRENT_STATUS.md
+require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/status/CURRENT_STATUS.md
 require_contains 'Current estimate table source alignment' docs/status/CURRENT_STATUS.md
 require_contains 'current estimate mathematical rebase' docs/status/CURRENT_STATUS.md
 require_contains 'current_estimate_table_source_alignment_present=1' docs/status/CURRENT_STATUS.md
@@ -119,24 +119,24 @@ require_contains 'estimate_adjustment_required=0' docs/status/CURRENT_STATUS.md
 require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
 
 require_contains 'CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md' docs/FOUNDATION_INDEX.md
-require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md' docs/FOUNDATION_INDEX.md
+require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/FOUNDATION_INDEX.md
 require_contains 'Current estimate table source alignment' docs/FOUNDATION_INDEX.md
 require_contains 'Current estimate mathematical rebase' docs/FOUNDATION_INDEX.md
 require_contains 'current_estimate_table_source_alignment_present=1' docs/FOUNDATION_INDEX.md
 require_contains 'current_estimate_mathematical_rebase_present=1' docs/FOUNDATION_INDEX.md
 
-require_contains 'Latest current estimate table source alignment note: 2026-05-27 CDT' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Latest current estimate mathematical rebase note: 2026-05-27 CDT' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latest current estimate table source alignment note: 2026-05-28 CDT' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latest current estimate mathematical rebase note: 2026-05-28 CDT' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Current estimate table source alignment' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Current estimate mathematical rebase' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Latest current estimate table source alignment note: 2026-05-27 CDT' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Latest current estimate mathematical rebase note: 2026-05-27 CDT' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latest current estimate table source alignment note: 2026-05-28 CDT' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latest current estimate mathematical rebase note: 2026-05-28 CDT' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Current estimate table source alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Current estimate mathematical rebase' docs/project_notes/UPCOMING_WORK.md
 require_contains 'current_estimate_table_source_alignment_present=1' docs/project_notes/UPCOMING_WORK.md
 require_contains 'current_estimate_mathematical_rebase_present=1' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md' docs/project_notes/README.md
-require_contains 'docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md' docs/project_notes/README.md
+require_contains 'docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/project_notes/README.md
 
 require_contains 'sh scripts/test-current-estimate-table-source-alignment.sh' .github/workflows/current-estimate-table-source-alignment.yml
 

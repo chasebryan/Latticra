@@ -4,6 +4,8 @@ Audience: users who want the shortest safe path to install, run, update, and rem
 
 Status: Latticra is still early-stage and evidence-bound. The current installer is user-local. It does not install a root service, change the kernel, change systemd, change SELinux, or use network authority.
 
+Command examples in this cheat sheet should follow the [Documentation Command Example Standard](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md): keep effect boundaries visible, preview before applying, and keep reset or cleanup routes close to commands that write user-local state.
+
 ## Fast Install
 
 Ubuntu prerequisites:

@@ -1,7 +1,7 @@
 # Current Estimate Table Source Alignment
 
 Status: current estimate table source alignment
-Date: 2026-05-27 CDT
+Date: 2026-05-28 CDT
 Scope: README, root status, detailed current status, status index, foundation index, project-notes alignment, and the current mathematical rebase record for the public estimate table source. This record does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, public-readiness promotion, production protection, security hardening, or runtime authority.
 
 ## Purpose
@@ -39,22 +39,22 @@ runtime_authority_granted=0
 ## Current Public Estimate Table
 
 ```text
-Overall Latticra system: 47%
-Latticra Seal / local evidence layer: 44%
-Latticra Panel / local control surface: 35%
+Overall Latticra system: 48%
+Latticra Seal / local evidence layer: 45%
+Latticra Panel / local control surface: 37%
 Nadia offline AI foundation: 77%
 L-UI parser / AST / string foundation: 87%
 Foundation documents and contracts: 96%
-Public documentation posture: 93%
-Strategy/status/funding framework: 65%
+Public documentation posture: 94%
+Strategy/status/funding framework: 67%
 Lat / Latticra Programming Language: 27%
 LIR / Intermediate Representation: 24%
-C/C++ foundation direction: 24%
+C/C++ foundation direction: 25%
 Constrained C++ authority layer: 5%
 Nucleus real task execution: 14%
-Runtime / operating-system-universe direction: 31%
-Security-hardening implementation: 13%
-Public product readiness: 12%
+Runtime / operating-system-universe direction: 32%
+Security-hardening implementation: 14%
+Public product readiness: 13%
 ```
 
 ## Boundary

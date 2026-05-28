@@ -23,5 +23,5 @@ directory_delete_performed=0
 host_mutation_performed=0
 network_performed=0
 runtime_authority_granted=0
-next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout-audit-contract
+next_lane=macos-reset-uninstall-live-runner-closeout-audit5-review-disposition-closeout-audit-contract
 REPORT

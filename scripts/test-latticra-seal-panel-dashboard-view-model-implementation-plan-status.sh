@@ -90,7 +90,7 @@ require_contains 'stale_source_default_decision=deny' "$status_file"
 require_contains 'unknown_source_default_decision=deny' "$status_file"
 require_contains 'operator_review_required_for_any_missing_source=1' "$status_file"
 require_contains 'authority_absent_for_all_rows=1' "$status_file"
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
+require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-implementation-plan-status.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-implementation-plan-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-implementation-plan-status.yml
 

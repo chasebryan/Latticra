@@ -556,7 +556,7 @@ scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 .github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml
 .github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml
-.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml
+.github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-disposition.yml
 .github/workflows/ubuntu-ppa-evidence-closeout-follow-on.yml
 .github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-follow-on.yml
 .github/workflows/ubuntu-ppa-evidence-closeout-archive-gate-review-follow-on.yml

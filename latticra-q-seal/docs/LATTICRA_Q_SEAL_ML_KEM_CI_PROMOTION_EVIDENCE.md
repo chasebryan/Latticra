@@ -37,6 +37,9 @@ readiness_gate_bound=1
 implementation_binding_manifest_required=1
 implementation_binding_manifest_bound=1
 replay_transcript_gate_bound=1
+acvp_verdict_receipt_gate_bound=1
+validation_claim_gate_bound=1
+module_boundary_gate_bound=1
 kat_acvp_gate_passing_recorded=0
 constant_time_gate_passing_recorded=0
 memory_safety_gate_passing_recorded=0
@@ -51,9 +54,9 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_promotion_items_total=20
-required_promotion_items_satisfied=10
-blocked_reason=ci-vector-constant-time-memory-side-channel-provider-binding-workflow-release-evidence-missing
+required_promotion_items_total=23
+required_promotion_items_satisfied=13
+blocked_reason=ci-vector-acvp-verdict-validation-claim-module-boundary-constant-time-memory-side-channel-provider-binding-workflow-release-evidence-missing
 status=ml-kem-ci-promotion-evidence-blocked
 ```
 

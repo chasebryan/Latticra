@@ -80,6 +80,8 @@ Before a future ACVP submission package can be accepted locally, Q-Seal must rec
 
 Even after local package acceptance, runtime cryptography and production claims remain blocked until the broader Q-Seal readiness profile is satisfied.
 
+The validation-server verdict receipt gate is recorded separately in `latticra-q-seal/evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md`; local package acceptance alone is not ACVP pass evidence and does not support validation, FIPS, or production-readiness claims.
+
 ## Non-Claims
 
 This contract is not an ACVP client, not an ACVP network session, not ACVP response JSON, not a submission receipt, not validation-server acceptance, not known-answer test execution, not primitive code, not generated source, not FIPS validation evidence, not production cryptography, not provider linking, not network behavior, not host mutation, and not runtime authority.

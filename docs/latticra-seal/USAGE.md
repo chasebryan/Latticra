@@ -31,6 +31,9 @@ and hash reads snapshot the opened descriptor's observed size and require the
 descriptor size after the read to match.
 Directory read or close failures make traversal incomplete and prevent fresh
 native hash-list promotion.
+Manifest array parsing, content-marker assembly, digest collection, and
+hash-list parsing fail closed if dynamic capacity growth would overflow an
+allocation size.
 Regular generated Seal artifacts are suppressed from native policy and digest
 scope even when a custom manifest omits the default artifact exclusions, so
 reports, hash lists, and lockfiles do not become self-referential evidence.

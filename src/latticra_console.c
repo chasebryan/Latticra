@@ -270,6 +270,18 @@ static const latticra_console_command_t lc_commands[] = {
         0
     },
     {
+        "lc service-runtime",
+        "lc service-runtime",
+        "Inspect the LC service runtime handoff contract before executors, supervision, or service launch exist.",
+        "lc.service.runtime.contract",
+        LATTICRA_CONSOLE_COMMAND_CORE,
+        LATTICRA_CONSOLE_COMMAND_EFFECT_NONE,
+        1,
+        1,
+        0,
+        0
+    },
+    {
         "lc profiles",
         "lc profiles",
         "Show installed LC configuration profile presets.",
@@ -782,6 +794,8 @@ static void lc_seed_result(
         "metadata-only-contract");
     lc_copy(result->service_plan_contract_status, sizeof(result->service_plan_contract_status),
         "metadata-only-contract");
+    lc_copy(result->service_runtime_contract_status, sizeof(result->service_runtime_contract_status),
+        "metadata-only-contract");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound");
     lc_copy(result->panel_install_status, sizeof(result->panel_install_status), "panel-installable");
     lc_copy(result->host_embedding_status, sizeof(result->host_embedding_status), "planned");
@@ -833,6 +847,7 @@ static void lc_seed_result(
     result->service_schema_contract_present = 1;
     result->service_definitions_contract_present = 1;
     result->service_plan_contract_present = 1;
+    result->service_runtime_contract_present = 1;
     result->command_registry_present = 1;
     result->substrate_bridge_present = 1;
     result->host_embeddable = 1;
@@ -928,6 +943,8 @@ static void lc_finalize(latticra_console_result_t *result) {
         sizeof(result->service_definitions_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->service_plan_contract_status, sizeof(result->service_plan_contract_status),
+        "metadata-only-contract-ready");
+    lc_copy(result->service_runtime_contract_status, sizeof(result->service_runtime_contract_status),
         "metadata-only-contract-ready");
     lc_copy(result->substrate_bridge_status, sizeof(result->substrate_bridge_status), "metadata-bound-ready");
     lc_copy(result->host_embedding_contract_status, sizeof(result->host_embedding_contract_status),
@@ -1113,6 +1130,7 @@ latticra_status_t latticra_console_manpage_report(
         "  latticra-lc service-schema\n"
         "  latticra-lc service-definitions\n"
         "  latticra-lc service-plan\n"
+        "  latticra-lc service-runtime\n"
         "  latticra-lc profiles\n"
         "  latticra-lc receipts\n"
         "  latticra-lc receipt-request\n"
@@ -1652,6 +1670,7 @@ latticra_status_t latticra_console_services_contract_report(
         "service_schema_contract_required=1\n"
         "service_definitions_contract_required=1\n"
         "service_plan_contract_required=1\n"
+        "service_runtime_contract_required=1\n"
         "init_contract_required=1\n"
         "rootfs_contract_required=1\n"
         "packages_contract_required=1\n"
@@ -1666,6 +1685,7 @@ latticra_status_t latticra_console_services_contract_report(
         "related_service_schema_command=lc service-schema\n"
         "related_service_definitions_command=lc service-definitions\n"
         "related_service_plan_command=lc service-plan\n"
+        "related_service_runtime_command=lc service-runtime\n"
         "related_init_command=lc init\n"
         "related_packages_command=lc packages\n"
         "related_rootfs_command=lc rootfs\n"
@@ -1817,6 +1837,7 @@ latticra_status_t latticra_console_service_definitions_contract_report(
         "related_service_schema_command=lc service-schema\n"
         "related_services_command=lc services\n"
         "related_service_plan_command=lc service-plan\n"
+        "related_service_runtime_command=lc service-runtime\n"
         "related_init_command=lc init\n"
         "related_os_contract_command=lc os-contract\n"
         "promotion_gate=lc_service_definitions_contract_before_service_definition_materialization\n"
@@ -1895,8 +1916,84 @@ latticra_status_t latticra_console_service_plan_contract_report(
         "related_service_schema_command=lc service-schema\n"
         "related_services_command=lc services\n"
         "related_init_command=lc init\n"
+        "related_service_runtime_command=lc service-runtime\n"
         "related_os_contract_command=lc os-contract\n"
         "promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation\n"
+        "no_effect=1\n"
+        "file_read_allowed=0\n"
+        "file_write_allowed=0\n"
+        "host_process_launch_allowed=0\n"
+        "host_file_read_allowed=0\n"
+        "host_file_write_allowed=0\n"
+        "host_mutation_allowed=0\n"
+        "network_allowed=0\n"
+        "runtime_enforcement_allowed=0\n"
+        "boot_allowed=0\n"
+        "production_os_claim=0\n");
+    return status;
+}
+
+latticra_status_t latticra_console_service_runtime_contract_report(
+    char *buffer,
+    size_t buffer_len) {
+    size_t used = 0u;
+    latticra_status_t status;
+
+    if (buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (buffer_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    buffer[0] = '\0';
+
+    status = lc_appendf(buffer, buffer_len, &used,
+        "LATTICRA CONSOLE SERVICE RUNTIME CONTRACT\n"
+        "service_runtime_profile=lc-service-runtime-v0\n"
+        "service_runtime_status=metadata-only-contract\n"
+        "service_runtime_contract_present=1\n"
+        "service_runtime_kind=lc-service-runtime-handoff-envelope\n"
+        "service_runtime_root=share/latticra/lc/services\n"
+        "service_runtime_state_source=metadata-only\n"
+        "service_runtime_file=runtime.toml\n"
+        "service_runtime_artifact_present=1\n"
+        "service_runtime_created=0\n"
+        "service_runtime_read_allowed=0\n"
+        "service_runtime_write_allowed=0\n"
+        "service_runtime_materialized=0\n"
+        "service_runtime_materialization_allowed=0\n"
+        "service_runtime_review_required=1\n"
+        "service_plan_input_allowed=0\n"
+        "service_plan_materialized=0\n"
+        "service_dependency_resolution_allowed=0\n"
+        "service_startup_order_resolution_allowed=0\n"
+        "service_authority_binding_allowed=0\n"
+        "service_activation_allowed=0\n"
+        "service_runtime_handoff_allowed=0\n"
+        "service_executor_allowed=0\n"
+        "service_process_launch_allowed=0\n"
+        "service_restart_policy_allowed=0\n"
+        "service_health_check_allowed=0\n"
+        "service_supervision_allowed=0\n"
+        "process_supervision_allowed=0\n"
+        "service_plan_contract_required=1\n"
+        "service_definitions_contract_required=1\n"
+        "service_schema_contract_required=1\n"
+        "services_contract_required=1\n"
+        "init_contract_required=1\n"
+        "rootfs_contract_required=1\n"
+        "packages_contract_required=1\n"
+        "namespace_contract_required=1\n"
+        "workspace_contract_required=1\n"
+        "session_contract_required=1\n"
+        "os_base_contract_required=1\n"
+        "runtime_boundary_required=1\n"
+        "seal_capability_labels_required=1\n"
+        "receipt_required_before_service_runtime=1\n"
+        "command_surface=lc service-runtime\n"
+        "related_service_plan_command=lc service-plan\n"
+        "related_service_definitions_command=lc service-definitions\n"
+        "related_service_schema_command=lc service-schema\n"
+        "related_services_command=lc services\n"
+        "related_init_command=lc init\n"
+        "related_os_contract_command=lc os-contract\n"
+        "promotion_gate=lc_service_runtime_contract_before_executor_handoff_or_supervision\n"
         "no_effect=1\n"
         "file_read_allowed=0\n"
         "file_write_allowed=0\n"
@@ -2054,7 +2151,7 @@ latticra_status_t latticra_console_receipt_request_report(
         "signature_request_profile=latticra-seal-signature-request/0.1\n"
         "requested_receipt_profile=latticra-seal-verified-receipt/0.1\n"
         "requested_capability=verified-receipt-report\n"
-        "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary\n"
         "receipt_payload_schema_profile=lc-receipt-payload-schema-v0\n"
         "receipt_payload_schema_required=1\n"
         "receipt_payload_schema_present=1\n"
@@ -2687,6 +2784,8 @@ latticra_status_t latticra_console_receipt_report(
         "service_definitions_contract_present=1\n"
         "service_plan_contract_receipt_required=1\n"
         "service_plan_contract_present=1\n"
+        "service_runtime_contract_receipt_required=1\n"
+        "service_runtime_contract_present=1\n"
         "receipt_request_contract_required=1\n"
         "receipt_request_contract_present=1\n"
         "receipt_payload_schema_required=1\n"
@@ -2725,6 +2824,7 @@ latticra_status_t latticra_console_receipt_report(
         "service_schema_contract_command=lc service-schema\n"
         "service_definitions_contract_command=lc service-definitions\n"
         "service_plan_contract_command=lc service-plan\n"
+        "service_runtime_contract_command=lc service-runtime\n"
         "seal_signature_planned=1\n"
         "seal_signature_present=0\n"
         "seal_signing_authority_present=0\n"
@@ -2733,7 +2833,7 @@ latticra_status_t latticra_console_receipt_report(
         "receipt_hash_recorded=0\n"
         "receipt_path_recorded=0\n"
         "receipt_format=metadata-only-contract\n"
-        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary\n"
+        "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary\n"
         "promotion_gate=lc_receipts_before_host_adapter_or_os_base\n"
         "command_surface=lc receipts\n"
         "no_effect=1\n"
@@ -2867,6 +2967,7 @@ latticra_status_t latticra_console_report(
         "service_schema_contract_status=%s\n"
         "service_definitions_contract_status=%s\n"
         "service_plan_contract_status=%s\n"
+        "service_runtime_contract_status=%s\n"
         "substrate_bridge_status=%s\n"
         "panel_install_status=%s\n"
         "host_embedding_status=%s\n"
@@ -2901,6 +3002,7 @@ latticra_status_t latticra_console_report(
         "service_schema_contract_present=%d\n"
         "service_definitions_contract_present=%d\n"
         "service_plan_contract_present=%d\n"
+        "service_runtime_contract_present=%d\n"
         "command_registry_present=%d\n"
         "substrate_bridge_present=%d\n"
         "operator_shell_present=%d\n"
@@ -2960,6 +3062,7 @@ latticra_status_t latticra_console_report(
         result->service_schema_contract_status,
         result->service_definitions_contract_status,
         result->service_plan_contract_status,
+        result->service_runtime_contract_status,
         result->substrate_bridge_status,
         result->panel_install_status,
         result->host_embedding_status,
@@ -2993,6 +3096,7 @@ latticra_status_t latticra_console_report(
         result->service_schema_contract_present,
         result->service_definitions_contract_present,
         result->service_plan_contract_present,
+        result->service_runtime_contract_present,
         result->command_registry_present,
         result->substrate_bridge_present,
         result->operator_shell_present,

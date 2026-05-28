@@ -500,6 +500,7 @@ LC_SERVICES_CONTRACT_PROFILE=$(cfg_section lc services_contract_profile lc-servi
 LC_SERVICE_SCHEMA_CONTRACT_PROFILE=$(cfg_section lc service_schema_contract_profile lc-service-schema-v0)
 LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE=$(cfg_section lc service_definitions_contract_profile lc-service-definitions-v0)
 LC_SERVICE_PLAN_CONTRACT_PROFILE=$(cfg_section lc service_plan_contract_profile lc-service-plan-v0)
+LC_SERVICE_RUNTIME_CONTRACT_PROFILE=$(cfg_section lc service_runtime_contract_profile lc-service-runtime-v0)
 LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)
 LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)
 LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)
@@ -530,6 +531,7 @@ LC_REQUIRE_SERVICES_CONTRACT=$(cfg_section lc require_services_contract true)
 LC_REQUIRE_SERVICE_SCHEMA_CONTRACT=$(cfg_section lc require_service_schema_contract true)
 LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT=$(cfg_section lc require_service_definitions_contract true)
 LC_REQUIRE_SERVICE_PLAN_CONTRACT=$(cfg_section lc require_service_plan_contract true)
+LC_REQUIRE_SERVICE_RUNTIME_CONTRACT=$(cfg_section lc require_service_runtime_contract true)
 LC_REQUIRE_RECEIPT_REQUEST_CONTRACT=$(cfg_section lc require_receipt_request_contract true)
 LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA=$(cfg_section lc require_receipt_payload_schema true)
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT=$(cfg_section lc require_receipt_payload_artifact_draft true)
@@ -623,6 +625,7 @@ for authority_field in \
   "LC service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE" \
   "LC service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE" \
   "LC service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE" \
+  "LC service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE" \
   "LC receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE" \
   "LC receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE" \
   "LC receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE" \
@@ -780,6 +783,9 @@ service_definitions_contract_present=1
 service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 service_plan_contract_status=metadata-only-contract
 service_plan_contract_present=1
+service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
+service_runtime_contract_status=metadata-only-contract
+service_runtime_contract_present=1
 panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -804,6 +810,7 @@ services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE
 service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
 service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
+service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
 receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE
 receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE
 receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE
@@ -833,6 +840,7 @@ services_contract_required=$LC_REQUIRE_SERVICES_CONTRACT
 service_schema_contract_required=$LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
 service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
 service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT
+service_runtime_contract_required=$LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
 receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -861,6 +869,7 @@ services_contract_status=metadata-only-contract
 service_schema_contract_status=metadata-only-contract
 service_definitions_contract_status=metadata-only-contract
 service_plan_contract_status=metadata-only-contract
+service_runtime_contract_status=metadata-only-contract
 receipt_request_contract_status=metadata-only-contract
 receipt_payload_schema_status=metadata-only-schema
 receipt_payload_artifact_draft_status=metadata-only-draft
@@ -2000,12 +2009,16 @@ lc_services_contract_profile=$LC_SERVICES_CONTRACT_PROFILE
 lc_services_contract_present=true
 lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
+lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
+lc_service_runtime_contract_present=true
 lc_service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 lc_service_schema_contract_present=true
 lc_service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
 lc_service_definitions_contract_present=true
 lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
+lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
+lc_service_runtime_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 plan_file=$PLAN
@@ -2242,6 +2255,7 @@ services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
 receipt_request_contract_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_artifact_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -2271,6 +2285,7 @@ services_contract_required = $LC_REQUIRE_SERVICES_CONTRACT
 service_schema_contract_required = $LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
 service_definitions_contract_required = $LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
 service_plan_contract_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
+service_runtime_contract_required = $LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -2348,11 +2363,13 @@ services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
 service_definitions_contract_present = true
 service_plan_contract_present = true
+service_runtime_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2396,11 +2413,13 @@ services_contract_profile = "$LC_SERVICES_CONTRACT_PROFILE"
 service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
 service_definitions_contract_present = true
 service_plan_contract_present = true
+service_runtime_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2435,6 +2454,7 @@ services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
+service_runtime_contract_profile = "lc-service-runtime-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2464,6 +2484,7 @@ services_contract_required = true
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2505,6 +2526,7 @@ services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
+service_runtime_contract_profile = "lc-service-runtime-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2534,6 +2556,7 @@ services_contract_required = true
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2572,6 +2595,7 @@ services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
+service_runtime_contract_profile = "lc-service-runtime-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2601,6 +2625,7 @@ services_contract_required = true
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2639,6 +2664,7 @@ services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
+service_runtime_contract_profile = "lc-service-runtime-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2668,6 +2694,7 @@ services_contract_required = true
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2706,6 +2733,7 @@ services_contract_profile = "lc-services-v0"
 service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
+service_runtime_contract_profile = "lc-service-runtime-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2735,6 +2763,7 @@ services_contract_required = true
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -3086,6 +3115,7 @@ pid1_claim_allowed = false
 service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
+service_runtime_contract_required = true
 init_contract_required = true
 rootfs_contract_required = true
 packages_contract_required = true
@@ -3100,6 +3130,7 @@ command_surface = "lc services"
 related_service_schema_command = "lc service-schema"
 related_service_definitions_command = "lc service-definitions"
 related_service_plan_command = "lc service-plan"
+related_service_runtime_command = "lc service-runtime"
 related_init_command = "lc init"
 related_packages_command = "lc packages"
 related_rootfs_command = "lc rootfs"
@@ -3227,6 +3258,7 @@ command_surface = "lc service-definitions"
 related_service_schema_command = "lc service-schema"
 related_services_command = "lc services"
 related_service_plan_command = "lc service-plan"
+related_service_runtime_command = "lc service-runtime"
 related_init_command = "lc init"
 related_os_contract_command = "lc os-contract"
 promotion_gate = "lc_service_definitions_contract_before_service_definition_materialization"
@@ -3293,6 +3325,7 @@ related_service_definitions_command = "lc service-definitions"
 related_service_schema_command = "lc service-schema"
 related_services_command = "lc services"
 related_init_command = "lc init"
+related_service_runtime_command = "lc service-runtime"
 related_os_contract_command = "lc os-contract"
 promotion_gate = "lc_service_plan_contract_before_dependency_resolution_or_activation"
 no_effect = true
@@ -3307,6 +3340,69 @@ runtime_enforcement_allowed = false
 boot_allowed = false
 production_os_claim = false
 LC_SERVICE_PLAN_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/services/runtime.toml" 0644 <<LC_SERVICE_RUNTIME_CONTRACT
+contract_name = "Latticra Console Service Runtime Contract"
+contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+service_runtime_contract_present = true
+service_runtime_kind = "lc-service-runtime-handoff-envelope"
+service_runtime_root = "$LC_INSTALL_SHARE_PATH/services"
+service_runtime_state_source = "metadata-only"
+service_runtime_file = "runtime.toml"
+service_runtime_artifact_present = true
+service_runtime_created = false
+service_runtime_read_allowed = false
+service_runtime_write_allowed = false
+service_runtime_materialized = false
+service_runtime_materialization_allowed = false
+service_runtime_review_required = true
+service_plan_input_allowed = false
+service_plan_materialized = false
+service_dependency_resolution_allowed = false
+service_startup_order_resolution_allowed = false
+service_authority_binding_allowed = false
+service_activation_allowed = false
+service_runtime_handoff_allowed = false
+service_executor_allowed = false
+service_process_launch_allowed = false
+service_restart_policy_allowed = false
+service_health_check_allowed = false
+service_supervision_allowed = false
+process_supervision_allowed = false
+service_plan_contract_required = true
+service_definitions_contract_required = true
+service_schema_contract_required = true
+services_contract_required = true
+init_contract_required = true
+rootfs_contract_required = true
+packages_contract_required = true
+namespace_contract_required = true
+workspace_contract_required = true
+session_contract_required = true
+os_base_contract_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_service_runtime = true
+command_surface = "lc service-runtime"
+related_service_plan_command = "lc service-plan"
+related_service_definitions_command = "lc service-definitions"
+related_service_schema_command = "lc service-schema"
+related_services_command = "lc services"
+related_init_command = "lc init"
+related_os_contract_command = "lc os-contract"
+promotion_gate = "lc_service_runtime_contract_before_executor_handoff_or_supervision"
+no_effect = true
+file_read_allowed = false
+file_write_allowed = false
+host_process_launch_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LC_SERVICE_RUNTIME_CONTRACT
   write_file "$PREFIX/share/latticra/lc/host-embedding/contract.toml" 0644 <<LC_HOST_CONTRACT
 contract_name = "Latticra Console Host Embedding Contract"
 contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
@@ -3402,7 +3498,7 @@ receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 signature_request_profile = "latticra-seal-signature-request/0.1"
 requested_receipt_profile = "latticra-seal-verified-receipt/0.1"
 requested_capability = "verified-receipt-report"
-requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
+requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_schema_present = true
@@ -3938,6 +4034,8 @@ service_definitions_contract_receipt_required = $LC_REQUIRE_SERVICE_DEFINITIONS_
 service_definitions_contract_present = true
 service_plan_contract_receipt_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
 service_plan_contract_present = true
+service_runtime_contract_receipt_required = $LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
+service_runtime_contract_present = true
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_request_contract_present = true
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
@@ -3976,6 +4074,7 @@ services_contract_command = "lc services"
 service_schema_contract_command = "lc service-schema"
 service_definitions_contract_command = "lc service-definitions"
 service_plan_contract_command = "lc service-plan"
+service_runtime_contract_command = "lc service-runtime"
 seal_signature_planned = true
 seal_signature_present = false
 seal_signing_authority_present = false
@@ -3984,7 +4083,7 @@ receipt_signed = false
 receipt_hash_recorded = false
 receipt_path_recorded = false
 receipt_format = "metadata-only-contract"
-receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
+receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
 promotion_gate = "lc_receipts_before_host_adapter_or_os_base"
 command_surface = "lc receipts"
 no_effect = true
@@ -4142,6 +4241,11 @@ share/latticra/lc/services/plan.toml. It records the future service activation
 plan envelope before dependency resolution, startup ordering, activation,
 service starts, or process supervision are allowed.
 
+The LC service runtime lane includes a contract file at
+share/latticra/lc/services/runtime.toml. It records the future service runtime
+handoff envelope before executors, service process launch, restart policy, or
+supervision are allowed.
+
 The host-embedding lane includes a contract file at
 share/latticra/lc/host-embedding/contract.toml. That contract is an evidence
 gate only; it does not grant host adapter, file, process, network, runtime, or
@@ -4243,6 +4347,7 @@ name=lc services category=core effect=none capability=lc.services.contract
 name=lc service-schema category=core effect=none capability=lc.service.schema.contract
 name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract
 name=lc service-plan category=core effect=none capability=lc.service.plan.contract
+name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc receipts category=core effect=none capability=lc.receipts.inspect
 name=lc receipt-request category=core effect=none capability=lc.receipt.request
@@ -5357,6 +5462,11 @@ case "\${1:-status}" in
     echo "prefix=\$PREFIX"
     echo "payload=\$PREFIX/lib/latticra"
     echo "receipts=\$PREFIX/share/latticra/receipts"
+    echo "network_authority=0"
+    echo "network_authority_denied=1"
+    echo "network_fetch_authority=0"
+    echo "network_fetch_authority_denied=1"
+    echo "network_performed=0"
     ;;
   path)
     echo "\$PREFIX"
@@ -5496,6 +5606,11 @@ echo "Lat tooling is installed as part of the Latticra payload."
 echo "prefix=\$PREFIX"
 echo "payload=\$PREFIX/lib/latticra"
 echo "No compiled lat binary was found yet."
+echo "network_authority=0"
+echo "network_authority_denied=1"
+echo "network_fetch_authority=0"
+echo "network_fetch_authority_denied=1"
+echo "network_performed=0"
 LATWRAP
 
   if bool_true "$LATTICRA_CONSOLE" && bool_true "$LC_INSTALL_USER_WRAPPER"; then
@@ -5558,6 +5673,7 @@ render_lc_man() {
   echo "  \$LC_COMMAND_WRAPPER service-schema"
   echo "  \$LC_COMMAND_WRAPPER service-definitions"
   echo "  \$LC_COMMAND_WRAPPER service-plan"
+  echo "  \$LC_COMMAND_WRAPPER service-runtime"
   echo "  \$LC_COMMAND_WRAPPER profiles"
   echo "  \$LC_COMMAND_WRAPPER receipts"
   echo "  \$LC_COMMAND_WRAPPER receipt-request"
@@ -5696,16 +5812,19 @@ case "\${1:-status}" in
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+    echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
     echo "init_contract_status=metadata-only-contract"
     echo "services_contract_status=metadata-only-contract"
     echo "service_schema_contract_status=metadata-only-contract"
     echo "service_definitions_contract_status=metadata-only-contract"
     echo "service_plan_contract_status=metadata-only-contract"
+    echo "service_runtime_contract_status=metadata-only-contract"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
     echo "service_definitions_contract_present=1"
     echo "service_plan_contract_present=1"
+    echo "service_runtime_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -5731,6 +5850,7 @@ case "\${1:-status}" in
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+    echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
     echo "receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -5760,6 +5880,7 @@ case "\${1:-status}" in
     echo "service_schema_contract_required=$LC_REQUIRE_SERVICE_SCHEMA_CONTRACT"
     echo "service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT"
     echo "service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT"
+    echo "service_runtime_contract_required=$LC_REQUIRE_SERVICE_RUNTIME_CONTRACT"
     echo "receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT"
     echo "receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA"
     echo "receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT"
@@ -5814,6 +5935,11 @@ case "\${1:-status}" in
     echo "host_mutation_allowed=0"
     echo "file_io_allowed=0"
     echo "network_allowed=0"
+    echo "network_authority=0"
+    echo "network_authority_denied=1"
+    echo "network_fetch_authority=0"
+    echo "network_fetch_authority_denied=1"
+    echo "network_performed=0"
     echo "runtime_enforcement_allowed=0"
     echo "boot_allowed=0"
     echo "os_base_enabled=0"
@@ -5862,11 +5988,13 @@ case "\${1:-status}" in
     echo "service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
+    echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
     echo "service_definitions_contract_present=1"
     echo "service_plan_contract_present=1"
+    echo "service_runtime_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -6224,6 +6352,7 @@ case "\${1:-status}" in
     echo "service_schema_contract_required=1"
     echo "service_definitions_contract_required=1"
     echo "service_plan_contract_required=1"
+    echo "service_runtime_contract_required=1"
     echo "init_contract_required=1"
     echo "rootfs_contract_required=1"
     echo "packages_contract_required=1"
@@ -6238,6 +6367,7 @@ case "\${1:-status}" in
     echo "related_service_schema_command=lc service-schema"
     echo "related_service_definitions_command=lc service-definitions"
     echo "related_service_plan_command=lc service-plan"
+    echo "related_service_runtime_command=lc service-runtime"
     echo "related_init_command=lc init"
     echo "related_packages_command=lc packages"
     echo "related_rootfs_command=lc rootfs"
@@ -6367,6 +6497,7 @@ case "\${1:-status}" in
     echo "related_service_schema_command=lc service-schema"
     echo "related_services_command=lc services"
     echo "related_service_plan_command=lc service-plan"
+    echo "related_service_runtime_command=lc service-runtime"
     echo "related_init_command=lc init"
     echo "related_os_contract_command=lc os-contract"
     echo "promotion_gate=lc_service_definitions_contract_before_service_definition_materialization"
@@ -6434,8 +6565,73 @@ case "\${1:-status}" in
     echo "related_service_schema_command=lc service-schema"
     echo "related_services_command=lc services"
     echo "related_init_command=lc init"
+    echo "related_service_runtime_command=lc service-runtime"
     echo "related_os_contract_command=lc os-contract"
     echo "promotion_gate=lc_service_plan_contract_before_dependency_resolution_or_activation"
+    echo "no_effect=1"
+    echo "file_read_allowed=0"
+    echo "file_write_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
+    ;;
+  service-runtime|service-runtime-contract|service-runtime-handoff|lc-service-runtime)
+    echo "LATTICRA CONSOLE SERVICE RUNTIME CONTRACT"
+    echo "service_runtime_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+    echo "service_runtime_status=metadata-only-contract"
+    echo "service_runtime_contract_file=\$LC_DIR/services/runtime.toml"
+    echo "service_runtime_contract_present=1"
+    echo "service_runtime_kind=lc-service-runtime-handoff-envelope"
+    echo "service_runtime_root=\$LC_DIR/services"
+    echo "service_runtime_state_source=metadata-only"
+    echo "service_runtime_file=runtime.toml"
+    echo "service_runtime_artifact_present=1"
+    echo "service_runtime_created=0"
+    echo "service_runtime_read_allowed=0"
+    echo "service_runtime_write_allowed=0"
+    echo "service_runtime_materialized=0"
+    echo "service_runtime_materialization_allowed=0"
+    echo "service_runtime_review_required=1"
+    echo "service_plan_input_allowed=0"
+    echo "service_plan_materialized=0"
+    echo "service_dependency_resolution_allowed=0"
+    echo "service_startup_order_resolution_allowed=0"
+    echo "service_authority_binding_allowed=0"
+    echo "service_activation_allowed=0"
+    echo "service_runtime_handoff_allowed=0"
+    echo "service_executor_allowed=0"
+    echo "service_process_launch_allowed=0"
+    echo "service_restart_policy_allowed=0"
+    echo "service_health_check_allowed=0"
+    echo "service_supervision_allowed=0"
+    echo "process_supervision_allowed=0"
+    echo "service_plan_contract_required=1"
+    echo "service_definitions_contract_required=1"
+    echo "service_schema_contract_required=1"
+    echo "services_contract_required=1"
+    echo "init_contract_required=1"
+    echo "rootfs_contract_required=1"
+    echo "packages_contract_required=1"
+    echo "namespace_contract_required=1"
+    echo "workspace_contract_required=1"
+    echo "session_contract_required=1"
+    echo "os_base_contract_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_service_runtime=1"
+    echo "command_surface=lc service-runtime"
+    echo "related_service_plan_command=lc service-plan"
+    echo "related_service_definitions_command=lc service-definitions"
+    echo "related_service_schema_command=lc service-schema"
+    echo "related_services_command=lc services"
+    echo "related_init_command=lc init"
+    echo "related_os_contract_command=lc os-contract"
+    echo "promotion_gate=lc_service_runtime_contract_before_executor_handoff_or_supervision"
     echo "no_effect=1"
     echo "file_read_allowed=0"
     echo "file_write_allowed=0"
@@ -6488,6 +6684,8 @@ case "\${1:-status}" in
     echo "service_definitions_contract_present=1"
     echo "service_plan_contract_receipt_required=1"
     echo "service_plan_contract_present=1"
+    echo "service_runtime_contract_receipt_required=1"
+    echo "service_runtime_contract_present=1"
     echo "receipt_request_contract_required=1"
     echo "receipt_request_contract_present=1"
     echo "receipt_payload_schema_required=1"
@@ -6526,6 +6724,7 @@ case "\${1:-status}" in
     echo "service_schema_contract_command=lc service-schema"
     echo "service_definitions_contract_command=lc service-definitions"
     echo "service_plan_contract_command=lc service-plan"
+    echo "service_runtime_contract_command=lc service-runtime"
     echo "seal_signature_planned=1"
     echo "seal_signature_present=0"
     echo "seal_signing_authority_present=0"
@@ -6534,7 +6733,7 @@ case "\${1:-status}" in
     echo "receipt_hash_recorded=0"
     echo "receipt_path_recorded=0"
     echo "receipt_format=metadata-only-contract"
-    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "promotion_gate=lc_receipts_before_host_adapter_or_os_base"
     echo "command_surface=lc receipts"
     echo "no_effect=1"
@@ -6557,7 +6756,7 @@ case "\${1:-status}" in
     echo "signature_request_profile=latticra-seal-signature-request/0.1"
     echo "requested_receipt_profile=latticra-seal-verified-receipt/0.1"
     echo "requested_capability=verified-receipt-report"
-    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_schema_required=1"
     echo "receipt_payload_schema_present=1"
@@ -7266,7 +7465,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -7295,6 +7494,10 @@ case "\${1:-report}" in
         echo "os=\${PRETTY_NAME:-unknown}"
       fi
       echo "network_authority=0"
+      echo "network_authority_denied=1"
+      echo "network_fetch_authority=0"
+      echo "network_fetch_authority_denied=1"
+      echo "network_performed=0"
       echo "runtime_enforcement_authority=0"
       echo
       echo "components:"
@@ -8399,6 +8602,10 @@ case "\${1:-status}" in
     echo "model_weights_downloaded=0"
     echo "model_weights_inspected=0"
     echo "network_authority=0"
+    echo "network_authority_denied=1"
+    echo "network_fetch_authority=0"
+    echo "network_fetch_authority_denied=1"
+    echo "network_performed=0"
     echo "tool_execution_authority=0"
     echo "source_mutation_authority=0"
     echo "training_performed=0"
@@ -9308,6 +9515,8 @@ lc_service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
 lc_service_definitions_contract_present=true
 lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
+lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
+lc_service_runtime_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 

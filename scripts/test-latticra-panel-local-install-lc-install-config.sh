@@ -28,6 +28,7 @@ standalone_services_report="$tmpdir/standalone-services.txt"
 standalone_service_schema_report="$tmpdir/standalone-service-schema.txt"
 standalone_service_definitions_report="$tmpdir/standalone-service-definitions.txt"
 standalone_service_plan_report="$tmpdir/standalone-service-plan.txt"
+standalone_service_runtime_report="$tmpdir/standalone-service-runtime.txt"
 live_plan="$tmpdir/live-plan.txt"
 live_receipts="$tmpdir/live-receipts"
 lc_report="$tmpdir/lc-install-config.txt"
@@ -38,6 +39,7 @@ lc_usage="$tmpdir/lc-usage.txt"
 lc_service_schema_report="$tmpdir/lc-service-schema.txt"
 lc_service_definitions_report="$tmpdir/lc-service-definitions.txt"
 lc_service_plan_report="$tmpdir/lc-service-plan.txt"
+lc_service_runtime_report="$tmpdir/lc-service-runtime.txt"
 verify_log="$tmpdir/verify.log"
 lc_wrapper="latticra-console-custom"
 bad_config="$tmpdir/bad.installer.toml"
@@ -82,6 +84,7 @@ grep -Fq 'services_contract_profile = "lc-services-v0"' installer/configs/defaul
 grep -Fq 'service_schema_contract_profile = "lc-service-schema-v0"' installer/configs/default.installer.toml
 grep -Fq 'service_definitions_contract_profile = "lc-service-definitions-v0"' installer/configs/default.installer.toml
 grep -Fq 'service_plan_contract_profile = "lc-service-plan-v0"' installer/configs/default.installer.toml
+grep -Fq 'service_runtime_contract_profile = "lc-service-runtime-v0"' installer/configs/default.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/default.installer.toml
 grep -Fq 'profile = "lc_standalone"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'install_profile = "lc-standalone-install-v0"' installer/configs/lc-standalone.installer.toml
@@ -97,6 +100,7 @@ grep -Fq 'services_contract_profile = "lc-services-v0"' installer/configs/lc-sta
 grep -Fq 'service_schema_contract_profile = "lc-service-schema-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'service_definitions_contract_profile = "lc-service-definitions-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'service_plan_contract_profile = "lc-service-plan-v0"' installer/configs/lc-standalone.installer.toml
+grep -Fq 'service_runtime_contract_profile = "lc-service-runtime-v0"' installer/configs/lc-standalone.installer.toml
 grep -Fq 'allow_external_host_commands = false' installer/configs/lc-standalone.installer.toml
 grep -Fq 'dry_run = false' installer/configs/lc-standalone-local.installer.toml
 grep -Fq 'allow_host_mutation = true' installer/configs/lc-standalone-local.installer.toml
@@ -114,6 +118,7 @@ grep -Fq 'LC_SERVICES_CONTRACT_PROFILE=$(cfg_section lc services_contract_profil
 grep -Fq 'LC_SERVICE_SCHEMA_CONTRACT_PROFILE=$(cfg_section lc service_schema_contract_profile lc-service-schema-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE=$(cfg_section lc service_definitions_contract_profile lc-service-definitions-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_SERVICE_PLAN_CONTRACT_PROFILE=$(cfg_section lc service_plan_contract_profile lc-service-plan-v0)' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'LC_SERVICE_RUNTIME_CONTRACT_PROFILE=$(cfg_section lc service_runtime_contract_profile lc-service-runtime-v0)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC install configuration cannot enable external host commands from the Panel' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'default target not run during install' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' installer/scripts/latticra-installer-apply.sh
@@ -127,6 +132,7 @@ grep -Fq 'name=lc services category=core effect=none capability=lc.services.cont
 grep -Fq 'name=lc service-schema category=core effect=none capability=lc.service.schema.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' installer/scripts/latticra-installer-apply.sh
+grep -Fq 'name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'install-config|install)' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC_COMMAND_WRAPPER="$LC_INSTALL_COMMAND_WRAPPER"' installer/scripts/latticra-installer-apply.sh
 grep -Fq 'LC command wrapper ($LC_COMMAND_WRAPPER)' installer/scripts/latticra-installer-verify.sh
@@ -184,6 +190,7 @@ grep -Fq 'services_contract_present=1' "$plan"
 grep -Fq 'service_schema_contract_present=1' "$plan"
 grep -Fq 'service_definitions_contract_present=1' "$plan"
 grep -Fq 'service_plan_contract_present=1' "$plan"
+grep -Fq 'service_runtime_contract_present=1' "$plan"
 grep -Fq 'allow_external_host_commands=false' "$plan"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$receipt_dir/latest-receipt.txt"
@@ -197,6 +204,7 @@ grep -Fq 'lc_services_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_service_schema_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_service_definitions_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_service_plan_contract_present=true' "$receipt_dir/latest-receipt.txt"
+grep -Fq 'lc_service_runtime_contract_present=true' "$receipt_dir/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$receipt_dir/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-panel-install-v0' "$run_log"
 
@@ -221,6 +229,7 @@ grep -Fq 'services_contract_present=1' "$standalone_plan"
 grep -Fq 'service_schema_contract_present=1' "$standalone_plan"
 grep -Fq 'service_definitions_contract_present=1' "$standalone_plan"
 grep -Fq 'service_plan_contract_present=1' "$standalone_plan"
+grep -Fq 'service_runtime_contract_present=1' "$standalone_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_plan"
 grep -Fq 'lc_install_profile=lc-standalone-install-v0' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_requires_panel=false' "$standalone_receipts/latest-receipt.txt"
@@ -234,6 +243,7 @@ grep -Fq 'lc_services_contract_present=true' "$standalone_receipts/latest-receip
 grep -Fq 'lc_service_schema_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_definitions_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_plan_contract_present=true' "$standalone_receipts/latest-receipt.txt"
+grep -Fq 'lc_service_runtime_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq 'lc_rootfs_contract_present=true' "$standalone_receipts/latest-receipt.txt"
 grep -Fq '[dry-run] would install LC config profile lc-standalone-install-v0' "$standalone_log"
 grep -Fq '[dry-run] Panel GUI build disabled by config' "$standalone_log"
@@ -259,6 +269,7 @@ test -f "$standalone_prefix/share/latticra/lc/services/contract.toml"
 test -f "$standalone_prefix/share/latticra/lc/services/definition-schema.toml"
 test -f "$standalone_prefix/share/latticra/lc/services/definitions.toml"
 test -f "$standalone_prefix/share/latticra/lc/services/plan.toml"
+test -f "$standalone_prefix/share/latticra/lc/services/runtime.toml"
 test -f "$standalone_prefix/share/latticra/lc/profiles/standalone-console.toml"
 test -f "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$standalone_home/.local/bin/latticra"
@@ -283,6 +294,7 @@ grep -Fq 'services_contract_present=1' "$standalone_local_plan"
 grep -Fq 'service_schema_contract_present=1' "$standalone_local_plan"
 grep -Fq 'service_definitions_contract_present=1' "$standalone_local_plan"
 grep -Fq 'service_plan_contract_present=1' "$standalone_local_plan"
+grep -Fq 'service_runtime_contract_present=1' "$standalone_local_plan"
 grep -Fq 'allow_external_host_commands=false' "$standalone_local_plan"
 grep -Fq 'build_gui_installer=false' "$standalone_local_plan"
 grep -Fq 'install_desktop_entry=false' "$standalone_local_plan"
@@ -299,6 +311,7 @@ grep -Fq 'lc_services_contract_present=true' "$standalone_local_receipts/latest-
 grep -Fq 'lc_service_schema_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_definitions_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_plan_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
+grep -Fq 'lc_service_runtime_contract_present=true' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'lc_allow_external_host_commands=false' "$standalone_local_receipts/latest-receipt.txt"
 grep -Fq 'install_profile = "lc-standalone-install-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'panel_embedded_console = false' "$standalone_prefix/share/latticra/lc/install/config.toml"
@@ -323,6 +336,8 @@ grep -Fq 'service_definitions_contract_profile = "lc-service-definitions-v0"' "$
 grep -Fq 'service_definitions_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'service_plan_contract_profile = "lc-service-plan-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'service_plan_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'service_runtime_contract_profile = "lc-service-runtime-v0"' "$standalone_prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'service_runtime_contract_present = true' "$standalone_prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc session category=core effect=none capability=lc.session.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
@@ -334,6 +349,7 @@ grep -Fq 'name=lc services category=core effect=none capability=lc.services.cont
 grep -Fq 'name=lc service-schema category=core effect=none capability=lc.service.schema.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
+grep -Fq 'name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract' "$standalone_prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'command_surface = "lc standalone"' "$standalone_prefix/share/latticra/lc/standalone/contract.toml"
 grep -Fq 'command_surface = "lc session"' "$standalone_prefix/share/latticra/lc/session/contract.toml"
 grep -Fq 'command_surface = "lc workspace"' "$standalone_prefix/share/latticra/lc/workspace/contract.toml"
@@ -345,6 +361,7 @@ grep -Fq 'command_surface = "lc services"' "$standalone_prefix/share/latticra/lc
 grep -Fq 'command_surface = "lc service-schema"' "$standalone_prefix/share/latticra/lc/services/definition-schema.toml"
 grep -Fq 'command_surface = "lc service-definitions"' "$standalone_prefix/share/latticra/lc/services/definitions.toml"
 grep -Fq 'command_surface = "lc service-plan"' "$standalone_prefix/share/latticra/lc/services/plan.toml"
+grep -Fq 'command_surface = "lc service-runtime"' "$standalone_prefix/share/latticra/lc/services/runtime.toml"
 
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" install-config > "$standalone_lc_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" standalone > "$standalone_contract_report"
@@ -358,6 +375,7 @@ HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" services > "$s
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" service-schema > "$standalone_service_schema_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" service-definitions > "$standalone_service_definitions_report"
 HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" service-plan > "$standalone_service_plan_report"
+HOME="$standalone_home" "$standalone_home/.local/bin/latticra-lc" service-runtime > "$standalone_service_runtime_report"
 
 grep -Fq 'LATTICRA CONSOLE INSTALL CONFIGURATION' "$standalone_lc_report"
 grep -Fq 'install_profile=lc-standalone-install-v0' "$standalone_lc_report"
@@ -375,6 +393,7 @@ grep -Fq 'services_contract_present=1' "$standalone_lc_report"
 grep -Fq 'service_schema_contract_present=1' "$standalone_lc_report"
 grep -Fq 'service_definitions_contract_present=1' "$standalone_lc_report"
 grep -Fq 'service_plan_contract_present=1' "$standalone_lc_report"
+grep -Fq 'service_runtime_contract_present=1' "$standalone_lc_report"
 grep -Fq 'allow_external_host_commands=false' "$standalone_lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_lc_report"
 grep -Fq 'LATTICRA CONSOLE STANDALONE CONTRACT' "$standalone_contract_report"
@@ -449,6 +468,14 @@ grep -Fq 'service_dependency_resolution_allowed=0' "$standalone_service_plan_rep
 grep -Fq 'service_activation_allowed=0' "$standalone_service_plan_report"
 grep -Fq 'command_surface=lc service-plan' "$standalone_service_plan_report"
 grep -Fq 'host_process_launch_allowed=0' "$standalone_service_plan_report"
+grep -Fq 'LATTICRA CONSOLE SERVICE RUNTIME CONTRACT' "$standalone_service_runtime_report"
+grep -Fq 'service_runtime_profile=lc-service-runtime-v0' "$standalone_service_runtime_report"
+grep -Fq 'service_runtime_file=runtime.toml' "$standalone_service_runtime_report"
+grep -Fq 'service_runtime_handoff_allowed=0' "$standalone_service_runtime_report"
+grep -Fq 'service_executor_allowed=0' "$standalone_service_runtime_report"
+grep -Fq 'service_supervision_allowed=0' "$standalone_service_runtime_report"
+grep -Fq 'command_surface=lc service-runtime' "$standalone_service_runtime_report"
+grep -Fq 'host_process_launch_allowed=0' "$standalone_service_runtime_report"
 
 cat > "$live_config" <<LIVECONFIG
 profile = "developer_local"
@@ -512,6 +539,7 @@ test -f "$prefix/share/latticra/lc/services/contract.toml"
 test -f "$prefix/share/latticra/lc/services/definition-schema.toml"
 test -f "$prefix/share/latticra/lc/services/definitions.toml"
 test -f "$prefix/share/latticra/lc/services/plan.toml"
+test -f "$prefix/share/latticra/lc/services/runtime.toml"
 test -f "$prefix/share/latticra/lc/commands/seed-registry.txt"
 test -x "$home/.local/bin/latticra"
 test -x "$home/.local/bin/$lc_wrapper"
@@ -538,6 +566,8 @@ grep -Fq 'service_definitions_contract_present = true' "$prefix/share/latticra/l
 grep -Fq 'command_surface = "lc service-definitions"' "$prefix/share/latticra/lc/services/definitions.toml"
 grep -Fq 'service_plan_contract_present = true' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'command_surface = "lc service-plan"' "$prefix/share/latticra/lc/services/plan.toml"
+grep -Fq 'service_runtime_contract_present = true' "$prefix/share/latticra/lc/install/config.toml"
+grep -Fq 'command_surface = "lc service-runtime"' "$prefix/share/latticra/lc/services/runtime.toml"
 grep -Fq 'allow_external_host_commands = false' "$prefix/share/latticra/lc/install/config.toml"
 grep -Fq 'name=lc install-config category=core effect=none capability=lc.install.config' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc workspace category=core effect=none capability=lc.workspace.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
@@ -549,6 +579,7 @@ grep -Fq 'name=lc services category=core effect=none capability=lc.services.cont
 grep -Fq 'name=lc service-schema category=core effect=none capability=lc.service.schema.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
+grep -Fq 'name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract' "$prefix/share/latticra/lc/commands/seed-registry.txt"
 grep -Fq 'lc_install_profile=lc-panel-install-v0' "$live_receipts/latest-receipt.txt"
 grep -Fq "lc_install_command_wrapper=$lc_wrapper" "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_standalone_console=true' "$live_receipts/latest-receipt.txt"
@@ -561,6 +592,7 @@ grep -Fq 'lc_services_contract_present=true' "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_schema_contract_present=true' "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_definitions_contract_present=true' "$live_receipts/latest-receipt.txt"
 grep -Fq 'lc_service_plan_contract_present=true' "$live_receipts/latest-receipt.txt"
+grep -Fq 'lc_service_runtime_contract_present=true' "$live_receipts/latest-receipt.txt"
 
 HOME="$home" "$home/.local/bin/$lc_wrapper" install-config > "$lc_report"
 HOME="$home" "$home/.local/bin/latticra" lc install-config > "$latticra_lc_report"
@@ -569,6 +601,7 @@ HOME="$home" "$home/.local/bin/$lc_wrapper" man > "$lc_man"
 HOME="$home" "$home/.local/bin/$lc_wrapper" service-schema > "$lc_service_schema_report"
 HOME="$home" "$home/.local/bin/$lc_wrapper" service-definitions > "$lc_service_definitions_report"
 HOME="$home" "$home/.local/bin/$lc_wrapper" service-plan > "$lc_service_plan_report"
+HOME="$home" "$home/.local/bin/$lc_wrapper" service-runtime > "$lc_service_runtime_report"
 if HOME="$home" "$home/.local/bin/$lc_wrapper" not-a-command > "$lc_usage" 2>&1; then
   echo "expected custom LC wrapper usage failure" >&2
   exit 1
@@ -588,6 +621,7 @@ grep -Fq 'services_contract_present=1' "$lc_report"
 grep -Fq 'service_schema_contract_present=1' "$lc_report"
 grep -Fq 'service_definitions_contract_present=1' "$lc_report"
 grep -Fq 'service_plan_contract_present=1' "$lc_report"
+grep -Fq 'service_runtime_contract_present=1' "$lc_report"
 grep -Fq "command_wrapper=$lc_wrapper" "$lc_report"
 grep -Fq 'allow_external_host_commands=false' "$lc_report"
 grep -Fq 'host_process_launch_allowed=0' "$lc_report"
@@ -598,6 +632,7 @@ grep -Fq "  $lc_wrapper install-config" "$lc_man"
 grep -Fq "  $lc_wrapper service-schema" "$lc_man"
 grep -Fq "  $lc_wrapper service-definitions" "$lc_man"
 grep -Fq "  $lc_wrapper service-plan" "$lc_man"
+grep -Fq "  $lc_wrapper service-runtime" "$lc_man"
 grep -Fq 'LATTICRA CONSOLE SERVICE SCHEMA CONTRACT' "$lc_service_schema_report"
 grep -Fq 'command_surface=lc service-schema' "$lc_service_schema_report"
 grep -Fq 'service_definition_validation_allowed=0' "$lc_service_schema_report"
@@ -609,6 +644,11 @@ grep -Fq 'LATTICRA CONSOLE SERVICE PLAN CONTRACT' "$lc_service_plan_report"
 grep -Fq 'command_surface=lc service-plan' "$lc_service_plan_report"
 grep -Fq 'service_dependency_resolution_allowed=0' "$lc_service_plan_report"
 grep -Fq 'service_activation_allowed=0' "$lc_service_plan_report"
+grep -Fq 'LATTICRA CONSOLE SERVICE RUNTIME CONTRACT' "$lc_service_runtime_report"
+grep -Fq 'command_surface=lc service-runtime' "$lc_service_runtime_report"
+grep -Fq 'service_runtime_handoff_allowed=0' "$lc_service_runtime_report"
+grep -Fq 'service_executor_allowed=0' "$lc_service_runtime_report"
+grep -Fq 'service_supervision_allowed=0' "$lc_service_runtime_report"
 grep -Fq "usage: $lc_wrapper {status|help|man|boundary|commands|install-config" "$lc_usage"
 if grep -Fq '  latticra-lc install-config' "$lc_man"; then
   echo "custom LC wrapper manpage still references the default wrapper command" >&2
@@ -643,6 +683,7 @@ grep -Fq 'ok: LC services registry command' "$verify_log"
 grep -Fq 'ok: LC service schema registry command' "$verify_log"
 grep -Fq 'ok: LC service definitions registry command' "$verify_log"
 grep -Fq 'ok: LC service plan registry command' "$verify_log"
+grep -Fq 'ok: LC service runtime registry command' "$verify_log"
 grep -Fq 'ok: LC wrapper install-config report' "$verify_log"
 grep -Fq 'ok: LC wrapper workspace report' "$verify_log"
 grep -Fq 'ok: LC wrapper namespace report' "$verify_log"
@@ -653,6 +694,7 @@ grep -Fq 'ok: LC wrapper services report' "$verify_log"
 grep -Fq 'ok: LC wrapper service schema report' "$verify_log"
 grep -Fq 'ok: LC wrapper service definitions report' "$verify_log"
 grep -Fq 'ok: LC wrapper service plan report' "$verify_log"
+grep -Fq 'ok: LC wrapper service runtime report' "$verify_log"
 grep -Fq 'ok: latticra lc install-config matches LC command wrapper install-config' "$verify_log"
 grep -Fq 'ok: updater config' "$verify_log"
 grep -Fq 'ok: updater policy' "$verify_log"

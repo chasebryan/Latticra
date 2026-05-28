@@ -26,6 +26,7 @@ secure configuration and change management requirements
 network exposure and remote access requirements
 data classification and protection requirements
 AI and agentic automation security requirements
+platform boot and firmware integrity requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -48,6 +49,11 @@ Date checked: 2026-05-26
 | CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection | Event logging supports continued operations and resilience through visibility, detection, and investigation across cloud, enterprise, mobile, and OT environments. | Require a security logging, monitoring, and detection baseline before hosted services, telemetry export, SIEM integration, or detection claims. |
 | CISA Logging Made Easy and CISA logging guidance | Centralized log management, user activity visibility, alerting, and regular review improve threat detection. | Require event-source inventory, log centralization/export planning, redaction, triage ownership, and incident handoff before monitoring claims. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
+| NSA Guidance for Managing UEFI Secure Boot | Secure Boot configuration should be queried, compared to expected norms, verified for enforcement, and recovered from misconfiguration. | Require Secure Boot state, PK/KEK/DB/DBX inventory, DBX review, boot binary inventory, and recovery evidence before Secure Boot or boot-integrity claims. |
+| NSA Boot Security Modes and Recommendations | UEFI Secure Boot with TPM auditing, full/thorough boot, PCR tracking, and legacy/CSM avoidance improve boot integrity. | Require boot mode inventory, legacy/CSM review, TPM/PCR measurement policy, and golden measurement records before measured boot or platform integrity claims. |
+| NSA UEFI Secure Boot Customization | Owner-managed Secure Boot customization requires careful signature, hash, and trust-store management for high-integrity platforms. | Block custom Secure Boot, bootloader signing, and owner-managed trust claims until key database inventory, signature policy, rollback, and exception evidence exist. |
+| CISA UEFI cybersecurity guidance | UEFI security depends on update distribution, rollback prevention, ecosystem coordination, and timely boot component remediation. | Require firmware update provenance, rollback prevention review, and boot/firmware vulnerability review before production boot claims. |
+| NIST SP 800-193, SP 800-147, and SP 800-155 | Platform firmware should be protected, detected, and recovered; BIOS/UEFI modification should be authenticated; integrity measurement should be reportable. | Require platform inventory, firmware version inventory, authenticated update path, recovery path, measurement baseline, and boot integrity log review before platform integrity claims. |
 | NSA Zero Trust Data Pillar | Data security maturity includes inventory, tagging, labeling, encryption, access control, data-loss prevention, and data-at-rest/in-transit protection. | Require data classification and protection evidence before sensitive-data, PII, telemetry, analytics, or customer-data handling claims. |
 | NSA Zero Trust Network and Environment Pillar | Network/environment zero trust requires segmentation, visibility, policy enforcement, and maturity planning for network flows and access. | Require network exposure and remote-access evidence before service-listener, remote administration, ingress/egress, segmentation, or hosted network claims. |
 | NSA Network Infrastructure Security Guide | Network infrastructure should be hardened with secure management, inventory, management-plane separation, routing/switching hygiene, and monitored administration. | Keep network infrastructure work metadata-only until device, service, firewall, route, management, and exception evidence exists. |
@@ -121,6 +127,7 @@ secure_configuration_change_management_baseline_present=1
 network_exposure_remote_access_baseline_present=1
 data_classification_protection_baseline_present=1
 ai_agentic_automation_security_baseline_present=1
+platform_boot_firmware_integrity_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
@@ -130,6 +137,7 @@ secure_configuration_change_control_required_before_hosted_service=1
 network_exposure_review_required_before_hosted_service=1
 data_classification_review_required_before_hosted_service=1
 ai_agentic_automation_security_required_before_model_or_tool_authority=1
+platform_integrity_review_required_before_bootable_os_claim=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -351,6 +359,8 @@ Before any production service, hosted system, or critical infrastructure deploym
 - define data classification and protection evidence;
 - define AI system inventory, model provenance, prompt/context boundaries, and agentic tool-authority evidence;
 - require AI adversarial testing, monitoring, rollback, human oversight, and incident handoff before model, MCP, tool, or autonomous-effect claims;
+- define boot mode, Secure Boot, TPM/PCR, firmware update, firmware recovery, and platform administrator evidence;
+- require platform boot and firmware integrity evidence before bootable OS, Secure Boot, measured boot, TPM attestation, firmware recovery, or platform-integrity claims;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
@@ -385,6 +395,7 @@ docs/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md
 docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
 docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
 docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md
+docs/PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -404,11 +415,12 @@ scripts/test-secure-configuration-change-management-baseline.sh
 scripts/test-network-exposure-remote-access-baseline.sh
 scripts/test-data-classification-protection-baseline.sh
 scripts/test-ai-agentic-automation-security-baseline.sh
+scripts/test-platform-boot-firmware-integrity-baseline.sh
 ```
 
 ## Non-Claims
 
-This baseline does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, MCP behavior, AI-agent execution, model execution, tool execution, shell execution, production protection, sandboxing, malware prevention, ransomware prevention, incident response, recovery behavior, certification, accreditation, compliance, external endorsement, or runtime authority.
+This baseline does not implement runtime execution, effect execution, capability enforcement, cryptographic verification, signing, host behavior, network behavior, boot behavior, firmware behavior, measured boot, Secure Boot enforcement, TPM attestation, MCP behavior, AI-agent execution, model execution, tool execution, shell execution, production protection, sandboxing, malware prevention, ransomware prevention, incident response, recovery behavior, certification, accreditation, compliance, external endorsement, or runtime authority.
 
 It also does not claim that Latticra is a finished operating system, hardened sandbox, production security product, high-assurance certified product, or critical infrastructure platform.
 

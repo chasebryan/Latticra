@@ -34,6 +34,7 @@ Known current evidence includes:
 - Seal Panel dashboard view-model implementation plan before any C implementation, report parsing, report loading, host scanning, or Panel UI rendering
 - bounded no-effect Seal Panel dashboard view-model implementation with caller-provided report strings only
 - Seal Panel dashboard view-model report surface/status checkpoint with deterministic local fixture output only
+- signed receipt proof path verification-only implementation with digest/key agreement and no trust-root loading, revocation lookup, signing, effects, or authority
 
 ## Current authority limits
 
@@ -73,6 +74,10 @@ panel_dashboard_view_model_implementation_plan_status_present=1
 panel_dashboard_view_model_implementation_present=1
 panel_dashboard_view_model_surface_present=1
 panel_dashboard_view_model_status_present=1
+signed_receipt_proof_path_contract_present=1
+signed_receipt_proof_path_contract_status_present=1
+signed_receipt_proof_path_implementation_present=1
+signed_receipt_proof_path_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

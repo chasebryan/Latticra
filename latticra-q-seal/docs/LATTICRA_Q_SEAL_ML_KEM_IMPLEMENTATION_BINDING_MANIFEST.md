@@ -4,7 +4,7 @@ Status: fail-closed clean-room implementation-binding slice
 Date: 2026-05-27
 Scope: module-to-evidence bindings before ML-KEM implementation files or primitive operations.
 
-This slice records the binding manifest that future ML-KEM implementation code must satisfy before it can be treated as an implementation candidate. It binds the FIPS 203 conformance matrix, SP 800-227 usage profile, implementation traceability matrix, and primitive source acceptance gate before KAT and ACVP intake and includes the ACVP fixture digest row template between fixture row planning and digest-ledger acceptance. It also binds the ACVP parser, response, response-fixture, and submission-package contracts before any vector execution, response-generation, or ACVP package-acceptance path can exist. It keeps primitive source creation, key generation, encapsulation, decapsulation, shared-secret emission, vector execution, response generation, provider execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
+This slice records the binding manifest that future ML-KEM implementation code must satisfy before it can be treated as an implementation candidate. It binds the FIPS 203 conformance matrix, SP 800-227 usage profile, implementation traceability matrix, and primitive source acceptance gate before KAT and ACVP intake and includes the ACVP fixture digest row template between fixture row planning and digest-ledger acceptance. It also binds the ACVP parser, response, response-fixture, submission-package, verdict-receipt, and validation-claim gates before any vector execution, response-generation, ACVP package-acceptance, validation-verdict acceptance, or public validation claim path can exist. It keeps primitive source creation, key generation, encapsulation, decapsulation, shared-secret emission, vector execution, response generation, provider execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
 
 ## Files
 
@@ -106,6 +106,9 @@ vector_source_bound=1
 vector_fixture_lock_bound=1
 vector_fixture_digest_ledger_bound=1
 replay_transcript_gate_bound=1
+acvp_verdict_receipt_gate_bound=1
+validation_claim_gate_bound=1
+module_boundary_gate_bound=1
 negative_test_evidence_bound=1
 memory_safety_evidence_bound=1
 api_misuse_resistance_bound=1
@@ -129,8 +132,8 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_binding_items_total=45
-required_binding_items_satisfied=40
+required_binding_items_total=48
+required_binding_items_satisfied=43
 blocked_reason=implementation-file-digest-keygen-encap-decap-code-owner-and-runtime-evidence-missing
 status=ml-kem-implementation-binding-blocked
 ```

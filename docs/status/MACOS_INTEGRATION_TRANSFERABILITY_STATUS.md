@@ -1010,6 +1010,14 @@ live_runner_closeout_audit5_file_write_enabled=0
 live_runner_closeout_audit5_dispatch_enabled=0
 live_runner_closeout_audit5_deletion_enabled=0
 
+Current live-runner closeout audit5 review disposition closeout audit contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout audit contract that audits the closed no-effect closeout audit5 review disposition closeout lane without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_disposition_closeout_audit_contract_present=1
+
 Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review closeout audit contract lane:
 
 ```text
@@ -1017,6 +1025,46 @@ Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout a
 ```
 
 macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit5_review_disposition_closeout_audit_contract_present=1
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_contract_present=1
+
+Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout audit review contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout audit review contract that reviews the audited no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_contract_state=reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_deletion_enabled=0
+
+Current live-runner closeout audit5 review closeout audit review disposition contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition contract that records the reviewed audited no-effect closeout audit5 review disposition closeout audit as a no-effect disposition without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_contract_state=disposed-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_deletion_enabled=0
+
+Current live-runner closeout audit5 review closeout audit review disposition closeout contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout contract that closes the recorded reviewed audited no-effect closeout audit5 review disposition closeout audit without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_contract_state=closed-recorded-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_deletion_enabled=0
 
 Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract lane:
 
@@ -1027,7 +1075,7 @@ Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout a
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit5 review disposition closeout audit review contract that reviews the audited no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout without opening dispatch or deletion.
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit contract that audits the closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit without opening dispatch or deletion.
 ```
 
 ## Non-Claims

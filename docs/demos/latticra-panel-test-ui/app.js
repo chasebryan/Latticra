@@ -1453,6 +1453,209 @@ function componentHealthSummary(rows = componentHealthRows()) {
   };
 }
 
+function deliveryPlanRows() {
+  const selected = selectedComponents();
+  const mode = state.mode === "dry" ? "dry-run" : "guarded-local";
+  const prefix = state.prefix || "~/.local";
+  const prefixGuard = state.prefixValid ? "accepted" : "blocked";
+  const componentIds = selected.map((component) => component.id).join(",") || "none";
+  return [
+    {
+      key: "profile",
+      label: "profile",
+      value: state.profile,
+      status: "ready",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "mode",
+      label: "mode",
+      value: mode,
+      status: state.mode === "local" ? "guarded" : "ready",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "prefix_guard",
+      label: "prefix_guard",
+      value: prefixGuard,
+      status: state.prefixValid ? "ready" : "blocked",
+      prefix,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "components",
+      label: "components",
+      value: componentIds,
+      status: selected.length > 0 ? "ready" : "blocked",
+      count: selected.length,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority_boundary",
+      value: "root=0 network=0 runtime=0 production=0 main=0 edge=0",
+      status: "guarded",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+  ];
+}
+
+function deliveryPlanSummary(rows = deliveryPlanRows()) {
+  const componentRow = rows.find((row) => row.key === "components");
+  const prefixRow = rows.find((row) => row.key === "prefix_guard");
+  const modeRow = rows.find((row) => row.key === "mode");
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const guarded = rows.filter((row) => row.status === "guarded").length;
+  return {
+    state: blocked > 0 ? "blocked" : "ready",
+    badge: blocked > 0 ? "blocked" : "current",
+    mode: modeRow?.value || "dry-run",
+    prefix: prefixRow?.prefix || state.prefix || "~/.local",
+    prefix_guard: prefixRow?.value || "blocked",
+    components: componentRow?.count || 0,
+    guarded,
+    blocked,
+    boundary: "production=0 / runtime=0 / main=0 / edge=0",
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
+function deliveryPlanPreviewText(rows = deliveryPlanRows()) {
+  return rows
+    .map((row) => {
+      if (row.key === "prefix_guard") {
+        return `prefix=${row.prefix}\nprefix_guard=${row.value}`;
+      }
+      return `${row.label}=${row.value}`;
+    })
+    .join("\n");
+}
+
+function updaterGateRows() {
+  const previewRecorded = state.events.some((event) => event.label === "Updater preview");
+  return [
+    {
+      key: "manifest",
+      label: "Manifest",
+      detail: "signed manifest missing",
+      status: "blocked",
+      required: true,
+    },
+    {
+      key: "artifact_hash",
+      label: "Artifact hash",
+      detail: "release hash missing",
+      status: "blocked",
+      required: true,
+    },
+    {
+      key: "rollback_plan",
+      label: "Rollback plan",
+      detail: "rollback receipt missing",
+      status: "blocked",
+      required: true,
+    },
+    {
+      key: "operator_confirmation",
+      label: "Operator confirmation",
+      detail: "production apply not confirmed",
+      status: "blocked",
+      required: true,
+    },
+    {
+      key: "preview_simulation",
+      label: "Preview simulation",
+      detail: previewRecorded ? "local preview event recorded" : "local preview available",
+      status: previewRecorded ? "ready" : "available",
+      required: false,
+    },
+  ].map((row, index) => ({
+    ...row,
+    order: index + 1,
+    can_apply: false,
+    local_only: true,
+    production_evidence_claim: 0,
+    network_fetch_authority: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+}
+
+function updaterGateSummary(rows = updaterGateRows()) {
+  const requiredRows = rows.filter((row) => row.required);
+  const blocked = requiredRows.filter((row) => row.status === "blocked").length;
+  const ready = rows.filter((row) => row.status === "ready").length;
+  const preview = rows.find((row) => row.key === "preview_simulation");
+  return {
+    state: blocked > 0 ? "closed" : "ready",
+    badge: blocked > 0 ? "gate closed" : "ready",
+    title: blocked > 0 ? "Signed delivery gate closed" : "Signed delivery ready",
+    blocked,
+    ready,
+    required: requiredRows.length,
+    preview_status: preview?.status || "available",
+    can_apply: false,
+    boundary: "apply=false / production=0 / network=0 / main=0 / edge=0",
+    local_only: true,
+    production_evidence_claim: 0,
+    network_fetch_authority: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.network_fetch_authority === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0 &&
+        row.can_apply === false,
+    ),
+  };
+}
+
 function evidenceDetailState(level = state.evidenceDetail) {
   const normalized = Math.max(1, Math.min(3, Math.round(Number(level) || 2)));
   const labels = {
@@ -4429,6 +4632,8 @@ function contextInspectorSummary() {
   const dashboardAuthority = dashboardAuthoritySummary();
   const runMonitor = runMonitorSummary();
   const workflow = operatorWorkflowSummary();
+  const deliveryPlan = deliveryPlanSummary();
+  const updaterGate = updaterGateSummary();
   const saved = selectedSavedReceipt();
   const promotion = selectedPromotionGateRow();
   const blocker = selectedProductionBlockerRow();
@@ -4512,6 +4717,17 @@ function contextInspectorSummary() {
     operator_workflow_current: workflow.current,
     operator_workflow_blocked: workflow.blocked,
     operator_workflow_next: workflow.next_step,
+    delivery_plan_state: deliveryPlan.state,
+    delivery_plan_mode: deliveryPlan.mode,
+    delivery_plan_components: deliveryPlan.components,
+    delivery_plan_prefix_guard: deliveryPlan.prefix_guard,
+    delivery_plan_zero_authority: deliveryPlan.zero_authority,
+    updater_gate_state: updaterGate.state,
+    updater_gate_blocked: updaterGate.blocked,
+    updater_gate_required: updaterGate.required,
+    updater_gate_preview_status: updaterGate.preview_status,
+    updater_gate_can_apply: updaterGate.can_apply,
+    updater_gate_zero_authority: updaterGate.zero_authority,
     promotion_gate: promotion?.label || "none",
     promotion_status: promotion?.status || "none",
     production_blocker: blocker?.label || "none",
@@ -4641,6 +4857,10 @@ function renderContextInspector() {
     `${summary.run_monitor_status}: ${summary.run_monitor_progress}% / prefix ${summary.run_monitor_prefix_guard} / runtime ${summary.run_monitor_runtime_authority}`;
   qs("#context-operator-workflow").textContent =
     `${summary.operator_workflow_state}: ${summary.operator_workflow_complete} complete / ${summary.operator_workflow_current} current / ${summary.operator_workflow_blocked} blocked / next ${summary.operator_workflow_next}`;
+  qs("#context-delivery-plan").textContent =
+    `${summary.delivery_plan_state}: ${summary.delivery_plan_components} components / ${summary.delivery_plan_mode} / prefix ${summary.delivery_plan_prefix_guard} / zero authority ${summary.delivery_plan_zero_authority ? "yes" : "no"}`;
+  qs("#context-updater-gate").textContent =
+    `${summary.updater_gate_state}: ${summary.updater_gate_blocked}/${summary.updater_gate_required} blocked / preview ${summary.updater_gate_preview_status} / apply ${summary.updater_gate_can_apply ? "yes" : "no"} / zero authority ${summary.updater_gate_zero_authority ? "yes" : "no"}`;
   qs("#context-promotion-gate").textContent = `${summary.promotion_gate} / ${summary.promotion_status}`;
   qs("#context-production-blocker").textContent = `${summary.production_blocker} / ${summary.production_blocker_status}`;
   qs("#context-release-acceptance").textContent = `${summary.release_acceptance} / ${summary.release_acceptance_status}`;
@@ -5230,6 +5450,14 @@ function buildReceiptPreview() {
       summary: componentHealthSummary(),
       rows: componentHealthRows(),
     },
+    delivery_plan: {
+      summary: deliveryPlanSummary(),
+      rows: deliveryPlanRows(),
+    },
+    signed_updater_gate: {
+      summary: updaterGateSummary(),
+      rows: updaterGateRows(),
+    },
     inspector_live_evidence: {
       summary: inspectorLiveEvidenceSummary(),
       rows: inspectorLiveEvidenceRows(),
@@ -5512,6 +5740,8 @@ function renderReceiptPreview() {
   renderWorkspaceRoute();
   renderWorkspacePostureStrip();
   renderComponentStack();
+  renderDeliveryPlanState();
+  renderUpdaterGate();
   renderQaReplayStrip();
   renderVisualIdentityPanel();
   renderInspectorLiveEvidence();
@@ -6499,6 +6729,61 @@ function renderComponentStack() {
   qs("#component-health-boundary").textContent =
     `production=${summary.production_evidence_claim} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
   qs("#component-selection-summary").textContent = componentSummaryText();
+}
+
+function renderDeliveryPlanState() {
+  const rows = deliveryPlanRows();
+  const summary = deliveryPlanSummary(rows);
+  const panel = qs("#delivery-plan-preview");
+  if (panel instanceof HTMLElement) {
+    panel.dataset.planState = summary.state;
+  }
+  const badge = qs("#plan-badge");
+  badge.textContent = summary.badge;
+  badge.classList.toggle("ok", summary.state === "ready");
+  badge.classList.toggle("stop", summary.state === "blocked");
+  qs("#delivery-plan-components").textContent = String(summary.components);
+  qs("#delivery-plan-prefix").textContent = summary.prefix_guard;
+  qs("#delivery-plan-authority").textContent = String(summary.host_write_authority);
+  qs("#plan-preview").textContent = deliveryPlanPreviewText(rows);
+  qs("#delivery-plan-boundary").textContent = summary.boundary;
+}
+
+function renderUpdaterGate() {
+  const rows = updaterGateRows();
+  const summary = updaterGateSummary(rows);
+  const board = qs("#signed-updater-gate");
+  if (board instanceof HTMLElement) {
+    board.dataset.updaterState = summary.state;
+  }
+  qs("#signed-updater-title").textContent = summary.title;
+  const badge = qs("#signed-updater-badge");
+  badge.textContent = summary.badge;
+  badge.classList.toggle("stop", summary.state === "closed");
+  badge.classList.toggle("ok", summary.state === "ready");
+  qs("#signed-updater-blocked").textContent = String(summary.blocked);
+  qs("#signed-updater-preview").textContent = summary.preview_status;
+  qs("#signed-updater-apply").textContent = String(summary.can_apply);
+  qs("#signed-updater-boundary").textContent = summary.boundary;
+
+  const list = qs("#signed-updater-list");
+  list.innerHTML = "";
+  rows.filter((row) => row.required).forEach((row) => {
+    const item = document.createElement("article");
+    item.dataset.updaterGate = row.key;
+    item.dataset.updaterStatus = row.status;
+
+    const label = document.createElement("strong");
+    label.textContent = row.label;
+    const detail = document.createElement("small");
+    detail.textContent = row.detail;
+    const status = document.createElement("span");
+    status.className = `badge ${row.status === "blocked" ? "stop" : "ok"}`;
+    status.textContent = row.status === "blocked" ? "missing" : row.status;
+
+    item.append(label, detail, status);
+    list.append(item);
+  });
 }
 
 function renderComponentTable(filter = "") {
@@ -8951,19 +9236,8 @@ function setConsoleStatus(status, message, announce = false) {
 }
 
 function renderPlan() {
-  const selected = selectedComponents().map((component) => component.id).join(",");
-  const mode = state.mode === "dry" ? "dry-run" : "guarded-local";
-  const prefix = state.prefix || "~/.local";
-  const prefixResult = renderPrefixValidation();
-  qs("#plan-preview").textContent = `profile=${qs("#profile-select").value}
-mode=${mode}
-prefix=${prefix}
-components=${selected}
-root_authority=0
-network_authority=0
-runtime_enforcement_authority=0
-prefix_guard=${prefixResult.valid ? "accepted" : "blocked"}
-production_installer_ready=0`;
+  renderPrefixValidation();
+  renderDeliveryPlanState();
   renderReceiptChecklist();
   renderReceiptSchema();
   renderReceiptPreview();

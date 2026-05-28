@@ -14,6 +14,7 @@ This foundation does not implement encryption, key encapsulation, decapsulation,
 latticra-q-seal/README.md
 latticra-q-seal/evidence/ML_KEM_ACVP_CAPABILITY_MATRIX.md
 latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_ROW_PLAN.md
+latticra-q-seal/evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
 latticra-q-seal/evidence/ML_KEM_ACVP_INTAKE.md
 latticra-q-seal/evidence/ML_KEM_API_MISUSE_RESISTANCE.md
 latticra-q-seal/evidence/ML_KEM_CODE_OWNER_REVIEW.md
@@ -40,11 +41,14 @@ latticra-q-seal/evidence/ML_KEM_VECTOR_SCHEMA.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
+latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
+latticra-q-seal/evidence/ML_KEM_MODULE_BOUNDARY_GATE.md
 latticra-q-seal/evidence/ML_KEM_ZEROIZATION_EVIDENCE.md
 latticra-q-seal/include/latticra/q_seal.h
 latticra-q-seal/include/latticra/q_seal_ml_kem.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_acvp_capability_matrix.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_acvp_fixture_row_plan.h
+latticra-q-seal/include/latticra/q_seal_ml_kem_acvp_verdict_receipt_gate.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_acvp_intake.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_api_misuse_resistance.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_code_owner_review.h
@@ -71,11 +75,14 @@ latticra-q-seal/include/latticra/q_seal_ml_kem_vector_schema.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_vector_source.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_vector_fixture_lock.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_vector_fixture_digest_ledger.h
+latticra-q-seal/include/latticra/q_seal_ml_kem_validation_claim_gate.h
+latticra-q-seal/include/latticra/q_seal_ml_kem_module_boundary_gate.h
 latticra-q-seal/include/latticra/q_seal_ml_kem_zeroization_evidence.h
 latticra-q-seal/src/q_seal.c
 latticra-q-seal/src/q_seal_ml_kem.c
 latticra-q-seal/src/q_seal_ml_kem_acvp_capability_matrix.c
 latticra-q-seal/src/q_seal_ml_kem_acvp_fixture_row_plan.c
+latticra-q-seal/src/q_seal_ml_kem_acvp_verdict_receipt_gate.c
 latticra-q-seal/src/q_seal_ml_kem_acvp_intake.c
 latticra-q-seal/src/q_seal_ml_kem_api_misuse_resistance.c
 latticra-q-seal/src/q_seal_ml_kem_code_owner_review.c
@@ -102,11 +109,14 @@ latticra-q-seal/src/q_seal_ml_kem_vector_schema.c
 latticra-q-seal/src/q_seal_ml_kem_vector_source.c
 latticra-q-seal/src/q_seal_ml_kem_vector_fixture_lock.c
 latticra-q-seal/src/q_seal_ml_kem_vector_fixture_digest_ledger.c
+latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
+latticra-q-seal/src/q_seal_ml_kem_module_boundary_gate.c
 latticra-q-seal/src/q_seal_ml_kem_zeroization_evidence.c
 latticra-q-seal/tests/q_seal_foundation_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_parameters_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_acvp_capability_matrix_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_acvp_fixture_row_plan_invariants.c
+latticra-q-seal/tests/q_seal_ml_kem_acvp_verdict_receipt_gate_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_acvp_intake_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_api_misuse_resistance_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_code_owner_review_invariants.c
@@ -133,11 +143,14 @@ latticra-q-seal/tests/q_seal_ml_kem_vector_schema_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_vector_source_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_vector_fixture_lock_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_vector_fixture_digest_ledger_invariants.c
+latticra-q-seal/tests/q_seal_ml_kem_validation_claim_gate_invariants.c
+latticra-q-seal/tests/q_seal_ml_kem_module_boundary_gate_invariants.c
 latticra-q-seal/tests/q_seal_ml_kem_zeroization_evidence_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-foundation.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-parameters.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
@@ -164,11 +177,14 @@ latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-source.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-fixture-lock.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-fixture-digest-ledger.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-zeroization-evidence.sh
 scripts/test-latticra-q-seal-foundation.sh
 scripts/test-latticra-q-seal-ml-kem-parameters.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 scripts/test-latticra-q-seal-ml-kem-api-misuse-resistance.sh
 scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
@@ -195,11 +211,14 @@ scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 scripts/test-latticra-q-seal-ml-kem-vector-source.sh
 scripts/test-latticra-q-seal-ml-kem-vector-fixture-lock.sh
 scripts/test-latticra-q-seal-ml-kem-vector-fixture-digest-ledger.sh
+scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 scripts/test-latticra-q-seal-ml-kem-zeroization-evidence.sh
 latticra-q-seal/docs/LATTICRA_Q_SEAL_FOUNDATION.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PARAMETERS.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md
+latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md
@@ -226,6 +245,8 @@ latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
+latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md
+latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_GATE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ZEROIZATION_EVIDENCE.md
 ```
 
@@ -277,7 +298,7 @@ The first `Latticra Q-Seal ML-KEM` packet is now started in `LATTICRA_Q_SEAL_ML_
 - differential comparison planning against allowed providers;
 - key generation, encapsulation, and decapsulation still disabled until the clean-room implementation and test-vector evidence are ready.
 
-The evidence gate is now started in `LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md`, the offline ACVP intake shape is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md`, the ACVP capability matrix is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md`, the ACVP fixture row plan is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md`, the KAT/ACVP vector schema is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md`, the vector-source digest intake is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`, the vector fixture lock is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md`, the vector fixture digest ledger is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`, the negative-test evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_NEGATIVE_TEST_EVIDENCE.md`, the memory-safety evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md`, the API misuse-resistance gate is started in `LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md`, the source digest manifest is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md`, the source digest receipt fixture is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md`, the source digest verification harness is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_VERIFICATION.md`, the receipt replay result fixture is started in `LATTICRA_Q_SEAL_ML_KEM_RECEIPT_REPLAY_RESULTS.md`, the code-owner review gate is started in `LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md`, the review disposition ledger is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEW_DISPOSITION_LEDGER.md`, the reviewer identity fixture is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEWER_IDENTITY_FIXTURE.md`, the reviewer role-mapping fixture is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEWER_ROLE_MAPPING.md`, the CI promotion evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md`, the constant-time review gate is started in `LATTICRA_Q_SEAL_ML_KEM_CONSTANT_TIME_REVIEW.md`, the randomness-source contract is started in `LATTICRA_Q_SEAL_ML_KEM_RANDOMNESS_SOURCE.md`, the zeroization evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_ZEROIZATION_EVIDENCE.md`, the side-channel review gate is started in `LATTICRA_Q_SEAL_ML_KEM_SIDE_CHANNEL_REVIEW.md`, the provider differential-test contract is started in `LATTICRA_Q_SEAL_ML_KEM_PROVIDER_DIFFERENTIAL.md`, the implementation-binding manifest is started in `LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md`, the clean-room implementation design frame is started in `LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md`, the secret-state contract is started in `LATTICRA_Q_SEAL_ML_KEM_SECRET_STATE_CONTRACT.md`, and candidate secret-operation helpers are started in `LATTICRA_Q_SEAL_ML_KEM_SECRET_OPS.md`.
+The evidence gate is now started in `LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md`, the offline ACVP intake shape is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md`, the ACVP capability matrix is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md`, the ACVP fixture row plan is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md`, the ACVP verdict receipt gate is started in `LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md`, the validation claim gate is started in `LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md`, the module-boundary gate is started in `LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_GATE.md`, the KAT/ACVP vector schema is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md`, the vector-source digest intake is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`, the vector fixture lock is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md`, the vector fixture digest ledger is started in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`, the negative-test evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_NEGATIVE_TEST_EVIDENCE.md`, the memory-safety evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md`, the API misuse-resistance gate is started in `LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md`, the source digest manifest is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md`, the source digest receipt fixture is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md`, the source digest verification harness is started in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_VERIFICATION.md`, the receipt replay result fixture is started in `LATTICRA_Q_SEAL_ML_KEM_RECEIPT_REPLAY_RESULTS.md`, the code-owner review gate is started in `LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md`, the review disposition ledger is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEW_DISPOSITION_LEDGER.md`, the reviewer identity fixture is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEWER_IDENTITY_FIXTURE.md`, the reviewer role-mapping fixture is started in `LATTICRA_Q_SEAL_ML_KEM_REVIEWER_ROLE_MAPPING.md`, the CI promotion evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md`, the constant-time review gate is started in `LATTICRA_Q_SEAL_ML_KEM_CONSTANT_TIME_REVIEW.md`, the randomness-source contract is started in `LATTICRA_Q_SEAL_ML_KEM_RANDOMNESS_SOURCE.md`, the zeroization evidence gate is started in `LATTICRA_Q_SEAL_ML_KEM_ZEROIZATION_EVIDENCE.md`, the side-channel review gate is started in `LATTICRA_Q_SEAL_ML_KEM_SIDE_CHANNEL_REVIEW.md`, the provider differential-test contract is started in `LATTICRA_Q_SEAL_ML_KEM_PROVIDER_DIFFERENTIAL.md`, the implementation-binding manifest is started in `LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md`, the clean-room implementation design frame is started in `LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md`, the secret-state contract is started in `LATTICRA_Q_SEAL_ML_KEM_SECRET_STATE_CONTRACT.md`, and candidate secret-operation helpers are started in `LATTICRA_Q_SEAL_ML_KEM_SECRET_OPS.md`.
 
 The next engineering packet should add reviewed fixture digest ledger rows, receipt replay transcripts, and imported reviewer role-map records before any ML-KEM operation implementation begins.
 
@@ -296,6 +317,12 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 sh scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
 sh scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-acvp-verdict-receipt-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-source.sh
@@ -363,6 +390,12 @@ latticra q-seal ml-kem acvp capability matrix invariants: ok
 latticra q-seal ml-kem acvp capability matrix: ok
 latticra q-seal ml-kem acvp fixture row plan invariants: ok
 latticra q-seal ml-kem acvp fixture row plan: ok
+latticra q-seal ml-kem acvp verdict receipt gate invariants: ok
+latticra q-seal ml-kem acvp verdict receipt gate: ok
+latticra q-seal ml-kem validation claim gate invariants: ok
+latticra q-seal ml-kem validation claim gate: ok
+latticra q-seal ml-kem module boundary gate invariants: ok
+latticra q-seal ml-kem module boundary gate: ok
 latticra q-seal ml-kem vector schema invariants: ok
 latticra q-seal ml-kem vector schema: ok
 latticra q-seal ml-kem vector source invariants: ok

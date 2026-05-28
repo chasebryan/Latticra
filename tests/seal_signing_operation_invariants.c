@@ -79,6 +79,23 @@ static latticra_seal_signer_invocation_t fixture_invocation(const char *mode) {
     return invocation;
 }
 
+static latticra_seal_signer_invocation_t fixture_crypto_bound_invocation(const char *mode) {
+    latticra_seal_signer_invocation_t invocation = fixture_invocation(mode);
+    set_string(invocation.crypto_graduation_profile, sizeof(invocation.crypto_graduation_profile), "latticra-seal-crypto-graduation-gate/0.1");
+    set_string(
+        invocation.assurance_baseline_profile,
+        sizeof(invocation.assurance_baseline_profile),
+        "latticra-cryptographic-assurance-key-management/0.1");
+    set_string(invocation.crypto_graduation_gate_state, sizeof(invocation.crypto_graduation_gate_state), "graduated-authority-neutral");
+    invocation.crypto_graduation_gate_present = 1u;
+    invocation.crypto_graduation_gate_passed = 1u;
+    invocation.standard_expectations_met = 1u;
+    invocation.local_verify_graduated = 1u;
+    invocation.receipt_promotion_graduated = 1u;
+    invocation.authority_promotion_allowed = 0u;
+    return invocation;
+}
+
 static int expect_denial(
     latticra_seal_signer_invocation_t *invocation,
     const char *requested_signing_operation,
@@ -126,6 +143,7 @@ static int operation_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(operation.message_digest_algorithm, "SHA-256") == 0, "digest algorithm");
     EXPECT_TRUE(strcmp(operation.message_digest_hex, invocation.message_digest_hex) == 0, "digest hex");
     EXPECT_TRUE(strcmp(operation.public_key_identity_label, "rfc8032-test-key") == 0, "public key identity");
+    EXPECT_TRUE(strcmp(operation.crypto_graduation_gate_state, "not-required") == 0, "crypto gate legacy");
     EXPECT_TRUE(strcmp(operation.requested_capability, "verified-receipt-report") == 0, "requested capability");
     EXPECT_TRUE(strcmp(operation.requested_effect, "report-only") == 0, "requested effect");
     EXPECT_TRUE(strcmp(operation.requested_handoff, "report-only") == 0, "requested handoff");
@@ -137,6 +155,8 @@ static int operation_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(operation.requested_signer_invocation, "metadata-only") == 0, "requested signer invocation");
     EXPECT_TRUE(strcmp(operation.requested_signing_operation, "metadata-only") == 0, "requested signing operation");
     EXPECT_TRUE(strcmp(operation.requested_scope, "local-fixture-scope") == 0, "requested scope");
+    EXPECT_TRUE(operation.crypto_graduation_gate_present == 0u, "crypto present legacy");
+    EXPECT_TRUE(operation.standard_expectations_met == 0u, "standard legacy");
     EXPECT_TRUE(strcmp(operation.signing_authorization_state, "authorized-metadata-only") == 0, "authorization state");
     EXPECT_TRUE(operation.signing_authorization_ready == 1u, "authorization ready");
     EXPECT_TRUE(strcmp(operation.signer_handoff_state, "handoff-metadata-only") == 0, "handoff state");
@@ -175,6 +195,43 @@ static int operation_allows_report_only_metadata(void) {
     EXPECT_TRUE(strstr(rendered, "trust_store_loaded=0") != 0, "render trust store");
     EXPECT_TRUE(strstr(rendered, "revocation_lookup_performed=0") != 0, "render revocation");
     EXPECT_TRUE(strstr(rendered, "runtime_authority_granted=0") != 0, "render runtime");
+    return 0;
+}
+
+static int operation_carries_crypto_graduation_evidence(void) {
+    latticra_seal_signer_invocation_t invocation = fixture_crypto_bound_invocation("report-only");
+    latticra_seal_signing_operation_t operation;
+    char rendered[LATTICRA_SEAL_SIGNING_OPERATION_RENDER_MAX];
+
+    EXPECT_TRUE(
+        latticra_seal_signing_operation_from_invocation(&invocation, "metadata-only", &operation) ==
+            LATTICRA_STATUS_OK,
+        "crypto operation status");
+    EXPECT_TRUE(operation.error == LATTICRA_SEAL_SIGNING_OPERATION_OK, "crypto operation ok");
+    EXPECT_TRUE(strcmp(operation.crypto_graduation_profile, "latticra-seal-crypto-graduation-gate/0.1") == 0, "crypto profile");
+    EXPECT_TRUE(strcmp(operation.assurance_baseline_profile, "latticra-cryptographic-assurance-key-management/0.1") == 0, "assurance profile");
+    EXPECT_TRUE(strcmp(operation.crypto_graduation_gate_state, "graduated-authority-neutral") == 0, "crypto state");
+    EXPECT_TRUE(operation.crypto_graduation_gate_present == 1u, "crypto present");
+    EXPECT_TRUE(operation.crypto_graduation_gate_passed == 1u, "crypto passed");
+    EXPECT_TRUE(operation.standard_expectations_met == 1u, "standards");
+    EXPECT_TRUE(operation.local_verify_graduated == 1u, "local verify");
+    EXPECT_TRUE(operation.receipt_promotion_graduated == 1u, "receipt promotion");
+    EXPECT_TRUE(operation.authority_promotion_allowed == 0u, "authority promotion");
+    EXPECT_TRUE(operation.signing_operation_ready == 1u, "crypto operation ready");
+    EXPECT_TRUE(strcmp(operation.signing_operation_state, "operation-metadata-only") == 0, "crypto operation state");
+    EXPECT_TRUE(operation.signature_performed == 0u, "crypto signature");
+    EXPECT_TRUE(operation.verification_performed == 0u, "crypto verification");
+    EXPECT_TRUE(operation.signer_invoked == 0u, "crypto signer invoked");
+    EXPECT_TRUE(operation.private_key_handling == 0u, "crypto private key");
+    EXPECT_TRUE(operation.key_generation_performed == 0u, "crypto key generation");
+    EXPECT_TRUE(operation.runtime_authority_granted == 0u, "crypto runtime");
+    EXPECT_TRUE(operation.host_read_performed == 0u, "crypto host read");
+    EXPECT_TRUE(operation.host_write_performed == 0u, "crypto host write");
+    EXPECT_TRUE(operation.network_performed == 0u, "crypto network");
+    EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "crypto render");
+    EXPECT_TRUE(strstr(rendered, "crypto_graduation_gate_present=1") != 0, "render crypto present");
+    EXPECT_TRUE(strstr(rendered, "standard_expectations_met=1") != 0, "render standard");
+    EXPECT_TRUE(strstr(rendered, "authority_promotion_allowed=0") != 0, "render authority promotion");
     return 0;
 }
 
@@ -400,6 +457,28 @@ static int operation_fails_closed(void) {
     if (expect_denial(&invocation, "metadata-only", LATTICRA_SEAL_SIGNING_OPERATION_DENIED_HOST_EFFECT, "denied-host-effect", "denied-host-effect", "host write status") != 0) {
         return 1;
     }
+    invocation = fixture_crypto_bound_invocation("report-only");
+    invocation.standard_expectations_met = 0u;
+    if (expect_denial(
+            &invocation,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "failed crypto gate status") != 0) {
+        return 1;
+    }
+    invocation = fixture_crypto_bound_invocation("report-only");
+    invocation.authority_promotion_allowed = 1u;
+    if (expect_denial(
+            &invocation,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "authority crypto gate status") != 0) {
+        return 1;
+    }
     EXPECT_TRUE(
         latticra_seal_signing_operation_from_invocation(&invocation, "metadata-only", 0) ==
             LATTICRA_STATUS_NULL_ARGUMENT,
@@ -462,6 +541,9 @@ static int operation_fails_closed(void) {
 
 int main(void) {
     if (operation_allows_report_only_metadata() != 0) {
+        return 1;
+    }
+    if (operation_carries_crypto_graduation_evidence() != 0) {
         return 1;
     }
     if (operation_allows_evaluate_only_metadata() != 0) {

@@ -43,6 +43,7 @@ require_contains 'Evidence level: 10 target, ISO USB and VM image readiness cont
 require_contains 'latticra_os_image_release_readiness_contract_present=1' "$doc"
 require_contains 'iso_artifact_present=0' "$doc"
 require_contains 'os_image_artifact_manifest_template_present=1' "$doc"
+require_contains 'os_image_artifact_manifest_generator_present=1' "$doc"
 require_contains 'os_image_artifact_manifest_validation_present=1' "$doc"
 require_contains 'os_image_artifact_manifest_candidate_present=0' "$doc"
 require_contains 'os_image_build_preflight_present=1' "$doc"
@@ -72,6 +73,7 @@ require_contains 'scripts/latticra-boot-seed-qemu-smoke.sh' "$doc"
 require_contains 'scripts/latticra-boot-seed-vm-image-build.sh' "$doc"
 require_contains 'scripts/latticra-os-image-input-bundle-from-files.sh' "$doc"
 require_contains 'scripts/latticra-os-image-artifact-manifest-template.sh' "$doc"
+require_contains 'scripts/latticra-os-image-artifact-manifest-from-files.sh' "$doc"
 require_contains 'scripts/latticra-os-image-artifact-manifest-validate.sh' "$doc"
 require_contains 'scripts/latticra-os-image-usb-write-command.sh' "$doc"
 require_contains 'scripts/latticra-os-image-vm-test-command.sh' "$doc"
@@ -85,6 +87,7 @@ require_contains 'status = "fixture-only"' "$manifest"
 require_contains 'os_image_release_readiness_contract_present = true' "$manifest"
 require_contains 'iso_artifact_present = false' "$manifest"
 require_contains 'os_image_artifact_manifest_template_present = true' "$manifest"
+require_contains 'os_image_artifact_manifest_generator_present = true' "$manifest"
 require_contains 'os_image_artifact_manifest_validation_present = true' "$manifest"
 require_contains 'os_image_artifact_manifest_candidate_present = false' "$manifest"
 require_contains 'os_image_build_preflight_present = true' "$manifest"
@@ -116,6 +119,7 @@ require_contains 'profile = "x86_64-qemu-iso"' "$manifest"
 require_contains 'LATTICRA OS IMAGE RELEASE PREFLIGHT' "$preflight"
 require_contains 'preflight_decision=blocked-fixture-only-no-os-image-artifact' "$preflight"
 require_contains 'os_image_artifact_manifest_template_present=1' "$preflight"
+require_contains 'os_image_artifact_manifest_generator_present=1' "$preflight"
 require_contains 'os_image_artifact_manifest_validation_present=1' "$preflight"
 require_contains 'os_image_artifact_manifest_candidate_present=0' "$preflight"
 require_contains 'os_image_build_preflight_present=1' "$preflight"
@@ -138,6 +142,7 @@ require_output_contains "$output" 'LATTICRA OS IMAGE RELEASE PREFLIGHT'
 require_output_contains "$output" 'preflight_status=ok'
 require_output_contains "$output" 'iso_artifact_present=0'
 require_output_contains "$output" 'os_image_artifact_manifest_template_present=1'
+require_output_contains "$output" 'os_image_artifact_manifest_generator_present=1'
 require_output_contains "$output" 'os_image_artifact_manifest_validation_present=1'
 require_output_contains "$output" 'os_image_artifact_manifest_candidate_present=0'
 require_output_contains "$output" 'os_image_build_preflight_present=1'
