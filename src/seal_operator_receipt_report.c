@@ -10,8 +10,47 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
-static int string_is(const char *value, const char *expected) {
-    return value != NULL && expected != NULL && strcmp(value, expected) == 0;
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
 }
 
 const char *latticra_seal_operator_receipt_report_error_label(
@@ -111,7 +150,9 @@ static int capability_source_report_only(
            capability->would_deny == 1u &&
            capability->would_require_operator_review == 1u &&
            capability->report_only == 1u &&
-           string_is(capability->mode, "report-only");
+           bounded_string_is(capability->mode,
+                             LATTICRA_SEAL_CAPABILITY_METADATA_STATUS_MAX,
+                             "report-only");
 }
 
 static int policy_source_report_only(const latticra_seal_policy_decision_t *policy) {
@@ -141,7 +182,16 @@ static int policy_source_report_only(const latticra_seal_policy_decision_t *poli
            policy->runtime_authority_granted == 0u &&
            policy->host_read_performed == 0u &&
            policy->host_write_performed == 0u &&
-           policy->network_performed == 0u;
+           policy->network_performed == 0u &&
+           bounded_string_is(policy->decision_state,
+                             LATTICRA_SEAL_POLICY_DECISION_STATE_MAX,
+                             "report-only") &&
+           bounded_string_is(policy->mode,
+                             LATTICRA_SEAL_POLICY_DECISION_STATE_MAX,
+                             "report-only") &&
+           bounded_string_is(policy->decision,
+                             LATTICRA_SEAL_POLICY_DECISION_STATE_MAX,
+                             "report-only");
 }
 
 static int freshness_source_report_only(
@@ -164,7 +214,13 @@ static int freshness_source_report_only(
            freshness->runtime_authority_granted == 0u &&
            freshness->host_read_performed == 0u &&
            freshness->host_write_performed == 0u &&
-           freshness->network_performed == 0u;
+           freshness->network_performed == 0u &&
+           bounded_string_is(freshness->mode,
+                             LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX,
+                             "report-only") &&
+           bounded_string_is(freshness->decision,
+                             LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX,
+                             "report-only");
 }
 
 static int signed_request_source_report_only(
@@ -190,7 +246,13 @@ static int signed_request_source_report_only(
            signed_request->runtime_authority_granted == 0u &&
            signed_request->host_read_performed == 0u &&
            signed_request->host_write_performed == 0u &&
-           signed_request->network_performed == 0u;
+           signed_request->network_performed == 0u &&
+           bounded_string_is(signed_request->mode,
+                             LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX,
+                             "report-only") &&
+           bounded_string_is(signed_request->decision,
+                             LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX,
+                             "report-only");
 }
 
 static int dry_run_source_report_only(const latticra_seal_runtime_dry_run_t *dry_run) {
@@ -218,7 +280,26 @@ static int dry_run_source_report_only(const latticra_seal_runtime_dry_run_t *dry
            dry_run->replayed_request_denied == 1u &&
            dry_run->invalid_signature_denied == 1u &&
            dry_run->report_only == 1u &&
-           string_is(dry_run->mode, "report-only");
+           bounded_string_is(dry_run->mode,
+                             LATTICRA_SEAL_RUNTIME_DRY_RUN_STATE_MAX,
+                             "report-only");
+}
+
+static int source_strings_valid(
+    const latticra_seal_operator_receipt_report_sources_t *sources) {
+    return sources != NULL &&
+           text_field_valid(sources->capability_metadata->capability_name,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX) &&
+           text_field_valid(sources->capability_metadata->blocked_reason,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_REASON_MAX) &&
+           text_field_valid(sources->policy_decision->decision_state,
+                            LATTICRA_SEAL_POLICY_DECISION_STATE_MAX) &&
+           text_field_valid(sources->request_freshness->decision,
+                            LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX) &&
+           text_field_valid(sources->signed_request->decision,
+                            LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX) &&
+           text_field_valid(sources->runtime_dry_run->mode,
+                            LATTICRA_SEAL_RUNTIME_DRY_RUN_STATE_MAX);
 }
 
 static int source_would_allow_effect(
@@ -308,6 +389,19 @@ latticra_status_t latticra_seal_operator_receipt_report_from_sources(
         return LATTICRA_STATUS_OK;
     }
 
+    if (source_would_allow_effect(sources)) {
+        receipt_mark_error(out,
+                           LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SOURCE_WOULD_ALLOW_EFFECT,
+                           "source-would-allow-effect-denied");
+        return LATTICRA_STATUS_OK;
+    }
+    if (!source_strings_valid(sources) || !sources_report_only(sources)) {
+        receipt_mark_error(out,
+                           LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_NON_REPORT_ONLY_SOURCE,
+                           "non-report-only-source-denied");
+        return LATTICRA_STATUS_OK;
+    }
+
     copy_literal(out->capability_name,
                  sizeof(out->capability_name),
                  sources->capability_metadata->capability_name);
@@ -323,19 +417,6 @@ latticra_status_t latticra_seal_operator_receipt_report_from_sources(
     copy_literal(out->runtime_dry_run_state,
                  sizeof(out->runtime_dry_run_state),
                  sources->runtime_dry_run->mode);
-
-    if (source_would_allow_effect(sources)) {
-        receipt_mark_error(out,
-                           LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SOURCE_WOULD_ALLOW_EFFECT,
-                           "source-would-allow-effect-denied");
-        return LATTICRA_STATUS_OK;
-    }
-    if (!sources_report_only(sources)) {
-        receipt_mark_error(out,
-                           LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_NON_REPORT_ONLY_SOURCE,
-                           "non-report-only-source-denied");
-        return LATTICRA_STATUS_OK;
-    }
 
     out->capability_known = sources->capability_metadata->capability_known;
     out->capability_candidate = sources->capability_metadata->capability_candidate;
@@ -371,9 +452,103 @@ latticra_status_t latticra_seal_operator_receipt_report_from_sources(
     return LATTICRA_STATUS_OK;
 }
 
+static int receipt_error_valid(latticra_seal_operator_receipt_report_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_OK:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_INVALID_INPUT:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MISSING_CAPABILITY_METADATA:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MISSING_POLICY_DECISION:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MISSING_REQUEST_FRESHNESS:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MISSING_SIGNED_REQUEST:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MISSING_RUNTIME_DRY_RUN:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_NON_REPORT_ONLY_SOURCE:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SOURCE_WOULD_ALLOW_EFFECT:
+    case LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_BUFFER_TOO_SMALL:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int receipt_text_fields_valid(
+    const latticra_seal_operator_receipt_report_t *receipt) {
+    return receipt != NULL &&
+           bounded_string_is(receipt->operator_receipt_profile,
+                             LATTICRA_SEAL_OPERATOR_RECEIPT_PROFILE_MAX,
+                             "latticra-seal-operator-receipt-report/0.1") &&
+           bounded_string_is(receipt->receipt_mode,
+                             LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                             "report-only") &&
+           (bounded_string_is(receipt->receipt_status,
+                              LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                              "denied-report-only") ||
+            bounded_string_is(receipt->receipt_status,
+                              LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                              "invalid-source-denied")) &&
+           text_field_valid(receipt->capability_name,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_CAPABILITY_MAX) &&
+           text_field_valid(receipt->policy_decision_state,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX) &&
+           text_field_valid(receipt->request_freshness_state,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX) &&
+           text_field_valid(receipt->signed_request_state,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX) &&
+           text_field_valid(receipt->runtime_dry_run_state,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX) &&
+           text_field_valid(receipt->blocked_reason,
+                            LATTICRA_SEAL_OPERATOR_RECEIPT_REASON_MAX);
+}
+
+static int receipt_no_effect_contract_valid(
+    const latticra_seal_operator_receipt_report_t *receipt) {
+    return receipt != NULL &&
+           receipt->default_action_deny == 1u &&
+           receipt->would_allow == 0u &&
+           receipt->would_deny == 1u &&
+           receipt->would_require_operator_review == 1u &&
+           receipt->would_execute_tool == 0u &&
+           receipt->would_read_host == 0u &&
+           receipt->would_write_host == 0u &&
+           receipt->would_use_network == 0u &&
+           receipt->would_grant_runtime_authority == 0u &&
+           receipt->report_only == 1u &&
+           receipt->runtime_authority_granted == 0u &&
+           receipt->effect_performed == 0u &&
+           receipt->host_read_performed == 0u &&
+           receipt->host_write_performed == 0u &&
+           receipt->network_performed == 0u;
+}
+
+static int receipt_completion_contract_valid(
+    const latticra_seal_operator_receipt_report_t *receipt) {
+    if (receipt == NULL || !receipt_error_valid(receipt->error)) {
+        return 0;
+    }
+    if (receipt->error == LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_OK) {
+        return receipt->receipt_complete == 1u &&
+               receipt->receipt_invalid == 0u &&
+               receipt->source_denial_reason_present == 1u &&
+               bounded_string_is(receipt->receipt_status,
+                                 LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                                 "denied-report-only");
+    }
+    return receipt->receipt_complete == 0u &&
+           receipt->receipt_invalid == 1u &&
+           bounded_string_is(receipt->receipt_status,
+                             LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                             "invalid-source-denied");
+}
+
+static int receipt_render_contract_valid(
+    const latticra_seal_operator_receipt_report_t *receipt) {
+    return receipt_text_fields_valid(receipt) &&
+           receipt_no_effect_contract_valid(receipt) &&
+           receipt_completion_contract_valid(receipt);
+}
+
 int latticra_seal_operator_receipt_report_is_report_only(
     const latticra_seal_operator_receipt_report_t *receipt) {
-    if (receipt == NULL) {
+    if (receipt == NULL || !receipt_render_contract_valid(receipt)) {
         return 0;
     }
 
@@ -402,8 +577,12 @@ int latticra_seal_operator_receipt_report_is_report_only(
            receipt->host_read_performed == 0u &&
            receipt->host_write_performed == 0u &&
            receipt->network_performed == 0u &&
-           string_is(receipt->receipt_mode, "report-only") &&
-           string_is(receipt->receipt_status, "denied-report-only") &&
+           bounded_string_is(receipt->receipt_mode,
+                             LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                             "report-only") &&
+           bounded_string_is(receipt->receipt_status,
+                             LATTICRA_SEAL_OPERATOR_RECEIPT_STATE_MAX,
+                             "denied-report-only") &&
            receipt->error == LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_OK;
 }
 
@@ -414,6 +593,13 @@ latticra_status_t latticra_seal_operator_receipt_report_render(
     int written;
 
     if (receipt == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!receipt_render_contract_valid(receipt)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

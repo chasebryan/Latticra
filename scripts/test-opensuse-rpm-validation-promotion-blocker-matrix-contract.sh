@@ -124,7 +124,7 @@ require_contains 'obs_publication_non_claim_review_reference' "$contract"
 require_contains 'promotion_reviewer' "$contract"
 require_contains 'promotion_decision' "$contract"
 require_contains 'promotion_scope' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' "$contract"
 require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract: ok' "$contract"
 
 require_contains "$intake_contract" "$contract"

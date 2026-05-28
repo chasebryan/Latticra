@@ -10,9 +10,232 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_terminated(const char *value, size_t max_len) {
+    int terminated = 0;
+
+    (void)bounded_string_len(value, max_len, &terminated);
+    return terminated == 1;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
 static int is_allowed_envelope(const char *envelope) {
-    return strcmp(envelope, "report-only") == 0 ||
-           strcmp(envelope, "evaluate-only") == 0;
+    return bounded_string_is(envelope,
+                             LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                             "report-only") ||
+           bounded_string_is(envelope,
+                             LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                             "evaluate-only");
+}
+
+static int boolean_flag_valid(unsigned value) {
+    return value == 0u || value == 1u;
+}
+
+static int envelope_error_valid(latticra_seal_report_envelope_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_REPORT_ENVELOPE_OK:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_INPUT:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_REPORT:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_MISSING_REQUESTED_ENVELOPE:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_UNKNOWN_ENVELOPE:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_ENVELOPE:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int report_error_valid(latticra_seal_runtime_handoff_report_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_OK:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_INPUT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_EVALUATION:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_EVALUATION:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_HANDOFF:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_REPORT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_MISSING_REQUESTED_REPORT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_UNKNOWN_REPORT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int report_flags_valid(const latticra_seal_runtime_handoff_report_t *report) {
+    if (report == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(report->crypto_graduation_gate_present) &&
+           boolean_flag_valid(report->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(report->standard_expectations_met) &&
+           boolean_flag_valid(report->local_verify_graduated) &&
+           boolean_flag_valid(report->receipt_promotion_graduated) &&
+           boolean_flag_valid(report->authority_promotion_allowed) &&
+           boolean_flag_valid(report->verified) &&
+           boolean_flag_valid(report->authority_usable) &&
+           boolean_flag_valid(report->receipt_capability_gate_allowed) &&
+           boolean_flag_valid(report->gate_allowed) &&
+           boolean_flag_valid(report->effect_allowed) &&
+           boolean_flag_valid(report->handoff_eligible) &&
+           boolean_flag_valid(report->report_ready) &&
+           boolean_flag_valid(report->handoff_performed) &&
+           boolean_flag_valid(report->effect_performed) &&
+           boolean_flag_valid(report->runtime_authority_granted) &&
+           boolean_flag_valid(report->host_read_performed) &&
+           boolean_flag_valid(report->host_write_performed) &&
+           boolean_flag_valid(report->network_performed);
+}
+
+static int report_strings_valid(const latticra_seal_runtime_handoff_report_t *report) {
+    if (report == NULL) {
+        return 0;
+    }
+
+    return bounded_string_is(report->report_profile,
+                             LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX,
+                             "latticra-seal-runtime-handoff-report/0.1") &&
+           text_field_terminated(report->handoff_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->decision_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->gate_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->receipt_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->verify_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->message_digest_algorithm,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_ALGORITHM_MAX) &&
+           text_field_terminated(report->message_digest_hex,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DIGEST_MAX) &&
+           text_field_terminated(report->public_key_identity_label,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->crypto_graduation_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_terminated(report->assurance_baseline_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_PROFILE_MAX) &&
+           text_field_valid(report->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           text_field_terminated(report->requested_capability,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->requested_effect,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->requested_handoff,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->requested_report,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->requested_scope,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX) &&
+           text_field_terminated(report->gate_state,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           text_field_terminated(report->decision_state,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           text_field_valid(report->handoff_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           text_field_valid(report->report_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           text_field_valid(report->status,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX) &&
+           report_error_valid(report->error) &&
+           report_flags_valid(report);
+}
+
+static int requested_envelope_present(const char *requested_envelope) {
+    return requested_envelope != NULL && requested_envelope[0] != '\0';
+}
+
+static int envelope_ready_state_valid(const latticra_seal_report_envelope_t *envelope) {
+    if (envelope == NULL || !boolean_flag_valid(envelope->envelope_ready)) {
+        return 0;
+    }
+    if (envelope->envelope_ready == 0u) {
+        return envelope->error != LATTICRA_SEAL_REPORT_ENVELOPE_OK &&
+               text_field_valid(envelope->envelope_state,
+                                LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX) &&
+               text_field_valid(envelope->status,
+                                LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX);
+    }
+
+    return envelope->error == LATTICRA_SEAL_REPORT_ENVELOPE_OK &&
+           bounded_string_is(envelope->status,
+                             LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX,
+                             "sealed-report-envelope-metadata") &&
+           ((bounded_string_is(envelope->requested_envelope,
+                               LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                               "report-only") &&
+             bounded_string_is(envelope->envelope_state,
+                               LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX,
+                               "sealed-report-only")) ||
+            (bounded_string_is(envelope->requested_envelope,
+                               LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                               "evaluate-only") &&
+             bounded_string_is(envelope->envelope_state,
+                               LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX,
+                               "sealed-evaluate-only")));
+}
+
+static const char *safe_requested_envelope_for_copy(
+    const char *requested_envelope) {
+    if (!requested_envelope_present(requested_envelope)) {
+        return NULL;
+    }
+    if (!text_field_valid(requested_envelope,
+                          LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX)) {
+        return "invalid-envelope";
+    }
+    return requested_envelope;
 }
 
 const char *latticra_seal_report_envelope_error_label(
@@ -89,7 +312,9 @@ static void copy_report_metadata(
     copy_literal(out->requested_effect, sizeof(out->requested_effect), report->requested_effect);
     copy_literal(out->requested_handoff, sizeof(out->requested_handoff), report->requested_handoff);
     copy_literal(out->requested_report, sizeof(out->requested_report), report->requested_report);
-    copy_literal(out->requested_envelope, sizeof(out->requested_envelope), requested_envelope);
+    copy_literal(out->requested_envelope,
+                 sizeof(out->requested_envelope),
+                 safe_requested_envelope_for_copy(requested_envelope));
     copy_literal(out->requested_scope, sizeof(out->requested_scope), report->requested_scope);
     out->crypto_graduation_gate_present = report->crypto_graduation_gate_present;
     out->crypto_graduation_gate_passed = report->crypto_graduation_gate_passed;
@@ -124,6 +349,13 @@ latticra_status_t latticra_seal_report_envelope_from_report(
         return LATTICRA_STATUS_OK;
     }
 
+    if (!report_strings_valid(report)) {
+        out->error = LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT;
+        copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-report");
+        copy_literal(out->status, sizeof(out->status), "invalid-report");
+        return LATTICRA_STATUS_OK;
+    }
+
     copy_report_metadata(report, requested_envelope, out);
 
     if (report->error != LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_OK) {
@@ -139,7 +371,9 @@ latticra_status_t latticra_seal_report_envelope_from_report(
          report->local_verify_graduated != 1u ||
          report->receipt_promotion_graduated != 1u ||
          report->authority_promotion_allowed != 0u ||
-         strcmp(report->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+         !bounded_string_is(report->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX,
+                            "graduated-authority-neutral"))) {
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_CRYPTO_GRADUATION_GATE;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-crypto-graduation-gate");
         copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
@@ -153,8 +387,12 @@ latticra_status_t latticra_seal_report_envelope_from_report(
         return LATTICRA_STATUS_OK;
     }
 
-    report_only_ready = strcmp(report->report_state, "ready-report-only") == 0;
-    evaluate_only_ready = strcmp(report->report_state, "ready-evaluate-only") == 0;
+    report_only_ready = bounded_string_is(report->report_state,
+                                          LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX,
+                                          "ready-report-only");
+    evaluate_only_ready = bounded_string_is(report->report_state,
+                                            LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_STATE_MAX,
+                                            "ready-evaluate-only");
     if (!report_only_ready && !evaluate_only_ready) {
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_REPORT;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-report");
@@ -186,22 +424,30 @@ latticra_status_t latticra_seal_report_envelope_from_report(
         return LATTICRA_STATUS_OK;
     }
 
-    if (requested_envelope == NULL || requested_envelope[0] == '\0') {
+    if (!requested_envelope_present(requested_envelope)) {
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_MISSING_REQUESTED_ENVELOPE;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-envelope");
         copy_literal(out->status, sizeof(out->status), "missing-requested-envelope");
         return LATTICRA_STATUS_OK;
     }
 
-    if (!is_allowed_envelope(requested_envelope)) {
+    if (!text_field_valid(requested_envelope,
+                          LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) ||
+        !is_allowed_envelope(requested_envelope)) {
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_UNKNOWN_ENVELOPE;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-envelope");
         copy_literal(out->status, sizeof(out->status), "denied-unknown-envelope");
         return LATTICRA_STATUS_OK;
     }
 
-    if ((report_only_ready && strcmp(requested_envelope, "report-only") != 0) ||
-        (evaluate_only_ready && strcmp(requested_envelope, "evaluate-only") != 0)) {
+    if ((report_only_ready &&
+         !bounded_string_is(requested_envelope,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                            "report-only")) ||
+        (evaluate_only_ready &&
+         !bounded_string_is(requested_envelope,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                            "evaluate-only"))) {
         out->error = LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_ENVELOPE;
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "denied-envelope");
         copy_literal(out->status, sizeof(out->status), "denied-envelope");
@@ -218,7 +464,9 @@ latticra_status_t latticra_seal_report_envelope_from_report(
     out->network_performed = 0u;
     out->error = LATTICRA_SEAL_REPORT_ENVELOPE_OK;
 
-    if (strcmp(requested_envelope, "report-only") == 0) {
+    if (bounded_string_is(requested_envelope,
+                          LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX,
+                          "report-only")) {
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "sealed-report-only");
     } else {
         copy_literal(out->envelope_state, sizeof(out->envelope_state), "sealed-evaluate-only");
@@ -240,7 +488,61 @@ int latticra_seal_report_envelope_is_metadata_only(
            envelope->runtime_authority_granted == 0u &&
            envelope->host_read_performed == 0u &&
            envelope->host_write_performed == 0u &&
-           envelope->network_performed == 0u;
+           envelope->network_performed == 0u &&
+           envelope_error_valid(envelope->error) &&
+           boolean_flag_valid(envelope->crypto_graduation_gate_present) &&
+           boolean_flag_valid(envelope->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(envelope->standard_expectations_met) &&
+           boolean_flag_valid(envelope->local_verify_graduated) &&
+           boolean_flag_valid(envelope->receipt_promotion_graduated) &&
+           boolean_flag_valid(envelope->authority_promotion_allowed) &&
+           boolean_flag_valid(envelope->report_ready) &&
+           envelope_ready_state_valid(envelope) &&
+           bounded_string_is(envelope->envelope_profile,
+                             LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX,
+                             "latticra-seal-report-envelope/0.1") &&
+           text_field_terminated(envelope->report_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->handoff_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->decision_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->gate_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->receipt_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->verify_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->message_digest_algorithm,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_ALGORITHM_MAX) &&
+           text_field_terminated(envelope->message_digest_hex,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_DIGEST_MAX) &&
+           text_field_terminated(envelope->public_key_identity_label,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->crypto_graduation_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_terminated(envelope->assurance_baseline_profile,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_PROFILE_MAX) &&
+           text_field_valid(envelope->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX) &&
+           text_field_terminated(envelope->requested_capability,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->requested_effect,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->requested_handoff,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->requested_report,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->requested_envelope,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_terminated(envelope->requested_scope,
+                                 LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX) &&
+           text_field_valid(envelope->report_state,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX) &&
+           text_field_valid(envelope->envelope_state,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX) &&
+           text_field_valid(envelope->status,
+                            LATTICRA_SEAL_REPORT_ENVELOPE_STATE_MAX);
 }
 
 latticra_status_t latticra_seal_report_envelope_render(
@@ -250,6 +552,13 @@ latticra_status_t latticra_seal_report_envelope_render(
     int written;
 
     if (envelope == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_report_envelope_is_metadata_only(envelope)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

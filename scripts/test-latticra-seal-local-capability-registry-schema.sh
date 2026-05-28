@@ -46,6 +46,7 @@ require_contains 'LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_NON_REPORT_ONLY
 require_contains 'latticra_seal_local_capability_registry_schema_add_default_entry' include/latticra/seal_local_capability_registry_schema.h
 require_contains 'latticra_seal_local_capability_registry_schema_render' include/latticra/seal_local_capability_registry_schema.h
 require_contains 'LATTICRA SEAL LOCAL CAPABILITY REGISTRY SCHEMA REPORT' src/seal_local_capability_registry_schema.c
+require_contains 'bounded_string_is' src/seal_local_capability_registry_schema.c
 require_contains 'registry_schema_profile=%s' src/seal_local_capability_registry_schema.c
 require_contains 'registry_loader_implemented=%u' src/seal_local_capability_registry_schema.c
 require_contains 'capability_grants_authority=%u' src/seal_local_capability_registry_schema.c
@@ -53,6 +54,8 @@ require_contains 'entry-would-grant-authority' src/seal_local_capability_registr
 require_contains 'entry-would-perform-effect' src/seal_local_capability_registry_schema.c
 require_contains 'non-report-only-entry' src/seal_local_capability_registry_schema.c
 require_contains 'registry-schema-is-descriptive-only' tests/seal_local_capability_registry_schema_invariants.c
+require_contains 'unterminated schema render rejected' tests/seal_local_capability_registry_schema_invariants.c
+require_contains 'runtime authority render rejected' tests/seal_local_capability_registry_schema_invariants.c
 require_contains 'seal local capability registry schema invariants: ok' tests/seal_local_capability_registry_schema_invariants.c
 require_contains 'registry_schema_profile=latticra-seal-local-capability-registry-schema/0.1' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'registry_loader_implemented=0' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
@@ -64,6 +67,7 @@ require_contains 'capability_executes_tool=0' docs/LATTICRA_SEAL_LOCAL_CAPABILIT
 require_contains 'capability_reads_host=0' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'capability_writes_host=0' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'capability_uses_network=0' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
+require_contains 'unterminated schema strings before render' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'scripts/test-latticra-seal-local-capability-registry-schema.sh' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md

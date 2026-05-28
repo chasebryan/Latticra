@@ -18,8 +18,8 @@ static int default_request_is_denied(void) {
     EXPECT_TRUE(latticra_kernel_lifecycle_default_request(&request) == LATTICRA_STATUS_OK,
         "default request status");
     EXPECT_TRUE(request.target_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
-        "default target runtime-entry-address-space-view-ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "default target runtime-entry-recovery-audit-observation-view-ready");
     EXPECT_TRUE(request.gate == LATTICRA_KERNEL_STATE_GATE_DENY,
         "default gate deny");
     EXPECT_TRUE(request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
@@ -46,7 +46,7 @@ static int default_request_is_denied(void) {
     return 0;
 }
 
-static int allowed_lifecycle_reaches_runtime_entry_address_space_view_ready(
+static int allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_view_ready(
     void) {
     latticra_kernel_lifecycle_request_t request;
     latticra_kernel_lifecycle_result_t result;
@@ -62,12 +62,12 @@ static int allowed_lifecycle_reaches_runtime_entry_address_space_view_ready(
     EXPECT_TRUE(strcmp(result.policy_status, "gate-allowed") == 0,
         "policy gate allowed");
     EXPECT_TRUE(result.final_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
-        "final state runtime-entry-address-space-view-ready");
-    EXPECT_TRUE(result.step_count == 28u,
-        "twenty eight steps to runtime-entry-address-space-view-ready");
-    EXPECT_TRUE(result.state_change_count == 28u,
-        "twenty eight state changes");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "final state runtime-entry-recovery-audit-observation-view-ready");
+    EXPECT_TRUE(result.step_count == 46u,
+        "forty six steps to runtime-entry-recovery-audit-observation-view-ready");
+    EXPECT_TRUE(result.state_change_count == 46u,
+        "forty six state changes");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "complete flag set");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -76,8 +76,8 @@ static int allowed_lifecycle_reaches_runtime_entry_address_space_view_ready(
         "lifecycle network denied");
     EXPECT_TRUE(result.machine.network_allowed == 0,
         "machine network denied");
-    EXPECT_TRUE(result.machine.log_count == 28u,
-        "machine log has twenty eight entries");
+    EXPECT_TRUE(result.machine.log_count == 46u,
+        "machine log has forty six entries");
     EXPECT_TRUE(result.machine.log[0].from_state == LATTICRA_KERNEL_STATE_CREATED,
         "log zero from created");
     EXPECT_TRUE(result.machine.log[0].to_state == LATTICRA_KERNEL_STATE_INITIALIZED,
@@ -171,6 +171,150 @@ static int allowed_lifecycle_reaches_runtime_entry_address_space_view_ready(
             LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
         "log twenty seven to runtime-entry-address-space-view-ready");
     EXPECT_TRUE(result.machine.log[27].state_change_performed == 1,
+        "runtime entry address space view step changed state");
+    EXPECT_TRUE(result.machine.log[28].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "log twenty eight from runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(result.machine.log[28].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY,
+        "log twenty eight to runtime-entry-privilege-level-view-ready");
+    EXPECT_TRUE(result.machine.log[28].state_change_performed == 1,
+        "runtime entry privilege level view step changed state");
+    EXPECT_TRUE(result.machine.log[29].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY,
+        "log twenty nine from runtime-entry-privilege-level-view-ready");
+    EXPECT_TRUE(result.machine.log[29].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY,
+        "log twenty nine to runtime-entry-syscall-gate-view-ready");
+    EXPECT_TRUE(result.machine.log[29].state_change_performed == 1,
+        "syscall gate step changed state");
+    EXPECT_TRUE(result.machine.log[30].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY,
+        "log thirty from runtime-entry-syscall-gate-view-ready");
+    EXPECT_TRUE(result.machine.log[30].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY,
+        "log thirty to runtime-entry-syscall-dispatch-view-ready");
+    EXPECT_TRUE(result.machine.log[30].state_change_performed == 1,
+        "syscall dispatch view step changed state");
+    EXPECT_TRUE(result.machine.log[31].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY,
+        "log thirty one from runtime-entry-syscall-dispatch-view-ready");
+    EXPECT_TRUE(result.machine.log[31].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY,
+        "log thirty one to runtime-entry-syscall-return-view-ready");
+    EXPECT_TRUE(result.machine.log[31].state_change_performed == 1,
+        "syscall return view step changed state");
+    EXPECT_TRUE(result.machine.log[32].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY,
+        "log thirty two from runtime-entry-syscall-return-view-ready");
+    EXPECT_TRUE(result.machine.log[32].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY,
+        "log thirty two to runtime-entry-syscall-exit-view-ready");
+    EXPECT_TRUE(result.machine.log[32].state_change_performed == 1,
+        "syscall exit view step changed state");
+    EXPECT_TRUE(result.machine.log[33].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY,
+        "log thirty three from runtime-entry-syscall-exit-view-ready");
+    EXPECT_TRUE(result.machine.log[33].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY,
+        "log thirty three to runtime-entry-user-mode-resume-view-ready");
+    EXPECT_TRUE(result.machine.log[33].state_change_performed == 1,
+        "user mode resume view step changed state");
+    EXPECT_TRUE(result.machine.log[34].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY,
+        "log thirty four from runtime-entry-user-mode-resume-view-ready");
+    EXPECT_TRUE(result.machine.log[34].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY,
+        "log thirty four to runtime-entry-post-resume-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[34].state_change_performed == 1,
+        "post resume observation view step changed state");
+    EXPECT_TRUE(result.machine.log[35].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY,
+        "log thirty five from runtime-entry-post-resume-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[35].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty five to runtime-entry-scheduler-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[35].state_change_performed == 1,
+        "scheduler return observation view step changed state");
+    EXPECT_TRUE(result.machine.log[36].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty six from runtime-entry-scheduler-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[36].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty six to runtime-entry-process-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[36].state_change_performed == 1,
+        "process return observation view step changed state");
+    EXPECT_TRUE(result.machine.log[37].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty seven from runtime-entry-process-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[37].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty seven to runtime-entry-idle-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[37].state_change_performed == 1,
+        "idle return observation view step changed state");
+    EXPECT_TRUE(result.machine.log[38].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty eight from runtime-entry-idle-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[38].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty eight to runtime-entry-quiescent-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[38].state_change_performed == 1,
+        "quiescent return observation view step changed state");
+    EXPECT_TRUE(result.machine.log[39].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY,
+        "log thirty nine from runtime-entry-quiescent-return-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[39].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log thirty nine to runtime-entry-persistence-boundary-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[39].state_change_performed == 1,
+        "persistence boundary observation view step changed state");
+    EXPECT_TRUE(result.machine.log[40].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log forty from runtime-entry-persistence-boundary-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[40].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log forty to runtime-entry-recovery-boundary-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[40].state_change_performed == 1,
+        "recovery boundary observation view step changed state");
+    EXPECT_TRUE(result.machine.log[41].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log forty one from runtime-entry-recovery-boundary-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[41].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY,
+        "log forty one to runtime-entry-recovery-plan-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[41].state_change_performed == 1,
+        "recovery plan observation view step changed state");
+    EXPECT_TRUE(result.machine.log[42].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY,
+        "log forty two from runtime-entry-recovery-plan-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[42].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY,
+        "log forty two to runtime-entry-recovery-disposition-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[42].state_change_performed == 1,
+        "recovery disposition observation view step changed state");
+    EXPECT_TRUE(result.machine.log[43].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY,
+        "log forty three from runtime-entry-recovery-disposition-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[43].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY,
+        "log forty three to runtime-entry-recovery-outcome-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[43].state_change_performed == 1,
+        "recovery outcome observation view step changed state");
+    EXPECT_TRUE(result.machine.log[44].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY,
+        "log forty four from runtime-entry-recovery-outcome-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[44].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY,
+        "log forty four to runtime-entry-recovery-closeout-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[44].state_change_performed == 1,
+        "recovery closeout observation view step changed state");
+    EXPECT_TRUE(result.machine.log[45].from_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY,
+        "log forty five from runtime-entry-recovery-closeout-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[45].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "log forty five to runtime-entry-recovery-audit-observation-view-ready");
+    EXPECT_TRUE(result.machine.log[45].state_change_performed == 1,
         "last step changed state");
     return 0;
 }
@@ -280,11 +424,11 @@ static int lifecycle_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "policy_status=gate-allowed\n") != 0,
         "policy status emitted");
     EXPECT_TRUE(strstr(report,
-            "final_state=runtime-entry-address-space-view-ready\n") != 0,
+            "final_state=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
         "final state emitted");
-    EXPECT_TRUE(strstr(report, "step_count=28\n") != 0,
+    EXPECT_TRUE(strstr(report, "step_count=46\n") != 0,
         "step count emitted");
-    EXPECT_TRUE(strstr(report, "state_change_count=28\n") != 0,
+    EXPECT_TRUE(strstr(report, "state_change_count=46\n") != 0,
         "state change count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "complete flag emitted");
@@ -294,7 +438,7 @@ static int lifecycle_report_is_deterministic(void) {
         "network flag emitted");
     EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
         "machine network flag emitted");
-    EXPECT_TRUE(strstr(report, "machine_log_count=28\n") != 0,
+    EXPECT_TRUE(strstr(report, "machine_log_count=46\n") != 0,
         "machine log count emitted");
     EXPECT_TRUE(strstr(report, "log[0].from=created\n") != 0,
         "log zero from emitted");
@@ -383,8 +527,152 @@ static int lifecycle_report_is_deterministic(void) {
         "log final from emitted");
     EXPECT_TRUE(strstr(report,
             "log[27].to=runtime-entry-address-space-view-ready\n") != 0,
-        "log final to emitted");
+        "log address space view to emitted");
     EXPECT_TRUE(strstr(report, "log[27].state_change_performed=1\n") != 0,
+        "log address space view change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[28].from=runtime-entry-address-space-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[28].to=runtime-entry-privilege-level-view-ready\n") != 0,
+        "log privilege level view to emitted");
+    EXPECT_TRUE(strstr(report, "log[28].state_change_performed=1\n") != 0,
+        "log privilege level view change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[29].from=runtime-entry-privilege-level-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[29].to=runtime-entry-syscall-gate-view-ready\n") != 0,
+        "log syscall gate to emitted");
+    EXPECT_TRUE(strstr(report, "log[29].state_change_performed=1\n") != 0,
+        "log syscall gate change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[30].from=runtime-entry-syscall-gate-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[30].to=runtime-entry-syscall-dispatch-view-ready\n") != 0,
+        "log syscall dispatch to emitted");
+    EXPECT_TRUE(strstr(report, "log[30].state_change_performed=1\n") != 0,
+        "log syscall dispatch change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[31].from=runtime-entry-syscall-dispatch-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[31].to=runtime-entry-syscall-return-view-ready\n") != 0,
+        "log syscall return to emitted");
+    EXPECT_TRUE(strstr(report, "log[31].state_change_performed=1\n") != 0,
+        "log syscall return change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[32].from=runtime-entry-syscall-return-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[32].to=runtime-entry-syscall-exit-view-ready\n") != 0,
+        "log syscall exit to emitted");
+    EXPECT_TRUE(strstr(report, "log[32].state_change_performed=1\n") != 0,
+        "log syscall exit change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[33].from=runtime-entry-syscall-exit-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[33].to=runtime-entry-user-mode-resume-view-ready\n") != 0,
+        "log user mode resume to emitted");
+    EXPECT_TRUE(strstr(report, "log[33].state_change_performed=1\n") != 0,
+        "log user mode resume change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[34].from=runtime-entry-user-mode-resume-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[34].to=runtime-entry-post-resume-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[34].state_change_performed=1\n") != 0,
+        "log post resume observation change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[35].from=runtime-entry-post-resume-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[35].to=runtime-entry-scheduler-return-observation-view-ready\n") != 0,
+        "log scheduler return to emitted");
+    EXPECT_TRUE(strstr(report, "log[35].state_change_performed=1\n") != 0,
+        "log scheduler return change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[36].from=runtime-entry-scheduler-return-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[36].to=runtime-entry-process-return-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[36].state_change_performed=1\n") != 0,
+        "log process return change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[37].from=runtime-entry-process-return-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[37].to=runtime-entry-idle-return-observation-view-ready\n") != 0,
+        "log idle return to emitted");
+    EXPECT_TRUE(strstr(report, "log[37].state_change_performed=1\n") != 0,
+        "log idle return change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[38].from=runtime-entry-idle-return-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[38].to=runtime-entry-quiescent-return-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[38].state_change_performed=1\n") != 0,
+        "log quiescent return change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[39].from=runtime-entry-quiescent-return-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[39].to=runtime-entry-persistence-boundary-observation-view-ready\n") != 0,
+        "log persistence boundary to emitted");
+    EXPECT_TRUE(strstr(report, "log[39].state_change_performed=1\n") != 0,
+        "log persistence boundary change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[40].from=runtime-entry-persistence-boundary-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[40].to=runtime-entry-recovery-boundary-observation-view-ready\n") != 0,
+        "log recovery boundary to emitted");
+    EXPECT_TRUE(strstr(report, "log[40].state_change_performed=1\n") != 0,
+        "log recovery boundary change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[41].from=runtime-entry-recovery-boundary-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[41].to=runtime-entry-recovery-plan-observation-view-ready\n") != 0,
+        "log recovery plan to emitted");
+    EXPECT_TRUE(strstr(report, "log[41].state_change_performed=1\n") != 0,
+        "log recovery plan change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[42].from=runtime-entry-recovery-plan-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[42].to=runtime-entry-recovery-disposition-observation-view-ready\n") != 0,
+        "log recovery disposition to emitted");
+    EXPECT_TRUE(strstr(report, "log[42].state_change_performed=1\n") != 0,
+        "log recovery disposition change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[43].from=runtime-entry-recovery-disposition-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[43].to=runtime-entry-recovery-outcome-observation-view-ready\n") != 0,
+        "log recovery outcome to emitted");
+    EXPECT_TRUE(strstr(report, "log[43].state_change_performed=1\n") != 0,
+        "log recovery outcome change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[44].from=runtime-entry-recovery-outcome-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[44].to=runtime-entry-recovery-closeout-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[44].state_change_performed=1\n") != 0,
+        "log recovery closeout change emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[45].from=runtime-entry-recovery-closeout-observation-view-ready\n") != 0,
+        "log final from emitted");
+    EXPECT_TRUE(strstr(report,
+            "log[45].to=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
+        "log final to emitted");
+    EXPECT_TRUE(strstr(report, "log[45].state_change_performed=1\n") != 0,
         "log final change emitted");
     return 0;
 }
@@ -410,7 +698,7 @@ static int null_guards_are_safe(void) {
 
 int main(void) {
     if (default_request_is_denied() != 0) return 1;
-    if (allowed_lifecycle_reaches_runtime_entry_address_space_view_ready()
+    if (allowed_lifecycle_reaches_runtime_entry_recovery_audit_observation_view_ready()
             != 0) {
         return 1;
     }

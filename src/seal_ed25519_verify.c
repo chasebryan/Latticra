@@ -78,7 +78,7 @@ static void result_init(latticra_seal_ed25519_verify_result_t *result) {
     copy_literal(result->message_digest_algorithm, sizeof(result->message_digest_algorithm), "SHA-256");
     copy_literal(result->signature_algorithm, sizeof(result->signature_algorithm), "Ed25519-development");
     copy_literal(result->crypto_verify_state, sizeof(result->crypto_verify_state), "invalid");
-    result->cryptographic_verification_supported = 1u;
+    result->cryptographic_verification_supported = 0u;
     result->cryptographic_verification_performed = 0u;
     result->verified = 0u;
     result->invalid = 1u;
@@ -97,6 +97,19 @@ static void copy_backend_metadata(
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), backend->public_key_identity_label);
     copy_literal(out->signature_algorithm, sizeof(out->signature_algorithm), backend->signature_algorithm);
     copy_literal(out->trust_source, sizeof(out->trust_source), backend->trust_source);
+}
+
+static int backend_allows_local_ed25519_verification(
+    const latticra_seal_crypto_verify_backend_t *backend) {
+    return backend->cryptographic_verification_supported == 1u &&
+           backend->cryptographic_verification_performed == 0u &&
+           backend->verified == 0u &&
+           backend->invalid == 0u &&
+           backend->authority_usable == 0u &&
+           backend->capability_gate_allowed == 0u &&
+           backend->runtime_authority_granted == 0u &&
+           strcmp(backend->crypto_verify_state, "ready-local-ed25519") == 0 &&
+           strcmp(backend->status, "crypto-verify-backend-ready") == 0;
 }
 
 static int openssl_ed25519_verify(
@@ -152,6 +165,7 @@ latticra_status_t latticra_seal_ed25519_verify_local(
 
     if (backend->error != LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_OK) {
         out->error = LATTICRA_SEAL_ED25519_VERIFY_INVALID_BACKEND;
+        copy_literal(out->crypto_verify_state, sizeof(out->crypto_verify_state), "invalid-backend");
         copy_literal(out->status, sizeof(out->status), "invalid-backend");
         return LATTICRA_STATUS_OK;
     }
@@ -164,6 +178,15 @@ latticra_status_t latticra_seal_ed25519_verify_local(
         copy_literal(out->status, sizeof(out->status), "unsupported-algorithm");
         return LATTICRA_STATUS_OK;
     }
+
+    if (!backend_allows_local_ed25519_verification(backend)) {
+        out->error = LATTICRA_SEAL_ED25519_VERIFY_INVALID_BACKEND;
+        copy_literal(out->crypto_verify_state, sizeof(out->crypto_verify_state), "invalid-backend");
+        copy_literal(out->status, sizeof(out->status), "invalid-backend");
+        return LATTICRA_STATUS_OK;
+    }
+
+    out->cryptographic_verification_supported = 1u;
 
     if (message == NULL || message_len == 0u) {
         out->error = LATTICRA_SEAL_ED25519_VERIFY_MISSING_MESSAGE;

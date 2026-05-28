@@ -56,7 +56,7 @@ Latest Lat LIR first transition-source edge endpoint payload evidence propagatio
 Latest Lat LIR first transition-source edge endpoint topology evidence propagation note: 2026-05-27 CDT
 Latest Lat LIR first transition-source edge endpoint span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
-Latest kernel lifecycle evidence status note: 2026-05-26 CDT
+Latest kernel lifecycle evidence status note: 2026-05-27 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
@@ -1137,7 +1137,7 @@ host_behavior_changed=0
 estimate_adjustment_required=0
 ```
 
-The Latticra Seal crypto verify backend status record makes the existing metadata-only crypto verify backend implementation visible from public entry points while preserving unsupported cryptographic verification, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
+The Latticra Seal crypto verify backend status record makes the existing authority-neutral crypto verify backend readiness implementation visible from public entry points while preserving verification-not-performed backend behavior, no signing, no key material loading, no private-key handling, no trust-store behavior, no revocation lookup, no host behavior, no network behavior, no capability enforcement, and no runtime authority.
 
 Current crypto verify backend fields:
 
@@ -1145,8 +1145,8 @@ Current crypto verify backend fields:
 seal_crypto_verify_backend_contract_present=1
 seal_crypto_verify_backend_implementation_present=1
 seal_crypto_verify_backend_status_present=1
-crypto_verify_state=unsupported
-cryptographic_verification_supported=0
+crypto_verify_state=ready-local-ed25519
+cryptographic_verification_supported=1
 cryptographic_verification_performed=0
 verified=0
 authority_usable=0
@@ -2223,6 +2223,24 @@ Kernel runtime entry frame seed
 Kernel runtime entry register-view seed
 Kernel runtime entry stack-view seed
 Kernel runtime entry address-space-view seed
+Kernel runtime entry privilege-level-view seed
+Kernel runtime entry syscall-gate-view seed
+Kernel runtime entry syscall-dispatch-view seed
+Kernel runtime entry syscall-return-view seed
+Kernel runtime entry syscall-exit-view seed
+Kernel runtime entry user-mode-resume-view seed
+Kernel runtime entry post-resume-observation-view seed
+Kernel runtime entry scheduler-return-observation-view seed
+Kernel runtime entry process-return-observation-view seed
+Kernel runtime entry idle-return-observation-view seed
+Kernel runtime entry quiescent-return-observation-view seed
+Kernel runtime entry persistence-boundary-observation-view seed
+Kernel runtime entry recovery-boundary-observation-view seed
+Kernel runtime entry recovery-plan-observation-view seed
+Kernel runtime entry recovery-disposition-observation-view seed
+Kernel runtime entry recovery-outcome-observation-view seed
+Kernel runtime entry recovery-closeout-observation-view seed
+Kernel runtime entry recovery-audit-observation-view seed
 Kernel lifecycle report runner
 Kernel lifecycle subsystem summary
 Kernel lifecycle rollback plan

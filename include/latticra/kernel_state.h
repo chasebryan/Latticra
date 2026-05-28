@@ -1,7 +1,7 @@
 #ifndef LATTICRA_KERNEL_STATE_H
 #define LATTICRA_KERNEL_STATE_H
 
-#include "latticra/kernel_runtime_entry_address_space_view.h"
+#include "latticra/kernel_runtime_entry_recovery_audit_observation_view.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,7 +39,25 @@ typedef enum {
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY = 25,
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY = 26,
     LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY = 27,
-    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY = 28
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY = 28,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY = 29,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY = 30,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY = 31,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY = 32,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY = 33,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY = 34,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY = 35,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY = 36,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY = 37,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY = 38,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY = 39,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY = 40,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY = 41,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY = 42,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY = 43,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY = 44,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY = 45,
+    LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY = 46
 } latticra_kernel_state_kind_t;
 
 typedef enum {
@@ -76,6 +94,42 @@ typedef struct {
         runtime_entry_stack_view_request;
     latticra_kernel_runtime_entry_address_space_view_request_t
         runtime_entry_address_space_view_request;
+    latticra_kernel_runtime_entry_privilege_level_view_request_t
+        runtime_entry_privilege_level_view_request;
+    latticra_kernel_runtime_entry_syscall_gate_view_request_t
+        runtime_entry_syscall_gate_view_request;
+    latticra_kernel_runtime_entry_syscall_dispatch_view_request_t
+        runtime_entry_syscall_dispatch_view_request;
+    latticra_kernel_runtime_entry_syscall_return_view_request_t
+        runtime_entry_syscall_return_view_request;
+    latticra_kernel_runtime_entry_syscall_exit_view_request_t
+        runtime_entry_syscall_exit_view_request;
+    latticra_kernel_runtime_entry_user_mode_resume_view_request_t
+        runtime_entry_user_mode_resume_view_request;
+    latticra_kernel_runtime_entry_post_resume_observation_view_request_t
+        runtime_entry_post_resume_observation_view_request;
+    latticra_kernel_runtime_entry_scheduler_return_observation_view_request_t
+        runtime_entry_scheduler_return_observation_view_request;
+    latticra_kernel_runtime_entry_process_return_observation_view_request_t
+        runtime_entry_process_return_observation_view_request;
+    latticra_kernel_runtime_entry_idle_return_observation_view_request_t
+        runtime_entry_idle_return_observation_view_request;
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_request_t
+        runtime_entry_quiescent_return_observation_view_request;
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_request_t
+        runtime_entry_persistence_boundary_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_request_t
+        runtime_entry_recovery_boundary_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_request_t
+        runtime_entry_recovery_plan_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_request_t
+        runtime_entry_recovery_disposition_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_request_t
+        runtime_entry_recovery_outcome_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_request_t
+        runtime_entry_recovery_closeout_observation_view_request;
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_request_t
+        runtime_entry_recovery_audit_observation_view_request;
     latticra_kernel_state_kind_t current_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_gate_t gate;
@@ -114,6 +168,42 @@ typedef struct {
     latticra_kernel_runtime_entry_stack_view_result_t runtime_entry_stack_view;
     latticra_kernel_runtime_entry_address_space_view_result_t
         runtime_entry_address_space_view;
+    latticra_kernel_runtime_entry_privilege_level_view_result_t
+        runtime_entry_privilege_level_view;
+    latticra_kernel_runtime_entry_syscall_gate_view_result_t
+        runtime_entry_syscall_gate_view;
+    latticra_kernel_runtime_entry_syscall_dispatch_view_result_t
+        runtime_entry_syscall_dispatch_view;
+    latticra_kernel_runtime_entry_syscall_return_view_result_t
+        runtime_entry_syscall_return_view;
+    latticra_kernel_runtime_entry_syscall_exit_view_result_t
+        runtime_entry_syscall_exit_view;
+    latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+        runtime_entry_user_mode_resume_view;
+    latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+        runtime_entry_post_resume_observation_view;
+    latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+        runtime_entry_scheduler_return_observation_view;
+    latticra_kernel_runtime_entry_process_return_observation_view_result_t
+        runtime_entry_process_return_observation_view;
+    latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+        runtime_entry_idle_return_observation_view;
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        runtime_entry_quiescent_return_observation_view;
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        runtime_entry_persistence_boundary_observation_view;
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        runtime_entry_recovery_boundary_observation_view;
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        runtime_entry_recovery_plan_observation_view;
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        runtime_entry_recovery_disposition_observation_view;
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        runtime_entry_recovery_outcome_observation_view;
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        runtime_entry_recovery_closeout_observation_view;
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        runtime_entry_recovery_audit_observation_view;
     latticra_kernel_state_kind_t previous_state;
     latticra_kernel_state_kind_t target_state;
     latticra_kernel_state_kind_t next_state;

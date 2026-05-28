@@ -51,7 +51,7 @@ require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' docs/OPENSUS
 require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains '.github/workflows/opensuse-rpm-install-remove-transcript-contract.yml' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 require_contains 'opensuse_rpmlint_static_spec_lane: ok' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
 
 require_contains 'LOCAL-ONLY openSUSE DRAFT' packaging/opensuse/latticra.spec

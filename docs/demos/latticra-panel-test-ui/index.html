@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Panel Test UI Lane</title>
+  <meta name="description" content="Isolated Latticra Panel test UI lane for high-fidelity GUI iteration without changing the guarded main Panel implementation.">
+  <meta name="theme-color" content="#f4f7fa">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <p class="sr-only" id="mode-description">Dry-run blocks writes. Guarded local only arms user-local write simulation in this isolated test lane.</p>
+  <p class="sr-only" id="primary-actions-description">Primary actions update the isolated test UI lane only and do not mutate the guarded Panel implementation.</p>
+  <p class="sr-only" id="prefix-policy">Accepted install prefixes must stay user-local. Remote, root, and system prefixes are blocked.</p>
+  <p class="sr-only" id="receipt-preview-description">Receipt preview is a no-effect JSON summary of current test-lane state and recent operator events.</p>
+  <p class="sr-only" id="schema-map-description">Receipt schema map rows expose the current value, source UI surface, and release status for each field. Blocked fields are intentional production gates.</p>
+  <p class="sr-only" id="receipt-checklist-policy">Receipt checklist changes update only the isolated no-effect receipt preview. Guarded items require local mode and an accepted user-local prefix before they can be recorded.</p>
+  <p class="sr-only" id="saved-receipts-description">Saved receipts are local no-effect snapshots. Selecting a saved receipt compares its event, checklist, schema, mode, and prefix state against the current preview.</p>
+  <p class="sr-only" id="saved-receipt-maintenance-description">Saved receipt maintenance retains the latest 8 local no-effect snapshots. Relabel and delete controls mutate only this isolated test lane state.</p>
+  <p class="sr-only" id="receipt-diff-description">Receipt diff detail compares stable saved and current no-effect receipt fields. Changed rows are audit hints only and do not become production evidence.</p>
+  <p class="sr-only" id="receipt-export-description">The receipt export preview is a local JSON artifact for the isolated test UI lane only. It is explicitly marked not production evidence.</p>
+  <p class="sr-only" id="receipt-export-validation-description">Export validation checks local-only schema, watermark, zero authority fields, selected snapshot, and diff filter binding before a local JSON preview is considered ready.</p>
+  <p class="sr-only" id="qa-handoff-description">QA handoff link and manifest are local no-effect review aids. They do not create production evidence, host writes, or main or edge GUI mutations.</p>
+  <p class="sr-only" id="qa-replay-description">QA replay strip summarizes requested URL state, applied local UI state, and zero-authority boundaries for the isolated test lane.</p>
+  <p class="sr-only" id="release-acceptance-description">Release acceptance rows combine local UI proof, migration, engine, accessibility, and production evidence gates without granting production promotion authority.</p>
+  <p class="sr-only" id="assistive-evidence-description">Assistive evidence rows track keyboard, screen-reader, and live-region proof needed before any guarded Panel migration.</p>
+  <p class="sr-only" id="component-toggle-policy">Component toggles update only the isolated test-lane plan and receipt preview.</p>
+  <p class="sr-only" id="console-policy">Console commands are limited to the test-lane allowlist. Blocked commands do not change mode, prefix, components, installer state, or production claims.</p>
+  <p class="sr-only" id="palette-description">Command palette rows can run allowlisted panel commands or jump to local UI review surfaces. They do not launch a shell, write to the host, or mutate the main or edge GUI.</p>
+  <p class="sr-only" id="focus-dock-description">Operator focus dock buttons mirror selected local review context and jump only within this isolated test UI lane.</p>
+  <div class="sr-only" id="assistive-status" role="status" aria-live="polite" aria-atomic="true">Dashboard selected. Dry-run mode. Production claims blocked.</div>
+
+  <div class="app-frame">
+    <header class="topbar" aria-label="Panel header">
+      <a class="brand" href="../../panel.html" aria-label="Back to public Latticra Panel overview">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>
+          <strong>Latticra Panel</strong>
+          <small>test UI lane</small>
+        </span>
+      </a>
+      <div class="topbar-center" role="radiogroup" aria-label="Workspace mode" aria-describedby="mode-description">
+        <button class="mode-option is-active" type="button" role="radio" aria-checked="true" tabindex="0" data-mode="dry">Dry-run</button>
+        <button class="mode-option" type="button" role="radio" aria-checked="false" tabindex="-1" data-mode="local">Guarded local</button>
+      </div>
+      <div class="topbar-actions" aria-label="Primary actions" aria-describedby="primary-actions-description">
+        <button class="ghost-button" type="button" data-action="save-evidence" aria-describedby="primary-actions-description">Save receipt</button>
+        <button class="ghost-button" type="button" data-action="reset-state" aria-describedby="primary-actions-description">Reset state</button>
+        <button class="secondary-button" type="button" data-action="generate-plan" aria-describedby="primary-actions-description">Generate plan</button>
+        <button class="primary-button" type="button" data-action="run-dry" aria-describedby="primary-actions-description">Run dry-install</button>
+      </div>
+    </header>
+    <div class="toast-stack" id="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <main class="panel-layout" id="workspace">
+      <aside class="sidebar" aria-label="Workspace navigation">
+        <nav class="nav-list" aria-label="Panel sections" role="tablist" aria-orientation="vertical">
+          <button class="nav-item is-active" type="button" role="tab" id="tab-dashboard" aria-selected="true" aria-controls="view-dashboard" tabindex="0" data-tab="dashboard">
+            <span>Dashboard</span>
+            <small>Posture</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-components" aria-selected="false" aria-controls="view-components" tabindex="-1" data-tab="components">
+            <span>Components</span>
+            <small>Payloads</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-authority" aria-selected="false" aria-controls="view-authority" tabindex="-1" data-tab="authority">
+            <span>Authority</span>
+            <small>Boundary</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-delivery" aria-selected="false" aria-controls="view-delivery" tabindex="-1" data-tab="delivery">
+            <span>Delivery</span>
+            <small>Plan</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-updater" aria-selected="false" aria-controls="view-updater" tabindex="-1" data-tab="updater">
+            <span>Updater</span>
+            <small>Closed gate</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-evidence" aria-selected="false" aria-controls="view-evidence" tabindex="-1" data-tab="evidence">
+            <span>Evidence</span>
+            <small>Receipts</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-review" aria-selected="false" aria-controls="view-review" tabindex="-1" data-tab="review">
+            <span>Review</span>
+            <small>QA gate</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-readiness" aria-selected="false" aria-controls="view-readiness" tabindex="-1" data-tab="readiness">
+            <span>Readiness</span>
+            <small>Blockers</small>
+          </button>
+          <button class="nav-item" type="button" role="tab" id="tab-console" aria-selected="false" aria-controls="view-console" tabindex="-1" data-tab="console">
+            <span>Console</span>
+            <small>Allowlist</small>
+          </button>
+        </nav>
+
+        <section class="rail-panel" aria-label="Readiness snapshot">
+          <div class="rail-heading">
+            <span>Readiness</span>
+            <strong id="readiness-score">72%</strong>
+          </div>
+          <div class="meter" aria-hidden="true"><span id="readiness-meter"></span></div>
+          <dl class="rail-metrics">
+            <div>
+              <dt>Mode</dt>
+              <dd id="rail-mode">dry-run</dd>
+            </div>
+            <div>
+              <dt>Writes</dt>
+              <dd id="rail-writes">blocked</dd>
+            </div>
+            <div>
+              <dt>Gate</dt>
+              <dd>closed</dd>
+            </div>
+          </dl>
+        </section>
+      </aside>
+
+      <section class="workspace-surface" aria-label="Workspace surface">
+        <div class="workspace-toolbar">
+          <div>
+            <p class="kicker">Operator Workbench</p>
+            <h1 id="workspace-title">Dashboard</h1>
+          </div>
+          <div class="toolbar-controls" aria-label="Workspace controls">
+            <label class="field compact-field">
+              <span>Profile</span>
+              <select id="profile-select">
+                <option>Guided local panel</option>
+                <option>Seal report-only</option>
+                <option>LC standalone</option>
+                <option>Fedora validation</option>
+              </select>
+            </label>
+            <label class="field compact-field">
+              <span>Evidence detail</span>
+              <input id="detail-range" type="range" min="1" max="3" value="2">
+            </label>
+          </div>
+        </div>
+
+        <section class="qa-replay-strip" id="qa-replay-strip" aria-label="QA replay state" aria-describedby="qa-replay-description" data-replay-status="idle">
+          <div class="qa-replay-heading">
+            <p class="kicker">QA Replay</p>
+            <strong id="qa-replay-state">no replay</strong>
+            <small id="qa-replay-summary">0 requested / 0 applied / 0 ignored</small>
+          </div>
+          <div class="qa-replay-chips" id="qa-replay-chips" aria-label="Requested replay parameters"></div>
+          <div class="qa-replay-boundary" id="qa-replay-boundary">production=0 main=0 edge=0</div>
+        </section>
+
+        <section class="status-strip" aria-label="Current posture">
+          <article class="status-card">
+            <span class="status-dot ok" aria-hidden="true"></span>
+            <div>
+              <strong>Plan-first flow</strong>
+              <small id="plan-state">plan ready for review</small>
+            </div>
+          </article>
+          <article class="status-card">
+            <span class="status-dot warn" aria-hidden="true"></span>
+            <div>
+              <strong>User-local prefix</strong>
+              <small id="prefix-state">writes require guarded mode</small>
+            </div>
+          </article>
+          <article class="status-card">
+            <span class="status-dot stop" aria-hidden="true"></span>
+            <div>
+              <strong>Root authority</strong>
+              <small>denied</small>
+            </div>
+          </article>
+          <article class="status-card">
+            <span class="status-dot info" aria-hidden="true"></span>
+            <div>
+              <strong>Production claim</strong>
+              <small>not released</small>
+            </div>
+          </article>
+        </section>
+
+        <section class="operator-focus-dock" id="operator-focus-dock" aria-label="Operator focus dock" aria-describedby="focus-dock-description">
+          <div class="focus-dock-heading">
+            <p class="kicker">Selected Context</p>
+            <strong id="focus-dock-summary">0 selected review targets</strong>
+          </div>
+          <div class="focus-dock-items" id="focus-dock-items" aria-label="Selected local review targets"></div>
+          <div class="focus-dock-boundary" id="focus-dock-boundary">production=0 host=0 main=0 edge=0</div>
+        </section>
+
+        <section class="view is-active" id="view-dashboard" role="tabpanel" aria-labelledby="tab-dashboard" data-view="dashboard">
+          <div class="dashboard-grid">
+            <article class="action-board">
+              <div class="section-title">
+                <p class="kicker">Next Action</p>
+                <h2>Plan, dry-run, then inspect receipts</h2>
+              </div>
+              <ol class="step-list">
+                <li class="is-done">
+                  <span></span>
+                  <div>
+                    <strong>Profile selected</strong>
+                    <small id="step-profile">Guided local panel</small>
+                  </div>
+                </li>
+                <li class="is-current">
+                  <span></span>
+                  <div>
+                    <strong>Plan review</strong>
+                    <small>component manifest, prefix, and authority fields checked</small>
+                  </div>
+                </li>
+                <li>
+                  <span></span>
+                  <div>
+                    <strong>Dry-install run</strong>
+                    <small>receipt and engine log stay in evidence</small>
+                  </div>
+                </li>
+                <li>
+                  <span></span>
+                  <div>
+                    <strong>Guarded local install</strong>
+                    <small>locked until explicit local mode is active</small>
+                  </div>
+                </li>
+              </ol>
+            </article>
+
+            <article class="run-monitor">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Run Monitor</p>
+                  <h2 id="run-monitor-title">Idle, plan current</h2>
+                </div>
+                <span class="badge ok" id="run-badge">ready</span>
+              </div>
+              <div class="progress-block">
+                <div class="progress-header">
+                  <span id="progress-label">Evidence completeness</span>
+                  <strong id="progress-percent">72%</strong>
+                </div>
+                <div class="progress-track" aria-hidden="true"><span id="progress-fill"></span></div>
+              </div>
+              <div class="log-window" id="recent-log" aria-label="Recent engine output">
+                <p>[plan] profile=guided-local-panel</p>
+                <p>[guard] root_authority=0 network_authority=0 runtime_enforcement=0</p>
+                <p>[receipt] dry_run_plan_digest=ready-for-review</p>
+              </div>
+            </article>
+
+            <article class="asset-panel">
+              <img src="../../assets/latticra-panel.png" alt="Latticra Panel workbench visual asset.">
+              <div>
+                <p class="kicker">Visual Identity</p>
+                <h2>Workbench, not wizard</h2>
+                <p>Dense panels, visible authority state, and receipt-first actions shape this test lane.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid secondary-grid">
+            <article class="matrix-card">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Components</p>
+                  <h2 id="component-count">6 selected</h2>
+                </div>
+                <button class="text-button" type="button" data-tab-jump="components">Review</button>
+              </div>
+              <div class="component-stack" id="component-stack"></div>
+            </article>
+
+            <article class="matrix-card">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Authority</p>
+                  <h2>Blocked effects stay visible</h2>
+                </div>
+                <button class="text-button" type="button" data-tab-jump="authority">Inspect</button>
+              </div>
+              <div class="authority-list">
+                <div><span class="swatch ok" aria-hidden="true"></span><strong>Dry-run plan</strong><small>allowed</small></div>
+                <div><span class="swatch warn" aria-hidden="true"></span><strong>User-local writes</strong><small id="local-write-row">requires guarded mode</small></div>
+                <div><span class="swatch stop" aria-hidden="true"></span><strong>System mutation</strong><small>blocked</small></div>
+                <div><span class="swatch stop" aria-hidden="true"></span><strong>Network fetch</strong><small>blocked</small></div>
+              </div>
+            </article>
+
+            <article class="matrix-card quality-card">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Production Gates</p>
+                  <h2 id="quality-gate-title">4 verified, 2 pending</h2>
+                </div>
+                <span class="badge warn" id="quality-gate-badge">not ready</span>
+              </div>
+              <div class="quality-gates" id="quality-gates" aria-label="Production quality gates"></div>
+              <button class="text-button" type="button" data-tab-jump="review">Open review</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-components" role="tabpanel" aria-labelledby="tab-components" aria-hidden="true" data-view="components">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Payload Selection</p>
+              <h2>Profiles choose components, operators keep final review.</h2>
+            </div>
+            <div class="view-actions">
+              <span class="component-summary" id="component-selection-summary" role="status" aria-live="polite">6 of 8 selected</span>
+              <input class="search-input" id="component-search" type="search" placeholder="Filter components" aria-label="Filter components" aria-describedby="component-toggle-policy component-selection-summary">
+            </div>
+          </div>
+          <div class="component-table" id="component-table" aria-describedby="component-toggle-policy component-selection-summary"></div>
+        </section>
+
+        <section class="view" id="view-authority" role="tabpanel" aria-labelledby="tab-authority" aria-hidden="true" data-view="authority">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Authority Boundary</p>
+              <h2>Allowed paths are narrow; blocked paths are first-class state.</h2>
+            </div>
+          </div>
+          <div class="authority-grid">
+            <article>
+              <span class="badge ok">allowed</span>
+              <h3>Generate plan</h3>
+              <p>Reads local config and component metadata, then renders an operator-reviewed plan.</p>
+            </article>
+            <article>
+              <span class="badge ok">allowed</span>
+              <h3>Dry-install receipt</h3>
+              <p>Writes evidence under the local receipt lane without creating the install prefix.</p>
+            </article>
+            <article>
+              <span class="badge warn">guarded</span>
+              <h3>User-local prefix</h3>
+              <p>Requires explicit guarded local mode and remains scoped to selected user files.</p>
+            </article>
+            <article>
+              <span class="badge stop">blocked</span>
+              <h3>Root and system paths</h3>
+              <p>No firmware, bootloader, service, package manager, kernel, or system directory writes.</p>
+            </article>
+            <article>
+              <span class="badge stop">blocked</span>
+              <h3>Network self-update</h3>
+              <p>Signed update delivery remains closed until manifest, artifact, rollback, and receipt gates exist.</p>
+            </article>
+            <article>
+              <span class="badge stop">blocked</span>
+              <h3>Runtime enforcement</h3>
+              <p>Seal and Nadia surfaces stay report-only until separate runtime evidence is promoted.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-delivery" role="tabpanel" aria-labelledby="tab-delivery" aria-hidden="true" data-view="delivery">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Delivery Plan</p>
+              <h2>Every phase has a receipt-facing state.</h2>
+            </div>
+            <button class="secondary-button" type="button" data-action="generate-plan">Refresh plan</button>
+          </div>
+          <div class="delivery-layout">
+            <article class="plan-preview">
+              <header>
+                <h3>Plan preview</h3>
+                <span class="badge ok" id="plan-badge">current</span>
+              </header>
+              <pre id="plan-preview">profile=guided-local-panel
+mode=dry-run
+prefix=~/.local
+components=lat,lir,seal,nadia,console,docs
+root_authority=0
+network_authority=0
+production_installer_ready=0</pre>
+            </article>
+            <article class="receipt-panel" aria-describedby="receipt-checklist-policy">
+              <div class="section-title inline-title">
+                <h3>Receipt checklist</h3>
+                <span class="badge warn" id="receipt-checklist-count" role="status" aria-live="polite">3 recorded</span>
+              </div>
+              <div class="receipt-checklist" id="receipt-checklist" aria-label="Receipt checklist" aria-describedby="receipt-checklist-policy"></div>
+            </article>
+          </div>
+          <article class="schema-panel" aria-describedby="schema-map-description">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Receipt Schema Map</p>
+                <h2>Live UI state maps to explicit receipt fields.</h2>
+              </div>
+              <span class="badge ok">v0</span>
+            </div>
+            <div class="schema-summary" aria-label="Receipt schema status summary">
+              <div><strong id="schema-live-count">0</strong><small>live</small></div>
+              <div><strong id="schema-guarded-count">0</strong><small>guarded</small></div>
+              <div><strong id="schema-blocked-count">0</strong><small>blocked</small></div>
+            </div>
+            <div class="schema-grid" id="receipt-schema-map" aria-label="Receipt schema field mapping" aria-describedby="schema-map-description"></div>
+          </article>
+        </section>
+
+        <section class="view" id="view-updater" role="tabpanel" aria-labelledby="tab-updater" aria-hidden="true" data-view="updater">
+          <div class="updater-board">
+            <div class="section-title">
+              <p class="kicker">Signed Updater Gate</p>
+              <h2>Preview exists; signed delivery stays closed.</h2>
+            </div>
+            <div class="gate-row">
+              <article><strong>Manifest</strong><span class="badge stop">missing</span></article>
+              <article><strong>Artifact hash</strong><span class="badge stop">missing</span></article>
+              <article><strong>Rollback plan</strong><span class="badge stop">missing</span></article>
+              <article><strong>Operator confirmation</strong><span class="badge stop">missing</span></article>
+            </div>
+            <div class="updater-actions">
+              <button class="secondary-button" type="button" data-action="updater-preview">Preview update</button>
+              <button class="disabled-button" type="button" disabled>Apply signed update</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-evidence" role="tabpanel" aria-labelledby="tab-evidence" aria-hidden="true" data-view="evidence">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Evidence Queue</p>
+              <h2>Receipts are readable before they become claims.</h2>
+            </div>
+            <input class="search-input" id="evidence-search" type="search" placeholder="Filter evidence" aria-label="Filter evidence">
+          </div>
+          <div class="evidence-layout">
+            <article class="receipt-preview">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Receipt Preview</p>
+                  <h2 id="receipt-preview-title">No-effect receipt</h2>
+                </div>
+                <span class="badge ok" id="event-count">0 events</span>
+              </div>
+              <pre id="receipt-preview" tabindex="0" aria-label="Receipt preview" aria-describedby="receipt-preview-description"></pre>
+            </article>
+            <article class="event-trail-card">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Event Trail</p>
+                  <h2>Recent operator events</h2>
+                </div>
+                <button class="ghost-button" type="button" data-action="clear-events">Clear events</button>
+              </div>
+              <div class="event-trail" id="event-trail" aria-label="Recent operator events"></div>
+            </article>
+          </div>
+          <section class="receipt-snapshot-panel" aria-label="Saved receipt snapshots" aria-describedby="saved-receipts-description saved-receipt-maintenance-description">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Saved Receipts</p>
+                <h2>Local snapshots for comparison</h2>
+              </div>
+              <span class="badge warn" id="saved-receipt-count" role="status" aria-live="polite">0 saved</span>
+            </div>
+            <div class="snapshot-maintenance" aria-describedby="saved-receipt-maintenance-description">
+              <label class="field snapshot-label-field">
+                <span>Snapshot label</span>
+                <input id="saved-receipt-label-input" type="text" maxlength="48" placeholder="No snapshot selected" autocomplete="off" disabled aria-describedby="saved-receipt-maintenance-description">
+              </label>
+              <button class="ghost-button" type="button" data-action="delete-saved-receipt" disabled aria-disabled="true" aria-describedby="saved-receipt-maintenance-description">Delete selected</button>
+              <span class="snapshot-limit" id="saved-receipt-limit">retains last 8 local snapshots</span>
+            </div>
+            <div class="snapshot-layout">
+              <div class="saved-receipts-list" id="saved-receipts-list" role="listbox" aria-label="Saved receipts" aria-describedby="saved-receipts-description"></div>
+              <div class="receipt-delta" id="receipt-delta" aria-live="polite" aria-label="Current versus saved receipt comparison">
+                <div><span>selected</span><strong id="selected-receipt-label">none</strong></div>
+                <div><span>events</span><strong id="receipt-delta-events">0</strong></div>
+                <div><span>checklist</span><strong id="receipt-delta-checklist">0</strong></div>
+                <div><span>blocked fields</span><strong id="receipt-delta-blocked">0</strong></div>
+                <div><span>mode</span><strong id="receipt-delta-mode">same</strong></div>
+                <div><span>prefix</span><strong id="receipt-delta-prefix">same</strong></div>
+              </div>
+            </div>
+            <div class="receipt-diff-detail" aria-describedby="receipt-diff-description">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Diff Detail</p>
+                  <h2>Saved versus current fields</h2>
+                </div>
+                <span class="badge warn" id="receipt-diff-count" role="status" aria-live="polite">0 changes</span>
+              </div>
+              <div class="receipt-diff-filter-row">
+                <div class="receipt-diff-filter" role="radiogroup" aria-label="Receipt diff field filter" aria-controls="receipt-diff-list">
+                  <button class="filter-option is-active" type="button" role="radio" aria-checked="true" data-receipt-diff-filter="all">All</button>
+                  <button class="filter-option" type="button" role="radio" aria-checked="false" data-receipt-diff-filter="changed">Changed</button>
+                  <button class="filter-option" type="button" role="radio" aria-checked="false" data-receipt-diff-filter="same">Same</button>
+                </div>
+                <span class="receipt-diff-filter-count" id="receipt-diff-filter-count">0 of 0 fields</span>
+              </div>
+              <div class="receipt-diff-list" id="receipt-diff-list" role="table" aria-label="Saved versus current receipt fields" aria-describedby="receipt-diff-description"></div>
+            </div>
+            <div class="receipt-export-preview" aria-label="Selected receipt export preview" aria-describedby="receipt-export-description">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Export Preview</p>
+                  <h2>Local JSON artifact</h2>
+                </div>
+                <span class="badge stop" id="receipt-export-watermark">not production evidence</span>
+              </div>
+              <div class="export-summary">
+                <div><span>artifact</span><strong id="receipt-export-filename">none</strong></div>
+                <div><span>selected</span><strong id="receipt-export-selected">none</strong></div>
+                <div><span>size</span><strong id="receipt-export-size">0 bytes</strong></div>
+                <div><span>digest</span><strong id="receipt-export-digest">none</strong></div>
+                <a class="secondary-button export-download" id="receipt-export-download" href="#" download="latticra-panel-test-ui-receipt.json" aria-disabled="true" aria-describedby="receipt-export-description">Download JSON</a>
+              </div>
+              <div class="receipt-export-validation" aria-describedby="receipt-export-validation-description">
+                <div class="section-title inline-title">
+                  <div>
+                    <p class="kicker">Export Validation</p>
+                    <h2>Preview gates before download</h2>
+                  </div>
+                  <span class="badge warn" id="receipt-export-validation-count" role="status" aria-live="polite">0 passed</span>
+                </div>
+                <div class="receipt-export-validation-list" id="receipt-export-validation-list" aria-label="Receipt export validation checks" aria-describedby="receipt-export-validation-description"></div>
+              </div>
+              <div class="receipt-qa-handoff" aria-describedby="qa-handoff-description">
+                <div class="section-title inline-title">
+                  <div>
+                    <p class="kicker">QA Handoff</p>
+                    <h2>Shareable review state</h2>
+                  </div>
+                  <span class="badge warn" id="qa-handoff-status" role="status" aria-live="polite">no snapshot</span>
+                </div>
+                <div class="qa-handoff-summary">
+                  <a class="secondary-button qa-handoff-link is-disabled" id="qa-handoff-link" href="#" aria-disabled="true" aria-describedby="qa-handoff-description">Open QA link</a>
+                  <div><span>mode</span><strong id="qa-handoff-mode">none</strong></div>
+                  <div><span>diff</span><strong id="qa-handoff-diff">all</strong></div>
+                  <div><span>digest</span><strong id="qa-handoff-digest">none</strong></div>
+                  <div><span>selected</span><strong id="qa-handoff-selected">none</strong></div>
+                </div>
+                <div class="qa-handoff-replay" aria-describedby="qa-handoff-description">
+                  <div class="section-title inline-title">
+                    <div>
+                      <p class="kicker">Replay Request</p>
+                      <h2>Incoming handoff state</h2>
+                    </div>
+                    <span class="badge warn" id="qa-handoff-replay-status" role="status" aria-live="polite">no request</span>
+                  </div>
+                  <div class="qa-handoff-replay-summary">
+                    <div><span>requested snapshot</span><strong id="qa-handoff-requested-snapshot">none</strong></div>
+                    <div><span>requested digest</span><strong id="qa-handoff-requested-digest">none</strong></div>
+                    <div><span>local snapshot</span><strong id="qa-handoff-local-snapshot-state">none</strong></div>
+                    <div><span>restored</span><strong id="qa-handoff-replay-restored">no</strong></div>
+                    <div><span>digest state</span><strong id="qa-handoff-replay-digest-state">none</strong></div>
+                  </div>
+                </div>
+                <div class="qa-handoff-validation" aria-describedby="qa-handoff-description">
+                  <div class="section-title inline-title">
+                    <div>
+                      <p class="kicker">Handoff Validation</p>
+                      <h2>Review link gates</h2>
+                    </div>
+                    <span class="badge warn" id="qa-handoff-validation-count" role="status" aria-live="polite">0 passed</span>
+                  </div>
+                  <div class="qa-handoff-validation-list" id="qa-handoff-validation-list" aria-label="QA handoff validation checks" aria-describedby="qa-handoff-description"></div>
+                </div>
+                <pre id="qa-handoff-manifest" tabindex="0" aria-label="QA handoff manifest" aria-describedby="qa-handoff-description">No saved receipt selected.</pre>
+              </div>
+              <pre id="receipt-export-artifact" tabindex="0" aria-label="Selected receipt export artifact" aria-describedby="receipt-export-description">No saved receipt selected.</pre>
+            </div>
+          </section>
+          <div class="evidence-list" id="evidence-list"></div>
+        </section>
+
+        <section class="view" id="view-review" role="tabpanel" aria-labelledby="tab-review" aria-hidden="true" data-view="review">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Quality Review</p>
+              <h2>Verified UI evidence is separated from pending migration and blocked production claims.</h2>
+            </div>
+            <span class="badge warn" id="review-release-badge">migration pending</span>
+          </div>
+          <section class="review-overview" aria-label="Quality review summary">
+            <article>
+              <span class="badge ok" id="review-verified-count">0 verified</span>
+              <h3>Test-lane checks</h3>
+              <p>Interaction, responsive layout, receipt preview, and authority surfaces are reviewed inside this isolated lane.</p>
+            </article>
+            <article>
+              <span class="badge warn" id="review-pending-count">0 pending</span>
+              <h3>Migration review</h3>
+              <p>Candidate surfaces must be reviewed against the guarded Rust Panel before any implementation migration.</p>
+            </article>
+            <article>
+              <span class="badge stop" id="review-blocked-count">0 blocked</span>
+              <h3>Production claims</h3>
+              <p>Release claims stay closed until installer artifact, SBOM, transcript, upgrade, rollback, and VM evidence exists.</p>
+            </article>
+          </section>
+          <section class="evidence-matrix" id="evidence-matrix" aria-label="Production readiness evidence matrix">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Evidence Matrix</p>
+                <h2>Local proof vs production blockers</h2>
+              </div>
+              <div class="matrix-counts" aria-label="Evidence matrix status counts">
+                <span class="badge ok" id="evidence-matrix-verified-count">0 verified</span>
+                <span class="badge warn" id="evidence-matrix-pending-count">0 pending</span>
+                <span class="badge stop" id="evidence-matrix-blocked-count">0 blocked</span>
+                <span class="badge warn">local evidence only</span>
+              </div>
+            </div>
+            <div class="evidence-matrix-list" id="evidence-matrix-list" aria-label="Evidence matrix rows"></div>
+          </section>
+          <section class="visual-baseline" id="visual-baseline" aria-label="Visual regression baseline ledger">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Visual Baseline</p>
+                <h2>Screenshot proof before migration</h2>
+              </div>
+              <div class="visual-baseline-counts" aria-label="Visual baseline status counts">
+                <span class="badge ok" id="visual-baseline-verified-count">0 verified</span>
+                <span class="badge warn" id="visual-baseline-pending-count">0 pending</span>
+                <span class="badge stop" id="visual-baseline-blocked-count">0 blocked</span>
+              </div>
+            </div>
+            <div class="visual-baseline-detail" id="visual-baseline-detail" aria-label="Selected visual baseline detail" aria-live="polite">
+              <div><span>selected baseline</span><strong id="visual-baseline-detail-title">Desktop Review baseline</strong></div>
+              <div><span>state</span><strong id="visual-baseline-detail-state">verified</strong></div>
+              <div><span>owner</span><strong id="visual-baseline-detail-owner">UI QA</strong></div>
+              <div><span>next action</span><strong id="visual-baseline-detail-next">refresh screenshot evidence</strong></div>
+            </div>
+            <div class="visual-baseline-list" id="visual-baseline-list" role="listbox" aria-label="Visual baseline rows" aria-describedby="visual-baseline-detail-title"></div>
+          </section>
+          <section class="release-acceptance" id="release-acceptance" aria-label="Release acceptance audit" aria-describedby="release-acceptance-description">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Release Acceptance</p>
+                <h2>Pre-promotion proof ledger</h2>
+              </div>
+              <div class="release-acceptance-counts" aria-label="Release acceptance status counts">
+                <span class="badge ok" id="release-acceptance-verified-count">0 verified</span>
+                <span class="badge warn" id="release-acceptance-pending-count">0 pending</span>
+                <span class="badge stop" id="release-acceptance-blocked-count">0 blocked</span>
+              </div>
+            </div>
+            <div class="release-acceptance-detail" id="release-acceptance-detail" aria-label="Selected release acceptance detail" aria-live="polite">
+              <div><span>selected gate</span><strong id="release-acceptance-detail-title">Local UI evidence acceptance</strong></div>
+              <div><span>state</span><strong id="release-acceptance-detail-state">verified</strong></div>
+              <div><span>owner</span><strong id="release-acceptance-detail-owner">UI QA</strong></div>
+              <div><span>next action</span><strong id="release-acceptance-detail-next">refresh local proof</strong></div>
+            </div>
+            <div class="release-acceptance-list" id="release-acceptance-list" role="listbox" aria-label="Release acceptance rows" aria-describedby="release-acceptance-detail-title release-acceptance-description"></div>
+          </section>
+          <section class="accessibility-audit" id="accessibility-audit" aria-label="Accessibility and keyboard audit" aria-describedby="assistive-evidence-description">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Accessibility Audit</p>
+                <h2>Keyboard paths and screen-reader readiness</h2>
+              </div>
+              <div class="audit-counts" aria-label="Accessibility audit status counts">
+                <span class="badge ok" id="accessibility-audit-verified-count">0 verified</span>
+                <span class="badge warn" id="accessibility-audit-pending-count">0 pending</span>
+                <span class="badge stop" id="accessibility-audit-blocked-count">0 blocked</span>
+              </div>
+            </div>
+            <div class="accessibility-evidence-detail" id="accessibility-evidence-detail" aria-label="Selected assistive evidence detail" aria-live="polite">
+              <div><span>selected check</span><strong id="accessibility-evidence-detail-title">Screen-reader live pass</strong></div>
+              <div><span>state</span><strong id="accessibility-evidence-detail-state">pending</strong></div>
+              <div><span>path</span><strong id="accessibility-evidence-detail-path">Manual VoiceOver/NVDA-style pass</strong></div>
+              <div><span>evidence gap</span><strong id="accessibility-evidence-detail-gap">external assistive-tech pass pending</strong></div>
+            </div>
+            <div class="accessibility-audit-list" id="accessibility-audit-list" role="listbox" aria-label="Accessibility audit rows" aria-describedby="accessibility-evidence-detail-title assistive-evidence-description"></div>
+          </section>
+          <section class="engine-binding" id="engine-binding" aria-label="Installer engine binding matrix">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Installer Engine Binding</p>
+                <h2>Simulated UI state to live event sources</h2>
+              </div>
+              <div class="engine-binding-counts" aria-label="Installer engine binding status counts">
+                <span class="badge ok" id="engine-binding-verified-count">0 verified</span>
+                <span class="badge warn" id="engine-binding-pending-count">0 pending</span>
+                <span class="badge stop" id="engine-binding-blocked-count">0 blocked</span>
+              </div>
+            </div>
+            <div class="engine-binding-detail" id="engine-binding-detail" aria-label="Selected installer engine binding detail" aria-live="polite">
+              <div><span>selected binding</span><strong id="engine-binding-detail-title">Plan preview binding</strong></div>
+              <div><span>state</span><strong id="engine-binding-detail-state">verified</strong></div>
+              <div><span>owner</span><strong id="engine-binding-detail-owner">installer engine</strong></div>
+              <div><span>next action</span><strong id="engine-binding-detail-next">compare plan payloads</strong></div>
+            </div>
+            <div class="engine-binding-contract" id="engine-binding-contract" aria-label="Selected installer binding contract">
+              <div class="engine-binding-contract-heading">
+                <div>
+                  <p class="kicker">Binding Contract</p>
+                  <h2>Selected source to live event gap</h2>
+                </div>
+                <span class="badge warn" id="engine-binding-contract-status" role="status" aria-live="polite">pending</span>
+              </div>
+              <div class="engine-binding-contract-list" id="engine-binding-contract-list" role="list" aria-label="Selected installer binding contract rows"></div>
+            </div>
+            <div class="engine-binding-list" id="engine-binding-list" role="listbox" aria-label="Installer engine binding rows" aria-describedby="engine-binding-detail-title"></div>
+          </section>
+          <section class="qa-runbook" id="qa-runbook" aria-label="QA scenario runbook">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">QA Runbook</p>
+                <h2>Repeatable checks before migration</h2>
+              </div>
+              <div class="qa-scenario-counts" aria-label="QA scenario status counts">
+                <span class="badge ok" id="qa-scenario-verified-count">0 verified</span>
+                <span class="badge warn" id="qa-scenario-pending-count">0 pending</span>
+                <span class="badge stop" id="qa-scenario-blocked-count">0 blocked</span>
+              </div>
+            </div>
+            <div class="qa-scenario-detail" id="qa-scenario-detail" aria-label="Selected QA scenario detail" aria-live="polite">
+              <div><span>selected scenario</span><strong id="qa-scenario-detail-title">Keyboard path sweep</strong></div>
+              <div><span>state</span><strong id="qa-scenario-detail-state">verified</strong></div>
+              <div><span>owner</span><strong id="qa-scenario-detail-owner">accessibility QA</strong></div>
+              <div><span>next action</span><strong id="qa-scenario-detail-next">repeat after each new surface</strong></div>
+            </div>
+            <div class="qa-scenario-list" id="qa-scenario-list" role="listbox" aria-label="QA scenarios" aria-describedby="qa-scenario-detail-title"></div>
+          </section>
+          <div class="review-layout">
+            <article class="review-board">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Review Checklist</p>
+                  <h2>Evidence-backed UI gates</h2>
+                </div>
+                <button class="text-button" type="button" data-tab-jump="evidence">Open evidence</button>
+              </div>
+              <div class="review-filter-row">
+                <div class="review-filter" role="radiogroup" aria-label="Review gate state">
+                  <button class="filter-option is-active" type="button" role="radio" aria-checked="true" aria-controls="review-checks" data-review-filter="all">All</button>
+                  <button class="filter-option" type="button" role="radio" aria-checked="false" aria-controls="review-checks" data-review-filter="verified">Verified</button>
+                  <button class="filter-option" type="button" role="radio" aria-checked="false" aria-controls="review-checks" data-review-filter="pending">Pending</button>
+                  <button class="filter-option" type="button" role="radio" aria-checked="false" aria-controls="review-checks" data-review-filter="blocked">Blocked</button>
+                </div>
+                <span class="review-filter-count" id="review-filter-count">8 checks</span>
+              </div>
+              <div class="review-checks" id="review-checks" aria-label="Quality review checks"></div>
+            </article>
+            <article class="migration-board">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Migration Map</p>
+                  <h2>Prototype surfaces and guarded destinations</h2>
+                </div>
+                <button class="text-button" type="button" data-tab-jump="readiness">Open blockers</button>
+              </div>
+              <div class="migration-detail" id="migration-detail" aria-label="Selected migration surface detail" aria-live="polite">
+                <div><span>selected surface</span><strong id="migration-detail-title">Workbench frame</strong></div>
+                <div><span>state</span><strong id="migration-detail-state">candidate</strong></div>
+                <div><span>owner</span><strong id="migration-detail-owner">Panel migration</strong></div>
+                <div><span>next action</span><strong id="migration-detail-next">compare layout behavior</strong></div>
+              </div>
+              <div class="migration-map" id="migration-map" role="listbox" aria-label="egui migration map" aria-describedby="migration-detail-title"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-readiness" role="tabpanel" aria-labelledby="tab-readiness" aria-hidden="true" data-view="readiness">
+          <div class="view-header">
+            <div>
+              <p class="kicker">Production Readiness</p>
+              <h2>The test UI can improve while production claims stay blocked.</h2>
+            </div>
+            <input class="search-input" id="blocker-search" type="search" placeholder="Filter blockers" aria-label="Filter production blockers">
+          </div>
+          <section class="readiness-summary" aria-label="Production readiness summary">
+            <article>
+              <span class="badge stop" id="blocker-count">0 open</span>
+              <h3>Production readiness remains closed</h3>
+              <p>These blockers come from the local production-quality ledger and do not block isolated UI iteration.</p>
+            </article>
+            <article>
+              <span class="badge ok">isolated</span>
+              <h3>Test lane boundary preserved</h3>
+              <p>The prototype remains separate from the guarded Rust Panel and any edge GUI implementation.</p>
+            </article>
+          </section>
+          <section class="readiness-compare" id="readiness-compare" aria-label="Local proof and production readiness comparison">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Readiness Compare</p>
+                <h2>Local UI proof versus release evidence</h2>
+              </div>
+              <span class="badge warn" id="readiness-compare-status" role="status" aria-live="polite">local proof only</span>
+            </div>
+            <div class="readiness-compare-summary" aria-label="Readiness comparison summary">
+              <div><span>local proof</span><strong id="readiness-compare-local">0 verified</strong></div>
+              <div><span>production gaps</span><strong id="readiness-compare-production">0 blocked</strong></div>
+              <div><span>selected gap</span><strong id="readiness-compare-selected">none</strong></div>
+              <div><span>claim authority</span><strong id="readiness-compare-authority">0</strong></div>
+            </div>
+            <div class="readiness-compare-detail" id="readiness-compare-detail" aria-label="Selected readiness comparison detail" aria-live="polite">
+              <div><span>selected lane</span><strong id="readiness-compare-detail-title">Local UI proof</strong></div>
+              <div><span>local proof</span><strong id="readiness-compare-detail-local">verified</strong></div>
+              <div><span>production requirement</span><strong id="readiness-compare-detail-production">not production evidence</strong></div>
+              <div><span>next action</span><strong id="readiness-compare-detail-next">keep local proof current</strong></div>
+            </div>
+            <div class="readiness-compare-list" id="readiness-compare-list" role="listbox" aria-label="Readiness comparison lanes" aria-describedby="readiness-compare-detail-title"></div>
+          </section>
+          <section class="evidence-intake" id="evidence-intake" aria-label="Release evidence intake queue">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Evidence Intake</p>
+                <h2>Release packets stay queued until production proof exists</h2>
+              </div>
+              <span class="badge warn" id="evidence-intake-status" role="status" aria-live="polite">intake blocked</span>
+            </div>
+            <div class="evidence-intake-summary" aria-label="Release evidence intake summary">
+              <div><span>local packet</span><strong id="evidence-intake-local">0 local</strong></div>
+              <div><span>waiting</span><strong id="evidence-intake-waiting">0 waiting</strong></div>
+              <div><span>blocked</span><strong id="evidence-intake-blocked">0 blocked</strong></div>
+              <div><span>authority</span><strong id="evidence-intake-authority">0</strong></div>
+            </div>
+            <div class="evidence-intake-detail" id="evidence-intake-detail" aria-label="Selected release evidence intake packet" aria-live="polite">
+              <div><span>selected packet</span><strong id="evidence-intake-detail-title">Local UI proof packet</strong></div>
+              <div><span>packet scope</span><strong id="evidence-intake-detail-packet">local QA packet</strong></div>
+              <div><span>intake decision</span><strong id="evidence-intake-detail-decision">local-only</strong></div>
+              <div><span>next action</span><strong id="evidence-intake-detail-next">keep receipt current</strong></div>
+            </div>
+            <div class="evidence-intake-list" id="evidence-intake-list" role="listbox" aria-label="Release evidence intake packets" aria-describedby="evidence-intake-detail-title"></div>
+          </section>
+          <section class="traceability-matrix" id="traceability-matrix" aria-label="Readiness traceability matrix">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Traceability</p>
+                <h2>Blockers mapped to packets, gates, and acceptance</h2>
+              </div>
+              <span class="badge warn" id="traceability-status" role="status" aria-live="polite">trace blocked</span>
+            </div>
+            <div class="traceability-summary" aria-label="Readiness traceability summary">
+              <div><span>covered paths</span><strong id="traceability-covered">0 covered</strong></div>
+              <div><span>waiting paths</span><strong id="traceability-waiting">0 waiting</strong></div>
+              <div><span>blocked paths</span><strong id="traceability-blocked">0 blocked</strong></div>
+              <div><span>authority</span><strong id="traceability-authority">0</strong></div>
+            </div>
+            <div class="traceability-detail" id="traceability-detail" aria-label="Selected readiness traceability path" aria-live="polite">
+              <div><span>selected path</span><strong id="traceability-detail-title">Local UI trace</strong></div>
+              <div><span>blockers</span><strong id="traceability-detail-blockers">none</strong></div>
+              <div><span>evidence packet</span><strong id="traceability-detail-packet">local UI packet</strong></div>
+              <div><span>promotion gate</span><strong id="traceability-detail-gate">local UI evidence</strong></div>
+              <div><span>acceptance gate</span><strong id="traceability-detail-acceptance">local UI acceptance</strong></div>
+              <div><span>next action</span><strong id="traceability-detail-next">keep receipt current</strong></div>
+            </div>
+            <div class="traceability-alignment" id="traceability-alignment" aria-label="Selected trace alignment checks">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Alignment</p>
+                  <h3>Selected path drift</h3>
+                </div>
+                <span class="badge warn" id="traceability-alignment-status" role="status" aria-live="polite">review needed</span>
+              </div>
+              <button class="secondary-button traceability-align-action" type="button" data-action="align-trace-context">Align local context</button>
+              <div class="traceability-alignment-list" id="traceability-alignment-list" role="list" aria-label="Selected trace alignment rows"></div>
+            </div>
+            <div class="traceability-list" id="traceability-list" role="listbox" aria-label="Readiness traceability paths" aria-describedby="traceability-detail-title"></div>
+          </section>
+          <section class="promotion-gate" id="promotion-gate" aria-label="Production promotion decision gate">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Promotion Gate</p>
+                <h2>Decision record before leaving the test lane</h2>
+              </div>
+              <span class="badge stop" id="promotion-gate-status" role="status" aria-live="polite">blocked</span>
+            </div>
+            <div class="promotion-summary" aria-label="Promotion decision summary">
+              <div><span>decision</span><strong id="promotion-decision">blocked</strong></div>
+              <div><span>production evidence</span><strong id="promotion-evidence-missing">0 missing</strong></div>
+              <div><span>pending migration</span><strong id="promotion-pending-count">0 pending</strong></div>
+              <div><span>claim authority</span><strong id="promotion-claim-authority">0</strong></div>
+            </div>
+            <div class="promotion-detail" id="promotion-gate-detail" aria-label="Selected promotion gate detail" aria-live="polite">
+              <div><span>selected gate</span><strong id="promotion-detail-title">artifact integrity</strong></div>
+              <div><span>status</span><strong id="promotion-detail-status">blocked</strong></div>
+              <div><span>owner</span><strong id="promotion-detail-owner">release evidence</strong></div>
+              <div><span>next action</span><strong id="promotion-detail-next">record release evidence</strong></div>
+            </div>
+            <div class="promotion-gate-list" id="promotion-gate-list" role="listbox" aria-label="Promotion gate requirements" aria-describedby="promotion-detail-title"></div>
+          </section>
+          <section class="production-blocker-drilldown" id="production-blocker-drilldown" aria-label="Production blocker remediation drilldown">
+            <div class="section-title inline-title">
+              <div>
+                <p class="kicker">Blocker Drilldown</p>
+                <h2>Selected remediation path</h2>
+              </div>
+              <span class="badge stop">release blocked</span>
+            </div>
+            <div class="blocker-detail" id="blocker-detail" aria-label="Selected production blocker detail" aria-live="polite">
+              <div><span>selected blocker</span><strong id="blocker-detail-title">Reproducible artifact</strong></div>
+              <div><span>status</span><strong id="blocker-detail-status">blocked</strong></div>
+              <div><span>owner</span><strong id="blocker-detail-owner">release evidence</strong></div>
+              <div><span>next action</span><strong id="blocker-detail-next">record reproducible artifact digest</strong></div>
+            </div>
+            <div class="blocker-board" id="blocker-board" role="listbox" aria-label="Production quality blockers" aria-describedby="blocker-detail-title"></div>
+          </section>
+        </section>
+
+        <section class="view" id="view-console" role="tabpanel" aria-labelledby="tab-console" aria-hidden="true" data-view="console">
+          <div class="console-layout">
+            <article class="console-card">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Embedded Console</p>
+                  <h2>Panel allowlist only</h2>
+                </div>
+                <div class="console-actions">
+                  <span class="console-status is-ready" id="console-status" role="status" aria-live="polite">ready</span>
+                  <button class="ghost-button" type="button" data-action="clear-console">Clear</button>
+                </div>
+              </div>
+              <div class="terminal" id="terminal" tabindex="0" aria-label="Console output" aria-live="polite" aria-atomic="false">
+                <p>&gt; status</p>
+                <p>panel=test-ui-lane mode=dry-run root_authority=0 network_authority=0</p>
+              </div>
+              <form class="console-form" id="console-form" aria-describedby="console-policy">
+                <label class="field">
+                  <span>Command</span>
+                  <input id="console-input" type="text" autocomplete="off" value="status" aria-describedby="console-policy console-status" aria-invalid="false">
+                </label>
+                <button class="primary-button" type="submit">Run</button>
+              </form>
+            </article>
+            <article class="command-palette" aria-describedby="palette-description">
+              <div class="section-title inline-title">
+                <div>
+                  <p class="kicker">Command Palette</p>
+                  <h3>Jump and command</h3>
+                </div>
+                <span class="badge info" id="palette-count">0</span>
+              </div>
+              <label class="field palette-search">
+                <span>Search</span>
+                <input id="palette-search" type="search" autocomplete="off" aria-controls="palette-results" aria-activedescendant="" aria-describedby="palette-status palette-description">
+              </label>
+              <div class="palette-results" id="palette-results" role="listbox" aria-label="Local command and jump targets"></div>
+              <div class="palette-status" id="palette-status" role="status" aria-live="polite">palette ready</div>
+              <div class="command-buttons" aria-label="Allowlisted command shortcuts">
+                <button type="button" data-command="status">status</button>
+                <button type="button" data-command="plan">plan</button>
+                <button type="button" data-command="dry-run">dry-run</button>
+                <button type="button" data-command="updater status">updater status</button>
+                <button type="button" data-command="mode dry">mode dry</button>
+                <button type="button" data-command="mode local">mode local</button>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <aside class="inspector" aria-label="Context inspector">
+        <section class="inspector-panel">
+          <div class="section-title">
+            <p class="kicker">Context</p>
+            <h2 id="inspector-title">Guided local panel</h2>
+          </div>
+          <label class="field">
+            <span>Install prefix</span>
+            <input id="prefix-input" type="text" value="~/.local" aria-describedby="prefix-validation prefix-policy">
+            <small class="field-status" id="prefix-validation">user-local prefix accepted</small>
+          </label>
+          <div class="fact-list">
+            <div><span>test_ui_lane</span><strong>1</strong></div>
+            <div><span>main_gui_mutation</span><strong>0</strong></div>
+            <div><span>edge_gui_mutation</span><strong>0</strong></div>
+            <div><span>host_write_authority</span><strong id="host-write-fact">0</strong></div>
+            <div><span>state_persistence</span><strong id="state-persistence-fact">local</strong></div>
+            <div><span>prefix_guard</span><strong id="prefix-guard-fact">accepted</strong></div>
+          </div>
+          <div class="selection-context" id="selection-context" aria-label="Selected review context">
+            <div><span>active tab</span><strong id="context-active-tab">dashboard</strong></div>
+            <div><span>promotion gate</span><strong id="context-promotion-gate">artifact integrity</strong></div>
+            <div><span>blocker</span><strong id="context-production-blocker">reproducible artifact</strong></div>
+            <div><span>acceptance</span><strong id="context-release-acceptance">local UI evidence</strong></div>
+            <div><span>readiness trace</span><strong id="context-readiness-trace">local UI trace</strong></div>
+            <div><span>trace alignment</span><strong id="context-trace-alignment">review</strong></div>
+            <div><span>QA replay</span><strong id="context-qa-replay">none</strong></div>
+            <div><span>saved receipt</span><strong id="context-saved-receipt">none</strong></div>
+          </div>
+        </section>
+
+        <section class="inspector-panel">
+          <div class="section-title inline-title">
+            <div>
+              <p class="kicker">Live Evidence</p>
+              <h2>Recent receipts</h2>
+            </div>
+            <span class="badge ok">3</span>
+          </div>
+          <div class="mini-log" id="mini-log">
+            <p>dry_run_plan_digest=ready-for-review</p>
+            <p>panel_ui_lane=isolated-test</p>
+            <p>production_installer_claim=0</p>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

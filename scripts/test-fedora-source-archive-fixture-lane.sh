@@ -38,6 +38,7 @@ require_no_archive_pattern() {
 }
 
 require_file docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 require_file docs/FEDORA_LOCAL_BINARY_RPM_BUILD_PLAN.md
 require_file packaging/fedora/latticra.spec
 require_file README.md
@@ -49,6 +50,7 @@ require_contains 'latticra-0.0.0.tar.gz' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE
 require_contains 'latticra-0.0.0/' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains "use Git's tracked and unignored source view" docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'exclude .git' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'exclude transient .tmp files' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'refuse symlink entries' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'normalize tar metadata' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not run `rpmbuild`' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
@@ -56,8 +58,10 @@ require_contains 'does not run `mock`' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.m
 require_contains 'does not create source RPM artifacts' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not create binary RPM artifacts' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'does not install Latticra' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
-require_contains 'Add Fedora local binary RPM build lane' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'Add a Fedora source archive transcript review validator' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
 require_contains 'fedora_source_archive_fixture_lane: ok' docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'fedora_source_archive_reproducibility_contract_present=1' docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
 
 name="$(awk '/^Name:/ { print $2; exit }' packaging/fedora/latticra.spec)"
 version="$(awk '/^Version:/ { print $2; exit }' packaging/fedora/latticra.spec)"
@@ -108,7 +112,7 @@ def excluded(relative):
     if ".git" in parts or ".rpmwork" in parts:
         return True
     name = parts[-1]
-    return name.endswith(".rpm") or name.endswith(".tar.gz")
+    return name.endswith(".rpm") or name.endswith(".tar.gz") or name.endswith(".tmp")
 
 
 def add_entry(archive, disk_path, archive_name):
@@ -162,9 +166,13 @@ with open(archive_path, "wb") as raw:
                     parent = os.path.dirname(parent)
 
             for rel in sorted(dirs):
+                if not os.path.lexists(os.path.join(source_root, rel)):
+                    continue
                 add_entry(archive, os.path.join(source_root, rel), f"{root}/{rel}")
             for rel in paths:
                 if excluded(rel):
+                    continue
+                if not os.path.lexists(os.path.join(source_root, rel)):
                     continue
                 add_entry(archive, os.path.join(source_root, rel), f"{root}/{rel}")
 PY
@@ -179,6 +187,7 @@ require_archive_entry "$root/scripts/test-kernel-lifecycle.sh"
 
 require_no_archive_pattern '(^|/)\.git(/|$)'
 require_no_archive_pattern '(^|/)\.rpmwork(/|$)'
+require_no_archive_pattern '\.tmp$'
 require_no_archive_pattern '\.rpm$'
 require_no_archive_pattern 'latticra-[^/]*\.tar\.gz$'
 

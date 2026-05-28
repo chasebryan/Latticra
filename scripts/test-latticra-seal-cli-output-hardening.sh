@@ -37,12 +37,60 @@ if [ -z "$OPENSSL_LIBS" ]; then
   OPENSSL_LIBS="-lcrypto"
 fi
 
-$CC $CFLAGS $OPENSSL_CFLAGS seal/latticra-seal.c $OPENSSL_LIBS -o "$tmpdir/latticra-seal"
+$CC $CFLAGS $OPENSSL_CFLAGS -Iinclude \
+  seal/latticra-seal.c \
+  src/seal_hybrid_envelope.c \
+  src/seal_hybrid_provider_self_test.c \
+  $OPENSSL_LIBS \
+  -o "$tmpdir/latticra-seal"
+
+require_contains "open_new_regular_file_for_write" seal/latticra-seal.c
+require_contains "open_report_dir_for_artifacts" seal/latticra-seal.c
+require_contains "open_new_regular_file_at_for_write" seal/latticra-seal.c
+require_contains "open_single_link_regular_file_at_for_read" seal/latticra-seal.c
+require_contains "fstatat(dirfd" seal/latticra-seal.c
+require_contains "unlinkat(dirfd" seal/latticra-seal.c
+require_contains "renameat(" seal/latticra-seal.c
+require_contains "flush_and_sync_file" seal/latticra-seal.c
+require_contains "fsync(fd)" seal/latticra-seal.c
+require_contains "sync_directory_fd" seal/latticra-seal.c
+require_contains "sync_cwd_directory" seal/latticra-seal.c
+require_contains "refusing hard-linked file in digest scope" seal/latticra-seal.c
+require_contains "CollectedFileList" seal/latticra-seal.c
+require_contains "open_collected_file_for_read" seal/latticra-seal.c
+require_contains "open_directory_for_traversal" seal/latticra-seal.c
+require_contains "fdopendir" seal/latticra-seal.c
+require_contains "same_file_identity(&st, expected_dir)" seal/latticra-seal.c
+require_contains "sha256_collected_file" seal/latticra-seal.c
+require_contains "cmp_collected_file_path" seal/latticra-seal.c
+require_contains "required_path_excluded_by_scope" seal/latticra-seal.c
+require_contains "first_required_file_excluded_from_scope" seal/latticra-seal.c
+require_contains "first_missing_required_file" seal/latticra-seal.c
+require_contains "required file excluded from digest scope" seal/latticra-seal.c
+require_contains "hash list not written because required file is missing" seal/latticra-seal.c
+require_contains "preserve_hash_list_fd" seal/latticra-seal.c
+require_contains "run_check(true, &hash_list_fd)" seal/latticra-seal.c
+require_contains "write_baseline_atomic(hash_list_fd)" seal/latticra-seal.c
+require_contains "copy_file_fd_to_path" seal/latticra-seal.c
+require_contains "compare_hash_lists_report(&run, BASELINE_PATH, run.hash_list_fd)" seal/latticra-seal.c
+require_contains "O_EXCL" seal/latticra-seal.c
+if grep -Fq "O_TRUNC" seal/latticra-seal.c; then
+  fail "Seal CLI artifact writers must not use truncate-before-check semantics"
+fi
+if sed -n '/static int command_baseline(void)/,/^}/p' seal/latticra-seal.c |
+  grep -Fq "open_report_dir_for_artifacts"; then
+  fail "Seal CLI baseline must promote from the retained check hash-list descriptor"
+fi
 
 make_case="$tmpdir/make-seal-case"
-mkdir -p "$make_case/seal"
+mkdir -p "$make_case/include/latticra" "$make_case/seal" "$make_case/src"
 cp Makefile latticra.seal README.md LICENSE "$make_case/"
+cp include/latticra/state_lattice.h "$make_case/include/latticra/"
+cp include/latticra/seal_hybrid_envelope.h "$make_case/include/latticra/"
+cp include/latticra/seal_hybrid_provider_self_test.h "$make_case/include/latticra/"
 cp seal/latticra-seal.c "$make_case/seal/"
+cp src/seal_hybrid_envelope.c "$make_case/src/"
+cp src/seal_hybrid_provider_self_test.c "$make_case/src/"
 
 if ! (
   cd "$make_case" &&
@@ -70,6 +118,26 @@ case_root="$tmpdir/case-root"
 mkdir "$case_root"
 cp latticra.seal README.md LICENSE "$case_root/"
 
+if (cd "$case_root" && "$tmpdir/latticra-seal" report > "$tmpdir/missing-report-read.out" 2>&1); then
+  fail "Seal CLI report command must exit nonzero when the reports directory is absent"
+fi
+
+require_contains "no file found at reports/latticra-seal-cli-report.txt" "$tmpdir/missing-report-read.out"
+
+if [ -e "$case_root/reports" ]; then
+  fail "Seal CLI report command must not create a reports directory while reading"
+fi
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" hashes > "$tmpdir/missing-hashes-read.out" 2>&1); then
+  fail "Seal CLI hashes command must exit nonzero when the reports directory is absent"
+fi
+
+require_contains "no file found at reports/latticra-seal-cli-hashes.txt" "$tmpdir/missing-hashes-read.out"
+
+if [ -e "$case_root/reports" ]; then
+  fail "Seal CLI hashes command must not create a reports directory while reading"
+fi
+
 victim_reports="$tmpdir/victim-reports"
 mkdir "$victim_reports"
 ln -s "$victim_reports" "$case_root/reports"
@@ -83,9 +151,34 @@ require_contains "refusing symlink report directory" "$tmpdir/symlink-report.out
 [ ! -e "$victim_reports/latticra-seal-cli-report.txt" ] ||
   fail "Seal CLI must not write reports through a symlinked reports directory"
 
+printf 'do-not-stream-report\n' > "$victim_reports/latticra-seal-cli-report.txt"
+printf 'do-not-stream-hashes\n' > "$victim_reports/latticra-seal-cli-hashes.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" report > "$tmpdir/symlink-report-read.out" 2>&1); then
+  fail "Seal CLI report command must refuse a symlinked reports directory"
+fi
+
+require_contains "refusing symlink report directory" "$tmpdir/symlink-report-read.out"
+
+if grep -Fq "do-not-stream-report" "$tmpdir/symlink-report-read.out"; then
+  fail "Seal CLI report command must not read through a symlinked reports directory"
+fi
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" hashes > "$tmpdir/symlink-hashes-read.out" 2>&1); then
+  fail "Seal CLI hashes command must refuse a symlinked reports directory"
+fi
+
+require_contains "refusing symlink report directory" "$tmpdir/symlink-hashes-read.out"
+
+if grep -Fq "do-not-stream-hashes" "$tmpdir/symlink-hashes-read.out"; then
+  fail "Seal CLI hashes command must not read through a symlinked reports directory"
+fi
+
 rm "$case_root/reports"
 mkdir "$case_root/reports"
 chmod 0777 "$case_root/reports"
+printf 'do-not-stream-writable-report\n' > "$case_root/reports/latticra-seal-cli-report.txt"
+printf 'do-not-stream-writable-hashes\n' > "$case_root/reports/latticra-seal-cli-hashes.txt"
 
 if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/writable-report-dir.out" 2>&1); then
   fail "Seal CLI check must refuse a group/world-writable reports directory"
@@ -93,8 +186,29 @@ fi
 
 require_contains "refusing writable report directory" "$tmpdir/writable-report-dir.out"
 
-[ ! -e "$case_root/reports/latticra-seal-cli-report.txt" ] ||
-  fail "Seal CLI must not write reports into a group/world-writable reports directory"
+if (cd "$case_root" && "$tmpdir/latticra-seal" report > "$tmpdir/writable-report-read.out" 2>&1); then
+  fail "Seal CLI report command must refuse a group/world-writable reports directory"
+fi
+
+require_contains "refusing writable report directory" "$tmpdir/writable-report-read.out"
+
+if grep -Fq "do-not-stream-writable-report" "$tmpdir/writable-report-read.out"; then
+  fail "Seal CLI report command must not read from a group/world-writable reports directory"
+fi
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" hashes > "$tmpdir/writable-hashes-read.out" 2>&1); then
+  fail "Seal CLI hashes command must refuse a group/world-writable reports directory"
+fi
+
+require_contains "refusing writable report directory" "$tmpdir/writable-hashes-read.out"
+
+if grep -Fq "do-not-stream-writable-hashes" "$tmpdir/writable-hashes-read.out"; then
+  fail "Seal CLI hashes command must not read from a group/world-writable reports directory"
+fi
+
+if [ "$(cat "$case_root/reports/latticra-seal-cli-report.txt")" != "do-not-stream-writable-report" ]; then
+  fail "Seal CLI must not overwrite reports inside a group/world-writable reports directory"
+fi
 
 chmod 0700 "$case_root/reports"
 rm -rf "$case_root/reports"
@@ -116,6 +230,47 @@ fi
 
 rm "$case_root/reports/latticra-seal-cli-report.txt"
 
+victim_report_hardlink="$tmpdir/victim-report-hardlink"
+printf 'do-not-overwrite-report-hardlink\n' > "$victim_report_hardlink"
+ln "$victim_report_hardlink" "$case_root/reports/latticra-seal-cli-report.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" report > "$tmpdir/hardlink-report-read.out" 2>&1); then
+  fail "Seal CLI report command must refuse a hard-linked report artifact"
+fi
+
+require_contains "no file found at reports/latticra-seal-cli-report.txt" "$tmpdir/hardlink-report-read.out"
+
+if grep -Fq "do-not-overwrite-report-hardlink" "$tmpdir/hardlink-report-read.out"; then
+  fail "Seal CLI report command must not read from a hard-linked report artifact"
+fi
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/hardlink-report-file.out" 2>&1); then
+  fail "Seal CLI check must refuse a hard-linked report file path"
+fi
+
+require_contains "could not open report: reports/latticra-seal-cli-report.txt" "$tmpdir/hardlink-report-file.out"
+
+if [ "$(cat "$victim_report_hardlink")" != "do-not-overwrite-report-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the report"
+fi
+
+rm "$case_root/reports/latticra-seal-cli-report.txt"
+
+printf 'stale-report-temp\n' > "$case_root/reports/latticra-seal-cli-report.tmp"
+
+if ! (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/stale-report-tmp.out" 2>&1); then
+  cat "$tmpdir/stale-report-tmp.out" >&2 || true
+  fail "Seal CLI check must clear a stale single-link temporary report before writing"
+fi
+
+require_contains "STATUS: PASS" "$tmpdir/stale-report-tmp.out"
+
+[ ! -e "$case_root/reports/latticra-seal-cli-report.tmp" ] ||
+  fail "Seal CLI must not leave a stale temporary report after successful promotion"
+
+rm "$case_root/reports/latticra-seal-cli-report.txt"
+rm "$case_root/reports/latticra-seal-cli-hashes.txt"
+
 victim_report_tmp="$tmpdir/victim-report-tmp"
 printf 'do-not-overwrite-report-tmp\n' > "$victim_report_tmp"
 ln -s "$victim_report_tmp" "$case_root/reports/latticra-seal-cli-report.tmp"
@@ -134,6 +289,124 @@ fi
   fail "Seal CLI must not promote a report when the temporary report path is refused"
 
 rm "$case_root/reports/latticra-seal-cli-report.tmp"
+
+victim_report_tmp_hardlink="$tmpdir/victim-report-tmp-hardlink"
+printf 'do-not-overwrite-report-tmp-hardlink\n' > "$victim_report_tmp_hardlink"
+ln "$victim_report_tmp_hardlink" "$case_root/reports/latticra-seal-cli-report.tmp"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/hardlink-report-tmp.out" 2>&1); then
+  fail "Seal CLI check must refuse a hard-linked temporary report file path"
+fi
+
+require_contains "could not open report: reports/latticra-seal-cli-report.txt" "$tmpdir/hardlink-report-tmp.out"
+
+if [ "$(cat "$victim_report_tmp_hardlink")" != "do-not-overwrite-report-tmp-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the temporary report"
+fi
+
+[ ! -e "$case_root/reports/latticra-seal-cli-report.txt" ] ||
+  fail "Seal CLI must not promote a report when the temporary report hardlink is refused"
+
+rm "$case_root/reports/latticra-seal-cli-report.tmp"
+
+victim_hash_file="$tmpdir/victim-hash-file"
+printf 'do-not-overwrite-hash\n' > "$victim_hash_file"
+ln -s "$victim_hash_file" "$case_root/reports/latticra-seal-cli-hashes.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-hash-file.out" 2>&1); then
+  fail "Seal CLI check must refuse a symlinked hash-list file path"
+fi
+
+require_contains "FAIL: could not clear previous hash list" "$tmpdir/symlink-hash-file.out"
+require_contains "STATUS: FAIL" "$tmpdir/symlink-hash-file.out"
+
+if [ "$(cat "$victim_hash_file")" != "do-not-overwrite-hash" ]; then
+  fail "Seal CLI must not overwrite a symlink target while writing the hash list"
+fi
+
+rm "$case_root/reports/latticra-seal-cli-hashes.txt"
+
+victim_hash_hardlink="$tmpdir/victim-hash-hardlink"
+printf 'do-not-overwrite-hash-hardlink\n' > "$victim_hash_hardlink"
+ln "$victim_hash_hardlink" "$case_root/reports/latticra-seal-cli-hashes.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" hashes > "$tmpdir/hardlink-hashes-read.out" 2>&1); then
+  fail "Seal CLI hashes command must refuse a hard-linked hash-list artifact"
+fi
+
+require_contains "no file found at reports/latticra-seal-cli-hashes.txt" "$tmpdir/hardlink-hashes-read.out"
+
+if grep -Fq "do-not-overwrite-hash-hardlink" "$tmpdir/hardlink-hashes-read.out"; then
+  fail "Seal CLI hashes command must not read from a hard-linked hash-list artifact"
+fi
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/hardlink-hash-file.out" 2>&1); then
+  fail "Seal CLI check must refuse a hard-linked hash-list file path"
+fi
+
+require_contains "FAIL: could not clear previous hash list" "$tmpdir/hardlink-hash-file.out"
+require_contains "STATUS: FAIL" "$tmpdir/hardlink-hash-file.out"
+
+if [ "$(cat "$victim_hash_hardlink")" != "do-not-overwrite-hash-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the hash list"
+fi
+
+rm "$case_root/reports/latticra-seal-cli-hashes.txt"
+
+printf 'stale-hash-temp\n' > "$case_root/reports/latticra-seal-cli-hashes.tmp"
+
+if ! (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/stale-hash-tmp.out" 2>&1); then
+  cat "$tmpdir/stale-hash-tmp.out" >&2 || true
+  fail "Seal CLI check must clear a stale single-link temporary hash list before writing"
+fi
+
+require_contains "STATUS: PASS" "$tmpdir/stale-hash-tmp.out"
+
+[ ! -e "$case_root/reports/latticra-seal-cli-hashes.tmp" ] ||
+  fail "Seal CLI must not leave a stale temporary hash list after successful promotion"
+
+rm "$case_root/reports/latticra-seal-cli-report.txt"
+rm "$case_root/reports/latticra-seal-cli-hashes.txt"
+
+victim_hash_tmp="$tmpdir/victim-hash-tmp"
+printf 'do-not-overwrite-hash-tmp\n' > "$victim_hash_tmp"
+ln -s "$victim_hash_tmp" "$case_root/reports/latticra-seal-cli-hashes.tmp"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-hash-tmp.out" 2>&1); then
+  fail "Seal CLI check must refuse a symlinked temporary hash-list path"
+fi
+
+require_contains "FAIL: could not clear temporary hash list" "$tmpdir/symlink-hash-tmp.out"
+require_contains "STATUS: FAIL" "$tmpdir/symlink-hash-tmp.out"
+
+if [ "$(cat "$victim_hash_tmp")" != "do-not-overwrite-hash-tmp" ]; then
+  fail "Seal CLI must not overwrite a symlink target while writing the temporary hash list"
+fi
+
+[ ! -e "$case_root/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must not promote a hash list when the temporary hash-list path is refused"
+
+rm "$case_root/reports/latticra-seal-cli-hashes.tmp"
+
+victim_hash_tmp_hardlink="$tmpdir/victim-hash-tmp-hardlink"
+printf 'do-not-overwrite-hash-tmp-hardlink\n' > "$victim_hash_tmp_hardlink"
+ln "$victim_hash_tmp_hardlink" "$case_root/reports/latticra-seal-cli-hashes.tmp"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/hardlink-hash-tmp.out" 2>&1); then
+  fail "Seal CLI check must refuse a hard-linked temporary hash-list path"
+fi
+
+require_contains "FAIL: could not clear temporary hash list" "$tmpdir/hardlink-hash-tmp.out"
+require_contains "STATUS: FAIL" "$tmpdir/hardlink-hash-tmp.out"
+
+if [ "$(cat "$victim_hash_tmp_hardlink")" != "do-not-overwrite-hash-tmp-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the temporary hash list"
+fi
+
+[ ! -e "$case_root/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must not promote a hash list when the temporary hash-list hardlink is refused"
+
+rm "$case_root/reports/latticra-seal-cli-hashes.tmp"
 
 mkdir -p "$case_root/.venv-piper/bin"
 printf 'local tool that must not enter Seal digests\n' > "$case_root/.venv-piper/bin/local-tool"
@@ -526,6 +799,78 @@ require_contains "PASS: loaded 1 required file path(s)" "$tmpdir/custom-required
 require_contains "PASS: required file exists: CUSTOM_REQUIRED.md" "$tmpdir/custom-required.out"
 require_contains "STATUS: PASS" "$tmpdir/custom-required.out"
 
+excluded_required_case="$tmpdir/excluded-required-case"
+mkdir -p "$excluded_required_case/docs"
+cp README.md LICENSE "$excluded_required_case/"
+printf 'required file must remain in digest scope\n' > "$excluded_required_case/docs/REQUIRED.md"
+cat > "$excluded_required_case/latticra.seal" <<'MANIFEST'
+schema = "latticra.seal/v0.1"
+format = "toml"
+kind = "local-integrity-manifest"
+
+[seal]
+mode = "local-integrity"
+status = "unsigned"
+algorithm = "sha256"
+digest_encoding = "hex"
+canonicalization = "relative-path + raw-bytes + unix-lf-preferred"
+trust_boundary = "project-root"
+
+[paths]
+include = [
+  ".",
+]
+exclude = [
+  "docs/",
+  "reports/*.txt",
+  "reports/*.json",
+  "latticra.seal.lock",
+  "*.tmp",
+]
+
+[policy]
+require_readme = true
+require_license = true
+deny_private_keys = true
+deny_env_files = true
+deny_obvious_tokens = true
+
+[policy.required_files]
+paths = [
+  "docs/REQUIRED.md",
+]
+
+[policy.deny_filenames]
+patterns = [
+  ".env",
+]
+
+[policy.deny_contents]
+pattern_parts = [
+  ["CUSTOM", "_MARKER="],
+]
+
+[report]
+default_output = "reports/latticra-seal-cli-report.txt"
+hash_list_output = "reports/latticra-seal-cli-hashes.txt"
+legacy_smoke_output = "reports/latticra-seal-report.txt"
+legacy_smoke_hash_list_output = "reports/latticra-seal-file-hashes.txt"
+include_file_list = true
+include_policy_results = true
+include_digest_summary = true
+MANIFEST
+
+if (cd "$excluded_required_case" && "$tmpdir/latticra-seal" check > "$tmpdir/excluded-required.out" 2>&1); then
+  fail "Seal CLI check must fail closed when a required file is excluded from digest scope"
+fi
+
+require_contains "FAIL: required file excluded from digest scope: docs/REQUIRED.md" "$tmpdir/excluded-required.out"
+require_contains "FAIL: hash list not written because required file is excluded from digest scope: docs/REQUIRED.md" "$tmpdir/excluded-required.out"
+require_contains "STATUS: FAIL" "$tmpdir/excluded-required.out"
+
+[ ! -e "$excluded_required_case/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must not promote a hash list when a required file is excluded from digest scope"
+
 rm "$custom_required_case/CUSTOM_REQUIRED.md"
 
 if (cd "$custom_required_case" && "$tmpdir/latticra-seal" check > "$tmpdir/custom-required-missing.out" 2>&1); then
@@ -533,7 +878,11 @@ if (cd "$custom_required_case" && "$tmpdir/latticra-seal" check > "$tmpdir/custo
 fi
 
 require_contains "FAIL: required file missing: CUSTOM_REQUIRED.md" "$tmpdir/custom-required-missing.out"
+require_contains "FAIL: hash list not written because required file is missing: CUSTOM_REQUIRED.md" "$tmpdir/custom-required-missing.out"
 require_contains "STATUS: FAIL" "$tmpdir/custom-required-missing.out"
+
+[ ! -e "$custom_required_case/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must remove stale hash lists when a required file is missing"
 
 malformed_required_case="$tmpdir/malformed-required-case"
 mkdir "$malformed_required_case"
@@ -942,6 +1291,24 @@ fi
 require_contains "FAIL: report default output is reports/latticra-seal-cli-report.txt" "$tmpdir/report-shape-drift.out"
 require_contains "STATUS: FAIL" "$tmpdir/report-shape-drift.out"
 
+symlink_dir_target="$tmpdir/symlink-dir-target"
+mkdir "$symlink_dir_target"
+printf 'outside directory content must not enter Seal evidence\n' > "$symlink_dir_target/secret.txt"
+ln -s "$symlink_dir_target" "$case_root/symlink-dir"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-dir-scope.out" 2>&1); then
+  fail "Seal CLI check must fail closed on in-scope symlinked directories"
+fi
+
+require_contains "FAIL: refusing symlink in digest scope: symlink-dir" "$tmpdir/symlink-dir-scope.out"
+require_contains "hash list not written because digest traversal failed" "$tmpdir/symlink-dir-scope.out"
+require_contains "STATUS: FAIL" "$tmpdir/symlink-dir-scope.out"
+
+[ ! -e "$case_root/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must remove stale hash lists when an in-scope symlinked directory is refused"
+
+rm "$case_root/symlink-dir"
+
 ln -s README.md "$case_root/readme-link"
 
 if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/symlink-scope.out" 2>&1); then
@@ -956,6 +1323,28 @@ require_contains "STATUS: FAIL" "$tmpdir/symlink-scope.out"
   fail "Seal CLI must remove stale hash lists when an in-scope symlink is refused"
 
 rm "$case_root/readme-link"
+
+printf 'hard-linked content must not enter Seal evidence\n' > "$case_root/reports/hardlink-scope-source"
+ln "$case_root/reports/hardlink-scope-source" "$case_root/hardlink-scope.txt"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/hardlink-scope.out" 2>&1); then
+  fail "Seal CLI check must fail closed on in-scope hard-linked files"
+fi
+
+require_contains "FAIL: refusing hard-linked file in digest scope: hardlink-scope.txt" "$tmpdir/hardlink-scope.out"
+require_contains "hash list not written because digest traversal failed" "$tmpdir/hardlink-scope.out"
+require_contains "STATUS: FAIL" "$tmpdir/hardlink-scope.out"
+
+[ ! -e "$case_root/reports/latticra-seal-cli-hashes.txt" ] ||
+  fail "Seal CLI must remove stale hash lists when an in-scope hard-linked file is refused"
+
+rm "$case_root/hardlink-scope.txt"
+
+if ! (cd "$case_root" && "$tmpdir/latticra-seal" check > "$tmpdir/post-hardlink-scope.out" 2>&1); then
+  fail "Seal CLI check must recover after an in-scope hard-linked file is removed"
+fi
+
+require_contains "STATUS: PASS" "$tmpdir/post-hardlink-scope.out"
 
 manifest_case="$tmpdir/manifest-case"
 mkdir "$manifest_case"
@@ -1093,6 +1482,8 @@ else
     fail "Seal CLI must remove stale hash lists when file hashing fails"
 fi
 
+printf 'stale-baseline-temp\n' > "$case_root/latticra.seal.lock.tmp"
+
 if ! (cd "$case_root" && "$tmpdir/latticra-seal" baseline > "$tmpdir/baseline-success.out" 2>&1); then
   cat "$tmpdir/baseline-success.out" >&2 || true
   fail "Seal CLI baseline must write a valid baseline after check passes"
@@ -1102,6 +1493,12 @@ require_contains "Baseline written to: latticra.seal.lock" "$tmpdir/baseline-suc
 
 [ -s "$case_root/latticra.seal.lock" ] ||
   fail "Seal CLI baseline must leave a non-empty lockfile"
+
+cmp -s "$case_root/reports/latticra-seal-cli-hashes.txt" "$case_root/latticra.seal.lock" ||
+  fail "Seal CLI baseline must copy the generated native hash list exactly"
+
+[ ! -e "$case_root/latticra.seal.lock.tmp" ] ||
+  fail "Seal CLI baseline must not leave a stale temporary lockfile after successful promotion"
 
 printf 'not-a-valid-baseline\n' > "$case_root/latticra.seal.lock"
 
@@ -1159,6 +1556,28 @@ fi
 
 rm "$case_root/latticra.seal.lock"
 
+victim_lock_hardlink="$tmpdir/victim-lock-hardlink"
+printf 'do-not-overwrite-hardlink\n' > "$victim_lock_hardlink"
+ln "$victim_lock_hardlink" "$case_root/latticra.seal.lock"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" verify > "$tmpdir/hardlink-baseline-verify.out" 2>&1); then
+  fail "Seal CLI verify must refuse a hard-linked baseline path"
+fi
+
+require_contains "latticra.seal.lock is missing or unreadable" "$tmpdir/hardlink-baseline-verify.out"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" baseline > "$tmpdir/hardlink-baseline.out" 2>&1); then
+  fail "Seal CLI baseline must refuse a hard-linked baseline path"
+fi
+
+require_contains "could not write baseline: latticra.seal.lock" "$tmpdir/hardlink-baseline.out"
+
+if [ "$(cat "$victim_lock_hardlink")" != "do-not-overwrite-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the baseline"
+fi
+
+rm "$case_root/latticra.seal.lock"
+
 victim_tmp_lock="$tmpdir/victim-tmp-lock"
 printf 'do-not-overwrite-tmp\n' > "$victim_tmp_lock"
 ln -s "$victim_tmp_lock" "$case_root/latticra.seal.lock.tmp"
@@ -1176,4 +1595,23 @@ fi
 [ ! -e "$case_root/latticra.seal.lock" ] ||
   fail "Seal CLI must not promote a baseline when the temporary baseline path is refused"
 
-printf 'PASS: Latticra Seal CLI output hardening rejects symlink writes\n'
+rm "$case_root/latticra.seal.lock.tmp"
+
+victim_tmp_lock_hardlink="$tmpdir/victim-tmp-lock-hardlink"
+printf 'do-not-overwrite-tmp-hardlink\n' > "$victim_tmp_lock_hardlink"
+ln "$victim_tmp_lock_hardlink" "$case_root/latticra.seal.lock.tmp"
+
+if (cd "$case_root" && "$tmpdir/latticra-seal" baseline > "$tmpdir/hardlink-baseline-tmp.out" 2>&1); then
+  fail "Seal CLI baseline must refuse a hard-linked temporary baseline path"
+fi
+
+require_contains "could not write baseline: latticra.seal.lock" "$tmpdir/hardlink-baseline-tmp.out"
+
+if [ "$(cat "$victim_tmp_lock_hardlink")" != "do-not-overwrite-tmp-hardlink" ]; then
+  fail "Seal CLI must not overwrite a hard-linked target while writing the temporary baseline"
+fi
+
+[ ! -e "$case_root/latticra.seal.lock" ] ||
+  fail "Seal CLI must not promote a baseline when the temporary baseline hardlink is refused"
+
+printf 'PASS: Latticra Seal CLI output hardening rejects unsafe artifact links\n'

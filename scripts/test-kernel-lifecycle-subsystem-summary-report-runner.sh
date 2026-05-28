@@ -47,6 +47,24 @@ cc $CFLAGS \
   src/kernel_runtime_entry_register_view.c \
   src/kernel_runtime_entry_stack_view.c \
   src/kernel_runtime_entry_address_space_view.c \
+  src/kernel_runtime_entry_privilege_level_view.c \
+  src/kernel_runtime_entry_syscall_gate_view.c \
+  src/kernel_runtime_entry_syscall_dispatch_view.c \
+  src/kernel_runtime_entry_syscall_return_view.c \
+  src/kernel_runtime_entry_syscall_exit_view.c \
+  src/kernel_runtime_entry_user_mode_resume_view.c \
+  src/kernel_runtime_entry_post_resume_observation_view.c \
+  src/kernel_runtime_entry_scheduler_return_observation_view.c \
+  src/kernel_runtime_entry_process_return_observation_view.c \
+  src/kernel_runtime_entry_idle_return_observation_view.c \
+  src/kernel_runtime_entry_quiescent_return_observation_view.c \
+  src/kernel_runtime_entry_persistence_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_plan_observation_view.c \
+  src/kernel_runtime_entry_recovery_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_outcome_observation_view.c \
+  src/kernel_runtime_entry_recovery_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_observation_view.c \
   src/nucleus_kernel_coupling.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
@@ -59,12 +77,12 @@ cc $CFLAGS \
 
 grep -Fq 'LATTICRA KERNEL LIFECYCLE SUBSYSTEM SUMMARY REPORT' "$report_txt"
 grep -Fq 'summary_status=summary-ready' "$report_txt"
-grep -Fq 'final_state=runtime-entry-address-space-view-ready' "$report_txt"
+grep -Fq 'final_state=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'registry_status=registry-ready' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
-grep -Fq 'lifecycle_step_count=28' "$report_txt"
-grep -Fq 'lifecycle_state_change_count=28' "$report_txt"
+grep -Fq 'lifecycle_step_count=46' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=46' "$report_txt"
 grep -Fq 'lifecycle_state_mutated=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -82,12 +100,45 @@ grep -Fq 'nucleus_context_switch_allowed=0' "$report_txt"
 grep -Fq 'nucleus_register_save_allowed=0' "$report_txt"
 grep -Fq 'nucleus_register_restore_allowed=0' "$report_txt"
 grep -Fq 'nucleus_host_effect_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_audit_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_closeout_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_outcome_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_disposition_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_plan_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_recovery_boundary_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_persistence_boundary_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_quiescent_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_idle_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_process_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_scheduler_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_post_resume_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_user_mode_resume_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_syscall_exit_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_syscall_return_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_syscall_dispatch_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_syscall_gate_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_entry_privilege_level_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_address_space_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_stack_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_register_view_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_frame_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_admission_allowed=0' "$report_txt"
 grep -Fq 'runtime_entry_allowed=0' "$report_txt"
+grep -Fq 'recovery_boundary_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_boundary_allowed=0' "$report_txt"
+grep -Fq 'recovery_plan_allowed=0' "$report_txt"
+grep -Fq 'recovery_plan_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_disposition_allowed=0' "$report_txt"
+grep -Fq 'recovery_disposition_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_outcome_allowed=0' "$report_txt"
+grep -Fq 'recovery_outcome_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_closeout_allowed=0' "$report_txt"
+grep -Fq 'recovery_closeout_observation_allowed=0' "$report_txt"
+grep -Fq 'persistence_boundary_observation_allowed=0' "$report_txt"
+grep -Fq 'persistence_boundary_allowed=0' "$report_txt"
+grep -Fq 'persistence_commit_allowed=0' "$report_txt"
 grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
 grep -Fq 'scheduler_selection_allowed=0' "$report_txt"
 grep -Fq 'scheduler_dispatch_allowed=0' "$report_txt"
@@ -142,7 +193,7 @@ grep -Fq 'entry_count=9' "$report_txt"
 grep -Fq 'subsystem[0].name=boot' "$report_txt"
 grep -Fq 'subsystem[0].lifecycle_relation=boot-sequence-seeded' "$report_txt"
 grep -Fq 'subsystem[1].name=runtime' "$report_txt"
-grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-address-space-view-ready' "$report_txt"
+grep -Fq 'subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
 grep -Fq 'subsystem[1].authority_status=runtime-entry-denied' "$report_txt"
 grep -Fq 'subsystem[2].lifecycle_relation=scheduler-run-entry-ready' "$report_txt"
 grep -Fq 'subsystem[2].authority_status=scheduler-execution-denied' "$report_txt"

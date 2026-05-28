@@ -68,8 +68,22 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
-static int string_is(const char *value, const char *expected) {
-    return value != NULL && expected != NULL && strcmp(value, expected) == 0;
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated);
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
 }
 
 static int text_contains(const char *value, const char *needle) {
@@ -481,7 +495,9 @@ static const latticra_seal_panel_dashboard_view_model_source_t *find_source(
         return NULL;
     }
     for (i = 0u; i < model->view_model_source_count; ++i) {
-        if (string_is(model->sources[i].source_id, source_id)) {
+        if (bounded_string_is(model->sources[i].source_id,
+                              LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_ID_MAX,
+                              source_id)) {
             return &model->sources[i];
         }
     }
@@ -574,14 +590,24 @@ static void fill_row_from_source(
 latticra_status_t latticra_seal_panel_dashboard_view_model_add_required_rows(
     latticra_seal_panel_dashboard_view_model_t *model) {
     size_t i;
+    unsigned required_count = (unsigned)(sizeof(required_rows) / sizeof(required_rows[0]));
 
     if (model == NULL) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
-    if (model->view_model_entry_count + (unsigned)(sizeof(required_rows) / sizeof(required_rows[0])) >
+    if (model->view_model_source_count >
+            LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_MAX ||
+        model->view_model_source_count > model->view_model_source_count_max) {
+        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_CAPACITY_EXCEEDED);
+        return LATTICRA_STATUS_OK;
+    }
+    if (model->view_model_entry_count >
             LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_MAX ||
-        model->view_model_entry_count + (unsigned)(sizeof(required_rows) / sizeof(required_rows[0])) >
-            model->view_model_entry_count_max) {
+        model->view_model_entry_count > model->view_model_entry_count_max ||
+        required_count >
+            LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_MAX -
+                model->view_model_entry_count ||
+        required_count > model->view_model_entry_count_max - model->view_model_entry_count) {
         mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_CAPACITY_EXCEEDED);
         return LATTICRA_STATUS_OK;
     }
@@ -689,32 +715,46 @@ static latticra_seal_panel_dashboard_view_model_error_t row_error(
     return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK;
 }
 
-latticra_status_t latticra_seal_panel_dashboard_view_model_validate(
-    latticra_seal_panel_dashboard_view_model_t *model) {
+static latticra_seal_panel_dashboard_view_model_error_t model_contract_error(
+    const latticra_seal_panel_dashboard_view_model_t *model) {
     unsigned i;
 
     if (model == NULL) {
-        return LATTICRA_STATUS_NULL_ARGUMENT;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_INPUT;
     }
 
-    if (!string_is(model->seal_panel_dashboard_view_model_profile,
-                   "latticra-seal-panel-dashboard-view-model/0.1")) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_PROFILE);
-        return LATTICRA_STATUS_OK;
+    if (!bounded_string_is(model->seal_panel_dashboard_view_model_profile,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_PROFILE_MAX,
+                           "latticra-seal-panel-dashboard-view-model/0.1")) {
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_PROFILE;
     }
-    if (!string_is(model->seal_panel_dashboard_view_model_mode, "report-only") ||
-        !string_is(model->seal_panel_dashboard_view_model_status, "planned-no-effect") ||
-        !string_is(model->input_contract_mode, "caller-provided-report-strings") ||
+    if (!bounded_string_is(model->seal_panel_dashboard_view_model_mode,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_MODE_MAX,
+                           "report-only") ||
+        !bounded_string_is(model->seal_panel_dashboard_view_model_status,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS_MAX,
+                           "planned-no-effect") ||
+        !bounded_string_is(model->input_contract_mode,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INPUT_MODE_MAX,
+                           "caller-provided-report-strings") ||
         model->seal_panel_dashboard_view_model_contract_present != 1u ||
         model->seal_panel_dashboard_view_model_implementation_plan_present != 1u ||
         model->caller_provided_report_strings_only != 1u ||
         model->missing_source_row_visible != 1u ||
         model->malformed_source_row_visible != 1u ||
         model->stale_source_row_visible != 1u ||
-        !string_is(model->missing_source_default_decision, "review") ||
-        !string_is(model->malformed_source_default_decision, "deny") ||
-        !string_is(model->stale_source_default_decision, "deny") ||
-        !string_is(model->unknown_source_default_decision, "deny") ||
+        !bounded_string_is(model->missing_source_default_decision,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_DECISION_MAX,
+                           "review") ||
+        !bounded_string_is(model->malformed_source_default_decision,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_DECISION_MAX,
+                           "deny") ||
+        !bounded_string_is(model->stale_source_default_decision,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_DECISION_MAX,
+                           "deny") ||
+        !bounded_string_is(model->unknown_source_default_decision,
+                           LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_DECISION_MAX,
+                           "deny") ||
         model->operator_review_required_for_any_missing_source != 1u ||
         model->authority_absent_for_all_rows != 1u ||
         model->auto_discover_reports != 0u ||
@@ -722,51 +762,58 @@ latticra_status_t latticra_seal_panel_dashboard_view_model_validate(
         model->report_file_loading_implemented != 0u ||
         model->panel_ui_implemented != 0u ||
         model->dashboard_view_model_implemented != 1u) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_INPUT);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_INPUT;
     }
     if (model->runtime_authority_granted != 0u) {
-        mark_error(model,
-                   LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_GRANT_AUTHORITY);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_GRANT_AUTHORITY;
     }
     if (model->effect_performed != 0u) {
-        mark_error(model,
-                   LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_PERFORM_EFFECT);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_PERFORM_EFFECT;
     }
     if (model->host_read_performed != 0u || model->host_write_performed != 0u) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_TOUCH_HOST);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_TOUCH_HOST;
     }
     if (model->network_performed != 0u) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_USE_NETWORK);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_WOULD_USE_NETWORK;
     }
-    if (model->view_model_source_count > LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_MAX ||
+    if (model->view_model_source_count >
+            LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_MAX ||
         model->view_model_source_count > model->view_model_source_count_max) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_CAPACITY_EXCEEDED);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_CAPACITY_EXCEEDED;
     }
     if (model->view_model_entry_count > LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_MAX ||
         model->view_model_entry_count > model->view_model_entry_count_max) {
-        mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_CAPACITY_EXCEEDED);
-        return LATTICRA_STATUS_OK;
+        return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_CAPACITY_EXCEEDED;
     }
 
     for (i = 0u; i < model->view_model_source_count; ++i) {
         latticra_seal_panel_dashboard_view_model_error_t error = source_error(&model->sources[i]);
         if (error != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
-            mark_error(model, error);
-            return LATTICRA_STATUS_OK;
+            return error;
         }
     }
     for (i = 0u; i < model->view_model_entry_count; ++i) {
         latticra_seal_panel_dashboard_view_model_error_t error = row_error(&model->rows[i]);
         if (error != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
-            mark_error(model, error);
-            return LATTICRA_STATUS_OK;
+            return error;
         }
+    }
+
+    return LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK;
+}
+
+latticra_status_t latticra_seal_panel_dashboard_view_model_validate(
+    latticra_seal_panel_dashboard_view_model_t *model) {
+    latticra_seal_panel_dashboard_view_model_error_t error;
+
+    if (model == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+
+    error = model_contract_error(model);
+    if (error != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
+        mark_error(model, error);
+        return LATTICRA_STATUS_OK;
     }
 
     mark_error(model, LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK);
@@ -775,47 +822,10 @@ latticra_status_t latticra_seal_panel_dashboard_view_model_validate(
 
 int latticra_seal_panel_dashboard_view_model_is_report_only(
     const latticra_seal_panel_dashboard_view_model_t *model) {
-    unsigned i;
-
     if (model == NULL ||
-        !string_is(model->seal_panel_dashboard_view_model_profile,
-                   "latticra-seal-panel-dashboard-view-model/0.1") ||
-        !string_is(model->seal_panel_dashboard_view_model_mode, "report-only") ||
-        !string_is(model->seal_panel_dashboard_view_model_status, "planned-no-effect") ||
-        !string_is(model->input_contract_mode, "caller-provided-report-strings") ||
-        model->seal_panel_dashboard_view_model_contract_present != 1u ||
-        model->seal_panel_dashboard_view_model_implementation_plan_present != 1u ||
-        model->caller_provided_report_strings_only != 1u ||
-        model->missing_source_row_visible != 1u ||
-        model->malformed_source_row_visible != 1u ||
-        model->stale_source_row_visible != 1u ||
-        model->operator_review_required_for_any_missing_source != 1u ||
-        model->authority_absent_for_all_rows != 1u ||
-        model->auto_discover_reports != 0u ||
-        model->auto_scan_host_paths != 0u ||
-        model->report_file_loading_implemented != 0u ||
-        model->panel_ui_implemented != 0u ||
-        model->dashboard_view_model_implemented != 1u ||
-        model->runtime_authority_granted != 0u ||
-        model->effect_performed != 0u ||
-        model->host_read_performed != 0u ||
-        model->host_write_performed != 0u ||
-        model->network_performed != 0u ||
-        model->view_model_source_count > LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_MAX ||
-        model->view_model_entry_count > LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_MAX ||
+        model_contract_error(model) != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK ||
         model->last_error != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
         return 0;
-    }
-
-    for (i = 0u; i < model->view_model_source_count; ++i) {
-        if (source_error(&model->sources[i]) != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
-            return 0;
-        }
-    }
-    for (i = 0u; i < model->view_model_entry_count; ++i) {
-        if (row_error(&model->rows[i]) != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
-            return 0;
-        }
     }
     return 1;
 }
@@ -861,6 +871,10 @@ latticra_status_t latticra_seal_panel_dashboard_view_model_render(
     }
     if (buffer_len == 0u) {
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (model_contract_error(model) != LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_OK) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
     if (!append_format(buffer,

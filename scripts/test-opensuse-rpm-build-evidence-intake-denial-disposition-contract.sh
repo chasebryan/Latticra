@@ -136,7 +136,7 @@ require_contains 're-request build evidence' "$contract"
 require_contains 'accept build evidence' "$contract"
 require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$contract"
 require_contains "$closeout_contract" "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract: ok' "$contract"
 
 require_contains "$contract" "$review_contract"

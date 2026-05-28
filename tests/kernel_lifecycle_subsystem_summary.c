@@ -13,7 +13,7 @@
         } \
     } while (0)
 
-static int default_request_targets_runtime_entry_address_space_view_ready(
+static int default_request_targets_runtime_entry_recovery_audit_observation_view_ready(
     void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
@@ -23,8 +23,8 @@ static int default_request_targets_runtime_entry_address_space_view_ready(
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
     EXPECT_TRUE(request.lifecycle_request.target_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
-        "summary default target runtime-entry-address-space-view-ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "summary default target runtime-entry-recovery-audit-observation-view-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -46,14 +46,14 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
     EXPECT_TRUE(strcmp(result.final_state,
-            "runtime-entry-address-space-view-ready") == 0,
-        "summary final state runtime-entry-address-space-view-ready");
+            "runtime-entry-recovery-audit-observation-view-ready") == 0,
+        "summary final state runtime-entry-recovery-audit-observation-view-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 28u,
-        "summary twenty eight lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 28u,
-        "summary twenty eight lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 46u,
+        "summary forty six lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 46u,
+        "summary forty six lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
@@ -89,6 +89,42 @@ static int summary_reaches_ready_without_authority(void) {
         "summary nucleus register restore denied");
     EXPECT_TRUE(result.nucleus_host_effect_allowed == 0,
         "summary nucleus host effect denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_observation_view_allowed == 0,
+        "summary runtime entry recovery audit observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_closeout_observation_view_allowed == 0,
+        "summary runtime entry recovery closeout observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_outcome_observation_view_allowed == 0,
+        "summary runtime entry recovery outcome observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_disposition_observation_view_allowed == 0,
+        "summary runtime entry recovery disposition observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_plan_observation_view_allowed == 0,
+        "summary runtime entry recovery plan observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_boundary_observation_view_allowed == 0,
+        "summary runtime entry recovery boundary observation view denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view_allowed == 0,
+        "summary runtime entry persistence boundary observation view denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view_allowed == 0,
+        "summary runtime entry quiescent return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view_allowed == 0,
+        "summary runtime entry idle return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view_allowed == 0,
+        "summary runtime entry process return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view_allowed == 0,
+        "summary runtime entry scheduler return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view_allowed == 0,
+        "summary runtime entry post resume observation view denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view_allowed == 0,
+        "summary runtime entry user mode resume view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view_allowed == 0,
+        "summary runtime entry syscall exit view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view_allowed == 0,
+        "summary runtime entry syscall return view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view_allowed == 0,
+        "summary runtime entry syscall dispatch view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view_allowed == 0,
+        "summary runtime entry syscall gate view denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view_allowed == 0,
+        "summary runtime entry privilege level view denied");
     EXPECT_TRUE(result.runtime_entry_address_space_view_allowed == 0,
         "summary runtime entry address space view denied");
     EXPECT_TRUE(result.runtime_entry_stack_view_allowed == 0,
@@ -101,6 +137,36 @@ static int summary_reaches_ready_without_authority(void) {
         "summary runtime entry admission denied");
     EXPECT_TRUE(result.runtime_entry_allowed == 0,
         "summary runtime entry denied");
+    EXPECT_TRUE(result.recovery_boundary_observation_allowed == 0,
+        "summary recovery boundary observation denied");
+    EXPECT_TRUE(result.recovery_boundary_allowed == 0,
+        "summary recovery boundary denied");
+    EXPECT_TRUE(result.recovery_plan_allowed == 0,
+        "summary recovery plan denied");
+    EXPECT_TRUE(result.recovery_plan_observation_allowed == 0,
+        "summary recovery plan observation denied");
+    EXPECT_TRUE(result.recovery_disposition_allowed == 0,
+        "summary recovery disposition denied");
+    EXPECT_TRUE(result.recovery_disposition_observation_allowed == 0,
+        "summary recovery disposition observation denied");
+    EXPECT_TRUE(result.recovery_outcome_allowed == 0,
+        "summary recovery outcome denied");
+    EXPECT_TRUE(result.recovery_outcome_observation_allowed == 0,
+        "summary recovery outcome observation denied");
+    EXPECT_TRUE(result.recovery_audit_allowed == 0,
+        "summary recovery audit denied");
+    EXPECT_TRUE(result.recovery_audit_observation_allowed == 0,
+        "summary recovery audit observation denied");
+    EXPECT_TRUE(result.recovery_closeout_allowed == 0,
+        "summary recovery closeout denied");
+    EXPECT_TRUE(result.recovery_closeout_observation_allowed == 0,
+        "summary recovery closeout observation denied");
+    EXPECT_TRUE(result.persistence_boundary_observation_allowed == 0,
+        "summary persistence boundary observation denied");
+    EXPECT_TRUE(result.persistence_boundary_allowed == 0,
+        "summary persistence boundary denied");
+    EXPECT_TRUE(result.persistence_commit_allowed == 0,
+        "summary persistence commit denied");
     EXPECT_TRUE(result.scheduler_execution_allowed == 0,
         "summary scheduler execution denied");
     EXPECT_TRUE(result.scheduler_selection_allowed == 0,
@@ -216,8 +282,8 @@ static int summary_reaches_ready_without_authority(void) {
     EXPECT_TRUE(strcmp(result.entries[1].name, "runtime") == 0,
         "summary runtime entry name");
     EXPECT_TRUE(strcmp(result.entries[1].lifecycle_relation,
-            "runtime-entry-address-space-view-ready") == 0,
-        "summary runtime address space view relation");
+            "runtime-entry-recovery-audit-observation-view-ready") == 0,
+        "summary runtime recovery audit observation view relation");
     EXPECT_TRUE(strcmp(result.entries[1].authority_status, "runtime-entry-denied") == 0,
         "summary runtime authority denied");
     EXPECT_TRUE(result.entries[1].lifecycle_ready == 0,
@@ -295,12 +361,14 @@ static int summary_respects_lifecycle_step_limit(void) {
     EXPECT_TRUE(result.lifecycle_step_count == 2u,
         "limited summary two steps");
     EXPECT_TRUE(strcmp(result.nucleus_coupling_status,
-            "nucleus-kernel-coupling-ready") == 0,
-        "limited summary nucleus coupling ready status");
-    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-ready") == 0,
-        "limited summary os metadata ready");
-    EXPECT_TRUE(result.nucleus_coupling_ready == 1,
-        "limited summary nucleus coupling ready");
+            "nucleus-kernel-coupling-blocked") == 0,
+        "limited summary nucleus coupling blocked status");
+    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-blocked") == 0,
+        "limited summary os metadata blocked");
+    EXPECT_TRUE(result.nucleus_coupling_ready == 0,
+        "limited summary nucleus coupling blocked");
+    EXPECT_TRUE(result.nucleus_no_effect_chain_ok == 0,
+        "limited summary nucleus chain blocked");
     EXPECT_TRUE(result.entries[0].lifecycle_ready == 1,
         "limited summary boot ready");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 0,
@@ -311,8 +379,8 @@ static int summary_respects_lifecycle_step_limit(void) {
         "limited summary process not ready");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "limited summary no external effect");
-    EXPECT_TRUE(result.no_external_effect_chain == 1,
-        "limited summary no external effect chain");
+    EXPECT_TRUE(result.no_external_effect_chain == 0,
+        "limited summary incomplete effect chain");
     EXPECT_TRUE(result.network_allowed == 0,
         "limited summary network denied");
     return 0;
@@ -338,13 +406,13 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
     EXPECT_TRUE(strstr(report,
-            "final_state=runtime-entry-address-space-view-ready\n") != 0,
+            "final_state=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=28\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=46\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=28\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=46\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
@@ -380,6 +448,60 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "nucleus_host_effect_allowed=0\n") != 0,
         "summary report nucleus host effect denied");
     EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_closeout_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery closeout observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_outcome_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery outcome observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_disposition_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery disposition observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_plan_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery plan observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_boundary_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery boundary observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_persistence_boundary_observation_view_allowed=0\n") != 0,
+        "summary report runtime persistence boundary observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_quiescent_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime quiescent return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_idle_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime idle return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_process_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime process return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_scheduler_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime scheduler return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_post_resume_observation_view_allowed=0\n") != 0,
+        "summary report runtime post resume observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_user_mode_resume_view_allowed=0\n") != 0,
+        "summary report runtime user mode resume view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_exit_view_allowed=0\n") != 0,
+        "summary report runtime syscall exit view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_return_view_allowed=0\n") != 0,
+        "summary report runtime syscall return view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_dispatch_view_allowed=0\n") != 0,
+        "summary report runtime syscall dispatch view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_gate_view_allowed=0\n") != 0,
+        "summary report runtime syscall gate view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_privilege_level_view_allowed=0\n") != 0,
+        "summary report runtime privilege level view denied");
+    EXPECT_TRUE(strstr(report,
             "runtime_entry_address_space_view_allowed=0\n") != 0,
         "summary report runtime address space view denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_stack_view_allowed=0\n") != 0,
@@ -392,6 +514,36 @@ static int summary_report_is_deterministic(void) {
         "summary report runtime admission denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_allowed=0\n") != 0,
         "summary report runtime denied");
+    EXPECT_TRUE(strstr(report, "recovery_boundary_observation_allowed=0\n") != 0,
+        "summary report recovery boundary observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_boundary_allowed=0\n") != 0,
+        "summary report recovery boundary denied");
+    EXPECT_TRUE(strstr(report, "recovery_plan_allowed=0\n") != 0,
+        "summary report recovery plan denied");
+    EXPECT_TRUE(strstr(report, "recovery_plan_observation_allowed=0\n") != 0,
+        "summary report recovery plan observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_disposition_allowed=0\n") != 0,
+        "summary report recovery disposition denied");
+    EXPECT_TRUE(strstr(report, "recovery_disposition_observation_allowed=0\n") != 0,
+        "summary report recovery disposition observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_outcome_allowed=0\n") != 0,
+        "summary report recovery outcome denied");
+    EXPECT_TRUE(strstr(report, "recovery_outcome_observation_allowed=0\n") != 0,
+        "summary report recovery outcome observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_closeout_allowed=0\n") != 0,
+        "summary report recovery closeout denied");
+    EXPECT_TRUE(strstr(report, "recovery_closeout_observation_allowed=0\n") != 0,
+        "summary report recovery closeout observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_allowed=0\n") != 0,
+        "summary report recovery audit denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_observation_allowed=0\n") != 0,
+        "summary report recovery audit observation denied");
+    EXPECT_TRUE(strstr(report, "persistence_boundary_observation_allowed=0\n") != 0,
+        "summary report persistence boundary observation denied");
+    EXPECT_TRUE(strstr(report, "persistence_boundary_allowed=0\n") != 0,
+        "summary report persistence boundary denied");
+    EXPECT_TRUE(strstr(report, "persistence_commit_allowed=0\n") != 0,
+        "summary report persistence commit denied");
     EXPECT_TRUE(strstr(report, "scheduler_execution_allowed=0\n") != 0,
         "summary report scheduler denied");
     EXPECT_TRUE(strstr(report, "scheduler_selection_allowed=0\n") != 0,
@@ -497,7 +649,7 @@ static int summary_report_is_deterministic(void) {
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
     EXPECT_TRUE(strstr(report,
-            "subsystem[1].lifecycle_relation=runtime-entry-address-space-view-ready\n") != 0,
+            "subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-observation-view-ready\n") != 0,
         "summary report runtime relation");
     EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-run-entry-ready\n") != 0,
         "summary report scheduler relation");
@@ -546,7 +698,7 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_runtime_entry_address_space_view_ready()
+    if (default_request_targets_runtime_entry_recovery_audit_observation_view_ready()
             != 0) {
         return 1;
     }

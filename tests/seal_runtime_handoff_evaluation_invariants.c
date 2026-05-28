@@ -181,12 +181,25 @@ static int evaluation_fails_closed(void) {
     latticra_seal_verified_effect_decision_t decision = fixture_decision("report-only");
     latticra_seal_runtime_handoff_evaluation_t evaluation;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_REPORT_MAX];
+    char unterminated_handoff[LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX];
+
+    memset(unterminated_handoff, 'x', sizeof(unterminated_handoff));
 
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(0, "report-only", &evaluation) == LATTICRA_STATUS_OK, "null decision status");
     EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_INPUT, "null decision error");
     decision.error = LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(&decision, "report-only", &evaluation) == LATTICRA_STATUS_OK, "invalid decision status");
     EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_DECISION, "invalid decision error");
+    decision = fixture_decision("report-only");
+    memset(decision.decision_state, 'z', sizeof(decision.decision_state));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(&decision, "report-only", &evaluation) == LATTICRA_STATUS_OK, "unterminated decision status");
+    EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_DECISION, "unterminated decision error");
+    EXPECT_TRUE(strcmp(evaluation.handoff_state, "denied-decision") == 0, "unterminated decision state");
+    decision = fixture_decision("report-only");
+    decision.verified = 2u;
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(&decision, "report-only", &evaluation) == LATTICRA_STATUS_OK, "invalid decision flag status");
+    EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_DECISION, "invalid decision flag error");
     decision = fixture_decision("report-only");
     decision.effect_allowed = 0u;
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(&decision, "report-only", &evaluation) == LATTICRA_STATUS_OK, "denied effect flag status");
@@ -236,6 +249,21 @@ static int evaluation_fails_closed(void) {
     EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_UNKNOWN_HANDOFF, "unknown handoff error");
     EXPECT_TRUE(strcmp(evaluation.handoff_state, "denied-effect") == 0, "unknown handoff state");
     decision = fixture_decision("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(
+                    &decision,
+                    unterminated_handoff,
+                    &evaluation) == LATTICRA_STATUS_OK,
+                "unterminated requested handoff status");
+    EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_UNKNOWN_HANDOFF,
+                "unterminated requested handoff error");
+    EXPECT_TRUE(strcmp(evaluation.requested_handoff, "invalid-handoff") == 0,
+                "unterminated requested handoff sanitized");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(&evaluation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested handoff render");
+    EXPECT_TRUE(strstr(rendered, "requested_handoff=invalid-handoff") != 0,
+                "unterminated requested handoff rendered sanitized");
+    decision = fixture_decision("report-only");
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(&decision, "evaluate-only", &evaluation) == LATTICRA_STATUS_OK, "mismatch status");
     EXPECT_TRUE(evaluation.error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_EFFECT, "mismatch error");
     EXPECT_TRUE(strcmp(evaluation.handoff_state, "denied-effect") == 0, "mismatch state");
@@ -245,6 +273,51 @@ static int evaluation_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small report clear");
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null evaluation report");
     EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(&evaluation, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer report");
+
+    decision = fixture_decision("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(
+                    &decision,
+                    "report-only",
+                    &evaluation) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(evaluation.handoff_profile, 'z', sizeof(evaluation.handoff_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(&evaluation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated evaluation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated evaluation render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_is_metadata_only(&evaluation) == 0,
+                "unterminated evaluation helper rejected");
+
+    decision = fixture_decision("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(
+                    &decision,
+                    "report-only",
+                    &evaluation) == LATTICRA_STATUS_OK,
+                "authority evaluation render source");
+    evaluation.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(&evaluation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority evaluation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority evaluation render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_is_metadata_only(&evaluation) == 0,
+                "authority evaluation helper rejected");
+
+    decision = fixture_decision("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_from_decision(
+                    &decision,
+                    "report-only",
+                    &evaluation) == LATTICRA_STATUS_OK,
+                "eligible flag evaluation render source");
+    evaluation.handoff_eligible = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_report(&evaluation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "eligible flag evaluation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "eligible flag evaluation render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_evaluation_is_metadata_only(&evaluation) == 0,
+                "eligible flag evaluation helper rejected");
     return 0;
 }
 

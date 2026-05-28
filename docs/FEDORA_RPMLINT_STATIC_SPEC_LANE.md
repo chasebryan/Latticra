@@ -15,8 +15,11 @@ This lane does not require a clean rpmlint result yet because the spec remains a
 
 ```text
 docs/FEDORA_RPMLINT_STATIC_SPEC_LANE.md
+docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
 scripts/test-fedora-rpmlint-static-spec-lane.sh
+scripts/test-fedora-rpmlint-findings-classification.sh
 .github/workflows/fedora-rpmlint-static-spec-lane.yml
+.github/workflows/fedora-rpmlint-findings-classification.yml
 packaging/fedora/latticra.spec
 ```
 
@@ -62,15 +65,26 @@ It does not submit Latticra to Fedora.
 
 It does not claim Fedora package approval, Fedora endorsement, Fedora spin/remix status, product readiness, operating-system readiness, runtime authority, kernel authority, or security-hardening completion.
 
-## Next slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on findings classification:
 
 ```text
 Add rpmlint findings classification report
+docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
+scripts/test-fedora-rpmlint-findings-classification.sh
+.github/workflows/fedora-rpmlint-findings-classification.yml
 ```
 
-That future lane may classify expected draft findings separately from unexpected spec findings while keeping the package local-only.
+The classification record separates expected local-only draft findings from unexpected blockers while keeping Fedora package readiness blocked.
+
+## Next slice
+
+Recommended next Fedora packaging evidence lane:
+
+```text
+Add a Fedora source archive reproducibility contract before mock build, package review, or production-readiness evidence can be accepted.
+```
 
 ## Validation
 

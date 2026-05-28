@@ -10,12 +10,316 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_terminated(const char *value, size_t max_len) {
+    int terminated = 0;
+
+    (void)bounded_string_len(value, max_len, &terminated);
+    return terminated == 1;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
 static int is_allowed_signature(const char *signature) {
-    return signature != NULL && strcmp(signature, "Ed25519-development") == 0;
+    return bounded_string_is(signature,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "Ed25519-development");
 }
 
 static int is_allowed_metadata_label(const char *label) {
-    return label != NULL && strcmp(label, "metadata-only") == 0;
+    return bounded_string_is(label,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only");
+}
+
+static int boolean_flag_valid(unsigned value) {
+    return value == 0u || value == 1u;
+}
+
+static int key_material_error_valid(latticra_seal_key_material_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_KEY_MATERIAL_OK:
+    case LATTICRA_SEAL_KEY_MATERIAL_INVALID_INPUT:
+    case LATTICRA_SEAL_KEY_MATERIAL_INVALID_KEY_HANDLING:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_HANDLING:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNING_OPERATION:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNER_INVOCATION:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNER_HANDOFF:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNING_AUTHORIZATION:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNATURE_ALGORITHM:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_MATERIAL:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_PRIVATE_KEY:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_TRUST_STORE:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_KEY_MATERIAL_DENIED_NETWORK_EFFECT:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int key_handling_error_valid(latticra_seal_key_handling_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_KEY_HANDLING_OK:
+    case LATTICRA_SEAL_KEY_HANDLING_INVALID_INPUT:
+    case LATTICRA_SEAL_KEY_HANDLING_INVALID_SIGNING_OPERATION:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_SIGNING_OPERATION:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_SIGNER_INVOCATION:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_SIGNER_HANDOFF:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_SIGNING_AUTHORIZATION:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_SIGNATURE_ALGORITHM:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_KEY_HANDLING:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_KEY_MATERIAL:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_PRIVATE_KEY:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_TRUST_STORE:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_KEY_HANDLING_DENIED_NETWORK_EFFECT:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int key_handling_flags_valid(
+    const latticra_seal_key_handling_t *key_handling) {
+    if (key_handling == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(key_handling->signing_authorization_ready) &&
+           boolean_flag_valid(key_handling->signer_handoff_ready) &&
+           boolean_flag_valid(key_handling->signer_invocation_ready) &&
+           boolean_flag_valid(key_handling->signing_operation_ready) &&
+           boolean_flag_valid(key_handling->key_handling_ready) &&
+           boolean_flag_valid(key_handling->signature_performed) &&
+           boolean_flag_valid(key_handling->verification_performed) &&
+           boolean_flag_valid(key_handling->signer_invoked) &&
+           boolean_flag_valid(key_handling->public_key_parsed) &&
+           boolean_flag_valid(key_handling->key_material_loaded) &&
+           boolean_flag_valid(key_handling->private_key_handling) &&
+           boolean_flag_valid(key_handling->key_generation_performed) &&
+           boolean_flag_valid(key_handling->hardware_key_used) &&
+           boolean_flag_valid(key_handling->trust_store_loaded) &&
+           boolean_flag_valid(key_handling->revocation_lookup_performed) &&
+           boolean_flag_valid(key_handling->handoff_performed) &&
+           boolean_flag_valid(key_handling->effect_performed) &&
+           boolean_flag_valid(key_handling->runtime_authority_granted) &&
+           boolean_flag_valid(key_handling->host_read_performed) &&
+           boolean_flag_valid(key_handling->host_write_performed) &&
+           boolean_flag_valid(key_handling->network_performed);
+}
+
+static int key_handling_state_fields_valid(
+    const latticra_seal_key_handling_t *key_handling) {
+    if (key_handling == NULL) {
+        return 0;
+    }
+
+    return text_field_valid(key_handling->signing_authorization_state,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX) &&
+           text_field_valid(key_handling->signer_handoff_state,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX) &&
+           text_field_valid(key_handling->signer_invocation_state,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX) &&
+           text_field_valid(key_handling->signing_operation_state,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX) &&
+           text_field_valid(key_handling->key_handling_state,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX) &&
+           text_field_valid(key_handling->status,
+                            LATTICRA_SEAL_KEY_HANDLING_STATE_MAX);
+}
+
+static int key_handling_strings_valid(
+    const latticra_seal_key_handling_t *key_handling) {
+    if (key_handling == NULL) {
+        return 0;
+    }
+
+    return bounded_string_is(key_handling->key_handling_profile,
+                             LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX,
+                             "latticra-seal-key-handling/0.1") &&
+           text_field_terminated(key_handling->signing_operation_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->signer_invocation_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->signer_handoff_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->signing_authorization_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->signature_request_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->envelope_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->report_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->handoff_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->decision_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->gate_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->receipt_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->verify_profile,
+                                 LATTICRA_SEAL_KEY_HANDLING_PROFILE_MAX) &&
+           text_field_terminated(key_handling->message_digest_algorithm,
+                                 LATTICRA_SEAL_KEY_HANDLING_ALGORITHM_MAX) &&
+           text_field_terminated(key_handling->message_digest_hex,
+                                 LATTICRA_SEAL_KEY_HANDLING_DIGEST_MAX) &&
+           text_field_terminated(key_handling->public_key_identity_label,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_capability,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_effect,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_handoff,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_report,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_envelope,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_signature,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_signing_authorization,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_signer_handoff,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_signer_invocation,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_signing_operation,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_key_handling,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           text_field_terminated(key_handling->requested_scope,
+                                 LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) &&
+           bounded_string_is(key_handling->mode,
+                             LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                             "metadata-only") &&
+           key_handling_error_valid(key_handling->error) &&
+           key_handling_flags_valid(key_handling) &&
+           key_handling_state_fields_valid(key_handling);
+}
+
+static int requested_key_material_present(const char *requested_key_material) {
+    return requested_key_material != NULL && requested_key_material[0] != '\0';
+}
+
+static int key_material_ready_state_valid(
+    const latticra_seal_key_material_t *key_material) {
+    if (key_material == NULL ||
+        !boolean_flag_valid(key_material->key_material_ready)) {
+        return 0;
+    }
+    if (key_material->key_material_ready == 0u) {
+        return key_material->error != LATTICRA_SEAL_KEY_MATERIAL_OK &&
+               text_field_valid(key_material->key_material_state,
+                                LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+               text_field_valid(key_material->status,
+                                LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX);
+    }
+
+    return key_material->error == LATTICRA_SEAL_KEY_MATERIAL_OK &&
+           key_material->signing_authorization_ready == 1u &&
+           key_material->signer_handoff_ready == 1u &&
+           key_material->signer_invocation_ready == 1u &&
+           key_material->signing_operation_ready == 1u &&
+           key_material->key_handling_ready == 1u &&
+           bounded_string_is(key_material->requested_signature,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "Ed25519-development") &&
+           bounded_string_is(key_material->requested_signing_authorization,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->requested_signer_handoff,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->requested_signer_invocation,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->requested_signing_operation,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->requested_key_handling,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(key_material->signing_authorization_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "authorized-metadata-only") &&
+           bounded_string_is(key_material->signer_handoff_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "handoff-metadata-only") &&
+           bounded_string_is(key_material->signer_invocation_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "invocation-metadata-only") &&
+           bounded_string_is(key_material->signing_operation_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "operation-metadata-only") &&
+           bounded_string_is(key_material->key_handling_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "key-handling-metadata-only") &&
+           bounded_string_is(key_material->key_material_state,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "key-material-metadata-only") &&
+           bounded_string_is(key_material->status,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "key-material-metadata");
+}
+
+static const char *safe_requested_key_material_for_copy(
+    const char *requested_key_material) {
+    if (!requested_key_material_present(requested_key_material)) {
+        return NULL;
+    }
+    if (!text_field_valid(requested_key_material,
+                          LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX)) {
+        return "invalid-key-material";
+    }
+    return requested_key_material;
 }
 
 const char *latticra_seal_key_material_error_label(
@@ -111,7 +415,9 @@ static void copy_key_handling_metadata(
         sizeof(out->requested_signing_operation),
         key_handling->requested_signing_operation);
     copy_literal(out->requested_key_handling, sizeof(out->requested_key_handling), key_handling->requested_key_handling);
-    copy_literal(out->requested_key_material, sizeof(out->requested_key_material), requested_key_material);
+    copy_literal(out->requested_key_material,
+                 sizeof(out->requested_key_material),
+                 safe_requested_key_material_for_copy(requested_key_material));
     copy_literal(out->requested_scope, sizeof(out->requested_scope), key_handling->requested_scope);
     copy_literal(
         out->signing_authorization_state,
@@ -145,16 +451,24 @@ static void copy_key_handling_metadata(
 }
 
 static int request_is_key_material(const char *requested_key_material) {
-    return requested_key_material != NULL &&
-           (strcmp(requested_key_material, "parse-public-key") == 0 ||
-            strcmp(requested_key_material, "load-key-material") == 0);
+    return bounded_string_is(requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "parse-public-key") ||
+           bounded_string_is(requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "load-key-material");
 }
 
 static int request_is_private_key(const char *requested_key_material) {
-    return requested_key_material != NULL &&
-           (strcmp(requested_key_material, "handle-private-key") == 0 ||
-            strcmp(requested_key_material, "generate-key") == 0 ||
-            strcmp(requested_key_material, "use-hardware-key") == 0);
+    return bounded_string_is(requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "handle-private-key") ||
+           bounded_string_is(requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "generate-key") ||
+           bounded_string_is(requested_key_material,
+                             LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                             "use-hardware-key");
 }
 
 latticra_status_t latticra_seal_key_material_from_key_handling(
@@ -171,6 +485,15 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
         return LATTICRA_STATUS_OK;
     }
 
+    if (!key_handling_strings_valid(key_handling)) {
+        out->error = LATTICRA_SEAL_KEY_MATERIAL_INVALID_KEY_HANDLING;
+        copy_literal(out->key_material_state,
+                     sizeof(out->key_material_state),
+                     "denied-key-handling");
+        copy_literal(out->status, sizeof(out->status), "invalid-key-handling");
+        return LATTICRA_STATUS_OK;
+    }
+
     copy_key_handling_metadata(key_handling, requested_key_material, out);
 
     if (key_handling->error != LATTICRA_SEAL_KEY_HANDLING_OK) {
@@ -181,8 +504,12 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
     }
 
     if (key_handling->key_handling_ready != 1u ||
-        strcmp(key_handling->key_handling_state, "key-handling-metadata-only") != 0 ||
-        strcmp(key_handling->requested_key_handling, "metadata-only") != 0) {
+        !bounded_string_is(key_handling->key_handling_state,
+                           LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                           "key-handling-metadata-only") ||
+        !bounded_string_is(key_handling->requested_key_handling,
+                           LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX,
+                           "metadata-only")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_HANDLING;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-key-handling");
         copy_literal(out->status, sizeof(out->status), "denied-key-handling");
@@ -190,8 +517,12 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
     }
 
     if (key_handling->signing_operation_ready != 1u ||
-        strcmp(key_handling->signing_operation_state, "operation-metadata-only") != 0 ||
-        strcmp(key_handling->requested_signing_operation, "metadata-only") != 0) {
+        !bounded_string_is(key_handling->signing_operation_state,
+                           LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                           "operation-metadata-only") ||
+        !bounded_string_is(key_handling->requested_signing_operation,
+                           LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX,
+                           "metadata-only")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNING_OPERATION;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-signing-operation");
         copy_literal(out->status, sizeof(out->status), "denied-signing-operation");
@@ -199,8 +530,12 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
     }
 
     if (key_handling->signer_invocation_ready != 1u ||
-        strcmp(key_handling->signer_invocation_state, "invocation-metadata-only") != 0 ||
-        strcmp(key_handling->requested_signer_invocation, "metadata-only") != 0) {
+        !bounded_string_is(key_handling->signer_invocation_state,
+                           LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                           "invocation-metadata-only") ||
+        !bounded_string_is(key_handling->requested_signer_invocation,
+                           LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX,
+                           "metadata-only")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNER_INVOCATION;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-signer-invocation");
         copy_literal(out->status, sizeof(out->status), "denied-signer-invocation");
@@ -208,8 +543,12 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
     }
 
     if (key_handling->signer_handoff_ready != 1u ||
-        strcmp(key_handling->signer_handoff_state, "handoff-metadata-only") != 0 ||
-        strcmp(key_handling->requested_signer_handoff, "metadata-only") != 0) {
+        !bounded_string_is(key_handling->signer_handoff_state,
+                           LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                           "handoff-metadata-only") ||
+        !bounded_string_is(key_handling->requested_signer_handoff,
+                           LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX,
+                           "metadata-only")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNER_HANDOFF;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-signer-handoff");
         copy_literal(out->status, sizeof(out->status), "denied-signer-handoff");
@@ -217,22 +556,29 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
     }
 
     if (key_handling->signing_authorization_ready != 1u ||
-        strcmp(key_handling->signing_authorization_state, "authorized-metadata-only") != 0 ||
-        strcmp(key_handling->requested_signing_authorization, "metadata-only") != 0) {
+        !bounded_string_is(key_handling->signing_authorization_state,
+                           LATTICRA_SEAL_KEY_HANDLING_STATE_MAX,
+                           "authorized-metadata-only") ||
+        !bounded_string_is(key_handling->requested_signing_authorization,
+                           LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX,
+                           "metadata-only")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNING_AUTHORIZATION;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-signing-authorization");
         copy_literal(out->status, sizeof(out->status), "denied-signing-authorization");
         return LATTICRA_STATUS_OK;
     }
 
-    if (key_handling->requested_signature[0] == '\0' || !is_allowed_signature(key_handling->requested_signature)) {
+    if (key_handling->requested_signature[0] == '\0' ||
+        !text_field_valid(key_handling->requested_signature,
+                          LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX) ||
+        !is_allowed_signature(key_handling->requested_signature)) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_SIGNATURE_ALGORITHM;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-signature-algorithm");
         copy_literal(out->status, sizeof(out->status), "denied-signature-algorithm");
         return LATTICRA_STATUS_OK;
     }
 
-    if (requested_key_material == NULL || requested_key_material[0] == '\0') {
+    if (!requested_key_material_present(requested_key_material)) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_MATERIAL;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-key-material");
         copy_literal(out->status, sizeof(out->status), "missing-requested-key-material");
@@ -253,14 +599,18 @@ latticra_status_t latticra_seal_key_material_from_key_handling(
         return LATTICRA_STATUS_OK;
     }
 
-    if (strcmp(requested_key_material, "load-trust-store") == 0) {
+    if (bounded_string_is(requested_key_material,
+                          LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                          "load-trust-store")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_TRUST_STORE;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-trust-store");
         copy_literal(out->status, sizeof(out->status), "denied-trust-store");
         return LATTICRA_STATUS_OK;
     }
 
-    if (strcmp(requested_key_material, "revocation-lookup") == 0) {
+    if (bounded_string_is(requested_key_material,
+                          LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX,
+                          "revocation-lookup")) {
         out->error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_NETWORK_EFFECT;
         copy_literal(out->key_material_state, sizeof(out->key_material_state), "denied-network-effect");
         copy_literal(out->status, sizeof(out->status), "denied-network-effect");
@@ -370,7 +720,92 @@ int latticra_seal_key_material_is_metadata_only(
            key_material->runtime_authority_granted == 0u &&
            key_material->host_read_performed == 0u &&
            key_material->host_write_performed == 0u &&
-           key_material->network_performed == 0u;
+           key_material->network_performed == 0u &&
+           key_material_error_valid(key_material->error) &&
+           boolean_flag_valid(key_material->signing_authorization_ready) &&
+           boolean_flag_valid(key_material->signer_handoff_ready) &&
+           boolean_flag_valid(key_material->signer_invocation_ready) &&
+           boolean_flag_valid(key_material->signing_operation_ready) &&
+           boolean_flag_valid(key_material->key_handling_ready) &&
+           key_material_ready_state_valid(key_material) &&
+           bounded_string_is(key_material->key_material_profile,
+                             LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX,
+                             "latticra-seal-key-material/0.1") &&
+           text_field_terminated(key_material->key_handling_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->signing_operation_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->signer_invocation_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->signer_handoff_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->signing_authorization_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->signature_request_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->envelope_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->report_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->handoff_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->decision_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->gate_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->receipt_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->verify_profile,
+                                 LATTICRA_SEAL_KEY_MATERIAL_PROFILE_MAX) &&
+           text_field_terminated(key_material->message_digest_algorithm,
+                                 LATTICRA_SEAL_KEY_MATERIAL_ALGORITHM_MAX) &&
+           text_field_terminated(key_material->message_digest_hex,
+                                 LATTICRA_SEAL_KEY_MATERIAL_DIGEST_MAX) &&
+           text_field_terminated(key_material->public_key_identity_label,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_capability,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_effect,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_handoff,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_report,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_envelope,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_signature,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_signing_authorization,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_signer_handoff,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_signer_invocation,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_signing_operation,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_key_handling,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_key_material,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->requested_scope,
+                                 LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX) &&
+           text_field_terminated(key_material->signing_authorization_state,
+                                 LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           text_field_terminated(key_material->signer_handoff_state,
+                                 LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           text_field_terminated(key_material->signer_invocation_state,
+                                 LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           text_field_terminated(key_material->signing_operation_state,
+                                 LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           text_field_terminated(key_material->key_handling_state,
+                                 LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           text_field_valid(key_material->key_material_state,
+                            LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX) &&
+           bounded_string_is(key_material->mode,
+                             LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX,
+                             "metadata-only") &&
+           text_field_valid(key_material->status,
+                            LATTICRA_SEAL_KEY_MATERIAL_STATE_MAX);
 }
 
 latticra_status_t latticra_seal_key_material_render(
@@ -380,6 +815,13 @@ latticra_status_t latticra_seal_key_material_render(
     int written;
 
     if (key_material == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_key_material_is_metadata_only(key_material)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

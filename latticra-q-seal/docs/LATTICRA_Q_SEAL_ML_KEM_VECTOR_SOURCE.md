@@ -7,7 +7,7 @@ Date: 2026-05-27
 
 The Latticra Q-Seal ML-KEM vector source intake defines the source-control gate for future KAT/ACVP vector bundles. It records the authority class and digest policy Q-Seal will require before a vector bundle can be accepted into offline validation.
 
-This slice does not fetch, import, parse, execute, or submit any vectors. It exists so future vector work cannot skip source provenance, digest verification, license review, errata binding, or offline storage review.
+This slice does not fetch, import, parse, execute, or submit any vectors. It exists so future vector work cannot skip source provenance, digest verification, license review, errata binding, offline storage review, the downstream fixture-lock gate recorded in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md`, or the digest and coverage ledger recorded in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`.
 
 ## Source Fields
 
@@ -55,7 +55,11 @@ latticra-q-seal/include/latticra/q_seal_ml_kem_vector_source.h
 latticra-q-seal/src/q_seal_ml_kem_vector_source.c
 latticra-q-seal/tests/q_seal_ml_kem_vector_source_invariants.c
 latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-source.sh
+scripts/test-latticra-q-seal-ml-kem-vector-fixture-lock.sh
+scripts/test-latticra-q-seal-ml-kem-vector-fixture-digest-ledger.sh
 scripts/test-latticra-q-seal-ml-kem-vector-source.sh
 ```
 

@@ -128,6 +128,8 @@ The implementation fails closed for:
 null output
 null signer invocation
 invalid signer invocation
+unterminated signer invocation strings
+invalid signer invocation boolean flags
 signer_invocation_ready=0
 signer_invocation_state not invocation-metadata-only
 requested_signer_invocation not metadata-only
@@ -141,6 +143,7 @@ missing requested signature
 unknown requested signature
 missing requested signing operation
 unknown requested signing operation
+unterminated requested signing operation -> denied-signing-operation without copying caller bytes
 private-key handling already present
 key generation already present
 trust-store loading already present
@@ -154,6 +157,9 @@ effect already performed
 host read already performed
 host write already performed
 network already performed
+tampered signing operation strings fail closed before render
+tampered signing operation authority/effect flags fail closed before render
+tampered signing operation ready/error state fails closed before render
 small render buffer
 ```
 

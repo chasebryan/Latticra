@@ -6,6 +6,8 @@ Scope: clean-room source and test digest evidence before ML-KEM implementation p
 
 This manifest records the digest policy and source-integrity template for future clean-room ML-KEM implementation files. It does not create implementation files, hash live primitive source, accept source digests, approve generated source, import third-party code, execute ML-KEM operations, claim production cryptography, claim FIPS validation, use the network, mutate host files, or grant runtime authority.
 
+The receipt fixture that must consume this manifest is recorded in `ML_KEM_SOURCE_DIGEST_RECEIPT.md`; it remains fail-closed until source, test, build, replay, review, and CI verification receipts exist.
+
 ## Current Fields
 
 ```text

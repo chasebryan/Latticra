@@ -1,0 +1,274 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  fedora-production-readiness-evidence-matrix.sh
+
+Prints a no-effect Fedora production-readiness evidence matrix. It validates
+local source records and reports the current blocker state. It does not run
+Fedora VM validation, build an RPM, install an RPM, remove an RPM, publish
+artifacts, submit to Fedora, claim production readiness, or mutate the host.
+USAGE
+}
+
+fail() {
+  printf 'fedora production readiness evidence matrix: %s\n' "$1" >&2
+  exit "${2:-1}"
+}
+
+require_file() {
+  file="$1"
+  [ -f "$file" ] || fail "missing file: $file" 66
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  grep -Fq -- "$pattern" "$file" || fail "missing required pattern in $file: $pattern"
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      fail "unknown argument: $1" 64
+      ;;
+  esac
+done
+
+require_file docs/FEDORA_READINESS_PLAN.md
+require_file docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE.md
+require_file docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE_STATUS.md
+require_file scripts/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh
+require_file docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_TRANSCRIPT_REVIEW_VALIDATOR.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_TEMPLATE.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_REVIEW_VALIDATOR.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_ACCEPTANCE_GATE.md
+require_file docs/FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT.md
+require_file docs/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT.md
+require_file docs/FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT.md
+require_file docs/FEDORA_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_file docs/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_file packaging/fedora/latticra.spec
+require_file scripts/test-fedora-local-rpm-static-validation.sh
+require_file README.md
+
+require_contains 'not a production operating system' docs/FEDORA_READINESS_PLAN.md
+require_contains 'promotion_allowed_by_publication_receipt_acceptance_promotion_gate_alone=0' docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE.md
+require_contains 'production_installer_promotion_allowed=0' docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE_STATUS.md
+require_contains 'fedora_distribution_promotion_allowed=0' scripts/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh
+require_contains 'fedora_rpmlint_findings_classification_present=1' docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'fedora_source_archive_reproducibility_contract_present=1' docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_contains 'fedora_source_archive_transcript_review_validator_present=1' docs/FEDORA_SOURCE_ARCHIVE_TRANSCRIPT_REVIEW_VALIDATOR.md
+require_contains 'fedora_source_archive_acceptance_gate_present=1' docs/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE.md
+require_contains 'fedora_source_archive_accepted_evidence_status_template_present=1' docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_TEMPLATE.md
+require_contains 'fedora_source_archive_accepted_evidence_status_review_validator_present=1' docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_REVIEW_VALIDATOR.md
+require_contains 'fedora_source_archive_accepted_evidence_acceptance_gate_present=1' docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_ACCEPTANCE_GATE.md
+require_contains 'fedora_source_archive_mock_build_input_handoff_contract_present=1' docs/FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT.md
+require_contains 'fedora_local_mock_build_gate_contract_present=1' docs/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT.md
+require_contains 'fedora_local_mock_build_environment_contract_present=1' docs/FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT.md
+require_contains 'fedora_rpm_artifact_naming_contract_present=1' docs/FEDORA_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_contains 'fedora_rpm_payload_inspection_contract_present=1' docs/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_contains 'Name:           latticra' packaging/fedora/latticra.spec
+require_contains 'fedora_local_rpm_static_validation: ok' scripts/test-fedora-local-rpm-static-validation.sh
+require_contains 'fedora_vm_cli_payload_repeatability_publication_receipt_acceptance_promotion_gate_present=1' README.md
+
+cat <<'REPORT'
+FEDORA PRODUCTION READINESS EVIDENCE MATRIX
+matrix_status=blocked
+fedora_production_readiness_evidence_matrix_present=1
+fedora_production_readiness_matrix_mode=no-effect-matrix
+fedora_production_readiness_evidence_complete=0
+fedora_production_readiness_promotion_allowed=0
+fedora_vm_cli_payload_repeatability_publication_receipt_acceptance_promotion_gate_present=1
+fedora_cli_payload_repeatability_prerequisite_complete=0
+fedora_packaging_metadata_static_lane_present=1
+fedora_local_rpm_static_validation_present=1
+fedora_mock_build_evidence_present=0
+fedora_rpmlint_evidence_present=0
+fedora_rpmlint_findings_classification_present=1
+fedora_source_archive_reproducibility_contract_present=1
+fedora_source_archive_transcript_review_validator_present=1
+fedora_source_archive_acceptance_gate_present=1
+fedora_source_archive_accepted_evidence_status_template_present=1
+fedora_source_archive_accepted_evidence_status_review_validator_present=1
+fedora_source_archive_accepted_evidence_acceptance_gate_present=1
+fedora_source_archive_mock_build_input_handoff_contract_present=1
+fedora_local_mock_build_gate_contract_present=1
+fedora_local_mock_build_environment_contract_present=1
+fedora_rpm_artifact_naming_contract_present=1
+fedora_rpm_payload_inspection_contract_present=1
+source_archive_acceptance_gate_mode=no-effect-gate
+source_archive_accepted_evidence_status_template_mode=no-effect-template
+source_archive_accepted_evidence_status_template_decision=blocked-template-only-no-status-write
+source_archive_accepted_evidence_status_review_mode=no-effect-validation
+source_archive_accepted_evidence_acceptance_gate_mode=no-effect-gate
+source_archive_mock_build_input_handoff_contract_state=closed-no-effect
+mock_build_input_handoff_allowed=0
+fedora_mock_build_gate_state=closed-no-effect
+fedora_mock_build_gate_open=0
+fedora_mock_build_gate_opened_by_contract=0
+fedora_mock_build_environment_contract_state=specified-no-effect
+fedora_rpm_artifact_naming_contract_state=specified-no-effect
+fedora_rpm_payload_inspection_contract_state=specified-no-effect
+payload_inspection_contract_state=specified-no-effect
+fedora_clean_build_environment_documented=1
+fedora_mock_target_documented=1
+fedora_target_distribution_documented=1
+fedora_build_environment_provisioned=0
+fedora_mock_build_environment_provisioned=0
+explicit_operator_build_authorization=0
+disposable_validation_environment_required=1
+disposable_validation_environment_provisioned=0
+environment_transcript_present=0
+toolchain_version_capture_required=1
+rpm_input_digest_binding_required=1
+mock_chroot_lifecycle_documented=1
+mock_network_policy_documented=1
+mock_result_directory_documented=1
+source_rpm_output_path_documented=1
+binary_rpm_output_path_documented=1
+transcript_retention_path_documented=1
+rpm_artifact_naming_contract_present=1
+rpm_artifact_output_directory_required_under_disposable_environment=1
+rpm_artifact_output_directory_created=0
+repository_rpm_artifact_write_allowed=0
+root_workspace_rpm_artifact_write_allowed=0
+publication_directory_write_allowed=0
+rpm_source_artifact_name_pattern_recorded=1
+rpm_binary_artifact_name_pattern_recorded=1
+rpm_dist_tag_token_required=1
+rpm_binary_arch_token_required=1
+rpm_payload_inspection_contract_present=1
+payload_inspection_contract_present=1
+rpm_payload_cli_path_required=1
+rpm_payload_doc_readme_required=1
+rpm_payload_service_files_allowed=0
+rpm_payload_systemd_units_allowed=0
+rpm_payload_init_files_allowed=0
+rpm_payload_kernel_files_allowed=0
+rpm_payload_privileged_helper_allowed=0
+rpm_payload_network_authority_allowed=0
+rpm_payload_host_mutation_hooks_allowed=0
+source_archive_policy_recorded=1
+source_archive_name_expected=latticra-0.0.0.tar.gz
+source_archive_root_expected=latticra-0.0.0/
+source_archive_matches_source0_required=1
+source_archive_matches_autosetup_required=1
+source_archive_transcript_present=0
+source_archive_transcript_candidate_valid=0
+source_archive_transcript_reviewed=0
+source_archive_transcript_review_report_valid=0
+source_archive_accepted_by_transcript_validator=0
+source_archive_written_by_transcript_validator=0
+source_archive_accepted_for_build_by_transcript_validator_alone=0
+source_archive_acceptance_requested=0
+candidate_source_archive_transcript_present=0
+candidate_source_archive_reproducible=0
+candidate_source_archive_repeated_sha256_match=0
+candidate_source_archive_rpmlint_prerequisite_present=0
+source_archive_accepted_by_acceptance_gate=0
+source_archive_written_by_acceptance_gate=0
+source_archive_accepted_for_build_by_acceptance_gate_alone=0
+source_archive_accepted_evidence_status_template_complete=0
+source_archive_accepted_evidence_status_candidate_valid=0
+source_archive_accepted_evidence_status_required_markers_present=0
+source_archive_accepted_evidence_status_placeholder_values_absent=0
+source_archive_accepted_evidence_status_value_fields_validated=0
+source_archive_accepted_evidence_status_reviewed=0
+source_archive_accepted_evidence_status_accepted_by_validator=0
+source_archive_accepted_evidence_status_written_by_validator=0
+source_archive_accepted_for_build_by_status_validator_alone=0
+fedora_mock_build_input_opened_by_status_validator_alone=0
+source_archive_accepted_evidence_status_review_report_valid=0
+source_archive_accepted_evidence_acceptance_requested=0
+source_archive_accepted_evidence_acceptance_gate_report_valid=0
+source_archive_accepted_evidence_acceptance_gate_reviewed=0
+source_archive_accepted_for_build_candidate_valid=0
+candidate_source_archive_accepted_evidence_status_written=0
+candidate_source_archive_accepted_evidence_present=0
+candidate_source_archive_accepted_for_build=0
+candidate_fedora_mock_build_input_opened=0
+source_archive_accepted_by_accepted_evidence_acceptance_gate=0
+source_archive_accepted_evidence_status_written_by_acceptance_gate=0
+source_archive_accepted_for_build_by_acceptance_gate_alone=0
+fedora_mock_build_input_opened_by_acceptance_gate_alone=0
+source_archive_handoff_to_rpmbuild_allowed=0
+source_archive_handoff_to_mock_allowed=0
+source_archive_handoff_written_by_contract=0
+fedora_rpm_input_layout_documented=1
+fedora_rpmbuild_sources_archive_staged=0
+fedora_rpmbuild_specs_spec_staged=0
+fedora_mock_build_input_opened_by_handoff_contract=0
+fedora_mock_config_written=0
+fedora_mock_chroot_initialized=0
+fedora_mock_chroot_mutated=0
+rpmbuild_allowed=0
+rpmbuild_bs_allowed=0
+rpmbuild_ba_allowed=0
+rpmbuild_bb_allowed=0
+rpmbuild_command_allowed=0
+mock_build_allowed=0
+mock_build_command_allowed=0
+mock_buildsrpm_allowed=0
+dnf_builddep_command_allowed=0
+dnf_builddep_allowed=0
+source_archive_transcript_attached=0
+source_archive_transcript_review_report_attached=0
+source_archive_acceptance_gate_report_attached=0
+source_archive_acceptance_gate_reviewed=0
+source_archive_accepted_evidence_status_written=0
+source_archive_accepted_evidence_present=0
+source_archive_accepted=0
+source_archive_created_by_contract=0
+source_archive_sha256_recorded=0
+source_archive_reproducible=0
+source_archive_accepted_for_build=0
+fedora_mock_build_input_opened=0
+fedora_package_review_ready=0
+rpmbuild_run=0
+rpmbuild_bs_run=0
+rpmbuild_ba_run=0
+rpmbuild_bb_run=0
+mock_build_run=0
+mock_buildsrpm_run=0
+dnf_builddep_run=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_artifact_published=0
+rpm_payload_inspection_run=0
+source_rpm_payload_inspection_run=0
+binary_rpm_payload_inspection_run=0
+rpm_payload_accepted=0
+rpm_payload_listing_sha256_recorded=0
+source_rpm_payload_listing_sha256_recorded=0
+binary_rpm_payload_listing_sha256_recorded=0
+rpm_installed_on_host=0
+rpm_removed_from_host=0
+fedora_multi_vm_validation_evidence_present=0
+fedora_update_safety_evidence_present=0
+fedora_recovery_safety_evidence_present=0
+fedora_immutable_host_evidence_present=0
+fedora_daily_driver_evidence_present=0
+fedora_security_hardening_evidence_present=0
+production_installer_promotion_allowed=0
+fedora_distribution_promotion_allowed=0
+host_install_ready_for_cli_payload=1
+host_mutation_performed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+REPORT

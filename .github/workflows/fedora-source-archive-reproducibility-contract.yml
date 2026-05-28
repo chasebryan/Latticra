@@ -1,0 +1,25 @@
+name: Fedora Source Archive Reproducibility Contract
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md'
+      - 'docs/status/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT_STATUS.md'
+      - 'docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md'
+      - 'scripts/test-fedora-source-archive-reproducibility-contract.sh'
+      - '.github/workflows/fedora-source-archive-reproducibility-contract.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-source-archive-reproducibility-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora source archive reproducibility contract guard
+        run: sh scripts/test-fedora-source-archive-reproducibility-contract.sh

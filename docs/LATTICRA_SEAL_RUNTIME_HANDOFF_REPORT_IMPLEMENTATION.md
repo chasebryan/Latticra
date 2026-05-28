@@ -121,6 +121,8 @@ handoff_eligible=0 -> denied-handoff
 handoff_state not eligible-report-only or eligible-evaluate-only -> denied-handoff
 missing requested report -> missing-requested-report
 unknown requested report -> denied-unknown-report
+unterminated requested report -> denied-unknown-report without copying caller bytes
+unterminated runtime handoff evaluation strings -> invalid-evaluation
 requested report mismatch -> denied-report
 runtime authority already granted -> denied-runtime-authority
 handoff already performed -> denied-host-effect
@@ -128,6 +130,9 @@ effect already performed -> denied-host-effect
 host read already performed -> denied-host-effect
 host write already performed -> denied-host-effect
 network already performed -> denied-network-effect
+tampered report strings fail closed before render
+tampered report authority/effect flags fail closed before render
+tampered report ready/error state fails closed before render
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

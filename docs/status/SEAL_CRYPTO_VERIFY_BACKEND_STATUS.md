@@ -1,16 +1,16 @@
 # Latticra Seal Crypto Verify Backend Status
 
-Status: status record for the Latticra Seal crypto verify backend metadata surface
+Status: status record for the Latticra Seal crypto verify backend readiness surface
 Source: local follow-up slice
-Scope: status and public-entry alignment after the Seal crypto verify backend contract and metadata implementation. This record does not implement cryptographic verification, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, capability enforcement, runtime authority, host reads, host writes, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Scope: status and public-entry alignment after the Seal crypto verify backend contract and readiness implementation. This record does not perform signature verification itself, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, capability enforcement, runtime authority, host reads, host writes, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This status record makes the Latticra Seal crypto verify backend metadata layer visible from public entry points.
+This status record makes the Latticra Seal crypto verify backend readiness layer visible from public entry points.
 
-The backend layer is important because it records a future cryptographic-verification boundary without treating metadata as authority.
+The backend layer is important because it records the local Ed25519 verification backend as ready without treating readiness metadata as authority.
 
-It remains metadata-only, unsupported, and no-effect.
+It remains verification-not-performed, authority-neutral, and no-effect.
 
 ## Reviewed files
 
@@ -61,18 +61,20 @@ manifest_profile=latticra-seal-manifest/0.1
 artifact_digest_algorithm=SHA-256
 signature_algorithm=Ed25519-development
 trust_source=local-fixture
-crypto_verify_state=unsupported
-cryptographic_verification_supported=0
+crypto_verify_state=ready-local-ed25519
+cryptographic_verification_supported=1
 cryptographic_verification_performed=0
 verified=0
 invalid=0
 authority_usable=0
 capability_gate_allowed=0
 runtime_authority_granted=0
-mode=metadata-only
-status=crypto-verify-backend-metadata
+mode=verify-backend-ready-authority-neutral
+status=crypto-verify-backend-ready
 error=ok
-implementation_behavior_changed=0
+implementation_behavior_changed=1
+backend_readiness_added=1
+signature_verification_performed_by_backend=0
 real_cryptographic_verification_added=0
 signing_added=0
 key_generation_added=0
@@ -94,7 +96,7 @@ This status surface is covered by:
 sh scripts/test-latticra-seal-crypto-verify-backend-status.sh
 ```
 
-The underlying metadata implementation remains covered by:
+The underlying readiness implementation remains covered by:
 
 ```sh
 sh scripts/test-latticra-seal-crypto-verify-backend.sh
@@ -109,9 +111,9 @@ seal crypto verify backend invariants: ok
 
 ## Boundary
 
-This status record is documentation/status alignment only.
+This status record is documentation/status alignment for the backend readiness boundary.
 
-It does not add real cryptographic verification, signing, key generation, private-key handling, trust-store behavior, revocation lookup, object sealing, capability enforcement, effect execution, runtime behavior, host behavior, network behavior, production readiness, external endorsement, or authority grants.
+It does not perform signature verification in the backend, signing, key generation, private-key handling, trust-store behavior, revocation lookup, object sealing, capability enforcement, effect execution, runtime behavior, host behavior, network behavior, production readiness, external endorsement, or authority grants.
 
 ## Current next valid slice
 

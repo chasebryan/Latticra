@@ -74,6 +74,7 @@ for field in \
   'pull_request_target_forbidden=1' \
   'repository_secret_use_requires_dedicated_review=1' \
   'implicit_github_token_use_requires_dedicated_review=1' \
+  'repository_source_symlink_refusal_required=1' \
   'repository_secret_filename_scan_required=1' \
   'repository_secret_content_marker_scan_required=1' \
   'sensitive_local_artifact_filename_guard_required=1' \
@@ -159,6 +160,7 @@ require_contains 'workflow must not use pull_request_target' scripts/test-qualit
 require_contains 'workflow must not consume repository secrets without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not consume implicit GitHub token surfaces without a dedicated review guard' scripts/test-quality-safety-guards.sh
 require_contains 'workflow must not add ad hoc network client commands without a dedicated review guard' scripts/test-quality-safety-guards.sh
+require_contains 'possible source-scope symlinks found' scripts/test-secret-material-guard.sh
 require_contains 'possible committed secret-bearing filenames found' scripts/test-secret-material-guard.sh
 require_contains 'possible committed secret or private-key content markers found' scripts/test-secret-material-guard.sh
 require_contains 'sh ./scripts/test-secret-material-guard.sh' Makefile

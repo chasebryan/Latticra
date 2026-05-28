@@ -3,7 +3,7 @@
 Status: source authority and digest policy recorded; vector bundle blocked
 Date: 2026-05-27
 
-This evidence record defines how Latticra Q-Seal will accept ML-KEM KAT/ACVP vector bundles later. It records the approved authority class, digest algorithm, freshness policy, and fail-closed blockers before any bundle URL, digest, license review, fetch, import, processing, or submission is allowed.
+This evidence record defines how Latticra Q-Seal will accept ML-KEM KAT/ACVP vector bundles later. It records the approved authority class, digest algorithm, freshness policy, and fail-closed blockers before any bundle URL, digest, license review, fetch, import, processing, or submission is allowed. The downstream fixture-lock record is `latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md`; the downstream digest and coverage ledger is `latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`.
 
 ```text
 ml_kem_vector_source_intake_present=1
@@ -46,4 +46,4 @@ status=ml-kem-vector-source-intake-blocked
 
 Q-Seal may not accept a vector bundle until the reviewed source URL, SHA-256 digest, bundle size, license review, hash verification, schema crosscheck, FIPS 203 errata binding, offline storage path, and import review are recorded. Even after bundle acceptance, runtime cryptography remains blocked until the broader Q-Seal readiness profile is satisfied.
 
-No network fetch, vector import, vector processing, ACVP submission, ML-KEM operation, production cryptography claim, FIPS claim, or runtime authority is enabled by this evidence record.
+No network fetch, vector import, fixture loading, vector processing, ACVP submission, ML-KEM operation, production cryptography claim, FIPS claim, or runtime authority is enabled by this evidence record.

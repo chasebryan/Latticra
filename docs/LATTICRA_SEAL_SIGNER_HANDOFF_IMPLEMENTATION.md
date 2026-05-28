@@ -146,6 +146,8 @@ The implementation fails closed for:
 null output
 null signing authorization
 invalid signing authorization
+unterminated signing authorization strings
+invalid signing authorization boolean flags
 failed crypto graduation gate evidence
 authority-bearing crypto graduation evidence
 signing_authorization_ready=0
@@ -155,6 +157,7 @@ missing requested signature
 unknown requested signature
 missing requested signer handoff
 unknown requested signer handoff
+unterminated requested signer handoff -> denied-signer-handoff without copying caller bytes
 private-key handling already present
 key generation already present
 trust-store loading already present
@@ -167,6 +170,9 @@ effect already performed
 host read already performed
 host write already performed
 network already performed
+tampered signer handoff strings fail closed before render
+tampered signer handoff authority/effect flags fail closed before render
+tampered signer handoff ready/error state fails closed before render
 small render buffer
 ```
 

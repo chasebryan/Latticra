@@ -65,16 +65,46 @@ The native CLI validates that the `[report]` output declarations in
 `latticra.seal` match these generated artifact paths before it returns PASS.
 It refuses symlinked, non-directory, or group/world-writable report directories
 before writing evidence artifacts.
+Generated report artifacts are then opened, unlinked, read, and promoted
+relative to the checked report-directory descriptor so a later path swap cannot
+redirect report or hash-list evidence.
 The native CLI writes the latest report through a temporary report file and
-promotes it only after the report is complete. Symlinked final or temporary
-report paths are refused.
+promotes it only after the report is complete.
+Symlinked, hard-linked, or non-regular final and temporary report paths are refused.
+Temporary artifact creation uses create-new semantics after clearing only safe
+single-link stale temp files. Report and hash-list temporary files are flushed
+and fsynced before promotion, and the report directory is synced after the
+promotion when the platform supports directory fsync.
+The native hash list follows the same artifact safety rule: stale regular hash
+lists may be cleared, but symlinked, hard-linked, or non-regular final and
+temporary hash-list paths are refused.
+Digest and policy traversal also refuses symlinks, hard-linked regular files,
+and other non-regular paths inside the included project scope before writing a
+new hash list. Recursed directories must still match their observed
+device/inode identity when opened for traversal. Regular files collected for
+policy scanning and hashing retain their device/inode identity, and later reads
+must still match that identity.
+Required files declared by the manifest must also stay inside the effective
+digest scope. A missing required file or one excluded by a file or
+parent-directory pattern fails the report and prevents a fresh native hash list
+from being promoted.
+Read-only streaming commands for report and hash-list artifacts fail closed when
+the artifact cannot be read, is hard-linked, or stdout cannot be written, so
+automation does not mistake redirected or truncated output for a successful export.
+These read-only commands refuse symlinked or group/world-writable report directories
+before streaming artifact contents, and they do not create `reports/` while
+serving a missing-artifact hint.
 
 `latticra-seal baseline` promotes the generated hash list into
-`latticra.seal.lock` through a temporary lockfile, and refuses symlinked or
-non-regular lock paths.
+`latticra.seal.lock` through a temporary lockfile.
+It retains the hash-list descriptor produced by its prerequisite passing check
+and copies that descriptor into the lockfile, then refuses symlinked,
+hard-linked, or non-regular lock paths. The temporary lockfile is flushed and
+fsynced before promotion, and the project-root directory is synced after the
+rename when supported.
 `latticra-seal verify` treats the lockfile as canonical: entries must use the
 native two-space hash/path separator, project-relative safe paths, and strict
-path sort order.
+path sort order. Hard-linked lockfiles are refused before comparison.
 
 The legacy shell smoke lane remains available through `make seal-smoke` and writes:
 

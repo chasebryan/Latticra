@@ -152,6 +152,8 @@ The implementation fails closed for:
 null output
 null key material
 invalid key material
+unterminated key material strings
+invalid key material boolean flags
 key_material_ready=0
 key_material_state not key-material-metadata-only
 requested_key_material not metadata-only
@@ -174,6 +176,7 @@ missing requested signature
 unknown requested signature
 missing requested public-key parsing
 unknown requested public-key parsing
+unterminated requested public key parsing -> denied-public-key-parsing without copying caller bytes
 public-key parsing request
 key material loading request
 private-key handling request
@@ -197,6 +200,9 @@ effect already performed
 host read already performed
 host write already performed
 network already performed
+tampered public key parsing strings fail closed before render
+tampered public key parsing authority/effect flags fail closed before render
+tampered public key parsing ready/error state fails closed before render
 small render buffer
 ```
 

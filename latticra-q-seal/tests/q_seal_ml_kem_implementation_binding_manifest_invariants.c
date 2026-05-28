@@ -46,8 +46,21 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.sp_800_227_kem_usage_bound == 1u, "sp800227");
     EXPECT_TRUE(manifest.kat_manifest_bound == 1u, "kat");
     EXPECT_TRUE(manifest.acvp_intake_bound == 1u, "acvp");
+    EXPECT_TRUE(manifest.acvp_capability_matrix_bound == 1u, "acvp matrix");
+    EXPECT_TRUE(manifest.acvp_fixture_row_plan_bound == 1u, "acvp rows");
+    EXPECT_TRUE(
+        manifest.acvp_fixture_digest_row_template_bound == 1u,
+        "acvp digest row template");
+    EXPECT_TRUE(manifest.acvp_parser_contract_bound == 1u, "acvp parser");
+    EXPECT_TRUE(manifest.acvp_response_contract_bound == 1u, "acvp response");
+    EXPECT_TRUE(manifest.acvp_response_fixture_bound == 1u, "acvp response fixture");
+    EXPECT_TRUE(
+        manifest.acvp_submission_package_contract_bound == 1u,
+        "acvp submission package");
     EXPECT_TRUE(manifest.vector_schema_bound == 1u, "schema");
     EXPECT_TRUE(manifest.vector_source_bound == 1u, "source");
+    EXPECT_TRUE(manifest.vector_fixture_lock_bound == 1u, "fixture lock");
+    EXPECT_TRUE(manifest.vector_fixture_digest_ledger_bound == 1u, "fixture digest ledger");
     EXPECT_TRUE(manifest.negative_test_evidence_bound == 1u, "negative");
     EXPECT_TRUE(manifest.memory_safety_evidence_bound == 1u, "memory");
     EXPECT_TRUE(manifest.api_misuse_resistance_bound == 1u, "api");
@@ -71,8 +84,8 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
     EXPECT_TRUE(manifest.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(manifest.fips_claim_allowed == 0u, "fips");
     EXPECT_TRUE(manifest.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(manifest.required_binding_items_total == 26u, "total");
-    EXPECT_TRUE(manifest.required_binding_items_satisfied == 21u, "satisfied");
+    EXPECT_TRUE(manifest.required_binding_items_total == 35u, "total");
+    EXPECT_TRUE(manifest.required_binding_items_satisfied == 30u, "satisfied");
     EXPECT_TRUE(manifest.error == LATTICRA_Q_SEAL_ML_KEM_BINDING_MANIFEST_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_implementation_binding_manifest_is_clean_room_no_effect(
@@ -95,6 +108,33 @@ static int implementation_binding_manifest_is_clean_room_no_effect(void) {
         strstr(rendered, "implementation_binding_manifest_present=1") != 0,
         "present report");
     EXPECT_TRUE(strstr(rendered, "planned_source_units_count=9") != 0, "source report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_capability_matrix_bound=1") != 0,
+        "acvp matrix report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_row_plan_bound=1") != 0,
+        "acvp rows report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_digest_row_template_bound=1") != 0,
+        "acvp template report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_parser_contract_bound=1") != 0,
+        "acvp parser report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_contract_bound=1") != 0,
+        "acvp response report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_fixture_bound=1") != 0,
+        "acvp response fixture report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_submission_package_contract_bound=1") != 0,
+        "acvp submission package report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_lock_bound=1") != 0,
+        "fixture lock report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_digest_ledger_bound=1") != 0,
+        "fixture digest ledger report");
     EXPECT_TRUE(
         strstr(rendered, "implementation_code_present=0") != 0,
         "code report");

@@ -4,7 +4,7 @@ Status: fail-closed implementation-source digest readiness slice
 Date: 2026-05-27
 Scope: source and test digest templates before ML-KEM implementation promotion.
 
-This slice records the source-integrity evidence that future clean-room ML-KEM implementation files must satisfy before they can be promoted. It keeps implementation source creation, source digest acceptance, generated-source acceptance, third-party source intake, operation execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
+This slice records the source-integrity evidence that future clean-room ML-KEM implementation files must satisfy before they can be promoted. It keeps implementation source creation, source digest acceptance, generated-source acceptance, third-party source intake, operation execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled. The downstream receipt fixture is recorded in `LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md`.
 
 ## Files
 
@@ -14,7 +14,9 @@ latticra-q-seal/src/q_seal_ml_kem_source_digest_manifest.c
 latticra-q-seal/tests/q_seal_ml_kem_source_digest_manifest_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
 latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_RECEIPT.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md
+scripts/test-latticra-q-seal-ml-kem-source-digest-receipt.sh
 scripts/test-latticra-q-seal-ml-kem-source-digest-manifest.sh
 ```
 

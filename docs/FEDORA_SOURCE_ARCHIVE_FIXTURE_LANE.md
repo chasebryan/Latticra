@@ -42,6 +42,7 @@ include packaging/fedora/latticra.spec
 include scripts used by the current %build section
 exclude .git
 exclude temporary RPM work directories
+exclude transient .tmp files
 exclude RPM artifacts
 exclude nested source archive artifacts
 refuse symlink entries
@@ -67,6 +68,7 @@ The lane should also fail if the archive contains:
 ```text
 .git/
 .rpmwork/
+*.tmp
 *.rpm
 nested latticra-*.tar.gz
 ```
@@ -79,10 +81,12 @@ The intended order is:
 
 ```text
 1. source archive fixture lane
-2. source archive handoff to temporary RPM topdir
-3. local binary RPM build lane
-4. RPM payload inspection lane
-5. fresh Fedora install smoke lane
+2. source archive reproducibility contract
+3. source archive transcript review validator
+4. source archive handoff to temporary RPM topdir
+5. local binary RPM build lane
+6. RPM payload inspection lane
+7. fresh Fedora install smoke lane
 ```
 
 ## Boundary
@@ -103,15 +107,25 @@ It does not submit Latticra to Fedora.
 
 It does not claim Fedora package approval, Fedora endorsement, Fedora spin/remix status, product readiness, operating-system readiness, runtime authority, kernel authority, boot authority, service authority, SELinux policy readiness, or security-hardening completion.
 
+## Completed Follow-On Lane
+
+Completed follow-on source archive reproducibility contract:
+
+```text
+docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+scripts/test-fedora-source-archive-reproducibility-contract.sh
+.github/workflows/fedora-source-archive-reproducibility-contract.yml
+```
+
+This contract keeps source archive acceptance closed until reviewed transcript evidence exists.
+
 ## Next slice
 
 Recommended next slice:
 
 ```text
-Add Fedora local binary RPM build lane
+Add a Fedora source archive transcript review validator before source archive evidence can be accepted for mock build or package review.
 ```
-
-That future slice may hand the temporary archive to an RPM topdir and run a local build inside Fedora CI.
 
 ## Validation
 

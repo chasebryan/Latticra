@@ -41,15 +41,18 @@ require_contains 'operator_receipt_profile=%s' src/seal_operator_receipt_report.
 require_contains 'receipt_status=%s' src/seal_operator_receipt_report.c
 require_contains 'source_capability_metadata_present=%u' src/seal_operator_receipt_report.c
 require_contains 'source_denial_reason_present=%u' src/seal_operator_receipt_report.c
+require_contains 'bounded_string_is' src/seal_operator_receipt_report.c
 require_contains 'source-would-allow-effect-denied' src/seal_operator_receipt_report.c
 require_contains 'non-report-only-source-denied' src/seal_operator_receipt_report.c
 require_contains 'known-capability-candidate-still-denied' tests/seal_operator_receipt_report_invariants.c
+require_contains 'unterminated receipt render rejected' tests/seal_operator_receipt_report_invariants.c
 require_contains 'seal operator receipt report invariants: ok' tests/seal_operator_receipt_report_invariants.c
 require_contains 'operator_receipt_profile=latticra-seal-operator-receipt-report/0.1' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'receipt_status=denied-report-only' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'source_capability_metadata_present=1' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'source_denial_reason_present=1' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'effect_performed=0' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
+require_contains 'unterminated source strings before receipt copy' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'scripts/test-latticra-seal-operator-receipt-report.sh' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md
 require_contains 'docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md' docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md

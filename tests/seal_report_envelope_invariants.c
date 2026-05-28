@@ -197,12 +197,25 @@ static int envelope_fails_closed(void) {
     latticra_seal_runtime_handoff_report_t report = fixture_report("report-only");
     latticra_seal_report_envelope_t envelope;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_REPORT_ENVELOPE_RENDER_MAX];
+    char unterminated_envelope[LATTICRA_SEAL_REPORT_ENVELOPE_LABEL_MAX];
+
+    memset(unterminated_envelope, 'x', sizeof(unterminated_envelope));
 
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(0, "report-only", &envelope) == LATTICRA_STATUS_OK, "null report status");
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_INPUT, "null report error");
     report.error = LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "invalid report status");
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT, "invalid report error");
+    report = fixture_report("report-only");
+    memset(report.report_state, 'z', sizeof(report.report_state));
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "unterminated report status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT, "unterminated report error");
+    EXPECT_TRUE(strcmp(envelope.envelope_state, "denied-report") == 0, "unterminated report state");
+    report = fixture_report("report-only");
+    report.verified = 2u;
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "invalid report flag status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_REPORT, "invalid report flag error");
     report = fixture_report("report-only");
     report.report_ready = 0u;
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "report-only", &envelope) == LATTICRA_STATUS_OK, "report ready status");
@@ -256,6 +269,21 @@ static int envelope_fails_closed(void) {
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_UNKNOWN_ENVELOPE, "unknown envelope error");
     EXPECT_TRUE(strcmp(envelope.envelope_state, "denied-envelope") == 0, "unknown envelope state");
     report = fixture_report("report-only");
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(
+                    &report,
+                    unterminated_envelope,
+                    &envelope) == LATTICRA_STATUS_OK,
+                "unterminated requested envelope status");
+    EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_UNKNOWN_ENVELOPE,
+                "unterminated requested envelope error");
+    EXPECT_TRUE(strcmp(envelope.requested_envelope, "invalid-envelope") == 0,
+                "unterminated requested envelope sanitized");
+    EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested envelope render");
+    EXPECT_TRUE(strstr(rendered, "requested_envelope=invalid-envelope") != 0,
+                "unterminated requested envelope rendered sanitized");
+    report = fixture_report("report-only");
     EXPECT_TRUE(latticra_seal_report_envelope_from_report(&report, "evaluate-only", &envelope) == LATTICRA_STATUS_OK, "mismatch status");
     EXPECT_TRUE(envelope.error == LATTICRA_SEAL_REPORT_ENVELOPE_DENIED_ENVELOPE, "mismatch error");
     EXPECT_TRUE(strcmp(envelope.envelope_state, "denied-envelope") == 0, "mismatch state");
@@ -265,6 +293,51 @@ static int envelope_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_report_envelope_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null envelope render");
     EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    report = fixture_report("report-only");
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(
+                    &report,
+                    "report-only",
+                    &envelope) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(envelope.envelope_profile, 'z', sizeof(envelope.envelope_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated envelope render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated envelope render cleared");
+    EXPECT_TRUE(latticra_seal_report_envelope_is_metadata_only(&envelope) == 0,
+                "unterminated envelope helper rejected");
+
+    report = fixture_report("report-only");
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(
+                    &report,
+                    "report-only",
+                    &envelope) == LATTICRA_STATUS_OK,
+                "authority envelope render source");
+    envelope.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority envelope render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority envelope render cleared");
+    EXPECT_TRUE(latticra_seal_report_envelope_is_metadata_only(&envelope) == 0,
+                "authority envelope helper rejected");
+
+    report = fixture_report("report-only");
+    EXPECT_TRUE(latticra_seal_report_envelope_from_report(
+                    &report,
+                    "report-only",
+                    &envelope) == LATTICRA_STATUS_OK,
+                "ready flag envelope render source");
+    envelope.envelope_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_report_envelope_render(&envelope, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag envelope render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag envelope render cleared");
+    EXPECT_TRUE(latticra_seal_report_envelope_is_metadata_only(&envelope) == 0,
+                "ready flag envelope helper rejected");
     return 0;
 }
 

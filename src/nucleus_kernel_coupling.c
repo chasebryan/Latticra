@@ -64,12 +64,56 @@ const char *latticra_nucleus_kernel_coupling_denial_label(
         return "kernel-registry-missing";
     case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_KERNEL_REGISTRY_BLOCKED:
         return "kernel-registry-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_KERNEL_LIFECYCLE_MISSING:
+        return "kernel-lifecycle-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_KERNEL_LIFECYCLE_BLOCKED:
+        return "kernel-lifecycle-blocked";
     case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_REGISTER_VIEW_MISSING:
         return "runtime-register-view-missing";
     case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_REGISTER_VIEW_BLOCKED:
         return "runtime-register-view-blocked";
     case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_NON_NO_EFFECT_CHAIN:
         return "non-no-effect-chain";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PROCESS_RETURN_OBSERVATION_VIEW_MISSING:
+        return "runtime-process-return-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PROCESS_RETURN_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-process-return-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_IDLE_RETURN_OBSERVATION_VIEW_MISSING:
+        return "runtime-idle-return-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_IDLE_RETURN_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-idle-return-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_QUIESCENT_RETURN_OBSERVATION_VIEW_MISSING:
+        return "runtime-quiescent-return-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_QUIESCENT_RETURN_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-quiescent-return-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_MISSING:
+        return "runtime-persistence-boundary-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-persistence-boundary-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_BOUNDARY_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-boundary-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_BOUNDARY_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-boundary-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_PLAN_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-plan-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_PLAN_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-plan-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_DISPOSITION_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-disposition-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_DISPOSITION_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-disposition-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_OUTCOME_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-outcome-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_OUTCOME_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-outcome-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-closeout-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-closeout-observation-view-blocked";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_MISSING:
+        return "runtime-recovery-audit-observation-view-missing";
+    case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_BLOCKED:
+        return "runtime-recovery-audit-observation-view-blocked";
     case LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_INTERNAL_ERROR:
     default:
         return "internal-error";
@@ -88,12 +132,55 @@ static void seed_record(latticra_nucleus_kernel_coupling_record_t *record) {
     coupling_copy(record->kernel_registry_status, sizeof(record->kernel_registry_status),
         "missing");
     coupling_copy(record->kernel_status, sizeof(record->kernel_status), "missing");
+    coupling_copy(record->kernel_lifecycle_status,
+        sizeof(record->kernel_lifecycle_status), "missing");
+    coupling_copy(record->kernel_lifecycle_final_state,
+        sizeof(record->kernel_lifecycle_final_state), "missing");
     coupling_copy(record->runtime_register_view_status,
         sizeof(record->runtime_register_view_status), "missing");
     coupling_copy(record->runtime_entry_frame_status,
         sizeof(record->runtime_entry_frame_status), "missing");
     coupling_copy(record->scheduler_run_entry_status,
         sizeof(record->scheduler_run_entry_status), "missing");
+    coupling_copy(record->runtime_process_return_observation_view_status,
+        sizeof(record->runtime_process_return_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_scheduler_return_observation_view_status,
+        sizeof(record->runtime_scheduler_return_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_post_resume_observation_view_status,
+        sizeof(record->runtime_post_resume_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_user_mode_resume_view_status,
+        sizeof(record->runtime_user_mode_resume_view_status),
+        "missing");
+    coupling_copy(record->runtime_idle_return_observation_view_status,
+        sizeof(record->runtime_idle_return_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_quiescent_return_observation_view_status,
+        sizeof(record->runtime_quiescent_return_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_persistence_boundary_observation_view_status,
+        sizeof(record->runtime_persistence_boundary_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_boundary_observation_view_status,
+        sizeof(record->runtime_recovery_boundary_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_plan_observation_view_status,
+        sizeof(record->runtime_recovery_plan_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_disposition_observation_view_status,
+        sizeof(record->runtime_recovery_disposition_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_outcome_observation_view_status,
+        sizeof(record->runtime_recovery_outcome_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_closeout_observation_view_status,
+        sizeof(record->runtime_recovery_closeout_observation_view_status),
+        "missing");
+    coupling_copy(record->runtime_recovery_audit_observation_view_status,
+        sizeof(record->runtime_recovery_audit_observation_view_status),
+        "missing");
     record->no_effect_chain_ok = 0;
     record->report_only = 1;
     record->no_effect = 1;
@@ -177,6 +264,23 @@ static int kernel_registry_ready(const latticra_kernel_subsystem_registry_result
         }
     }
     return 1;
+}
+
+static int kernel_lifecycle_ready(
+    const latticra_kernel_lifecycle_result_t *lifecycle) {
+    return lifecycle != 0 &&
+           lifecycle->status == LATTICRA_STATUS_OK &&
+           lifecycle->lifecycle_complete == 1 &&
+           lifecycle->final_state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY &&
+           lifecycle->step_count == (size_t)lifecycle->final_state &&
+           lifecycle->state_change_count == lifecycle->step_count &&
+           lifecycle->external_effect_performed == 0 &&
+           lifecycle->network_allowed == 0 &&
+           lifecycle->machine.network_allowed == 0 &&
+           lifecycle->machine.external_effect_performed == 0 &&
+           lifecycle->machine.current_state == lifecycle->final_state &&
+           lifecycle->machine.log_count == lifecycle->step_count;
 }
 
 static int runtime_register_view_entry_ready(
@@ -267,6 +371,1679 @@ static int runtime_register_view_ready(
     return 1;
 }
 
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_process_return_observation(
+    const latticra_kernel_runtime_entry_process_return_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_scheduler_return_observation_view.
+        runtime_entry_post_resume_observation_view.
+        runtime_entry_user_mode_resume_view.
+        runtime_entry_syscall_exit_view.
+        runtime_entry_syscall_return_view.
+        runtime_entry_syscall_dispatch_view.
+        runtime_entry_syscall_gate_view.
+        runtime_entry_privilege_level_view.
+        runtime_entry_address_space_view.
+        runtime_entry_stack_view.
+        runtime_entry_register_view;
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_idle_return(
+    const latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_process_return_observation_view;
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_idle_return_observation(
+    const latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_process_return_observation(
+        process_return_observation_from_idle_return(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_quiescent_return(
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_idle_return_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_quiescent_return(
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_idle_return(
+        idle_return_observation_from_quiescent_return(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_quiescent_return_observation(
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_idle_return_observation(
+        idle_return_observation_from_quiescent_return(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_persistence_boundary(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_quiescent_return_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_persistence_boundary(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_quiescent_return(
+        quiescent_return_observation_from_persistence_boundary(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_persistence_boundary(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_quiescent_return(
+        quiescent_return_observation_from_persistence_boundary(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_persistence_boundary_observation(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_quiescent_return_observation(
+        quiescent_return_observation_from_persistence_boundary(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_boundary(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_persistence_boundary_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_boundary(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_persistence_boundary(
+        persistence_boundary_observation_from_recovery_boundary(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_boundary(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_persistence_boundary(
+        persistence_boundary_observation_from_recovery_boundary(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_boundary(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_persistence_boundary(
+        persistence_boundary_observation_from_recovery_boundary(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_boundary_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_persistence_boundary_observation(
+        persistence_boundary_observation_from_recovery_boundary(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t *
+recovery_boundary_observation_from_recovery_plan(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_recovery_boundary_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_plan(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    return persistence_boundary_observation_from_recovery_boundary(
+        recovery_boundary_observation_from_recovery_plan(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_plan(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_recovery_boundary(
+        recovery_boundary_observation_from_recovery_plan(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_plan(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_recovery_boundary(
+        recovery_boundary_observation_from_recovery_plan(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_plan(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_recovery_boundary(
+        recovery_boundary_observation_from_recovery_plan(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_plan_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_recovery_boundary_observation(
+        recovery_boundary_observation_from_recovery_plan(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t *
+recovery_plan_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_recovery_plan_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t *
+recovery_boundary_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return recovery_boundary_observation_from_recovery_plan(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return persistence_boundary_observation_from_recovery_plan(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_recovery_plan(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_recovery_plan(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_disposition(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_recovery_plan(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_disposition_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_recovery_plan_observation(
+        recovery_plan_observation_from_recovery_disposition(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t *
+recovery_disposition_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_recovery_disposition_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t *
+recovery_plan_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return recovery_plan_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t *
+recovery_boundary_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return recovery_boundary_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return persistence_boundary_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_outcome(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_recovery_disposition(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_outcome_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_recovery_disposition_observation(
+        recovery_disposition_observation_from_recovery_outcome(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t *
+recovery_outcome_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_recovery_outcome_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t *
+recovery_disposition_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return recovery_disposition_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t *
+recovery_plan_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return recovery_plan_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t *
+recovery_boundary_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return recovery_boundary_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return persistence_boundary_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_closeout(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_recovery_outcome(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_closeout_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_recovery_outcome_observation(
+        recovery_outcome_observation_from_recovery_closeout(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t *
+recovery_closeout_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    if (runtime_view == 0) return 0;
+    return &runtime_view->runtime_entry_recovery_closeout_observation_view;
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t *
+recovery_outcome_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return recovery_outcome_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t *
+recovery_disposition_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return recovery_disposition_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t *
+recovery_plan_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return recovery_plan_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t *
+recovery_boundary_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return recovery_boundary_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t *
+persistence_boundary_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return persistence_boundary_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t *
+quiescent_return_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return quiescent_return_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_idle_return_observation_view_result_t *
+idle_return_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return idle_return_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const
+latticra_kernel_runtime_entry_process_return_observation_view_result_t *
+process_return_observation_from_recovery_audit(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return process_return_observation_from_recovery_closeout(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static const latticra_kernel_runtime_entry_register_view_result_t *
+register_view_from_recovery_audit_observation(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    return register_view_from_recovery_closeout_observation(
+        recovery_closeout_observation_from_recovery_audit(runtime_view));
+}
+
+static int runtime_process_return_observation_entry_ready(
+    const latticra_kernel_runtime_entry_process_return_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->scheduler_return_observation_view_declared == 1 &&
+           entry->process_return_observation_view_declared == 1 &&
+           entry->scheduler_return_observation_declared == 1 &&
+           entry->process_return_observation_declared == 1 &&
+           entry->process_return_declared == 1 &&
+           entry->process_state_observation_declared == 1 &&
+           entry->process_return_reason_declared == 1 &&
+           entry->process_return_observation_view_planned == 0 &&
+           entry->process_return_observation_planned == 0 &&
+           entry->process_return_planned == 0 &&
+           entry->process_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_scheduler_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_post_resume_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->scheduler_return_observation_allowed == 0 &&
+           entry->process_return_observation_allowed == 0 &&
+           entry->process_return_allowed == 0 &&
+           entry->process_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1;
+}
+
+static int runtime_process_return_observation_ready(
+    const latticra_kernel_runtime_entry_process_return_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+    const latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+        *scheduler_view;
+    const latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+        *post_resume_view;
+    const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+        *user_resume_view;
+    const latticra_kernel_runtime_entry_register_view_result_t *register_view;
+
+    if (runtime_view == 0) return 0;
+    scheduler_view =
+        &runtime_view->runtime_entry_scheduler_return_observation_view;
+    post_resume_view =
+        &scheduler_view->runtime_entry_post_resume_observation_view;
+    user_resume_view =
+        &post_resume_view->runtime_entry_user_mode_resume_view;
+    register_view = register_view_from_process_return_observation(runtime_view);
+
+    if (runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->process_return_observation_view_count == 0u ||
+        runtime_view->process_return_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_MAX ||
+        scheduler_view->status != LATTICRA_STATUS_OK ||
+        scheduler_view->no_effect != 1 ||
+        post_resume_view->status != LATTICRA_STATUS_OK ||
+        post_resume_view->no_effect != 1 ||
+        user_resume_view->status != LATTICRA_STATUS_OK ||
+        user_resume_view->no_effect != 1 ||
+        !runtime_register_view_ready(register_view) ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_scheduler_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_post_resume_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->scheduler_return_observation_allowed != 0 ||
+        runtime_view->process_return_observation_allowed != 0 ||
+        runtime_view->process_return_allowed != 0 ||
+        runtime_view->process_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->process_return_observation_view_count; ++i) {
+        if (!runtime_process_return_observation_entry_ready(
+                &runtime_view->process_return_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_idle_return_observation_entry_ready(
+    const latticra_kernel_runtime_entry_idle_return_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->process_return_observation_view_declared == 1 &&
+           entry->scheduler_return_observation_view_declared == 1 &&
+           entry->idle_return_observation_view_declared == 1 &&
+           entry->process_return_observation_declared == 1 &&
+           entry->scheduler_return_observation_declared == 1 &&
+           entry->process_return_declared == 1 &&
+           entry->idle_return_observation_declared == 1 &&
+           entry->idle_return_declared == 1 &&
+           entry->idle_state_observation_declared == 1 &&
+           entry->idle_return_reason_declared == 1 &&
+           entry->idle_return_observation_view_planned == 0 &&
+           entry->idle_return_observation_planned == 0 &&
+           entry->idle_return_planned == 0 &&
+           entry->process_return_observation_planned == 0 &&
+           entry->process_return_planned == 0 &&
+           entry->idle_state_read_planned == 0 &&
+           entry->process_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_scheduler_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_post_resume_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->scheduler_return_observation_allowed == 0 &&
+           entry->process_return_observation_allowed == 0 &&
+           entry->process_return_allowed == 0 &&
+           entry->idle_return_observation_allowed == 0 &&
+           entry->idle_return_allowed == 0 &&
+           entry->idle_state_read_allowed == 0 &&
+           entry->process_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1;
+}
+
+static int runtime_idle_return_observation_ready(
+    const latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->idle_return_observation_view_count == 0u ||
+        runtime_view->idle_return_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_MAX ||
+        !runtime_process_return_observation_ready(
+            &runtime_view->runtime_entry_process_return_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_idle_return_observation(runtime_view)) ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_scheduler_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_post_resume_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->scheduler_return_observation_allowed != 0 ||
+        runtime_view->process_return_observation_allowed != 0 ||
+        runtime_view->process_return_allowed != 0 ||
+        runtime_view->idle_return_observation_allowed != 0 ||
+        runtime_view->idle_return_allowed != 0 ||
+        runtime_view->idle_state_read_allowed != 0 ||
+        runtime_view->process_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->idle_return_observation_view_count; ++i) {
+        if (!runtime_idle_return_observation_entry_ready(
+                &runtime_view->idle_return_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_quiescent_return_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->idle_return_observation_view_declared == 1 &&
+           entry->quiescent_return_observation_view_declared == 1 &&
+           entry->idle_return_observation_declared == 1 &&
+           entry->idle_return_declared == 1 &&
+           entry->quiescent_return_observation_declared == 1 &&
+           entry->quiescent_return_declared == 1 &&
+           entry->quiescent_state_observation_declared == 1 &&
+           entry->quiescent_return_observation_view_planned == 0 &&
+           entry->quiescent_return_observation_planned == 0 &&
+           entry->quiescent_return_planned == 0 &&
+           entry->idle_return_observation_planned == 0 &&
+           entry->idle_return_planned == 0 &&
+           entry->quiescent_state_read_planned == 0 &&
+           entry->idle_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->persistence_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->quiescent_return_observation_allowed == 0 &&
+           entry->quiescent_return_allowed == 0 &&
+           entry->quiescent_state_read_allowed == 0 &&
+           entry->idle_return_observation_allowed == 0 &&
+           entry->idle_return_allowed == 0 &&
+           entry->idle_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 42u;
+}
+
+static int runtime_quiescent_return_observation_ready(
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->quiescent_return_observation_view_count == 0u ||
+        runtime_view->quiescent_return_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_MAX ||
+        !runtime_idle_return_observation_ready(
+            &runtime_view->runtime_entry_idle_return_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_quiescent_return_observation(runtime_view)) ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->quiescent_return_observation_allowed != 0 ||
+        runtime_view->quiescent_return_allowed != 0 ||
+        runtime_view->quiescent_state_read_allowed != 0 ||
+        runtime_view->idle_return_observation_allowed != 0 ||
+        runtime_view->idle_return_allowed != 0 ||
+        runtime_view->idle_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 42u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->quiescent_return_observation_view_count;
+            ++i) {
+        if (!runtime_quiescent_return_observation_entry_ready(
+                &runtime_view->quiescent_return_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_persistence_boundary_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->quiescent_return_observation_view_declared == 1 &&
+           entry->persistence_boundary_observation_view_declared == 1 &&
+           entry->quiescent_return_observation_declared == 1 &&
+           entry->quiescent_return_declared == 1 &&
+           entry->persistence_boundary_observation_declared == 1 &&
+           entry->persistence_boundary_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->persistence_boundary_observation_view_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->quiescent_return_observation_planned == 0 &&
+           entry->quiescent_return_planned == 0 &&
+           entry->quiescent_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->quiescent_return_observation_allowed == 0 &&
+           entry->quiescent_return_allowed == 0 &&
+           entry->quiescent_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 43u;
+}
+
+static int runtime_persistence_boundary_observation_ready(
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->persistence_boundary_observation_view_count == 0u ||
+        runtime_view->persistence_boundary_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_MAX ||
+        !runtime_quiescent_return_observation_ready(
+            &runtime_view->runtime_entry_quiescent_return_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_persistence_boundary_observation(runtime_view)) ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->quiescent_return_observation_allowed != 0 ||
+        runtime_view->quiescent_return_allowed != 0 ||
+        runtime_view->quiescent_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 43u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->persistence_boundary_observation_view_count;
+            ++i) {
+        if (!runtime_persistence_boundary_observation_entry_ready(
+                &runtime_view->persistence_boundary_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_boundary_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->persistence_boundary_observation_view_declared == 1 &&
+           entry->quiescent_return_observation_view_declared == 1 &&
+           entry->recovery_boundary_observation_view_declared == 1 &&
+           entry->persistence_boundary_observation_declared == 1 &&
+           entry->persistence_boundary_declared == 1 &&
+           entry->quiescent_return_observation_declared == 1 &&
+           entry->quiescent_return_declared == 1 &&
+           entry->recovery_boundary_observation_declared == 1 &&
+           entry->recovery_boundary_declared == 1 &&
+           entry->recovery_plan_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_boundary_observation_view_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->quiescent_return_observation_planned == 0 &&
+           entry->quiescent_return_planned == 0 &&
+           entry->quiescent_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->quiescent_return_observation_allowed == 0 &&
+           entry->quiescent_return_allowed == 0 &&
+           entry->quiescent_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 44u;
+}
+
+static int runtime_recovery_boundary_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_boundary_observation_view_count == 0u ||
+        runtime_view->recovery_boundary_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_MAX ||
+        !runtime_persistence_boundary_observation_ready(
+            &runtime_view->runtime_entry_persistence_boundary_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_boundary_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->quiescent_return_observation_allowed != 0 ||
+        runtime_view->quiescent_return_allowed != 0 ||
+        runtime_view->quiescent_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 44u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_boundary_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_boundary_observation_entry_ready(
+                &runtime_view->recovery_boundary_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_plan_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->persistence_boundary_observation_view_declared == 1 &&
+           entry->quiescent_return_observation_view_declared == 1 &&
+           entry->recovery_boundary_observation_view_declared == 1 &&
+           entry->recovery_plan_observation_view_declared == 1 &&
+           entry->persistence_boundary_observation_declared == 1 &&
+           entry->persistence_boundary_declared == 1 &&
+           entry->quiescent_return_observation_declared == 1 &&
+           entry->quiescent_return_declared == 1 &&
+           entry->recovery_boundary_observation_declared == 1 &&
+           entry->recovery_boundary_declared == 1 &&
+           entry->recovery_plan_observation_declared == 1 &&
+           entry->recovery_plan_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_plan_observation_view_planned == 0 &&
+           entry->recovery_plan_observation_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->quiescent_return_observation_planned == 0 &&
+           entry->quiescent_return_planned == 0 &&
+           entry->quiescent_state_read_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_plan_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_plan_observation_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->quiescent_return_observation_allowed == 0 &&
+           entry->quiescent_return_allowed == 0 &&
+           entry->quiescent_state_read_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 45u;
+}
+
+static int runtime_recovery_plan_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_plan_observation_view_count == 0u ||
+        runtime_view->recovery_plan_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_MAX ||
+        !runtime_recovery_boundary_observation_ready(
+            &runtime_view->runtime_entry_recovery_boundary_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_plan_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_plan_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_plan_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->quiescent_return_observation_allowed != 0 ||
+        runtime_view->quiescent_return_allowed != 0 ||
+        runtime_view->quiescent_state_read_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 45u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_plan_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_plan_observation_entry_ready(
+                &runtime_view->recovery_plan_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_disposition_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->recovery_plan_observation_view_declared == 1 &&
+           entry->recovery_boundary_observation_view_declared == 1 &&
+           entry->recovery_disposition_observation_view_declared == 1 &&
+           entry->recovery_plan_observation_declared == 1 &&
+           entry->recovery_plan_declared == 1 &&
+           entry->recovery_disposition_observation_declared == 1 &&
+           entry->recovery_disposition_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_disposition_observation_view_planned == 0 &&
+           entry->recovery_disposition_observation_planned == 0 &&
+           entry->recovery_disposition_planned == 0 &&
+           entry->recovery_plan_observation_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_disposition_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_plan_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_disposition_observation_allowed == 0 &&
+           entry->recovery_disposition_allowed == 0 &&
+           entry->recovery_plan_observation_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 46u;
+}
+
+static int runtime_recovery_disposition_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_disposition_observation_view_count == 0u ||
+        runtime_view->recovery_disposition_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_MAX ||
+        !runtime_recovery_plan_observation_ready(
+            &runtime_view->runtime_entry_recovery_plan_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_disposition_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_disposition_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_plan_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_disposition_observation_allowed != 0 ||
+        runtime_view->recovery_disposition_allowed != 0 ||
+        runtime_view->recovery_plan_observation_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 46u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_disposition_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_disposition_observation_entry_ready(
+                &runtime_view->recovery_disposition_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_outcome_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->recovery_disposition_observation_view_declared == 1 &&
+           entry->recovery_plan_observation_view_declared == 1 &&
+           entry->recovery_boundary_observation_view_declared == 1 &&
+           entry->recovery_outcome_observation_view_declared == 1 &&
+           entry->recovery_disposition_observation_declared == 1 &&
+           entry->recovery_disposition_declared == 1 &&
+           entry->recovery_outcome_observation_declared == 1 &&
+           entry->recovery_outcome_declared == 1 &&
+           entry->recovery_plan_observation_declared == 1 &&
+           entry->recovery_plan_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_outcome_observation_view_planned == 0 &&
+           entry->recovery_outcome_observation_planned == 0 &&
+           entry->recovery_outcome_planned == 0 &&
+           entry->recovery_disposition_observation_planned == 0 &&
+           entry->recovery_disposition_planned == 0 &&
+           entry->recovery_plan_observation_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_outcome_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_disposition_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_plan_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_outcome_observation_allowed == 0 &&
+           entry->recovery_outcome_allowed == 0 &&
+           entry->recovery_disposition_observation_allowed == 0 &&
+           entry->recovery_disposition_allowed == 0 &&
+           entry->recovery_plan_observation_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 47u;
+}
+
+static int runtime_recovery_outcome_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_outcome_observation_view_count == 0u ||
+        runtime_view->recovery_outcome_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_MAX ||
+        !runtime_recovery_disposition_observation_ready(
+            &runtime_view->runtime_entry_recovery_disposition_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_outcome_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_outcome_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_disposition_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_plan_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_outcome_observation_allowed != 0 ||
+        runtime_view->recovery_outcome_allowed != 0 ||
+        runtime_view->recovery_disposition_observation_allowed != 0 ||
+        runtime_view->recovery_disposition_allowed != 0 ||
+        runtime_view->recovery_plan_observation_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 47u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_outcome_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_outcome_observation_entry_ready(
+                &runtime_view->recovery_outcome_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_closeout_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->recovery_outcome_observation_view_declared == 1 &&
+           entry->recovery_closeout_observation_view_declared == 1 &&
+           entry->recovery_outcome_observation_declared == 1 &&
+           entry->recovery_outcome_declared == 1 &&
+           entry->recovery_closeout_observation_declared == 1 &&
+           entry->recovery_closeout_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_closeout_observation_view_planned == 0 &&
+           entry->recovery_closeout_observation_planned == 0 &&
+           entry->recovery_closeout_planned == 0 &&
+           entry->recovery_outcome_observation_planned == 0 &&
+           entry->recovery_outcome_planned == 0 &&
+           entry->recovery_disposition_observation_planned == 0 &&
+           entry->recovery_disposition_planned == 0 &&
+           entry->recovery_plan_observation_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_closeout_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_outcome_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_disposition_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_plan_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_closeout_observation_allowed == 0 &&
+           entry->recovery_closeout_allowed == 0 &&
+           entry->recovery_outcome_observation_allowed == 0 &&
+           entry->recovery_outcome_allowed == 0 &&
+           entry->recovery_disposition_observation_allowed == 0 &&
+           entry->recovery_disposition_allowed == 0 &&
+           entry->recovery_plan_observation_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 48u;
+}
+
+static int runtime_recovery_closeout_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_closeout_observation_view_count == 0u ||
+        runtime_view->recovery_closeout_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_MAX ||
+        !runtime_recovery_outcome_observation_ready(
+            &runtime_view->runtime_entry_recovery_outcome_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_closeout_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_closeout_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_outcome_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_disposition_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_plan_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_closeout_observation_allowed != 0 ||
+        runtime_view->recovery_closeout_allowed != 0 ||
+        runtime_view->recovery_outcome_observation_allowed != 0 ||
+        runtime_view->recovery_outcome_allowed != 0 ||
+        runtime_view->recovery_disposition_observation_allowed != 0 ||
+        runtime_view->recovery_disposition_allowed != 0 ||
+        runtime_view->recovery_plan_observation_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 48u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_closeout_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_closeout_observation_entry_ready(
+                &runtime_view->recovery_closeout_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+static int runtime_recovery_audit_observation_entry_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_entry_t
+        *entry) {
+    return entry != 0 &&
+           entry->declared == 1 &&
+           entry->recovery_audit_observation_view_declared == 1 &&
+           entry->recovery_closeout_observation_view_declared == 1 &&
+           entry->recovery_outcome_observation_view_declared == 1 &&
+           entry->recovery_audit_observation_declared == 1 &&
+           entry->recovery_audit_declared == 1 &&
+           entry->recovery_closeout_observation_declared == 1 &&
+           entry->recovery_closeout_declared == 1 &&
+           entry->recovery_outcome_observation_declared == 1 &&
+           entry->recovery_outcome_declared == 1 &&
+           entry->recovery_authority_observation_declared == 1 &&
+           entry->recovery_audit_observation_view_planned == 0 &&
+           entry->recovery_audit_observation_planned == 0 &&
+           entry->recovery_audit_planned == 0 &&
+           entry->recovery_closeout_observation_planned == 0 &&
+           entry->recovery_closeout_planned == 0 &&
+           entry->recovery_outcome_observation_planned == 0 &&
+           entry->recovery_outcome_planned == 0 &&
+           entry->recovery_disposition_observation_planned == 0 &&
+           entry->recovery_disposition_planned == 0 &&
+           entry->recovery_plan_observation_planned == 0 &&
+           entry->recovery_plan_planned == 0 &&
+           entry->recovery_boundary_observation_planned == 0 &&
+           entry->recovery_boundary_planned == 0 &&
+           entry->persistence_boundary_observation_planned == 0 &&
+           entry->persistence_boundary_planned == 0 &&
+           entry->persistence_commit_planned == 0 &&
+           entry->recovery_authority_planned == 0 &&
+           entry->scheduler_execution_planned == 0 &&
+           entry->context_switch_planned == 0 &&
+           entry->run_queue_mutation_planned == 0 &&
+           entry->runtime_entry_recovery_audit_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_closeout_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_outcome_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_disposition_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_plan_observation_view_allowed == 0 &&
+           entry->runtime_entry_recovery_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_persistence_boundary_observation_view_allowed == 0 &&
+           entry->runtime_entry_quiescent_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_idle_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_process_return_observation_view_allowed == 0 &&
+           entry->runtime_entry_allowed == 0 &&
+           entry->recovery_audit_observation_allowed == 0 &&
+           entry->recovery_audit_allowed == 0 &&
+           entry->recovery_closeout_observation_allowed == 0 &&
+           entry->recovery_closeout_allowed == 0 &&
+           entry->recovery_outcome_observation_allowed == 0 &&
+           entry->recovery_outcome_allowed == 0 &&
+           entry->recovery_disposition_observation_allowed == 0 &&
+           entry->recovery_disposition_allowed == 0 &&
+           entry->recovery_plan_observation_allowed == 0 &&
+           entry->recovery_plan_allowed == 0 &&
+           entry->recovery_boundary_observation_allowed == 0 &&
+           entry->recovery_boundary_allowed == 0 &&
+           entry->persistence_boundary_observation_allowed == 0 &&
+           entry->persistence_boundary_allowed == 0 &&
+           entry->persistence_commit_allowed == 0 &&
+           entry->persistence_allowed == 0 &&
+           entry->recovery_authority_allowed == 0 &&
+           entry->scheduler_execution_allowed == 0 &&
+           entry->scheduler_dispatch_allowed == 0 &&
+           entry->context_switch_allowed == 0 &&
+           entry->run_queue_mutation_allowed == 0 &&
+           entry->process_wake_allowed == 0 &&
+           entry->hardware_effect_allowed == 0 &&
+           entry->host_effect_allowed == 0 &&
+           entry->no_effect == 1 &&
+           entry->evidence_level == 49u;
+}
+
+static int runtime_recovery_audit_observation_ready(
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_view) {
+    size_t i;
+
+    if (runtime_view == 0 ||
+        runtime_view->status != LATTICRA_STATUS_OK ||
+        runtime_view->no_effect != 1 ||
+        runtime_view->recovery_audit_observation_view_count == 0u ||
+        runtime_view->recovery_audit_observation_view_count >
+            LATTICRA_KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_MAX ||
+        !runtime_recovery_closeout_observation_ready(
+            &runtime_view->runtime_entry_recovery_closeout_observation_view) ||
+        !runtime_register_view_ready(
+            register_view_from_recovery_audit_observation(runtime_view)) ||
+        runtime_view->runtime_entry_recovery_audit_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_closeout_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_outcome_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_disposition_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_plan_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_recovery_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_persistence_boundary_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_quiescent_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_idle_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_process_return_observation_view_allowed != 0 ||
+        runtime_view->runtime_entry_allowed != 0 ||
+        runtime_view->recovery_audit_observation_allowed != 0 ||
+        runtime_view->recovery_audit_allowed != 0 ||
+        runtime_view->recovery_closeout_observation_allowed != 0 ||
+        runtime_view->recovery_closeout_allowed != 0 ||
+        runtime_view->recovery_outcome_observation_allowed != 0 ||
+        runtime_view->recovery_outcome_allowed != 0 ||
+        runtime_view->recovery_disposition_observation_allowed != 0 ||
+        runtime_view->recovery_disposition_allowed != 0 ||
+        runtime_view->recovery_plan_observation_allowed != 0 ||
+        runtime_view->recovery_plan_allowed != 0 ||
+        runtime_view->recovery_boundary_observation_allowed != 0 ||
+        runtime_view->recovery_boundary_allowed != 0 ||
+        runtime_view->persistence_boundary_observation_allowed != 0 ||
+        runtime_view->persistence_boundary_allowed != 0 ||
+        runtime_view->persistence_commit_allowed != 0 ||
+        runtime_view->persistence_allowed != 0 ||
+        runtime_view->recovery_authority_allowed != 0 ||
+        runtime_view->scheduler_execution_allowed != 0 ||
+        runtime_view->scheduler_dispatch_allowed != 0 ||
+        runtime_view->context_switch_allowed != 0 ||
+        runtime_view->run_queue_mutation_allowed != 0 ||
+        runtime_view->process_wake_allowed != 0 ||
+        runtime_view->hardware_effect_allowed != 0 ||
+        runtime_view->host_effect_allowed != 0 ||
+        runtime_view->evidence_level != 49u) {
+        return 0;
+    }
+
+    for (i = 0u; i < runtime_view->recovery_audit_observation_view_count;
+            ++i) {
+        if (!runtime_recovery_audit_observation_entry_ready(
+                &runtime_view->recovery_audit_observation_views[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 static void capture_evidence(
     const latticra_nucleus_kernel_coupling_request_t *request,
     latticra_nucleus_kernel_coupling_result_t *result) {
@@ -292,6 +2069,21 @@ static void capture_evidence(
         result->record.subsystem_count = registry->entry_count;
     }
 
+    if (request->kernel_lifecycle != 0) {
+        const latticra_kernel_lifecycle_result_t *lifecycle =
+            request->kernel_lifecycle;
+        coupling_copy(result->record.kernel_lifecycle_status,
+            sizeof(result->record.kernel_lifecycle_status),
+            lifecycle->lifecycle_status);
+        coupling_copy(result->record.kernel_lifecycle_final_state,
+            sizeof(result->record.kernel_lifecycle_final_state),
+            latticra_kernel_state_label(lifecycle->final_state));
+        result->record.lifecycle_step_count = lifecycle->step_count;
+        result->record.lifecycle_state_change_count =
+            lifecycle->state_change_count;
+        result->record.lifecycle_complete = lifecycle->lifecycle_complete;
+    }
+
     if (request->runtime_register_view != 0) {
         const latticra_kernel_runtime_entry_register_view_result_t *runtime_view =
             request->runtime_register_view;
@@ -307,6 +2099,853 @@ static void capture_evidence(
                 scheduler_run_entry.run_entry_status);
         result->record.register_view_count = runtime_view->register_view_count;
     }
+
+    if (request->runtime_process_return_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *runtime_view = request->runtime_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &runtime_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            runtime_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        result->record.process_return_observation_view_count =
+            runtime_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+    }
+
+    if (request->runtime_idle_return_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *runtime_view = request->runtime_idle_return_observation_view;
+        coupling_copy(result->record.
+                runtime_idle_return_observation_view_status,
+            sizeof(result->record.
+                runtime_idle_return_observation_view_status),
+            runtime_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            runtime_view->idle_return_observation_view_count;
+    }
+
+    if (request->runtime_quiescent_return_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *runtime_view =
+                request->runtime_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &runtime_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_quiescent_return_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            runtime_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            runtime_view->quiescent_return_observation_view_count;
+
+        coupling_copy(result->record.runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_persistence_boundary_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *runtime_view =
+                request->runtime_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &runtime_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_persistence_boundary_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            runtime_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            runtime_view->persistence_boundary_observation_view_count;
+
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+
+        coupling_copy(result->record.runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_recovery_boundary_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+            *runtime_view = request->runtime_recovery_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *persistence_view =
+                &runtime_view->runtime_entry_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &persistence_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_recovery_boundary_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_recovery_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_boundary_observation_view_status),
+            runtime_view->recovery_boundary_observation_view_status);
+        result->record.recovery_boundary_observation_view_count =
+            runtime_view->recovery_boundary_observation_view_count;
+
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            persistence_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            persistence_view->persistence_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+        coupling_copy(result->record.runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_recovery_plan_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+            *runtime_view = request->runtime_recovery_plan_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+            *recovery_view =
+                &runtime_view->runtime_entry_recovery_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *persistence_view =
+                &recovery_view->runtime_entry_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &persistence_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_recovery_plan_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_recovery_plan_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_plan_observation_view_status),
+            runtime_view->recovery_plan_observation_view_status);
+        result->record.recovery_plan_observation_view_count =
+            runtime_view->recovery_plan_observation_view_count;
+
+        coupling_copy(result->record.
+                runtime_recovery_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_boundary_observation_view_status),
+            recovery_view->recovery_boundary_observation_view_status);
+        result->record.recovery_boundary_observation_view_count =
+            recovery_view->recovery_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            persistence_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            persistence_view->persistence_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+        coupling_copy(result->record.runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_recovery_audit_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+            *runtime_view = request->runtime_recovery_audit_observation_view;
+
+        coupling_copy(result->record.
+                runtime_recovery_audit_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_audit_observation_view_status),
+            runtime_view->recovery_audit_observation_view_status);
+        result->record.recovery_audit_observation_view_count =
+            runtime_view->recovery_audit_observation_view_count;
+    }
+
+    if (request->runtime_recovery_closeout_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+            *runtime_view = request->runtime_recovery_closeout_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+            *outcome_view =
+                &runtime_view->runtime_entry_recovery_outcome_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+            *disposition_view =
+                &outcome_view->runtime_entry_recovery_disposition_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+            *plan_view =
+                &disposition_view->runtime_entry_recovery_plan_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+            *recovery_view =
+                &plan_view->runtime_entry_recovery_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *persistence_view =
+                &recovery_view->runtime_entry_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &persistence_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_recovery_closeout_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_recovery_closeout_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_closeout_observation_view_status),
+            runtime_view->recovery_closeout_observation_view_status);
+        result->record.recovery_closeout_observation_view_count =
+            runtime_view->recovery_closeout_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_outcome_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_outcome_observation_view_status),
+            outcome_view->recovery_outcome_observation_view_status);
+        result->record.recovery_outcome_observation_view_count =
+            outcome_view->recovery_outcome_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_disposition_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_disposition_observation_view_status),
+            disposition_view->recovery_disposition_observation_view_status);
+        result->record.recovery_disposition_observation_view_count =
+            disposition_view->recovery_disposition_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_plan_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_plan_observation_view_status),
+            plan_view->recovery_plan_observation_view_status);
+        result->record.recovery_plan_observation_view_count =
+            plan_view->recovery_plan_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_boundary_observation_view_status),
+            recovery_view->recovery_boundary_observation_view_status);
+        result->record.recovery_boundary_observation_view_count =
+            recovery_view->recovery_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            persistence_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            persistence_view->persistence_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_recovery_outcome_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+            *runtime_view = request->runtime_recovery_outcome_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+            *disposition_view =
+                &runtime_view->runtime_entry_recovery_disposition_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+            *plan_view =
+                &disposition_view->runtime_entry_recovery_plan_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+            *recovery_view =
+                &plan_view->runtime_entry_recovery_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *persistence_view =
+                &recovery_view->runtime_entry_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &persistence_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_recovery_outcome_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_recovery_outcome_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_outcome_observation_view_status),
+            runtime_view->recovery_outcome_observation_view_status);
+        result->record.recovery_outcome_observation_view_count =
+            runtime_view->recovery_outcome_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_disposition_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_disposition_observation_view_status),
+            disposition_view->recovery_disposition_observation_view_status);
+        result->record.recovery_disposition_observation_view_count =
+            disposition_view->recovery_disposition_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_plan_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_plan_observation_view_status),
+            plan_view->recovery_plan_observation_view_status);
+        result->record.recovery_plan_observation_view_count =
+            plan_view->recovery_plan_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_boundary_observation_view_status),
+            recovery_view->recovery_boundary_observation_view_status);
+        result->record.recovery_boundary_observation_view_count =
+            recovery_view->recovery_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            persistence_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            persistence_view->persistence_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
+    if (request->runtime_recovery_disposition_observation_view != 0) {
+        const
+        latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+            *runtime_view =
+                request->runtime_recovery_disposition_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+            *plan_view =
+                &runtime_view->runtime_entry_recovery_plan_observation_view;
+        const
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+            *recovery_view =
+                &plan_view->runtime_entry_recovery_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+            *persistence_view =
+                &recovery_view->runtime_entry_persistence_boundary_observation_view;
+        const
+        latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+            *quiescent_view =
+                &persistence_view->runtime_entry_quiescent_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+            *idle_view =
+                &quiescent_view->runtime_entry_idle_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_process_return_observation_view_result_t
+            *process_view =
+                &idle_view->runtime_entry_process_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_scheduler_return_observation_view_result_t
+            *scheduler_view =
+                &process_view->runtime_entry_scheduler_return_observation_view;
+        const
+        latticra_kernel_runtime_entry_post_resume_observation_view_result_t
+            *post_resume_view =
+                &scheduler_view->runtime_entry_post_resume_observation_view;
+        const latticra_kernel_runtime_entry_user_mode_resume_view_result_t
+            *user_resume_view =
+                &post_resume_view->runtime_entry_user_mode_resume_view;
+        const latticra_kernel_runtime_entry_register_view_result_t
+            *register_view =
+                register_view_from_recovery_disposition_observation(runtime_view);
+
+        coupling_copy(result->record.
+                runtime_recovery_disposition_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_disposition_observation_view_status),
+            runtime_view->recovery_disposition_observation_view_status);
+        result->record.recovery_disposition_observation_view_count =
+            runtime_view->recovery_disposition_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_plan_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_plan_observation_view_status),
+            plan_view->recovery_plan_observation_view_status);
+        result->record.recovery_plan_observation_view_count =
+            plan_view->recovery_plan_observation_view_count;
+        coupling_copy(result->record.
+                runtime_recovery_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_recovery_boundary_observation_view_status),
+            recovery_view->recovery_boundary_observation_view_status);
+        result->record.recovery_boundary_observation_view_count =
+            recovery_view->recovery_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_persistence_boundary_observation_view_status,
+            sizeof(result->record.
+                runtime_persistence_boundary_observation_view_status),
+            persistence_view->persistence_boundary_observation_view_status);
+        result->record.persistence_boundary_observation_view_count =
+            persistence_view->persistence_boundary_observation_view_count;
+        coupling_copy(result->record.
+                runtime_quiescent_return_observation_view_status,
+            sizeof(result->record.
+                runtime_quiescent_return_observation_view_status),
+            quiescent_view->quiescent_return_observation_view_status);
+        result->record.quiescent_return_observation_view_count =
+            quiescent_view->quiescent_return_observation_view_count;
+        coupling_copy(result->record.runtime_idle_return_observation_view_status,
+            sizeof(result->record.runtime_idle_return_observation_view_status),
+            idle_view->idle_return_observation_view_status);
+        result->record.idle_return_observation_view_count =
+            idle_view->idle_return_observation_view_count;
+        coupling_copy(result->record.
+                runtime_process_return_observation_view_status,
+            sizeof(result->record.
+                runtime_process_return_observation_view_status),
+            process_view->process_return_observation_view_status);
+        coupling_copy(result->record.
+                runtime_scheduler_return_observation_view_status,
+            sizeof(result->record.
+                runtime_scheduler_return_observation_view_status),
+            scheduler_view->scheduler_return_observation_view_status);
+        coupling_copy(result->record.runtime_post_resume_observation_view_status,
+            sizeof(result->record.runtime_post_resume_observation_view_status),
+            post_resume_view->post_resume_observation_view_status);
+        coupling_copy(result->record.runtime_user_mode_resume_view_status,
+            sizeof(result->record.runtime_user_mode_resume_view_status),
+            user_resume_view->user_mode_resume_view_status);
+        coupling_copy(result->record.runtime_register_view_status,
+            sizeof(result->record.runtime_register_view_status),
+            register_view->register_view_status);
+        coupling_copy(result->record.runtime_entry_frame_status,
+            sizeof(result->record.runtime_entry_frame_status),
+            register_view->runtime_entry_frame.frame_status);
+        coupling_copy(result->record.scheduler_run_entry_status,
+            sizeof(result->record.scheduler_run_entry_status),
+            register_view->runtime_entry_frame.runtime_entry_admission.
+                scheduler_run_entry.run_entry_status);
+        result->record.process_return_observation_view_count =
+            process_view->process_return_observation_view_count;
+        result->record.scheduler_return_observation_view_count =
+            scheduler_view->scheduler_return_observation_view_count;
+        result->record.post_resume_observation_view_count =
+            post_resume_view->post_resume_observation_view_count;
+        result->record.user_mode_resume_view_count =
+            user_resume_view->user_mode_resume_view_count;
+        result->record.register_view_count = register_view->register_view_count;
+    }
+
 }
 
 static void set_blocked(latticra_nucleus_kernel_coupling_result_t *result,
@@ -356,7 +2995,13 @@ static void set_ready(latticra_nucleus_kernel_coupling_result_t *result) {
     result->record.no_effect_chain_ok = 1;
     result->record.report_only = 1;
     result->record.no_effect = 1;
-    result->record.evidence_level = 30u;
+    result->record.runtime_recovery_audit_observation_view_allowed = 0;
+    result->record.recovery_audit_allowed = 0;
+    result->record.recovery_audit_observation_allowed = 0;
+    result->runtime_recovery_audit_observation_view_allowed = 0;
+    result->recovery_audit_allowed = 0;
+    result->recovery_audit_observation_allowed = 0;
+    result->record.evidence_level = 49u;
     result->no_effect = 1;
 }
 
@@ -429,6 +3074,37 @@ latticra_status_t latticra_nucleus_kernel_coupling_default_nucleus_plan(
 latticra_status_t latticra_nucleus_kernel_coupling_evaluate(
     const latticra_nucleus_kernel_coupling_request_t *request,
     latticra_nucleus_kernel_coupling_result_t *result) {
+    const latticra_kernel_runtime_entry_register_view_result_t
+        *runtime_register_view;
+    const latticra_kernel_runtime_entry_process_return_observation_view_result_t
+        *runtime_process_return_observation_view;
+    const latticra_kernel_runtime_entry_idle_return_observation_view_result_t
+        *runtime_idle_return_observation_view;
+    const
+    latticra_kernel_runtime_entry_quiescent_return_observation_view_result_t
+        *runtime_quiescent_return_observation_view;
+    const
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        *runtime_persistence_boundary_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        *runtime_recovery_boundary_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        *runtime_recovery_plan_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        *runtime_recovery_disposition_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        *runtime_recovery_outcome_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        *runtime_recovery_closeout_observation_view;
+    const
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        *runtime_recovery_audit_observation_view;
+    latticra_nucleus_kernel_coupling_request_t capture_request;
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     seed_result(result);
     result->record_count = 1u;
@@ -451,7 +3127,327 @@ latticra_status_t latticra_nucleus_kernel_coupling_evaluate(
         return LATTICRA_STATUS_OK;
     }
 
-    capture_evidence(request, result);
+    runtime_register_view = request->runtime_register_view;
+    runtime_process_return_observation_view =
+        request->runtime_process_return_observation_view;
+    runtime_idle_return_observation_view =
+        request->runtime_idle_return_observation_view;
+    runtime_quiescent_return_observation_view =
+        request->runtime_quiescent_return_observation_view;
+    runtime_persistence_boundary_observation_view =
+        request->runtime_persistence_boundary_observation_view;
+    runtime_recovery_boundary_observation_view =
+        request->runtime_recovery_boundary_observation_view;
+    runtime_recovery_plan_observation_view =
+        request->runtime_recovery_plan_observation_view;
+    runtime_recovery_disposition_observation_view =
+        request->runtime_recovery_disposition_observation_view;
+    runtime_recovery_outcome_observation_view =
+        request->runtime_recovery_outcome_observation_view;
+    runtime_recovery_closeout_observation_view =
+        request->runtime_recovery_closeout_observation_view;
+    runtime_recovery_audit_observation_view =
+        request->runtime_recovery_audit_observation_view;
+    if (runtime_recovery_audit_observation_view != 0) {
+        if (runtime_recovery_closeout_observation_view == 0) {
+            runtime_recovery_closeout_observation_view =
+                recovery_closeout_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_recovery_outcome_observation_view == 0) {
+            runtime_recovery_outcome_observation_view =
+                recovery_outcome_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_recovery_disposition_observation_view == 0) {
+            runtime_recovery_disposition_observation_view =
+                recovery_disposition_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_recovery_plan_observation_view == 0) {
+            runtime_recovery_plan_observation_view =
+                recovery_plan_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_recovery_boundary_observation_view == 0) {
+            runtime_recovery_boundary_observation_view =
+                recovery_boundary_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_audit(
+                    runtime_recovery_audit_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_audit_observation(
+                    runtime_recovery_audit_observation_view);
+        }
+    }
+    if (runtime_recovery_closeout_observation_view != 0) {
+        if (runtime_recovery_outcome_observation_view == 0) {
+            runtime_recovery_outcome_observation_view =
+                recovery_outcome_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_recovery_disposition_observation_view == 0) {
+            runtime_recovery_disposition_observation_view =
+                recovery_disposition_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_recovery_plan_observation_view == 0) {
+            runtime_recovery_plan_observation_view =
+                recovery_plan_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_recovery_boundary_observation_view == 0) {
+            runtime_recovery_boundary_observation_view =
+                recovery_boundary_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_closeout(
+                    runtime_recovery_closeout_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_closeout_observation(
+                    runtime_recovery_closeout_observation_view);
+        }
+    }
+    if (runtime_recovery_outcome_observation_view != 0) {
+        if (runtime_recovery_disposition_observation_view == 0) {
+            runtime_recovery_disposition_observation_view =
+                recovery_disposition_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_recovery_plan_observation_view == 0) {
+            runtime_recovery_plan_observation_view =
+                recovery_plan_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_recovery_boundary_observation_view == 0) {
+            runtime_recovery_boundary_observation_view =
+                recovery_boundary_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_outcome(
+                    runtime_recovery_outcome_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_outcome_observation(
+                    runtime_recovery_outcome_observation_view);
+        }
+    }
+    if (runtime_recovery_disposition_observation_view != 0) {
+        if (runtime_recovery_plan_observation_view == 0) {
+            runtime_recovery_plan_observation_view =
+                recovery_plan_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_recovery_boundary_observation_view == 0) {
+            runtime_recovery_boundary_observation_view =
+                recovery_boundary_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_disposition(
+                    runtime_recovery_disposition_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_disposition_observation(
+                    runtime_recovery_disposition_observation_view);
+        }
+    }
+    if (runtime_recovery_plan_observation_view != 0) {
+        if (runtime_recovery_boundary_observation_view == 0) {
+            runtime_recovery_boundary_observation_view =
+                recovery_boundary_observation_from_recovery_plan(
+                    runtime_recovery_plan_observation_view);
+        }
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_plan(
+                    runtime_recovery_plan_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_plan(
+                    runtime_recovery_plan_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_plan(
+                    runtime_recovery_plan_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_plan(
+                    runtime_recovery_plan_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_plan_observation(
+                    runtime_recovery_plan_observation_view);
+        }
+    }
+    if (runtime_recovery_boundary_observation_view != 0) {
+        if (runtime_persistence_boundary_observation_view == 0) {
+            runtime_persistence_boundary_observation_view =
+                persistence_boundary_observation_from_recovery_boundary(
+                    runtime_recovery_boundary_observation_view);
+        }
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_recovery_boundary(
+                    runtime_recovery_boundary_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_recovery_boundary(
+                    runtime_recovery_boundary_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_recovery_boundary(
+                    runtime_recovery_boundary_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_recovery_boundary_observation(
+                    runtime_recovery_boundary_observation_view);
+        }
+    }
+    if (runtime_persistence_boundary_observation_view != 0) {
+        if (runtime_quiescent_return_observation_view == 0) {
+            runtime_quiescent_return_observation_view =
+                quiescent_return_observation_from_persistence_boundary(
+                    runtime_persistence_boundary_observation_view);
+        }
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_persistence_boundary(
+                    runtime_persistence_boundary_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_persistence_boundary(
+                    runtime_persistence_boundary_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_persistence_boundary_observation(
+                    runtime_persistence_boundary_observation_view);
+        }
+    }
+    if (runtime_quiescent_return_observation_view != 0) {
+        if (runtime_idle_return_observation_view == 0) {
+            runtime_idle_return_observation_view =
+                idle_return_observation_from_quiescent_return(
+                    runtime_quiescent_return_observation_view);
+        }
+        if (runtime_process_return_observation_view == 0) {
+            runtime_process_return_observation_view =
+                process_return_observation_from_quiescent_return(
+                    runtime_quiescent_return_observation_view);
+        }
+        if (runtime_register_view == 0) {
+            runtime_register_view =
+                register_view_from_quiescent_return_observation(
+                    runtime_quiescent_return_observation_view);
+        }
+    }
+
+    capture_request = *request;
+    capture_request.runtime_register_view = runtime_register_view;
+    capture_request.runtime_process_return_observation_view =
+        runtime_process_return_observation_view;
+    capture_request.runtime_idle_return_observation_view =
+        runtime_idle_return_observation_view;
+    capture_request.runtime_quiescent_return_observation_view =
+        runtime_quiescent_return_observation_view;
+    capture_request.runtime_persistence_boundary_observation_view =
+        runtime_persistence_boundary_observation_view;
+    capture_request.runtime_recovery_boundary_observation_view =
+        runtime_recovery_boundary_observation_view;
+    capture_request.runtime_recovery_plan_observation_view =
+        runtime_recovery_plan_observation_view;
+    capture_request.runtime_recovery_disposition_observation_view =
+        runtime_recovery_disposition_observation_view;
+    capture_request.runtime_recovery_outcome_observation_view =
+        runtime_recovery_outcome_observation_view;
+    capture_request.runtime_recovery_closeout_observation_view =
+        runtime_recovery_closeout_observation_view;
+    capture_request.runtime_recovery_audit_observation_view =
+        runtime_recovery_audit_observation_view;
+    capture_evidence(&capture_request, result);
 
     if (request->nucleus_plan == 0) {
         set_blocked(result,
@@ -475,15 +3471,166 @@ latticra_status_t latticra_nucleus_kernel_coupling_evaluate(
         return LATTICRA_STATUS_OK;
     }
 
-    if (request->runtime_register_view == 0) {
+    if (request->kernel_lifecycle == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_KERNEL_LIFECYCLE_MISSING, 0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!kernel_lifecycle_ready(request->kernel_lifecycle)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_KERNEL_LIFECYCLE_BLOCKED, 0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_register_view == 0) {
         set_blocked(result,
             LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_REGISTER_VIEW_MISSING,
             0);
         return LATTICRA_STATUS_OK;
     }
-    if (!runtime_register_view_ready(request->runtime_register_view)) {
+    if (!runtime_register_view_ready(runtime_register_view)) {
         set_blocked(result,
             LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_REGISTER_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_process_return_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PROCESS_RETURN_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_process_return_observation_ready(
+            runtime_process_return_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PROCESS_RETURN_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_idle_return_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_IDLE_RETURN_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_idle_return_observation_ready(
+            runtime_idle_return_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_IDLE_RETURN_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_quiescent_return_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_QUIESCENT_RETURN_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_quiescent_return_observation_ready(
+            runtime_quiescent_return_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_QUIESCENT_RETURN_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_persistence_boundary_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_persistence_boundary_observation_ready(
+            runtime_persistence_boundary_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_boundary_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_BOUNDARY_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_boundary_observation_ready(
+            runtime_recovery_boundary_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_BOUNDARY_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_plan_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_PLAN_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_plan_observation_ready(
+            runtime_recovery_plan_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_PLAN_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_disposition_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_DISPOSITION_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_disposition_observation_ready(
+            runtime_recovery_disposition_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_DISPOSITION_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_outcome_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_OUTCOME_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_outcome_observation_ready(
+            runtime_recovery_outcome_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_OUTCOME_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_closeout_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_closeout_observation_ready(
+            runtime_recovery_closeout_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_BLOCKED,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+
+    if (runtime_recovery_audit_observation_view == 0) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_MISSING,
+            0);
+        return LATTICRA_STATUS_OK;
+    }
+    if (!runtime_recovery_audit_observation_ready(
+            runtime_recovery_audit_observation_view)) {
+        set_blocked(result,
+            LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_OBSERVATION_VIEW_BLOCKED,
             0);
         return LATTICRA_STATUS_OK;
     }
@@ -497,8 +3644,36 @@ latticra_status_t latticra_nucleus_kernel_coupling_evaluate_default(
     latticra_nucleus_task_plan_result_t plan;
     latticra_kernel_subsystem_registry_request_t registry_request;
     latticra_kernel_subsystem_registry_result_t registry;
-    latticra_kernel_runtime_entry_register_view_request_t register_view_request;
-    latticra_kernel_runtime_entry_register_view_result_t register_view;
+    latticra_kernel_lifecycle_request_t lifecycle_request;
+    latticra_kernel_lifecycle_result_t lifecycle;
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_request_t
+        persistence_boundary_request;
+    latticra_kernel_runtime_entry_persistence_boundary_observation_view_result_t
+        persistence_boundary_view;
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_request_t
+        recovery_boundary_request;
+    latticra_kernel_runtime_entry_recovery_boundary_observation_view_result_t
+        recovery_boundary_view;
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_request_t
+        recovery_plan_request;
+    latticra_kernel_runtime_entry_recovery_plan_observation_view_result_t
+        recovery_plan_view;
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_request_t
+        recovery_disposition_request;
+    latticra_kernel_runtime_entry_recovery_disposition_observation_view_result_t
+        recovery_disposition_view;
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_request_t
+        recovery_outcome_request;
+    latticra_kernel_runtime_entry_recovery_outcome_observation_view_result_t
+        recovery_outcome_view;
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_request_t
+        recovery_closeout_request;
+    latticra_kernel_runtime_entry_recovery_closeout_observation_view_result_t
+        recovery_closeout_view;
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_request_t
+        recovery_audit_request;
+    latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
+        recovery_audit_view;
     latticra_nucleus_kernel_coupling_request_t coupling_request;
     latticra_status_t status;
 
@@ -514,18 +3689,126 @@ latticra_status_t latticra_nucleus_kernel_coupling_evaluate_default(
         &registry);
     if (status != LATTICRA_STATUS_OK) return status;
 
-    status = latticra_kernel_runtime_entry_register_view_default_request(
-        &register_view_request);
+    status = latticra_kernel_lifecycle_default_request(&lifecycle_request);
     if (status != LATTICRA_STATUS_OK) return status;
-    status = latticra_kernel_runtime_entry_register_view_evaluate(
-        &register_view_request, &register_view);
+    lifecycle_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+    lifecycle_request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY;
+    lifecycle_request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
+    status = latticra_kernel_lifecycle_run(&lifecycle_request, &lifecycle);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_default_request(
+            &persistence_boundary_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    status =
+        latticra_kernel_runtime_entry_persistence_boundary_observation_view_evaluate(
+            &persistence_boundary_request, &persistence_boundary_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_default_request(
+            &recovery_boundary_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_boundary_request.
+        runtime_entry_persistence_boundary_observation_view_request =
+        persistence_boundary_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_boundary_observation_view_evaluate(
+            &recovery_boundary_request, &recovery_boundary_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_default_request(
+            &recovery_plan_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_plan_request.runtime_entry_recovery_boundary_observation_view_request =
+        recovery_boundary_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_plan_observation_view_evaluate(
+            &recovery_plan_request, &recovery_plan_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_disposition_observation_view_default_request(
+            &recovery_disposition_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_disposition_request.
+        runtime_entry_recovery_plan_observation_view_request =
+        recovery_plan_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_disposition_observation_view_evaluate(
+            &recovery_disposition_request, &recovery_disposition_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_outcome_observation_view_default_request(
+            &recovery_outcome_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_outcome_request.
+        runtime_entry_recovery_disposition_observation_view_request =
+        recovery_disposition_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_outcome_observation_view_evaluate(
+            &recovery_outcome_request, &recovery_outcome_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_closeout_observation_view_default_request(
+            &recovery_closeout_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_closeout_request.
+        runtime_entry_recovery_outcome_observation_view_request =
+        recovery_outcome_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_closeout_observation_view_evaluate(
+            &recovery_closeout_request, &recovery_closeout_view);
+    if (status != LATTICRA_STATUS_OK) return status;
+
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_observation_view_default_request(
+            &recovery_audit_request);
+    if (status != LATTICRA_STATUS_OK) return status;
+    recovery_audit_request.
+        runtime_entry_recovery_closeout_observation_view_request =
+        recovery_closeout_request;
+    status =
+        latticra_kernel_runtime_entry_recovery_audit_observation_view_evaluate(
+            &recovery_audit_request, &recovery_audit_view);
     if (status != LATTICRA_STATUS_OK) return status;
 
     status = latticra_nucleus_kernel_coupling_default_request(&coupling_request);
     if (status != LATTICRA_STATUS_OK) return status;
     coupling_request.nucleus_plan = &plan;
     coupling_request.kernel_registry = &registry;
-    coupling_request.runtime_register_view = &register_view;
+    coupling_request.kernel_lifecycle = &lifecycle;
+    coupling_request.runtime_register_view =
+        register_view_from_persistence_boundary_observation(
+            &persistence_boundary_view);
+    coupling_request.runtime_process_return_observation_view =
+        process_return_observation_from_persistence_boundary(
+            &persistence_boundary_view);
+    coupling_request.runtime_idle_return_observation_view =
+        idle_return_observation_from_persistence_boundary(
+            &persistence_boundary_view);
+    coupling_request.runtime_quiescent_return_observation_view =
+        quiescent_return_observation_from_persistence_boundary(
+            &persistence_boundary_view);
+    coupling_request.runtime_persistence_boundary_observation_view =
+        &persistence_boundary_view;
+    coupling_request.runtime_recovery_boundary_observation_view =
+        &recovery_boundary_view;
+    coupling_request.runtime_recovery_plan_observation_view =
+        &recovery_plan_view;
+    coupling_request.runtime_recovery_disposition_observation_view =
+        &recovery_disposition_view;
+    coupling_request.runtime_recovery_outcome_observation_view =
+        &recovery_outcome_view;
+    coupling_request.runtime_recovery_closeout_observation_view =
+        &recovery_closeout_view;
+    coupling_request.runtime_recovery_audit_observation_view =
+        &recovery_audit_view;
     return latticra_nucleus_kernel_coupling_evaluate(&coupling_request, result);
 }
 
@@ -584,6 +3867,12 @@ latticra_status_t latticra_nucleus_kernel_coupling_report(
         !append_text(buffer, buffer_len, &used, "kernel_status=%s\n",
             record->kernel_status) ||
         !append_text(buffer, buffer_len, &used,
+            "kernel_lifecycle_status=%s\n",
+            record->kernel_lifecycle_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "kernel_lifecycle_final_state=%s\n",
+            record->kernel_lifecycle_final_state) ||
+        !append_text(buffer, buffer_len, &used,
             "runtime_register_view_status=%s\n",
             record->runtime_register_view_status) ||
         !append_text(buffer, buffer_len, &used,
@@ -592,6 +3881,45 @@ latticra_status_t latticra_nucleus_kernel_coupling_report(
         !append_text(buffer, buffer_len, &used,
             "scheduler_run_entry_status=%s\n",
             record->scheduler_run_entry_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_process_return_observation_view_status=%s\n",
+            record->runtime_process_return_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_scheduler_return_observation_view_status=%s\n",
+            record->runtime_scheduler_return_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_post_resume_observation_view_status=%s\n",
+            record->runtime_post_resume_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_user_mode_resume_view_status=%s\n",
+            record->runtime_user_mode_resume_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_idle_return_observation_view_status=%s\n",
+            record->runtime_idle_return_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_quiescent_return_observation_view_status=%s\n",
+            record->runtime_quiescent_return_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_persistence_boundary_observation_view_status=%s\n",
+            record->runtime_persistence_boundary_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_boundary_observation_view_status=%s\n",
+            record->runtime_recovery_boundary_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_plan_observation_view_status=%s\n",
+            record->runtime_recovery_plan_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_disposition_observation_view_status=%s\n",
+            record->runtime_recovery_disposition_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_outcome_observation_view_status=%s\n",
+            record->runtime_recovery_outcome_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_closeout_observation_view_status=%s\n",
+            record->runtime_recovery_closeout_observation_view_status) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_audit_observation_view_status=%s\n",
+            record->runtime_recovery_audit_observation_view_status) ||
         !append_text(buffer, buffer_len, &used, "task_count=%lu\n",
             (unsigned long)record->task_count) ||
         !append_text(buffer, buffer_len, &used, "accepted_task_count=%lu\n",
@@ -600,12 +3928,58 @@ latticra_status_t latticra_nucleus_kernel_coupling_report(
             (unsigned long)record->blocked_task_count) ||
         !append_text(buffer, buffer_len, &used, "subsystem_count=%lu\n",
             (unsigned long)record->subsystem_count) ||
+        !append_text(buffer, buffer_len, &used, "lifecycle_step_count=%lu\n",
+            (unsigned long)record->lifecycle_step_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "lifecycle_state_change_count=%lu\n",
+            (unsigned long)record->lifecycle_state_change_count) ||
         !append_text(buffer, buffer_len, &used, "register_view_count=%lu\n",
             (unsigned long)record->register_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "process_return_observation_view_count=%lu\n",
+            (unsigned long)record->process_return_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "scheduler_return_observation_view_count=%lu\n",
+            (unsigned long)record->scheduler_return_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "post_resume_observation_view_count=%lu\n",
+            (unsigned long)record->post_resume_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "user_mode_resume_view_count=%lu\n",
+            (unsigned long)record->user_mode_resume_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "idle_return_observation_view_count=%lu\n",
+            (unsigned long)record->idle_return_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "quiescent_return_observation_view_count=%lu\n",
+            (unsigned long)record->quiescent_return_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "persistence_boundary_observation_view_count=%lu\n",
+            (unsigned long)record->persistence_boundary_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_boundary_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_boundary_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_plan_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_plan_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_disposition_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_disposition_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_outcome_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_outcome_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_closeout_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_closeout_observation_view_count) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_audit_observation_view_count=%lu\n",
+            (unsigned long)record->recovery_audit_observation_view_count) ||
         !append_text(buffer, buffer_len, &used, "prerequisites_satisfied=%d\n",
             record->prerequisites_satisfied) ||
         !append_text(buffer, buffer_len, &used, "no_effect_chain_ok=%d\n",
             record->no_effect_chain_ok) ||
+        !append_text(buffer, buffer_len, &used, "lifecycle_complete=%d\n",
+            record->lifecycle_complete) ||
         !append_text(buffer, buffer_len, &used, "report_only=%d\n",
             record->report_only) ||
         !append_text(buffer, buffer_len, &used, "no_effect=%d\n",
@@ -635,6 +4009,126 @@ latticra_status_t latticra_nucleus_kernel_coupling_report(
             record->register_save_allowed) ||
         !append_text(buffer, buffer_len, &used, "register_restore_allowed=%d\n",
             record->register_restore_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_process_return_observation_view_allowed=%d\n",
+            record->runtime_process_return_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_scheduler_return_observation_view_allowed=%d\n",
+            record->runtime_scheduler_return_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_post_resume_observation_view_allowed=%d\n",
+            record->runtime_post_resume_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_idle_return_observation_view_allowed=%d\n",
+            record->runtime_idle_return_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_quiescent_return_observation_view_allowed=%d\n",
+            record->runtime_quiescent_return_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_persistence_boundary_observation_view_allowed=%d\n",
+            record->runtime_persistence_boundary_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_boundary_observation_view_allowed=%d\n",
+            record->runtime_recovery_boundary_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_plan_observation_view_allowed=%d\n",
+            record->runtime_recovery_plan_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_disposition_observation_view_allowed=%d\n",
+            record->runtime_recovery_disposition_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_outcome_observation_view_allowed=%d\n",
+            record->runtime_recovery_outcome_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_closeout_observation_view_allowed=%d\n",
+            record->runtime_recovery_closeout_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "runtime_recovery_audit_observation_view_allowed=%d\n",
+            record->runtime_recovery_audit_observation_view_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "scheduler_return_observation_allowed=%d\n",
+            record->scheduler_return_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "process_return_observation_allowed=%d\n",
+            record->process_return_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used, "process_return_allowed=%d\n",
+            record->process_return_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "idle_return_observation_allowed=%d\n",
+            record->idle_return_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used, "idle_return_allowed=%d\n",
+            record->idle_return_allowed) ||
+        !append_text(buffer, buffer_len, &used, "idle_state_read_allowed=%d\n",
+            record->idle_state_read_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "quiescent_return_observation_allowed=%d\n",
+            record->quiescent_return_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "quiescent_return_allowed=%d\n",
+            record->quiescent_return_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "quiescent_state_read_allowed=%d\n",
+            record->quiescent_state_read_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "persistence_boundary_observation_allowed=%d\n",
+            record->persistence_boundary_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "persistence_boundary_allowed=%d\n",
+            record->persistence_boundary_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "persistence_commit_allowed=%d\n",
+            record->persistence_commit_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_boundary_observation_allowed=%d\n",
+            record->recovery_boundary_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_boundary_allowed=%d\n",
+            record->recovery_boundary_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_plan_allowed=%d\n",
+            record->recovery_plan_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_plan_observation_allowed=%d\n",
+            record->recovery_plan_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_disposition_allowed=%d\n",
+            record->recovery_disposition_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_disposition_observation_allowed=%d\n",
+            record->recovery_disposition_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_outcome_allowed=%d\n",
+            record->recovery_outcome_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_outcome_observation_allowed=%d\n",
+            record->recovery_outcome_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_closeout_allowed=%d\n",
+            record->recovery_closeout_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_closeout_observation_allowed=%d\n",
+            record->recovery_closeout_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_audit_allowed=%d\n",
+            record->recovery_audit_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_audit_observation_allowed=%d\n",
+            record->recovery_audit_observation_allowed) ||
+        !append_text(buffer, buffer_len, &used, "process_state_read_allowed=%d\n",
+            record->process_state_read_allowed) ||
+        !append_text(buffer, buffer_len, &used, "scheduler_execution_allowed=%d\n",
+            record->scheduler_execution_allowed) ||
+        !append_text(buffer, buffer_len, &used, "scheduler_dispatch_allowed=%d\n",
+            record->scheduler_dispatch_allowed) ||
+        !append_text(buffer, buffer_len, &used, "run_queue_mutation_allowed=%d\n",
+            record->run_queue_mutation_allowed) ||
+        !append_text(buffer, buffer_len, &used, "process_wake_allowed=%d\n",
+            record->process_wake_allowed) ||
+        !append_text(buffer, buffer_len, &used, "persistence_allowed=%d\n",
+            record->persistence_allowed) ||
+        !append_text(buffer, buffer_len, &used,
+            "recovery_authority_allowed=%d\n",
+            record->recovery_authority_allowed) ||
         !append_text(buffer, buffer_len, &used, "host_effect_allowed=%d\n",
             record->host_effect_allowed) ||
         !append_text(buffer, buffer_len, &used, "evidence_level=%u\n",

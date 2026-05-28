@@ -252,6 +252,15 @@ static int invalid_entries_fail_closed(void) {
                     LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_DEFAULT_DECISION) == 0,
                 "allow rejected");
 
+    entry = valid_entry("unterminated-decision");
+    memset(entry.capability_default_decision,
+           'x',
+           sizeof(entry.capability_default_decision));
+    EXPECT_TRUE(invalid_entry_sets_error(
+                    entry,
+                    LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_DEFAULT_DECISION) == 0,
+                "unterminated decision rejected");
+
     entry = valid_entry("grant");
     entry.capability_grants_authority = 1u;
     EXPECT_TRUE(invalid_entry_sets_error(
@@ -300,6 +309,7 @@ static int failure_cases_stay_bounded(void) {
     latticra_seal_local_capability_registry_schema_t schema;
     latticra_seal_local_capability_registry_entry_t entry;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_REPORT_MAX];
     unsigned i;
 
     EXPECT_TRUE(latticra_seal_local_capability_registry_schema_init(0) ==
@@ -327,6 +337,65 @@ static int failure_cases_stay_bounded(void) {
                 "null entry error");
     EXPECT_TRUE(schema.registry_entry_count == 0u, "null entry count");
 
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_init(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated schema init");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_add_default_entry(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated schema default");
+    memset(schema.registry_schema_profile,
+           'z',
+           sizeof(schema.registry_schema_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_render(
+                    &schema,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated schema render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated schema render cleared");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_is_report_only(&schema) == 0,
+                "unterminated schema helper rejected");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_validate(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated schema validate");
+    EXPECT_TRUE(schema.last_error ==
+                    LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_PROFILE,
+                "unterminated schema error");
+
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_init(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "runtime authority init");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_add_default_entry(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "runtime authority default");
+    schema.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_render(
+                    &schema,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "runtime authority render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "runtime authority render cleared");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_is_report_only(&schema) == 0,
+                "runtime authority helper rejected");
+
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_init(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "entry authority init");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_add_default_entry(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "entry authority default");
+    schema.entries[0].capability_grants_authority = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_render(
+                    &schema,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "entry authority render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "entry authority render cleared");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_is_report_only(&schema) == 0,
+                "entry authority helper rejected");
+
     entry = valid_entry("capacity");
     EXPECT_TRUE(latticra_seal_local_capability_registry_schema_init(&schema) ==
                     LATTICRA_STATUS_OK,
@@ -347,6 +416,15 @@ static int failure_cases_stay_bounded(void) {
                     LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_ENTRY_CAPACITY_EXCEEDED,
                 "capacity overflow error");
 
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_render(&schema, tiny, sizeof(tiny)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "capacity error render rejected");
+    EXPECT_TRUE(tiny[0] == '\0', "capacity error render cleared");
+    EXPECT_TRUE(latticra_seal_local_capability_registry_schema_validate(&schema) ==
+                    LATTICRA_STATUS_OK,
+                "capacity validate");
+    EXPECT_TRUE(schema.last_error == LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_OK,
+                "capacity validated ok");
     EXPECT_TRUE(latticra_seal_local_capability_registry_schema_render(&schema, tiny, sizeof(tiny)) ==
                     LATTICRA_STATUS_BUFFER_TOO_SMALL,
                 "small render");

@@ -1,7 +1,7 @@
 # Kernel Lifecycle Evidence Status
 
 Status: status alignment record
-Date: 2026-05-26 00:45 CDT
+Date: 2026-05-27 00:45 CDT
 Scope: public status alignment after the merged kernel lifecycle evidence sequence.
 
 ## Purpose
@@ -66,6 +66,42 @@ kernel runtime entry stack-view guard
 kernel runtime entry stack-view report runner
 kernel runtime entry address-space-view guard
 kernel runtime entry address-space-view report runner
+kernel runtime entry privilege-level-view guard
+kernel runtime entry privilege-level-view report runner
+kernel runtime entry syscall-gate-view guard
+kernel runtime entry syscall-gate-view report runner
+kernel runtime entry syscall-dispatch-view guard
+kernel runtime entry syscall-dispatch-view report runner
+kernel runtime entry syscall-return-view guard
+kernel runtime entry syscall-return-view report runner
+kernel runtime entry syscall-exit-view guard
+kernel runtime entry syscall-exit-view report runner
+kernel runtime entry user-mode-resume-view guard
+kernel runtime entry user-mode-resume-view report runner
+kernel runtime entry post-resume-observation-view guard
+kernel runtime entry post-resume-observation-view report runner
+kernel runtime entry scheduler-return-observation-view guard
+kernel runtime entry scheduler-return-observation-view report runner
+kernel runtime entry process-return-observation-view guard
+kernel runtime entry process-return-observation-view report runner
+kernel runtime entry idle-return-observation-view guard
+kernel runtime entry idle-return-observation-view report runner
+kernel runtime entry quiescent-return-observation-view guard
+kernel runtime entry quiescent-return-observation-view report runner
+kernel runtime entry persistence-boundary-observation-view guard
+kernel runtime entry persistence-boundary-observation-view report runner
+kernel runtime entry recovery-boundary-observation-view guard
+kernel runtime entry recovery-boundary-observation-view report runner
+kernel runtime entry recovery-plan-observation-view guard
+kernel runtime entry recovery-plan-observation-view report runner
+kernel runtime entry recovery-disposition-observation-view guard
+kernel runtime entry recovery-disposition-observation-view report runner
+kernel runtime entry recovery-outcome-observation-view guard
+kernel runtime entry recovery-outcome-observation-view report runner
+kernel runtime entry recovery-closeout-observation-view guard
+kernel runtime entry recovery-closeout-observation-view report runner
+kernel runtime entry recovery-audit-observation-view guard
+kernel runtime entry recovery-audit-observation-view report runner
 kernel process table guard
 kernel process table report runner
 kernel syscall table guard
@@ -78,7 +114,7 @@ kernel lifecycle rollback plan
 The lifecycle evidence can report a bounded in-memory path ending at:
 
 ```text
-final_state=runtime-entry-address-space-view-ready
+final_state=runtime-entry-recovery-audit-observation-view-ready
 ```
 
 The lifecycle report runner and subsystem summary keep the external-effect posture explicit:
@@ -93,12 +129,48 @@ no_external_effect_chain=1
 The merged evidence keeps authority denied:
 
 ```text
+runtime_entry_recovery_boundary_observation_view_allowed=0
+runtime_entry_recovery_plan_observation_view_allowed=0
+runtime_entry_recovery_disposition_observation_view_allowed=0
+runtime_entry_recovery_outcome_observation_view_allowed=0
+runtime_entry_recovery_closeout_observation_view_allowed=0
+runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_persistence_boundary_observation_view_allowed=0
+runtime_entry_quiescent_return_observation_view_allowed=0
+runtime_entry_idle_return_observation_view_allowed=0
+runtime_entry_process_return_observation_view_allowed=0
+runtime_entry_scheduler_return_observation_view_allowed=0
+runtime_entry_post_resume_observation_view_allowed=0
+runtime_entry_user_mode_resume_view_allowed=0
+runtime_entry_syscall_exit_view_allowed=0
+runtime_entry_syscall_return_view_allowed=0
+runtime_entry_syscall_dispatch_view_allowed=0
+runtime_entry_syscall_gate_view_allowed=0
+runtime_entry_privilege_level_view_allowed=0
 runtime_entry_address_space_view_allowed=0
 runtime_entry_stack_view_allowed=0
 runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
+recovery_boundary_observation_allowed=0
+recovery_boundary_allowed=0
+recovery_plan_allowed=0
+recovery_plan_observation_allowed=0
+recovery_disposition_allowed=0
+recovery_disposition_observation_allowed=0
+recovery_outcome_allowed=0
+recovery_outcome_observation_allowed=0
+recovery_closeout_allowed=0
+recovery_closeout_observation_allowed=0
+recovery_audit_allowed=0
+recovery_audit_observation_allowed=0
+persistence_boundary_observation_allowed=0
+persistence_boundary_allowed=0
+persistence_commit_allowed=0
+quiescent_return_observation_allowed=0
+quiescent_return_allowed=0
+quiescent_state_read_allowed=0
 scheduler_execution_allowed=0
 scheduler_selection_allowed=0
 scheduler_dispatch_allowed=0
@@ -146,6 +218,8 @@ cpu_usage_write_allowed=0
 quota_update_allowed=0
 scheduler_credit_update_allowed=0
 process_wake_allowed=0
+persistence_allowed=0
+recovery_authority_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 ```
@@ -192,21 +266,49 @@ not installer-ready
 Recommended next work:
 
 ```text
-Add no-effect runtime entry privilege-level view classifier
+Add no-effect runtime entry recovery-audit-review observation view evidence after the audit terminal
 ```
 
-That future slice should build on the address-space-view classifier with privilege-level metadata/reporting only and continue to require:
+That future slice should keep recovery-audit-review evidence report-only while preserving lifecycle, nucleus coupling, and subsystem summary evidence. It should continue to require:
 
 ```text
 external_effect_performed=0
 persistence_allowed=0
 recovery_authority_allowed=0
+runtime_entry_recovery_boundary_observation_view_allowed=0
+runtime_entry_recovery_plan_observation_view_allowed=0
+runtime_entry_recovery_disposition_observation_view_allowed=0
+runtime_entry_recovery_outcome_observation_view_allowed=0
+runtime_entry_recovery_closeout_observation_view_allowed=0
+runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_persistence_boundary_observation_view_allowed=0
+runtime_entry_idle_return_observation_view_allowed=0
+runtime_entry_quiescent_return_observation_view_allowed=0
+runtime_entry_process_return_observation_view_allowed=0
+runtime_entry_scheduler_return_observation_view_allowed=0
+runtime_entry_post_resume_observation_view_allowed=0
+runtime_entry_user_mode_resume_view_allowed=0
+runtime_entry_syscall_exit_view_allowed=0
+runtime_entry_syscall_return_view_allowed=0
+runtime_entry_syscall_dispatch_view_allowed=0
+runtime_entry_syscall_gate_view_allowed=0
+runtime_entry_privilege_level_view_allowed=0
 runtime_entry_address_space_view_allowed=0
 runtime_entry_stack_view_allowed=0
 runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
+recovery_boundary_observation_allowed=0
+recovery_boundary_allowed=0
+recovery_plan_allowed=0
+recovery_plan_observation_allowed=0
+recovery_disposition_allowed=0
+recovery_disposition_observation_allowed=0
+recovery_outcome_allowed=0
+recovery_outcome_observation_allowed=0
+recovery_closeout_allowed=0
+recovery_closeout_observation_allowed=0
 ```
 
 ## Validation
@@ -242,6 +344,24 @@ Dedicated workflow lanes keep the kernel table guards visible:
 .github/workflows/kernel-runtime-entry-register-view.yml
 .github/workflows/kernel-runtime-entry-stack-view.yml
 .github/workflows/kernel-runtime-entry-address-space-view.yml
+.github/workflows/kernel-runtime-entry-privilege-level-view.yml
+.github/workflows/kernel-runtime-entry-syscall-gate-view.yml
+.github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml
+.github/workflows/kernel-runtime-entry-syscall-return-view.yml
+.github/workflows/kernel-runtime-entry-syscall-exit-view.yml
+.github/workflows/kernel-runtime-entry-user-mode-resume-view.yml
+.github/workflows/kernel-runtime-entry-post-resume-observation-view.yml
+.github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml
+.github/workflows/kernel-runtime-entry-process-return-observation-view.yml
+.github/workflows/kernel-runtime-entry-idle-return-observation-view.yml
+.github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml
+.github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
+.github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
 .github/workflows/kernel-process-table.yml
 .github/workflows/kernel-syscall-table.yml
 ```

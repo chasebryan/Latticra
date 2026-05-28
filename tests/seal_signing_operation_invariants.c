@@ -43,6 +43,7 @@ static latticra_seal_signer_invocation_t fixture_invocation(const char *mode) {
         sizeof(invocation.message_digest_hex),
         "aaaabbbbccccddddeeeeffff0000111122223333444455556666777788889999");
     set_string(invocation.public_key_identity_label, sizeof(invocation.public_key_identity_label), "rfc8032-test-key");
+    set_string(invocation.crypto_graduation_gate_state, sizeof(invocation.crypto_graduation_gate_state), "not-required");
     set_string(invocation.requested_capability, sizeof(invocation.requested_capability), "verified-receipt-report");
     set_string(invocation.requested_effect, sizeof(invocation.requested_effect), requested_mode);
     set_string(invocation.requested_handoff, sizeof(invocation.requested_handoff), requested_mode);
@@ -210,6 +211,10 @@ static int operation_fails_closed(void) {
     latticra_seal_signer_invocation_t invocation = fixture_invocation("report-only");
     latticra_seal_signing_operation_t operation;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNING_OPERATION_RENDER_MAX];
+    char unterminated_operation[LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX];
+
+    memset(unterminated_operation, 'x', sizeof(unterminated_operation));
 
     EXPECT_TRUE(
         latticra_seal_signing_operation_from_invocation(0, "metadata-only", &operation) == LATTICRA_STATUS_OK,
@@ -224,6 +229,28 @@ static int operation_fails_closed(void) {
             "denied-signer-invocation",
             "invalid-signer-invocation",
             "invalid invocation status") != 0) {
+        return 1;
+    }
+    invocation = fixture_invocation("report-only");
+    memset(invocation.signer_invocation_state, 'z', sizeof(invocation.signer_invocation_state));
+    if (expect_denial(
+            &invocation,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNING_OPERATION_INVALID_SIGNER_INVOCATION,
+            "denied-signer-invocation",
+            "invalid-signer-invocation",
+            "unterminated invocation status") != 0) {
+        return 1;
+    }
+    invocation = fixture_invocation("report-only");
+    invocation.signer_invocation_ready = 2u;
+    if (expect_denial(
+            &invocation,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNING_OPERATION_INVALID_SIGNER_INVOCATION,
+            "denied-signer-invocation",
+            "invalid-signer-invocation",
+            "invalid invocation flag status") != 0) {
         return 1;
     }
     invocation = fixture_invocation("report-only");
@@ -293,6 +320,21 @@ static int operation_fails_closed(void) {
     if (expect_denial(&invocation, "sign-now", LATTICRA_SEAL_SIGNING_OPERATION_DENIED_SIGNING_OPERATION, "denied-signing-operation", "denied-signing-operation", "unknown operation status") != 0) {
         return 1;
     }
+    invocation = fixture_invocation("report-only");
+    EXPECT_TRUE(latticra_seal_signing_operation_from_invocation(
+                    &invocation,
+                    unterminated_operation,
+                    &operation) == LATTICRA_STATUS_OK,
+                "unterminated requested signing operation status");
+    EXPECT_TRUE(operation.error == LATTICRA_SEAL_SIGNING_OPERATION_DENIED_SIGNING_OPERATION,
+                "unterminated requested signing operation error");
+    EXPECT_TRUE(strcmp(operation.requested_signing_operation, "invalid-signing-operation") == 0,
+                "unterminated requested signing operation sanitized");
+    EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested signing operation render");
+    EXPECT_TRUE(strstr(rendered, "requested_signing_operation=invalid-signing-operation") != 0,
+                "unterminated requested signing operation rendered sanitized");
     invocation = fixture_invocation("report-only");
     invocation.private_key_handling = 1u;
     if (expect_denial(&invocation, "metadata-only", LATTICRA_SEAL_SIGNING_OPERATION_DENIED_PRIVATE_KEY, "denied-private-key", "denied-private-key", "private key status") != 0) {
@@ -370,6 +412,51 @@ static int operation_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_signing_operation_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null operation render");
     EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    invocation = fixture_invocation("report-only");
+    EXPECT_TRUE(latticra_seal_signing_operation_from_invocation(
+                    &invocation,
+                    "metadata-only",
+                    &operation) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(operation.signing_operation_profile, 'z', sizeof(operation.signing_operation_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated signing operation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated signing operation render cleared");
+    EXPECT_TRUE(latticra_seal_signing_operation_is_metadata_only(&operation) == 0,
+                "unterminated signing operation helper rejected");
+
+    invocation = fixture_invocation("report-only");
+    EXPECT_TRUE(latticra_seal_signing_operation_from_invocation(
+                    &invocation,
+                    "metadata-only",
+                    &operation) == LATTICRA_STATUS_OK,
+                "authority signing operation render source");
+    operation.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority signing operation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority signing operation render cleared");
+    EXPECT_TRUE(latticra_seal_signing_operation_is_metadata_only(&operation) == 0,
+                "authority signing operation helper rejected");
+
+    invocation = fixture_invocation("report-only");
+    EXPECT_TRUE(latticra_seal_signing_operation_from_invocation(
+                    &invocation,
+                    "metadata-only",
+                    &operation) == LATTICRA_STATUS_OK,
+                "ready flag signing operation render source");
+    operation.signing_operation_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_operation_render(&operation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag signing operation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag signing operation render cleared");
+    EXPECT_TRUE(latticra_seal_signing_operation_is_metadata_only(&operation) == 0,
+                "ready flag signing operation helper rejected");
     return 0;
 }
 

@@ -162,6 +162,10 @@ null output
 null entry input
 small render buffer
 entry capacity overflow
+unterminated schema strings before render
+unterminated entry default decisions before add
+tampered schema authority/effect flags before render
+tampered entry authority/effect flags before render
 invalid scope
 invalid effect class
 invalid authority class

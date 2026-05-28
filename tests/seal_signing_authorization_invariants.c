@@ -211,12 +211,25 @@ static int authorization_fails_closed(void) {
     latticra_seal_signature_request_t request = fixture_request("report-only");
     latticra_seal_signing_authorization_t authorization;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNING_AUTHORIZATION_RENDER_MAX];
+    char unterminated_authorization[LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX];
+
+    memset(unterminated_authorization, 'x', sizeof(unterminated_authorization));
 
     EXPECT_TRUE(latticra_seal_signing_authorization_from_request(0, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "null request status");
     EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_INPUT, "null request error");
     request.error = LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_ENVELOPE;
     EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "invalid request status");
     EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST, "invalid request error");
+    request = fixture_request("report-only");
+    memset(request.signature_request_state, 'z', sizeof(request.signature_request_state));
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "unterminated request status");
+    EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST, "unterminated request error");
+    EXPECT_TRUE(strcmp(authorization.signing_authorization_state, "denied-signature-request") == 0, "unterminated request state");
+    request = fixture_request("report-only");
+    request.signature_request_ready = 2u;
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "invalid request flag status");
+    EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST, "invalid request flag error");
     request = fixture_request("report-only");
     request.signature_request_ready = 0u;
     EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "request ready status");
@@ -244,6 +257,23 @@ static int authorization_fails_closed(void) {
     request = fixture_request("report-only");
     EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "real-signing", &authorization) == LATTICRA_STATUS_OK, "unknown authorization status");
     EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_AUTHORIZATION_REQUEST, "unknown authorization error");
+    request = fixture_request("report-only");
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(
+                    &request,
+                    unterminated_authorization,
+                    &authorization) == LATTICRA_STATUS_OK,
+                "unterminated requested signing authorization status");
+    EXPECT_TRUE(authorization.error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_AUTHORIZATION_REQUEST,
+                "unterminated requested signing authorization error");
+    EXPECT_TRUE(strcmp(authorization.requested_signing_authorization,
+                       "invalid-signing-authorization") == 0,
+                "unterminated requested signing authorization sanitized");
+    EXPECT_TRUE(latticra_seal_signing_authorization_render(&authorization, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested signing authorization render");
+    EXPECT_TRUE(strstr(rendered,
+                       "requested_signing_authorization=invalid-signing-authorization") != 0,
+                "unterminated requested signing authorization rendered sanitized");
     request = fixture_request("report-only");
     request.private_key_handling = 1u;
     EXPECT_TRUE(latticra_seal_signing_authorization_from_request(&request, "metadata-only", &authorization) == LATTICRA_STATUS_OK, "private key status");
@@ -295,6 +325,53 @@ static int authorization_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_signing_authorization_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null authorization render");
     EXPECT_TRUE(latticra_seal_signing_authorization_render(&authorization, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    request = fixture_request("report-only");
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(
+                    &request,
+                    "metadata-only",
+                    &authorization) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(authorization.signing_authorization_profile,
+           'z',
+           sizeof(authorization.signing_authorization_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_authorization_render(&authorization, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated authorization render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated authorization render cleared");
+    EXPECT_TRUE(latticra_seal_signing_authorization_is_metadata_only(&authorization) == 0,
+                "unterminated authorization helper rejected");
+
+    request = fixture_request("report-only");
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(
+                    &request,
+                    "metadata-only",
+                    &authorization) == LATTICRA_STATUS_OK,
+                "authority authorization render source");
+    authorization.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_authorization_render(&authorization, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority authorization render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority authorization render cleared");
+    EXPECT_TRUE(latticra_seal_signing_authorization_is_metadata_only(&authorization) == 0,
+                "authority authorization helper rejected");
+
+    request = fixture_request("report-only");
+    EXPECT_TRUE(latticra_seal_signing_authorization_from_request(
+                    &request,
+                    "metadata-only",
+                    &authorization) == LATTICRA_STATUS_OK,
+                "ready flag authorization render source");
+    authorization.signing_authorization_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signing_authorization_render(&authorization, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag authorization render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag authorization render cleared");
+    EXPECT_TRUE(latticra_seal_signing_authorization_is_metadata_only(&authorization) == 0,
+                "ready flag authorization helper rejected");
     return 0;
 }
 

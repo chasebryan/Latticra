@@ -31,14 +31,33 @@ ml_kem_512_parameters_present=1
 ml_kem_768_parameters_present=1
 ml_kem_1024_parameters_present=1
 evidence_gate_present=1
+kat_manifest_present=1
+kat_runner_contract_present=1
+kat_result_schema_present=1
+kat_result_row_fixture_present=1
 acvp_intake_present=1
+acvp_capability_matrix_present=1
+acvp_fixture_row_plan_present=1
+acvp_fixture_digest_row_template_present=1
+acvp_parser_contract_present=1
+acvp_response_contract_present=1
+acvp_response_fixture_present=1
+acvp_submission_package_contract_present=1
 vector_schema_present=1
 vector_source_intake_present=1
+vector_fixture_lock_present=1
+vector_fixture_digest_ledger_present=1
 negative_test_evidence_present=1
 memory_safety_evidence_present=1
 api_misuse_resistance_present=1
 source_digest_manifest_present=1
+source_digest_receipt_present=1
+source_digest_verification_present=1
+receipt_replay_results_present=1
 code_owner_review_present=1
+review_disposition_ledger_present=1
+reviewer_identity_fixture_present=1
+reviewer_role_mapping_present=1
 ci_promotion_evidence_present=1
 constant_time_review_present=1
 randomness_source_contract_present=1
@@ -52,11 +71,11 @@ clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=20
-components_present=20
-runtime_blockers_total=18
-required_readiness_items_total=328
-required_readiness_items_satisfied=158
+components_total=39
+components_present=39
+runtime_blockers_total=37
+required_readiness_items_total=1003
+required_readiness_items_satisfied=643
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -72,17 +91,36 @@ status=q-seal-readiness-profile-blocked
 
 ## Runtime Blockers
 
-Runtime cryptography remains blocked by eighteen aggregate blockers:
+Runtime cryptography remains blocked by thirty-seven aggregate blockers:
 
 - ML-KEM evidence gate is missing KAT, ACVP, errata, constant-time, side-channel, randomness, zeroization, review, fuzzing, and CI evidence.
+- ML-KEM KAT manifest has no KAT runner implementation, vector bundle digest, license review, storage review, parser review, positive vector verification, negative vector verification, malformed vector verification, provider differential record, CI KAT replay, loaded known-answer vectors, ACVP vector review, or operation implementation.
+- ML-KEM KAT runner contract has no runner implementation, loaded fixture bundle, verified fixture digest, license review, storage review, runner parser review, result-schema review, positive result rows, negative result rows, malformed result rows, implicit-rejection result rows, provider differential rows, CI KAT replay transcript, operation implementation, KAT execution, or ACVP response generation.
+- ML-KEM KAT result schema has no schema review, fixture bundle digest binding, result row fixture, positive result rows, negative result rows, malformed result rows, implicit-rejection rows, provider-differential rows, CI KAT replay transcript binding, runner execution record, or ACVP response-generation evidence.
+- ML-KEM KAT result row fixture has no row-fixture review, fixture-bundle digest binding, positive row fixture, negative row fixture, malformed row fixture, implicit-rejection row fixture, provider-differential row fixture, CI KAT replay transcript binding, runner execution record, or ACVP response-generation evidence.
 - ACVP intake has no reviewed vector source, digest, license review, schema review, loader, response generator, or submission path.
+- ACVP capability matrix has no reviewed registration JSON, capability matrix review, parameter coverage review, function coverage review, response-schema review, or fixture row-generation approval.
+- ACVP fixture row plan has no reviewed registration JSON, capability matrix review, fixture row plan review, digest rows, source digests, storage paths, license review, schema crosscheck, import review, digest-ledger review, or row-plan-to-ledger review.
+- ACVP fixture digest row template has no real digest rows, source URL rows, SHA-256 digest rows, bundle-size rows, storage-path rows, license-review rows, schema-crosscheck rows, reviewer identity rows, review timestamp rows, CI replay transcript rows, tamper evidence rows, or template review.
+- ACVP parser contract has no parser implementation, canonical schema validation, length-bound enforcement, duplicate-field rejection, invalid-type rejection, parameter-set crosscheck, deterministic fixture replay, fuzzing harness, negative parser corpus, response-emission review, memory-safety review, or implementation binding.
+- ACVP response contract has no response generator implementation, response negative tests, schema review, security review, CI replay, accepted parser output, vector execution evidence, response JSON generation, or accepted response output.
+- ACVP response fixture has no fixture review, fixture-bundle digest binding, accepted parser output, vector-execution evidence, keyGen response fixture, encapsulation response fixture, decapsulation response fixture, key-check response fixture, negative response fixture, response schema review, security review, CI replay, accepted response output, or response-generation evidence.
+- ACVP submission-package contract has no package review, request-bundle digest binding, response-bundle digest binding, vector-execution evidence, accepted response output, local replay transcript, ACVP client-boundary review, submission receipt, validation-server acceptance, local package acceptance, or ACVP response-acceptance record.
 - ML-KEM vector schema has no reviewed vector source, digest, license review, loader, JSON parser, response generator, vector execution, or ACVP submission authority.
 - ML-KEM vector source intake has no reviewed bundle URL, digest, size, license review, hash verification, schema crosscheck, errata binding, offline storage path, or import review.
+- ML-KEM vector fixture lock has no fixture source digest, license review, storage path, schema crosscheck, parameter coverage, negative-case coverage, import review, loaded bundle, vector execution, or runtime authority.
+- ML-KEM vector fixture digest ledger has no source URL, source digest, bundle size, license review, storage path, schema crosscheck, parameter-set coverage, operation-family coverage, negative-case coverage, import review, or ledger review.
 - ML-KEM negative-test evidence has no length validation, encoding canonicality, invalid ciphertext, invalid key, decapsulation-failure, implicit-rejection, parser-rejection, fuzzing-corpus, differential negative-test, or implementation-binding evidence.
 - ML-KEM memory-safety evidence has no overflow review, bounds review, sanitizer evidence, static-analysis evidence, memory-safety fuzzing, alias/lifetime review, secret-buffer isolation, zeroization binding, cross-platform word-size review, or implementation binding.
 - ML-KEM API misuse-resistance evidence has no error taxonomy, API state machine, misuse-case matrix, wrong-parameter tests, null/overlap tests, deterministic test-mode guard, secret-output lifetime policy, language-binding policy, documentation examples review, or implementation binding.
 - ML-KEM source digest manifest has no implementation files, source-file digests, test-file digests, build-script digests, reviewed digest receipt, reproducible source snapshot, or CI digest verification.
+- ML-KEM source digest receipt has no source receipts, test receipts, build receipts, receipt verification, reviewed digest receipt, replay check, or CI digest verification.
+- ML-KEM source digest verification has no source receipts, test receipts, build receipts, digest replay execution, tamper fixture execution, CI verification harness, or reviewed verification result.
+- ML-KEM receipt replay results have no source replay results, test replay results, build replay results, tamper replay results, or replay-result review.
 - ML-KEM code-owner review has no reviewer identities, CODEOWNERS record, cryptography review, security review, standards traceability review, side-channel review, source-digest review, closed findings, or approval receipt.
+- ML-KEM review disposition ledger has no reviewer identity disposition, code-owner disposition, cryptography disposition, security disposition, standards traceability disposition, side-channel disposition, source-digest disposition, closed findings, or approval receipt.
+- ML-KEM reviewer identity fixture has no imported reviewer identities, cryptography reviewer identity, security reviewer identity, code-owner identity, independence attestation, identity import review, or approval authority.
+- ML-KEM reviewer role mapping has no imported role records, cryptography role mapping, security role mapping, code-owner role mapping, standards traceability role mapping, side-channel role mapping, source-digest role mapping, separation review, or approval-authority mapping.
 - ML-KEM CI promotion evidence has no KAT/ACVP passing record, constant-time passing record, memory-safety passing record, side-channel passing record, negative-test passing record, provider differential passing record, implementation-binding CI result, promotion workflow record, release-claim gate, or signed artifact receipt.
 - ML-KEM constant-time review has no timing measurement, static-analysis record, assembly review, optimizer review, secret-state binding, negative timing tests, cross-platform review, formal signoff, CI gate, or implementation binding.
 - ML-KEM randomness source has no entropy-source inventory, entropy validation, DRBG selection, security-strength review, seed derivation policy, reseed policy, prediction-resistance policy, health-test policy, failure-mode policy, platform RNG boundary, entropy signoff, or implementation binding.
@@ -100,7 +138,44 @@ latticra-q-seal/include/latticra/q_seal_readiness.h
 latticra-q-seal/src/q_seal_readiness.c
 latticra-q-seal/tests/q_seal_readiness_invariants.c
 latticra-q-seal/evidence/Q_SEAL_READINESS.md
+latticra-q-seal/evidence/ML_KEM_KAT_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_KAT_RUNNER_CONTRACT.md
+latticra-q-seal/evidence/ML_KEM_KAT_RESULT_SCHEMA.md
+latticra-q-seal/evidence/ML_KEM_KAT_RESULT_ROW_FIXTURE.md
+latticra-q-seal/evidence/ML_KEM_ACVP_CAPABILITY_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_ROW_PLAN.md
+latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_DIGEST_ROW_TEMPLATE.md
+latticra-q-seal/evidence/ML_KEM_ACVP_PARSER_CONTRACT.md
+latticra-q-seal/evidence/ML_KEM_ACVP_RESPONSE_CONTRACT.md
+latticra-q-seal/evidence/ML_KEM_ACVP_RESPONSE_FIXTURE.md
+latticra-q-seal/evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_RECEIPT.md
+latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_VERIFICATION.md
+latticra-q-seal/evidence/ML_KEM_RECEIPT_REPLAY_RESULTS.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
+latticra-q-seal/evidence/ML_KEM_REVIEW_DISPOSITION_LEDGER.md
+latticra-q-seal/evidence/ML_KEM_REVIEWER_IDENTITY_FIXTURE.md
+latticra-q-seal/evidence/ML_KEM_REVIEWER_ROLE_MAPPING.md
 latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-kat-manifest.sh
+scripts/test-latticra-q-seal-ml-kem-kat-runner-contract.sh
+scripts/test-latticra-q-seal-ml-kem-kat-result-schema.sh
+scripts/test-latticra-q-seal-ml-kem-kat-result-row-fixture.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-parser-contract.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-response-contract.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
+scripts/test-latticra-q-seal-ml-kem-source-digest-receipt.sh
+scripts/test-latticra-q-seal-ml-kem-source-digest-verification.sh
+scripts/test-latticra-q-seal-ml-kem-receipt-replay-results.sh
+scripts/test-latticra-q-seal-ml-kem-vector-fixture-lock.sh
+scripts/test-latticra-q-seal-ml-kem-vector-fixture-digest-ledger.sh
+scripts/test-latticra-q-seal-ml-kem-review-disposition-ledger.sh
+scripts/test-latticra-q-seal-ml-kem-reviewer-identity-fixture.sh
+scripts/test-latticra-q-seal-ml-kem-reviewer-role-mapping.sh
 scripts/test-latticra-q-seal-readiness.sh
 ```
 

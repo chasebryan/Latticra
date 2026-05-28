@@ -29,7 +29,7 @@ docs/KERNEL_LIFECYCLE_SEED.md
 The default lifecycle target is:
 
 ```text
-runtime-entry-address-space-view-ready
+runtime-entry-recovery-audit-observation-view-ready
 ```
 
 The approved sequence is:
@@ -63,6 +63,24 @@ runtime-entry-admission-ready -> runtime-entry-frame-ready
 runtime-entry-frame-ready -> runtime-entry-register-view-ready
 runtime-entry-register-view-ready -> runtime-entry-stack-view-ready
 runtime-entry-stack-view-ready -> runtime-entry-address-space-view-ready
+runtime-entry-address-space-view-ready -> runtime-entry-privilege-level-view-ready
+runtime-entry-privilege-level-view-ready -> runtime-entry-syscall-gate-view-ready
+runtime-entry-syscall-gate-view-ready -> runtime-entry-syscall-dispatch-view-ready
+runtime-entry-syscall-dispatch-view-ready -> runtime-entry-syscall-return-view-ready
+runtime-entry-syscall-return-view-ready -> runtime-entry-syscall-exit-view-ready
+runtime-entry-syscall-exit-view-ready -> runtime-entry-user-mode-resume-view-ready
+runtime-entry-user-mode-resume-view-ready -> runtime-entry-post-resume-observation-view-ready
+runtime-entry-post-resume-observation-view-ready -> runtime-entry-scheduler-return-observation-view-ready
+runtime-entry-scheduler-return-observation-view-ready -> runtime-entry-process-return-observation-view-ready
+runtime-entry-process-return-observation-view-ready -> runtime-entry-idle-return-observation-view-ready
+runtime-entry-idle-return-observation-view-ready -> runtime-entry-quiescent-return-observation-view-ready
+runtime-entry-quiescent-return-observation-view-ready -> runtime-entry-persistence-boundary-observation-view-ready
+runtime-entry-persistence-boundary-observation-view-ready -> runtime-entry-recovery-boundary-observation-view-ready
+runtime-entry-recovery-boundary-observation-view-ready -> runtime-entry-recovery-plan-observation-view-ready
+runtime-entry-recovery-plan-observation-view-ready -> runtime-entry-recovery-disposition-observation-view-ready
+runtime-entry-recovery-disposition-observation-view-ready -> runtime-entry-recovery-outcome-observation-view-ready
+runtime-entry-recovery-outcome-observation-view-ready -> runtime-entry-recovery-closeout-observation-view-ready
+runtime-entry-recovery-closeout-observation-view-ready -> runtime-entry-recovery-audit-observation-view-ready
 ```
 
 ## Controlled effect boundary
@@ -72,7 +90,7 @@ This slice allows internal state-machine mutation only.
 The result may report:
 
 ```text
-state_change_count=28
+state_change_count=46
 lifecycle_complete=1
 ```
 
@@ -106,12 +124,12 @@ The guard verifies:
 LATTICRA KERNEL LIFECYCLE REPORT
 lifecycle_status=lifecycle-complete
 policy_status=gate-allowed
-final_state=runtime-entry-address-space-view-ready
-step_count=28
-state_change_count=28
+final_state=runtime-entry-recovery-audit-observation-view-ready
+step_count=46
+state_change_count=46
 lifecycle_complete=1
 external_effect_performed=0
-machine_log_count=28
+machine_log_count=46
 evidence_level=10
 ```
 
@@ -137,7 +155,7 @@ The guards verify:
 
 ```text
 default request is denied
-allowed lifecycle reaches runtime-entry-address-space-view-ready
+allowed lifecycle reaches runtime-entry-recovery-audit-observation-view-ready
 intermediate target stops correctly
 step limit is respected
 report includes lifecycle completion and transition log
@@ -163,6 +181,49 @@ address-space switching
 page-table writes
 TLB flushes
 MMU updates
+privilege transitions
+syscall gates
+syscall dispatch views
+syscall return views
+syscall exit views
+user-mode resume views
+post-resume observation views
+scheduler-return observation views
+scheduler returns
+process-return observation views
+process returns
+process state reads
+idle-return observation views
+idle returns
+idle state reads
+quiescent-return observation views
+quiescent-return observations
+quiescent returns
+quiescent state reads
+persistence-boundary observation views
+persistence-boundary observations
+persistence boundaries
+persistence commits
+recovery-boundary observation views
+recovery-boundary observations
+recovery boundaries
+recovery-plan observation views
+recovery-plan observations
+recovery plans
+recovery-disposition observation views
+recovery-disposition observations
+recovery dispositions
+recovery-outcome observation views
+recovery-outcome observations
+recovery outcomes
+recovery authority
+instruction pointer reads
+stack pointer reads
+CPU mode reads
+user-mode resume
+user instruction resume
+resume frame commits
+interrupt returns
 time accounting
 process wakeups
 timer arming
@@ -183,4 +244,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may add lifecycle rollback, lifecycle-to-subsystem summary reporting, or state persistence planning before any external effects are introduced.
+A later slice may integrate no-effect runtime entry recovery-closeout observation metadata into lifecycle and coupling reports, or add state recovery closeout planning before any external effects are introduced.

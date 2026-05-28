@@ -4,7 +4,7 @@ Status: clean-room implementation-binding manifest
 Date: 2026-05-27
 Scope: module-to-evidence bindings before ML-KEM primitive code is created or promoted.
 
-This manifest binds the future clean-room ML-KEM module plan to the evidence gates that must precede implementation. It records intended source and test unit counts, standards anchors, and gate bindings, but it does not create primitive source files, implement polynomial arithmetic, implement NTT, sample secrets, encode keys, generate keys, encapsulate, decapsulate, execute tests over vectors, claim production cryptography, claim FIPS validation, use the network, mutate host files, or grant runtime authority.
+This manifest binds the future clean-room ML-KEM module plan to the evidence gates that must precede implementation. It binds the first-class KAT manifest before ACVP intake, includes the ACVP fixture digest row template between the row plan and digest ledger, and binds the ACVP parser, response, response-fixture, and submission-package contracts before any vector execution, response-generation, or ACVP package-acceptance path can exist. It records intended source and test unit counts, standards anchors, and gate bindings, but it does not create primitive source files, implement polynomial arithmetic, implement NTT, sample secrets, encode keys, generate keys, encapsulate, decapsulate, execute tests over vectors, generate ACVP response JSON, submit ACVP material, claim production cryptography, claim FIPS validation, use the network, mutate host files, or grant runtime authority.
 
 ## Current Fields
 
@@ -25,8 +25,17 @@ fips_203_algorithm_bound=1
 sp_800_227_kem_usage_bound=1
 kat_manifest_bound=1
 acvp_intake_bound=1
+acvp_capability_matrix_bound=1
+acvp_fixture_row_plan_bound=1
+acvp_fixture_digest_row_template_bound=1
+acvp_parser_contract_bound=1
+acvp_response_contract_bound=1
+acvp_response_fixture_bound=1
+acvp_submission_package_contract_bound=1
 vector_schema_bound=1
 vector_source_bound=1
+vector_fixture_lock_bound=1
+vector_fixture_digest_ledger_bound=1
 negative_test_evidence_bound=1
 memory_safety_evidence_bound=1
 api_misuse_resistance_bound=1
@@ -50,8 +59,8 @@ operation_execution_allowed=0
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0
-required_binding_items_total=26
-required_binding_items_satisfied=21
+required_binding_items_total=35
+required_binding_items_satisfied=30
 status=ml-kem-implementation-binding-blocked
 ```
 
@@ -62,11 +71,11 @@ polynomial_arithmetic -> constant_time_review, memory_safety_evidence, side_chan
 ntt -> constant_time_review, side_channel_review, provider_differential
 sampling -> randomness_source, zeroization_evidence, secret_state_contract
 compression -> vector_schema, negative_test_evidence, api_misuse_resistance
-encoding -> vector_schema, vector_source, negative_test_evidence
-hash_xof -> FIPS203, SP800-227, provider_differential, source_digest_manifest
-keygen -> KAT_manifest, ACVP_intake, randomness_source, source_digest_manifest, code_owner_review, CI_promotion
-encapsulation -> KAT_manifest, ACVP_intake, vector_source, source_digest_manifest, code_owner_review, CI_promotion
-decapsulation -> KAT_manifest, ACVP_intake, negative_test_evidence, source_digest_manifest, code_owner_review, CI_promotion
+encoding -> vector_schema, vector_source, vector_fixture_lock, vector_fixture_digest_ledger, negative_test_evidence
+hash_xof -> FIPS203, SP800-227, provider_differential, source_digest_manifest, source_digest_receipt, source_digest_verification, receipt_replay_results
+keygen -> KAT_manifest, ACVP_intake, ACVP_capability_matrix, ACVP_fixture_row_plan, ACVP_fixture_digest_row_template, ACVP_parser_contract, ACVP_response_contract, ACVP_response_fixture, ACVP_submission_package_contract, vector_fixture_lock, vector_fixture_digest_ledger, randomness_source, source_digest_manifest, source_digest_receipt, source_digest_verification, receipt_replay_results, code_owner_review, review_disposition_ledger, reviewer_identity_fixture, reviewer_role_mapping, CI_promotion
+encapsulation -> KAT_manifest, ACVP_intake, ACVP_capability_matrix, ACVP_fixture_row_plan, ACVP_fixture_digest_row_template, ACVP_parser_contract, ACVP_response_contract, ACVP_response_fixture, ACVP_submission_package_contract, vector_source, vector_fixture_lock, vector_fixture_digest_ledger, source_digest_manifest, source_digest_receipt, source_digest_verification, receipt_replay_results, code_owner_review, review_disposition_ledger, reviewer_identity_fixture, reviewer_role_mapping, CI_promotion
+decapsulation -> KAT_manifest, ACVP_intake, ACVP_capability_matrix, ACVP_fixture_row_plan, ACVP_fixture_digest_row_template, ACVP_parser_contract, ACVP_response_contract, ACVP_response_fixture, ACVP_submission_package_contract, vector_fixture_lock, vector_fixture_digest_ledger, negative_test_evidence, source_digest_manifest, source_digest_receipt, source_digest_verification, receipt_replay_results, code_owner_review, review_disposition_ledger, reviewer_identity_fixture, reviewer_role_mapping, CI_promotion
 ```
 
 ## Promotion Blockers

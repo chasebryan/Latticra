@@ -218,15 +218,105 @@ static int sequential_steps_advance_ladder(void) {
     EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
             &result) == LATTICRA_STATUS_OK,
         "runtime entry stack view ready to runtime entry address space view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry address space view ready to runtime entry privilege level view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry privilege level view ready to runtime entry syscall gate view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry syscall gate view ready to runtime entry syscall dispatch view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry syscall dispatch view ready to runtime entry syscall return view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry syscall return view ready to runtime entry syscall exit view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry syscall exit view ready to runtime entry user mode resume view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry user mode resume view ready to runtime entry post resume observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry post resume observation view ready to runtime entry scheduler return observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry scheduler return observation view ready to runtime entry process return observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry process return observation view ready to runtime entry idle return observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry idle return observation view ready to runtime entry quiescent return observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry quiescent return observation view ready to runtime entry persistence boundary observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry persistence boundary observation view ready to runtime entry recovery boundary observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry recovery boundary observation view ready to runtime entry recovery plan observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry recovery plan observation view ready to runtime entry recovery disposition observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry recovery disposition observation view ready to runtime entry recovery outcome observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry recovery outcome observation view ready to runtime entry recovery closeout observation view ready");
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY;
+    EXPECT_TRUE(latticra_kernel_state_machine_step(&machine, &request,
+            &result) == LATTICRA_STATUS_OK,
+        "runtime entry recovery closeout observation view ready to runtime entry recovery audit observation view ready");
 
     EXPECT_TRUE(machine.current_state ==
-            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
-        "machine reaches runtime entry address space view ready");
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "machine reaches runtime entry recovery audit observation view ready");
     EXPECT_TRUE(strcmp(machine.machine_status,
-            "runtime-entry-address-space-view-ready") == 0,
-        "machine status runtime entry address space view ready");
-    EXPECT_TRUE(machine.log_count == 28u,
-        "twenty eight transitions logged");
+            "runtime-entry-recovery-audit-observation-view-ready") == 0,
+        "machine status runtime entry recovery audit observation view ready");
+    EXPECT_TRUE(machine.log_count == 46u,
+        "forty six transitions logged");
     EXPECT_TRUE(machine.external_effect_performed == 0,
         "sequence external effects absent");
     EXPECT_TRUE(machine.network_allowed == 0,
@@ -286,6 +376,60 @@ static int sequential_steps_advance_ladder(void) {
     EXPECT_TRUE(machine.log[27].to_state ==
             LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
         "log runtime entry address space view ready");
+    EXPECT_TRUE(machine.log[28].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY,
+        "log runtime entry privilege level view ready");
+    EXPECT_TRUE(machine.log[29].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY,
+        "log runtime entry syscall gate view ready");
+    EXPECT_TRUE(machine.log[30].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY,
+        "log runtime entry syscall dispatch view ready");
+    EXPECT_TRUE(machine.log[31].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY,
+        "log runtime entry syscall return view ready");
+    EXPECT_TRUE(machine.log[32].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY,
+        "log runtime entry syscall exit view ready");
+    EXPECT_TRUE(machine.log[33].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY,
+        "log runtime entry user mode resume view ready");
+    EXPECT_TRUE(machine.log[34].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY,
+        "log runtime entry post resume observation view ready");
+    EXPECT_TRUE(machine.log[35].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY,
+        "log runtime entry scheduler return observation view ready");
+    EXPECT_TRUE(machine.log[36].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY,
+        "log runtime entry process return observation view ready");
+    EXPECT_TRUE(machine.log[37].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY,
+        "log runtime entry idle return observation view ready");
+    EXPECT_TRUE(machine.log[38].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY,
+        "log runtime entry quiescent return observation view ready");
+    EXPECT_TRUE(machine.log[39].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log runtime entry persistence boundary observation view ready");
+    EXPECT_TRUE(machine.log[40].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery boundary observation view ready");
+    EXPECT_TRUE(machine.log[41].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery plan observation view ready");
+    EXPECT_TRUE(machine.log[42].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery disposition observation view ready");
+    EXPECT_TRUE(machine.log[43].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery outcome observation view ready");
+    EXPECT_TRUE(machine.log[44].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery closeout observation view ready");
+    EXPECT_TRUE(machine.log[45].to_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY,
+        "log runtime entry recovery audit observation view ready");
     return 0;
 }
 

@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX 64u
-#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_REPORT_MAX 24576u
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_REPORT_MAX 32768u
 #define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_ENTRY_MAX \
     LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_ENTRY_MAX
 
@@ -63,12 +63,48 @@ typedef struct {
     int nucleus_register_save_allowed;
     int nucleus_register_restore_allowed;
     int nucleus_host_effect_allowed;
+    int runtime_entry_recovery_audit_observation_view_allowed;
+    int runtime_entry_recovery_closeout_observation_view_allowed;
+    int runtime_entry_recovery_outcome_observation_view_allowed;
+    int runtime_entry_recovery_disposition_observation_view_allowed;
+    int runtime_entry_recovery_plan_observation_view_allowed;
+    int runtime_entry_recovery_boundary_observation_view_allowed;
+    int runtime_entry_persistence_boundary_observation_view_allowed;
+    int runtime_entry_quiescent_return_observation_view_allowed;
+    int runtime_entry_idle_return_observation_view_allowed;
+    int runtime_entry_process_return_observation_view_allowed;
+    int runtime_entry_scheduler_return_observation_view_allowed;
+    int runtime_entry_post_resume_observation_view_allowed;
+    int runtime_entry_user_mode_resume_view_allowed;
+    int runtime_entry_syscall_exit_view_allowed;
+    int runtime_entry_syscall_return_view_allowed;
+    int runtime_entry_syscall_dispatch_view_allowed;
+    int runtime_entry_syscall_gate_view_allowed;
+    int runtime_entry_privilege_level_view_allowed;
     int runtime_entry_address_space_view_allowed;
     int runtime_entry_stack_view_allowed;
     int runtime_entry_register_view_allowed;
     int runtime_entry_frame_allowed;
     int runtime_entry_admission_allowed;
     int runtime_entry_allowed;
+    int recovery_boundary_observation_allowed;
+    int recovery_boundary_allowed;
+    int recovery_plan_allowed;
+    int recovery_plan_observation_allowed;
+    int recovery_disposition_allowed;
+    int recovery_disposition_observation_allowed;
+    int recovery_outcome_allowed;
+    int recovery_outcome_observation_allowed;
+    int recovery_audit_allowed;
+    int recovery_audit_observation_allowed;
+    int recovery_closeout_allowed;
+    int recovery_closeout_observation_allowed;
+    int persistence_boundary_observation_allowed;
+    int persistence_boundary_allowed;
+    int persistence_commit_allowed;
+    int quiescent_return_observation_allowed;
+    int quiescent_return_allowed;
+    int quiescent_state_read_allowed;
     int scheduler_execution_allowed;
     int scheduler_selection_allowed;
     int scheduler_dispatch_allowed;
@@ -116,6 +152,8 @@ typedef struct {
     int quota_update_allowed;
     int scheduler_credit_update_allowed;
     int process_wake_allowed;
+    int persistence_allowed;
+    int recovery_authority_allowed;
     int dma_allowed;
     int hardware_effect_allowed;
     int no_external_effect_chain;

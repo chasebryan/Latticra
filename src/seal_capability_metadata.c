@@ -10,19 +10,81 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
+static int text_field_empty(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len == 0u;
+}
+
+static int error_valid(latticra_seal_capability_metadata_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_CAPABILITY_METADATA_OK:
+    case LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_INPUT:
+    case LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_CAPABILITY_NAME:
+    case LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_FIXTURE:
+    case LATTICRA_SEAL_CAPABILITY_METADATA_BUFFER_TOO_SMALL:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
 static int present_capability_name(const char *capability_name) {
-    return capability_name != NULL && strlen(capability_name) > 0u;
+    return capability_name != NULL && capability_name[0] != '\0';
 }
 
 static int valid_capability_name(const char *capability_name) {
-    size_t len;
+    int terminated = 0;
+    size_t len = bounded_string_len(capability_name,
+                                    LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX,
+                                    &terminated);
 
-    if (capability_name == NULL) {
-        return 0;
-    }
-
-    len = strlen(capability_name);
-    return len > 0u && len < LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX;
+    return terminated == 1 && len > 0u &&
+           len < LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX;
 }
 
 const char *latticra_seal_capability_metadata_error_label(
@@ -92,7 +154,9 @@ static const latticra_seal_capability_metadata_entry_t *fixture_find(
     }
 
     for (i = 0u; i < fixture->capability_fixture_entry_count; ++i) {
-        if (strcmp(fixture->entries[i].capability_name, capability_name) == 0) {
+        if (bounded_string_is(fixture->entries[i].capability_name,
+                              LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX,
+                              capability_name)) {
             return &fixture->entries[i];
         }
     }
@@ -170,9 +234,8 @@ latticra_status_t latticra_seal_capability_metadata_result_unknown(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    result_init(out, capability_name);
-
     if (!valid_capability_name(capability_name)) {
+        result_init(out, "invalid-capability");
         out->error = LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_CAPABILITY_NAME;
         out->invalid_capability_denied = 1u;
         copy_literal(out->blocked_reason, sizeof(out->blocked_reason), "invalid-capability-denied");
@@ -180,6 +243,7 @@ latticra_status_t latticra_seal_capability_metadata_result_unknown(
         return LATTICRA_STATUS_OK;
     }
 
+    result_init(out, capability_name);
     out->error = LATTICRA_SEAL_CAPABILITY_METADATA_OK;
     return LATTICRA_STATUS_OK;
 }
@@ -194,9 +258,8 @@ latticra_status_t latticra_seal_capability_metadata_result_candidate(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    result_init(out, capability_name);
-
     if (!valid_capability_name(capability_name)) {
+        result_init(out, "invalid-capability");
         out->error = LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_CAPABILITY_NAME;
         out->invalid_capability_denied = 1u;
         copy_literal(out->blocked_reason, sizeof(out->blocked_reason), "invalid-capability-denied");
@@ -204,6 +267,7 @@ latticra_status_t latticra_seal_capability_metadata_result_candidate(
         return LATTICRA_STATUS_OK;
     }
 
+    result_init(out, capability_name);
     fixture = latticra_seal_capability_metadata_fixture();
     entry = fixture_find(&fixture, capability_name);
     if (entry == NULL) {
@@ -266,6 +330,8 @@ int latticra_seal_capability_metadata_is_report_only(
     }
 
     return result->capability_lookup_performed == 1u &&
+           result->capability_fixture_entry_count <=
+               LATTICRA_SEAL_CAPABILITY_METADATA_ENTRY_MAX &&
            result->capability_requires_guarded_allowlist == 1u &&
            result->capability_requires_policy_decision == 1u &&
            result->capability_requires_runtime_gate == 1u &&
@@ -281,7 +347,29 @@ int latticra_seal_capability_metadata_is_report_only(
            result->would_deny == 1u &&
            result->would_require_operator_review == 1u &&
            result->report_only == 1u &&
-           strcmp(result->mode, "report-only") == 0;
+           error_valid(result->error) &&
+           bounded_string_is(result->capability_metadata_profile,
+                             LATTICRA_SEAL_CAPABILITY_METADATA_PROFILE_MAX,
+                             "latticra-seal-capability-metadata/0.1") &&
+           ((result->capability_name_present == 1u &&
+             text_field_valid(result->capability_name,
+                              LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX)) ||
+            (result->capability_name_present == 0u &&
+             text_field_empty(result->capability_name,
+                              LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX))) &&
+           text_field_valid(result->capability_scope,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_SCOPE_MAX) &&
+           text_field_valid(result->capability_effect_class,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_EFFECT_MAX) &&
+           text_field_valid(result->capability_fixture_source,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_SOURCE_MAX) &&
+           text_field_valid(result->blocked_reason,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_REASON_MAX) &&
+           bounded_string_is(result->mode,
+                             LATTICRA_SEAL_CAPABILITY_METADATA_STATUS_MAX,
+                             "report-only") &&
+           text_field_valid(result->status,
+                            LATTICRA_SEAL_CAPABILITY_METADATA_STATUS_MAX);
 }
 
 latticra_status_t latticra_seal_capability_metadata_report(
@@ -291,6 +379,13 @@ latticra_status_t latticra_seal_capability_metadata_report(
     int written;
 
     if (result == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_capability_metadata_is_report_only(result)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

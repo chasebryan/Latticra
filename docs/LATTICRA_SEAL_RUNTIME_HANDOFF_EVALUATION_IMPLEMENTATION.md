@@ -114,17 +114,23 @@ The implementation fails closed:
 null output -> LATTICRA_STATUS_NULL_ARGUMENT
 null verified effect decision -> invalid-input
 invalid verified effect decision -> invalid-decision
+unterminated verified effect decision strings -> invalid-decision
+invalid verified effect decision boolean flags -> invalid-decision
 failed crypto graduation gate evidence -> denied-crypto-graduation-gate
 authority-bearing crypto graduation evidence -> denied-crypto-graduation-gate
 effect_allowed=0 -> denied-effect
 decision_state not allowed-report-only or allowed-evaluate-only -> denied-decision
 missing requested handoff -> missing-requested-handoff
 unknown requested handoff -> denied-unknown-handoff
+unterminated requested handoff -> denied-unknown-handoff without copying caller bytes
 runtime authority already granted -> denied-runtime-authority
 effect already performed -> denied-host-effect
 host read already performed -> denied-host-effect
 host write already performed -> denied-host-effect
 network already performed -> denied-network-effect
+tampered evaluation strings fail closed before render
+tampered evaluation authority/effect flags fail closed before render
+tampered evaluation eligible/error state fails closed before render
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

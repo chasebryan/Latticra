@@ -328,6 +328,7 @@ static int invalid_model_fields_fail_closed(void) {
 static int capacity_and_api_fail_closed(void) {
     latticra_seal_panel_dashboard_view_model_t model;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_REPORT_MAX];
     unsigned i;
 
     EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_init(0) ==
@@ -393,6 +394,49 @@ static int capacity_and_api_fail_closed(void) {
                     LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_CAPACITY_EXCEEDED,
                 "row overflow");
 
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_init(&model) == LATTICRA_STATUS_OK,
+                "tampered source count init");
+    model.view_model_source_count = LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_MAX + 1u;
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_add_required_rows(&model) ==
+                    LATTICRA_STATUS_OK,
+                "tampered source count rows");
+    EXPECT_TRUE(model.last_error ==
+                    LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SOURCE_CAPACITY_EXCEEDED,
+                "tampered source count error");
+
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_init(&model) == LATTICRA_STATUS_OK,
+                "tampered row count init");
+    model.view_model_entry_count = ~0u;
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_add_required_rows(&model) ==
+                    LATTICRA_STATUS_OK,
+                "tampered row count rows");
+    EXPECT_TRUE(model.last_error ==
+                    LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_ROW_CAPACITY_EXCEEDED,
+                "tampered row count error");
+
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_init(&model) == LATTICRA_STATUS_OK,
+                "unterminated render init");
+    memset(model.seal_panel_dashboard_view_model_profile,
+           'x',
+           sizeof(model.seal_panel_dashboard_view_model_profile));
+    memset(rendered, 'z', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_render(
+                    &model,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated render cleared");
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_validate(&model) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated validate");
+    EXPECT_TRUE(model.last_error == LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_INVALID_PROFILE,
+                "unterminated profile error");
+
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_render(&model, tiny, sizeof(tiny)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "invalid small render");
+    EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_init(&model) == LATTICRA_STATUS_OK,
+                "small render init");
     EXPECT_TRUE(latticra_seal_panel_dashboard_view_model_render(&model, tiny, sizeof(tiny)) ==
                     LATTICRA_STATUS_BUFFER_TOO_SMALL,
                 "small render");

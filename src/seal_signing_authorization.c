@@ -10,12 +10,233 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_terminated(const char *value, size_t max_len) {
+    int terminated = 0;
+
+    (void)bounded_string_len(value, max_len, &terminated);
+    return terminated == 1;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
 static int is_allowed_signature(const char *signature) {
-    return strcmp(signature, "Ed25519-development") == 0;
+    return bounded_string_is(signature,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX,
+                             "Ed25519-development");
 }
 
 static int is_allowed_authorization(const char *authorization) {
-    return strcmp(authorization, "metadata-only") == 0;
+    return bounded_string_is(authorization,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX,
+                             "metadata-only");
+}
+
+static int boolean_flag_valid(unsigned value) {
+    return value == 0u || value == 1u;
+}
+
+static int authorization_error_valid(latticra_seal_signing_authorization_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_OK:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_INPUT:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_SIGNATURE_REQUEST:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_SIGNATURE_ALGORITHM:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_AUTHORIZATION_REQUEST:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_PRIVATE_KEY:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int request_error_valid(latticra_seal_signature_request_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_OK:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_INPUT:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_ENVELOPE:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_ENVELOPE:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_MISSING_REQUESTED_SIGNATURE:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_UNKNOWN_SIGNATURE:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int request_flags_valid(const latticra_seal_signature_request_t *request) {
+    if (request == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(request->crypto_graduation_gate_present) &&
+           boolean_flag_valid(request->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(request->standard_expectations_met) &&
+           boolean_flag_valid(request->local_verify_graduated) &&
+           boolean_flag_valid(request->receipt_promotion_graduated) &&
+           boolean_flag_valid(request->authority_promotion_allowed) &&
+           boolean_flag_valid(request->envelope_ready) &&
+           boolean_flag_valid(request->signature_request_ready) &&
+           boolean_flag_valid(request->signature_performed) &&
+           boolean_flag_valid(request->verification_performed) &&
+           boolean_flag_valid(request->private_key_handling) &&
+           boolean_flag_valid(request->handoff_performed) &&
+           boolean_flag_valid(request->effect_performed) &&
+           boolean_flag_valid(request->runtime_authority_granted) &&
+           boolean_flag_valid(request->host_read_performed) &&
+           boolean_flag_valid(request->host_write_performed) &&
+           boolean_flag_valid(request->network_performed);
+}
+
+static int request_strings_valid(const latticra_seal_signature_request_t *request) {
+    if (request == NULL) {
+        return 0;
+    }
+
+    return bounded_string_is(request->signature_request_profile,
+                             LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX,
+                             "latticra-seal-signature-request/0.1") &&
+           text_field_terminated(request->envelope_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->report_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->handoff_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->decision_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->gate_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->receipt_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->verify_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->message_digest_algorithm,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_ALGORITHM_MAX) &&
+           text_field_terminated(request->message_digest_hex,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_DIGEST_MAX) &&
+           text_field_terminated(request->public_key_identity_label,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->crypto_graduation_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_terminated(request->assurance_baseline_profile,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_PROFILE_MAX) &&
+           text_field_valid(request->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX) &&
+           text_field_terminated(request->requested_capability,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_effect,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_handoff,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_report,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_envelope,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_signature,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_terminated(request->requested_scope,
+                                 LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) &&
+           text_field_valid(request->envelope_state,
+                            LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX) &&
+           text_field_valid(request->signature_request_state,
+                            LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX) &&
+           text_field_valid(request->status,
+                            LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX) &&
+           request_error_valid(request->error) &&
+           request_flags_valid(request);
+}
+
+static int requested_authorization_present(
+    const char *requested_signing_authorization) {
+    return requested_signing_authorization != NULL &&
+           requested_signing_authorization[0] != '\0';
+}
+
+static int authorization_ready_state_valid(
+    const latticra_seal_signing_authorization_t *authorization) {
+    if (authorization == NULL ||
+        !boolean_flag_valid(authorization->signing_authorization_ready)) {
+        return 0;
+    }
+    if (authorization->signing_authorization_ready == 0u) {
+        return authorization->error != LATTICRA_SEAL_SIGNING_AUTHORIZATION_OK &&
+               text_field_valid(authorization->signing_authorization_state,
+                                LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX) &&
+               text_field_valid(authorization->status,
+                                LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX);
+    }
+
+    return authorization->error == LATTICRA_SEAL_SIGNING_AUTHORIZATION_OK &&
+           bounded_string_is(authorization->requested_signing_authorization,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX,
+                             "metadata-only") &&
+           bounded_string_is(authorization->signing_authorization_state,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX,
+                             "authorized-metadata-only") &&
+           bounded_string_is(authorization->status,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX,
+                             "signing-authorization-metadata");
+}
+
+static const char *safe_requested_authorization_for_copy(
+    const char *requested_signing_authorization) {
+    if (!requested_authorization_present(requested_signing_authorization)) {
+        return NULL;
+    }
+    if (!text_field_valid(requested_signing_authorization,
+                          LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX)) {
+        return "invalid-signing-authorization";
+    }
+    return requested_signing_authorization;
 }
 
 const char *latticra_seal_signing_authorization_error_label(
@@ -108,7 +329,9 @@ static void copy_request_metadata(
     copy_literal(out->requested_report, sizeof(out->requested_report), request->requested_report);
     copy_literal(out->requested_envelope, sizeof(out->requested_envelope), request->requested_envelope);
     copy_literal(out->requested_signature, sizeof(out->requested_signature), request->requested_signature);
-    copy_literal(out->requested_signing_authorization, sizeof(out->requested_signing_authorization), requested_signing_authorization);
+    copy_literal(out->requested_signing_authorization,
+                 sizeof(out->requested_signing_authorization),
+                 safe_requested_authorization_for_copy(requested_signing_authorization));
     copy_literal(out->requested_scope, sizeof(out->requested_scope), request->requested_scope);
     out->crypto_graduation_gate_present = request->crypto_graduation_gate_present;
     out->crypto_graduation_gate_passed = request->crypto_graduation_gate_passed;
@@ -143,6 +366,15 @@ latticra_status_t latticra_seal_signing_authorization_from_request(
         return LATTICRA_STATUS_OK;
     }
 
+    if (!request_strings_valid(request)) {
+        out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_INVALID_SIGNATURE_REQUEST;
+        copy_literal(out->signing_authorization_state,
+                     sizeof(out->signing_authorization_state),
+                     "denied-signature-request");
+        copy_literal(out->status, sizeof(out->status), "invalid-signature-request");
+        return LATTICRA_STATUS_OK;
+    }
+
     copy_request_metadata(request, requested_signing_authorization, out);
 
     if (request->error != LATTICRA_SEAL_SIGNATURE_REQUEST_OK) {
@@ -158,7 +390,9 @@ latticra_status_t latticra_seal_signing_authorization_from_request(
          request->local_verify_graduated != 1u ||
          request->receipt_promotion_graduated != 1u ||
          request->authority_promotion_allowed != 0u ||
-         strcmp(request->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+         !bounded_string_is(request->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX,
+                            "graduated-authority-neutral"))) {
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_CRYPTO_GRADUATION_GATE;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-crypto-graduation-gate");
         copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
@@ -166,7 +400,9 @@ latticra_status_t latticra_seal_signing_authorization_from_request(
     }
 
     if (request->signature_request_ready != 1u ||
-        strcmp(request->signature_request_state, "requested-metadata-only") != 0) {
+        !bounded_string_is(request->signature_request_state,
+                           LATTICRA_SEAL_SIGNATURE_REQUEST_STATE_MAX,
+                           "requested-metadata-only")) {
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_SIGNATURE_REQUEST;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-signature-request");
         copy_literal(out->status, sizeof(out->status), "denied-signature-request");
@@ -206,21 +442,26 @@ latticra_status_t latticra_seal_signing_authorization_from_request(
         return LATTICRA_STATUS_OK;
     }
 
-    if (request->requested_signature[0] == '\0' || !is_allowed_signature(request->requested_signature)) {
+    if (request->requested_signature[0] == '\0' ||
+        !text_field_valid(request->requested_signature,
+                          LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX) ||
+        !is_allowed_signature(request->requested_signature)) {
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_SIGNATURE_ALGORITHM;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-signature-algorithm");
         copy_literal(out->status, sizeof(out->status), "denied-signature-algorithm");
         return LATTICRA_STATUS_OK;
     }
 
-    if (requested_signing_authorization == NULL || requested_signing_authorization[0] == '\0') {
+    if (!requested_authorization_present(requested_signing_authorization)) {
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_AUTHORIZATION_REQUEST;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-authorization-request");
         copy_literal(out->status, sizeof(out->status), "missing-requested-signing-authorization");
         return LATTICRA_STATUS_OK;
     }
 
-    if (!is_allowed_authorization(requested_signing_authorization)) {
+    if (!text_field_valid(requested_signing_authorization,
+                          LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) ||
+        !is_allowed_authorization(requested_signing_authorization)) {
         out->error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_AUTHORIZATION_REQUEST;
         copy_literal(out->signing_authorization_state, sizeof(out->signing_authorization_state), "denied-authorization-request");
         copy_literal(out->status, sizeof(out->status), "denied-authorization-request");
@@ -263,7 +504,72 @@ int latticra_seal_signing_authorization_is_metadata_only(
            authorization->runtime_authority_granted == 0u &&
            authorization->host_read_performed == 0u &&
            authorization->host_write_performed == 0u &&
-           authorization->network_performed == 0u;
+           authorization->network_performed == 0u &&
+           authorization_error_valid(authorization->error) &&
+           boolean_flag_valid(authorization->crypto_graduation_gate_present) &&
+           boolean_flag_valid(authorization->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(authorization->standard_expectations_met) &&
+           boolean_flag_valid(authorization->local_verify_graduated) &&
+           boolean_flag_valid(authorization->receipt_promotion_graduated) &&
+           boolean_flag_valid(authorization->authority_promotion_allowed) &&
+           boolean_flag_valid(authorization->signature_request_ready) &&
+           authorization_ready_state_valid(authorization) &&
+           bounded_string_is(authorization->signing_authorization_profile,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX,
+                             "latticra-seal-signing-authorization/0.1") &&
+           text_field_terminated(authorization->signature_request_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->envelope_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->report_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->handoff_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->decision_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->gate_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->receipt_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->verify_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->message_digest_algorithm,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_ALGORITHM_MAX) &&
+           text_field_terminated(authorization->message_digest_hex,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_DIGEST_MAX) &&
+           text_field_terminated(authorization->public_key_identity_label,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->crypto_graduation_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_terminated(authorization->assurance_baseline_profile,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_PROFILE_MAX) &&
+           text_field_valid(authorization->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX) &&
+           text_field_terminated(authorization->requested_capability,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_effect,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_handoff,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_report,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_envelope,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_signature,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_signing_authorization,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_terminated(authorization->requested_scope,
+                                 LATTICRA_SEAL_SIGNING_AUTHORIZATION_LABEL_MAX) &&
+           text_field_valid(authorization->signature_request_state,
+                            LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX) &&
+           text_field_valid(authorization->signing_authorization_state,
+                            LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX) &&
+           bounded_string_is(authorization->mode,
+                             LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX,
+                             "metadata-only") &&
+           text_field_valid(authorization->status,
+                            LATTICRA_SEAL_SIGNING_AUTHORIZATION_STATE_MAX);
 }
 
 latticra_status_t latticra_seal_signing_authorization_render(
@@ -273,6 +579,13 @@ latticra_status_t latticra_seal_signing_authorization_render(
     int written;
 
     if (authorization == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_signing_authorization_is_metadata_only(authorization)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

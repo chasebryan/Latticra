@@ -33,19 +33,43 @@ require_file latticra-q-seal/include/latticra/q_seal_readiness.h
 require_file latticra-q-seal/src/q_seal_readiness.c
 require_file latticra-q-seal/tests/q_seal_readiness_invariants.c
 require_file latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_file latticra-q-seal/evidence/ML_KEM_KAT_RUNNER_CONTRACT.md
+require_file latticra-q-seal/evidence/ML_KEM_KAT_RESULT_SCHEMA.md
+require_file latticra-q-seal/evidence/ML_KEM_KAT_RESULT_ROW_FIXTURE.md
+require_file latticra-q-seal/evidence/ML_KEM_ACVP_RESPONSE_FIXTURE.md
+require_file latticra-q-seal/evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
 require_file latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_file latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
 
 require_contains 'latticra_q_seal_readiness_prepare' latticra-q-seal/include/latticra/q_seal_readiness.h
 require_contains 'latticra-q-seal-readiness/0.1' latticra-q-seal/src/q_seal_readiness.c
-require_contains 'components_total = 20u' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'components_total = 39u' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_kat_manifest_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_kat_runner_contract_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_kat_result_schema_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_kat_result_row_fixture_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_capability_matrix_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_fixture_row_plan_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_fixture_digest_row_template_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_parser_contract_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_response_contract_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_response_fixture_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_acvp_submission_package_contract_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_vector_schema_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_vector_source_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_vector_fixture_lock_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_vector_fixture_digest_ledger_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_negative_test_evidence_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_memory_safety_evidence_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_api_misuse_resistance_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_source_digest_manifest_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_source_digest_receipt_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_source_digest_verification_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_receipt_replay_results_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_code_owner_review_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_review_disposition_ledger_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_reviewer_identity_fixture_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_reviewer_role_mapping_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_ci_promotion_evidence_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_constant_time_review_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_randomness_source_prepare' latticra-q-seal/src/q_seal_readiness.c
@@ -58,34 +82,87 @@ require_contains 'latticra q-seal readiness invariants: ok' latticra-q-seal/test
 require_contains 'q_seal_readiness_profile_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'design_frame_integration_ready=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'runtime_crypto_ready=0' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'kat_manifest_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'kat_runner_contract_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'kat_result_schema_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'kat_result_row_fixture_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'acvp_response_contract_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'acvp_response_fixture_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'acvp_submission_package_contract_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'components_total=39' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'runtime_blockers_total=37' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_total=1003' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_satisfied=643' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'q_seal_readiness_profile_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'kat_manifest_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'kat_runner_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'kat_result_schema_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'kat_result_row_fixture_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_capability_matrix_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_fixture_row_plan_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_fixture_digest_row_template_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_parser_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_response_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_response_fixture_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'acvp_submission_package_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'vector_schema_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'vector_source_intake_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'vector_fixture_lock_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'vector_fixture_digest_ledger_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'negative_test_evidence_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'memory_safety_evidence_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'api_misuse_resistance_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'source_digest_manifest_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'source_digest_receipt_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'source_digest_verification_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'receipt_replay_results_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'code_owner_review_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'review_disposition_ledger_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'reviewer_identity_fixture_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'reviewer_role_mapping_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'ci_promotion_evidence_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'constant_time_review_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'randomness_source_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'zeroization_evidence_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'side_channel_review_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'implementation_binding_manifest_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'required_readiness_items_total=328' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'components_total=39' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'components_present=39' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'runtime_blockers_total=37' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_total=1003' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_satisfied=643' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 
 cc $CFLAGS -Ilatticra-q-seal/include \
   latticra-q-seal/src/q_seal.c \
   latticra-q-seal/src/q_seal_ml_kem.c \
   latticra-q-seal/src/q_seal_ml_kem_evidence_gate.c \
+  latticra-q-seal/src/q_seal_ml_kem_kat_manifest.c \
+  latticra-q-seal/src/q_seal_ml_kem_kat_runner_contract.c \
+  latticra-q-seal/src/q_seal_ml_kem_kat_result_schema.c \
+  latticra-q-seal/src/q_seal_ml_kem_kat_result_row_fixture.c \
   latticra-q-seal/src/q_seal_ml_kem_acvp_intake.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_capability_matrix.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_fixture_row_plan.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_fixture_digest_row_template.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_parser_contract.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_response_contract.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_response_fixture.c \
+  latticra-q-seal/src/q_seal_ml_kem_acvp_submission_package_contract.c \
   latticra-q-seal/src/q_seal_ml_kem_vector_schema.c \
   latticra-q-seal/src/q_seal_ml_kem_vector_source.c \
+  latticra-q-seal/src/q_seal_ml_kem_vector_fixture_lock.c \
+  latticra-q-seal/src/q_seal_ml_kem_vector_fixture_digest_ledger.c \
   latticra-q-seal/src/q_seal_ml_kem_negative_test_evidence.c \
   latticra-q-seal/src/q_seal_ml_kem_memory_safety_evidence.c \
   latticra-q-seal/src/q_seal_ml_kem_api_misuse_resistance.c \
   latticra-q-seal/src/q_seal_ml_kem_source_digest_manifest.c \
+  latticra-q-seal/src/q_seal_ml_kem_source_digest_receipt.c \
+  latticra-q-seal/src/q_seal_ml_kem_source_digest_verification.c \
+  latticra-q-seal/src/q_seal_ml_kem_receipt_replay_results.c \
   latticra-q-seal/src/q_seal_ml_kem_code_owner_review.c \
+  latticra-q-seal/src/q_seal_ml_kem_review_disposition_ledger.c \
+  latticra-q-seal/src/q_seal_ml_kem_reviewer_identity_fixture.c \
+  latticra-q-seal/src/q_seal_ml_kem_reviewer_role_mapping.c \
   latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c \
   latticra-q-seal/src/q_seal_ml_kem_constant_time_review.c \
   latticra-q-seal/src/q_seal_ml_kem_randomness_source.c \

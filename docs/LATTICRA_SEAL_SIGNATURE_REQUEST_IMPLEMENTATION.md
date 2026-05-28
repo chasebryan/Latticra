@@ -122,12 +122,15 @@ The implementation fails closed:
 null output -> LATTICRA_STATUS_NULL_ARGUMENT
 null report envelope -> invalid-input
 invalid report envelope -> invalid-envelope
+unterminated report envelope strings -> invalid-envelope
+invalid report envelope boolean flags -> invalid-envelope
 failed crypto graduation gate evidence -> denied-crypto-graduation-gate
 authority-bearing crypto graduation evidence -> denied-crypto-graduation-gate
 envelope_ready=0 -> denied-envelope
 envelope_state not sealed-report-only or sealed-evaluate-only -> denied-envelope
 missing requested signature -> missing-requested-signature
 unknown requested signature -> denied-unknown-signature
+unterminated requested signature -> denied-unknown-signature without copying caller bytes
 signature already performed -> denied-host-effect
 runtime authority already granted -> denied-runtime-authority
 handoff already performed -> denied-host-effect
@@ -135,6 +138,9 @@ effect already performed -> denied-host-effect
 host read already performed -> denied-host-effect
 host write already performed -> denied-host-effect
 network already performed -> denied-network-effect
+tampered signature request strings fail closed before render
+tampered signature request authority/effect flags fail closed before render
+tampered signature request ready/error state fails closed before render
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 

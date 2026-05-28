@@ -37,8 +37,17 @@ typedef struct {
     unsigned sp_800_227_kem_usage_bound;
     unsigned kat_manifest_bound;
     unsigned acvp_intake_bound;
+    unsigned acvp_capability_matrix_bound;
+    unsigned acvp_fixture_row_plan_bound;
+    unsigned acvp_fixture_digest_row_template_bound;
+    unsigned acvp_parser_contract_bound;
+    unsigned acvp_response_contract_bound;
+    unsigned acvp_response_fixture_bound;
+    unsigned acvp_submission_package_contract_bound;
     unsigned vector_schema_bound;
     unsigned vector_source_bound;
+    unsigned vector_fixture_lock_bound;
+    unsigned vector_fixture_digest_ledger_bound;
     unsigned negative_test_evidence_bound;
     unsigned memory_safety_evidence_bound;
     unsigned api_misuse_resistance_bound;

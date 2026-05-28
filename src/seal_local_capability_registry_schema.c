@@ -11,10 +11,6 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
-static int string_is(const char *value, const char *expected) {
-    return value != NULL && expected != NULL && strcmp(value, expected) == 0;
-}
-
 static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
     size_t i;
 
@@ -43,6 +39,22 @@ static int text_field_valid(const char *value, size_t max_len) {
     size_t len = bounded_string_len(value, max_len, &terminated);
 
     return terminated == 1 && len > 0u;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
 }
 
 const char *latticra_seal_local_capability_registry_schema_error_label(
@@ -223,7 +235,9 @@ static latticra_seal_local_capability_registry_schema_error_t entry_error(
     if (!authority_class_valid(entry->capability_authority_class)) {
         return LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_AUTHORITY_CLASS;
     }
-    if (!string_is(entry->capability_default_decision, "deny")) {
+    if (!bounded_string_is(entry->capability_default_decision,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_DEFAULT_DECISION_MAX,
+                           "deny")) {
         return LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_DEFAULT_DECISION;
     }
     if (entry->capability_grants_authority != 0u) {
@@ -338,18 +352,27 @@ latticra_status_t latticra_seal_local_capability_registry_schema_validate(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    if (!string_is(schema->registry_schema_profile,
-                   "latticra-seal-local-capability-registry-schema/0.1")) {
+    if (!bounded_string_is(schema->registry_schema_profile,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_PROFILE_MAX,
+                           "latticra-seal-local-capability-registry-schema/0.1")) {
         mark_schema_error(schema, LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_PROFILE);
         return LATTICRA_STATUS_OK;
     }
-    if (!string_is(schema->registry_scope, "local-only")) {
+    if (!bounded_string_is(schema->registry_scope,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCOPE_MAX,
+                           "local-only")) {
         mark_schema_error(schema, LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_INVALID_SCOPE);
         return LATTICRA_STATUS_OK;
     }
-    if (!string_is(schema->registry_mode, "report-only") ||
-        !string_is(schema->registry_status, "contract-only") ||
-        !string_is(schema->registry_format_version, "0.1") ||
+    if (!bounded_string_is(schema->registry_mode,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_MODE_MAX,
+                           "report-only") ||
+        !bounded_string_is(schema->registry_status,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_STATUS_MAX,
+                           "contract-only") ||
+        !bounded_string_is(schema->registry_format_version,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_FORMAT_MAX,
+                           "0.1") ||
         schema->registry_contract_present != 1u ||
         schema->registry_schema_planning_only != 1u ||
         schema->registry_loader_implemented != 0u ||
@@ -399,12 +422,21 @@ int latticra_seal_local_capability_registry_schema_is_report_only(
     if (schema == NULL) {
         return 0;
     }
-    if (!string_is(schema->registry_schema_profile,
-                   "latticra-seal-local-capability-registry-schema/0.1") ||
-        !string_is(schema->registry_format_version, "0.1") ||
-        !string_is(schema->registry_scope, "local-only") ||
-        !string_is(schema->registry_mode, "report-only") ||
-        !string_is(schema->registry_status, "contract-only") ||
+    if (!bounded_string_is(schema->registry_schema_profile,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_PROFILE_MAX,
+                           "latticra-seal-local-capability-registry-schema/0.1") ||
+        !bounded_string_is(schema->registry_format_version,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_FORMAT_MAX,
+                           "0.1") ||
+        !bounded_string_is(schema->registry_scope,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCOPE_MAX,
+                           "local-only") ||
+        !bounded_string_is(schema->registry_mode,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_MODE_MAX,
+                           "report-only") ||
+        !bounded_string_is(schema->registry_status,
+                           LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_STATUS_MAX,
+                           "contract-only") ||
         schema->registry_contract_present != 1u ||
         schema->registry_schema_planning_only != 1u ||
         schema->registry_loader_implemented != 0u ||
@@ -475,6 +507,10 @@ latticra_status_t latticra_seal_local_capability_registry_schema_render(
     }
     if (buffer_len == 0u) {
         return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_local_capability_registry_schema_is_report_only(schema)) {
+        buffer[0] = '\0';
+        return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
     if (!append_format(buffer,

@@ -241,6 +241,10 @@ static int public_key_parsing_fails_closed(void) {
     latticra_seal_key_material_t key_material = fixture_key_material("report-only");
     latticra_seal_public_key_parsing_t public_key_parsing;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_PUBLIC_KEY_PARSING_RENDER_MAX];
+    char unterminated_public_key_parsing[LATTICRA_SEAL_PUBLIC_KEY_PARSING_LABEL_MAX];
+
+    memset(unterminated_public_key_parsing, 'x', sizeof(unterminated_public_key_parsing));
 
     EXPECT_TRUE(
         latticra_seal_public_key_parsing_from_key_material(0, "metadata-only", &public_key_parsing) ==
@@ -252,6 +256,28 @@ static int public_key_parsing_fails_closed(void) {
         "null key material state");
     key_material.error = LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_MATERIAL;
     if (expect_denial(&key_material, "metadata-only", LATTICRA_SEAL_PUBLIC_KEY_PARSING_INVALID_KEY_MATERIAL, "denied-key-material", "invalid-key-material", "invalid key material status") != 0) {
+        return 1;
+    }
+    key_material = fixture_key_material("report-only");
+    memset(key_material.key_material_state, 'z', sizeof(key_material.key_material_state));
+    if (expect_denial(
+            &key_material,
+            "metadata-only",
+            LATTICRA_SEAL_PUBLIC_KEY_PARSING_INVALID_KEY_MATERIAL,
+            "denied-key-material",
+            "invalid-key-material",
+            "unterminated key material status") != 0) {
+        return 1;
+    }
+    key_material = fixture_key_material("report-only");
+    key_material.key_material_ready = 2u;
+    if (expect_denial(
+            &key_material,
+            "metadata-only",
+            LATTICRA_SEAL_PUBLIC_KEY_PARSING_INVALID_KEY_MATERIAL,
+            "denied-key-material",
+            "invalid-key-material",
+            "invalid key material flag status") != 0) {
         return 1;
     }
     key_material = fixture_key_material("report-only");
@@ -395,6 +421,21 @@ static int public_key_parsing_fails_closed(void) {
         return 1;
     }
     key_material = fixture_key_material("report-only");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_from_key_material(
+                    &key_material,
+                    unterminated_public_key_parsing,
+                    &public_key_parsing) == LATTICRA_STATUS_OK,
+                "unterminated requested public key parsing status");
+    EXPECT_TRUE(public_key_parsing.error == LATTICRA_SEAL_PUBLIC_KEY_PARSING_DENIED_PUBLIC_KEY_PARSING,
+                "unterminated requested public key parsing error");
+    EXPECT_TRUE(strcmp(public_key_parsing.requested_public_key_parsing, "invalid-public-key-parsing") == 0,
+                "unterminated requested public key parsing sanitized");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_render(&public_key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested public key parsing render");
+    EXPECT_TRUE(strstr(rendered, "requested_public_key_parsing=invalid-public-key-parsing") != 0,
+                "unterminated requested public key parsing rendered sanitized");
+    key_material = fixture_key_material("report-only");
     key_material.public_key_parsed = 1u;
     if (expect_denial(&key_material, "metadata-only", LATTICRA_SEAL_PUBLIC_KEY_PARSING_DENIED_PUBLIC_KEY_PARSING, "denied-public-key-parsing", "denied-public-key-parsing", "public key parsed status") != 0) {
         return 1;
@@ -491,6 +532,51 @@ static int public_key_parsing_fails_closed(void) {
         latticra_seal_public_key_parsing_render(&public_key_parsing, 0, sizeof(tiny)) ==
             LATTICRA_STATUS_NULL_ARGUMENT,
         "null buffer render");
+
+    key_material = fixture_key_material("report-only");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_from_key_material(
+                    &key_material,
+                    "metadata-only",
+                    &public_key_parsing) == LATTICRA_STATUS_OK,
+                "tamper public key parsing render source");
+    memset(public_key_parsing.public_key_parsing_profile, 'z', sizeof(public_key_parsing.public_key_parsing_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_public_key_parsing_render(&public_key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated public key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated public key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_is_metadata_only(&public_key_parsing) == 0,
+                "unterminated public key parsing helper rejected");
+
+    key_material = fixture_key_material("report-only");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_from_key_material(
+                    &key_material,
+                    "metadata-only",
+                    &public_key_parsing) == LATTICRA_STATUS_OK,
+                "authority public key parsing render source");
+    public_key_parsing.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_public_key_parsing_render(&public_key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority public key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority public key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_is_metadata_only(&public_key_parsing) == 0,
+                "authority public key parsing helper rejected");
+
+    key_material = fixture_key_material("report-only");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_from_key_material(
+                    &key_material,
+                    "metadata-only",
+                    &public_key_parsing) == LATTICRA_STATUS_OK,
+                "ready flag public key parsing render source");
+    public_key_parsing.public_key_parsing_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_public_key_parsing_render(&public_key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag public key parsing render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag public key parsing render cleared");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_is_metadata_only(&public_key_parsing) == 0,
+                "ready flag public key parsing helper rejected");
     return 0;
 }
 

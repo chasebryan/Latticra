@@ -44,6 +44,29 @@ cc $CFLAGS \
   src/kernel_runtime_entry_admission.c \
   src/kernel_runtime_entry_frame.c \
   src/kernel_runtime_entry_register_view.c \
+  src/kernel_runtime_entry_stack_view.c \
+  src/kernel_runtime_entry_address_space_view.c \
+  src/kernel_runtime_entry_privilege_level_view.c \
+  src/kernel_runtime_entry_syscall_gate_view.c \
+  src/kernel_runtime_entry_syscall_dispatch_view.c \
+  src/kernel_runtime_entry_syscall_return_view.c \
+  src/kernel_runtime_entry_syscall_exit_view.c \
+  src/kernel_runtime_entry_user_mode_resume_view.c \
+  src/kernel_runtime_entry_post_resume_observation_view.c \
+  src/kernel_runtime_entry_scheduler_return_observation_view.c \
+  src/kernel_runtime_entry_process_return_observation_view.c \
+  src/kernel_runtime_entry_idle_return_observation_view.c \
+  src/kernel_runtime_entry_quiescent_return_observation_view.c \
+  src/kernel_runtime_entry_persistence_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_plan_observation_view.c \
+  src/kernel_runtime_entry_recovery_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_outcome_observation_view.c \
+  src/kernel_runtime_entry_recovery_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_observation_view.c \
+  src/kernel_state.c \
+  src/kernel_state_machine.c \
+  src/kernel_lifecycle.c \
   src/nucleus_kernel_coupling.c \
   tools/nucleus_kernel_coupling_report.c \
   -o "$report_bin"
@@ -58,16 +81,47 @@ grep -Fq 'os_readiness_status=os-metadata-ready' "$report_txt"
 grep -Fq 'nucleus_plan_status=allow-no-effect-sequence' "$report_txt"
 grep -Fq 'kernel_registry_status=registry-ready' "$report_txt"
 grep -Fq 'kernel_status=initialized-report-only' "$report_txt"
+grep -Fq 'kernel_lifecycle_status=lifecycle-complete' "$report_txt"
+grep -Fq 'kernel_lifecycle_final_state=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
 grep -Fq 'runtime_register_view_status=runtime-entry-register-view-seed-ready' "$report_txt"
 grep -Fq 'runtime_entry_frame_status=runtime-entry-frame-seed-ready' "$report_txt"
 grep -Fq 'scheduler_run_entry_status=scheduler-run-entry-seed-ready' "$report_txt"
+grep -Fq 'runtime_process_return_observation_view_status=runtime-entry-process-return-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_scheduler_return_observation_view_status=runtime-entry-scheduler-return-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_post_resume_observation_view_status=runtime-entry-post-resume-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_user_mode_resume_view_status=runtime-entry-user-mode-resume-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_idle_return_observation_view_status=runtime-entry-idle-return-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_quiescent_return_observation_view_status=runtime-entry-quiescent-return-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_persistence_boundary_observation_view_status=runtime-entry-persistence-boundary-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_boundary_observation_view_status=runtime-entry-recovery-boundary-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_plan_observation_view_status=runtime-entry-recovery-plan-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_disposition_observation_view_status=runtime-entry-recovery-disposition-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_outcome_observation_view_status=runtime-entry-recovery-outcome-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_closeout_observation_view_status=runtime-entry-recovery-closeout-observation-view-seed-ready' "$report_txt"
+grep -Fq 'runtime_recovery_audit_observation_view_status=runtime-entry-recovery-audit-observation-view-seed-ready' "$report_txt"
 grep -Fq 'task_count=1' "$report_txt"
 grep -Fq 'accepted_task_count=1' "$report_txt"
 grep -Fq 'blocked_task_count=0' "$report_txt"
 grep -Fq 'subsystem_count=9' "$report_txt"
+grep -Fq 'lifecycle_step_count=46' "$report_txt"
+grep -Fq 'lifecycle_state_change_count=46' "$report_txt"
 grep -Fq 'register_view_count=4' "$report_txt"
+grep -Fq 'process_return_observation_view_count=4' "$report_txt"
+grep -Fq 'scheduler_return_observation_view_count=4' "$report_txt"
+grep -Fq 'post_resume_observation_view_count=4' "$report_txt"
+grep -Fq 'user_mode_resume_view_count=4' "$report_txt"
+grep -Fq 'idle_return_observation_view_count=4' "$report_txt"
+grep -Fq 'quiescent_return_observation_view_count=4' "$report_txt"
+grep -Fq 'persistence_boundary_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_boundary_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_plan_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_disposition_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_outcome_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_closeout_observation_view_count=4' "$report_txt"
+grep -Fq 'recovery_audit_observation_view_count=4' "$report_txt"
 grep -Fq 'prerequisites_satisfied=1' "$report_txt"
 grep -Fq 'no_effect_chain_ok=1' "$report_txt"
+grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'report_only=1' "$report_txt"
 grep -Fq 'execution_allowed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
@@ -77,7 +131,48 @@ grep -Fq 'scheduler_run_entry_allowed=0' "$report_txt"
 grep -Fq 'context_switch_allowed=0' "$report_txt"
 grep -Fq 'register_save_allowed=0' "$report_txt"
 grep -Fq 'register_restore_allowed=0' "$report_txt"
+grep -Fq 'runtime_process_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_scheduler_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_post_resume_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_idle_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_quiescent_return_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_persistence_boundary_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_boundary_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_plan_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_disposition_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_outcome_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_closeout_observation_view_allowed=0' "$report_txt"
+grep -Fq 'runtime_recovery_audit_observation_view_allowed=0' "$report_txt"
+grep -Fq 'scheduler_return_observation_allowed=0' "$report_txt"
+grep -Fq 'process_return_observation_allowed=0' "$report_txt"
+grep -Fq 'process_return_allowed=0' "$report_txt"
+grep -Fq 'idle_return_observation_allowed=0' "$report_txt"
+grep -Fq 'idle_return_allowed=0' "$report_txt"
+grep -Fq 'idle_state_read_allowed=0' "$report_txt"
+grep -Fq 'quiescent_return_observation_allowed=0' "$report_txt"
+grep -Fq 'quiescent_return_allowed=0' "$report_txt"
+grep -Fq 'quiescent_state_read_allowed=0' "$report_txt"
+grep -Fq 'persistence_boundary_observation_allowed=0' "$report_txt"
+grep -Fq 'persistence_boundary_allowed=0' "$report_txt"
+grep -Fq 'persistence_commit_allowed=0' "$report_txt"
+grep -Fq 'recovery_boundary_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_boundary_allowed=0' "$report_txt"
+grep -Fq 'recovery_plan_allowed=0' "$report_txt"
+grep -Fq 'recovery_plan_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_disposition_allowed=0' "$report_txt"
+grep -Fq 'recovery_disposition_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_outcome_allowed=0' "$report_txt"
+grep -Fq 'recovery_outcome_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_closeout_allowed=0' "$report_txt"
+grep -Fq 'recovery_closeout_observation_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_allowed=0' "$report_txt"
+grep -Fq 'recovery_audit_observation_allowed=0' "$report_txt"
+grep -Fq 'process_state_read_allowed=0' "$report_txt"
+grep -Fq 'scheduler_execution_allowed=0' "$report_txt"
+grep -Fq 'scheduler_dispatch_allowed=0' "$report_txt"
+grep -Fq 'run_queue_mutation_allowed=0' "$report_txt"
+grep -Fq 'process_wake_allowed=0' "$report_txt"
 grep -Fq 'host_effect_allowed=0' "$report_txt"
-grep -Fq 'evidence_level=30' "$report_txt"
+grep -Fq 'evidence_level=49' "$report_txt"
 
 printf 'nucleus_kernel_coupling_report_runner: ok\n'

@@ -28,9 +28,10 @@ static latticra_seal_crypto_verify_backend_t fixture_backend(void) {
     (void)snprintf(backend.signature_algorithm, sizeof(backend.signature_algorithm), "%s", "Ed25519-development");
     (void)snprintf(backend.public_key_identity_label, sizeof(backend.public_key_identity_label), "%s", "rfc8032-test-key");
     (void)snprintf(backend.trust_source, sizeof(backend.trust_source), "%s", "local-test-vector");
-    (void)snprintf(backend.crypto_verify_state, sizeof(backend.crypto_verify_state), "%s", "unsupported");
+    (void)snprintf(backend.crypto_verify_state, sizeof(backend.crypto_verify_state), "%s", "ready-local-ed25519");
+    backend.cryptographic_verification_supported = 1u;
     backend.error = LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_OK;
-    (void)snprintf(backend.status, sizeof(backend.status), "%s", "crypto-verify-backend-metadata");
+    (void)snprintf(backend.status, sizeof(backend.status), "%s", "crypto-verify-backend-ready");
     return backend;
 }
 

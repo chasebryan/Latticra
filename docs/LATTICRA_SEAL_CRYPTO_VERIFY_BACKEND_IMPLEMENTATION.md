@@ -1,13 +1,13 @@
 # Latticra Seal Crypto Verify Backend Implementation
 
-Status: initial crypto verify backend metadata implementation
-Scope: bounded C metadata surface for crypto verification backend posture after verification policy metadata. This slice does not implement real cryptographic verification, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, capability enforcement, runtime authority, host reads, host writes, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: crypto verify backend readiness implementation
+Scope: bounded C readiness surface for crypto verification backend posture after verification policy metadata. This slice does not perform signature verification itself, signing, key generation, private-key storage, public-key trust stores, network trust lookup, revocation lookup, object sealing, capability enforcement, runtime authority, host reads, host writes, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document records the first Latticra Seal crypto verify backend metadata implementation.
+This document records the Latticra Seal crypto verify backend readiness implementation.
 
-The implementation accepts an existing verification policy metadata record and produces deterministic crypto verify backend metadata. It does not verify signatures and does not treat metadata as authority.
+The implementation accepts an existing verification policy metadata record and produces deterministic crypto verify backend readiness metadata for the local Ed25519 verifier. It does not verify signatures in this backend layer and does not treat readiness metadata as authority.
 
 ## Added files
 
@@ -33,6 +33,7 @@ latticra_seal_crypto_verify_backend_error_t
 latticra_seal_crypto_verify_backend_error_label
 latticra_seal_crypto_verify_backend_from_policy
 latticra_seal_crypto_verify_backend_is_metadata_only
+latticra_seal_crypto_verify_backend_is_authority_neutral
 latticra_seal_crypto_verify_backend_report
 ```
 
@@ -52,8 +53,8 @@ copies signature algorithm metadata
 copies public-key identity metadata
 copies trust-source metadata
 accepts only the Ed25519-development signature algorithm label
-sets crypto_verify_state=unsupported
-sets cryptographic_verification_supported=0
+sets crypto_verify_state=ready-local-ed25519
+sets cryptographic_verification_supported=1
 sets cryptographic_verification_performed=0
 sets verified=0
 sets invalid=0
@@ -67,7 +68,7 @@ renders deterministic crypto verify backend metadata
 
 This implementation does not verify signatures, parse public keys, create keys, store keys, contact networks, query revocation status, persist verification decisions, seal objects, enforce capabilities, read host files, write host files, execute network behavior, call runtime components, or grant runtime authority.
 
-It is metadata only.
+It is a readiness boundary only. Real Ed25519 signature verification remains in the local provider-backed verify-only layer and now requires this ready backend state before invoking OpenSSL.
 
 ## Failure behavior
 
@@ -102,14 +103,16 @@ signer identity label is copied
 signature algorithm label is copied
 public-key identity label is copied
 trust source is copied
-crypto_verify_state remains unsupported
-cryptographic_verification_supported remains zero
+crypto_verify_state is ready-local-ed25519 for the supported local Ed25519 backend
+cryptographic_verification_supported is one before verification
 cryptographic_verification_performed remains zero
 verified remains zero
 invalid remains zero
 authority_usable remains zero
 capability_gate_allowed remains zero
 runtime_authority_granted remains zero
+metadata-only helper rejects the ready backend
+authority-neutral helper accepts the ready backend
 small report buffer fails closed
 null inputs fail closed
 invalid verification policy metadata fails closed

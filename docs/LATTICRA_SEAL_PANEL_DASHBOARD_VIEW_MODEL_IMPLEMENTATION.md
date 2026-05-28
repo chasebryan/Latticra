@@ -257,6 +257,9 @@ The implementation rejects:
 null output
 null source input
 small render buffer
+unterminated public struct strings before rendering
+tampered source count before row construction
+tampered row count before row construction
 source capacity overflow
 row capacity overflow
 invalid category

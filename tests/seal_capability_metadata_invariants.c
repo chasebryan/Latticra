@@ -134,11 +134,14 @@ static int known_capability_becomes_candidate_only(void) {
 static int capability_metadata_fails_closed(void) {
     latticra_seal_capability_metadata_result_t result;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_MAX];
     char oversized[LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX + 1u];
+    char unterminated[LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX];
     size_t i;
 
     for (i = 0u; i < LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX; ++i) {
         oversized[i] = 'x';
+        unterminated[i] = 'y';
     }
     oversized[LATTICRA_SEAL_CAPABILITY_METADATA_NAME_MAX] = '\0';
 
@@ -151,6 +154,16 @@ static int capability_metadata_fails_closed(void) {
     EXPECT_TRUE(result.error == LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_CAPABILITY_NAME,
                 "oversized capability error");
     EXPECT_TRUE(result.invalid_capability_denied == 1u, "oversized invalid denied");
+    EXPECT_TRUE(strcmp(result.capability_name, "invalid-capability") == 0,
+                "oversized sanitized name");
+    EXPECT_TRUE(latticra_seal_capability_metadata_evaluate(unterminated, &result) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated capability status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_CAPABILITY_METADATA_INVALID_CAPABILITY_NAME,
+                "unterminated capability error");
+    EXPECT_TRUE(strcmp(result.capability_name, "invalid-capability") == 0,
+                "unterminated sanitized name");
+    EXPECT_TRUE(result.invalid_capability_denied == 1u, "unterminated invalid denied");
     EXPECT_TRUE(latticra_seal_capability_metadata_evaluate("seal.capability.inspect", 0) == LATTICRA_STATUS_NULL_ARGUMENT,
                 "null output");
     EXPECT_TRUE(latticra_seal_capability_metadata_is_report_only(0) == 0, "null helper");
@@ -161,6 +174,36 @@ static int capability_metadata_fails_closed(void) {
                 "null result report");
     EXPECT_TRUE(latticra_seal_capability_metadata_report(&result, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT,
                 "null buffer report");
+
+    EXPECT_TRUE(latticra_seal_capability_metadata_evaluate("seal.capability.report", &result) ==
+                    LATTICRA_STATUS_OK,
+                "tamper source");
+    memset(result.capability_metadata_profile,
+           'z',
+           sizeof(result.capability_metadata_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_capability_metadata_report(
+                    &result,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated result render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated result render cleared");
+    EXPECT_TRUE(latticra_seal_capability_metadata_is_report_only(&result) == 0,
+                "unterminated helper rejected");
+
+    EXPECT_TRUE(latticra_seal_capability_metadata_evaluate("seal.capability.report", &result) ==
+                    LATTICRA_STATUS_OK,
+                "effect tamper source");
+    result.capability_grants_authority = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_capability_metadata_report(
+                    &result,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority result render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority result render cleared");
+    EXPECT_TRUE(latticra_seal_capability_metadata_is_report_only(&result) == 0,
+                "authority helper rejected");
     return 0;
 }
 

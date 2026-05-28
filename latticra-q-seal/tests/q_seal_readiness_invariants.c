@@ -33,14 +33,37 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.ml_kem_768_parameters_present == 1u, "768");
     EXPECT_TRUE(readiness.ml_kem_1024_parameters_present == 1u, "1024");
     EXPECT_TRUE(readiness.evidence_gate_present == 1u, "evidence");
+    EXPECT_TRUE(readiness.kat_manifest_present == 1u, "kat manifest");
+    EXPECT_TRUE(readiness.kat_runner_contract_present == 1u, "kat runner");
+    EXPECT_TRUE(readiness.kat_result_schema_present == 1u, "kat result schema");
+    EXPECT_TRUE(readiness.kat_result_row_fixture_present == 1u, "kat result rows");
     EXPECT_TRUE(readiness.acvp_intake_present == 1u, "acvp");
+    EXPECT_TRUE(readiness.acvp_capability_matrix_present == 1u, "acvp matrix");
+    EXPECT_TRUE(readiness.acvp_fixture_row_plan_present == 1u, "acvp rows");
+    EXPECT_TRUE(
+        readiness.acvp_fixture_digest_row_template_present == 1u,
+        "acvp digest row template");
+    EXPECT_TRUE(readiness.acvp_parser_contract_present == 1u, "acvp parser");
+    EXPECT_TRUE(readiness.acvp_response_contract_present == 1u, "acvp response");
+    EXPECT_TRUE(readiness.acvp_response_fixture_present == 1u, "acvp response fixture");
+    EXPECT_TRUE(
+        readiness.acvp_submission_package_contract_present == 1u,
+        "acvp submission package");
     EXPECT_TRUE(readiness.vector_schema_present == 1u, "vector schema");
     EXPECT_TRUE(readiness.vector_source_intake_present == 1u, "vector source");
+    EXPECT_TRUE(readiness.vector_fixture_lock_present == 1u, "fixture lock");
+    EXPECT_TRUE(readiness.vector_fixture_digest_ledger_present == 1u, "digest ledger");
     EXPECT_TRUE(readiness.negative_test_evidence_present == 1u, "negative test");
     EXPECT_TRUE(readiness.memory_safety_evidence_present == 1u, "memory safety");
     EXPECT_TRUE(readiness.api_misuse_resistance_present == 1u, "api misuse");
     EXPECT_TRUE(readiness.source_digest_manifest_present == 1u, "source digest");
+    EXPECT_TRUE(readiness.source_digest_receipt_present == 1u, "source receipt");
+    EXPECT_TRUE(readiness.source_digest_verification_present == 1u, "source verification");
+    EXPECT_TRUE(readiness.receipt_replay_results_present == 1u, "replay results");
     EXPECT_TRUE(readiness.code_owner_review_present == 1u, "code owner");
+    EXPECT_TRUE(readiness.review_disposition_ledger_present == 1u, "disposition");
+    EXPECT_TRUE(readiness.reviewer_identity_fixture_present == 1u, "identity");
+    EXPECT_TRUE(readiness.reviewer_role_mapping_present == 1u, "role mapping");
     EXPECT_TRUE(readiness.ci_promotion_evidence_present == 1u, "ci promotion");
     EXPECT_TRUE(readiness.constant_time_review_present == 1u, "constant time");
     EXPECT_TRUE(readiness.randomness_source_contract_present == 1u, "randomness");
@@ -54,11 +77,11 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.apple_corecrypto_code_copied == 0u, "apple code");
     EXPECT_TRUE(readiness.external_provider_code_copied == 0u, "provider code");
     EXPECT_TRUE(readiness.provider_runtime_used == 0u, "provider runtime");
-    EXPECT_TRUE(readiness.components_total == 20u, "components total");
-    EXPECT_TRUE(readiness.components_present == 20u, "components present");
-    EXPECT_TRUE(readiness.runtime_blockers_total == 18u, "runtime blockers");
-    EXPECT_TRUE(readiness.required_readiness_items_total == 328u, "readiness total");
-    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 158u, "readiness satisfied");
+    EXPECT_TRUE(readiness.components_total == 39u, "components total");
+    EXPECT_TRUE(readiness.components_present == 39u, "components present");
+    EXPECT_TRUE(readiness.runtime_blockers_total == 37u, "runtime blockers");
+    EXPECT_TRUE(readiness.required_readiness_items_total == 1003u, "readiness total");
+    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 643u, "readiness satisfied");
     EXPECT_TRUE(readiness.design_frame_integration_ready == 1u, "design frame");
     EXPECT_TRUE(readiness.runtime_crypto_ready == 0u, "runtime crypto");
     EXPECT_TRUE(readiness.operations_enabled == 0u, "operations");
@@ -81,12 +104,61 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
             LATTICRA_Q_SEAL_STATUS_OK,
         "report");
     EXPECT_TRUE(strstr(rendered, "LATTICRA Q-SEAL READINESS PROFILE") != 0, "header");
-    EXPECT_TRUE(strstr(rendered, "components_present=20") != 0, "components report");
+    EXPECT_TRUE(strstr(rendered, "components_present=39") != 0, "components report");
+    EXPECT_TRUE(strstr(rendered, "kat_manifest_present=1") != 0, "kat report");
+    EXPECT_TRUE(strstr(rendered, "kat_runner_contract_present=1") != 0, "runner report");
+    EXPECT_TRUE(strstr(rendered, "kat_result_schema_present=1") != 0, "schema report");
+    EXPECT_TRUE(
+        strstr(rendered, "kat_result_row_fixture_present=1") != 0,
+        "row fixture report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_capability_matrix_present=1") != 0,
+        "acvp matrix report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_row_plan_present=1") != 0,
+        "acvp rows report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_digest_row_template_present=1") != 0,
+        "acvp digest row template report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_parser_contract_present=1") != 0,
+        "acvp parser report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_contract_present=1") != 0,
+        "acvp response report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_fixture_present=1") != 0,
+        "acvp response fixture report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_submission_package_contract_present=1") != 0,
+        "acvp submission package report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_lock_present=1") != 0,
+        "fixture lock report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_digest_ledger_present=1") != 0,
+        "digest ledger report");
     EXPECT_TRUE(strstr(rendered, "negative_test_evidence_present=1") != 0, "negative report");
     EXPECT_TRUE(strstr(rendered, "memory_safety_evidence_present=1") != 0, "memory report");
     EXPECT_TRUE(strstr(rendered, "api_misuse_resistance_present=1") != 0, "api report");
     EXPECT_TRUE(strstr(rendered, "source_digest_manifest_present=1") != 0, "digest report");
+    EXPECT_TRUE(strstr(rendered, "source_digest_receipt_present=1") != 0, "receipt report");
+    EXPECT_TRUE(
+        strstr(rendered, "source_digest_verification_present=1") != 0,
+        "verification report");
+    EXPECT_TRUE(
+        strstr(rendered, "receipt_replay_results_present=1") != 0,
+        "replay report");
     EXPECT_TRUE(strstr(rendered, "code_owner_review_present=1") != 0, "owner report");
+    EXPECT_TRUE(
+        strstr(rendered, "review_disposition_ledger_present=1") != 0,
+        "disposition report");
+    EXPECT_TRUE(
+        strstr(rendered, "reviewer_identity_fixture_present=1") != 0,
+        "identity report");
+    EXPECT_TRUE(
+        strstr(rendered, "reviewer_role_mapping_present=1") != 0,
+        "role report");
     EXPECT_TRUE(strstr(rendered, "ci_promotion_evidence_present=1") != 0, "ci report");
     EXPECT_TRUE(strstr(rendered, "constant_time_review_present=1") != 0, "constant report");
     EXPECT_TRUE(
@@ -97,7 +169,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "implementation_binding_manifest_present=1") != 0,
         "binding report");
-    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=18") != 0, "blockers report");
+    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=37") != 0, "blockers report");
     EXPECT_TRUE(
         strstr(rendered, "design_frame_integration_ready=1") != 0,
         "design report");

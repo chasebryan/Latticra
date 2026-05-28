@@ -13,7 +13,7 @@ kernel subsystem registry
 nucleus-kernel coupling gate
 ```
 
-The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-address-space-view-ready` through gated internal state changes.
+The lifecycle runner can move a local in-memory kernel state machine from `created` to `runtime-entry-recovery-audit-observation-view-ready` through gated internal state changes.
 
 The subsystem registry exposes boot, runtime, scheduler, memory, process, filesystem, network, device, and security subsystem posture.
 
@@ -48,17 +48,17 @@ docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 The default summary request allows the lifecycle runner to reach:
 
 ```text
-runtime-entry-address-space-view-ready
+runtime-entry-recovery-audit-observation-view-ready
 ```
 
 That produces:
 
 ```text
 summary_status=summary-ready
-final_state=runtime-entry-address-space-view-ready
+final_state=runtime-entry-recovery-audit-observation-view-ready
 lifecycle_complete=1
-lifecycle_step_count=28
-lifecycle_state_change_count=28
+lifecycle_step_count=46
+lifecycle_state_change_count=46
 external_effect_performed=0
 registry_no_effect=1
 nucleus_coupling_status=nucleus-kernel-coupling-ready
@@ -75,7 +75,7 @@ Expected readiness examples:
 ```text
 boot -> boot-sequence-seeded
 scheduler -> scheduler-run-entry-ready
-runtime -> runtime-entry-address-space-view-ready
+runtime -> runtime-entry-recovery-audit-observation-view-ready
 memory -> memory-map-ready
 process -> ipc-table-ready
 filesystem -> vfs-namespace-ready
@@ -87,12 +87,48 @@ security -> security-not-production-boundary
 Authority remains denied:
 
 ```text
+runtime_entry_recovery_audit_observation_view_allowed=0
+runtime_entry_recovery_closeout_observation_view_allowed=0
+runtime_entry_recovery_plan_observation_view_allowed=0
+runtime_entry_recovery_disposition_observation_view_allowed=0
+runtime_entry_recovery_outcome_observation_view_allowed=0
+runtime_entry_recovery_boundary_observation_view_allowed=0
+runtime_entry_persistence_boundary_observation_view_allowed=0
+runtime_entry_quiescent_return_observation_view_allowed=0
+runtime_entry_idle_return_observation_view_allowed=0
+runtime_entry_process_return_observation_view_allowed=0
+runtime_entry_scheduler_return_observation_view_allowed=0
+runtime_entry_post_resume_observation_view_allowed=0
+runtime_entry_user_mode_resume_view_allowed=0
+runtime_entry_syscall_exit_view_allowed=0
+runtime_entry_syscall_return_view_allowed=0
+runtime_entry_syscall_dispatch_view_allowed=0
+runtime_entry_syscall_gate_view_allowed=0
+runtime_entry_privilege_level_view_allowed=0
 runtime_entry_address_space_view_allowed=0
 runtime_entry_stack_view_allowed=0
 runtime_entry_register_view_allowed=0
 runtime_entry_frame_allowed=0
 runtime_entry_admission_allowed=0
 runtime_entry_allowed=0
+persistence_boundary_observation_allowed=0
+persistence_boundary_allowed=0
+persistence_commit_allowed=0
+recovery_boundary_observation_allowed=0
+recovery_boundary_allowed=0
+recovery_plan_allowed=0
+recovery_plan_observation_allowed=0
+recovery_disposition_allowed=0
+recovery_disposition_observation_allowed=0
+recovery_outcome_allowed=0
+recovery_outcome_observation_allowed=0
+recovery_audit_allowed=0
+recovery_audit_observation_allowed=0
+recovery_closeout_allowed=0
+recovery_closeout_observation_allowed=0
+quiescent_return_observation_allowed=0
+quiescent_return_allowed=0
+quiescent_state_read_allowed=0
 scheduler_execution_allowed=0
 scheduler_selection_allowed=0
 scheduler_dispatch_allowed=0
@@ -140,6 +176,8 @@ cpu_usage_write_allowed=0
 quota_update_allowed=0
 scheduler_credit_update_allowed=0
 process_wake_allowed=0
+persistence_allowed=0
+recovery_authority_allowed=0
 dma_allowed=0
 hardware_effect_allowed=0
 nucleus_boot_allowed=0
@@ -203,11 +241,11 @@ kernel_lifecycle_subsystem_summary_report_runner: ok
 The guards verify:
 
 ```text
-default request targets runtime-entry-address-space-view-ready
-summary reaches runtime-entry-address-space-view-ready
+default request targets runtime-entry-recovery-audit-observation-view-ready
+summary reaches runtime-entry-recovery-audit-observation-view-ready
 summary marks boot/scheduler/memory/process/filesystem as lifecycle-ready metadata
-runtime address-space-view metadata is ready while runtime remains not entered
-runtime entry address-space view, stack view, register view, frame, admission, and runtime entry remain denied
+runtime recovery-audit-observation-view metadata is ready while runtime remains not entered
+runtime entry recovery-audit observation view, recovery-closeout observation view, recovery-outcome observation view, recovery-disposition observation view, recovery-plan observation view, recovery-boundary observation view, persistence-boundary observation view, quiescent-return observation view, idle-return observation view, process-return observation view, scheduler-return observation view, post-resume observation view, user-mode-resume view, syscall-exit view, syscall-return view, syscall-dispatch view, syscall-gate view, privilege-level view, address-space view, stack view, register view, frame, admission, and runtime entry remain denied
 nucleus-kernel coupling reports os-metadata-ready only with no-effect evidence
 nucleus boot, runtime entry, scheduler run entry, context switch, register save, register restore, and host effect remain denied
 scheduler execution remains denied
@@ -228,4 +266,4 @@ This slice does not make Latticra bootable, runnable as an operating system, pro
 
 ## Next possible lane
 
-A later slice may add lifecycle rollback planning, virtual device binding metadata, or scheduler-to-timer handoff metadata. Those should remain report-only unless a separate authority contract is introduced first.
+A later slice may add recovery-audit-review observation metadata, virtual device binding metadata, scheduler-to-timer handoff metadata, or define a production-authority contract. Those should remain report-only unless a separate authority contract is introduced first.

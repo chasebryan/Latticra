@@ -234,12 +234,27 @@ static int handoff_fails_closed(void) {
     latticra_seal_signing_authorization_t authorization = fixture_authorization("report-only");
     latticra_seal_signer_handoff_t handoff;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNER_HANDOFF_RENDER_MAX];
+    char unterminated_handoff[LATTICRA_SEAL_SIGNER_HANDOFF_LABEL_MAX];
+
+    memset(unterminated_handoff, 'x', sizeof(unterminated_handoff));
 
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(0, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "null authorization status");
     EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_INVALID_INPUT, "null authorization error");
     authorization.error = LATTICRA_SEAL_SIGNING_AUTHORIZATION_DENIED_SIGNATURE_REQUEST;
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "invalid authorization status");
     EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_INVALID_SIGNING_AUTHORIZATION, "invalid authorization error");
+    authorization = fixture_authorization("report-only");
+    memset(authorization.signing_authorization_state,
+           'z',
+           sizeof(authorization.signing_authorization_state));
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "unterminated authorization status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_INVALID_SIGNING_AUTHORIZATION, "unterminated authorization error");
+    EXPECT_TRUE(strcmp(handoff.signer_handoff_state, "denied-signing-authorization") == 0, "unterminated authorization state");
+    authorization = fixture_authorization("report-only");
+    authorization.signing_authorization_ready = 2u;
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "invalid authorization flag status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_INVALID_SIGNING_AUTHORIZATION, "invalid authorization flag error");
     authorization = fixture_authorization("report-only");
     authorization.signing_authorization_ready = 0u;
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "authorization ready status");
@@ -270,6 +285,21 @@ static int handoff_fails_closed(void) {
     authorization = fixture_authorization("report-only");
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "invoke-signer", &handoff) == LATTICRA_STATUS_OK, "unknown handoff status");
     EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_DENIED_SIGNER_HANDOFF, "unknown handoff error");
+    authorization = fixture_authorization("report-only");
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(
+                    &authorization,
+                    unterminated_handoff,
+                    &handoff) == LATTICRA_STATUS_OK,
+                "unterminated requested signer handoff status");
+    EXPECT_TRUE(handoff.error == LATTICRA_SEAL_SIGNER_HANDOFF_DENIED_SIGNER_HANDOFF,
+                "unterminated requested signer handoff error");
+    EXPECT_TRUE(strcmp(handoff.requested_signer_handoff, "invalid-signer-handoff") == 0,
+                "unterminated requested signer handoff sanitized");
+    EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested signer handoff render");
+    EXPECT_TRUE(strstr(rendered, "requested_signer_handoff=invalid-signer-handoff") != 0,
+                "unterminated requested signer handoff rendered sanitized");
     authorization = fixture_authorization("report-only");
     authorization.private_key_handling = 1u;
     EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(&authorization, "metadata-only", &handoff) == LATTICRA_STATUS_OK, "private key status");
@@ -333,6 +363,51 @@ static int handoff_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_signer_handoff_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null handoff render");
     EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    authorization = fixture_authorization("report-only");
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(
+                    &authorization,
+                    "metadata-only",
+                    &handoff) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(handoff.signer_handoff_profile, 'z', sizeof(handoff.signer_handoff_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated signer handoff render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated signer handoff render cleared");
+    EXPECT_TRUE(latticra_seal_signer_handoff_is_metadata_only(&handoff) == 0,
+                "unterminated signer handoff helper rejected");
+
+    authorization = fixture_authorization("report-only");
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(
+                    &authorization,
+                    "metadata-only",
+                    &handoff) == LATTICRA_STATUS_OK,
+                "authority signer handoff render source");
+    handoff.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority signer handoff render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority signer handoff render cleared");
+    EXPECT_TRUE(latticra_seal_signer_handoff_is_metadata_only(&handoff) == 0,
+                "authority signer handoff helper rejected");
+
+    authorization = fixture_authorization("report-only");
+    EXPECT_TRUE(latticra_seal_signer_handoff_from_authorization(
+                    &authorization,
+                    "metadata-only",
+                    &handoff) == LATTICRA_STATUS_OK,
+                "ready flag signer handoff render source");
+    handoff.signer_handoff_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_handoff_render(&handoff, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag signer handoff render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag signer handoff render cleared");
+    EXPECT_TRUE(latticra_seal_signer_handoff_is_metadata_only(&handoff) == 0,
+                "ready flag signer handoff helper rejected");
     return 0;
 }
 

@@ -1,0 +1,83 @@
+# Production Installer SBOM Evidence Intake Validator Status
+
+Status: validator/status alignment
+Date: 2026-05-27
+Scope: current no-effect production-installer SBOM evidence intake validator.
+
+## Current status
+
+The production-installer SBOM evidence intake validator is present.
+
+It can validate a future local evidence bundle that includes an SPDX JSON or CycloneDX JSON SBOM, dependency review, vulnerability review, license review, final SBOM review, and a matching evidence manifest.
+
+It does not generate an SBOM, accept evidence, attach an SBOM to a release artifact, pass promotion, claim production installer readiness, publish an artifact, or mutate a host.
+
+## Current classification
+
+```text
+sbom_evidence_intake_validator_present=1
+sbom_evidence_intake_validation_mode=no-effect-validation
+sbom_evidence_candidate_valid=0
+sbom_artifact_file_present=0
+sbom_artifact_sha256_recorded=0
+sbom_dependency_review_present=0
+sbom_vulnerability_review_present=0
+sbom_license_review_present=0
+sbom_review_present=0
+sbom_evidence_accepted_by_intake_validator=0
+sbom_evidence_written_by_intake_validator=0
+installer_sbom_promotion_allowed_by_intake_validator_alone=0
+release_artifact_promotion_gate_passed=0
+installer_sbom_recorded=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+host_mutation_performed=0
+```
+
+## Candidate validation surface
+
+The validator expects future complete SBOM evidence candidates to include:
+
+```text
+sbom_evidence_status=complete
+sbom_artifact_present=1
+sbom_format_declared=1
+sbom_format=spdx-json
+sbom_component_inventory_present=1
+sbom_dependency_reviewed=1
+sbom_vulnerability_reviewed=1
+sbom_license_reviewed=1
+sbom_reviewed=1
+installer_sbom_recorded=1
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+host_mutation_performed=0
+```
+
+CycloneDX JSON is also accepted when its local shape markers are present and the evidence manifest declares `sbom_format=cyclonedx-json`.
+
+## Validation
+
+Validated locally:
+
+```text
+sh scripts/test-production-installer-sbom-evidence-intake-validator-contract.sh
+production_installer_sbom_evidence_intake_validator_contract: ok
+```
+
+## Next recommended lane
+
+```text
+Generate a production-installer SBOM for a tagged release artifact candidate, review dependency, vulnerability, and license evidence, then validate the bundle with the SBOM evidence intake validator before any promotion review.
+```
+
+## Non-claims
+
+This status record is not a generated SBOM, not SBOM acceptance, not artifact promotion, not production installer readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver readiness, not immutable Fedora readiness, not security hardening, not malware prevention, not ransomware prevention, and not OS-replacement readiness.

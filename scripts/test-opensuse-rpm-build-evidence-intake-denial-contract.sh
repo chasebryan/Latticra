@@ -124,7 +124,7 @@ require_contains 'opensuse_obs_publication_claimed=0' "$contract"
 require_contains 'request build evidence' "$contract"
 require_contains 'accept build evidence' "$contract"
 require_contains 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_contract: ok' "$contract"
 
 require_contains "$review_contract" "$contract"

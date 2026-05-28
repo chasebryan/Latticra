@@ -28,6 +28,7 @@ require_no_rpm_artifacts() {
 }
 
 contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md'
+archive_gate_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md'
 disposition_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md'
 review_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
 denial_contract='docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
@@ -40,6 +41,7 @@ environment_contract='docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md'
 gate_contract='docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md'
 
 require_file "$contract"
+require_file "$archive_gate_contract"
 require_file "$disposition_contract"
 require_file "$review_contract"
 require_file "$denial_contract"
@@ -149,9 +151,10 @@ require_contains 'archive denied build evidence' "$contract"
 require_contains 're-request build evidence' "$contract"
 require_contains 'accept build evidence' "$contract"
 require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' "$contract"
 require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract: ok' "$contract"
 
+require_contains "$archive_gate_contract" "$contract"
 require_contains "$contract" "$disposition_contract"
 require_contains "$contract" "$review_contract"
 require_contains "$contract" "$denial_contract"

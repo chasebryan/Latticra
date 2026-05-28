@@ -5,9 +5,9 @@ Date: 2026-05-26
 
 ## Scope
 
-This record tracks the cryptographic assurance and key-management baseline for cryptographic module boundaries, FIPS/CMVP claim gates, algorithm and parameter inventory, key lifecycle, key storage, key destruction, randomness, self-tests, sensitive-data handling, post-quantum migration planning, Seal metadata, signing authority, and cryptographic non-claims.
+This record tracks the cryptographic assurance and key-management baseline for cryptographic module boundaries, FIPS/CMVP claim gates, algorithm and parameter inventory, key lifecycle, key storage, key destruction, randomness, self-tests, sensitive-data handling, post-quantum migration planning, Seal metadata, Q-Seal provider self-test evidence, signing authority, and cryptographic non-claims.
 
-It does not implement production cryptography, signing authority, key storage, key generation, entropy collection, random-bit generation, FIPS validation, CMVP submission, CAVP testing, post-quantum migration, compliance, or runtime authority.
+It does not implement production cryptography, signing authority, key storage, production key generation, entropy collection, standalone random-bit generation authority, FIPS validation, CMVP submission, CAVP testing, post-quantum migration, compliance, or runtime authority.
 
 ## Current fields
 
@@ -21,6 +21,22 @@ seal_pqc_integration_frame_present=1
 seal_pqc_integration_frame_guard_present=1
 seal_pqc_provider_adapter_present=1
 seal_pqc_provider_adapter_guard_present=1
+seal_hybrid_provider_self_test_present=1
+seal_hybrid_provider_self_test_passed=1
+seal_hybrid_provider_self_test_authority_neutral=1
+seal_hybrid_provider_self_test_ml_kem_parameter_sets_tested=3
+seal_hybrid_provider_self_test_records_authenticated_total=3
+seal_hybrid_provider_self_test_transcript_aad_bound=1
+seal_hybrid_provider_self_test_transcript_tampering_rejected_total=3
+seal_hybrid_provider_self_test_secret_output_emitted=0
+seal_hybrid_provider_self_test_record_output_emitted=0
+seal_hybrid_provider_self_test_runtime_authority_granted=0
+q_seal_ml_kem_provider_self_test_present=1
+q_seal_ml_kem_provider_self_test_passed=1
+q_seal_ml_kem_provider_self_test_authority_neutral=1
+q_seal_ml_kem_provider_self_test_secret_output_emitted=0
+q_seal_ml_kem_provider_self_test_ciphertext_output_emitted=0
+q_seal_ml_kem_provider_self_test_runtime_authority_granted=0
 fips_140_3_boundary_required_before_production_crypto=1
 cmvp_validation_path_required_before_fips_claim=1
 validated_module_claim_requires_certificate=1
@@ -59,8 +75,23 @@ side_channel_sensitive_data_review_required=1
 post_quantum_migration_inventory_required=1
 cnsa_2_pq_planning_tracked=1
 non_fips_disclosure_required_if_not_validated=1
-seal_crypto_metadata_only_current=1
-implementation_behavior_changed=0
+seal_crypto_metadata_only_current=0
+seal_crypto_authority_neutral_current=1
+seal_true_crypto_substrate_present=1
+seal_hybrid_envelope_hkdf_provider_api_used=1
+seal_hybrid_envelope_hkdf_sha256_digest_bound=1
+seal_hybrid_envelope_hkdf_manual_fallback_used=0
+seal_hybrid_envelope_aes_gcm_provider_api_used=1
+seal_hybrid_envelope_aes_gcm_provider_cipher_fetched=1
+seal_hybrid_envelope_aes_gcm_96bit_nonce_configured=1
+seal_hybrid_envelope_aes_gcm_128bit_tag_bound=1
+seal_hybrid_envelope_aes_gcm_static_cipher_fallback_used=0
+seal_hybrid_envelope_random_bytes_ex_api_used=1
+seal_hybrid_envelope_random_bytes_strength_bits_requested=256
+seal_hybrid_envelope_random_bytes_manual_fallback_used=0
+seal_hybrid_envelope_generated_salt_csprng_success=1
+seal_hybrid_envelope_generated_nonce_csprng_success=1
+implementation_behavior_changed=1
 production_crypto_added=0
 signing_authority_granted=0
 key_storage_added=0

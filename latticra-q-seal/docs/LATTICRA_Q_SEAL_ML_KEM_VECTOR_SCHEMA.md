@@ -9,7 +9,7 @@ The Latticra Q-Seal ML-KEM vector schema records the test-vector shape required 
 
 This slice is intentionally schema-only. It records the fields Q-Seal must understand for ML-KEM key generation, encapsulation, decapsulation, key checks, AFT tests, VAL tests, parameter sets, and implicit rejection, but it does not parse JSON, load vector bundles, generate responses, submit ACVP sessions, execute vectors, or enable cryptography.
 
-Vector-bundle authority, SHA-256 digest policy, freshness, license review, errata binding, offline storage, and import review are recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`.
+Vector-bundle authority, SHA-256 digest policy, freshness, license review, errata binding, offline storage, and import review are recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`. The downstream offline fixture lock is recorded in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md`, and the digest and coverage rows are recorded in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`.
 
 ## Schema Fields
 
@@ -71,6 +71,8 @@ latticra-q-seal/src/q_seal_ml_kem_vector_schema.c
 latticra-q-seal/tests/q_seal_ml_kem_vector_schema_invariants.c
 latticra-q-seal/evidence/ML_KEM_VECTOR_SCHEMA.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md
+latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 ```

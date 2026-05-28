@@ -26,8 +26,17 @@ static unsigned required_items_satisfied(
     satisfied += one_if(manifest->sp_800_227_kem_usage_bound);
     satisfied += one_if(manifest->kat_manifest_bound);
     satisfied += one_if(manifest->acvp_intake_bound);
+    satisfied += one_if(manifest->acvp_capability_matrix_bound);
+    satisfied += one_if(manifest->acvp_fixture_row_plan_bound);
+    satisfied += one_if(manifest->acvp_fixture_digest_row_template_bound);
+    satisfied += one_if(manifest->acvp_parser_contract_bound);
+    satisfied += one_if(manifest->acvp_response_contract_bound);
+    satisfied += one_if(manifest->acvp_response_fixture_bound);
+    satisfied += one_if(manifest->acvp_submission_package_contract_bound);
     satisfied += one_if(manifest->vector_schema_bound);
     satisfied += one_if(manifest->vector_source_bound);
+    satisfied += one_if(manifest->vector_fixture_lock_bound);
+    satisfied += one_if(manifest->vector_fixture_digest_ledger_bound);
     satisfied += one_if(manifest->negative_test_evidence_bound);
     satisfied += one_if(manifest->memory_safety_evidence_bound);
     satisfied += one_if(manifest->api_misuse_resistance_bound);
@@ -98,8 +107,17 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->sp_800_227_kem_usage_bound = 1u;
     out->kat_manifest_bound = 1u;
     out->acvp_intake_bound = 1u;
+    out->acvp_capability_matrix_bound = 1u;
+    out->acvp_fixture_row_plan_bound = 1u;
+    out->acvp_fixture_digest_row_template_bound = 1u;
+    out->acvp_parser_contract_bound = 1u;
+    out->acvp_response_contract_bound = 1u;
+    out->acvp_response_fixture_bound = 1u;
+    out->acvp_submission_package_contract_bound = 1u;
     out->vector_schema_bound = 1u;
     out->vector_source_bound = 1u;
+    out->vector_fixture_lock_bound = 1u;
+    out->vector_fixture_digest_ledger_bound = 1u;
     out->negative_test_evidence_bound = 1u;
     out->memory_safety_evidence_bound = 1u;
     out->api_misuse_resistance_bound = 1u;
@@ -123,7 +141,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_binding_items_total = 26u;
+    out->required_binding_items_total = 35u;
     out->required_binding_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -168,8 +186,17 @@ int latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation
            manifest->sp_800_227_kem_usage_bound == 1u &&
            manifest->kat_manifest_bound == 1u &&
            manifest->acvp_intake_bound == 1u &&
+           manifest->acvp_capability_matrix_bound == 1u &&
+           manifest->acvp_fixture_row_plan_bound == 1u &&
+           manifest->acvp_fixture_digest_row_template_bound == 1u &&
+           manifest->acvp_parser_contract_bound == 1u &&
+           manifest->acvp_response_contract_bound == 1u &&
+           manifest->acvp_response_fixture_bound == 1u &&
+           manifest->acvp_submission_package_contract_bound == 1u &&
            manifest->vector_schema_bound == 1u &&
            manifest->vector_source_bound == 1u &&
+           manifest->vector_fixture_lock_bound == 1u &&
+           manifest->vector_fixture_digest_ledger_bound == 1u &&
            manifest->negative_test_evidence_bound == 1u &&
            manifest->memory_safety_evidence_bound == 1u &&
            manifest->api_misuse_resistance_bound == 1u &&
@@ -223,8 +250,17 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         "sp_800_227_kem_usage_bound=%u\n"
         "kat_manifest_bound=%u\n"
         "acvp_intake_bound=%u\n"
+        "acvp_capability_matrix_bound=%u\n"
+        "acvp_fixture_row_plan_bound=%u\n"
+        "acvp_fixture_digest_row_template_bound=%u\n"
+        "acvp_parser_contract_bound=%u\n"
+        "acvp_response_contract_bound=%u\n"
+        "acvp_response_fixture_bound=%u\n"
+        "acvp_submission_package_contract_bound=%u\n"
         "vector_schema_bound=%u\n"
         "vector_source_bound=%u\n"
+        "vector_fixture_lock_bound=%u\n"
+        "vector_fixture_digest_ledger_bound=%u\n"
         "negative_test_evidence_bound=%u\n"
         "memory_safety_evidence_bound=%u\n"
         "api_misuse_resistance_bound=%u\n"
@@ -269,8 +305,17 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_implementation_binding_manifest_
         manifest->sp_800_227_kem_usage_bound,
         manifest->kat_manifest_bound,
         manifest->acvp_intake_bound,
+        manifest->acvp_capability_matrix_bound,
+        manifest->acvp_fixture_row_plan_bound,
+        manifest->acvp_fixture_digest_row_template_bound,
+        manifest->acvp_parser_contract_bound,
+        manifest->acvp_response_contract_bound,
+        manifest->acvp_response_fixture_bound,
+        manifest->acvp_submission_package_contract_bound,
         manifest->vector_schema_bound,
         manifest->vector_source_bound,
+        manifest->vector_fixture_lock_bound,
+        manifest->vector_fixture_digest_ledger_bound,
         manifest->negative_test_evidence_bound,
         manifest->memory_safety_evidence_bound,
         manifest->api_misuse_resistance_bound,

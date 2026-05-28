@@ -161,6 +161,150 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
     request->runtime_entry_address_space_view_request.
         runtime_entry_stack_view_request =
         request->runtime_entry_stack_view_request;
+    if (latticra_kernel_runtime_entry_privilege_level_view_default_request(
+            &request->runtime_entry_privilege_level_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_privilege_level_view_request.
+        runtime_entry_address_space_view_request =
+        request->runtime_entry_address_space_view_request;
+    if (latticra_kernel_runtime_entry_syscall_gate_view_default_request(
+            &request->runtime_entry_syscall_gate_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_syscall_gate_view_request.
+        runtime_entry_privilege_level_view_request =
+        request->runtime_entry_privilege_level_view_request;
+    if (latticra_kernel_runtime_entry_syscall_dispatch_view_default_request(
+            &request->runtime_entry_syscall_dispatch_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_syscall_dispatch_view_request.
+        runtime_entry_syscall_gate_view_request =
+        request->runtime_entry_syscall_gate_view_request;
+    if (latticra_kernel_runtime_entry_syscall_return_view_default_request(
+            &request->runtime_entry_syscall_return_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_syscall_return_view_request.
+        runtime_entry_syscall_dispatch_view_request =
+        request->runtime_entry_syscall_dispatch_view_request;
+    if (latticra_kernel_runtime_entry_syscall_exit_view_default_request(
+            &request->runtime_entry_syscall_exit_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_syscall_exit_view_request.
+        runtime_entry_syscall_return_view_request =
+        request->runtime_entry_syscall_return_view_request;
+    if (latticra_kernel_runtime_entry_user_mode_resume_view_default_request(
+            &request->runtime_entry_user_mode_resume_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_user_mode_resume_view_request.
+        runtime_entry_syscall_exit_view_request =
+        request->runtime_entry_syscall_exit_view_request;
+    if (latticra_kernel_runtime_entry_post_resume_observation_view_default_request(
+            &request->runtime_entry_post_resume_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_post_resume_observation_view_request.
+        runtime_entry_user_mode_resume_view_request =
+        request->runtime_entry_user_mode_resume_view_request;
+    if (latticra_kernel_runtime_entry_scheduler_return_observation_view_default_request(
+            &request->runtime_entry_scheduler_return_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_scheduler_return_observation_view_request.
+        runtime_entry_post_resume_observation_view_request =
+        request->runtime_entry_post_resume_observation_view_request;
+    if (latticra_kernel_runtime_entry_process_return_observation_view_default_request(
+            &request->runtime_entry_process_return_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_process_return_observation_view_request.
+        runtime_entry_scheduler_return_observation_view_request =
+        request->runtime_entry_scheduler_return_observation_view_request;
+    if (latticra_kernel_runtime_entry_idle_return_observation_view_default_request(
+            &request->runtime_entry_idle_return_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_idle_return_observation_view_request.
+        runtime_entry_process_return_observation_view_request =
+        request->runtime_entry_process_return_observation_view_request;
+    if (latticra_kernel_runtime_entry_quiescent_return_observation_view_default_request(
+            &request->runtime_entry_quiescent_return_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_quiescent_return_observation_view_request.
+        runtime_entry_idle_return_observation_view_request =
+        request->runtime_entry_idle_return_observation_view_request;
+    if (latticra_kernel_runtime_entry_persistence_boundary_observation_view_default_request(
+            &request->runtime_entry_persistence_boundary_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_persistence_boundary_observation_view_request.
+        runtime_entry_quiescent_return_observation_view_request =
+        request->runtime_entry_quiescent_return_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_boundary_observation_view_default_request(
+            &request->runtime_entry_recovery_boundary_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_boundary_observation_view_request.
+        runtime_entry_persistence_boundary_observation_view_request =
+        request->runtime_entry_persistence_boundary_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_plan_observation_view_default_request(
+            &request->runtime_entry_recovery_plan_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_plan_observation_view_request.
+        runtime_entry_recovery_boundary_observation_view_request =
+        request->runtime_entry_recovery_boundary_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_disposition_observation_view_default_request(
+            &request->runtime_entry_recovery_disposition_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_disposition_observation_view_request.
+        runtime_entry_recovery_plan_observation_view_request =
+        request->runtime_entry_recovery_plan_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_outcome_observation_view_default_request(
+            &request->runtime_entry_recovery_outcome_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_outcome_observation_view_request.
+        runtime_entry_recovery_disposition_observation_view_request =
+        request->runtime_entry_recovery_disposition_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_closeout_observation_view_default_request(
+            &request->runtime_entry_recovery_closeout_observation_view_request) !=
+            LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_closeout_observation_view_request.
+        runtime_entry_recovery_outcome_observation_view_request =
+        request->runtime_entry_recovery_outcome_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_audit_observation_view_default_request(
+            &request->runtime_entry_recovery_audit_observation_view_request) !=
+        LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_audit_observation_view_request.
+        runtime_entry_recovery_closeout_observation_view_request =
+        request->runtime_entry_recovery_closeout_observation_view_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -248,6 +392,42 @@ latticra_status_t latticra_kernel_state_machine_step(
         request->runtime_entry_stack_view_request;
     transition_request.runtime_entry_address_space_view_request =
         request->runtime_entry_address_space_view_request;
+    transition_request.runtime_entry_privilege_level_view_request =
+        request->runtime_entry_privilege_level_view_request;
+    transition_request.runtime_entry_syscall_gate_view_request =
+        request->runtime_entry_syscall_gate_view_request;
+    transition_request.runtime_entry_syscall_dispatch_view_request =
+        request->runtime_entry_syscall_dispatch_view_request;
+    transition_request.runtime_entry_syscall_return_view_request =
+        request->runtime_entry_syscall_return_view_request;
+    transition_request.runtime_entry_syscall_exit_view_request =
+        request->runtime_entry_syscall_exit_view_request;
+    transition_request.runtime_entry_user_mode_resume_view_request =
+        request->runtime_entry_user_mode_resume_view_request;
+    transition_request.runtime_entry_post_resume_observation_view_request =
+        request->runtime_entry_post_resume_observation_view_request;
+    transition_request.runtime_entry_scheduler_return_observation_view_request =
+        request->runtime_entry_scheduler_return_observation_view_request;
+    transition_request.runtime_entry_process_return_observation_view_request =
+        request->runtime_entry_process_return_observation_view_request;
+    transition_request.runtime_entry_idle_return_observation_view_request =
+        request->runtime_entry_idle_return_observation_view_request;
+    transition_request.runtime_entry_quiescent_return_observation_view_request =
+        request->runtime_entry_quiescent_return_observation_view_request;
+    transition_request.runtime_entry_persistence_boundary_observation_view_request =
+        request->runtime_entry_persistence_boundary_observation_view_request;
+    transition_request.runtime_entry_recovery_boundary_observation_view_request =
+        request->runtime_entry_recovery_boundary_observation_view_request;
+    transition_request.runtime_entry_recovery_plan_observation_view_request =
+        request->runtime_entry_recovery_plan_observation_view_request;
+    transition_request.runtime_entry_recovery_disposition_observation_view_request =
+        request->runtime_entry_recovery_disposition_observation_view_request;
+    transition_request.runtime_entry_recovery_outcome_observation_view_request =
+        request->runtime_entry_recovery_outcome_observation_view_request;
+    transition_request.runtime_entry_recovery_closeout_observation_view_request =
+        request->runtime_entry_recovery_closeout_observation_view_request;
+    transition_request.runtime_entry_recovery_audit_observation_view_request =
+        request->runtime_entry_recovery_audit_observation_view_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;

@@ -1,0 +1,24 @@
+name: Fedora Local Mock Build Gate Contract
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT.md'
+      - 'docs/status/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT_STATUS.md'
+      - 'scripts/test-fedora-local-mock-build-gate-contract.sh'
+      - '.github/workflows/fedora-local-mock-build-gate-contract.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-local-mock-build-gate-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora local mock build gate contract guard
+        run: sh scripts/test-fedora-local-mock-build-gate-contract.sh

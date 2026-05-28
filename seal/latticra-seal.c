@@ -1,5 +1,8 @@
 #define _POSIX_C_SOURCE 200809L
 
+#include "latticra/seal_hybrid_envelope.h"
+#include "latticra/seal_hybrid_provider_self_test.h"
+
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -10,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -20,26 +24,66 @@
 #define LATTICRA_SEAL_VERSION "v0.3-dev"
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
+#define REPORT_FILE "latticra-seal-cli-report.txt"
 #define REPORT_PATH "reports/latticra-seal-cli-report.txt"
+#define REPORT_TMP_FILE "latticra-seal-cli-report.tmp"
 #define REPORT_TMP_PATH "reports/latticra-seal-cli-report.tmp"
+#define HASH_LIST_FILE "latticra-seal-cli-hashes.txt"
 #define HASH_LIST_PATH "reports/latticra-seal-cli-hashes.txt"
+#define HASH_LIST_TMP_FILE "latticra-seal-cli-hashes.tmp"
 #define HASH_LIST_TMP_PATH "reports/latticra-seal-cli-hashes.tmp"
 #define LEGACY_SMOKE_REPORT_PATH "reports/latticra-seal-report.txt"
 #define LEGACY_SMOKE_HASH_LIST_PATH "reports/latticra-seal-file-hashes.txt"
 #define BASELINE_PATH "latticra.seal.lock"
 #define BASELINE_TMP_PATH "latticra.seal.lock.tmp"
 
+static const unsigned char HYBRID_SELF_CHECK_CLASSICAL_SECRET[LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES] = {
+    0x4c, 0x61, 0x74, 0x74, 0x69, 0x63, 0x72, 0x61,
+    0x2d, 0x73, 0x65, 0x61, 0x6c, 0x2d, 0x63, 0x31,
+    0x10, 0x32, 0x54, 0x76, 0x98, 0xba, 0xdc, 0xfe,
+    0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef
+};
+
+static const unsigned char HYBRID_SELF_CHECK_PQC_SECRET[LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES] = {
+    0x4c, 0x61, 0x74, 0x74, 0x69, 0x63, 0x72, 0x61,
+    0x2d, 0x73, 0x65, 0x61, 0x6c, 0x2d, 0x71, 0x31,
+    0xef, 0xcd, 0xab, 0x89, 0x67, 0x45, 0x23, 0x01,
+    0xfe, 0xdc, 0xba, 0x98, 0x76, 0x54, 0x32, 0x10
+};
+
+static const unsigned char HYBRID_SELF_CHECK_AAD[] =
+    "latticra-seal-cli:hybrid-envelope:self-check:v1";
+static const unsigned char HYBRID_SELF_CHECK_PLAINTEXT[] =
+    "Latticra Seal hybrid envelope command self-check payload";
+
 typedef struct {
     int failures;
     int warnings;
     FILE *report;
+    int report_dir_fd;
+    int hash_list_fd;
+    bool preserve_hash_list_fd;
 } SealRun;
+
+static void close_hash_list_fd(SealRun *run);
 
 typedef struct {
     char **items;
     size_t len;
     size_t cap;
 } PathList;
+
+typedef struct {
+    char *path;
+    dev_t dev;
+    ino_t ino;
+} CollectedFile;
+
+typedef struct {
+    CollectedFile *items;
+    size_t len;
+    size_t cap;
+} CollectedFileList;
 
 typedef struct {
     char *hash;
@@ -88,39 +132,119 @@ static bool file_exists(const char *path) {
     return ok;
 }
 
-static bool ensure_report_dir(void) {
-    struct stat st;
-
-    if (lstat(REPORT_DIR, &st) == 0) {
-        if (S_ISLNK(st.st_mode)) {
-            fprintf(stderr, "refusing symlink report directory: %s\n", REPORT_DIR);
-            return false;
-        }
-        if (!S_ISDIR(st.st_mode)) {
-            fprintf(stderr, "refusing non-directory report path: %s\n", REPORT_DIR);
-            return false;
-        }
-        if ((st.st_mode & (S_IWGRP | S_IWOTH)) != 0) {
-            fprintf(stderr, "refusing writable report directory: %s\n", REPORT_DIR);
-            return false;
-        }
-        return true;
-    }
-
-    if (errno != ENOENT) {
-        fprintf(stderr, "could not inspect report directory: %s\n", REPORT_DIR);
+static bool report_dir_stat_is_safe(const struct stat *st) {
+    if (S_ISLNK(st->st_mode)) {
+        fprintf(stderr, "refusing symlink report directory: %s\n", REPORT_DIR);
         return false;
     }
-
-    if (mkdir(REPORT_DIR, 0700) != 0) {
-        fprintf(stderr, "could not create report directory: %s\n", REPORT_DIR);
+    if (!S_ISDIR(st->st_mode)) {
+        fprintf(stderr, "refusing non-directory report path: %s\n", REPORT_DIR);
+        return false;
+    }
+    if ((st->st_mode & (S_IWGRP | S_IWOTH)) != 0) {
+        fprintf(stderr, "refusing writable report directory: %s\n", REPORT_DIR);
         return false;
     }
 
     return true;
 }
 
-static FILE *open_regular_file_for_read(const char *path) {
+static bool same_file_identity(const struct stat *a, const struct stat *b) {
+    return a->st_dev == b->st_dev && a->st_ino == b->st_ino;
+}
+
+static int open_report_dir_for_artifacts(bool create_if_missing, bool *missing) {
+    if (missing) {
+        *missing = false;
+    }
+
+    for (int attempt = 0; attempt < 3; attempt++) {
+        struct stat path_st;
+
+        if (lstat(REPORT_DIR, &path_st) != 0) {
+            if (errno == ENOENT) {
+                if (!create_if_missing) {
+                    if (missing) {
+                        *missing = true;
+                    }
+                    return -1;
+                }
+
+                if (mkdir(REPORT_DIR, 0700) == 0 || errno == EEXIST) {
+                    continue;
+                }
+
+                fprintf(stderr, "could not create report directory: %s\n", REPORT_DIR);
+                return -1;
+            }
+
+            fprintf(stderr, "could not inspect report directory: %s\n", REPORT_DIR);
+            return -1;
+        }
+
+        if (!report_dir_stat_is_safe(&path_st)) {
+            return -1;
+        }
+
+        int flags = O_RDONLY;
+#ifdef O_CLOEXEC
+        flags |= O_CLOEXEC;
+#endif
+#ifdef O_DIRECTORY
+        flags |= O_DIRECTORY;
+#endif
+#ifdef O_NOFOLLOW
+        flags |= O_NOFOLLOW;
+#endif
+
+        int fd = open(REPORT_DIR, flags);
+
+        if (fd < 0) {
+            if (errno == ENOENT) {
+                if (!create_if_missing) {
+                    if (missing) {
+                        *missing = true;
+                    }
+                    return -1;
+                }
+
+                continue;
+            }
+
+            fprintf(stderr, "could not open report directory: %s\n", REPORT_DIR);
+            return -1;
+        }
+
+        struct stat fd_st;
+
+        if (fstat(fd, &fd_st) != 0) {
+            close(fd);
+            fprintf(stderr, "could not inspect report directory: %s\n", REPORT_DIR);
+            return -1;
+        }
+
+        if (!report_dir_stat_is_safe(&fd_st)) {
+            close(fd);
+            return -1;
+        }
+
+        if (!same_file_identity(&path_st, &fd_st)) {
+            close(fd);
+            continue;
+        }
+
+        return fd;
+    }
+
+    fprintf(stderr, "could not stabilize report directory: %s\n", REPORT_DIR);
+    return -1;
+}
+
+static int open_regular_file_at_for_read_fd_checked(
+    int dirfd,
+    const char *path,
+    bool require_single_link
+) {
     struct stat st;
 
     int flags = O_RDONLY;
@@ -134,14 +258,33 @@ static FILE *open_regular_file_for_read(const char *path) {
     flags |= O_NONBLOCK;
 #endif
 
-    int fd = open(path, flags);
+    int fd = openat(dirfd, path, flags);
 
     if (fd < 0) {
-        return NULL;
+        return -1;
     }
 
-    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode)) {
+    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) ||
+        (require_single_link && st.st_nlink != 1)) {
         close(fd);
+        return -1;
+    }
+
+    return fd;
+}
+
+static FILE *open_regular_file_at_for_read_checked(
+    int dirfd,
+    const char *path,
+    bool require_single_link
+) {
+    int fd = open_regular_file_at_for_read_fd_checked(
+        dirfd,
+        path,
+        require_single_link
+    );
+
+    if (fd < 0) {
         return NULL;
     }
 
@@ -154,18 +297,14 @@ static FILE *open_regular_file_for_read(const char *path) {
     return file;
 }
 
-static FILE *open_regular_file_for_write(const char *path) {
+static FILE *open_regular_file_for_read_checked(const char *path, bool require_single_link) {
+    return open_regular_file_at_for_read_checked(AT_FDCWD, path, require_single_link);
+}
+
+static FILE *open_collected_file_for_read(const CollectedFile *file) {
     struct stat st;
 
-    if (lstat(path, &st) == 0) {
-        if (S_ISLNK(st.st_mode) || !S_ISREG(st.st_mode)) {
-            return NULL;
-        }
-    } else if (errno != ENOENT) {
-        return NULL;
-    }
-
-    int flags = O_WRONLY | O_CREAT | O_TRUNC;
+    int flags = O_RDONLY;
 #ifdef O_CLOEXEC
     flags |= O_CLOEXEC;
 #endif
@@ -176,13 +315,102 @@ static FILE *open_regular_file_for_write(const char *path) {
     flags |= O_NONBLOCK;
 #endif
 
-    int fd = open(path, flags, 0600);
+    int fd = open(file->path, flags);
 
     if (fd < 0) {
         return NULL;
     }
 
-    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode)) {
+    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) ||
+        st.st_nlink != 1 || st.st_dev != file->dev || st.st_ino != file->ino) {
+        close(fd);
+        return NULL;
+    }
+
+    FILE *stream = fdopen(fd, "r");
+
+    if (!stream) {
+        close(fd);
+    }
+
+    return stream;
+}
+
+static DIR *open_directory_for_traversal(
+    const char *path,
+    const struct stat *expected_dir
+) {
+    int flags = O_RDONLY;
+#ifdef O_CLOEXEC
+    flags |= O_CLOEXEC;
+#endif
+#ifdef O_DIRECTORY
+    flags |= O_DIRECTORY;
+#endif
+#ifdef O_NOFOLLOW
+    flags |= O_NOFOLLOW;
+#endif
+
+    int fd = open(path, flags);
+
+    if (fd < 0) {
+        return NULL;
+    }
+
+    struct stat st;
+
+    if (fstat(fd, &st) != 0 || !S_ISDIR(st.st_mode) ||
+        (expected_dir && !same_file_identity(&st, expected_dir))) {
+        close(fd);
+        return NULL;
+    }
+
+    DIR *dir = fdopendir(fd);
+
+    if (!dir) {
+        close(fd);
+    }
+
+    return dir;
+}
+
+static FILE *open_regular_file_for_read(const char *path) {
+    return open_regular_file_for_read_checked(path, false);
+}
+
+static FILE *open_single_link_regular_file_for_read(const char *path) {
+    return open_regular_file_for_read_checked(path, true);
+}
+
+static FILE *open_single_link_regular_file_at_for_read(int dirfd, const char *path) {
+    return open_regular_file_at_for_read_checked(dirfd, path, true);
+}
+
+static int open_single_link_regular_file_at_for_read_fd(int dirfd, const char *path) {
+    return open_regular_file_at_for_read_fd_checked(dirfd, path, true);
+}
+
+static FILE *open_new_regular_file_at_for_write(int dirfd, const char *path) {
+    struct stat st;
+
+    int flags = O_WRONLY | O_CREAT | O_EXCL;
+#ifdef O_CLOEXEC
+    flags |= O_CLOEXEC;
+#endif
+#ifdef O_NOFOLLOW
+    flags |= O_NOFOLLOW;
+#endif
+#ifdef O_NONBLOCK
+    flags |= O_NONBLOCK;
+#endif
+
+    int fd = openat(dirfd, path, flags, 0600);
+
+    if (fd < 0) {
+        return NULL;
+    }
+
+    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) || st.st_nlink != 1) {
         close(fd);
         return NULL;
     }
@@ -198,36 +426,97 @@ static FILE *open_regular_file_for_write(const char *path) {
     return file;
 }
 
-static bool path_is_regular_or_missing(const char *path) {
+static FILE *open_new_regular_file_for_write(const char *path) {
+    return open_new_regular_file_at_for_write(AT_FDCWD, path);
+}
+
+static bool flush_and_sync_file(FILE *file) {
+    if (fflush(file) != 0) {
+        return false;
+    }
+
+    int fd = fileno(file);
+
+    if (fd < 0) {
+        return false;
+    }
+
+    return fsync(fd) == 0;
+}
+
+static bool sync_directory_fd(int dirfd) {
+    if (fsync(dirfd) == 0) {
+        return true;
+    }
+
+    return errno == EINVAL
+#ifdef ENOTSUP
+        || errno == ENOTSUP
+#endif
+        ;
+}
+
+static bool sync_cwd_directory(void) {
+    int flags = O_RDONLY;
+#ifdef O_CLOEXEC
+    flags |= O_CLOEXEC;
+#endif
+#ifdef O_DIRECTORY
+    flags |= O_DIRECTORY;
+#endif
+
+    int fd = open(".", flags);
+
+    if (fd < 0) {
+        return false;
+    }
+
+    bool ok = sync_directory_fd(fd);
+    close(fd);
+    return ok;
+}
+
+static bool path_at_is_regular_or_missing(int dirfd, const char *path) {
     struct stat st;
 
-    if (lstat(path, &st) == 0) {
-        return S_ISREG(st.st_mode);
+    if (fstatat(dirfd, path, &st, AT_SYMLINK_NOFOLLOW) == 0) {
+        return S_ISREG(st.st_mode) && st.st_nlink == 1;
+    }
+
+    return errno == ENOENT;
+}
+
+static bool path_is_regular_or_missing(const char *path) {
+    return path_at_is_regular_or_missing(AT_FDCWD, path);
+}
+
+static bool unlink_regular_at_if_present(int dirfd, const char *path) {
+    struct stat st;
+
+    if (fstatat(dirfd, path, &st, AT_SYMLINK_NOFOLLOW) == 0) {
+        if (!S_ISREG(st.st_mode) || st.st_nlink != 1) {
+            return false;
+        }
+
+        return unlinkat(dirfd, path, 0) == 0;
     }
 
     return errno == ENOENT;
 }
 
 static bool unlink_regular_if_present(const char *path) {
-    struct stat st;
-
-    if (lstat(path, &st) == 0) {
-        if (!S_ISREG(st.st_mode)) {
-            return false;
-        }
-
-        return unlink(path) == 0;
-    }
-
-    return errno == ENOENT;
+    return unlink_regular_at_if_present(AT_FDCWD, path);
 }
 
-static FILE *open_report_for_write(void) {
-    if (!path_is_regular_or_missing(REPORT_PATH)) {
+static FILE *open_report_for_write(int report_dir_fd) {
+    if (!path_at_is_regular_or_missing(report_dir_fd, REPORT_FILE)) {
+        return NULL;
+    }
+    if (!unlink_regular_at_if_present(report_dir_fd, REPORT_TMP_FILE)) {
         return NULL;
     }
 
-    return open_regular_file_for_write(REPORT_TMP_PATH);
+    return open_new_regular_file_at_for_write(report_dir_fd, REPORT_TMP_FILE);
 }
 
 static const char *visible_path(const char *path) {
@@ -257,7 +546,10 @@ static char *read_file(const char *path) {
         return NULL;
     }
 
-    rewind(f);
+    if (fseek(f, 0, SEEK_SET) != 0) {
+        fclose(f);
+        return NULL;
+    }
 
     char *buf = calloc((size_t)size + 1, 1);
 
@@ -267,9 +559,10 @@ static char *read_file(const char *path) {
     }
 
     size_t read_count = fread(buf, 1, (size_t)size, f);
-    fclose(f);
+    bool read_ok = read_count == (size_t)size && !ferror(f);
+    bool close_ok = fclose(f) == 0;
 
-    if (read_count != (size_t)size) {
+    if (!read_ok || !close_ok) {
         free(buf);
         return NULL;
     }
@@ -321,6 +614,15 @@ static void fail_run(SealRun *run, const char *msg) {
     emit(run, line);
 }
 
+static bool stdout_is_healthy(void) {
+    return fflush(stdout) == 0 && !ferror(stdout);
+}
+
+static int stdout_failure(const char *label) {
+    fprintf(stderr, "could not write %s to stdout\n", label);
+    return 1;
+}
+
 static bool pathlist_push(PathList *list, const char *path) {
     size_t len = strlen(path);
 
@@ -347,6 +649,36 @@ static bool pathlist_push(PathList *list, const char *path) {
     return true;
 }
 
+static bool collected_filelist_push(
+    CollectedFileList *list,
+    const char *path,
+    const struct stat *st
+) {
+    if (list->len == list->cap) {
+        size_t next_cap = list->cap == 0 ? 64 : list->cap * 2;
+        CollectedFile *next = realloc(list->items, next_cap * sizeof(CollectedFile));
+
+        if (!next) {
+            return false;
+        }
+
+        list->items = next;
+        list->cap = next_cap;
+    }
+
+    char *item = xstrdup(path);
+
+    if (!item) {
+        return false;
+    }
+
+    list->items[list->len].path = item;
+    list->items[list->len].dev = st->st_dev;
+    list->items[list->len].ino = st->st_ino;
+    list->len++;
+    return true;
+}
+
 static void pathlist_free(PathList *list) {
     for (size_t i = 0; i < list->len; i++) {
         free(list->items[i]);
@@ -358,10 +690,22 @@ static void pathlist_free(PathList *list) {
     list->cap = 0;
 }
 
-static int cmp_string_ptr(const void *a, const void *b) {
-    const char *const *pa = a;
-    const char *const *pb = b;
-    return strcmp(*pa, *pb);
+static void collected_filelist_free(CollectedFileList *list) {
+    for (size_t i = 0; i < list->len; i++) {
+        free(list->items[i].path);
+    }
+
+    free(list->items);
+    list->items = NULL;
+    list->len = 0;
+    list->cap = 0;
+}
+
+static int cmp_collected_file_path(const void *a, const void *b) {
+    const CollectedFile *fa = a;
+    const CollectedFile *fb = b;
+
+    return strcmp(fa->path, fb->path);
 }
 
 static bool pathlist_has_duplicate_items(const PathList *list) {
@@ -553,11 +897,12 @@ static bool path_excluded_file(const char *visible, const char *name, const Path
 
 static void collect_files(
     SealRun *run,
-    PathList *list,
+    CollectedFileList *list,
     const char *dir_path,
-    const PathList *excludes
+    const PathList *excludes,
+    const struct stat *expected_dir
 ) {
-    DIR *dir = opendir(dir_path);
+    DIR *dir = open_directory_for_traversal(dir_path, expected_dir);
 
     if (!dir) {
         char msg[512];
@@ -595,7 +940,7 @@ static void collect_files(
 
         if (S_ISDIR(st.st_mode)) {
             if (!path_excluded_dir(visible, entry->d_name, excludes)) {
-                collect_files(run, list, path, excludes);
+                collect_files(run, list, path, excludes, &st);
             }
 
             continue;
@@ -606,7 +951,14 @@ static void collect_files(
         }
 
         if (S_ISREG(st.st_mode)) {
-            if (!pathlist_push(list, path)) {
+            if (st.st_nlink != 1) {
+                char msg[512];
+                snprintf(msg, sizeof(msg), "refusing hard-linked file in digest scope: %.400s", visible_path(path));
+                fail_run(run, msg);
+                continue;
+            }
+
+            if (!collected_filelist_push(list, path, &st)) {
                 fail_run(run, "out of memory while collecting file paths");
                 closedir(dir);
                 return;
@@ -676,7 +1028,7 @@ static size_t pathlist_max_len(const PathList *list) {
 }
 
 static bool file_contains_secret_marker(
-    const char *path,
+    const CollectedFile *file,
     const PathList *markers,
     bool *read_ok
 ) {
@@ -688,7 +1040,7 @@ static bool file_contains_secret_marker(
     size_t marker_overlap = max_marker_len == 0 ? 0 : max_marker_len - 1;
     unsigned char *buf = malloc(marker_overlap + read_chunk);
     size_t prefix_len = 0;
-    FILE *f = open_regular_file_for_read(path);
+    FILE *f = open_collected_file_for_read(file);
 
     *read_ok = false;
 
@@ -744,22 +1096,15 @@ static bool file_contains_secret_marker(
     return false;
 }
 
-static bool sha256_file(const char *path, char out_hex[65]) {
+static bool sha256_stream(FILE *f, char out_hex[65]) {
     bool ok = false;
     unsigned char digest[EVP_MAX_MD_SIZE];
     unsigned int digest_len = 0;
     unsigned char buf[8192];
 
-    FILE *f = open_regular_file_for_read(path);
-
-    if (!f) {
-        return false;
-    }
-
     EVP_MD_CTX *ctx = EVP_MD_CTX_new();
 
     if (!ctx) {
-        fclose(f);
         return false;
     }
 
@@ -802,7 +1147,54 @@ static bool sha256_file(const char *path, char out_hex[65]) {
 
 done:
     EVP_MD_CTX_free(ctx);
-    fclose(f);
+    return ok;
+}
+
+static bool sha256_file(const char *path, char out_hex[65]) {
+    FILE *f = open_regular_file_for_read(path);
+
+    if (!f) {
+        return false;
+    }
+
+    bool ok = sha256_stream(f, out_hex);
+
+    if (fclose(f) != 0) {
+        ok = false;
+    }
+
+    return ok;
+}
+
+static bool sha256_collected_file(const CollectedFile *file, char out_hex[65]) {
+    FILE *f = open_collected_file_for_read(file);
+
+    if (!f) {
+        return false;
+    }
+
+    bool ok = sha256_stream(f, out_hex);
+
+    if (fclose(f) != 0) {
+        ok = false;
+    }
+
+    return ok;
+}
+
+static bool sha256_file_at(int dirfd, const char *path, char out_hex[65]) {
+    FILE *f = open_single_link_regular_file_at_for_read(dirfd, path);
+
+    if (!f) {
+        return false;
+    }
+
+    bool ok = sha256_stream(f, out_hex);
+
+    if (fclose(f) != 0) {
+        ok = false;
+    }
+
     return ok;
 }
 
@@ -1433,6 +1825,77 @@ static void require_manifest_assignment(
     }
 }
 
+static bool load_path_scope(
+    SealRun *run,
+    const char *manifest,
+    PathList *includes,
+    PathList *excludes
+);
+
+static bool load_required_files(SealRun *run, const char *manifest, PathList *required) {
+    const char *value;
+    size_t value_len;
+    size_t required_count = manifest_assignment_count(manifest, "policy.required_files", "paths");
+
+    if (required_count != 1 ||
+        !manifest_find_assignment_value(manifest, "policy.required_files", "paths", &value, &value_len) ||
+        !parse_string_array(value, value_len, required) ||
+        pathlist_has_duplicate_items(required) ||
+        !pathlist_all_safe(required, manifest_required_path_is_safe)) {
+        fail_run(run, "policy required files are missing, duplicate, or malformed");
+        return false;
+    }
+
+    return true;
+}
+
+static bool required_path_excluded_by_scope(const char *path, const PathList *excludes) {
+    if (path_excluded_file(path, basename_of(path), excludes)) {
+        return true;
+    }
+
+    for (const char *slash = strchr(path, '/'); slash; slash = strchr(slash + 1, '/')) {
+        char dir_path[PATH_MAX];
+        size_t dir_len = (size_t)(slash - path);
+
+        if (dir_len == 0 || dir_len >= sizeof(dir_path)) {
+            return true;
+        }
+
+        memcpy(dir_path, path, dir_len);
+        dir_path[dir_len] = '\0';
+
+        if (path_excluded_dir(dir_path, basename_of(dir_path), excludes)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static const char *first_required_file_excluded_from_scope(
+    const PathList *required,
+    const PathList *excludes
+) {
+    for (size_t i = 0; i < required->len; i++) {
+        if (required_path_excluded_by_scope(required->items[i], excludes)) {
+            return required->items[i];
+        }
+    }
+
+    return NULL;
+}
+
+static const char *first_missing_required_file(const PathList *required) {
+    for (size_t i = 0; i < required->len; i++) {
+        if (!file_exists(required->items[i])) {
+            return required->items[i];
+        }
+    }
+
+    return NULL;
+}
+
 static void check_manifest_shape(SealRun *run, const char *manifest) {
     section(run, "Manifest shape");
 
@@ -1477,16 +1940,17 @@ static void check_required_files(SealRun *run, const char *manifest) {
     required.len = 0;
     required.cap = 0;
 
-    const char *value;
-    size_t value_len;
-    size_t required_count = manifest_assignment_count(manifest, "policy.required_files", "paths");
+    PathList includes;
+    includes.items = NULL;
+    includes.len = 0;
+    includes.cap = 0;
 
-    if (required_count != 1 ||
-        !manifest_find_assignment_value(manifest, "policy.required_files", "paths", &value, &value_len) ||
-        !parse_string_array(value, value_len, &required) ||
-        pathlist_has_duplicate_items(&required) ||
-        !pathlist_all_safe(&required, manifest_required_path_is_safe)) {
-        fail_run(run, "policy required files are missing, duplicate, or malformed");
+    PathList excludes;
+    excludes.items = NULL;
+    excludes.len = 0;
+    excludes.cap = 0;
+
+    if (!load_required_files(run, manifest, &required)) {
         pathlist_free(&required);
         return;
     }
@@ -1505,7 +1969,27 @@ static void check_required_files(SealRun *run, const char *manifest) {
         }
     }
 
+    if (!load_path_scope(run, manifest, &includes, &excludes)) {
+        fail_run(run, "required file digest scope skipped because path scope was invalid");
+        pathlist_free(&required);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    const char *excluded_required =
+        first_required_file_excluded_from_scope(&required, &excludes);
+
+    if (excluded_required != NULL) {
+        snprintf(msg, sizeof(msg), "required file excluded from digest scope: %.400s", excluded_required);
+        fail_run(run, msg);
+    } else {
+        pass(run, "required files remain inside digest scope");
+    }
+
     pathlist_free(&required);
+    pathlist_free(&includes);
+    pathlist_free(&excludes);
 }
 
 static bool load_path_scope(
@@ -1623,18 +2107,18 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
         return;
     }
 
-    PathList list;
+    CollectedFileList list;
     list.items = NULL;
     list.len = 0;
     list.cap = 0;
 
     int traversal_failures_before = run->failures;
 
-    collect_files(run, &list, ".", &excludes);
+    collect_files(run, &list, ".", &excludes, NULL);
 
     if (run->failures != traversal_failures_before) {
         fail_run(run, "policy denial scan incomplete because traversal failed");
-        pathlist_free(&list);
+        collected_filelist_free(&list);
         pathlist_free(&includes);
         pathlist_free(&excludes);
         pathlist_free(&filename_patterns);
@@ -1642,14 +2126,15 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
         return;
     }
 
-    qsort(list.items, list.len, sizeof(char *), cmp_string_ptr);
+    qsort(list.items, list.len, sizeof(CollectedFile), cmp_collected_file_path);
 
     size_t filename_hits = 0;
     size_t content_hits = 0;
     size_t inspect_failures = 0;
 
     for (size_t i = 0; i < list.len; i++) {
-        const char *path = list.items[i];
+        CollectedFile *file = &list.items[i];
+        const char *path = file->path;
 
         if (denied_secret_filename(path, &filename_patterns)) {
             char msg[512];
@@ -1660,7 +2145,7 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
 
         bool read_ok;
 
-        if (file_contains_secret_marker(path, &content_markers, &read_ok)) {
+        if (file_contains_secret_marker(file, &content_markers, &read_ok)) {
             char msg[512];
             snprintf(msg, sizeof(msg), "possible secret content marker in: %.400s", visible_path(path));
             fail_run(run, msg);
@@ -1681,7 +2166,7 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
         pass(run, "no obvious secret content markers found");
     }
 
-    pathlist_free(&list);
+    collected_filelist_free(&list);
     pathlist_free(&includes);
     pathlist_free(&excludes);
     pathlist_free(&filename_patterns);
@@ -1691,7 +2176,14 @@ static void check_policy_denials(SealRun *run, const char *manifest) {
 static void write_digest_summary(SealRun *run, const char *manifest) {
     section(run, "Digest summary");
 
-    PathList list;
+    if (!run || run->report_dir_fd < 0) {
+        fail_run(run, "hash list not written because report directory was unavailable");
+        return;
+    }
+
+    close_hash_list_fd(run);
+
+    CollectedFileList list;
     list.items = NULL;
     list.len = 0;
     list.cap = 0;
@@ -1706,12 +2198,12 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
     excludes.len = 0;
     excludes.cap = 0;
 
-    if (unlink(HASH_LIST_PATH) != 0 && errno != ENOENT) {
+    if (!unlink_regular_at_if_present(run->report_dir_fd, HASH_LIST_FILE)) {
         fail_run(run, "could not clear previous hash list");
         return;
     }
 
-    if (unlink(HASH_LIST_TMP_PATH) != 0 && errno != ENOENT) {
+    if (!unlink_regular_at_if_present(run->report_dir_fd, HASH_LIST_TMP_FILE)) {
         fail_run(run, "could not clear temporary hash list");
         return;
     }
@@ -1723,25 +2215,77 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
         return;
     }
 
-    int traversal_failures_before = run->failures;
+    PathList required;
+    required.items = NULL;
+    required.len = 0;
+    required.cap = 0;
 
-    collect_files(run, &list, ".", &excludes);
-
-    if (run->failures != traversal_failures_before) {
-        fail_run(run, "hash list not written because digest traversal failed");
-        pathlist_free(&list);
+    if (!load_required_files(run, manifest, &required)) {
+        fail_run(run, "hash list not written because required file policy was invalid");
+        pathlist_free(&required);
         pathlist_free(&includes);
         pathlist_free(&excludes);
         return;
     }
 
-    qsort(list.items, list.len, sizeof(char *), cmp_string_ptr);
+    const char *missing_required = first_missing_required_file(&required);
 
-    FILE *hashes = open_regular_file_for_write(HASH_LIST_TMP_PATH);
+    if (missing_required) {
+        char msg[512];
+        snprintf(
+            msg,
+            sizeof(msg),
+            "hash list not written because required file is missing: %.400s",
+            missing_required
+        );
+        fail_run(run, msg);
+        pathlist_free(&required);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    const char *excluded_required = first_required_file_excluded_from_scope(&required, &excludes);
+
+    if (excluded_required) {
+        char msg[512];
+        snprintf(
+            msg,
+            sizeof(msg),
+            "hash list not written because required file is excluded from digest scope: %.400s",
+            excluded_required
+        );
+        fail_run(run, msg);
+        pathlist_free(&required);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    int traversal_failures_before = run->failures;
+
+    collect_files(run, &list, ".", &excludes, NULL);
+
+    if (run->failures != traversal_failures_before) {
+        fail_run(run, "hash list not written because digest traversal failed");
+        pathlist_free(&required);
+        collected_filelist_free(&list);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    qsort(list.items, list.len, sizeof(CollectedFile), cmp_collected_file_path);
+
+    FILE *hashes = open_new_regular_file_at_for_write(
+        run->report_dir_fd,
+        HASH_LIST_TMP_FILE
+    );
 
     if (!hashes) {
         fail_run(run, "could not write hash list");
-        pathlist_free(&list);
+        pathlist_free(&required);
+        collected_filelist_free(&list);
         pathlist_free(&includes);
         pathlist_free(&excludes);
         return;
@@ -1752,15 +2296,16 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
 
     for (size_t i = 0; i < list.len; i++) {
         char hex[65];
+        CollectedFile *file = &list.items[i];
 
-        if (!sha256_file(list.items[i], hex)) {
+        if (!sha256_collected_file(file, hex)) {
             char msg[512];
-            snprintf(msg, sizeof(msg), "could not hash file: %.400s", visible_path(list.items[i]));
+            snprintf(msg, sizeof(msg), "could not hash file: %.400s", visible_path(file->path));
             fail_run(run, msg);
             continue;
         }
 
-        if (fprintf(hashes, "%s  %s\n", hex, visible_path(list.items[i])) < 0) {
+        if (fprintf(hashes, "%s  %s\n", hex, visible_path(file->path)) < 0) {
             fail_run(run, "could not write hash entry");
             hash_write_ok = false;
             break;
@@ -1769,24 +2314,55 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
         hashed_count++;
     }
 
+    if (!flush_and_sync_file(hashes)) {
+        fail_run(run, "could not sync hash list");
+        hash_write_ok = false;
+    }
+
     if (fclose(hashes) != 0) {
         fail_run(run, "could not finalize hash list");
         hash_write_ok = false;
     }
 
     if (run->failures != traversal_failures_before || !hash_write_ok) {
-        (void)unlink(HASH_LIST_TMP_PATH);
+        (void)unlink_regular_at_if_present(run->report_dir_fd, HASH_LIST_TMP_FILE);
         fail_run(run, "hash list not written because file hashing failed");
-        pathlist_free(&list);
+        pathlist_free(&required);
+        collected_filelist_free(&list);
         pathlist_free(&includes);
         pathlist_free(&excludes);
         return;
     }
 
-    if (rename(HASH_LIST_TMP_PATH, HASH_LIST_PATH) != 0) {
-        (void)unlink(HASH_LIST_TMP_PATH);
+    if (!path_at_is_regular_or_missing(run->report_dir_fd, HASH_LIST_FILE)) {
+        (void)unlink_regular_at_if_present(run->report_dir_fd, HASH_LIST_TMP_FILE);
         fail_run(run, "could not promote hash list");
-        pathlist_free(&list);
+        pathlist_free(&required);
+        collected_filelist_free(&list);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    if (renameat(
+            run->report_dir_fd,
+            HASH_LIST_TMP_FILE,
+            run->report_dir_fd,
+            HASH_LIST_FILE
+        ) != 0) {
+        (void)unlink_regular_at_if_present(run->report_dir_fd, HASH_LIST_TMP_FILE);
+        fail_run(run, "could not promote hash list");
+        pathlist_free(&required);
+        collected_filelist_free(&list);
+        pathlist_free(&includes);
+        pathlist_free(&excludes);
+        return;
+    }
+
+    if (!sync_directory_fd(run->report_dir_fd)) {
+        fail_run(run, "could not sync promoted hash list");
+        pathlist_free(&required);
+        collected_filelist_free(&list);
         pathlist_free(&includes);
         pathlist_free(&excludes);
         return;
@@ -1803,12 +2379,21 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
         fail_run(run, "could not hash manifest");
     }
 
-    if (sha256_file(HASH_LIST_PATH, root_hex)) {
+    if (sha256_file_at(run->report_dir_fd, HASH_LIST_FILE, root_hex)) {
         char line[160];
         snprintf(line, sizeof(line), "root_digest_v0_2: %s", root_hex);
         emit(run, line);
     } else {
         fail_run(run, "could not hash digest list");
+    }
+
+    run->hash_list_fd = open_single_link_regular_file_at_for_read_fd(
+        run->report_dir_fd,
+        HASH_LIST_FILE
+    );
+
+    if (run->hash_list_fd < 0) {
+        fail_run(run, "could not retain generated hash list");
     }
 
     char count_line[160];
@@ -1817,7 +2402,8 @@ static void write_digest_summary(SealRun *run, const char *manifest) {
 
     emit(run, "hash_list: " HASH_LIST_PATH);
 
-    pathlist_free(&list);
+    pathlist_free(&required);
+    collected_filelist_free(&list);
     pathlist_free(&includes);
     pathlist_free(&excludes);
 }
@@ -1837,6 +2423,20 @@ static void write_header(SealRun *run) {
     emit(run, "Version: " LATTICRA_SEAL_VERSION);
     emit(run, "Mode: local-integrity");
     emit(run, stamp);
+}
+
+static void close_report_dir(SealRun *run) {
+    if (run && run->report_dir_fd >= 0) {
+        close(run->report_dir_fd);
+        run->report_dir_fd = -1;
+    }
+}
+
+static void close_hash_list_fd(SealRun *run) {
+    if (run && run->hash_list_fd >= 0) {
+        close(run->hash_list_fd);
+        run->hash_list_fd = -1;
+    }
 }
 
 static int finish(SealRun *run) {
@@ -1864,46 +2464,106 @@ static int finish(SealRun *run) {
     return run->failures == 0 ? 0 : 1;
 }
 
-static int finalize_report(SealRun *run, int code) {
+static int finalize_report(SealRun *run, int code, const char *stdout_label) {
     if (!run->report) {
+        close_report_dir(run);
+        close_hash_list_fd(run);
         return code;
+    }
+
+    if (!flush_and_sync_file(run->report)) {
+        FILE *report = run->report;
+        run->report = NULL;
+        (void)fclose(report);
+        if (run->report_dir_fd >= 0) {
+            (void)unlink_regular_at_if_present(run->report_dir_fd, REPORT_TMP_FILE);
+        }
+        close_report_dir(run);
+        close_hash_list_fd(run);
+        fprintf(stderr, "could not sync report: %s\n", REPORT_PATH);
+        return 2;
     }
 
     if (fclose(run->report) != 0) {
         run->report = NULL;
-        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+        if (run->report_dir_fd >= 0) {
+            (void)unlink_regular_at_if_present(run->report_dir_fd, REPORT_TMP_FILE);
+        }
+        close_report_dir(run);
+        close_hash_list_fd(run);
         fprintf(stderr, "could not finalize report: %s\n", REPORT_PATH);
         return 2;
     }
 
     run->report = NULL;
 
-    if (!path_is_regular_or_missing(REPORT_PATH)) {
-        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+    if (run->report_dir_fd < 0 ||
+        !path_at_is_regular_or_missing(run->report_dir_fd, REPORT_FILE)) {
+        if (run->report_dir_fd >= 0) {
+            (void)unlink_regular_at_if_present(run->report_dir_fd, REPORT_TMP_FILE);
+        }
+        close_report_dir(run);
+        close_hash_list_fd(run);
         fprintf(stderr, "could not promote report: %s\n", REPORT_PATH);
         return 2;
     }
 
-    if (rename(REPORT_TMP_PATH, REPORT_PATH) != 0) {
-        (void)unlink_regular_if_present(REPORT_TMP_PATH);
+    if (renameat(
+            run->report_dir_fd,
+            REPORT_TMP_FILE,
+            run->report_dir_fd,
+            REPORT_FILE
+        ) != 0) {
+        (void)unlink_regular_at_if_present(run->report_dir_fd, REPORT_TMP_FILE);
+        close_report_dir(run);
+        close_hash_list_fd(run);
         fprintf(stderr, "could not promote report: %s\n", REPORT_PATH);
         return 2;
+    }
+
+    if (!sync_directory_fd(run->report_dir_fd)) {
+        close_report_dir(run);
+        close_hash_list_fd(run);
+        fprintf(stderr, "could not sync promoted report: %s\n", REPORT_PATH);
+        return 2;
+    }
+
+    close_report_dir(run);
+
+    if (stdout_label && !stdout_is_healthy()) {
+        close_hash_list_fd(run);
+        return stdout_failure(stdout_label);
+    }
+
+    if (!(run->preserve_hash_list_fd && code == 0)) {
+        close_hash_list_fd(run);
     }
 
     return code;
 }
 
-static int command_check(void) {
-    if (!ensure_report_dir()) {
+static int run_check(bool preserve_hash_list_fd, int *out_hash_list_fd) {
+    if (out_hash_list_fd) {
+        *out_hash_list_fd = -1;
+    }
+
+    int report_dir_fd = open_report_dir_for_artifacts(true, NULL);
+
+    if (report_dir_fd < 0) {
         return 2;
     }
 
     SealRun run;
     run.failures = 0;
     run.warnings = 0;
-    run.report = open_report_for_write();
+    run.report = NULL;
+    run.report_dir_fd = report_dir_fd;
+    run.hash_list_fd = -1;
+    run.preserve_hash_list_fd = preserve_hash_list_fd;
+    run.report = open_report_for_write(run.report_dir_fd);
 
     if (!run.report) {
+        close_report_dir(&run);
         fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
         return 2;
     }
@@ -1917,7 +2577,7 @@ static int command_check(void) {
     if (!manifest) {
         fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
-        return finalize_report(&run, code);
+        return finalize_report(&run, code, "check report");
     }
 
     pass(&run, "latticra.seal exists");
@@ -1932,14 +2592,28 @@ static int command_check(void) {
     free(manifest);
 
     int code = finish(&run);
-    return finalize_report(&run, code);
+    code = finalize_report(&run, code, "check report");
+
+    if (code == 0 && preserve_hash_list_fd && out_hash_list_fd &&
+        run.hash_list_fd >= 0) {
+        *out_hash_list_fd = run.hash_list_fd;
+        run.hash_list_fd = -1;
+    }
+
+    close_hash_list_fd(&run);
+    return code;
 }
 
-static void print_manifest_value(
+static int command_check(void) {
+    return run_check(false, NULL);
+}
+
+static bool print_manifest_value(
     const char *manifest,
     const char *section_name,
     const char *key,
-    const char *label
+    const char *label,
+    const char *expected_value
 ) {
     const char *start;
     size_t len;
@@ -1947,20 +2621,38 @@ static void print_manifest_value(
 
     if (count == 0) {
         printf("%s: missing\n", label);
-        return;
+        return false;
     }
 
     if (count > 1) {
         printf("%s: duplicate\n", label);
-        return;
+        return false;
     }
 
     if (!manifest_find_quoted_assignment(manifest, section_name, key, &start, &len)) {
         printf("%s: malformed\n", label);
-        return;
+        return false;
     }
 
-    printf("%s: %.*s\n", label, (int)len, start);
+    if (len == 0) {
+        printf("%s: empty\n", label);
+        return false;
+    }
+
+    printf("%s: ", label);
+    (void)fwrite(start, 1, len, stdout);
+
+    if (expected_value) {
+        size_t expected_len = strlen(expected_value);
+
+        if (len != expected_len || strncmp(start, expected_value, expected_len) != 0) {
+            puts(" (unsupported)");
+            return false;
+        }
+    }
+
+    putchar('\n');
+    return true;
 }
 
 static int command_manifest(void) {
@@ -1974,22 +2666,68 @@ static int command_manifest(void) {
     puts("Latticra Seal Manifest Summary");
     puts("------------------------------");
 
-    print_manifest_value(manifest, "", "schema", "Schema");
-    print_manifest_value(manifest, "", "kind", "Kind");
-    print_manifest_value(manifest, "project", "name", "Project");
-    print_manifest_value(manifest, "project", "version", "Project Version");
-    print_manifest_value(manifest, "seal", "mode", "Seal Mode");
-    print_manifest_value(manifest, "seal", "status", "Seal Status");
-    print_manifest_value(manifest, "seal", "algorithm", "Digest Algorithm");
-    print_manifest_value(manifest, "seal", "trust_boundary", "Trust Boundary");
+    bool ok = true;
+
+    if (!print_manifest_value(manifest, "", "schema", "Schema", "latticra.seal/v0.1")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "", "format", "Format", "toml")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "", "kind", "Kind", "local-integrity-manifest")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "project", "name", "Project", NULL)) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "project", "version", "Project Version", NULL)) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "seal", "mode", "Seal Mode", "local-integrity")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "seal", "status", "Seal Status", "unsigned")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "seal", "algorithm", "Digest Algorithm", "sha256")) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "seal", "digest_encoding", "Digest Encoding", "hex")) {
+        ok = false;
+    }
+    if (!print_manifest_value(
+        manifest,
+        "seal",
+        "canonicalization",
+        "Canonicalization",
+        "relative-path + raw-bytes + unix-lf-preferred"
+    )) {
+        ok = false;
+    }
+    if (!print_manifest_value(manifest, "seal", "trust_boundary", "Trust Boundary", "project-root")) {
+        ok = false;
+    }
 
     free(manifest);
+
+    if (!stdout_is_healthy()) {
+        return stdout_failure("manifest summary");
+    }
+
+    if (!ok) {
+        fprintf(
+            stderr,
+            "manifest summary failed: required fields are missing, duplicate, malformed, empty, or unsupported\n"
+        );
+        return 1;
+    }
+
     return 0;
 }
 
 
 
-static bool files_equal(const char *a, const char *b);
+static bool files_equal_fd_and_path(int fd, const char *path);
 
 static void strip_newline(char *s) {
     size_t n = strlen(s);
@@ -2050,25 +2788,17 @@ static bool is_sha256_hex(const char *hash) {
     return hash[64] == '\0';
 }
 
-static bool read_hash_list(const char *path, HashList *list) {
-    FILE *f = open_regular_file_for_read(path);
-
-    if (!f) {
-        return false;
-    }
-
+static bool read_hash_list_stream(FILE *f, HashList *list) {
     char line[8192];
 
     while (fgets(line, sizeof(line), f)) {
         if (!strchr(line, '\n') && !feof(f)) {
-            fclose(f);
             return false;
         }
 
         strip_newline(line);
 
         if (strlen(line) < 67 || line[64] != ' ' || line[65] != ' ') {
-            fclose(f);
             return false;
         }
 
@@ -2077,38 +2807,86 @@ static bool read_hash_list(const char *path, HashList *list) {
         hash[64] = '\0';
 
         if (!is_sha256_hex(hash)) {
-            fclose(f);
             return false;
         }
 
         char *file_path = line + 66;
 
         if (*file_path == '\0' || *file_path == ' ' || *file_path == '\t') {
-            fclose(f);
             return false;
         }
 
         if (!hashlist_path_is_safe(file_path)) {
-            fclose(f);
             return false;
         }
 
         if (list->len > 0 && strcmp(list->items[list->len - 1].path, file_path) >= 0) {
-            fclose(f);
             return false;
         }
 
         if (!hashlist_push(list, hash, file_path)) {
-            fclose(f);
             return false;
         }
     }
 
-    if (fclose(f) != 0) {
+    return !ferror(f);
+}
+
+static bool read_hash_list(const char *path, HashList *list) {
+    FILE *f = open_single_link_regular_file_for_read(path);
+
+    if (!f) {
         return false;
     }
 
-    return true;
+    bool ok = read_hash_list_stream(f, list);
+
+    if (fclose(f) != 0) {
+        ok = false;
+    }
+
+    return ok;
+}
+
+static FILE *open_stream_from_fd_start(int fd) {
+    if (fd < 0) {
+        return NULL;
+    }
+
+    int dup_fd = dup(fd);
+
+    if (dup_fd < 0) {
+        return NULL;
+    }
+
+    if (lseek(dup_fd, 0, SEEK_SET) < 0) {
+        close(dup_fd);
+        return NULL;
+    }
+
+    FILE *f = fdopen(dup_fd, "r");
+
+    if (!f) {
+        close(dup_fd);
+    }
+
+    return f;
+}
+
+static bool read_hash_list_fd(int fd, HashList *list) {
+    FILE *f = open_stream_from_fd_start(fd);
+
+    if (!f) {
+        return false;
+    }
+
+    bool ok = read_hash_list_stream(f, list);
+
+    if (fclose(f) != 0) {
+        ok = false;
+    }
+
+    return ok;
 }
 
 static void emit_change(SealRun *run, const char *kind, const char *path) {
@@ -2123,9 +2901,9 @@ static void emit_change(SealRun *run, const char *kind, const char *path) {
 static void compare_hash_lists_report(
     SealRun *run,
     const char *baseline_path,
-    const char *current_path
+    int current_fd
 ) {
-    if (files_equal(current_path, baseline_path)) {
+    if (files_equal_fd_and_path(current_fd, baseline_path)) {
         pass(run, "current file hashes match saved baseline");
         return;
     }
@@ -2147,7 +2925,7 @@ static void compare_hash_lists_report(
         return;
     }
 
-    if (!read_hash_list(current_path, &current)) {
+    if (!read_hash_list_fd(current_fd, &current)) {
         hashlist_free(&baseline);
         hashlist_free(&current);
         fail_run(run, "could not read current hash list");
@@ -2206,14 +2984,14 @@ static void compare_hash_lists_report(
     hashlist_free(&current);
 }
 
-static bool copy_file(const char *src, const char *dst) {
-    FILE *in = open_regular_file_for_read(src);
+static bool copy_file_fd_to_path(int src_fd, const char *dst) {
+    FILE *in = open_stream_from_fd_start(src_fd);
 
     if (!in) {
         return false;
     }
 
-    FILE *out = open_regular_file_for_write(dst);
+    FILE *out = open_new_regular_file_for_write(dst);
 
     if (!out) {
         fclose(in);
@@ -2240,15 +3018,21 @@ static bool copy_file(const char *src, const char *dst) {
         }
     }
 
+    if (ok && !flush_and_sync_file(out)) {
+        ok = false;
+    }
+
     if (fclose(out) != 0) {
         ok = false;
     }
 
-    fclose(in);
+    if (fclose(in) != 0) {
+        ok = false;
+    }
     return ok;
 }
 
-static bool write_baseline_atomic(void) {
+static bool write_baseline_atomic(int hash_fd) {
     if (!path_is_regular_or_missing(BASELINE_PATH)) {
         return false;
     }
@@ -2257,7 +3041,7 @@ static bool write_baseline_atomic(void) {
         return false;
     }
 
-    if (!copy_file(HASH_LIST_PATH, BASELINE_TMP_PATH)) {
+    if (!copy_file_fd_to_path(hash_fd, BASELINE_TMP_PATH)) {
         (void)unlink_regular_if_present(BASELINE_TMP_PATH);
         return false;
     }
@@ -2272,97 +3056,160 @@ static bool write_baseline_atomic(void) {
         return false;
     }
 
-    return true;
+    return sync_cwd_directory();
 }
 
-static bool files_equal(const char *a, const char *b) {
-    FILE *fa = open_regular_file_for_read(a);
+static bool file_streams_equal(FILE *a, FILE *b) {
+    unsigned char a_buf[8192];
+    unsigned char b_buf[8192];
+
+    for (;;) {
+        size_t a_len = fread(a_buf, 1, sizeof(a_buf), a);
+        size_t b_len = fread(b_buf, 1, sizeof(b_buf), b);
+
+        if (a_len != b_len) {
+            return false;
+        }
+
+        if (a_len > 0 && memcmp(a_buf, b_buf, a_len) != 0) {
+            return false;
+        }
+
+        if (a_len < sizeof(a_buf)) {
+            return !ferror(a) && !ferror(b);
+        }
+    }
+}
+
+static bool files_equal_fd_and_path(int fd, const char *path) {
+    FILE *fa = open_stream_from_fd_start(fd);
 
     if (!fa) {
         return false;
     }
 
-    FILE *fb = open_regular_file_for_read(b);
+    FILE *fb = open_single_link_regular_file_for_read(path);
 
     if (!fb) {
         fclose(fa);
         return false;
     }
 
-    bool equal = true;
+    bool equal = file_streams_equal(fa, fb);
 
-    for (;;) {
-        int ca = fgetc(fa);
-        int cb = fgetc(fb);
-
-        if (ca != cb) {
-            equal = false;
-            break;
-        }
-
-        if (ca == EOF || cb == EOF) {
-            break;
-        }
+    if (fclose(fa) != 0) {
+        equal = false;
     }
-
-    fclose(fa);
-    fclose(fb);
+    if (fclose(fb) != 0) {
+        equal = false;
+    }
     return equal;
 }
 
-static int print_file_to_stdout(const char *path, const char *missing_hint) {
-    FILE *f = open_regular_file_for_read(path);
+static void print_missing_file_hint(const char *path, const char *missing_hint) {
+    fprintf(stderr, "no file found at %s\n", path);
+
+    if (missing_hint) {
+        fprintf(stderr, "%s\n", missing_hint);
+    }
+}
+
+static int print_file_to_stdout_at(
+    int dirfd,
+    const char *name,
+    const char *display_path,
+    const char *missing_hint
+) {
+    FILE *f = open_single_link_regular_file_at_for_read(dirfd, name);
 
     if (!f) {
-        fprintf(stderr, "no file found at %s\n", path);
-
-        if (missing_hint) {
-            fprintf(stderr, "%s\n", missing_hint);
-        }
-
+        print_missing_file_hint(display_path, missing_hint);
         return 1;
     }
 
-    int ch;
+    unsigned char buf[8192];
+    bool read_ok = true;
+    bool write_ok = true;
 
-    while ((ch = fgetc(f)) != EOF) {
-        putchar(ch);
+    for (;;) {
+        size_t n = fread(buf, 1, sizeof(buf), f);
+
+        if (n > 0 && fwrite(buf, 1, n, stdout) != n) {
+            write_ok = false;
+            break;
+        }
+
+        if (n < sizeof(buf)) {
+            if (ferror(f)) {
+                read_ok = false;
+            }
+
+            break;
+        }
     }
 
-    fclose(f);
+    bool close_ok = fclose(f) == 0;
+
+    if (!read_ok || !close_ok) {
+        fprintf(stderr, "could not read %s\n", display_path);
+        return 1;
+    }
+
+    if (!write_ok || !stdout_is_healthy()) {
+        return stdout_failure(display_path);
+    }
+
     return 0;
 }
 
-
 static int command_baseline(void) {
-    int code = command_check();
+    int hash_list_fd = -1;
+    int code = run_check(true, &hash_list_fd);
 
     if (code != 0) {
+        if (hash_list_fd >= 0) {
+            close(hash_list_fd);
+        }
         fprintf(stderr, "baseline refused because check did not pass\n");
         return code;
     }
 
-    if (!write_baseline_atomic()) {
+    if (hash_list_fd < 0) {
+        fprintf(stderr, "could not write baseline: %s\n", BASELINE_PATH);
+        return 1;
+    }
+
+    bool baseline_ok = write_baseline_atomic(hash_list_fd);
+    close(hash_list_fd);
+
+    if (!baseline_ok) {
         fprintf(stderr, "could not write baseline: %s\n", BASELINE_PATH);
         return 1;
     }
 
     printf("Baseline written to: %s\n", BASELINE_PATH);
-    return 0;
+    return stdout_is_healthy() ? 0 : stdout_failure("baseline");
 }
 
 
 static int command_verify(void) {
-    if (!ensure_report_dir()) {
+    int report_dir_fd = open_report_dir_for_artifacts(true, NULL);
+
+    if (report_dir_fd < 0) {
         return 2;
     }
 
     SealRun run;
     run.failures = 0;
     run.warnings = 0;
-    run.report = open_report_for_write();
+    run.report = NULL;
+    run.report_dir_fd = report_dir_fd;
+    run.hash_list_fd = -1;
+    run.preserve_hash_list_fd = false;
+    run.report = open_report_for_write(run.report_dir_fd);
 
     if (!run.report) {
+        close_report_dir(&run);
         fprintf(stderr, "could not open report: %s\n", REPORT_PATH);
         return 2;
     }
@@ -2380,7 +3227,7 @@ static int command_verify(void) {
         hashlist_free(&baseline_probe);
         fail_run(&run, "latticra.seal.lock is missing or unreadable");
         int code = finish(&run);
-        return finalize_report(&run, code);
+        return finalize_report(&run, code, "verify report");
     }
 
     hashlist_free(&baseline_probe);
@@ -2393,7 +3240,7 @@ static int command_verify(void) {
     if (!manifest) {
         fail_run(&run, "latticra.seal is missing or unreadable");
         int code = finish(&run);
-        return finalize_report(&run, code);
+        return finalize_report(&run, code, "verify report");
     }
 
     pass(&run, "latticra.seal exists");
@@ -2410,32 +3257,200 @@ static int command_verify(void) {
     section(&run, "Baseline comparison");
 
     if (run.failures == 0) {
-        compare_hash_lists_report(&run, BASELINE_PATH, HASH_LIST_PATH);
+        compare_hash_lists_report(&run, BASELINE_PATH, run.hash_list_fd);
     } else {
         warn_run(&run, "baseline comparison skipped because earlier checks failed");
     }
 
     int code = finish(&run);
-    return finalize_report(&run, code);
+    return finalize_report(&run, code, "verify report");
 }
 
 static int command_report(void) {
-    return print_file_to_stdout(
+    bool report_dir_missing = false;
+    int report_dir_fd = open_report_dir_for_artifacts(false, &report_dir_missing);
+
+    if (report_dir_fd < 0) {
+        if (report_dir_missing) {
+            print_missing_file_hint(REPORT_PATH, "run: ./build/latticra-seal check");
+            return 1;
+        }
+
+        return 2;
+    }
+
+    int code = print_file_to_stdout_at(
+        report_dir_fd,
+        REPORT_FILE,
         REPORT_PATH,
         "run: ./build/latticra-seal check"
     );
+
+    close(report_dir_fd);
+    return code;
 }
 
 static int command_hashes(void) {
-    return print_file_to_stdout(
+    bool report_dir_missing = false;
+    int report_dir_fd = open_report_dir_for_artifacts(false, &report_dir_missing);
+
+    if (report_dir_fd < 0) {
+        if (report_dir_missing) {
+            print_missing_file_hint(HASH_LIST_PATH, "run: ./build/latticra-seal check");
+            return 1;
+        }
+
+        return 2;
+    }
+
+    int code = print_file_to_stdout_at(
+        report_dir_fd,
+        HASH_LIST_FILE,
         HASH_LIST_PATH,
         "run: ./build/latticra-seal check"
     );
+
+    close(report_dir_fd);
+    return code;
 }
 
 static int command_version(void) {
     puts("latticra-seal " LATTICRA_SEAL_VERSION);
-    return 0;
+    return stdout_is_healthy() ? 0 : stdout_failure("version");
+}
+
+static int print_hybrid_result(
+    const char *label,
+    const latticra_seal_hybrid_envelope_result_t *result
+) {
+    char rendered[LATTICRA_SEAL_HYBRID_ENVELOPE_REPORT_MAX];
+
+    if (latticra_seal_hybrid_envelope_report(result, rendered, sizeof(rendered)) != LATTICRA_STATUS_OK) {
+        fprintf(stderr, "could not render hybrid envelope %s report\n", label);
+        return 1;
+    }
+
+    printf("== %s ==\n", label);
+    fputs(rendered, stdout);
+    return stdout_is_healthy() ? 0 : stdout_failure("hybrid envelope report");
+}
+
+static int print_hybrid_provider_self_test_result(
+    const latticra_seal_hybrid_provider_self_test_t *self_test
+) {
+    char rendered[LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_REPORT_MAX];
+
+    if (latticra_seal_hybrid_provider_self_test_report(
+            self_test,
+            rendered,
+            sizeof(rendered)) != LATTICRA_STATUS_OK) {
+        fprintf(stderr, "could not render hybrid provider self-test report\n");
+        return 1;
+    }
+
+    fputs(rendered, stdout);
+    return stdout_is_healthy() ? 0 : stdout_failure("hybrid provider self-test report");
+}
+
+static int command_hybrid(void) {
+    unsigned char record[
+        LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES +
+            sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u +
+            LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES
+    ];
+    unsigned char recovered[sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u];
+    size_t record_len = 0u;
+    size_t recovered_len = 0u;
+    latticra_seal_hybrid_envelope_result_t seal_result;
+    latticra_seal_hybrid_envelope_result_t open_result;
+
+    memset(record, 0, sizeof(record));
+    memset(recovered, 0, sizeof(recovered));
+
+    puts("LATTICRA SEAL HYBRID ENVELOPE SELF-CHECK");
+    puts("secret_material_output=redacted");
+    puts("salt_output=redacted");
+    puts("nonce_output=redacted");
+    puts("ciphertext_output=redacted");
+    puts("tag_output=redacted");
+    puts("record_output=redacted");
+
+    if (latticra_seal_hybrid_envelope_seal_record(
+            HYBRID_SELF_CHECK_CLASSICAL_SECRET,
+            sizeof(HYBRID_SELF_CHECK_CLASSICAL_SECRET),
+            HYBRID_SELF_CHECK_PQC_SECRET,
+            sizeof(HYBRID_SELF_CHECK_PQC_SECRET),
+            HYBRID_SELF_CHECK_AAD,
+            sizeof(HYBRID_SELF_CHECK_AAD) - 1u,
+            HYBRID_SELF_CHECK_PLAINTEXT,
+            sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u,
+            record,
+            sizeof(record),
+            &record_len,
+            &seal_result) != LATTICRA_STATUS_OK ||
+        seal_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
+        (void)print_hybrid_result("seal", &seal_result);
+        fprintf(stderr, "hybrid envelope encryption self-check failed\n");
+        return 1;
+    }
+
+    if (print_hybrid_result("seal", &seal_result) != 0) {
+        return 1;
+    }
+
+    if (latticra_seal_hybrid_envelope_open_record(
+            HYBRID_SELF_CHECK_CLASSICAL_SECRET,
+            sizeof(HYBRID_SELF_CHECK_CLASSICAL_SECRET),
+            HYBRID_SELF_CHECK_PQC_SECRET,
+            sizeof(HYBRID_SELF_CHECK_PQC_SECRET),
+            HYBRID_SELF_CHECK_AAD,
+            sizeof(HYBRID_SELF_CHECK_AAD) - 1u,
+            record,
+            record_len,
+            recovered,
+            sizeof(recovered),
+            &recovered_len,
+            &open_result) != LATTICRA_STATUS_OK ||
+        open_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK ||
+        recovered_len != sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u ||
+        memcmp(recovered, HYBRID_SELF_CHECK_PLAINTEXT, recovered_len) != 0) {
+        (void)print_hybrid_result("open", &open_result);
+        fprintf(stderr, "hybrid envelope decryption self-check failed\n");
+        return 1;
+    }
+
+    if (print_hybrid_result("open", &open_result) != 0) {
+        return 1;
+    }
+
+    puts("hybrid_envelope_self_check=pass");
+    return stdout_is_healthy() ? 0 : stdout_failure("hybrid envelope self-check");
+}
+
+static int command_hybrid_provider_self_test(void) {
+    latticra_seal_hybrid_provider_self_test_t self_test;
+
+    if (latticra_seal_hybrid_provider_self_test_run(&self_test) != LATTICRA_STATUS_OK) {
+        fprintf(stderr, "hybrid provider self-test invocation failed\n");
+        return 1;
+    }
+
+    if (print_hybrid_provider_self_test_result(&self_test) != 0) {
+        return 1;
+    }
+
+    if (!latticra_seal_hybrid_provider_self_test_is_authority_neutral(&self_test)) {
+        fprintf(stderr, "hybrid provider self-test violated authority-neutral boundaries\n");
+        return 1;
+    }
+
+    if (self_test.error != LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_OK) {
+        fprintf(stderr, "hybrid provider self-test failed\n");
+        return 1;
+    }
+
+    puts("hybrid_provider_self_test=pass");
+    return stdout_is_healthy() ? 0 : stdout_failure("hybrid provider self-test");
 }
 
 static int command_help(void) {
@@ -2448,6 +3463,8 @@ static int command_help(void) {
     puts("  latticra-seal verify");
     puts("  latticra-seal report");
     puts("  latticra-seal hashes");
+    puts("  latticra-seal hybrid");
+    puts("  latticra-seal hybrid-provider-self-test");
     puts("  latticra-seal version");
     puts("  latticra-seal help");
     puts("");
@@ -2458,9 +3475,11 @@ static int command_help(void) {
     puts("  verify     compare current hashes against latticra.seal.lock");
     puts("  report     print the latest generated CLI report");
     puts("  hashes     print the latest generated file hash list");
+    puts("  hybrid     run the local hybrid envelope encrypt/decrypt self-check");
+    puts("  hybrid-provider-self-test  run the provider-backed hybrid self-test");
     puts("  version    print the Seal CLI version");
     puts("  help       show this help message");
-    return 0;
+    return stdout_is_healthy() ? 0 : stdout_failure("help");
 }
 
 int main(int argc, char **argv) {
@@ -2492,6 +3511,14 @@ int main(int argc, char **argv) {
 
     if (strcmp(command, "hashes") == 0) {
         return command_hashes();
+    }
+
+    if (strcmp(command, "hybrid") == 0) {
+        return command_hybrid();
+    }
+
+    if (strcmp(command, "hybrid-provider-self-test") == 0) {
+        return command_hybrid_provider_self_test();
     }
 
     if (strcmp(command, "version") == 0) {

@@ -124,7 +124,7 @@
         </article>
         <article>
           <span>final_state</span>
-          <strong>runtime-entry-address-space-view-ready</strong>
+          <strong>runtime-entry-recovery-audit-observation-view-ready</strong>
         </article>
         <article>
           <span>lifecycle_complete</span>
@@ -146,7 +146,7 @@
         <p class="eyebrow">Lifecycle Ladder</p>
         <h2>The sequence is explicit and bounded.</h2>
         <p>
-          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at runtime-entry-address-space-view-ready. That path is evidence, not scheduler execution.
+          The lifecycle runner can advance a local in-memory state object through an approved sequence ending at runtime-entry-recovery-audit-observation-view-ready. That path is evidence, not scheduler execution.
         </p>
       </div>
       <div class="content-shell kernel-ladder-grid">
@@ -172,8 +172,8 @@
         </article>
         <article>
           <span>Target</span>
-          <h3>runtime-entry-address-space-view-ready</h3>
-          <p>Reports the current lifecycle target while address-space capture, address-space switching, page-table writes, TLB flushes, MMU updates, stack capture, stack switching, register capture, register save/restore, frame construction, runtime entry admission, runtime entry, scheduler run-entry, scheduler activation, scheduler handoff, scheduler dispatch, scheduler selection, scheduler credit updates, quota updates, time reads, preemption, context switch, and run queue mutation remain denied.</p>
+          <h3>runtime-entry-recovery-audit-observation-view-ready</h3>
+          <p>Reports the current lifecycle target while recovery-audit observation metadata is visible and recovery audit observation, recovery audits, recovery closeout observation, recovery closeouts, recovery-outcome observation, recovery outcomes, recovery-disposition observation, recovery dispositions, recovery-plan observation, recovery-boundary observation, recovery boundaries, recovery plans, persistence-boundary observation, persistence boundaries, persistence commits, recovery authority, quiescent-return observation, quiescent returns, quiescent state reads, idle-return observation, idle returns, idle state reads, process-return observation, process returns, process state reads, process wakes, scheduler-return observation, scheduler returns, scheduler execution, scheduler dispatch, context switching, run queue mutation, post-resume observation, instruction-pointer reads, stack-pointer reads, CPU-mode reads, user-mode resume, user instruction resume, resume frame commits, syscall exit commits, syscall exits, syscall returns, interrupt returns, privilege transitions, address-space switching, page-table writes, TLB flushes, MMU updates, stack switching, register save/restore, frame construction, runtime entry admission, runtime entry, scheduler run-entry, scheduler activation, scheduler handoff, scheduler selection, scheduler credit updates, quota updates, time reads, and preemption remain denied.</p>
         </article>
       </div>
     </section>
@@ -194,7 +194,7 @@
           </div>
           <div role="row">
             <span role="cell">Controlled internal state</span>
-            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to runtime-entry-address-space-view-ready while preserving external_effect_performed=0.</p>
+            <p role="cell">The lifecycle may report internal state changes such as a completed sequence to runtime-entry-recovery-audit-observation-view-ready while preserving external_effect_performed=0.</p>
           </div>
           <div role="row">
             <span role="cell">Denied now</span>
@@ -242,7 +242,45 @@ sh scripts/test-kernel-runtime-entry-register-view.sh
 sh scripts/test-kernel-runtime-entry-register-view-report-runner.sh
 sh scripts/test-kernel-runtime-entry-stack-view.sh
 sh scripts/test-kernel-runtime-entry-stack-view-report-runner.sh
-sh scripts/test-kernel-lifecycle.sh
+sh scripts/test-kernel-runtime-entry-address-space-view.sh
+sh scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-privilege-level-view.sh
+sh scripts/test-kernel-runtime-entry-privilege-level-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-syscall-gate-view.sh
+sh scripts/test-kernel-runtime-entry-syscall-gate-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-syscall-dispatch-view.sh
+sh scripts/test-kernel-runtime-entry-syscall-dispatch-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-syscall-return-view.sh
+sh scripts/test-kernel-runtime-entry-syscall-return-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-syscall-exit-view.sh
+sh scripts/test-kernel-runtime-entry-syscall-exit-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-user-mode-resume-view.sh
+sh scripts/test-kernel-runtime-entry-user-mode-resume-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-post-resume-observation-view.sh
+sh scripts/test-kernel-runtime-entry-post-resume-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-scheduler-return-observation-view.sh
+sh scripts/test-kernel-runtime-entry-scheduler-return-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-process-return-observation-view.sh
+sh scripts/test-kernel-runtime-entry-process-return-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-idle-return-observation-view.sh
+sh scripts/test-kernel-runtime-entry-idle-return-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-quiescent-return-observation-view.sh
+sh scripts/test-kernel-runtime-entry-quiescent-return-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-persistence-boundary-observation-view.sh
+sh scripts/test-kernel-runtime-entry-persistence-boundary-observation-view-report-runner.sh
+sh scripts/test-kernel-runtime-entry-recovery-boundary-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-boundary-observation-view-report-runner.sh
+   sh scripts/test-kernel-runtime-entry-recovery-plan-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-plan-observation-view-report-runner.sh
+   sh scripts/test-kernel-runtime-entry-recovery-disposition-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-disposition-observation-view-report-runner.sh
+   sh scripts/test-kernel-runtime-entry-recovery-outcome-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-outcome-observation-view-report-runner.sh
+   sh scripts/test-kernel-runtime-entry-recovery-closeout-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-closeout-observation-view-report-runner.sh
+   sh scripts/test-kernel-runtime-entry-recovery-audit-observation-view.sh
+   sh scripts/test-kernel-runtime-entry-recovery-audit-observation-view-report-runner.sh
+   sh scripts/test-kernel-lifecycle.sh
 sh scripts/test-kernel-lifecycle-report-runner.sh</code></pre>
         </article>
         <article class="command-panel">
@@ -264,7 +302,7 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_IMPLEMENTATION.md"><strong>Kernel seed</strong><span>Compiled kernel identity, report fields, no-effect posture, and denied boot/runtime behavior.</span></a>
         <a href="KERNEL_SUBSYSTEM_REGISTRY.md"><strong>Subsystem registry</strong><span>Boot, runtime, scheduler, memory, process, filesystem, network, device, and security metadata.</span></a>
         <a href="KERNEL_STATE_MACHINE.md"><strong>State machine</strong><span>Bounded in-memory state object, sequential step function, transition log, and report surface.</span></a>
-        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to runtime-entry-address-space-view-ready with external effects denied.</span></a>
+        <a href="KERNEL_LIFECYCLE_SEED.md"><strong>Lifecycle seed</strong><span>Approved sequence to runtime-entry-recovery-audit-observation-view-ready with external effects denied.</span></a>
         <a href="KERNEL_SCHEDULER_CREDIT_SEED.md"><strong>Scheduler credit seed</strong><span>Candidate scheduler credit metadata with quota and CPU usage write authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_SELECTION_SEED.md"><strong>Scheduler selection seed</strong><span>Candidate runnable selection metadata with dispatch and run-queue authority denied.</span></a>
         <a href="KERNEL_SCHEDULER_DISPATCH_SEED.md"><strong>Scheduler dispatch seed</strong><span>Candidate dispatch metadata with context-switch and run-queue authority denied.</span></a>
@@ -276,6 +314,24 @@ sh scripts/test-kernel-lifecycle-status-alignment.sh</code></pre>
         <a href="KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md"><strong>Runtime entry register-view seed</strong><span>Candidate register-view metadata with register capture, save/restore, context-switch, and stack-switch authority denied.</span></a>
         <a href="KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md"><strong>Runtime entry stack-view seed</strong><span>Candidate stack-view metadata with stack capture, stack-switch, context-switch, and address-space authority denied.</span></a>
         <a href="KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md"><strong>Runtime entry address-space-view seed</strong><span>Candidate address-space-view metadata with address-space switching, page-table writes, TLB flushes, and MMU updates denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md"><strong>Runtime entry privilege-level-view seed</strong><span>Candidate privilege-level metadata with privilege transitions, syscall gates, and interrupt returns denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md"><strong>Runtime entry syscall-gate-view seed</strong><span>Candidate syscall-gate metadata with gate installation, syscall dispatch, instruction execution, handlers, and returns denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md"><strong>Runtime entry syscall-dispatch-view seed</strong><span>Candidate syscall-dispatch metadata with argument copy, instruction execution, handlers, and returns denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md"><strong>Runtime entry syscall-return-view seed</strong><span>Candidate syscall-return metadata with result copy, syscall returns, interrupt returns, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md"><strong>Runtime entry syscall-exit-view seed</strong><span>Candidate syscall-exit metadata with exit commits, process wakes, syscall exits, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md"><strong>Runtime entry user-mode-resume-view seed</strong><span>Candidate user-mode-resume metadata with resume frame commits, instruction resume, interrupt returns, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry post-resume-observation-view seed</strong><span>Candidate post-resume observation metadata with instruction-pointer reads, stack-pointer reads, CPU-mode reads, scheduler execution, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry scheduler-return-observation-view seed</strong><span>Candidate scheduler-return observation metadata with scheduler returns, context switches, run queue mutation, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry process-return-observation-view seed</strong><span>Candidate process-return observation metadata with process returns, process state reads, process wakes, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry idle-return-observation-view seed</strong><span>Candidate idle-return observation metadata with idle returns, idle state reads, process returns, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry quiescent-return-observation-view seed</strong><span>Candidate quiescent-return observation metadata with quiescent returns, quiescent state reads, idle returns, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry persistence-boundary-observation-view seed</strong><span>Candidate persistence-boundary observation metadata with persistence commits, recovery authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-boundary-observation-view seed</strong><span>Candidate recovery-boundary observation metadata with recovery plans, persistence commits, recovery authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-plan-observation-view seed</strong><span>Candidate recovery-plan observation metadata with recovery-plan observation, recovery authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-disposition-observation-view seed</strong><span>Candidate recovery-disposition observation metadata with recovery-disposition observation, recovery disposition authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-outcome-observation-view seed</strong><span>Candidate recovery-outcome observation metadata with recovery-outcome observation, recovery outcome authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-closeout-observation-view seed</strong><span>Candidate recovery-closeout observation metadata with recovery closeout authority, runtime entry, and host effects denied.</span></a>
+        <a href="KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md"><strong>Runtime entry recovery-audit-observation-view seed</strong><span>Candidate recovery-audit observation metadata with recovery audit authority, runtime entry, and host effects denied.</span></a>
         <a href="KERNEL_TIME_ACCOUNTING_SEED.md"><strong>Time accounting seed</strong><span>Candidate CPU charge metadata with clock, quota, and scheduler credit authority denied.</span></a>
         <a href="KERNEL_PREEMPTION_SEED.md"><strong>Preemption seed</strong><span>Candidate preemption decision metadata with dispatch and context-switch authority denied.</span></a>
         <a href="KERNEL_CONTEXT_SWITCH_SEED.md"><strong>Context switch seed</strong><span>Candidate switch metadata with register, stack, and address-space authority denied.</span></a>

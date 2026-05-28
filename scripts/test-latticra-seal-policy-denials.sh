@@ -36,7 +36,12 @@ pass() {
 }
 
 NATIVE_SEAL="$TMP_DIR/latticra-seal"
-"$CC" $CFLAGS $OPENSSL_CFLAGS "$ROOT/seal/latticra-seal.c" $OPENSSL_LIBS -o "$NATIVE_SEAL"
+"$CC" $CFLAGS $OPENSSL_CFLAGS -I"$ROOT/include" \
+  "$ROOT/seal/latticra-seal.c" \
+  "$ROOT/src/seal_hybrid_envelope.c" \
+  "$ROOT/src/seal_hybrid_provider_self_test.c" \
+  $OPENSSL_LIBS \
+  -o "$NATIVE_SEAL"
 
 copy_minimal_workspace() {
   dest="$1"

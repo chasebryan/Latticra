@@ -29,6 +29,12 @@ require_file docs/LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md
 require_file docs/LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md
 require_file docs/LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md
+require_file docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_file docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
+require_file docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_file docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_file latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_file latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_file docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md
 require_file docs/status/SEAL_ED25519_VERIFY_STATUS.md
 require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
@@ -44,6 +50,8 @@ require_file docs/security.html
 require_file Makefile
 require_file scripts/test-high-assurance-security-baseline.sh
 require_file scripts/test-latticra-seal-crypto-graduation-gate.sh
+require_file scripts/test-latticra-seal-hybrid-provider-self-test.sh
+require_file scripts/test-latticra-q-seal-ml-kem-provider-self-test.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: cryptographic assurance and key management baseline' "$doc"
@@ -97,6 +105,22 @@ for field in \
   'seal_pqc_integration_frame_guard_present=1' \
   'seal_pqc_provider_adapter_present=1' \
   'seal_pqc_provider_adapter_guard_present=1' \
+  'seal_hybrid_provider_self_test_present=1' \
+  'seal_hybrid_provider_self_test_passed=1' \
+  'seal_hybrid_provider_self_test_authority_neutral=1' \
+  'seal_hybrid_provider_self_test_ml_kem_parameter_sets_tested=3' \
+  'seal_hybrid_provider_self_test_records_authenticated_total=3' \
+  'seal_hybrid_provider_self_test_transcript_aad_bound=1' \
+  'seal_hybrid_provider_self_test_transcript_tampering_rejected_total=3' \
+  'seal_hybrid_provider_self_test_secret_output_emitted=0' \
+  'seal_hybrid_provider_self_test_record_output_emitted=0' \
+  'seal_hybrid_provider_self_test_runtime_authority_granted=0' \
+  'q_seal_ml_kem_provider_self_test_present=1' \
+  'q_seal_ml_kem_provider_self_test_passed=1' \
+  'q_seal_ml_kem_provider_self_test_authority_neutral=1' \
+  'q_seal_ml_kem_provider_self_test_secret_output_emitted=0' \
+  'q_seal_ml_kem_provider_self_test_ciphertext_output_emitted=0' \
+  'q_seal_ml_kem_provider_self_test_runtime_authority_granted=0' \
   'fips_140_3_boundary_required_before_production_crypto=1' \
   'cmvp_validation_path_required_before_fips_claim=1' \
   'validated_module_claim_requires_certificate=1' \
@@ -135,8 +159,23 @@ for field in \
   'post_quantum_migration_inventory_required=1' \
   'cnsa_2_pq_planning_tracked=1' \
   'non_fips_disclosure_required_if_not_validated=1' \
-  'seal_crypto_metadata_only_current=1' \
-  'implementation_behavior_changed=0' \
+  'seal_crypto_metadata_only_current=0' \
+  'seal_crypto_authority_neutral_current=1' \
+  'seal_true_crypto_substrate_present=1' \
+  'seal_hybrid_envelope_hkdf_provider_api_used=1' \
+  'seal_hybrid_envelope_hkdf_sha256_digest_bound=1' \
+  'seal_hybrid_envelope_hkdf_manual_fallback_used=0' \
+  'seal_hybrid_envelope_aes_gcm_provider_api_used=1' \
+  'seal_hybrid_envelope_aes_gcm_provider_cipher_fetched=1' \
+  'seal_hybrid_envelope_aes_gcm_96bit_nonce_configured=1' \
+  'seal_hybrid_envelope_aes_gcm_128bit_tag_bound=1' \
+  'seal_hybrid_envelope_aes_gcm_static_cipher_fallback_used=0' \
+  'seal_hybrid_envelope_random_bytes_ex_api_used=1' \
+  'seal_hybrid_envelope_random_bytes_strength_bits_requested=256' \
+  'seal_hybrid_envelope_random_bytes_manual_fallback_used=0' \
+  'seal_hybrid_envelope_generated_salt_csprng_success=1' \
+  'seal_hybrid_envelope_generated_nonce_csprng_success=1' \
+  'implementation_behavior_changed=1' \
   'production_crypto_added=0' \
   'signing_authority_granted=0' \
   'key_storage_added=0' \
@@ -212,11 +251,13 @@ do
 done
 
 for seal_field in \
-  'seal_crypto_verify_backend_metadata_only=1' \
+  'seal_crypto_verify_backend_ready_authority_neutral=1' \
   'seal_ed25519_verify_only_authority_neutral=1' \
   'seal_crypto_graduation_gate_authority_neutral=1' \
   'seal_pqc_integration_frame_authority_neutral=1' \
   'seal_pqc_provider_adapter_authority_neutral=1' \
+  'seal_hybrid_provider_self_test_authority_neutral=1' \
+  'q_seal_ml_kem_provider_self_test_authority_neutral=1' \
   'seal_signing_metadata_only=1' \
   'seal_key_material_metadata_only=1' \
   'seal_runtime_authority_granted=0' \
@@ -225,7 +266,7 @@ do
   require_contains "$seal_field" "$doc"
 done
 
-require_contains 'crypto_verify_state=unsupported' docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md
+require_contains 'crypto_verify_state=ready-local-ed25519' docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md
 require_contains 'ed25519_authority_usable=0' docs/status/SEAL_ED25519_VERIFY_STATUS.md
 require_contains 'seal_crypto_graduation_gate_present=1' docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_contains 'authority_promotion_allowed=0' docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
@@ -234,6 +275,62 @@ require_contains 'apple_corecrypto_embedding_allowed=0' docs/status/SEAL_PQC_INT
 require_contains 'seal_pqc_provider_adapter_present=1' docs/status/SEAL_PQC_PROVIDER_ADAPTER_STATUS.md
 require_contains 'apple_corecrypto_code_copied=0' docs/status/SEAL_PQC_PROVIDER_ADAPTER_STATUS.md
 require_contains 'liboqs_linked=0' docs/status/SEAL_PQC_PROVIDER_ADAPTER_STATUS.md
+require_contains 'hybrid_provider_self_test_present=1' docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
+require_contains 'hkdf_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_extract_expand_standard_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_sha256_digest_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_provider_cipher_fetched=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_96bit_nonce_configured=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_128bit_tag_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_static_cipher_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_ex_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_strength_bits_requested=256' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_salt_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_nonce_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_extract_expand_standard_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_provider_cipher_fetched=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_96bit_nonce_configured=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_128bit_tag_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_static_cipher_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_ex_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_strength_bits_requested=256' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_salt_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_nonce_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'classical_algorithm=ECDH-P-256' docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
+require_contains 'pqc_algorithm=ML-KEM-512,ML-KEM-768,ML-KEM-1024' docs/LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md
+require_contains 'p256_shared_secret_match=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_shared_secret_match=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_parameter_sets_tested=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_512_ciphertext_bytes=768' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_768_ciphertext_bytes=1088' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_1024_ciphertext_bytes=1568' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_authenticated=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_envelope_records_authenticated_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_transcript_aad_bound=1' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'hybrid_transcript_tampering_rejected_total=3' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_ciphertext_transcript_bytes_total=3424' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'secret_material_output_emitted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'record_output_emitted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'runtime_authority_granted=0' docs/status/SEAL_HYBRID_PROVIDER_SELF_TEST_STATUS.md
+require_contains 'ml_kem_provider_self_test_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'provider=OpenSSL-EVP' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'ML-KEM-512-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'ML-KEM-768-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'ML-KEM-1024-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_match=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'ciphertext_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'shared_secret_output_emitted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'ciphertext_output_emitted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'runtime_authority_granted=0' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'cryptographic_assurance_key_management_baseline_present=1' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'docs/CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
 require_contains 'scripts/test-cryptographic-assurance-key-management-baseline.sh' docs/HIGH_ASSURANCE_SECURITY_BASELINE.md
@@ -248,14 +345,19 @@ require_contains 'Latest cryptographic assurance and key management baseline not
 require_contains 'CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md' docs/FOUNDATION_INDEX.md
+require_contains 'LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md' docs/FOUNDATION_INDEX.md
 require_contains 'Cryptographic assurance and key management baseline' docs/security.html
 require_contains 'CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-cryptographic-assurance-key-management-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-crypto-graduation-gate.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-pqc-integration-frame.sh' Makefile
 require_contains 'sh ./scripts/test-latticra-seal-pqc-provider-adapter.sh' Makefile
+require_contains 'sh ./scripts/test-latticra-seal-hybrid-provider-self-test.sh' Makefile
+require_contains 'sh ./scripts/test-latticra-q-seal-ml-kem-provider-self-test.sh' Makefile
 require_contains 'cryptographic-assurance-key-management-baseline:' Makefile
 require_contains 'latticra-seal-crypto-graduation-gate:' Makefile
+require_contains 'latticra-seal-hybrid-provider-self-test:' Makefile
 require_contains 'latticra-seal-pqc-integration-frame:' Makefile
 require_contains 'latticra-seal-pqc-provider-adapter:' Makefile
 require_contains 'sh ./scripts/test-cryptographic-assurance-key-management-baseline.sh' scripts/test-quality-safety-guards.sh

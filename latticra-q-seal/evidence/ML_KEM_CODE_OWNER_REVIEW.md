@@ -6,6 +6,10 @@ Scope: clean-room code-owner, cryptography, security, standards, side-channel, a
 
 This evidence record defines the review gate for future clean-room ML-KEM implementation work. It records the review roles and approval evidence that must exist before implementation promotion, but it does not identify reviewers, approve source files, close findings, accept cryptographic operations, claim production cryptography, claim FIPS validation, use the network, mutate host files, or grant runtime authority.
 
+The review disposition ledger that must consume this gate is recorded in `ML_KEM_REVIEW_DISPOSITION_LEDGER.md`; it remains fail-closed until reviewer identity, code-owner, cryptography, security, standards, side-channel, source-digest, finding-closure, and approval dispositions exist.
+
+The reviewer identity fixture that must support future review evidence is recorded in `ML_KEM_REVIEWER_IDENTITY_FIXTURE.md`; it remains fail-closed until identity import, role mapping, independence attestation, and approval authority are recorded.
+
 ## Current Fields
 
 ```text

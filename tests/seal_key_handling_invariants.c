@@ -221,6 +221,10 @@ static int key_handling_fails_closed(void) {
     latticra_seal_signing_operation_t operation = fixture_operation("report-only");
     latticra_seal_key_handling_t key_handling;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_KEY_HANDLING_RENDER_MAX];
+    char unterminated_key_handling[LATTICRA_SEAL_KEY_HANDLING_LABEL_MAX];
+
+    memset(unterminated_key_handling, 'x', sizeof(unterminated_key_handling));
 
     EXPECT_TRUE(
         latticra_seal_key_handling_from_operation(0, "metadata-only", &key_handling) ==
@@ -236,6 +240,28 @@ static int key_handling_fails_closed(void) {
             "denied-signing-operation",
             "invalid-signing-operation",
             "invalid operation status") != 0) {
+        return 1;
+    }
+    operation = fixture_operation("report-only");
+    memset(operation.signing_operation_state, 'z', sizeof(operation.signing_operation_state));
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_INVALID_SIGNING_OPERATION,
+            "denied-signing-operation",
+            "invalid-signing-operation",
+            "unterminated operation status") != 0) {
+        return 1;
+    }
+    operation = fixture_operation("report-only");
+    operation.signing_operation_ready = 2u;
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_INVALID_SIGNING_OPERATION,
+            "denied-signing-operation",
+            "invalid-signing-operation",
+            "invalid operation flag status") != 0) {
         return 1;
     }
     operation = fixture_operation("report-only");
@@ -349,6 +375,21 @@ static int key_handling_fails_closed(void) {
         return 1;
     }
     operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    unterminated_key_handling,
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "unterminated requested key handling status");
+    EXPECT_TRUE(key_handling.error == LATTICRA_SEAL_KEY_HANDLING_DENIED_KEY_HANDLING,
+                "unterminated requested key handling error");
+    EXPECT_TRUE(strcmp(key_handling.requested_key_handling, "invalid-key-handling") == 0,
+                "unterminated requested key handling sanitized");
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested key handling render");
+    EXPECT_TRUE(strstr(rendered, "requested_key_handling=invalid-key-handling") != 0,
+                "unterminated requested key handling rendered sanitized");
+    operation = fixture_operation("report-only");
     operation.private_key_handling = 1u;
     if (expect_denial(&operation, "metadata-only", LATTICRA_SEAL_KEY_HANDLING_DENIED_PRIVATE_KEY, "denied-private-key", "denied-private-key", "private key status") != 0) {
         return 1;
@@ -425,6 +466,51 @@ static int key_handling_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_key_handling_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null render");
     EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    "metadata-only",
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(key_handling.key_handling_profile, 'z', sizeof(key_handling.key_handling_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated key handling render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated key handling render cleared");
+    EXPECT_TRUE(latticra_seal_key_handling_is_metadata_only(&key_handling) == 0,
+                "unterminated key handling helper rejected");
+
+    operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    "metadata-only",
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "authority key handling render source");
+    key_handling.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority key handling render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority key handling render cleared");
+    EXPECT_TRUE(latticra_seal_key_handling_is_metadata_only(&key_handling) == 0,
+                "authority key handling helper rejected");
+
+    operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    "metadata-only",
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "ready flag key handling render source");
+    key_handling.key_handling_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag key handling render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag key handling render cleared");
+    EXPECT_TRUE(latticra_seal_key_handling_is_metadata_only(&key_handling) == 0,
+                "ready flag key handling helper rejected");
     return 0;
 }
 

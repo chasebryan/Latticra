@@ -5,7 +5,7 @@ Date: 2026-05-27
 
 This evidence record captures the ML-KEM test-vector shape Latticra Q-Seal must satisfy before any known-answer vector loading, ACVP response generation, provider differential execution, or runtime cryptography is allowed.
 
-Vector source authority and digest acceptance are controlled by `latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md`; this schema evidence does not accept, fetch, import, or process vector bundles.
+Vector source authority and digest acceptance are controlled by `latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md`; offline fixture locking is controlled by `latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_LOCK.md`; fixture digest and coverage rows are controlled by `latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`. This schema evidence does not accept, fetch, import, load, or process vector bundles.
 
 Standards and validation sources:
 

@@ -63,7 +63,7 @@ LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SOURCE_WOULD_ALLOW_EFFECT
 LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_BUFFER_TOO_SMALL
 ```
 
-Invalid source metadata is represented as denied metadata inside the receipt record. A null output pointer is still a hard `LATTICRA_STATUS_NULL_ARGUMENT` API error. A too-small render buffer returns `LATTICRA_STATUS_BUFFER_TOO_SMALL` and clears the caller-provided buffer when possible.
+Invalid source metadata is represented as denied metadata inside the receipt record. A null output pointer is still a hard `LATTICRA_STATUS_NULL_ARGUMENT` API error. A too-small render buffer returns `LATTICRA_STATUS_BUFFER_TOO_SMALL` and clears the caller-provided buffer when possible. Unterminated source strings are denied before descriptive source text is copied into the receipt. Unterminated or authority-bearing receipt structs are rejected before rendering and clear the caller-provided buffer when possible.
 
 ## Complete Denied Receipt
 
@@ -139,6 +139,15 @@ network_performed=0
 
 The implementation copies descriptive state only. It never copies authority, effect, host I/O, or network behavior from upstream sources.
 
+Additional public-struct hardening rejects:
+
+```text
+unterminated source strings before receipt copy
+unterminated receipt strings before rendering
+tampered receipt effect flags before rendering
+tampered receipt authority flags before rendering
+```
+
 ## Validation
 
 Current guard:
@@ -154,7 +163,7 @@ seal operator receipt report invariants: ok
 latticra seal operator receipt report: ok
 ```
 
-The guard compiles the new receipt implementation with the deterministic capability metadata fixture and verifies complete receipt rendering, missing source denial, non-report-only source denial, effect-allowing source denial, null handling, and small-buffer handling.
+The guard compiles the new receipt implementation with the deterministic capability metadata fixture and verifies complete receipt rendering, missing source denial, non-report-only source denial, effect-allowing source denial, null handling, small-buffer handling, source-string rejection before copy, and receipt render rejection for unterminated strings or tampered effect flags.
 
 ## Current Next Valid Slice
 

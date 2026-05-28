@@ -21,10 +21,12 @@ trap cleanup EXIT INT HUP TERM
 
 filename_hits="$tmp_dir/filename-hits.txt"
 content_hits="$tmp_dir/content-hits.txt"
+symlink_hits="$tmp_dir/symlink-hits.txt"
 : >"$filename_hits"
 : >"$content_hits"
+: >"$symlink_hits"
 
-source_files() {
+source_scope_find() {
   find . \
     -path './.git' -prune -o \
     -path './reports' -prune -o \
@@ -38,7 +40,15 @@ source_files() {
     -name __pycache__ -type d -prune -o \
     -name .pytest_cache -type d -prune -o \
     -name .mypy_cache -type d -prune -o \
-    -type f -print
+    "$@"
+}
+
+source_files() {
+  source_scope_find -type f -print
+}
+
+source_symlinks() {
+  source_scope_find -type l -print
 }
 
 is_allowed_secret_template_name() {
@@ -58,6 +68,13 @@ is_sensitive_secret_name() {
   esac
   return 1
 }
+
+source_symlinks >"$symlink_hits"
+
+if [ -s "$symlink_hits" ]; then
+  sed -n '1,40p' "$symlink_hits" >&2
+  fail "possible source-scope symlinks found"
+fi
 
 source_files |
   while IFS= read -r path; do

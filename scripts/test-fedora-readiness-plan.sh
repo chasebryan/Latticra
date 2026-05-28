@@ -51,8 +51,38 @@ require_contains 'Fedora endorsement' docs/FEDORA_READINESS_PLAN.md
 require_contains 'Fedora allowed license posture' docs/FEDORA_READINESS_PLAN.md
 require_contains 'BuildRequires completeness' docs/FEDORA_READINESS_PLAN.md
 require_contains 'mock build readiness' docs/FEDORA_READINESS_PLAN.md
-require_contains 'final_state=runtime-entry-address-space-view-ready' docs/FEDORA_READINESS_PLAN.md
+require_contains 'final_state=runtime-entry-recovery-closeout-observation-view-ready' docs/FEDORA_READINESS_PLAN.md
 require_contains 'external_effect_performed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_closeout_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_recovery_boundary_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_persistence_boundary_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_quiescent_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'persistence_boundary_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'persistence_boundary_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'persistence_commit_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_boundary_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_boundary_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_plan_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_plan_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_disposition_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_disposition_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_outcome_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_outcome_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_closeout_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'recovery_closeout_observation_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_idle_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_process_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_post_resume_observation_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_user_mode_resume_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_syscall_exit_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_syscall_return_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_syscall_dispatch_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_syscall_gate_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
+require_contains 'runtime_entry_privilege_level_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_address_space_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_stack_view_allowed=0' docs/FEDORA_READINESS_PLAN.md
 require_contains 'runtime_entry_register_view_allowed=0' docs/FEDORA_READINESS_PLAN.md

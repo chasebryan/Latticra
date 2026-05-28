@@ -6,7 +6,7 @@ Scope: ACVP ML-KEM schema tracking, vector intake blockers, and no-network valid
 
 This slice adds an offline ACVP intake contract for Latticra Q-Seal ML-KEM. It records that the NIST ACVP ML-KEM JSON schema is tracked for `ML-KEM / keyGen / FIPS203` and `ML-KEM / encapDecap / FIPS203`, while keeping vector loading, response generation, ACVP submission, network sessions, operation execution, production crypto claims, FIPS claims, and runtime authority disabled.
 
-The schema-only field contract for those ACVP/KAT vectors is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md`. The source authority and digest intake contract for future vector bundles is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`.
+The downstream capability matrix is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md`, and the downstream fixture row plan is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md`. The schema-only field contract for those ACVP/KAT vectors is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md`. The source authority and digest intake contract for future vector bundles is recorded separately in `LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`.
 
 ## Source Posture
 
@@ -25,12 +25,16 @@ latticra-q-seal/src/q_seal_ml_kem_acvp_intake.c
 latticra-q-seal/tests/q_seal_ml_kem_acvp_intake_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 latticra-q-seal/evidence/ML_KEM_ACVP_INTAKE.md
+latticra-q-seal/evidence/ML_KEM_ACVP_CAPABILITY_MATRIX.md
+latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_ROW_PLAN.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_SCHEMA.md
 latticra-q-seal/evidence/ML_KEM_VECTOR_SOURCE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md
 scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 scripts/test-latticra-q-seal-ml-kem-vector-source.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
+scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
 ```
 
 ## Current Fields
@@ -75,6 +79,10 @@ status=ml-kem-acvp-intake-offline-blocked
 ```sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
 sh scripts/test-latticra-q-seal-ml-kem-acvp-intake.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
+sh scripts/test-latticra-q-seal-ml-kem-acvp-capability-matrix.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
+sh scripts/test-latticra-q-seal-ml-kem-acvp-fixture-row-plan.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh scripts/test-latticra-q-seal-ml-kem-vector-schema.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-vector-source.sh
@@ -86,6 +94,10 @@ Expected output:
 ```text
 latticra q-seal ml-kem acvp intake invariants: ok
 latticra q-seal ml-kem acvp intake: ok
+latticra q-seal ml-kem acvp capability matrix invariants: ok
+latticra q-seal ml-kem acvp capability matrix: ok
+latticra q-seal ml-kem acvp fixture row plan invariants: ok
+latticra q-seal ml-kem acvp fixture row plan: ok
 latticra q-seal ml-kem vector schema invariants: ok
 latticra q-seal ml-kem vector schema: ok
 latticra q-seal ml-kem vector source invariants: ok

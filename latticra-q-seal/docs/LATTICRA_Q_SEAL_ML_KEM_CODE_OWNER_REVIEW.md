@@ -4,7 +4,7 @@ Status: fail-closed code-owner review readiness slice
 Date: 2026-05-27
 Scope: clean-room review evidence before ML-KEM implementation promotion.
 
-This slice records the required code-owner, cryptography, security, standards, side-channel, and source-digest review evidence that must exist before future ML-KEM implementation work can be promoted. It keeps reviewer approval, implementation promotion, operation execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled.
+This slice records the required code-owner, cryptography, security, standards, side-channel, and source-digest review evidence that must exist before future ML-KEM implementation work can be promoted. It keeps reviewer approval, implementation promotion, operation execution, production crypto claims, FIPS claims, network behavior, host mutation, and runtime authority disabled. The downstream disposition ledger is recorded in `LATTICRA_Q_SEAL_ML_KEM_REVIEW_DISPOSITION_LEDGER.md`, and the reviewer identity import fixture is recorded in `LATTICRA_Q_SEAL_ML_KEM_REVIEWER_IDENTITY_FIXTURE.md`.
 
 ## Files
 
@@ -14,7 +14,11 @@ latticra-q-seal/src/q_seal_ml_kem_code_owner_review.c
 latticra-q-seal/tests/q_seal_ml_kem_code_owner_review_invariants.c
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 latticra-q-seal/evidence/ML_KEM_CODE_OWNER_REVIEW.md
+latticra-q-seal/evidence/ML_KEM_REVIEW_DISPOSITION_LEDGER.md
+latticra-q-seal/evidence/ML_KEM_REVIEWER_IDENTITY_FIXTURE.md
 latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md
+scripts/test-latticra-q-seal-ml-kem-review-disposition-ledger.sh
+scripts/test-latticra-q-seal-ml-kem-reviewer-identity-fixture.sh
 scripts/test-latticra-q-seal-ml-kem-code-owner-review.sh
 ```
 

@@ -99,8 +99,8 @@ latticra_status_t latticra_seal_crypto_verify_backend_from_policy(
     copy_literal(out->signature_algorithm, sizeof(out->signature_algorithm), policy->signature_algorithm);
     copy_literal(out->public_key_identity_label, sizeof(out->public_key_identity_label), policy->public_key_identity_label);
     copy_literal(out->trust_source, sizeof(out->trust_source), policy->trust_source);
-    copy_literal(out->crypto_verify_state, sizeof(out->crypto_verify_state), "unsupported");
-    out->cryptographic_verification_supported = 0u;
+    copy_literal(out->crypto_verify_state, sizeof(out->crypto_verify_state), "ready-local-ed25519");
+    out->cryptographic_verification_supported = 1u;
     out->cryptographic_verification_performed = 0u;
     out->verified = 0u;
     out->invalid = 0u;
@@ -108,7 +108,7 @@ latticra_status_t latticra_seal_crypto_verify_backend_from_policy(
     out->capability_gate_allowed = 0u;
     out->runtime_authority_granted = 0u;
     out->error = LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_OK;
-    copy_literal(out->status, sizeof(out->status), "crypto-verify-backend-metadata");
+    copy_literal(out->status, sizeof(out->status), "crypto-verify-backend-ready");
     return LATTICRA_STATUS_OK;
 }
 
@@ -123,6 +123,17 @@ int latticra_seal_crypto_verify_backend_is_metadata_only(
            backend->verified == 0u &&
            backend->invalid == 0u &&
            backend->authority_usable == 0u &&
+           backend->capability_gate_allowed == 0u &&
+           backend->runtime_authority_granted == 0u;
+}
+
+int latticra_seal_crypto_verify_backend_is_authority_neutral(
+    const latticra_seal_crypto_verify_backend_t *backend) {
+    if (backend == NULL) {
+        return 0;
+    }
+
+    return backend->authority_usable == 0u &&
            backend->capability_gate_allowed == 0u &&
            backend->runtime_authority_granted == 0u;
 }

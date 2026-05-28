@@ -253,6 +253,10 @@ static int invocation_fails_closed(void) {
     latticra_seal_signer_handoff_t handoff = fixture_handoff("report-only");
     latticra_seal_signer_invocation_t invocation;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNER_INVOCATION_RENDER_MAX];
+    char unterminated_invocation[LATTICRA_SEAL_SIGNER_INVOCATION_LABEL_MAX];
+
+    memset(unterminated_invocation, 'x', sizeof(unterminated_invocation));
 
     EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(0, "metadata-only", &invocation) == LATTICRA_STATUS_OK, "null handoff status");
     EXPECT_TRUE(invocation.error == LATTICRA_SEAL_SIGNER_INVOCATION_INVALID_INPUT, "null handoff error");
@@ -265,6 +269,28 @@ static int invocation_fails_closed(void) {
             "denied-signer-handoff",
             "invalid-signer-handoff",
             "invalid handoff status") != 0) {
+        return 1;
+    }
+    handoff = fixture_handoff("report-only");
+    memset(handoff.signer_handoff_state, 'z', sizeof(handoff.signer_handoff_state));
+    if (expect_denial(
+            &handoff,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNER_INVOCATION_INVALID_SIGNER_HANDOFF,
+            "denied-signer-handoff",
+            "invalid-signer-handoff",
+            "unterminated handoff status") != 0) {
+        return 1;
+    }
+    handoff = fixture_handoff("report-only");
+    handoff.signer_handoff_ready = 2u;
+    if (expect_denial(
+            &handoff,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNER_INVOCATION_INVALID_SIGNER_HANDOFF,
+            "denied-signer-handoff",
+            "invalid-signer-handoff",
+            "invalid handoff flag status") != 0) {
         return 1;
     }
     handoff = fixture_handoff("report-only");
@@ -319,6 +345,21 @@ static int invocation_fails_closed(void) {
     if (expect_denial(&handoff, "spawn-signer", LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_SIGNER_INVOCATION, "denied-signer-invocation", "denied-signer-invocation", "unknown invocation status") != 0) {
         return 1;
     }
+    handoff = fixture_handoff("report-only");
+    EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(
+                    &handoff,
+                    unterminated_invocation,
+                    &invocation) == LATTICRA_STATUS_OK,
+                "unterminated requested signer invocation status");
+    EXPECT_TRUE(invocation.error == LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_SIGNER_INVOCATION,
+                "unterminated requested signer invocation error");
+    EXPECT_TRUE(strcmp(invocation.requested_signer_invocation, "invalid-signer-invocation") == 0,
+                "unterminated requested signer invocation sanitized");
+    EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested signer invocation render");
+    EXPECT_TRUE(strstr(rendered, "requested_signer_invocation=invalid-signer-invocation") != 0,
+                "unterminated requested signer invocation rendered sanitized");
     handoff = fixture_handoff("report-only");
     handoff.private_key_handling = 1u;
     if (expect_denial(&handoff, "metadata-only", LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_PRIVATE_KEY, "denied-private-key", "denied-private-key", "private key status") != 0) {
@@ -412,6 +453,51 @@ static int invocation_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_signer_invocation_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null invocation render");
     EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    handoff = fixture_handoff("report-only");
+    EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(
+                    &handoff,
+                    "metadata-only",
+                    &invocation) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(invocation.signer_invocation_profile, 'z', sizeof(invocation.signer_invocation_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated signer invocation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated signer invocation render cleared");
+    EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(&invocation) == 0,
+                "unterminated signer invocation helper rejected");
+
+    handoff = fixture_handoff("report-only");
+    EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(
+                    &handoff,
+                    "metadata-only",
+                    &invocation) == LATTICRA_STATUS_OK,
+                "authority signer invocation render source");
+    invocation.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority signer invocation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority signer invocation render cleared");
+    EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(&invocation) == 0,
+                "authority signer invocation helper rejected");
+
+    handoff = fixture_handoff("report-only");
+    EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(
+                    &handoff,
+                    "metadata-only",
+                    &invocation) == LATTICRA_STATUS_OK,
+                "ready flag signer invocation render source");
+    invocation.signer_invocation_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag signer invocation render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag signer invocation render cleared");
+    EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(&invocation) == 0,
+                "ready flag signer invocation helper rejected");
     return 0;
 }
 

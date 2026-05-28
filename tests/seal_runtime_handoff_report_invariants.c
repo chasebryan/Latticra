@@ -191,6 +191,10 @@ static int report_fails_closed(void) {
     latticra_seal_runtime_handoff_evaluation_t evaluation = fixture_evaluation("report-only");
     latticra_seal_runtime_handoff_report_t report;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_RENDER_MAX];
+    char unterminated_report[LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_LABEL_MAX];
+
+    memset(unterminated_report, 'x', sizeof(unterminated_report));
 
     EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(0, "report-only", &report) == LATTICRA_STATUS_OK, "null evaluation status");
     EXPECT_TRUE(report.error == LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_INPUT, "null evaluation error");
@@ -250,6 +254,32 @@ static int report_fails_closed(void) {
     EXPECT_TRUE(report.error == LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_UNKNOWN_REPORT, "unknown report error");
     EXPECT_TRUE(strcmp(report.report_state, "denied-report") == 0, "unknown report state");
     evaluation = fixture_evaluation("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(
+                    &evaluation,
+                    unterminated_report,
+                    &report) == LATTICRA_STATUS_OK,
+                "unterminated requested report status");
+    EXPECT_TRUE(report.error == LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_UNKNOWN_REPORT,
+                "unterminated requested report error");
+    EXPECT_TRUE(strcmp(report.requested_report, "invalid-report") == 0,
+                "unterminated requested report sanitized");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(&report, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested report render");
+    EXPECT_TRUE(strstr(rendered, "requested_report=invalid-report") != 0,
+                "unterminated requested report rendered sanitized");
+    evaluation = fixture_evaluation("report-only");
+    memset(evaluation.handoff_state, 'z', sizeof(evaluation.handoff_state));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(
+                    &evaluation,
+                    "report-only",
+                    &report) == LATTICRA_STATUS_OK,
+                "unterminated evaluation status");
+    EXPECT_TRUE(report.error == LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_INVALID_EVALUATION,
+                "unterminated evaluation error");
+    EXPECT_TRUE(strcmp(report.report_state, "denied-evaluation") == 0,
+                "unterminated evaluation state");
+    evaluation = fixture_evaluation("report-only");
     EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(&evaluation, "evaluate-only", &report) == LATTICRA_STATUS_OK, "mismatch status");
     EXPECT_TRUE(report.error == LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_DENIED_REPORT, "mismatch error");
     EXPECT_TRUE(strcmp(report.report_state, "denied-report") == 0, "mismatch state");
@@ -259,6 +289,51 @@ static int report_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null report render");
     EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(&report, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    evaluation = fixture_evaluation("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(
+                    &evaluation,
+                    "report-only",
+                    &report) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(report.report_profile, 'z', sizeof(report.report_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(&report, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated report render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated report render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_is_metadata_only(&report) == 0,
+                "unterminated report helper rejected");
+
+    evaluation = fixture_evaluation("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(
+                    &evaluation,
+                    "report-only",
+                    &report) == LATTICRA_STATUS_OK,
+                "authority render source");
+    report.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(&report, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority report render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority report render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_is_metadata_only(&report) == 0,
+                "authority report helper rejected");
+
+    evaluation = fixture_evaluation("report-only");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_from_evaluation(
+                    &evaluation,
+                    "report-only",
+                    &report) == LATTICRA_STATUS_OK,
+                "ready flag render source");
+    report.report_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_render(&report, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag report render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag report render cleared");
+    EXPECT_TRUE(latticra_seal_runtime_handoff_report_is_metadata_only(&report) == 0,
+                "ready flag report helper rejected");
     return 0;
 }
 

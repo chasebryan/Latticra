@@ -106,7 +106,7 @@ require_contains 'accepted_rpmlint_transcript_present=0' "$contract"
 require_contains 'rpm_payload_accepted=0' "$contract"
 require_contains 'rpm_install_remove_transcript_present=0' "$contract"
 require_contains 'explicit_operator_build_authorization=0' "$contract"
-require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate contract' "$contract"
+require_contains 'Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review contract' "$contract"
 require_contains 'opensuse_obs_publication_non_claim_review_contract: ok' "$contract"
 
 require_contains "$contract" "$install_remove_contract"

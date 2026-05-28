@@ -43,6 +43,24 @@ cc $CFLAGS \
   src/kernel_runtime_entry_register_view.c \
   src/kernel_runtime_entry_stack_view.c \
   src/kernel_runtime_entry_address_space_view.c \
+  src/kernel_runtime_entry_privilege_level_view.c \
+  src/kernel_runtime_entry_syscall_gate_view.c \
+  src/kernel_runtime_entry_syscall_dispatch_view.c \
+  src/kernel_runtime_entry_syscall_return_view.c \
+  src/kernel_runtime_entry_syscall_exit_view.c \
+  src/kernel_runtime_entry_user_mode_resume_view.c \
+  src/kernel_runtime_entry_post_resume_observation_view.c \
+  src/kernel_runtime_entry_scheduler_return_observation_view.c \
+  src/kernel_runtime_entry_process_return_observation_view.c \
+  src/kernel_runtime_entry_idle_return_observation_view.c \
+  src/kernel_runtime_entry_quiescent_return_observation_view.c \
+  src/kernel_runtime_entry_persistence_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_plan_observation_view.c \
+  src/kernel_runtime_entry_recovery_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_outcome_observation_view.c \
+  src/kernel_runtime_entry_recovery_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_observation_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \

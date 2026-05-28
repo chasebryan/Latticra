@@ -7,7 +7,7 @@ Scope: provider-backed local Ed25519 verification result surface after the Ed255
 
 This document records the first local Ed25519 verify-only implementation for Latticra Seal.
 
-The implementation accepts caller-supplied message bytes, caller-supplied public key bytes, caller-supplied signature bytes, and an existing crypto verify backend metadata record.
+The implementation accepts caller-supplied message bytes, caller-supplied public key bytes, caller-supplied signature bytes, and an existing ready crypto verify backend record.
 
 It produces bounded verification result metadata.
 
@@ -35,7 +35,8 @@ The test runner links with:
 The implementation:
 
 ```text
-accepts a valid crypto verify backend metadata record
+accepts a valid ready crypto verify backend record
+requires crypto_verify_state=ready-local-ed25519 before provider invocation
 accepts Ed25519-development as the only supported algorithm label
 accepts caller-supplied message bytes
 accepts caller-supplied 32-byte Ed25519 public key bytes
@@ -44,6 +45,7 @@ computes a SHA-256 digest of the message for reporting
 calls the OpenSSL EVP Ed25519 verify provider
 records crypto_verify_state=verified on success
 records crypto_verify_state=invalid-signature on signature failure
+rejects unsupported or stale backend metadata before calling the OpenSSL provider
 renders deterministic verification result metadata
 ```
 

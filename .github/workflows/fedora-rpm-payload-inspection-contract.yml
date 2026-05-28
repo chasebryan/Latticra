@@ -1,0 +1,24 @@
+name: Fedora RPM Payload Inspection Contract
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT.md'
+      - 'docs/status/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT_STATUS.md'
+      - 'scripts/test-fedora-rpm-payload-inspection-contract.sh'
+      - '.github/workflows/fedora-rpm-payload-inspection-contract.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpm-payload-inspection-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora RPM payload inspection contract guard
+        run: sh scripts/test-fedora-rpm-payload-inspection-contract.sh

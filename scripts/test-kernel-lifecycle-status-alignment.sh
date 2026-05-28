@@ -27,6 +27,7 @@ require_file docs/status/CURRENT_STATUS.md
 require_file docs/FOUNDATION_INDEX.md
 require_file docs/KERNEL_LIFECYCLE_SEED.md
 require_file docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_file docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
 require_file docs/KERNEL_PREEMPTION_SEED.md
 require_file docs/KERNEL_SCHEDULER_CREDIT_SEED.md
 require_file docs/KERNEL_SCHEDULER_SELECTION_SEED.md
@@ -124,6 +125,150 @@ require_file tools/kernel_runtime_entry_address_space_view_report.c
 require_file scripts/test-kernel-runtime-entry-address-space-view.sh
 require_file scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh
 require_file .github/workflows/kernel-runtime-entry-address-space-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_privilege_level_view.h
+require_file src/kernel_runtime_entry_privilege_level_view.c
+require_file tests/kernel_runtime_entry_privilege_level_view.c
+require_file tools/kernel_runtime_entry_privilege_level_view_report.c
+require_file scripts/test-kernel-runtime-entry-privilege-level-view.sh
+require_file scripts/test-kernel-runtime-entry-privilege-level-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-privilege-level-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_syscall_gate_view.h
+require_file src/kernel_runtime_entry_syscall_gate_view.c
+require_file tests/kernel_runtime_entry_syscall_gate_view.c
+require_file tools/kernel_runtime_entry_syscall_gate_view_report.c
+require_file scripts/test-kernel-runtime-entry-syscall-gate-view.sh
+require_file scripts/test-kernel-runtime-entry-syscall-gate-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-syscall-gate-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_syscall_dispatch_view.h
+require_file src/kernel_runtime_entry_syscall_dispatch_view.c
+require_file tests/kernel_runtime_entry_syscall_dispatch_view.c
+require_file tools/kernel_runtime_entry_syscall_dispatch_view_report.c
+require_file scripts/test-kernel-runtime-entry-syscall-dispatch-view.sh
+require_file scripts/test-kernel-runtime-entry-syscall-dispatch-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_syscall_return_view.h
+require_file src/kernel_runtime_entry_syscall_return_view.c
+require_file tests/kernel_runtime_entry_syscall_return_view.c
+require_file tools/kernel_runtime_entry_syscall_return_view_report.c
+require_file scripts/test-kernel-runtime-entry-syscall-return-view.sh
+require_file scripts/test-kernel-runtime-entry-syscall-return-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-syscall-return-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_syscall_exit_view.h
+require_file src/kernel_runtime_entry_syscall_exit_view.c
+require_file tests/kernel_runtime_entry_syscall_exit_view.c
+require_file tools/kernel_runtime_entry_syscall_exit_view_report.c
+require_file scripts/test-kernel-runtime-entry-syscall-exit-view.sh
+require_file scripts/test-kernel-runtime-entry-syscall-exit-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-syscall-exit-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_user_mode_resume_view.h
+require_file src/kernel_runtime_entry_user_mode_resume_view.c
+require_file tests/kernel_runtime_entry_user_mode_resume_view.c
+require_file tools/kernel_runtime_entry_user_mode_resume_view_report.c
+require_file scripts/test-kernel-runtime-entry-user-mode-resume-view.sh
+require_file scripts/test-kernel-runtime-entry-user-mode-resume-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-user-mode-resume-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_post_resume_observation_view.h
+require_file src/kernel_runtime_entry_post_resume_observation_view.c
+require_file tests/kernel_runtime_entry_post_resume_observation_view.c
+require_file tools/kernel_runtime_entry_post_resume_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-post-resume-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-post-resume-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-post-resume-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_scheduler_return_observation_view.h
+require_file src/kernel_runtime_entry_scheduler_return_observation_view.c
+require_file tests/kernel_runtime_entry_scheduler_return_observation_view.c
+require_file tools/kernel_runtime_entry_scheduler_return_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-scheduler-return-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-scheduler-return-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_process_return_observation_view.h
+require_file src/kernel_runtime_entry_process_return_observation_view.c
+require_file tests/kernel_runtime_entry_process_return_observation_view.c
+require_file tools/kernel_runtime_entry_process_return_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-process-return-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-process-return-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-process-return-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_idle_return_observation_view.h
+require_file src/kernel_runtime_entry_idle_return_observation_view.c
+require_file tests/kernel_runtime_entry_idle_return_observation_view.c
+require_file tools/kernel_runtime_entry_idle_return_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-idle-return-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-idle-return-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-idle-return-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_quiescent_return_observation_view.h
+require_file src/kernel_runtime_entry_quiescent_return_observation_view.c
+require_file tests/kernel_runtime_entry_quiescent_return_observation_view.c
+require_file tools/kernel_runtime_entry_quiescent_return_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-quiescent-return-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-quiescent-return-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_persistence_boundary_observation_view.h
+require_file src/kernel_runtime_entry_persistence_boundary_observation_view.c
+require_file tests/kernel_runtime_entry_persistence_boundary_observation_view.c
+require_file tools/kernel_runtime_entry_persistence_boundary_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-persistence-boundary-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-persistence-boundary-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_boundary_observation_view.h
+require_file src/kernel_runtime_entry_recovery_boundary_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_boundary_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_boundary_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-boundary-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-boundary-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_plan_observation_view.h
+require_file src/kernel_runtime_entry_recovery_plan_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_plan_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_plan_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-plan-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-plan-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_disposition_observation_view.h
+require_file src/kernel_runtime_entry_recovery_disposition_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_disposition_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_disposition_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-disposition-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-disposition-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_outcome_observation_view.h
+require_file src/kernel_runtime_entry_recovery_outcome_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_outcome_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_outcome_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-outcome-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-outcome-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_closeout_observation_view.h
+require_file src/kernel_runtime_entry_recovery_closeout_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_closeout_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_closeout_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-closeout-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-closeout-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
+require_file docs/KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md
+require_file include/latticra/kernel_runtime_entry_recovery_audit_observation_view.h
+require_file src/kernel_runtime_entry_recovery_audit_observation_view.c
+require_file tests/kernel_runtime_entry_recovery_audit_observation_view.c
+require_file tools/kernel_runtime_entry_recovery_audit_observation_view_report.c
+require_file scripts/test-kernel-runtime-entry-recovery-audit-observation-view.sh
+require_file scripts/test-kernel-runtime-entry-recovery-audit-observation-view-report-runner.sh
+require_file .github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
 require_file scripts/test-kernel-process-table.sh
 require_file scripts/test-kernel-process-table-report-runner.sh
 require_file .github/workflows/kernel-process-table.yml
@@ -183,21 +328,84 @@ require_contains 'kernel runtime entry stack-view guard' docs/status/KERNEL_LIFE
 require_contains 'kernel runtime entry stack-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel runtime entry address-space-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel runtime entry address-space-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry privilege-level-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry privilege-level-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-gate-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-gate-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-dispatch-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-dispatch-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-return-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-return-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-exit-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry syscall-exit-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry user-mode-resume-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry user-mode-resume-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry post-resume-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry post-resume-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry scheduler-return-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry scheduler-return-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry process-return-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry process-return-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry idle-return-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry idle-return-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry quiescent-return-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry quiescent-return-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry persistence-boundary-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry persistence-boundary-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-boundary-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-boundary-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-plan-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-plan-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-disposition-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-disposition-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel process table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel syscall table report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle subsystem summary' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'kernel lifecycle rollback plan' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'final_state=runtime-entry-address-space-view-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'final_state=runtime-entry-recovery-audit-observation-view-ready' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'external_effect_performed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'no_external_effect_chain=1' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_boundary_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_persistence_boundary_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_quiescent_return_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_idle_return_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_process_return_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_post_resume_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_user_mode_resume_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_syscall_exit_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_syscall_return_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_syscall_dispatch_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_syscall_gate_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_privilege_level_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_address_space_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_stack_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_register_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_frame_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_admission_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'runtime_entry_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_boundary_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_boundary_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_plan_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_plan_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_disposition_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_disposition_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_closeout_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'runtime_entry_recovery_audit_observation_view_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_outcome_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_outcome_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_closeout_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_closeout_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_audit_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery_audit_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'persistence_boundary_observation_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'persistence_boundary_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'persistence_commit_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_execution_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_selection_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'scheduler_dispatch_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -247,7 +455,14 @@ require_contains 'scheduler_credit_update_allowed=0' docs/status/KERNEL_LIFECYCL
 require_contains 'process_wake_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'dma_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains 'hardware_effect_allowed=0' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
-require_contains 'Add no-effect runtime entry privilege-level view classifier' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-outcome-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-outcome-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-closeout-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-closeout-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-audit-observation-view guard' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'kernel runtime entry recovery-audit-observation-view report runner' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'Add no-effect runtime entry recovery-audit-review observation view evidence after the audit terminal' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains 'recovery-audit-review evidence report-only' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-ipc-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-vfs-namespace.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-device-registry.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
@@ -269,6 +484,26 @@ require_contains '.github/workflows/kernel-runtime-entry-admission.yml' docs/sta
 require_contains '.github/workflows/kernel-runtime-entry-frame.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-runtime-entry-register-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-runtime-entry-stack-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-address-space-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-privilege-level-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-gate-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-return-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-exit-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-user-mode-resume-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-post-resume-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-process-return-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-idle-return-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-process-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 require_contains '.github/workflows/kernel-syscall-table.yml' docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md
 
@@ -318,18 +553,91 @@ require_contains 'kernel runtime entry stack-view guard' docs/status/README.md
 require_contains 'kernel runtime entry stack-view report runner' docs/status/README.md
 require_contains 'kernel runtime entry address-space-view guard' docs/status/README.md
 require_contains 'kernel runtime entry address-space-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry privilege-level-view guard' docs/status/README.md
+require_contains 'kernel runtime entry privilege-level-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry syscall-gate-view guard' docs/status/README.md
+require_contains 'kernel runtime entry syscall-gate-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry syscall-dispatch-view guard' docs/status/README.md
+require_contains 'kernel runtime entry syscall-dispatch-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry syscall-return-view guard' docs/status/README.md
+require_contains 'kernel runtime entry syscall-return-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry syscall-exit-view guard' docs/status/README.md
+require_contains 'kernel runtime entry syscall-exit-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry user-mode-resume-view guard' docs/status/README.md
+require_contains 'kernel runtime entry user-mode-resume-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry post-resume-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry post-resume-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry scheduler-return-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry scheduler-return-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry process-return-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry process-return-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry idle-return-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry idle-return-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry quiescent-return-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry quiescent-return-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry persistence-boundary-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry persistence-boundary-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-boundary-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-boundary-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-plan-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-plan-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-disposition-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-disposition-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-outcome-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-outcome-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-closeout-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-closeout-observation-view report runner' docs/status/README.md
+require_contains 'kernel runtime entry recovery-audit-observation-view guard' docs/status/README.md
+require_contains 'kernel runtime entry recovery-audit-observation-view report runner' docs/status/README.md
 require_contains 'kernel process table guard' docs/status/README.md
 require_contains 'kernel process table report runner' docs/status/README.md
 require_contains 'kernel syscall table guard' docs/status/README.md
 require_contains 'kernel syscall table report runner' docs/status/README.md
-require_contains 'final_state=runtime-entry-address-space-view-ready' docs/status/README.md
+require_contains 'final_state=runtime-entry-recovery-audit-observation-view-ready' docs/status/README.md
 require_contains 'external_effect_performed=0' docs/status/README.md
+require_contains 'no_external_effect_chain=1' docs/status/README.md
+require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_recovery_closeout_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_recovery_audit_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_recovery_boundary_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_persistence_boundary_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_quiescent_return_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_idle_return_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_process_return_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_post_resume_observation_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_user_mode_resume_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_syscall_exit_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_syscall_return_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_syscall_dispatch_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_syscall_gate_view_allowed=0' docs/status/README.md
+require_contains 'runtime_entry_privilege_level_view_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_address_space_view_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_stack_view_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_register_view_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_frame_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_admission_allowed=0' docs/status/README.md
 require_contains 'runtime_entry_allowed=0' docs/status/README.md
+require_contains 'recovery_boundary_observation_allowed=0' docs/status/README.md
+require_contains 'recovery_boundary_allowed=0' docs/status/README.md
+require_contains 'recovery_plan_allowed=0' docs/status/README.md
+require_contains 'recovery_plan_observation_allowed=0' docs/status/README.md
+require_contains 'recovery_disposition_allowed=0' docs/status/README.md
+require_contains 'recovery_disposition_observation_allowed=0' docs/status/README.md
+require_contains 'recovery_outcome_allowed=0' docs/status/README.md
+require_contains 'recovery_outcome_observation_allowed=0' docs/status/README.md
+require_contains 'recovery_closeout_allowed=0' docs/status/README.md
+require_contains 'recovery_closeout_observation_allowed=0' docs/status/README.md
+require_contains 'recovery_audit_allowed=0' docs/status/README.md
+require_contains 'recovery_audit_observation_allowed=0' docs/status/README.md
+require_contains 'persistence_boundary_observation_allowed=0' docs/status/README.md
+require_contains 'persistence_boundary_allowed=0' docs/status/README.md
+require_contains 'persistence_commit_allowed=0' docs/status/README.md
+require_contains 'quiescent_return_observation_allowed=0' docs/status/README.md
+require_contains 'quiescent_return_allowed=0' docs/status/README.md
+require_contains 'quiescent_state_read_allowed=0' docs/status/README.md
 require_contains 'scheduler_execution_allowed=0' docs/status/README.md
 require_contains 'scheduler_selection_allowed=0' docs/status/README.md
 require_contains 'scheduler_dispatch_allowed=0' docs/status/README.md
@@ -377,14 +685,44 @@ require_contains 'cpu_usage_write_allowed=0' docs/status/README.md
 require_contains 'quota_update_allowed=0' docs/status/README.md
 require_contains 'scheduler_credit_update_allowed=0' docs/status/README.md
 require_contains 'process_wake_allowed=0' docs/status/README.md
+require_contains 'persistence_allowed=0' docs/status/README.md
+require_contains 'recovery_authority_allowed=0' docs/status/README.md
 require_contains 'dma_allowed=0' docs/status/README.md
 require_contains 'hardware_effect_allowed=0' docs/status/README.md
-require_contains 'Add no-effect runtime entry privilege-level view classifier' docs/status/README.md
+require_contains 'Add no-effect runtime entry recovery-audit-review observation view evidence after the audit terminal' docs/status/README.md
 require_contains '.github/workflows/kernel-runtime-entry-admission.yml' docs/status/README.md
 require_contains '.github/workflows/kernel-runtime-entry-frame.yml' docs/status/README.md
 require_contains '.github/workflows/kernel-runtime-entry-register-view.yml' docs/status/README.md
 require_contains '.github/workflows/kernel-runtime-entry-stack-view.yml' docs/status/README.md
-require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle path reaches `runtime-entry-address-space-view-ready` with guarded scheduler run-entry, runtime-entry admission, frame, register-view, stack-view, and address-space-view metadata' README.md
+require_contains '.github/workflows/kernel-runtime-entry-address-space-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-privilege-level-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-gate-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-return-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-syscall-exit-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-user-mode-resume-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-post-resume-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-process-return-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-idle-return-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml' docs/status/README.md
+require_contains '.github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml' docs/status/README.md
+require_contains '| Kernel lifecycle evidence | No-effect kernel lifecycle, nucleus coupling, and subsystem summary reach `runtime-entry-recovery-audit-observation-view-ready`; recovery-audit observation evidence remains report-only' README.md
+require_contains '[nucleus kernel coupling readiness](docs/NUCLEUS_KERNEL_COUPLING_READINESS.md)' README.md
+require_contains 'kernel_lifecycle_final_state=runtime-entry-recovery-audit-observation-view-ready' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'runtime_recovery_audit_observation_view_status=runtime-entry-recovery-audit-observation-view-seed-ready' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'lifecycle_step_count=46' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'lifecycle_state_change_count=46' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'recovery_audit_observation_view_count=4' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'runtime_recovery_audit_observation_view_allowed=0' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'recovery_audit_allowed=0' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'recovery_audit_observation_allowed=0' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
+require_contains 'evidence_level=49' docs/NUCLEUS_KERNEL_COUPLING_READINESS.md
 require_contains 'kernel_lifecycle_evidence_status_present=1' README.md
 require_contains 'kernel_run_queue_guard_present=1' README.md
 require_contains 'kernel_context_switch_guard_present=1' README.md
@@ -401,15 +739,67 @@ require_contains 'kernel_runtime_entry_frame_guard_present=1' README.md
 require_contains 'kernel_runtime_entry_register_view_guard_present=1' README.md
 require_contains 'kernel_runtime_entry_stack_view_guard_present=1' README.md
 require_contains 'kernel_runtime_entry_address_space_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_privilege_level_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_syscall_gate_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_syscall_dispatch_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_syscall_return_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_syscall_exit_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_user_mode_resume_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_post_resume_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_scheduler_return_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_process_return_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_idle_return_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_quiescent_return_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_persistence_boundary_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_boundary_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_plan_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_disposition_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_outcome_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_closeout_observation_view_guard_present=1' README.md
+require_contains 'kernel_runtime_entry_recovery_audit_observation_view_guard_present=1' README.md
 require_contains 'kernel_process_table_guard_present=1' README.md
 require_contains 'kernel_syscall_table_guard_present=1' README.md
-require_contains 'final_state=runtime-entry-address-space-view-ready' README.md
+require_contains 'final_state=runtime-entry-recovery-audit-observation-view-ready' README.md
+require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_closeout_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_audit_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_boundary_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_persistence_boundary_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_quiescent_return_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_idle_return_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_process_return_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_post_resume_observation_view_allowed=0' README.md
+require_contains 'runtime_entry_user_mode_resume_view_allowed=0' README.md
+require_contains 'runtime_entry_syscall_exit_view_allowed=0' README.md
+require_contains 'runtime_entry_syscall_return_view_allowed=0' README.md
+require_contains 'runtime_entry_syscall_dispatch_view_allowed=0' README.md
+require_contains 'runtime_entry_syscall_gate_view_allowed=0' README.md
+require_contains 'runtime_entry_privilege_level_view_allowed=0' README.md
 require_contains 'runtime_entry_address_space_view_allowed=0' README.md
 require_contains 'runtime_entry_stack_view_allowed=0' README.md
 require_contains 'runtime_entry_register_view_allowed=0' README.md
 require_contains 'runtime_entry_frame_allowed=0' README.md
 require_contains 'runtime_entry_admission_allowed=0' README.md
 require_contains 'runtime_entry_allowed=0' README.md
+require_contains 'recovery_boundary_observation_allowed=0' README.md
+require_contains 'recovery_boundary_allowed=0' README.md
+require_contains 'recovery_plan_allowed=0' README.md
+require_contains 'recovery_plan_observation_allowed=0' README.md
+require_contains 'recovery_disposition_allowed=0' README.md
+require_contains 'recovery_disposition_observation_allowed=0' README.md
+require_contains 'recovery_outcome_allowed=0' README.md
+require_contains 'recovery_outcome_observation_allowed=0' README.md
+require_contains 'recovery_closeout_allowed=0' README.md
+require_contains 'recovery_closeout_observation_allowed=0' README.md
+require_contains 'recovery_audit_allowed=0' README.md
+require_contains 'recovery_audit_observation_allowed=0' README.md
+require_contains 'persistence_boundary_observation_allowed=0' README.md
+require_contains 'persistence_boundary_allowed=0' README.md
+require_contains 'persistence_commit_allowed=0' README.md
 require_contains 'scheduler_selection_allowed=0' README.md
 require_contains 'scheduler_dispatch_allowed=0' README.md
 require_contains 'scheduler_handoff_allowed=0' README.md
@@ -434,8 +824,25 @@ require_contains 'docs/KERNEL_RUNTIME_ENTRY_FRAME_SEED.md' README.md
 require_contains 'docs/KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md' README.md
 require_contains 'docs/KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md' README.md
 require_contains 'docs/KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md' README.md
+require_contains 'docs/KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md' README.md
 require_contains 'docs/status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' README.md
-require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' STATUS.md
+require_contains 'Latest kernel lifecycle evidence status note: 2026-05-27 CDT' STATUS.md
 require_contains 'Kernel run queue seed' STATUS.md
 require_contains 'Kernel context switch seed' STATUS.md
 require_contains 'Kernel time accounting seed' STATUS.md
@@ -451,8 +858,26 @@ require_contains 'Kernel runtime entry frame seed' STATUS.md
 require_contains 'Kernel runtime entry register-view seed' STATUS.md
 require_contains 'Kernel runtime entry stack-view seed' STATUS.md
 require_contains 'Kernel runtime entry address-space-view seed' STATUS.md
+require_contains 'Kernel runtime entry privilege-level-view seed' STATUS.md
+require_contains 'Kernel runtime entry syscall-gate-view seed' STATUS.md
+require_contains 'Kernel runtime entry syscall-dispatch-view seed' STATUS.md
+require_contains 'Kernel runtime entry syscall-return-view seed' STATUS.md
+require_contains 'Kernel runtime entry syscall-exit-view seed' STATUS.md
+require_contains 'Kernel runtime entry user-mode-resume-view seed' STATUS.md
+require_contains 'Kernel runtime entry post-resume-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry scheduler-return-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry process-return-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry idle-return-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry quiescent-return-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry persistence-boundary-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-boundary-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-plan-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-disposition-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-outcome-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-closeout-observation-view seed' STATUS.md
+require_contains 'Kernel runtime entry recovery-audit-observation-view seed' STATUS.md
 require_contains 'Kernel lifecycle rollback plan' STATUS.md
-require_contains 'Latest kernel lifecycle evidence status note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'Latest kernel lifecycle evidence status note: 2026-05-27 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel run queue seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel context switch seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel time accounting seed' docs/status/CURRENT_STATUS.md
@@ -468,6 +893,24 @@ require_contains 'Kernel runtime entry frame seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel runtime entry register-view seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel runtime entry stack-view seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel runtime entry address-space-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry privilege-level-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry syscall-gate-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry syscall-dispatch-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry syscall-return-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry syscall-exit-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry user-mode-resume-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry post-resume-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry scheduler-return-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry process-return-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry idle-return-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry quiescent-return-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry persistence-boundary-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-boundary-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-plan-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-disposition-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-outcome-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-closeout-observation-view seed' docs/status/CURRENT_STATUS.md
+require_contains 'Kernel runtime entry recovery-audit-observation-view seed' docs/status/CURRENT_STATUS.md
 require_contains 'Kernel lifecycle rollback plan' docs/status/CURRENT_STATUS.md
 require_contains 'status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUN_QUEUE_SEED.md' docs/FOUNDATION_INDEX.md
@@ -485,6 +928,58 @@ require_contains 'KERNEL_RUNTIME_ENTRY_FRAME_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
 require_contains 'KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md' docs/FOUNDATION_INDEX.md
+require_contains 'runtime-entry-quiescent-return-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-persistence-boundary-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-recovery-closeout-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-recovery-audit-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-recovery-disposition-observation-view-ready -> runtime-entry-recovery-outcome-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-recovery-outcome-observation-view-ready -> runtime-entry-recovery-closeout-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime-entry-recovery-closeout-observation-view-ready -> runtime-entry-recovery-audit-observation-view-ready' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'state_change_count=46' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'machine_log_count=46' docs/KERNEL_LIFECYCLE_SEED.md
+require_contains 'runtime_entry_recovery_outcome_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_recovery_audit_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_recovery_closeout_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_recovery_disposition_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_recovery_boundary_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_recovery_plan_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_persistence_boundary_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_quiescent_return_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_idle_return_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_process_return_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_scheduler_return_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime_entry_post_resume_observation_view_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_boundary_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_boundary_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_plan_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_plan_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_disposition_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_disposition_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_outcome_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_outcome_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_audit_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_audit_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_closeout_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'recovery_closeout_observation_allowed=0' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
+require_contains 'runtime -> runtime-entry-recovery-audit-observation-view-ready' docs/KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md
 require_contains 'sh scripts/test-kernel-ipc-table.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-ipc-table-report-runner.sh' .github/workflows/kernel-ipc-table.yml
 require_contains 'sh scripts/test-kernel-vfs-namespace.sh' .github/workflows/kernel-vfs-namespace.yml
@@ -529,6 +1024,42 @@ require_contains 'sh scripts/test-kernel-runtime-entry-stack-view.sh' .github/wo
 require_contains 'sh scripts/test-kernel-runtime-entry-stack-view-report-runner.sh' .github/workflows/kernel-runtime-entry-stack-view.yml
 require_contains 'sh scripts/test-kernel-runtime-entry-address-space-view.sh' .github/workflows/kernel-runtime-entry-address-space-view.yml
 require_contains 'sh scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh' .github/workflows/kernel-runtime-entry-address-space-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-privilege-level-view.sh' .github/workflows/kernel-runtime-entry-privilege-level-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-privilege-level-view-report-runner.sh' .github/workflows/kernel-runtime-entry-privilege-level-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-gate-view.sh' .github/workflows/kernel-runtime-entry-syscall-gate-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-gate-view-report-runner.sh' .github/workflows/kernel-runtime-entry-syscall-gate-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-dispatch-view.sh' .github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-dispatch-view-report-runner.sh' .github/workflows/kernel-runtime-entry-syscall-dispatch-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-return-view.sh' .github/workflows/kernel-runtime-entry-syscall-return-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-return-view-report-runner.sh' .github/workflows/kernel-runtime-entry-syscall-return-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-exit-view.sh' .github/workflows/kernel-runtime-entry-syscall-exit-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-syscall-exit-view-report-runner.sh' .github/workflows/kernel-runtime-entry-syscall-exit-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-user-mode-resume-view.sh' .github/workflows/kernel-runtime-entry-user-mode-resume-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-user-mode-resume-view-report-runner.sh' .github/workflows/kernel-runtime-entry-user-mode-resume-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-post-resume-observation-view.sh' .github/workflows/kernel-runtime-entry-post-resume-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-post-resume-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-post-resume-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-scheduler-return-observation-view.sh' .github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-scheduler-return-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-scheduler-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-process-return-observation-view.sh' .github/workflows/kernel-runtime-entry-process-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-process-return-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-process-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-idle-return-observation-view.sh' .github/workflows/kernel-runtime-entry-idle-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-idle-return-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-idle-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-quiescent-return-observation-view.sh' .github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-quiescent-return-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-quiescent-return-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-persistence-boundary-observation-view.sh' .github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-persistence-boundary-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-persistence-boundary-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-boundary-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-boundary-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-boundary-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-plan-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-plan-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-plan-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-disposition-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-disposition-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-disposition-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-outcome-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-outcome-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-outcome-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-closeout-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-closeout-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-closeout-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-audit-observation-view.sh' .github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
+require_contains 'sh scripts/test-kernel-runtime-entry-recovery-audit-observation-view-report-runner.sh' .github/workflows/kernel-runtime-entry-recovery-audit-observation-view.yml
 require_contains 'sh scripts/test-kernel-process-table.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-process-table-report-runner.sh' .github/workflows/kernel-process-table.yml
 require_contains 'sh scripts/test-kernel-syscall-table.sh' .github/workflows/kernel-syscall-table.yml

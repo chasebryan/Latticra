@@ -46,6 +46,24 @@ cc $CFLAGS \
   src/kernel_runtime_entry_register_view.c \
   src/kernel_runtime_entry_stack_view.c \
   src/kernel_runtime_entry_address_space_view.c \
+  src/kernel_runtime_entry_privilege_level_view.c \
+  src/kernel_runtime_entry_syscall_gate_view.c \
+  src/kernel_runtime_entry_syscall_dispatch_view.c \
+  src/kernel_runtime_entry_syscall_return_view.c \
+  src/kernel_runtime_entry_syscall_exit_view.c \
+  src/kernel_runtime_entry_user_mode_resume_view.c \
+  src/kernel_runtime_entry_post_resume_observation_view.c \
+  src/kernel_runtime_entry_scheduler_return_observation_view.c \
+  src/kernel_runtime_entry_process_return_observation_view.c \
+  src/kernel_runtime_entry_idle_return_observation_view.c \
+  src/kernel_runtime_entry_quiescent_return_observation_view.c \
+  src/kernel_runtime_entry_persistence_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_boundary_observation_view.c \
+  src/kernel_runtime_entry_recovery_plan_observation_view.c \
+  src/kernel_runtime_entry_recovery_disposition_observation_view.c \
+  src/kernel_runtime_entry_recovery_outcome_observation_view.c \
+  src/kernel_runtime_entry_recovery_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_observation_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -57,14 +75,14 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=runtime-entry-address-space-view-ready' "$report_txt"
-grep -Fq 'step_count=28' "$report_txt"
-grep -Fq 'state_change_count=28' "$report_txt"
+grep -Fq 'final_state=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
+grep -Fq 'step_count=46' "$report_txt"
+grep -Fq 'state_change_count=46' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
-grep -Fq 'machine_log_count=28' "$report_txt"
+grep -Fq 'machine_log_count=46' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -161,5 +179,76 @@ grep -Fq 'log[27].from=runtime-entry-stack-view-ready' "$report_txt"
 grep -Fq 'log[27].to=runtime-entry-address-space-view-ready' "$report_txt"
 grep -Fq 'log[27].state_change_performed=1' "$report_txt"
 grep -Fq 'log[27].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[28].from=runtime-entry-address-space-view-ready' "$report_txt"
+grep -Fq 'log[28].to=runtime-entry-privilege-level-view-ready' "$report_txt"
+grep -Fq 'log[28].state_change_performed=1' "$report_txt"
+grep -Fq 'log[28].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[29].from=runtime-entry-privilege-level-view-ready' "$report_txt"
+grep -Fq 'log[29].to=runtime-entry-syscall-gate-view-ready' "$report_txt"
+grep -Fq 'log[29].state_change_performed=1' "$report_txt"
+grep -Fq 'log[29].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[30].from=runtime-entry-syscall-gate-view-ready' "$report_txt"
+grep -Fq 'log[30].to=runtime-entry-syscall-dispatch-view-ready' "$report_txt"
+grep -Fq 'log[30].state_change_performed=1' "$report_txt"
+grep -Fq 'log[30].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[31].from=runtime-entry-syscall-dispatch-view-ready' "$report_txt"
+grep -Fq 'log[31].to=runtime-entry-syscall-return-view-ready' "$report_txt"
+grep -Fq 'log[31].state_change_performed=1' "$report_txt"
+grep -Fq 'log[31].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[32].from=runtime-entry-syscall-return-view-ready' "$report_txt"
+grep -Fq 'log[32].to=runtime-entry-syscall-exit-view-ready' "$report_txt"
+grep -Fq 'log[32].state_change_performed=1' "$report_txt"
+grep -Fq 'log[32].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[33].from=runtime-entry-syscall-exit-view-ready' "$report_txt"
+grep -Fq 'log[33].to=runtime-entry-user-mode-resume-view-ready' "$report_txt"
+grep -Fq 'log[33].state_change_performed=1' "$report_txt"
+grep -Fq 'log[33].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[34].from=runtime-entry-user-mode-resume-view-ready' "$report_txt"
+grep -Fq 'log[34].to=runtime-entry-post-resume-observation-view-ready' "$report_txt"
+grep -Fq 'log[34].state_change_performed=1' "$report_txt"
+grep -Fq 'log[34].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[35].from=runtime-entry-post-resume-observation-view-ready' "$report_txt"
+grep -Fq 'log[35].to=runtime-entry-scheduler-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[35].state_change_performed=1' "$report_txt"
+grep -Fq 'log[35].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[36].from=runtime-entry-scheduler-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[36].to=runtime-entry-process-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[36].state_change_performed=1' "$report_txt"
+grep -Fq 'log[36].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[37].from=runtime-entry-process-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[37].to=runtime-entry-idle-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[37].state_change_performed=1' "$report_txt"
+grep -Fq 'log[37].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[38].from=runtime-entry-idle-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[38].to=runtime-entry-quiescent-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[38].state_change_performed=1' "$report_txt"
+grep -Fq 'log[38].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[39].from=runtime-entry-quiescent-return-observation-view-ready' "$report_txt"
+grep -Fq 'log[39].to=runtime-entry-persistence-boundary-observation-view-ready' "$report_txt"
+grep -Fq 'log[39].state_change_performed=1' "$report_txt"
+grep -Fq 'log[39].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[40].from=runtime-entry-persistence-boundary-observation-view-ready' "$report_txt"
+grep -Fq 'log[40].to=runtime-entry-recovery-boundary-observation-view-ready' "$report_txt"
+grep -Fq 'log[40].state_change_performed=1' "$report_txt"
+grep -Fq 'log[40].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[41].from=runtime-entry-recovery-boundary-observation-view-ready' "$report_txt"
+grep -Fq 'log[41].to=runtime-entry-recovery-plan-observation-view-ready' "$report_txt"
+grep -Fq 'log[41].state_change_performed=1' "$report_txt"
+grep -Fq 'log[41].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[42].from=runtime-entry-recovery-plan-observation-view-ready' "$report_txt"
+grep -Fq 'log[42].to=runtime-entry-recovery-disposition-observation-view-ready' "$report_txt"
+grep -Fq 'log[42].state_change_performed=1' "$report_txt"
+grep -Fq 'log[42].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[43].from=runtime-entry-recovery-disposition-observation-view-ready' "$report_txt"
+grep -Fq 'log[43].to=runtime-entry-recovery-outcome-observation-view-ready' "$report_txt"
+grep -Fq 'log[43].state_change_performed=1' "$report_txt"
+grep -Fq 'log[44].from=runtime-entry-recovery-outcome-observation-view-ready' "$report_txt"
+grep -Fq 'log[44].to=runtime-entry-recovery-closeout-observation-view-ready' "$report_txt"
+grep -Fq 'log[44].state_change_performed=1' "$report_txt"
+grep -Fq 'log[44].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[45].from=runtime-entry-recovery-closeout-observation-view-ready' "$report_txt"
+grep -Fq 'log[45].to=runtime-entry-recovery-audit-observation-view-ready' "$report_txt"
+grep -Fq 'log[45].state_change_performed=1' "$report_txt"
+grep -Fq 'log[45].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

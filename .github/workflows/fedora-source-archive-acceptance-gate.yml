@@ -1,0 +1,25 @@
+name: Fedora Source Archive Acceptance Gate
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE.md'
+      - 'docs/status/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE_STATUS.md'
+      - 'scripts/fedora-source-archive-acceptance-gate.sh'
+      - 'scripts/test-fedora-source-archive-acceptance-gate.sh'
+      - '.github/workflows/fedora-source-archive-acceptance-gate.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-source-archive-acceptance-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora source archive acceptance gate guard
+        run: sh scripts/test-fedora-source-archive-acceptance-gate.sh

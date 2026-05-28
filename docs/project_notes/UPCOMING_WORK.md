@@ -130,7 +130,7 @@ The security-guidance refresh slices are aligned across the baseline, roadmap, s
 
 Latticra Seal README status row alignment remains complete for the compact README Seal row and current-posture summary.
 
-Latticra Seal crypto verify backend status/public-entry alignment is complete for the current metadata-only unsupported backend surface. It does not add real cryptographic verification, signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
+Latticra Seal crypto verify backend status/public-entry alignment is complete for the current authority-neutral ready backend surface. It does not perform signature verification in the backend and does not add signing, key handling, host behavior, network behavior, capability enforcement, effect execution, or runtime authority.
 
 Latticra Seal Ed25519 verify-only status/public-entry alignment is complete for the existing local provider-backed verification result surface. It does not add new implementation behavior, signing, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, capability enforcement, effect execution, runtime authority, or production cryptography claims.
 

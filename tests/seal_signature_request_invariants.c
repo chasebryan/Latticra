@@ -195,12 +195,25 @@ static int request_fails_closed(void) {
     latticra_seal_report_envelope_t envelope = fixture_envelope("report-only");
     latticra_seal_signature_request_t request;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNATURE_REQUEST_RENDER_MAX];
+    char unterminated_signature[LATTICRA_SEAL_SIGNATURE_REQUEST_LABEL_MAX];
+
+    memset(unterminated_signature, 'x', sizeof(unterminated_signature));
 
     EXPECT_TRUE(latticra_seal_signature_request_from_envelope(0, "Ed25519-development", &request) == LATTICRA_STATUS_OK, "null envelope status");
     EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_INPUT, "null envelope error");
     envelope.error = LATTICRA_SEAL_REPORT_ENVELOPE_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "Ed25519-development", &request) == LATTICRA_STATUS_OK, "invalid envelope status");
     EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_ENVELOPE, "invalid envelope error");
+    envelope = fixture_envelope("report-only");
+    memset(envelope.envelope_state, 'z', sizeof(envelope.envelope_state));
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "Ed25519-development", &request) == LATTICRA_STATUS_OK, "unterminated envelope status");
+    EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_ENVELOPE, "unterminated envelope error");
+    EXPECT_TRUE(strcmp(request.signature_request_state, "denied-envelope") == 0, "unterminated envelope state");
+    envelope = fixture_envelope("report-only");
+    envelope.report_ready = 2u;
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "Ed25519-development", &request) == LATTICRA_STATUS_OK, "invalid envelope flag status");
+    EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_INVALID_ENVELOPE, "invalid envelope flag error");
     envelope = fixture_envelope("report-only");
     envelope.envelope_ready = 0u;
     EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "Ed25519-development", &request) == LATTICRA_STATUS_OK, "envelope ready status");
@@ -257,12 +270,72 @@ static int request_fails_closed(void) {
     EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "ML-DSA-future", &request) == LATTICRA_STATUS_OK, "unknown signature status");
     EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_UNKNOWN_SIGNATURE, "unknown signature error");
     EXPECT_TRUE(strcmp(request.signature_request_state, "denied-signature-request") == 0, "unknown signature state");
+    envelope = fixture_envelope("report-only");
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(
+                    &envelope,
+                    unterminated_signature,
+                    &request) == LATTICRA_STATUS_OK,
+                "unterminated requested signature status");
+    EXPECT_TRUE(request.error == LATTICRA_SEAL_SIGNATURE_REQUEST_DENIED_UNKNOWN_SIGNATURE,
+                "unterminated requested signature error");
+    EXPECT_TRUE(strcmp(request.requested_signature, "invalid-signature") == 0,
+                "unterminated requested signature sanitized");
+    EXPECT_TRUE(latticra_seal_signature_request_render(&request, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested signature render");
+    EXPECT_TRUE(strstr(rendered, "requested_signature=invalid-signature") != 0,
+                "unterminated requested signature rendered sanitized");
     EXPECT_TRUE(latticra_seal_signature_request_from_envelope(&envelope, "Ed25519-development", 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_signature_request_is_metadata_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_signature_request_render(&request, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small render");
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_signature_request_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null request render");
     EXPECT_TRUE(latticra_seal_signature_request_render(&request, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    envelope = fixture_envelope("report-only");
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(
+                    &envelope,
+                    "Ed25519-development",
+                    &request) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(request.signature_request_profile, 'z', sizeof(request.signature_request_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signature_request_render(&request, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated request render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated request render cleared");
+    EXPECT_TRUE(latticra_seal_signature_request_is_metadata_only(&request) == 0,
+                "unterminated request helper rejected");
+
+    envelope = fixture_envelope("report-only");
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(
+                    &envelope,
+                    "Ed25519-development",
+                    &request) == LATTICRA_STATUS_OK,
+                "authority request render source");
+    request.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signature_request_render(&request, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority request render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority request render cleared");
+    EXPECT_TRUE(latticra_seal_signature_request_is_metadata_only(&request) == 0,
+                "authority request helper rejected");
+
+    envelope = fixture_envelope("report-only");
+    EXPECT_TRUE(latticra_seal_signature_request_from_envelope(
+                    &envelope,
+                    "Ed25519-development",
+                    &request) == LATTICRA_STATUS_OK,
+                "ready flag request render source");
+    request.signature_request_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signature_request_render(&request, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag request render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag request render cleared");
+    EXPECT_TRUE(latticra_seal_signature_request_is_metadata_only(&request) == 0,
+                "ready flag request helper rejected");
     return 0;
 }
 

@@ -217,6 +217,10 @@ static int key_material_fails_closed(void) {
     latticra_seal_key_handling_t key_handling = fixture_key_handling("report-only");
     latticra_seal_key_material_t key_material;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_KEY_MATERIAL_RENDER_MAX];
+    char unterminated_key_material[LATTICRA_SEAL_KEY_MATERIAL_LABEL_MAX];
+
+    memset(unterminated_key_material, 'x', sizeof(unterminated_key_material));
 
     EXPECT_TRUE(
         latticra_seal_key_material_from_key_handling(0, "metadata-only", &key_material) ==
@@ -226,6 +230,28 @@ static int key_material_fails_closed(void) {
     EXPECT_TRUE(strcmp(key_material.key_material_state, "denied-key-handling") == 0, "null key handling state");
     key_handling.error = LATTICRA_SEAL_KEY_HANDLING_DENIED_KEY_HANDLING;
     if (expect_denial(&key_handling, "metadata-only", LATTICRA_SEAL_KEY_MATERIAL_INVALID_KEY_HANDLING, "denied-key-handling", "invalid-key-handling", "invalid key handling status") != 0) {
+        return 1;
+    }
+    key_handling = fixture_key_handling("report-only");
+    memset(key_handling.key_handling_state, 'z', sizeof(key_handling.key_handling_state));
+    if (expect_denial(
+            &key_handling,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_MATERIAL_INVALID_KEY_HANDLING,
+            "denied-key-handling",
+            "invalid-key-handling",
+            "unterminated key handling status") != 0) {
+        return 1;
+    }
+    key_handling = fixture_key_handling("report-only");
+    key_handling.key_handling_ready = 2u;
+    if (expect_denial(
+            &key_handling,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_MATERIAL_INVALID_KEY_HANDLING,
+            "denied-key-handling",
+            "invalid-key-handling",
+            "invalid key handling flag status") != 0) {
         return 1;
     }
     key_handling = fixture_key_handling("report-only");
@@ -354,6 +380,21 @@ static int key_material_fails_closed(void) {
         return 1;
     }
     key_handling = fixture_key_handling("report-only");
+    EXPECT_TRUE(latticra_seal_key_material_from_key_handling(
+                    &key_handling,
+                    unterminated_key_material,
+                    &key_material) == LATTICRA_STATUS_OK,
+                "unterminated requested key material status");
+    EXPECT_TRUE(key_material.error == LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_MATERIAL,
+                "unterminated requested key material error");
+    EXPECT_TRUE(strcmp(key_material.requested_key_material, "invalid-key-material") == 0,
+                "unterminated requested key material sanitized");
+    EXPECT_TRUE(latticra_seal_key_material_render(&key_material, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "unterminated requested key material render");
+    EXPECT_TRUE(strstr(rendered, "requested_key_material=invalid-key-material") != 0,
+                "unterminated requested key material rendered sanitized");
+    key_handling = fixture_key_handling("report-only");
     key_handling.public_key_parsed = 1u;
     if (expect_denial(&key_handling, "metadata-only", LATTICRA_SEAL_KEY_MATERIAL_DENIED_KEY_MATERIAL, "denied-key-material", "denied-key-material", "public key parsed status") != 0) {
         return 1;
@@ -445,6 +486,51 @@ static int key_material_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small render clear");
     EXPECT_TRUE(latticra_seal_key_material_render(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null render");
     EXPECT_TRUE(latticra_seal_key_material_render(&key_material, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer render");
+
+    key_handling = fixture_key_handling("report-only");
+    EXPECT_TRUE(latticra_seal_key_material_from_key_handling(
+                    &key_handling,
+                    "metadata-only",
+                    &key_material) == LATTICRA_STATUS_OK,
+                "tamper render source");
+    memset(key_material.key_material_profile, 'z', sizeof(key_material.key_material_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_material_render(&key_material, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated key material render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated key material render cleared");
+    EXPECT_TRUE(latticra_seal_key_material_is_metadata_only(&key_material) == 0,
+                "unterminated key material helper rejected");
+
+    key_handling = fixture_key_handling("report-only");
+    EXPECT_TRUE(latticra_seal_key_material_from_key_handling(
+                    &key_handling,
+                    "metadata-only",
+                    &key_material) == LATTICRA_STATUS_OK,
+                "authority key material render source");
+    key_material.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_material_render(&key_material, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority key material render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority key material render cleared");
+    EXPECT_TRUE(latticra_seal_key_material_is_metadata_only(&key_material) == 0,
+                "authority key material helper rejected");
+
+    key_handling = fixture_key_handling("report-only");
+    EXPECT_TRUE(latticra_seal_key_material_from_key_handling(
+                    &key_handling,
+                    "metadata-only",
+                    &key_material) == LATTICRA_STATUS_OK,
+                "ready flag key material render source");
+    key_material.key_material_ready = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_material_render(&key_material, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "ready flag key material render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "ready flag key material render cleared");
+    EXPECT_TRUE(latticra_seal_key_material_is_metadata_only(&key_material) == 0,
+                "ready flag key material helper rejected");
     return 0;
 }
 

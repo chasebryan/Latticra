@@ -27,6 +27,7 @@ persist_credentials_false_required=1
 pull_request_target_forbidden=1
 repository_secret_use_requires_dedicated_review=1
 implicit_github_token_use_requires_dedicated_review=1
+repository_source_symlink_refusal_required=1
 repository_secret_filename_scan_required=1
 repository_secret_content_marker_scan_required=1
 sensitive_local_artifact_filename_guard_required=1
@@ -74,7 +75,7 @@ external_endorsement_claimed=0
 | Checkout credentials | checkout steps require `persist-credentials: false` | `scripts/test-quality-safety-guards.sh` |
 | Pull request trust boundary | `pull_request_target` is forbidden | `scripts/test-quality-safety-guards.sh` |
 | Secrets and tokens | workflow secret and implicit token use are blocked without a dedicated guard | `scripts/test-quality-safety-guards.sh` |
-| Repository secret material | secret-bearing filenames, private-key blocks, and common live-token markers are blocked from source files | `scripts/test-secret-material-guard.sh` |
+| Repository source hygiene | source-scope symlinks, secret-bearing filenames, private-key blocks, and common live-token markers are blocked from source files | `scripts/test-secret-material-guard.sh` |
 | Report and log redaction | whole-environment dumps, shell xtrace, and unredacted installer child logs are blocked | `scripts/test-report-redaction-boundary.sh` |
 | Installer engine logs | child stdout/stderr lines are redacted, escaped, and length-bounded before entering evidence logs | `scripts/test-installer-engine-log-sanitization.sh` |
 | Installer engine event boundary | internal log and failure events are redacted, escaped, and length-bounded through one engine send boundary | `scripts/test-installer-engine-event-boundary.sh` |
@@ -154,6 +155,7 @@ CI changes must preserve:
 - no `pull_request_target`;
 - no repository secrets without dedicated review;
 - no implicit `GITHUB_TOKEN`, `GH_TOKEN`, `ACTIONS_ID_TOKEN`, or runtime token use without dedicated review;
+- no source-scope symlink entries that can bypass source or secret-material scans;
 - no committed local secret files, private-key blocks, or common live-token markers in repository source;
 - no whole-environment dumps, shell xtrace, or unredacted child-process output in report/log paths;
 - no installer profile, update-channel, strategy, or command-wrapper string may cross into plans, config artifacts, or install scripts unless it passes the authority slug/name allowlist;

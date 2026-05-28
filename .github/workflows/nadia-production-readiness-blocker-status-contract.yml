@@ -1,0 +1,22 @@
+name: Nadia Production Readiness Blocker Status
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  nadia-production-readiness-blocker-status-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Nadia production readiness blocker status guard
+        run: sh scripts/test-nadia-production-readiness-blocker-status-contract.sh

@@ -337,6 +337,7 @@ static int receipt_api_fails_closed(void) {
     operator_receipt_fixture_t fixture;
     latticra_seal_operator_receipt_report_t receipt;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_MAX];
 
     EXPECT_TRUE(fixture_init(&fixture) == 0, "fixture init api");
     EXPECT_TRUE(latticra_seal_operator_receipt_report_from_sources(
@@ -368,6 +369,54 @@ static int receipt_api_fails_closed(void) {
                     0,
                     sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT,
                 "null buffer render");
+
+    EXPECT_TRUE(fixture_init(&fixture) == 0, "fixture init malformed source");
+    memset(fixture.policy_decision.decision_state,
+           'x',
+           sizeof(fixture.policy_decision.decision_state));
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_from_sources(
+                    &fixture.sources,
+                    &receipt) == LATTICRA_STATUS_OK,
+                "malformed source status");
+    EXPECT_TRUE(receipt.error == LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_NON_REPORT_ONLY_SOURCE,
+                "malformed source denied");
+    EXPECT_TRUE(strcmp(receipt.capability_name, "unknown") == 0,
+                "malformed source not copied");
+    EXPECT_TRUE(receipt.receipt_invalid == 1u, "malformed source invalid");
+    EXPECT_TRUE(receipt.effect_performed == 0u, "malformed source effect");
+
+    EXPECT_TRUE(fixture_init(&fixture) == 0, "fixture init render tamper");
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_from_sources(
+                    &fixture.sources,
+                    &receipt) == LATTICRA_STATUS_OK,
+                "render tamper source status");
+    memset(receipt.operator_receipt_profile,
+           'x',
+           sizeof(receipt.operator_receipt_profile));
+    memset(rendered, 'z', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_render(
+                    &receipt,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated receipt render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated receipt render cleared");
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_is_report_only(&receipt) == 0,
+                "unterminated receipt helper");
+
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_from_sources(
+                    &fixture.sources,
+                    &receipt) == LATTICRA_STATUS_OK,
+                "effect tamper source status");
+    receipt.effect_performed = 1u;
+    memset(rendered, 'z', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_render(
+                    &receipt,
+                    rendered,
+                    sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT,
+                "effect receipt render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "effect receipt render cleared");
+    EXPECT_TRUE(latticra_seal_operator_receipt_report_is_report_only(&receipt) == 0,
+                "effect receipt helper");
     return 0;
 }
 

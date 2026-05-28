@@ -1,0 +1,135 @@
+# Production Installer Multi-VM Evidence Intake Validator Status
+
+Status: validator/status alignment
+Date: 2026-05-27
+Scope: current no-effect production-installer multi-VM evidence intake validator.
+
+## Current status
+
+The production-installer multi-VM evidence intake validator is present.
+
+It can validate a future local evidence bundle that includes fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, package-signature verification, reviewed evidence, and a matching evidence manifest.
+
+It does not run VMs, install, uninstall, upgrade, rollback, invoke a package manager, accept evidence, pass promotion, claim production installer readiness, publish an artifact, or mutate a host.
+
+## Current classification
+
+```text
+multi_vm_evidence_intake_validator_present=1
+multi_vm_evidence_intake_validation_mode=no-effect-validation
+multi_vm_evidence_candidate_valid=0
+fresh_vm_validation_file_present=0
+repeat_vm_validation_file_present=0
+existing_install_validation_file_present=0
+remove_reinstall_validation_file_present=0
+unsupported_target_validation_file_present=0
+non_root_cli_validation_file_present=0
+root_boundary_validation_file_present=0
+checksum_verification_file_present=0
+package_signature_verification_file_present=0
+fresh_vm_validation_sha256_recorded=0
+repeat_vm_validation_sha256_recorded=0
+existing_install_validation_sha256_recorded=0
+remove_reinstall_validation_sha256_recorded=0
+unsupported_target_validation_sha256_recorded=0
+non_root_cli_validation_sha256_recorded=0
+root_boundary_validation_sha256_recorded=0
+checksum_verification_sha256_recorded=0
+package_signature_verification_sha256_recorded=0
+fresh_vm_validation_review_present=0
+repeat_vm_validation_review_present=0
+existing_install_validation_review_present=0
+remove_reinstall_validation_review_present=0
+unsupported_target_validation_review_present=0
+non_root_cli_validation_review_present=0
+root_boundary_validation_review_present=0
+checksum_verification_review_present=0
+package_signature_verification_review_present=0
+multi_vm_evidence_accepted_by_intake_validator=0
+multi_vm_evidence_written_by_intake_validator=0
+installer_multi_vm_promotion_allowed_by_intake_validator_alone=0
+release_artifact_promotion_gate_passed=0
+installer_multi_vm_validation_completed=0
+installer_fresh_vm_validation_completed=0
+installer_repeat_vm_validation_completed=0
+installer_existing_install_validation_completed=0
+installer_non_root_cli_validation_completed=0
+installer_root_boundary_validation_completed=0
+vm_invocation_performed=0
+host_mutation_performed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+```
+
+## Candidate validation surface
+
+The validator expects future complete multi-VM evidence candidates to include:
+
+```text
+multi_vm_evidence_status=complete
+fresh_vm_validation_evidence_present=1
+repeat_vm_validation_evidence_present=1
+existing_install_validation_evidence_present=1
+remove_reinstall_validation_evidence_present=1
+unsupported_target_validation_evidence_present=1
+non_root_cli_validation_evidence_present=1
+root_boundary_validation_evidence_present=1
+checksum_verification_evidence_present=1
+package_signature_verification_evidence_present=1
+fresh_vm_validation_reviewed=1
+repeat_vm_validation_reviewed=1
+existing_install_validation_reviewed=1
+remove_reinstall_validation_reviewed=1
+unsupported_target_validation_reviewed=1
+non_root_cli_validation_reviewed=1
+root_boundary_validation_reviewed=1
+checksum_verification_reviewed=1
+package_signature_verification_reviewed=1
+fresh_disposable_fedora_vm_validation=1
+repeat_disposable_fedora_vm_validation=1
+existing_install_upgrade_validation=1
+remove_and_reinstall_validation=1
+unsupported_target_block_validation=1
+non_root_cli_use_validation=1
+root_boundary_validation=1
+checksum_verification_validation=1
+package_signature_verification_validation=1
+installer_multi_vm_validation_completed=1
+installer_fresh_vm_validation_completed=1
+installer_repeat_vm_validation_completed=1
+installer_existing_install_validation_completed=1
+installer_non_root_cli_validation_completed=1
+installer_root_boundary_validation_completed=1
+vm_invocation_performed=0
+package_manager_invoked=0
+release_artifact_promotion_gate_passed=0
+production_installer_ready=0
+fedora_distribution_ready=0
+fedora_approval_claimed=0
+daily_driver_install_ready=0
+immutable_fedora_ready=0
+host_mutation_performed=0
+network_allowed=0
+```
+
+## Validation
+
+Validated locally:
+
+```text
+sh scripts/test-production-installer-multi-vm-evidence-intake-validator-contract.sh
+production_installer_multi_vm_evidence_intake_validator_contract: ok
+```
+
+## Next recommended lane
+
+```text
+Attach reviewed fresh VM, repeat VM, existing-install upgrade, remove-and-reinstall, unsupported-target block, non-root CLI, root-boundary, checksum verification, and package-signature verification evidence from disposable production-installer validation, then validate the bundle with the multi-VM evidence intake validator before any promotion review.
+```
+
+## Non-claims
+
+This status record is not multi-VM evidence acceptance, not artifact promotion, not production installer readiness, not Fedora approval, not Fedora distribution readiness, not daily-driver readiness, not immutable Fedora readiness, not security hardening, not malware prevention, not ransomware prevention, and not OS-replacement readiness.

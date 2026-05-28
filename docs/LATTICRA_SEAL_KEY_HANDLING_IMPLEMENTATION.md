@@ -140,6 +140,8 @@ The implementation fails closed for:
 null output
 null signing operation
 invalid signing operation
+unterminated signing operation strings
+invalid signing operation boolean flags
 signing_operation_ready=0
 signing_operation_state not operation-metadata-only
 requested_signing_operation not metadata-only
@@ -156,6 +158,7 @@ missing requested signature
 unknown requested signature
 missing requested key handling
 unknown requested key handling
+unterminated requested key handling -> denied-key-handling without copying caller bytes
 public-key parsing request
 key material loading request
 private-key handling request
@@ -176,6 +179,9 @@ effect already performed
 host read already performed
 host write already performed
 network already performed
+tampered key handling strings fail closed before render
+tampered key handling authority/effect flags fail closed before render
+tampered key handling ready/error state fails closed before render
 small render buffer
 ```
 

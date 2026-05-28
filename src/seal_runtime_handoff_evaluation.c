@@ -10,9 +10,216 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
+
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_terminated(const char *value, size_t max_len) {
+    int terminated = 0;
+
+    (void)bounded_string_len(value, max_len, &terminated);
+    return terminated == 1;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
+        return 0;
+    }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
+
 static int is_allowed_handoff(const char *handoff) {
-    return strcmp(handoff, "report-only") == 0 ||
-           strcmp(handoff, "evaluate-only") == 0;
+    return bounded_string_is(handoff,
+                             LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                             "report-only") ||
+           bounded_string_is(handoff,
+                             LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                             "evaluate-only");
+}
+
+static int boolean_flag_valid(unsigned value) {
+    return value == 0u || value == 1u;
+}
+
+static int evaluation_error_valid(latticra_seal_runtime_handoff_evaluation_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_OK:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_INPUT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_DECISION:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_DECISION:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_EFFECT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_MISSING_REQUESTED_HANDOFF:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_UNKNOWN_HANDOFF:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int decision_error_valid(latticra_seal_verified_effect_decision_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_OK:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_INVALID_INPUT:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_INVALID_GATE:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_GATE:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_MISSING_REQUESTED_EFFECT:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_UNKNOWN_EFFECT:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_RUNTIME_AUTHORITY:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_HOST_EFFECT:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_NETWORK_EFFECT:
+    case LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DENIED_CRYPTO_GRADUATION_GATE:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+static int decision_flags_valid(
+    const latticra_seal_verified_effect_decision_t *decision) {
+    if (decision == NULL) {
+        return 0;
+    }
+
+    return boolean_flag_valid(decision->crypto_graduation_gate_present) &&
+           boolean_flag_valid(decision->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(decision->standard_expectations_met) &&
+           boolean_flag_valid(decision->local_verify_graduated) &&
+           boolean_flag_valid(decision->receipt_promotion_graduated) &&
+           boolean_flag_valid(decision->authority_promotion_allowed) &&
+           boolean_flag_valid(decision->verified) &&
+           boolean_flag_valid(decision->authority_usable) &&
+           boolean_flag_valid(decision->receipt_capability_gate_allowed) &&
+           boolean_flag_valid(decision->gate_allowed) &&
+           boolean_flag_valid(decision->effect_allowed) &&
+           boolean_flag_valid(decision->effect_performed) &&
+           boolean_flag_valid(decision->runtime_authority_granted) &&
+           boolean_flag_valid(decision->host_read_performed) &&
+           boolean_flag_valid(decision->host_write_performed) &&
+           boolean_flag_valid(decision->network_performed);
+}
+
+static int decision_strings_valid(
+    const latticra_seal_verified_effect_decision_t *decision) {
+    if (decision == NULL) {
+        return 0;
+    }
+
+    return text_field_valid(decision->decision_profile,
+                            LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_terminated(decision->gate_profile,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_terminated(decision->receipt_profile,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_terminated(decision->verify_profile,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_terminated(decision->message_digest_algorithm,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_ALGORITHM_MAX) &&
+           text_field_terminated(decision->message_digest_hex,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_DIGEST_MAX) &&
+           text_field_terminated(decision->public_key_identity_label,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_LABEL_MAX) &&
+           text_field_terminated(decision->crypto_graduation_profile,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_terminated(decision->assurance_baseline_profile,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_PROFILE_MAX) &&
+           text_field_valid(decision->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX) &&
+           text_field_terminated(decision->requested_capability,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_LABEL_MAX) &&
+           text_field_terminated(decision->requested_effect,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_LABEL_MAX) &&
+           text_field_terminated(decision->requested_scope,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_LABEL_MAX) &&
+           text_field_terminated(decision->gate_state,
+                                 LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX) &&
+           text_field_valid(decision->decision_state,
+                            LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX) &&
+           text_field_valid(decision->status,
+                            LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX) &&
+           decision_error_valid(decision->error) &&
+           decision_flags_valid(decision);
+}
+
+static int requested_handoff_present(const char *requested_handoff) {
+    return requested_handoff != NULL && requested_handoff[0] != '\0';
+}
+
+static int eligible_state_valid(
+    const latticra_seal_runtime_handoff_evaluation_t *evaluation) {
+    if (evaluation == NULL || !boolean_flag_valid(evaluation->handoff_eligible)) {
+        return 0;
+    }
+    if (evaluation->handoff_eligible == 0u) {
+        return evaluation->error != LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_OK &&
+               text_field_valid(evaluation->handoff_state,
+                                LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX) &&
+               text_field_valid(evaluation->status,
+                                LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX);
+    }
+
+    return evaluation->error == LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_OK &&
+           bounded_string_is(evaluation->status,
+                             LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX,
+                             "runtime-handoff-evaluation-metadata") &&
+           ((bounded_string_is(evaluation->requested_handoff,
+                               LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                               "report-only") &&
+             bounded_string_is(evaluation->handoff_state,
+                               LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX,
+                               "eligible-report-only")) ||
+            (bounded_string_is(evaluation->requested_handoff,
+                               LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                               "evaluate-only") &&
+             bounded_string_is(evaluation->handoff_state,
+                               LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX,
+                               "eligible-evaluate-only")));
+}
+
+static const char *safe_requested_handoff_for_copy(const char *requested_handoff) {
+    if (!requested_handoff_present(requested_handoff)) {
+        return NULL;
+    }
+    if (!text_field_valid(requested_handoff,
+                          LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX)) {
+        return "invalid-handoff";
+    }
+    return requested_handoff;
 }
 
 const char *latticra_seal_runtime_handoff_evaluation_error_label(
@@ -88,7 +295,9 @@ static void copy_decision_metadata(
     copy_literal(out->crypto_graduation_gate_state, sizeof(out->crypto_graduation_gate_state), decision->crypto_graduation_gate_state);
     copy_literal(out->requested_capability, sizeof(out->requested_capability), decision->requested_capability);
     copy_literal(out->requested_effect, sizeof(out->requested_effect), decision->requested_effect);
-    copy_literal(out->requested_handoff, sizeof(out->requested_handoff), requested_handoff);
+    copy_literal(out->requested_handoff,
+                 sizeof(out->requested_handoff),
+                 safe_requested_handoff_for_copy(requested_handoff));
     copy_literal(out->requested_scope, sizeof(out->requested_scope), decision->requested_scope);
     out->crypto_graduation_gate_present = decision->crypto_graduation_gate_present;
     out->crypto_graduation_gate_passed = decision->crypto_graduation_gate_passed;
@@ -127,6 +336,13 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_from_decision(
         return LATTICRA_STATUS_OK;
     }
 
+    if (!decision_strings_valid(decision)) {
+        out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_INVALID_DECISION;
+        copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-decision");
+        copy_literal(out->status, sizeof(out->status), "invalid-decision");
+        return LATTICRA_STATUS_OK;
+    }
+
     copy_decision_metadata(decision, requested_handoff, out);
 
     if (decision->error != LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_OK) {
@@ -142,7 +358,9 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_from_decision(
          decision->local_verify_graduated != 1u ||
          decision->receipt_promotion_graduated != 1u ||
          decision->authority_promotion_allowed != 0u ||
-         strcmp(decision->crypto_graduation_gate_state, "graduated-authority-neutral") != 0)) {
+         !bounded_string_is(decision->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX,
+                            "graduated-authority-neutral"))) {
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_CRYPTO_GRADUATION_GATE;
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-crypto-graduation-gate");
         copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
@@ -156,8 +374,12 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_from_decision(
         return LATTICRA_STATUS_OK;
     }
 
-    decision_report = strcmp(decision->decision_state, "allowed-report-only") == 0;
-    decision_evaluate = strcmp(decision->decision_state, "allowed-evaluate-only") == 0;
+    decision_report = bounded_string_is(decision->decision_state,
+                                        LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX,
+                                        "allowed-report-only");
+    decision_evaluate = bounded_string_is(decision->decision_state,
+                                          LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_STATE_MAX,
+                                          "allowed-evaluate-only");
     if (!decision_report && !decision_evaluate) {
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_DECISION;
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-decision");
@@ -188,22 +410,30 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_from_decision(
         return LATTICRA_STATUS_OK;
     }
 
-    if (requested_handoff == NULL || requested_handoff[0] == '\0') {
+    if (!requested_handoff_present(requested_handoff)) {
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_MISSING_REQUESTED_HANDOFF;
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-effect");
         copy_literal(out->status, sizeof(out->status), "missing-requested-handoff");
         return LATTICRA_STATUS_OK;
     }
 
-    if (!is_allowed_handoff(requested_handoff)) {
+    if (!text_field_valid(requested_handoff,
+                          LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) ||
+        !is_allowed_handoff(requested_handoff)) {
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_UNKNOWN_HANDOFF;
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-effect");
         copy_literal(out->status, sizeof(out->status), "denied-unknown-handoff");
         return LATTICRA_STATUS_OK;
     }
 
-    if ((decision_report && strcmp(requested_handoff, "report-only") != 0) ||
-        (decision_evaluate && strcmp(requested_handoff, "evaluate-only") != 0)) {
+    if ((decision_report &&
+         !bounded_string_is(requested_handoff,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                            "report-only")) ||
+        (decision_evaluate &&
+         !bounded_string_is(requested_handoff,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                            "evaluate-only"))) {
         out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DENIED_EFFECT;
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "denied-effect");
         copy_literal(out->status, sizeof(out->status), "denied-effect");
@@ -219,7 +449,9 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_from_decision(
     out->network_performed = 0u;
     out->error = LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_OK;
 
-    if (strcmp(requested_handoff, "report-only") == 0) {
+    if (bounded_string_is(requested_handoff,
+                          LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX,
+                          "report-only")) {
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "eligible-report-only");
     } else {
         copy_literal(out->handoff_state, sizeof(out->handoff_state), "eligible-evaluate-only");
@@ -240,7 +472,59 @@ int latticra_seal_runtime_handoff_evaluation_is_metadata_only(
            evaluation->runtime_authority_granted == 0u &&
            evaluation->host_read_performed == 0u &&
            evaluation->host_write_performed == 0u &&
-           evaluation->network_performed == 0u;
+           evaluation->network_performed == 0u &&
+           evaluation_error_valid(evaluation->error) &&
+           boolean_flag_valid(evaluation->crypto_graduation_gate_present) &&
+           boolean_flag_valid(evaluation->crypto_graduation_gate_passed) &&
+           boolean_flag_valid(evaluation->standard_expectations_met) &&
+           boolean_flag_valid(evaluation->local_verify_graduated) &&
+           boolean_flag_valid(evaluation->receipt_promotion_graduated) &&
+           boolean_flag_valid(evaluation->authority_promotion_allowed) &&
+           boolean_flag_valid(evaluation->verified) &&
+           boolean_flag_valid(evaluation->authority_usable) &&
+           boolean_flag_valid(evaluation->receipt_capability_gate_allowed) &&
+           boolean_flag_valid(evaluation->gate_allowed) &&
+           boolean_flag_valid(evaluation->effect_allowed) &&
+           eligible_state_valid(evaluation) &&
+           bounded_string_is(evaluation->handoff_profile,
+                             LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX,
+                             "latticra-seal-runtime-handoff-evaluation/0.1") &&
+           text_field_terminated(evaluation->decision_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_terminated(evaluation->gate_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_terminated(evaluation->receipt_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_terminated(evaluation->verify_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_terminated(evaluation->message_digest_algorithm,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_ALGORITHM_MAX) &&
+           text_field_terminated(evaluation->message_digest_hex,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_DIGEST_MAX) &&
+           text_field_terminated(evaluation->public_key_identity_label,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) &&
+           text_field_terminated(evaluation->crypto_graduation_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_terminated(evaluation->assurance_baseline_profile,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_PROFILE_MAX) &&
+           text_field_valid(evaluation->crypto_graduation_gate_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX) &&
+           text_field_terminated(evaluation->requested_capability,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) &&
+           text_field_terminated(evaluation->requested_effect,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) &&
+           text_field_terminated(evaluation->requested_handoff,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) &&
+           text_field_terminated(evaluation->requested_scope,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_LABEL_MAX) &&
+           text_field_terminated(evaluation->gate_state,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX) &&
+           text_field_terminated(evaluation->decision_state,
+                                 LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX) &&
+           text_field_valid(evaluation->handoff_state,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX) &&
+           text_field_valid(evaluation->status,
+                            LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_STATE_MAX);
 }
 
 latticra_status_t latticra_seal_runtime_handoff_evaluation_report(
@@ -250,6 +534,13 @@ latticra_status_t latticra_seal_runtime_handoff_evaluation_report(
     int written;
 
     if (evaluation == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_runtime_handoff_evaluation_is_metadata_only(evaluation)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

@@ -4,7 +4,7 @@ Status: offline ACVP intake shape
 Date: 2026-05-27
 Scope: ACVP ML-KEM vector intake planning before vector loading, response generation, ACVP submission, or operation execution.
 
-This record defines the offline intake shape for future NIST ACVP ML-KEM vectors. It does not download vectors, open an ACVP session, parse vector JSON, generate response JSON, execute ML-KEM, submit results, claim FIPS validation, claim production cryptography, use the network, mutate host files, or grant runtime authority.
+This record defines the offline intake shape for future NIST ACVP ML-KEM vectors. The downstream capability matrix is recorded in `latticra-q-seal/evidence/ML_KEM_ACVP_CAPABILITY_MATRIX.md`, and the downstream fixture row plan is recorded in `latticra-q-seal/evidence/ML_KEM_ACVP_FIXTURE_ROW_PLAN.md`. It does not download vectors, open an ACVP session, parse vector JSON, generate response JSON, execute ML-KEM, submit results, claim FIPS validation, claim production cryptography, use the network, mutate host files, or grant runtime authority.
 
 ## Current Fields
 

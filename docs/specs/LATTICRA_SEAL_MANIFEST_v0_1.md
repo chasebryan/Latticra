@@ -64,6 +64,23 @@ The native Seal CLI validates the declared mode, unsigned status, digest
 algorithm, digest encoding, canonicalization string, and trust boundary before
 emitting a passing report. seal configuration fields must fail closed when
 missing, duplicate, malformed, or unsupported.
+The native manifest summary command is read-only, but it must also fail closed:
+required summary fields must not be missing, duplicate, malformed, empty, or
+unsupported when `latticra-seal manifest` exits successfully.
+Read-only output commands, including `manifest`, `report`, `hashes`, `version`,
+and `help`, must exit nonzero when stdout cannot be written.
+The `report` and `hashes` commands must also refuse symlinked or
+group/world-writable report directories before streaming artifact contents.
+Generated report and hash-list artifacts must be single-link regular files
+before read-only streaming commands can export them. Native report artifacts
+must be opened, unlinked, read, and promoted relative to a checked `reports/`
+directory descriptor; read-only streaming commands must not create `reports/`
+while serving missing-artifact hints.
+Report-streaming commands, including `check` and `verify`, must also exit
+nonzero when stdout cannot be written after their generated report artifacts are
+finalized. `baseline` must refuse promotion when its prerequisite check stream
+cannot be written and must exit nonzero if its final success line cannot be
+written.
 
 ## Paths Section
 
@@ -81,6 +98,13 @@ are malformed.
 Exclude entries must stay relative to the project root and must not contain
 absolute paths, `.` or `..` path segments, control characters, backslashes, or
 multiple wildcards.
+Digest and policy traversal must fail closed on symlinks, hard-linked regular
+files, and other non-regular paths inside the included project scope before any
+new native hash list is promoted. Directory traversal must open directories
+without following symlinks and verify that recursed directories still match the
+previously observed device/inode identity before reading entries. File reads
+performed after traversal must verify that the opened file still matches the
+collected device/inode identity.
 
 ## Policy Section
 
@@ -101,6 +125,10 @@ arrays must fail closed, and every declared required file must exist as a
 regular file. Required-file paths must be project-relative regular-file paths;
 absolute paths, directory paths, wildcards, `.` or `..` segments, control
 characters, and backslashes are malformed.
+Required files must also remain inside the effective digest scope. If a
+required file is missing or excluded by a file or parent-directory exclude
+pattern, the check must fail closed and no new native hash list may be
+promoted.
 
 Content-denial marker examples should be represented as split `pattern_parts`
 metadata in the manifest so the manifest does not itself contain a complete
@@ -129,6 +157,19 @@ each entry uses lowercase SHA-256 hex, two spaces, and a project-relative safe
 path. Baseline entries must already be sorted by path; verification must reject
 malformed, unsafe, duplicate, or unsorted baseline entries instead of
 normalizing them.
+Native hash-list promotion must refuse symlinked, hard-linked, or non-regular
+final and temporary hash-list paths, and promotion must occur relative to the
+checked report-directory descriptor. Native report and hash-list temporary
+files must be flushed and fsynced before promotion, and the report directory
+must be synced after promotion when directory fsync is supported.
+Baseline promotion must apply the same symlink, hard-link, and non-regular path
+refusal to `latticra.seal.lock` and its temporary lockfile. Baseline promotion
+must copy from the generated hash-list descriptor retained by its prerequisite
+passing check, not by reopening the hash-list artifact after the check returns.
+The temporary baseline lockfile must be flushed and fsynced before promotion,
+and the project-root directory must be synced after promotion when directory
+fsync is supported.
+Baseline verification must refuse hard-linked lockfiles before comparing hashes.
 
 Legacy smoke-lane outputs retained for compatibility:
 
@@ -141,8 +182,11 @@ The native Seal CLI validates `[report].default_output`,
 before returning PASS. These declarations must match the actual CLI report
 surface so manifest metadata cannot drift away from generated artifacts.
 Native report writes should use a temporary report file and atomic promotion so
-the public latest-report path is not left partially written. Symlinked final or
-temporary report paths must be refused.
+the public latest-report path is not left partially written.
+Symlinked, hard-linked, or non-regular final and temporary report paths must be refused.
+Temporary artifact creation must use create-new semantics after clearing only
+safe single-link stale temp files, so temp writers do not truncate an existing
+path before validating it.
 
 ## Proof Section
 
