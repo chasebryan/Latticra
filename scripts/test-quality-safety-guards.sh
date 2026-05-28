@@ -622,7 +622,7 @@ check_shell_script() {
         unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+(apt-get[[:space:]]+update|env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get[[:space:]]+install[[:space:]]+-y[[:space:]]+"\$@")[[:space:]]*$' || :)"
         ;;
       scripts/test-opensuse-rpmlint-osc-availability.sh)
-        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+zypper[[:space:]]+--non-interactive[[:space:]]+(refresh|install[[:space:]]+--force-resolution[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+zypper[[:space:]]+--non-interactive[[:space:]]+(clean[[:space:]]+--metadata|refresh([[:space:]]+--force)?|install[[:space:]]+--force-resolution[[:space:]]+"\$@"([[:space:]]+&&[[:space:]]+return[[:space:]]+0)?)[[:space:]]*$' || :)"
         ;;
       scripts/run-fedora-vm-cli-payload-validation-lane.sh|scripts/run-fedora-vm-cli-payload-repeatability-lane.sh)
         unexpected_privilege_lines="$(printf '%s\n' "$privilege_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+rpm[[:space:]]+(-Uvh[[:space:]]+--nodeps[[:space:]]+"\$rpm_path"|-e[[:space:]]+"\$name")[[:space:]]*$' || :)"
@@ -643,7 +643,7 @@ check_shell_script() {
         unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*(sudo[[:space:]]+)?(apt-get[[:space:]]+update|env[[:space:]]+DEBIAN_FRONTEND=noninteractive[[:space:]]+apt-get[[:space:]]+install[[:space:]]+-y[[:space:]]+"\$@")[[:space:]]*$' || :)"
         ;;
       scripts/test-opensuse-rpmlint-osc-availability.sh)
-        unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*(sudo[[:space:]]+)?zypper[[:space:]]+--non-interactive[[:space:]]+(refresh|install[[:space:]]+--force-resolution[[:space:]]+"\$@")[[:space:]]*$' || :)"
+        unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*(sudo[[:space:]]+)?zypper[[:space:]]+--non-interactive[[:space:]]+(clean[[:space:]]+--metadata|refresh([[:space:]]+--force)?|install[[:space:]]+--force-resolution[[:space:]]+"\$@"([[:space:]]+&&[[:space:]]+return[[:space:]]+0)?)[[:space:]]*$' || :)"
         ;;
       scripts/run-fedora-vm-cli-payload-validation-lane.sh|scripts/run-fedora-vm-cli-payload-repeatability-lane.sh)
         unexpected_package_mutation_lines="$(printf '%s\n' "$package_manager_mutation_lines" | grep -Ev ':[[:space:]]*sudo[[:space:]]+rpm[[:space:]]+(-Uvh[[:space:]]+--nodeps[[:space:]]+"\$rpm_path"|-e[[:space:]]+"\$name")[[:space:]]*$' || :)"

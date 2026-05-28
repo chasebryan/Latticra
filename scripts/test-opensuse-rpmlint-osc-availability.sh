@@ -22,9 +22,17 @@ require_contains() {
 zypper_install() {
   if [ "$(id -u)" -eq 0 ]; then
     zypper --non-interactive refresh
+    zypper --non-interactive install --force-resolution "$@" && return 0
+    printf 'opensuse rpmlint osc availability: retrying zypper install after metadata refresh\n' >&2
+    zypper --non-interactive clean --metadata
+    zypper --non-interactive refresh --force
     zypper --non-interactive install --force-resolution "$@"
   elif command -v sudo >/dev/null 2>&1; then
     sudo zypper --non-interactive refresh
+    sudo zypper --non-interactive install --force-resolution "$@" && return 0
+    printf 'opensuse rpmlint osc availability: retrying zypper install after metadata refresh\n' >&2
+    sudo zypper --non-interactive clean --metadata
+    sudo zypper --non-interactive refresh --force
     sudo zypper --non-interactive install --force-resolution "$@"
   else
     printf 'opensuse rpmlint osc availability: zypper install requires root or sudo\n' >&2
