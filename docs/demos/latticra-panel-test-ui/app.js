@@ -66,6 +66,8 @@ const components = [
   },
 ];
 
+const coreComponentIds = new Set(["console", "lat", "lir", "seal", "nadia", "docs"]);
+
 const evidence = [
   ["dry_run_plan_digest", "ready-for-review", "plan"],
   ["panel_ui_lane", "isolated-test", "lane"],
@@ -1394,6 +1396,63 @@ function componentSummaryText() {
   return `${selectedComponents().length} of ${components.length} selected`;
 }
 
+function componentHealthRows() {
+  return components.map((component, index) => {
+    const core = coreComponentIds.has(component.id);
+    const status = component.selected ? (core ? "core_selected" : "optional_selected") : core ? "core_missing" : "omitted";
+    return {
+      id: component.id,
+      label: component.name,
+      note: component.note,
+      order: index + 1,
+      core,
+      selected: component.selected,
+      status,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    };
+  });
+}
+
+function componentHealthSummary(rows = componentHealthRows()) {
+  const selected = rows.filter((row) => row.selected).length;
+  const omitted = rows.length - selected;
+  const core = rows.filter((row) => row.core).length;
+  const coreSelected = rows.filter((row) => row.core && row.selected).length;
+  const optionalSelected = rows.filter((row) => !row.core && row.selected).length;
+  const coreMissing = core - coreSelected;
+  return {
+    state: coreMissing > 0 ? "blocked" : "ready",
+    selected,
+    omitted,
+    total: rows.length,
+    core,
+    core_selected: coreSelected,
+    core_missing: coreMissing,
+    optional_selected: optionalSelected,
+    coverage_label: `${coreSelected}/${core}`,
+    badge: coreMissing > 0 ? "core missing" : "core ready",
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
 function evidenceDetailState(level = state.evidenceDetail) {
   const normalized = Math.max(1, Math.min(3, Math.round(Number(level) || 2)));
   const labels = {
@@ -2174,6 +2233,143 @@ function wireBrandEmblem() {
     } else {
       setMissing();
     }
+  }
+}
+
+function visualIdentityState() {
+  const image = qs("#visual-identity-asset");
+  const brand = brandEmblemState();
+  const loaded = image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
+  const missing = image instanceof HTMLImageElement && image.complete && image.naturalWidth === 0;
+  const assetStatus = missing ? "missing" : loaded ? "loaded" : "pending";
+  const brandStatus = brand.fallback_visible
+    ? "fallback"
+    : brand.loaded && brand.browser_metadata_ready
+      ? "ready"
+      : brand.loaded
+        ? "loaded"
+        : brand.status;
+  const state = missing
+    ? "missing"
+    : brand.fallback_visible
+      ? "fallback"
+      : assetStatus === "loaded" && brandStatus === "ready"
+        ? "ready"
+        : "pending";
+  return {
+    state,
+    asset: "../../assets/latticra-panel.png",
+    asset_status: assetStatus,
+    asset_loaded: loaded,
+    asset_intrinsic_size:
+      image instanceof HTMLImageElement && image.naturalWidth > 0 && image.naturalHeight > 0
+        ? `${image.naturalWidth}x${image.naturalHeight}`
+        : "pending",
+    asset_reserved_size:
+      image instanceof HTMLImageElement
+        ? `${image.getAttribute("width") || "0"}x${image.getAttribute("height") || "0"}`
+        : "0x0",
+    brand_status: brandStatus,
+    brand_asset: brand.asset,
+    brand_metadata_ready: brand.browser_metadata_ready,
+    boundary: "production=0 / main=0 / edge=0",
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: true,
+  };
+}
+
+function visualIdentityRows(identity = visualIdentityState()) {
+  return [
+    {
+      key: "shared_panel_asset",
+      label: "Shared panel asset",
+      status: identity.asset_status === "loaded" ? "ready" : identity.asset_status,
+      value: identity.asset_intrinsic_size,
+      note: identity.asset_status === "loaded" ? "loaded from shared docs asset" : "waiting for browser image decode",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "header_emblem",
+      label: "Header emblem",
+      status: identity.brand_status,
+      value: identity.brand_asset,
+      note: identity.brand_metadata_ready ? "browser metadata ready" : "browser metadata pending",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    },
+    {
+      key: "authority_boundary",
+      label: "Authority boundary",
+      status: identity.zero_authority ? "ready" : "blocked",
+      value: identity.boundary,
+      note: "visual identity does not mutate main or edge GUI code",
+      local_only: true,
+      production_evidence_claim: identity.production_evidence_claim,
+      host_write_authority: identity.host_write_authority,
+      runtime_enforcement_authority: identity.runtime_enforcement_authority,
+      main_gui_mutation_required: identity.main_gui_mutation_required,
+      edge_gui_mutation_required: identity.edge_gui_mutation_required,
+    },
+  ];
+}
+
+function visualIdentitySummary(rows = visualIdentityRows()) {
+  const asset = rows.find((row) => row.key === "shared_panel_asset");
+  const brand = rows.find((row) => row.key === "header_emblem");
+  const boundary = rows.find((row) => row.key === "authority_boundary");
+  const pending = rows.filter((row) => row.status === "pending").length;
+  const blocked = rows.filter((row) => row.status === "blocked" || row.status === "missing").length;
+  const ready = rows.filter((row) => row.status === "ready").length;
+  const state = blocked > 0 ? "missing" : brand?.status === "fallback" ? "fallback" : pending > 0 ? "pending" : "ready";
+  return {
+    state,
+    title:
+      state === "ready"
+        ? "Workbench identity ready"
+        : state === "fallback"
+          ? "Emblem fallback active"
+          : state === "missing"
+            ? "Visual asset needs review"
+            : "Visual identity loading",
+    ready,
+    pending,
+    blocked,
+    asset_status: asset?.status || "pending",
+    asset_size: asset?.value || "pending",
+    brand_status: brand?.status || "pending",
+    boundary: boundary?.value || "production=0 / main=0 / edge=0",
+    zero_authority: boundary?.status === "ready",
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+}
+
+function wireVisualIdentityAsset() {
+  const image = qs("#visual-identity-asset");
+  if (!(image instanceof HTMLImageElement)) {
+    return;
+  }
+  const refresh = () => renderReceiptPreview();
+  image.addEventListener("load", refresh);
+  image.addEventListener("error", refresh);
+  if (image.complete) {
+    refresh();
   }
 }
 
@@ -4136,9 +4332,94 @@ function qaReplaySummary(rows = qaReplayRows(), params = queryParams()) {
   };
 }
 
+function inspectorLiveEvidenceRows() {
+  const priority = new Map([
+    ["dry_run_plan_digest", 1],
+    ["panel_ui_lane", 2],
+    ["production_installer_claim", 3],
+    ["main_gui_mutation_required", 4],
+    ["edge_gui_mutation_required", 5],
+    ["root_authority", 6],
+    ["network_authority", 7],
+    ["runtime_enforcement_authority", 8],
+  ]);
+  const baseRows = evidence.map(([key, value, source], index) => {
+    const boundaryKey =
+      key.includes("authority") ||
+      key.includes("mutation") ||
+      key.includes("claim") ||
+      key.includes("enforcement");
+    return {
+      key,
+      label: key,
+      value,
+      source,
+      status: boundaryKey ? "guarded" : "ready",
+      order: priority.get(key) || index + 20,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    };
+  });
+  const eventRows = state.events.slice(-2).reverse().map((event, index) => ({
+    key: `event_${index + 1}`,
+    label: event.label.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "") || "event",
+    value: event.detail,
+    source: "event",
+    status: event.level === "blocked" ? "blocked" : "ready",
+    order: index - 2,
+    timestamp: event.timestamp,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  }));
+  return [...eventRows, ...baseRows].sort((a, b) => a.order - b.order);
+}
+
+function inspectorLiveEvidenceSummary(rows = inspectorLiveEvidenceRows()) {
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const guarded = rows.filter((row) => row.status === "guarded").length;
+  const ready = rows.filter((row) => row.status === "ready").length;
+  const visibleRows = rows.slice(0, 5);
+  const latest = visibleRows[0]?.label || "none";
+  return {
+    state: blocked > 0 ? "blocked" : guarded > 0 ? "review" : "ready",
+    title: blocked > 0 ? "Evidence needs review" : "Receipt evidence ready",
+    row_count: rows.length,
+    visible_count: visibleRows.length,
+    ready,
+    guarded,
+    blocked,
+    latest,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
 function contextInspectorSummary() {
   const replay = qaReplaySummary();
+  const liveEvidence = inspectorLiveEvidenceSummary();
   const brand = brandEmblemState();
+  const visualIdentity = visualIdentitySummary();
+  const componentHealth = componentHealthSummary();
   const primaryActions = primaryActionRailSummary();
   const posture = workspacePostureSummary();
   const route = workspaceRouteSummary();
@@ -4158,6 +4439,12 @@ function contextInspectorSummary() {
   const traceAlignment = traceabilityAlignmentSummary();
   return {
     active_tab: state.activeTab,
+    live_evidence_state: liveEvidence.state,
+    live_evidence_visible: liveEvidence.visible_count,
+    live_evidence_total: liveEvidence.row_count,
+    live_evidence_guarded: liveEvidence.guarded,
+    live_evidence_latest: liveEvidence.latest,
+    live_evidence_zero_authority: liveEvidence.zero_authority,
     brand_emblem_status: brand.status,
     brand_emblem_asset: brand.asset,
     brand_emblem_fallback: brand.fallback_visible,
@@ -4166,6 +4453,17 @@ function contextInspectorSummary() {
         ? `${brand.intrinsic_width}x${brand.intrinsic_height}`
         : "pending",
     brand_metadata_status: brand.browser_metadata_ready ? "browser identity ready" : "browser identity pending",
+    visual_identity_state: visualIdentity.state,
+    visual_identity_asset_status: visualIdentity.asset_status,
+    visual_identity_asset_size: visualIdentity.asset_size,
+    visual_identity_brand_status: visualIdentity.brand_status,
+    visual_identity_zero_authority: visualIdentity.zero_authority,
+    component_health_state: componentHealth.state,
+    component_health_selected: componentHealth.selected,
+    component_health_total: componentHealth.total,
+    component_health_omitted: componentHealth.omitted,
+    component_health_core_coverage: componentHealth.coverage_label,
+    component_health_zero_authority: componentHealth.zero_authority,
     primary_action_count: primaryActions.action_count,
     primary_action_iconized_count: primaryActions.iconized_count,
     primary_action_key: primaryActions.primary_action,
@@ -4272,15 +4570,63 @@ function renderQaReplayStrip() {
   });
 }
 
+function renderVisualIdentityPanel() {
+  const rows = visualIdentityRows();
+  const summary = visualIdentitySummary(rows);
+  const panel = qs("#visual-identity-panel");
+  if (panel instanceof HTMLElement) {
+    panel.dataset.visualState = summary.state;
+  }
+  qs("#visual-identity-title").textContent = summary.title;
+  qs("#visual-identity-asset-state").textContent =
+    summary.asset_size === "pending" ? summary.asset_status : `${summary.asset_status} ${summary.asset_size}`;
+  qs("#visual-identity-brand-state").textContent = summary.brand_status;
+  qs("#visual-identity-boundary-state").textContent =
+    `main ${summary.main_gui_mutation_required} / edge ${summary.edge_gui_mutation_required}`;
+  qs("#visual-identity-boundary").textContent = summary.boundary;
+}
+
+function renderInspectorLiveEvidence() {
+  const rows = inspectorLiveEvidenceRows();
+  const summary = inspectorLiveEvidenceSummary(rows);
+  const card = qs("#inspector-live-evidence");
+  if (card instanceof HTMLElement) {
+    card.dataset.liveEvidenceState = summary.state;
+  }
+  const badge = qs("#inspector-live-evidence-count");
+  badge.textContent = String(summary.visible_count);
+  badge.classList.toggle("ok", summary.state === "ready" || summary.state === "review");
+  badge.classList.toggle("stop", summary.state === "blocked");
+  qs("#inspector-live-evidence-title").textContent = summary.title;
+
+  const mini = qs("#mini-log");
+  mini.innerHTML = "";
+  rows.slice(0, 5).forEach((row) => {
+    const line = document.createElement("p");
+    line.dataset.liveEvidenceKey = row.key;
+    line.dataset.liveEvidenceStatus = row.status;
+    line.textContent = `${row.label}=${row.value}`;
+    mini.append(line);
+  });
+  qs("#inspector-live-evidence-boundary").textContent =
+    `production=${summary.production_evidence_claim} / runtime=${summary.runtime_enforcement_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+}
+
 function renderContextInspector() {
   const summary = contextInspectorSummary();
+  qs("#context-live-evidence").textContent =
+    `${summary.live_evidence_state}: ${summary.live_evidence_visible}/${summary.live_evidence_total} visible / guarded ${summary.live_evidence_guarded} / latest ${summary.live_evidence_latest} / zero authority ${summary.live_evidence_zero_authority ? "yes" : "no"}`;
   qs("#context-active-tab").textContent = summary.active_tab;
   qs("#context-brand-emblem").textContent =
     `${summary.brand_emblem_status} / ${summary.brand_emblem_intrinsic_size} / ${summary.brand_metadata_status}`;
+  qs("#context-visual-identity").textContent =
+    `${summary.visual_identity_state}: asset ${summary.visual_identity_asset_status} / brand ${summary.visual_identity_brand_status} / zero authority ${summary.visual_identity_zero_authority ? "yes" : "no"}`;
   qs("#context-action-rail").textContent =
     `${summary.primary_action_rail_status}: ${summary.primary_action_count} actions / ${summary.primary_action_iconized_count} icons / primary ${summary.primary_action_key}`;
   qs("#context-posture-strip").textContent =
     `${summary.posture_ready} ready / ${summary.posture_guarded} guarded / ${summary.posture_blocked} blocked / zero authority ${summary.posture_zero_authority ? "yes" : "no"}`;
+  qs("#context-component-health").textContent =
+    `${summary.component_health_state}: ${summary.component_health_selected}/${summary.component_health_total} selected / core ${summary.component_health_core_coverage} / omitted ${summary.component_health_omitted} / zero authority ${summary.component_health_zero_authority ? "yes" : "no"}`;
   qs("#context-workspace-route").textContent =
     `${summary.workspace_route_tab} / ${summary.workspace_route_profile} / detail ${summary.workspace_route_detail} ${summary.workspace_route_detail_label.toLowerCase()} / ${summary.workspace_route_boundary}`;
   qs("#context-profile-scope").textContent =
@@ -4864,6 +5210,10 @@ function buildReceiptPreview() {
       rows: qaReplayRows(),
     },
     brand_emblem: brandEmblemState(),
+    visual_identity_panel: {
+      summary: visualIdentitySummary(),
+      rows: visualIdentityRows(),
+    },
     primary_action_rail: {
       summary: primaryActionRailSummary(),
       rows: primaryActionRailRows(),
@@ -4875,6 +5225,14 @@ function buildReceiptPreview() {
     workspace_route: {
       summary: workspaceRouteSummary(),
       rows: workspaceRouteRows(),
+    },
+    component_health: {
+      summary: componentHealthSummary(),
+      rows: componentHealthRows(),
+    },
+    inspector_live_evidence: {
+      summary: inspectorLiveEvidenceSummary(),
+      rows: inspectorLiveEvidenceRows(),
     },
     context_inspector: contextInspectorSummary(),
     operator_focus_dock: {
@@ -5153,7 +5511,10 @@ function renderReceiptPreview() {
   renderOperatorWorkflow();
   renderWorkspaceRoute();
   renderWorkspacePostureStrip();
+  renderComponentStack();
   renderQaReplayStrip();
+  renderVisualIdentityPanel();
+  renderInspectorLiveEvidence();
   renderContextInspector();
   renderCommandPalette();
   renderOperatorFocusDock();
@@ -6080,16 +6441,63 @@ function moveModeFocus(currentButton, direction) {
 
 function renderComponentStack() {
   const stack = qs("#component-stack");
+  const rows = componentHealthRows();
+  const summary = componentHealthSummary(rows);
+  const selectedRows = rows.filter((row) => row.selected);
   stack.innerHTML = "";
-  selectedComponents().slice(0, 5).forEach((component) => {
+  selectedRows.forEach((component) => {
     const row = document.createElement("div");
     row.className = "component-row";
-    row.innerHTML = `<div><strong>${component.name}</strong><small>${component.note}</small></div><span class="badge ok">selected</span>`;
+    row.dataset.componentState = component.status;
+
+    const copy = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = component.label;
+    const note = document.createElement("small");
+    note.textContent = component.note;
+    copy.append(title, note);
+
+    const badge = document.createElement("span");
+    badge.className = "badge ok";
+    badge.textContent = component.core ? "core" : "optional";
+
+    row.append(copy, badge);
     stack.append(row);
   });
+  if (summary.omitted > 0) {
+    const row = document.createElement("div");
+    row.className = "component-row";
+    row.dataset.componentState = "omitted";
 
-  const count = selectedComponents().length;
-  qs("#component-count").textContent = `${count} selected`;
+    const copy = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = `${summary.omitted} optional omitted`;
+    const note = document.createElement("small");
+    note.textContent = "omitted components stay local review state, not production evidence";
+    copy.append(title, note);
+
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = "review";
+
+    row.append(copy, badge);
+    stack.append(row);
+  }
+
+  const card = qs("#component-health-card");
+  if (card instanceof HTMLElement) {
+    card.dataset.componentHealth = summary.state;
+  }
+  const badge = qs("#component-health-badge");
+  badge.textContent = summary.badge;
+  badge.classList.toggle("ok", summary.state === "ready");
+  badge.classList.toggle("stop", summary.state === "blocked");
+  qs("#component-count").textContent = `${summary.selected} selected`;
+  qs("#component-health-selected").textContent = String(summary.selected);
+  qs("#component-health-omitted").textContent = String(summary.omitted);
+  qs("#component-health-core").textContent = summary.coverage_label;
+  qs("#component-health-boundary").textContent =
+    `production=${summary.production_evidence_claim} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
   qs("#component-selection-summary").textContent = componentSummaryText();
 }
 
@@ -8490,14 +8898,6 @@ function appendLog(message) {
   line.textContent = message;
   log.append(line);
   log.scrollTop = log.scrollHeight;
-
-  const mini = qs("#mini-log");
-  const miniLine = document.createElement("p");
-  miniLine.textContent = message.replace(/^\[[^\]]+\]\s*/, "");
-  mini.append(miniLine);
-  while (mini.children.length > 5) {
-    mini.firstElementChild.remove();
-  }
 }
 
 function appendTerminal(command, output) {
@@ -9309,3 +9709,4 @@ setTab(state.activeTab);
 setProgress(state.progress);
 wireEvents();
 wireBrandEmblem();
+wireVisualIdentityAsset();

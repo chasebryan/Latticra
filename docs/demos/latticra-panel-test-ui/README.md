@@ -6,9 +6,13 @@ This lane is for production-quality Latticra Panel UI/GUI iteration without chan
 
 The header brand mark now uses a high-resolution transparent lattice emblem, replacing the temporary `L` badge with a navy/cyan mark and restrained frosted treatment inspired by the provided Latticra banner reference. The same emblem is declared as the lane favicon, touch icon, and preloaded browser identity asset; it reserves intrinsic image dimensions, falls back to a crisp local letter mark if the PNG fails, and reports asset and metadata load state in the no-effect receipt.
 
+The dashboard Visual Identity panel now reports shared artwork load state, header emblem/browser identity state, and zero production/main/edge authority as first-screen evidence. Its title, summary, right-context row, and no-effect receipt entry all come from the same local-only state model.
+
 The header primary action rail now uses iconized, stable-width controls with explicit local-only intent metadata for save receipt, reset state, generate plan, and dry-install. The action rail is mirrored into the right context inspector and receipt so QA can verify priority, icon coverage, and zero host-write/main/edge authority before any guarded Panel migration.
 
 The dashboard posture strip now exposes state-bearing cards for plan flow, user-local prefix guard, root authority, and production claim. Each card carries a data status, badge, stronger scan styling, right-inspector summary, and no-effect receipt binding so critical posture is inspectable without relying on color alone.
+
+The dashboard Components card now reports component health instead of only listing selected items: selected count, omitted optional count, core coverage, dashboard state, right-inspector context, and receipt rows all come from the same local component toggle model while production/main/edge authority stays zero.
 
 The workspace toolbar now includes a compact route strip that keeps active tab, profile, evidence detail, and the local-only boundary visible beside the main title. The same route state is mirrored into the right context inspector and no-effect receipt so QA can confirm orientation after deep links, profile changes, and evidence-detail adjustments.
 
@@ -109,6 +113,8 @@ Missing replay requests are explicit: the strip shows whether the requested snap
 The global QA replay strip summarizes active URL-requested state across tabs, mode, filters, selected gates, blocker items, snapshots, and digests, then binds that applied/ignored count into the no-effect receipt with production, main GUI, and edge GUI authority held at zero.
 
 The right context inspector now mirrors brand emblem load state, selected promotion gate, production blocker, release acceptance, readiness comparison, comparison alignment, readiness trace, trace alignment, QA replay, and saved receipt context so reviewers retain orientation while moving across tabs, with the same local-only summary embedded in the receipt.
+
+The right Live Evidence card now renders from receipt-bound evidence rows instead of static mini-log copy. Its visible row count, guarded boundary rows, latest local event, zero-authority boundary, context inspector summary, and no-effect receipt section all share the same local-only state model.
 
 The operator focus dock keeps the selected tab, readiness comparison, comparison alignment state, production blocker, release acceptance gate, readiness trace, trace alignment state, command palette target, saved receipt, and zero-authority boundary visible near the workspace top. On mobile it compresses into a denser snap-scrolling review strip so selected trace rows remain readable. Its buttons jump only within the isolated test lane and the same context is embedded in the no-effect receipt.
 

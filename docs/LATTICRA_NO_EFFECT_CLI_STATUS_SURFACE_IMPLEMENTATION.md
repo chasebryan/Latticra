@@ -6,7 +6,7 @@ Scope: first no-effect `latticra` CLI status surface implementation.
 
 ## Summary
 
-This slice implements the first local no-effect Latticra CLI status surface as a small C executable source file.
+This slice implements the first local no-effect Latticra CLI status and prevention-research surface as a small C executable source file.
 
 The implementation is intentionally narrow.
 
@@ -16,6 +16,9 @@ It provides deterministic report-only output for:
 latticra --status
 latticra --version
 latticra --report
+latticra --prevention-research
+latticra --prevention-boundary
+latticra --prevention-method <id>
 ```
 
 It does not update the Fedora RPM spec.
@@ -38,12 +41,15 @@ scripts/test-latticra-no-effect-cli-status-surface.sh
 
 ## CLI surface
 
-The CLI accepts only the three report-only commands defined by the contract:
+The CLI accepts only the report-only commands defined by the contract:
 
 ```text
 latticra --status
 latticra --version
 latticra --report
+latticra --prevention-research
+latticra --prevention-boundary
+latticra --prevention-method <id>
 ```
 
 Invalid commands emit usage text to stderr and return exit code 2.
@@ -74,6 +80,90 @@ latticra 0.0.0
 mode=no-effect
 runtime_behavior=disabled
 ```
+
+The `--prevention-research` command emits a source-backed local report for installed-system defensive planning:
+
+```text
+LATTICRA PREVENTION RESEARCH REPORT
+installed_system_scope=1
+dynamic_research_network=0
+production_protection_claim=0
+source_refresh_date=2026-05-28
+prevention_method_matrix_version=1
+prevention_method_count=16
+method_sql=bind-parameters-for-values
+method_nosql=driver-structured-query-objects
+method_ldap=ldap-filter-or-dn-context-encoding
+method_os_command=avoid-shell-use-fixed-argv
+method_xss=contextual-output-encoding-and-safe-sinks
+method_failure=fail-closed-before-interpreter-boundary
+sql_prepared_statements_required=1
+nosql_structured_query_object_required=1
+ldap_context_escape_required=1
+os_command_direct_calls_avoided=1
+xss_contextual_output_encoding_required=1
+ssrf_destination_allowlist_required=1
+path_allowed_root_confinement_required=1
+xml_external_entities_disabled_required=1
+unsafe_deserialization_blocked=1
+log_injection_newline_neutralization_required=1
+operator_visible_evidence_required=1
+```
+
+The prevention-research command is bundled guidance only. It does not scan the host, contact the network, mutate files, grant authority, or claim that Latticra prevents attacks.
+
+The `--prevention-boundary` command emits a deterministic installed-system boundary checklist:
+
+```text
+LATTICRA PREVENTION BOUNDARY REPORT
+installed_system_scope=1
+boundary_inventory_version=1
+boundary_count=8
+boundary_database=sql,sql-identifier,nosql,ldap,xpath
+boundary_process=os-command,program-argument
+boundary_browser=xss
+boundary_server_fetch=ssrf
+boundary_filesystem=path
+boundary_parser=xml,deserialization,template
+boundary_observability=log,secret
+boundary_policy=failure
+untrusted_input_edge_inventory_required=1
+interpreter_boundary_owner_required=1
+source_sink_pairing_required=1
+method_mapping_required=1
+deny_before_boundary_required=1
+safe_api_or_encoding_required=1
+adversarial_fixture_required=1
+evidence_artifact_required=1
+review_on_new_boundary_required=1
+host_mutation=0
+network=0
+host_scan=0
+production_protection_claim=0
+source=owasp-injection-and-nist-ssdf
+```
+
+The boundary command does not inspect applications or host files. It gives operators a source-backed inventory standard for every untrusted-input edge that reaches an interpreter or parser boundary.
+
+The `--prevention-method <id>` command emits one selected method from the matrix. For example:
+
+```text
+LATTICRA PREVENTION METHOD
+project=latticra
+mode=no-effect
+method_id=sql
+interpreter_boundary=database-sql
+primary_rule=bind-parameters-for-values
+required_controls=prepared-statements,identifier-allowlist,least-privilege
+source=owasp-sql-injection
+host_mutation=0
+network=0
+host_scan=0
+production_protection_claim=0
+operator_visible_evidence_required=1
+```
+
+The local guard verifies all accepted method ids: `sql`, `sql-identifier`, `nosql`, `ldap`, `xpath`, `os-command`, `program-argument`, `xss`, `ssrf`, `path`, `xml`, `deserialization`, `template`, `log`, `secret`, and `failure`.
 
 ## No-effect implementation constraints
 

@@ -110,7 +110,8 @@ Report-streaming commands that own the native hash-list output must clear stale
 regular hash-list artifacts before manifest or baseline gates, so early failure
 does not leave previous hash evidence in the current output slot.
 Fresh native hash-list promotion requires passing manifest, policy, report,
-and reserved proof metadata shape checks with no prior check failures. Policy denial hits or policy inspection failures must prevent temporary native hash-list creation and fresh native hash-list promotion.
+and reserved proof metadata shape checks with no prior check failures. Policy
+denial hits or policy inspection failures must prevent temporary native hash-list creation and fresh native hash-list promotion.
 
 ## Paths Section
 
@@ -243,7 +244,8 @@ the public latest-report path is not left partially written.
 Symlinked, hard-linked, or non-regular final and temporary report paths must be refused.
 Temporary artifact creation must use create-new semantics after clearing only
 safe single-link stale temp files, so temp writers do not truncate an existing
-path before validating it.
+path before validating it. Post-open setup failures, including file mode setup
+failures, must remove the created temporary artifact before returning failure.
 
 ## Proof Section
 

@@ -349,6 +349,9 @@ scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-
 docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md
 scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
 .github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.yml
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.yml
 ```
 
 Those follow-on lanes refuse, review, close, close out, archive-gate, archive-gate-review, archive-gate-review-dispose, closeout-archive-gate, closeout-archive-gate-review, closeout-archive-gate-review-dispose, closeout-archive-gate-review-disposition-closeout, closeout-archive-gate-review-disposition-closeout-archive-gate, closeout-archive-gate-review-disposition-closeout-archive-gate-review, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition, closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout, and closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate denied PPA creation, archive submission, Launchpad publication evidence, and publication transcript intake while this matrix remains closed.
@@ -554,6 +557,26 @@ scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
 That lane archive-gates the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
 
 That future lane should archive-gate the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.
+
+Completed follow-on publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract:
+
+```text
+Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.
+```
+
+```text
+docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md
+scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.sh
+.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.yml
+```
+
+That lane reviews the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
+
+Recorded lane slug: closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review.
+
+That future lane should review the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate while preserving publication and readiness blockers.
+
+That future lane should dispose the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review while preserving publication and readiness blockers.
 
 Recommended next slice:
 

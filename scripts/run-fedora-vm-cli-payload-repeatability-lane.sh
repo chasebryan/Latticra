@@ -278,6 +278,9 @@ installed_listing="$workdir/installed.list"
 status_out="$workdir/cli-status.out"
 version_out="$workdir/cli-version.out"
 report_out="$workdir/cli-report.out"
+research_out="$workdir/cli-prevention-research.out"
+boundary_out="$workdir/cli-prevention-boundary.out"
+method_out="$workdir/cli-prevention-method-sql.out"
 invalid_out="$workdir/cli-invalid.out"
 invalid_err="$workdir/cli-invalid.err"
 
@@ -360,12 +363,63 @@ require_output_field 'boot_operation=0' "$report_out"
 require_output_field 'selinux_policy_operation=0' "$report_out"
 require_output_field 'effect_authority=denied' "$report_out"
 
+/usr/bin/latticra --prevention-research >"$research_out"
+require_output_field 'LATTICRA PREVENTION RESEARCH REPORT' "$research_out"
+require_output_field 'installed_system_scope=1' "$research_out"
+require_output_field 'dynamic_research_network=0' "$research_out"
+require_output_field 'production_protection_claim=0' "$research_out"
+require_output_field 'prevention_method_matrix_version=1' "$research_out"
+require_output_field 'method_sql=bind-parameters-for-values' "$research_out"
+require_output_field 'method_nosql=driver-structured-query-objects' "$research_out"
+require_output_field 'method_ldap=ldap-filter-or-dn-context-encoding' "$research_out"
+require_output_field 'method_os_command=avoid-shell-use-fixed-argv' "$research_out"
+require_output_field 'method_xss=contextual-output-encoding-and-safe-sinks' "$research_out"
+require_output_field 'method_failure=fail-closed-before-interpreter-boundary' "$research_out"
+require_output_field 'sql_prepared_statements_required=1' "$research_out"
+require_output_field 'nosql_structured_query_object_required=1' "$research_out"
+require_output_field 'ldap_context_escape_required=1' "$research_out"
+require_output_field 'os_command_direct_calls_avoided=1' "$research_out"
+require_output_field 'xss_contextual_output_encoding_required=1' "$research_out"
+require_output_field 'ssrf_destination_allowlist_required=1' "$research_out"
+require_output_field 'xml_external_entities_disabled_required=1' "$research_out"
+require_output_field 'log_injection_newline_neutralization_required=1' "$research_out"
+require_output_field 'unsafe_deserialization_blocked=1' "$research_out"
+require_output_field 'operator_visible_evidence_required=1' "$research_out"
+
+/usr/bin/latticra --prevention-boundary >"$boundary_out"
+require_output_field 'LATTICRA PREVENTION BOUNDARY REPORT' "$boundary_out"
+require_output_field 'installed_system_scope=1' "$boundary_out"
+require_output_field 'boundary_inventory_version=1' "$boundary_out"
+require_output_field 'boundary_count=8' "$boundary_out"
+require_output_field 'boundary_database=sql,sql-identifier,nosql,ldap,xpath' "$boundary_out"
+require_output_field 'boundary_process=os-command,program-argument' "$boundary_out"
+require_output_field 'boundary_server_fetch=ssrf' "$boundary_out"
+require_output_field 'source_sink_pairing_required=1' "$boundary_out"
+require_output_field 'method_mapping_required=1' "$boundary_out"
+require_output_field 'deny_before_boundary_required=1' "$boundary_out"
+require_output_field 'adversarial_fixture_required=1' "$boundary_out"
+require_output_field 'evidence_artifact_required=1' "$boundary_out"
+require_output_field 'host_mutation=0' "$boundary_out"
+require_output_field 'network=0' "$boundary_out"
+require_output_field 'production_protection_claim=0' "$boundary_out"
+
+/usr/bin/latticra --prevention-method sql >"$method_out"
+require_output_field 'LATTICRA PREVENTION METHOD' "$method_out"
+require_output_field 'method_id=sql' "$method_out"
+require_output_field 'interpreter_boundary=database-sql' "$method_out"
+require_output_field 'primary_rule=bind-parameters-for-values' "$method_out"
+require_output_field 'required_controls=prepared-statements,identifier-allowlist,least-privilege' "$method_out"
+require_output_field 'source=owasp-sql-injection' "$method_out"
+require_output_field 'host_mutation=0' "$method_out"
+require_output_field 'network=0' "$method_out"
+require_output_field 'production_protection_claim=0' "$method_out"
+
 set +e
 /usr/bin/latticra --invalid >"$invalid_out" 2>"$invalid_err"
 invalid_status="$?"
 set -e
 [ "$invalid_status" -eq 2 ] || fail "invalid CLI command exited with $invalid_status instead of 2"
-require_output_field 'usage: latticra [--status|--version|--report]' "$invalid_err"
+require_output_field 'usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-method <id>]' "$invalid_err"
 
 sudo rpm -e "$name"
 if rpm -q "$name" >/dev/null 2>&1; then
@@ -405,6 +459,9 @@ unexpected_runtime_surface_absent=1
 cli_status_output_recorded=1
 cli_version_output_recorded=1
 cli_report_output_recorded=1
+cli_prevention_research_output_recorded=1
+cli_prevention_boundary_output_recorded=1
+cli_prevention_method_output_recorded=1
 cli_invalid_command_exit_recorded=1
 validated_cli_mode_still_no_effect=1
 validated_runtime_behavior_still_disabled=1

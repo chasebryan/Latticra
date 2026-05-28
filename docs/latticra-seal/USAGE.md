@@ -37,7 +37,10 @@ reports, hash lists, and lockfiles do not become self-referential evidence.
 The command clears stale native hash-list artifacts before manifest parsing, so
 an early manifest or baseline failure cannot leave old hash evidence advertised
 as current output. A fresh hash list is promoted only after manifest, policy,
-report, and reserved proof metadata checks pass with no prior failures. Policy denial hits or policy inspection failures prevent temporary hash-list creation and fresh hash-list promotion.
+report, and reserved proof metadata checks pass with no prior failures. Policy
+denial hits or policy inspection failures prevent temporary hash-list creation
+and fresh hash-list promotion. Temporary report, hash-list, and lockfile
+artifact setup failures remove the created temp path before returning failure.
 Core `[project]` identity metadata must be present and supported before native
 digest evidence is promoted.
 Native v0.1 does not enforce large-binary denial; present large-binary policy

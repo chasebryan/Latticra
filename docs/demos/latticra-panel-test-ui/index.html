@@ -321,26 +321,39 @@
               <div class="run-monitor-boundary" id="run-monitor-boundary">runtime=0 / production=0 / main=0 / edge=0</div>
             </article>
 
-            <article class="asset-panel">
-              <img src="../../assets/latticra-panel.png" alt="Latticra Panel workbench visual asset.">
+            <article class="asset-panel" id="visual-identity-panel" data-visual-state="pending" aria-describedby="visual-identity-boundary">
+              <img id="visual-identity-asset" src="../../assets/latticra-panel.png" alt="Latticra Panel workbench visual asset." width="500" height="500" decoding="async">
               <div>
                 <p class="kicker">Visual Identity</p>
-                <h2>Workbench, not wizard</h2>
+                <h2 id="visual-identity-title">Workbench, not wizard</h2>
                 <p>Dense panels, visible authority state, and receipt-first actions shape this test lane.</p>
+                <div class="visual-identity-summary" aria-label="Visual identity summary">
+                  <span><strong id="visual-identity-asset-state">pending</strong><small>asset</small></span>
+                  <span><strong id="visual-identity-brand-state">pending</strong><small>brand</small></span>
+                  <span><strong id="visual-identity-boundary-state">0/0</strong><small>main/edge</small></span>
+                </div>
+                <div class="visual-identity-boundary" id="visual-identity-boundary">production=0 / main=0 / edge=0</div>
               </div>
             </article>
           </div>
 
           <div class="dashboard-grid secondary-grid">
-            <article class="matrix-card">
+            <article class="matrix-card component-health-card" id="component-health-card" data-component-health="ready" aria-describedby="component-health-boundary">
               <div class="section-title inline-title">
                 <div>
                   <p class="kicker">Components</p>
                   <h2 id="component-count">6 selected</h2>
                 </div>
+                <span class="badge ok" id="component-health-badge">core ready</span>
                 <button class="text-button" type="button" data-tab-jump="components">Review</button>
               </div>
+              <div class="component-health-summary" aria-label="Component health summary">
+                <span><strong id="component-health-selected">6</strong><small>selected</small></span>
+                <span><strong id="component-health-omitted">2</strong><small>omitted</small></span>
+                <span><strong id="component-health-core">6/6</strong><small>core</small></span>
+              </div>
               <div class="component-stack" id="component-stack"></div>
+              <div class="component-health-boundary" id="component-health-boundary">production=0 / main=0 / edge=0</div>
             </article>
 
             <article class="matrix-card authority-card" id="dashboard-authority-card" data-authority-decision="locked" aria-describedby="dashboard-authority-boundary">
@@ -1143,8 +1156,10 @@ production_installer_ready=0</pre>
           <div class="selection-context" id="selection-context" aria-label="Selected review context">
             <div><span>active tab</span><strong id="context-active-tab">dashboard</strong></div>
             <div><span>brand mark</span><strong id="context-brand-emblem">pending</strong></div>
+            <div><span>visual identity</span><strong id="context-visual-identity">pending</strong></div>
             <div><span>action rail</span><strong id="context-action-rail">4 local actions</strong></div>
             <div><span>posture strip</span><strong id="context-posture-strip">2 ready / 2 blocked</strong></div>
+            <div><span>component health</span><strong id="context-component-health">6/8 selected</strong></div>
             <div><span>workspace route</span><strong id="context-workspace-route">dashboard / detail 2</strong></div>
             <div><span>profile scope</span><strong id="context-profile-scope">guided local</strong></div>
             <div><span>readiness rail</span><strong id="context-readiness-rail">72% / local proof review / gate closed</strong></div>
@@ -1159,24 +1174,26 @@ production_installer_ready=0</pre>
             <div><span>compare alignment</span><strong id="context-compare-alignment">review</strong></div>
             <div><span>readiness trace</span><strong id="context-readiness-trace">local UI trace</strong></div>
             <div><span>trace alignment</span><strong id="context-trace-alignment">review</strong></div>
+            <div><span>live evidence</span><strong id="context-live-evidence">3 rows / local only</strong></div>
             <div><span>QA replay</span><strong id="context-qa-replay">none</strong></div>
             <div><span>saved receipt</span><strong id="context-saved-receipt">none</strong></div>
           </div>
         </section>
 
-        <section class="inspector-panel">
+        <section class="inspector-panel live-evidence-card" id="inspector-live-evidence" data-live-evidence-state="ready" aria-describedby="inspector-live-evidence-boundary">
           <div class="section-title inline-title">
             <div>
               <p class="kicker">Live Evidence</p>
-              <h2>Recent receipts</h2>
+              <h2 id="inspector-live-evidence-title">Receipt evidence ready</h2>
             </div>
-            <span class="badge ok">3</span>
+            <span class="badge ok" id="inspector-live-evidence-count">5</span>
           </div>
-          <div class="mini-log" id="mini-log">
-            <p>dry_run_plan_digest=ready-for-review</p>
-            <p>panel_ui_lane=isolated-test</p>
-            <p>production_installer_claim=0</p>
+          <div class="mini-log" id="mini-log" aria-label="Receipt-bound live evidence">
+            <p data-live-evidence-key="dry_run_plan_digest" data-live-evidence-status="ready">dry_run_plan_digest=ready-for-review</p>
+            <p data-live-evidence-key="panel_ui_lane" data-live-evidence-status="ready">panel_ui_lane=isolated-test</p>
+            <p data-live-evidence-key="production_installer_claim" data-live-evidence-status="guarded">production_installer_claim=0</p>
           </div>
+          <div class="live-evidence-boundary" id="inspector-live-evidence-boundary">production=0 / runtime=0 / main=0 / edge=0</div>
         </section>
       </aside>
     </main>

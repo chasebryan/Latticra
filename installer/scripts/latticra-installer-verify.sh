@@ -15,6 +15,89 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
+expand_path() {
+  case "$1" in
+    "~")
+      printf '%s\n' "$HOME"
+      ;;
+    "~/"*)
+      printf '%s/%s\n' "$HOME" "${1#~/}"
+      ;;
+    *)
+      printf '%s\n' "$1"
+      ;;
+  esac
+}
+
+canonical_existing_path() {
+  path="$1"
+  dir=$(dirname -- "$path")
+  base=$(basename -- "$path")
+
+  resolved=$(
+    cd -- "$dir" 2>/dev/null &&
+      printf '%s/%s\n' "$(pwd -P)" "$base"
+  ) || {
+    printf '%s\n' "$path"
+    return 0
+  }
+
+  printf '%s\n' "$resolved"
+}
+
+fail() {
+  printf '%s\n' "$*" >&2
+  exit 1
+}
+
+path_has_parent_reference() {
+  case "$1" in
+    ..|../*|*/..|*/../*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+prefix_is_allowed_user_local() {
+  candidate="$1"
+  home_real=$(canonical_existing_path "$HOME")
+
+  case "$candidate" in
+    "$HOME"/.local/share/latticra|"$HOME"/.local/share/latticra/*|"$HOME"/.local/share/latticra-validation|"$HOME"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    "$home_real"/.local/share/latticra|"$home_real"/.local/share/latticra/*|"$home_real"/.local/share/latticra-validation|"$home_real"/.local/share/latticra-validation/*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+PREFIX=$(expand_path "$PREFIX")
+
+case "$PREFIX" in
+  /*) ;;
+  *) fail "refusing to verify unsafe prefix: $PREFIX" ;;
+esac
+
+if path_has_parent_reference "$PREFIX"; then
+  fail "refusing to verify unsafe prefix with parent-directory traversal: $PREFIX"
+fi
+
+if [ -L "$PREFIX" ]; then
+  fail "refusing to verify symlink prefix: $PREFIX"
+fi
+
+PREFIX_REAL=$(canonical_existing_path "$PREFIX")
+if path_has_parent_reference "$PREFIX_REAL"; then
+  fail "refusing to verify unsafe prefix with parent-directory traversal: $PREFIX"
+fi
+
+prefix_is_allowed_user_local "$PREFIX" &&
+  prefix_is_allowed_user_local "$PREFIX_REAL" ||
+  fail "refusing to verify unsafe prefix: $PREFIX"
+
 USER_BIN="$HOME/.local/bin"
 APP_FILE="$HOME/.local/share/applications/latticra-panel.desktop"
 ICON_FILE="$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png"

@@ -68,6 +68,7 @@ typedef struct {
 } SealRun;
 
 static void close_hash_list_fd(SealRun *run);
+static bool unlink_regular_at_if_present(int dirfd, const char *path);
 
 typedef struct {
     char **items;
@@ -487,15 +488,21 @@ static FILE *open_new_regular_file_at_for_write(int dirfd, const char *path) {
 
     if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) || st.st_nlink != 1) {
         close(fd);
+        (void)unlink_regular_at_if_present(dirfd, path);
         return NULL;
     }
 
-    (void)fchmod(fd, 0600);
+    if (fchmod(fd, 0600) != 0) {
+        close(fd);
+        (void)unlink_regular_at_if_present(dirfd, path);
+        return NULL;
+    }
 
     FILE *file = fdopen(fd, "w");
 
     if (!file) {
         close(fd);
+        (void)unlink_regular_at_if_present(dirfd, path);
     }
 
     return file;

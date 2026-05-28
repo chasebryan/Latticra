@@ -130,8 +130,13 @@ require_contains "OPENSSL_cleanse(recovered, sizeof(recovered))" seal/latticra-s
 require_contains "cli_record_buffer_zeroized=1" seal/latticra-seal.c
 require_contains "cli_recovered_plaintext_buffer_zeroized=1" seal/latticra-seal.c
 require_contains "O_EXCL" seal/latticra-seal.c
+require_contains "fchmod(fd, 0600) != 0" seal/latticra-seal.c
 if grep -Fq "O_TRUNC" seal/latticra-seal.c; then
   fail "Seal CLI artifact writers must not use truncate-before-check semantics"
+fi
+if ! sed -n '/static FILE \*open_new_regular_file_at_for_write/,/^}/p' seal/latticra-seal.c |
+  grep -Fq "unlink_regular_at_if_present(dirfd, path)"; then
+  fail "Seal CLI temp artifact writer must remove created temp paths after setup failures"
 fi
 if ! sed -n '/collect_files(run, &list, ".", &excludes, NULL);/,/FILE \\*hashes =/p' seal/latticra-seal.c |
   grep -Fq "if (pre_digest_failures != 0)"; then

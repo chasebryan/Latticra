@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Latticra Request to Effect visual explainer</title>
+  <desc id="desc">A professional Latticra educational card showing a flow from Request to Policy to Receipt to Gate, ending with Effect or Denial.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7faf9; }
+      .ink { fill: #121417; }
+      .muted { fill: #5d6868; }
+      .teal { fill: #146b63; }
+      .blue { fill: #315e9e; }
+      .amber { fill: #b6812d; }
+      .rust { fill: #a1493f; }
+      .line { stroke: #cfd9d6; stroke-width: 2; }
+      .flow-line { stroke: #315e9e; stroke-width: 5; stroke-linecap: round; }
+      .card { fill: #ffffff; stroke: #dbe4e1; stroke-width: 2; }
+      .label { font: 700 34px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+      .small { font: 500 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+      .micro { font: 600 19px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0.08em; }
+      .title { font: 800 84px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+      .subtitle { font: 500 34px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+      .footer { font: 600 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0; }
+    </style>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#315e9e"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+
+  <g opacity="0.58">
+    <path class="line" d="M430 154 L610 118 L790 166 L980 116 L1190 168 L1400 126 L1490 152"/>
+    <path class="line" d="M220 720 L390 650 L570 706 L760 622 L970 704 L1160 638 L1380 716"/>
+    <circle cx="430" cy="154" r="7" fill="#146b63"/>
+    <circle cx="610" cy="118" r="7" fill="#315e9e"/>
+    <circle cx="790" cy="166" r="7" fill="#b6812d"/>
+    <circle cx="980" cy="116" r="7" fill="#146b63"/>
+    <circle cx="1190" cy="168" r="7" fill="#315e9e"/>
+    <circle cx="1400" cy="126" r="7" fill="#b6812d"/>
+    <circle cx="1490" cy="152" r="7" fill="#a1493f"/>
+    <circle cx="220" cy="720" r="7" fill="#315e9e"/>
+    <circle cx="390" cy="650" r="7" fill="#b6812d"/>
+    <circle cx="570" cy="706" r="7" fill="#146b63"/>
+    <circle cx="760" cy="622" r="7" fill="#315e9e"/>
+    <circle cx="970" cy="704" r="7" fill="#b6812d"/>
+    <circle cx="1160" cy="638" r="7" fill="#a1493f"/>
+    <circle cx="1380" cy="716" r="7" fill="#146b63"/>
+  </g>
+
+  <g transform="translate(82 56)">
+    <image href="../../docs/assets/latticra-official-emblem.png" x="0" y="0" width="118" height="118" preserveAspectRatio="xMidYMid meet"/>
+    <text class="micro muted" x="138" y="52">LATTICRA</text>
+    <text class="small ink" x="138" y="88">Boundary Literacy</text>
+  </g>
+
+  <text class="title ink" x="96" y="284">Request to Effect</text>
+  <text class="subtitle muted" x="100" y="358">Make authority visible before behavior becomes consequential.</text>
+
+  <g transform="translate(98 420)">
+    <rect class="card" x="0" y="0" width="252" height="142" rx="22"/>
+    <circle cx="42" cy="48" r="15" class="teal"/>
+    <text class="label ink" x="76" y="59">Request</text>
+    <text class="small muted" x="42" y="104">Who asked?</text>
+
+    <line class="flow-line" x1="282" y1="71" x2="356" y2="71" marker-end="url(#arrow)"/>
+
+    <rect class="card" x="386" y="0" width="252" height="142" rx="22"/>
+    <circle cx="428" cy="48" r="15" class="blue"/>
+    <text class="label ink" x="462" y="59">Policy</text>
+    <text class="small muted" x="428" y="104">What rule applies?</text>
+
+    <line class="flow-line" x1="668" y1="71" x2="742" y2="71" marker-end="url(#arrow)"/>
+
+    <rect class="card" x="772" y="0" width="252" height="142" rx="22"/>
+    <circle cx="814" cy="48" r="15" class="amber"/>
+    <text class="label ink" x="848" y="59">Receipt</text>
+    <text class="small muted" x="814" y="104">What evidence remains?</text>
+
+    <line class="flow-line" x1="1054" y1="71" x2="1128" y2="71" marker-end="url(#arrow)"/>
+
+    <rect class="card" x="1158" y="0" width="252" height="142" rx="22"/>
+    <circle cx="1200" cy="48" r="15" class="rust"/>
+    <text class="label ink" x="1234" y="59">Gate</text>
+    <text class="small muted" x="1200" y="104">What is allowed?</text>
+  </g>
+
+  <g transform="translate(412 650)">
+    <rect x="0" y="0" width="776" height="118" rx="28" fill="#121417"/>
+    <text class="label" x="54" y="52" fill="#ffffff">Outcome: Effect or Denial</text>
+    <text class="small" x="54" y="91" fill="#cfe3df">Both should be legible.</text>
+  </g>
+
+  <text class="footer muted" x="96" y="830">@Latticra</text>
+  <text class="footer muted" x="1248" y="830">Linux-native secure computing substrates</text>
+</svg>

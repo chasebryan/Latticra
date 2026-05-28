@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-27 07:34 CDT
+Last updated: 2026-05-28 05:42 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -222,6 +222,129 @@ Latest Nucleus effect-contract and runtime-denial planning completion checkpoint
 
 ```text
 2026-05-27-0734-cdt-nucleus-effect-contract-runtime-denial-planning-completion-checkpoint.md
+```
+
+Latest X public presence operating packet:
+
+```text
+2026-05-28-0325-cdt-x-public-presence-operating-packet.md
+```
+
+Latest X audience growth and education goal:
+
+```text
+2026-05-28-0329-cdt-x-audience-growth-education-goal.md
+```
+
+Latest X launch-week education calendar:
+
+```text
+2026-05-28-0332-cdt-x-launch-week-education-calendar.md
+```
+
+Latest X content approval queue:
+
+```text
+2026-05-28-0343-cdt-x-content-approval-queue.md
+```
+
+Latest X text-first education bank:
+
+```text
+2026-05-28-0358-cdt-x-text-first-education-bank.md
+```
+
+Latest X engagement and measurement playbook:
+
+```text
+2026-05-28-0400-cdt-x-engagement-measurement-playbook.md
+```
+
+Latest X post performance ledger:
+
+```text
+2026-05-28-0400-cdt-x-post-performance-ledger.md
+```
+
+Latest X profile conversion packet:
+
+```text
+2026-05-28-0403-cdt-x-profile-conversion-packet.md
+```
+
+Latest X week-one text-only publish packet:
+
+```text
+2026-05-28-0406-cdt-x-week-one-text-only-publish-packet.md
+```
+
+Latest X glass-base visual series review packet:
+
+```text
+2026-05-28-0421-cdt-x-glass-base-visual-series-review-packet.md
+```
+
+Latest X media-ready approval matrix:
+
+```text
+2026-05-28-0430-cdt-x-media-ready-approval-matrix.md
+```
+
+Latest X local review board:
+
+```text
+2026-05-28-0430-cdt-x-review-board.html
+```
+
+Latest X first live post packet:
+
+```text
+2026-05-28-0504-cdt-x-first-live-post-packet.md
+```
+
+Latest X mention response readiness packet:
+
+```text
+2026-05-28-0552-cdt-x-mention-response-readiness-packet.md
+```
+
+Latest X mention intake log:
+
+```text
+2026-05-28-0558-cdt-x-mention-intake-log.md
+```
+
+Latest X early monitoring checkpoint:
+
+```text
+2026-05-28-0601-cdt-x-early-monitoring-checkpoint.md
+```
+
+Latest X scheduled-post verification runbook:
+
+```text
+2026-05-28-0606-cdt-x-10am-verification-runbook.md
+```
+
+Latest X scheduled queue verification chain:
+
+```text
+2026-05-28-0610-cdt-x-scheduled-queue-verification-chain.md
+```
+
+Latest X next education sequence packet:
+
+```text
+2026-05-28-0555-cdt-x-next-education-sequence-packet.md
+```
+
+Current X launch publication state:
+
+```text
+first post live at 2026-05-28 05:16:28 CDT
+live URL: https://x.com/Latticra/status/2059941871787347985
+scheduled follow-ups: 2026-05-28 10:00 CDT, 15:00 CDT, 20:00 CDT, and 2026-05-29 01:00 CDT
+status timing helper: scripts/latticra-x-status-metrics.py
 ```
 
 Current operating rule:

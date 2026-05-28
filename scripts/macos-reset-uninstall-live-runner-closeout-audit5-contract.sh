@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+UNAME_S=$(uname -s 2>/dev/null || printf 'unknown')
+UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
+
+cat <<REPORT
+MACOS RESET UNINSTALL LIVE RUNNER CLOSEOUT AUDIT5 CONTRACT
+
+closeout_audit5_contract_status=ok
+macos_reset_uninstall_live_runner_closeout_audit5_contract_present=1
+repo_root=$ROOT
+host_kernel_name=$UNAME_S
+host_arch=$UNAME_M
+live_runner_closeout_audit5_dispatch_enabled=0
+live_runner_closeout_audit5_dispatch_performed=0
+live_runner_closeout_audit5_deletion_enabled=0
+live_runner_closeout_audit5_audit_review_opened=0
+file_delete_performed=0
+directory_delete_performed=0
+host_mutation_performed=0
+network_performed=0
+runtime_authority_granted=0
+next_lane=macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit
+REPORT

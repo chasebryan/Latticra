@@ -62,6 +62,7 @@ grep -q "runtime_authority_granted=0" docs/latticra-seal/USAGE.md
 grep -q "Quoted summary fields that contain backslash escapes" docs/latticra-seal/USAGE.md
 grep -q "clears stale native hash-list artifacts before manifest parsing" docs/latticra-seal/USAGE.md
 grep -q "prevent temporary hash-list creation" docs/latticra-seal/USAGE.md
+grep -q "artifact setup failures remove the created temp path" docs/latticra-seal/USAGE.md
 grep -q "identity metadata must be present" docs/latticra-seal/USAGE.md
 grep -q "reserved proof metadata checks pass" docs/latticra-seal/USAGE.md
 grep -q "large-binary policy" docs/latticra-seal/USAGE.md
@@ -94,6 +95,7 @@ grep -q "size-stable descriptor read" docs/latticra-seal/REPORTS.md
 grep -q "computed from the parsed manifest" docs/latticra-seal/REPORTS.md
 grep -q "clear stale native hash-list artifacts" docs/latticra-seal/REPORTS.md
 grep -q "prevent temporary hash-list creation" docs/latticra-seal/REPORTS.md
+grep -q "removes the created temporary artifact" docs/latticra-seal/REPORTS.md
 grep -q "reserved proof metadata checks pass" docs/latticra-seal/REPORTS.md
 grep -q "hard-linked, or non-regular lock paths" docs/latticra-seal/REPORTS.md
 grep -q "create-new semantics" docs/latticra-seal/REPORTS.md
@@ -138,6 +140,7 @@ grep -q "must clear stale" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "regular hash-list artifacts before manifest or baseline gates" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "reserved proof metadata shape checks" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "prevent temporary native hash-list creation" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
+grep -q "Post-open setup failures" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "does not enforce large-binary denial" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "max_file_size_mb" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md
 grep -q "single-link regular files" docs/specs/LATTICRA_SEAL_MANIFEST_v0_1.md

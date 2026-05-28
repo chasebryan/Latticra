@@ -4,6 +4,33 @@
 
 #define LATTICRA_CLI_VERSION "0.0.0"
 
+typedef struct {
+    const char *id;
+    const char *interpreter_boundary;
+    const char *primary_rule;
+    const char *required_controls;
+    const char *source;
+} LatticraPreventionMethod;
+
+static const LatticraPreventionMethod LATTICRA_PREVENTION_METHODS[] = {
+    {"sql", "database-sql", "bind-parameters-for-values", "prepared-statements,identifier-allowlist,least-privilege", "owasp-sql-injection"},
+    {"sql-identifier", "database-sql-identifier", "closed-allowlist-map", "enum-map,no-raw-identifiers,review-before-new-name", "owasp-sql-injection"},
+    {"nosql", "database-nosql", "driver-structured-query-objects", "operator-key-allowlist,no-raw-json-query,no-eval", "owasp-nosql-security"},
+    {"ldap", "directory-ldap", "ldap-filter-or-dn-context-encoding", "context-specific-escape,allowlist-attributes,least-privilege-bind", "owasp-ldap-injection"},
+    {"xpath", "xml-query-xpath", "parameterized-xpath-or-closed-allowlist", "no-string-concat,allowlist-expression,escape-by-context", "owasp-injection-prevention"},
+    {"os-command", "process-launch", "avoid-shell-use-fixed-argv", "no-shell,constant-program,argument-allowlist", "owasp-os-command-injection"},
+    {"program-argument", "process-argument", "option-allowlist-and-end-of-options-marker", "reject-option-smuggling,allowlist-values,argv-array", "owasp-os-command-injection"},
+    {"xss", "browser-output", "contextual-output-encoding-and-safe-sinks", "html-attr-js-url-contexts,safe-sinks,csp-as-defense-depth", "owasp-xss-prevention"},
+    {"ssrf", "server-side-url-fetch", "parse-url-then-allowlist-destination", "scheme-host-port-allowlist,dns-ip-recheck,egress-deny", "owasp-ssrf-prevention"},
+    {"path", "filesystem-path", "canonicalize-then-confine-to-allowed-root", "normalize,deny-traversal,allowed-root-check", "mitre-cwe-top25"},
+    {"xml", "xml-parser", "disable-external-entities-and-dtds", "no-dtd,no-external-entity,no-network-fetch", "owasp-xxe-prevention"},
+    {"deserialization", "object-decoder", "block-native-object-deserialization", "safe-format,typed-schema,no-untrusted-object-graph", "owasp-deserialization"},
+    {"template", "template-renderer", "autoescape-or-logicless-template-boundary", "autoescape,template-allowlist,no-user-template-code", "owasp-injection-prevention"},
+    {"log", "audit-log", "structured-logging-newline-neutralization", "structured-fields,crlf-neutralization,integrity-review", "owasp-logging"},
+    {"secret", "log-and-report-data", "never-log-secrets-or-tokens", "redact-before-log,secret-scan,least-data", "owasp-logging"},
+    {"failure", "any-interpreter", "fail-closed-before-interpreter-boundary", "deny-before-call,visible-reason,operator-evidence", "nist-ssdf"}
+};
+
 static void latticra_cli_print_status(void) {
     puts("LATTICRA STATUS REPORT");
     puts("project=latticra");
@@ -25,8 +52,144 @@ static void latticra_cli_print_version(void) {
     puts("runtime_behavior=disabled");
 }
 
+static void latticra_cli_print_prevention_research(void) {
+    puts("LATTICRA PREVENTION RESEARCH REPORT");
+    puts("project=latticra");
+    puts("mode=no-effect");
+    puts("installed_system_scope=1");
+    puts("runtime_behavior=disabled");
+    puts("host_mutation=0");
+    puts("network=0");
+    puts("host_scan=0");
+    puts("dynamic_research_network=0");
+    puts("production_protection_claim=0");
+    puts("research_basis=source-backed");
+    puts("source_refresh_date=2026-05-28");
+    puts("source_owasp_sql_injection=https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html");
+    puts("source_cisa_sql_injection=https://www.cisa.gov/sites/default/files/2024-03/SbD%20Alert%20-%20Eliminating%20SQL%20Injection%20Vulnerabilities%20in%20Software_508c.pdf");
+    puts("source_owasp_os_command_injection=https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html");
+    puts("source_cisa_os_command_injection=https://www.cisa.gov/resources-tools/resources/secure-design-alert-eliminating-os-command-injection-vulnerabilities");
+    puts("source_owasp_xss=https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_ssrf=https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_deserialization=https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html");
+    puts("source_owasp_injection=https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_nosql=https://cheatsheetseries.owasp.org/cheatsheets/NoSQL_Security_Cheat_Sheet.html");
+    puts("source_owasp_ldap=https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_xxe=https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_logging=https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html");
+    puts("source_nist_ssdf=https://csrc.nist.gov/pubs/sp/800/218/final");
+    puts("source_mitre_cwe_top25_2025=https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html");
+    puts("prevention_method_matrix_version=1");
+    puts("prevention_method_count=16");
+    puts("method_sql=bind-parameters-for-values");
+    puts("method_sql_identifier=closed-allowlist-map");
+    puts("method_nosql=driver-structured-query-objects");
+    puts("method_ldap=ldap-filter-or-dn-context-encoding");
+    puts("method_xpath=parameterized-xpath-or-closed-allowlist");
+    puts("method_os_command=avoid-shell-use-fixed-argv");
+    puts("method_program_argument=option-allowlist-and-end-of-options-marker");
+    puts("method_xss=contextual-output-encoding-and-safe-sinks");
+    puts("method_ssrf=parse-url-then-allowlist-destination");
+    puts("method_path=canonicalize-then-confine-to-allowed-root");
+    puts("method_xml=disable-external-entities-and-dtds");
+    puts("method_deserialization=block-native-object-deserialization");
+    puts("method_template=autoescape-or-logicless-template-boundary");
+    puts("method_log=structured-logging-newline-neutralization");
+    puts("method_secret=never-log-secrets-or-tokens");
+    puts("method_failure=fail-closed-before-interpreter-boundary");
+    puts("prevention_pipeline_order=parse-canonicalize-validate-bind-or-encode");
+    puts("sql_prepared_statements_required=1");
+    puts("sql_dynamic_identifier_allowlist_required=1");
+    puts("nosql_structured_query_object_required=1");
+    puts("nosql_operator_key_allowlist_required=1");
+    puts("ldap_context_escape_required=1");
+    puts("xpath_parameterization_or_allowlist_required=1");
+    puts("os_command_direct_calls_avoided=1");
+    puts("os_command_argument_allowlist_required=1");
+    puts("server_side_allowlist_validation_required=1");
+    puts("xss_contextual_output_encoding_required=1");
+    puts("xss_dangerous_contexts_blocked=1");
+    puts("ssrf_destination_allowlist_required=1");
+    puts("ssrf_network_layer_deny_required=1");
+    puts("path_canonicalization_required=1");
+    puts("path_allowed_root_confinement_required=1");
+    puts("xml_external_entities_disabled_required=1");
+    puts("unsafe_deserialization_blocked=1");
+    puts("safe_data_format_required=1");
+    puts("template_autoescape_or_logicless_required=1");
+    puts("log_injection_newline_neutralization_required=1");
+    puts("secret_redaction_before_logging_required=1");
+    puts("least_privilege_required=1");
+    puts("security_logging_required=1");
+    puts("dependency_and_kev_review_required=1");
+    puts("adversarial_test_plan_required=1");
+    puts("fail_closed_default_required=1");
+    puts("operator_visible_evidence_required=1");
+}
+
+static void latticra_cli_print_prevention_boundary(void) {
+    puts("LATTICRA PREVENTION BOUNDARY REPORT");
+    puts("project=latticra");
+    puts("mode=no-effect");
+    puts("installed_system_scope=1");
+    puts("boundary_inventory_version=1");
+    puts("boundary_count=8");
+    puts("boundary_database=sql,sql-identifier,nosql,ldap,xpath");
+    puts("boundary_process=os-command,program-argument");
+    puts("boundary_browser=xss");
+    puts("boundary_server_fetch=ssrf");
+    puts("boundary_filesystem=path");
+    puts("boundary_parser=xml,deserialization,template");
+    puts("boundary_observability=log,secret");
+    puts("boundary_policy=failure");
+    puts("untrusted_input_edge_inventory_required=1");
+    puts("interpreter_boundary_owner_required=1");
+    puts("source_sink_pairing_required=1");
+    puts("method_mapping_required=1");
+    puts("deny_before_boundary_required=1");
+    puts("safe_api_or_encoding_required=1");
+    puts("adversarial_fixture_required=1");
+    puts("evidence_artifact_required=1");
+    puts("review_on_new_boundary_required=1");
+    puts("host_mutation=0");
+    puts("network=0");
+    puts("host_scan=0");
+    puts("production_protection_claim=0");
+    puts("source=owasp-injection-and-nist-ssdf");
+}
+
+static int latticra_cli_print_prevention_method(const char *method_id) {
+    size_t i;
+
+    if (method_id == 0) {
+        return 2;
+    }
+
+    for (i = 0u; i < sizeof(LATTICRA_PREVENTION_METHODS) / sizeof(LATTICRA_PREVENTION_METHODS[0]); i++) {
+        const LatticraPreventionMethod *method = &LATTICRA_PREVENTION_METHODS[i];
+        if (strcmp(method_id, method->id) == 0) {
+            puts("LATTICRA PREVENTION METHOD");
+            puts("project=latticra");
+            puts("mode=no-effect");
+            printf("method_id=%s\n", method->id);
+            printf("interpreter_boundary=%s\n", method->interpreter_boundary);
+            printf("primary_rule=%s\n", method->primary_rule);
+            printf("required_controls=%s\n", method->required_controls);
+            printf("source=%s\n", method->source);
+            puts("host_mutation=0");
+            puts("network=0");
+            puts("host_scan=0");
+            puts("production_protection_claim=0");
+            puts("operator_visible_evidence_required=1");
+            return 0;
+        }
+    }
+
+    return 2;
+}
+
 static void latticra_cli_print_usage(void) {
-    fputs("usage: latticra [--status|--version|--report]\n", stderr);
+    fputs("usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-method <id>]\n", stderr);
 }
 
 int main(int argc, char **argv) {
@@ -43,6 +206,25 @@ int main(int argc, char **argv) {
     if (argc == 2 && strcmp(argv[1], "--version") == 0) {
         latticra_cli_print_version();
         return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--prevention-research") == 0) {
+        latticra_cli_print_prevention_research();
+        return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--prevention-boundary") == 0) {
+        latticra_cli_print_prevention_boundary();
+        return 0;
+    }
+
+    if (argc == 3 && strcmp(argv[1], "--prevention-method") == 0) {
+        int method_status = latticra_cli_print_prevention_method(argv[2]);
+        if (method_status == 0) {
+            return 0;
+        }
+        latticra_cli_print_usage();
+        return method_status;
     }
 
     latticra_cli_print_usage();

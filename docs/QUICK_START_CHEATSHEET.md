@@ -116,6 +116,7 @@ sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-ar
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-disposition.sh
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.sh
 sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 ```
 

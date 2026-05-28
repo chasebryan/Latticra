@@ -91,12 +91,15 @@ The runner performs this sequence only after the hard gate passes:
 16. Execute `latticra --status` without root.
 17. Execute `latticra --version` without root.
 18. Execute `latticra --report` without root.
-19. Verify invalid CLI usage exits with code 2.
-20. Remove the RPM from the disposable Fedora VM with `rpm`.
-21. Confirm the package is absent after removal.
-22. Confirm the CLI payload is absent after removal.
-23. Confirm the README payload is absent after removal.
-24. Emit a deterministic validation report.
+19. Execute `latticra --prevention-research` without root.
+20. Execute `latticra --prevention-boundary` without root.
+21. Execute `latticra --prevention-method sql` without root.
+22. Verify invalid CLI usage exits with code 2.
+23. Remove the RPM from the disposable Fedora VM with `rpm`.
+24. Confirm the package is absent after removal.
+25. Confirm the CLI payload is absent after removal.
+26. Confirm the README payload is absent after removal.
+27. Emit a deterministic validation report.
 ```
 
 ## Expected payload
@@ -150,10 +153,70 @@ mode=no-effect
 runtime_behavior=disabled
 ```
 
+The runner validates that `latticra --prevention-research` emits:
+
+```text
+LATTICRA PREVENTION RESEARCH REPORT
+installed_system_scope=1
+dynamic_research_network=0
+production_protection_claim=0
+prevention_method_matrix_version=1
+method_sql=bind-parameters-for-values
+method_nosql=driver-structured-query-objects
+method_ldap=ldap-filter-or-dn-context-encoding
+method_os_command=avoid-shell-use-fixed-argv
+method_xss=contextual-output-encoding-and-safe-sinks
+method_failure=fail-closed-before-interpreter-boundary
+sql_prepared_statements_required=1
+nosql_structured_query_object_required=1
+ldap_context_escape_required=1
+os_command_direct_calls_avoided=1
+xss_contextual_output_encoding_required=1
+ssrf_destination_allowlist_required=1
+xml_external_entities_disabled_required=1
+log_injection_newline_neutralization_required=1
+unsafe_deserialization_blocked=1
+operator_visible_evidence_required=1
+```
+
 The runner validates that an invalid CLI command exits with code `2` and emits:
 
 ```text
-usage: latticra [--status|--version|--report]
+usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-method <id>]
+```
+
+The runner validates that `latticra --prevention-boundary` emits:
+
+```text
+LATTICRA PREVENTION BOUNDARY REPORT
+installed_system_scope=1
+boundary_inventory_version=1
+boundary_count=8
+boundary_database=sql,sql-identifier,nosql,ldap,xpath
+boundary_process=os-command,program-argument
+boundary_server_fetch=ssrf
+source_sink_pairing_required=1
+method_mapping_required=1
+deny_before_boundary_required=1
+adversarial_fixture_required=1
+evidence_artifact_required=1
+host_mutation=0
+network=0
+production_protection_claim=0
+```
+
+The runner validates that `latticra --prevention-method sql` emits:
+
+```text
+LATTICRA PREVENTION METHOD
+method_id=sql
+interpreter_boundary=database-sql
+primary_rule=bind-parameters-for-values
+required_controls=prepared-statements,identifier-allowlist,least-privilege
+source=owasp-sql-injection
+host_mutation=0
+network=0
+production_protection_claim=0
 ```
 
 ## Required report fields
@@ -203,6 +266,9 @@ rpm_verify_completed=1
 cli_status_command_recorded=1
 cli_version_command_recorded=1
 cli_report_command_recorded=1
+cli_prevention_research_command_recorded=1
+cli_prevention_boundary_command_recorded=1
+cli_prevention_method_command_recorded=1
 cli_invalid_command_recorded=1
 cli_no_root_required=1
 cli_no_host_mutation_observed=1
@@ -223,6 +289,9 @@ install_validation_performed=1
 cli_status_validation_performed=1
 cli_version_validation_performed=1
 cli_report_validation_performed=1
+cli_prevention_research_validation_performed=1
+cli_prevention_boundary_validation_performed=1
+cli_prevention_method_validation_performed=1
 removal_validation_performed=1
 disposable_vm_cli_validation_completed=1
 host_install_ready_for_cli_payload=1

@@ -84,14 +84,18 @@ The native `check` and `verify` commands clear stale native hash-list artifacts
 before manifest or baseline gates, which prevents early failures from leaving an
 older hash list in the advertised output location.
 A fresh native hash list is promoted only after manifest, policy, report, and
-reserved proof metadata checks pass with no prior failures. Policy denial hits or policy inspection failures prevent temporary hash-list creation and fresh hash-list promotion.
+reserved proof metadata checks pass with no prior failures. Policy denial hits
+or policy inspection failures prevent temporary hash-list creation and fresh
+hash-list promotion.
 The native CLI writes the latest report through a temporary report file and
 promotes it only after the report is complete.
 Symlinked, hard-linked, or non-regular final and temporary report paths are refused.
 Temporary artifact creation uses create-new semantics after clearing only safe
-single-link stale temp files. Report and hash-list temporary files are flushed
-and fsynced before promotion, and the report directory is synced after the
-promotion when the platform supports directory fsync.
+single-link stale temp files. If post-open setup fails, including file mode
+setup, the native CLI removes the created temporary artifact before returning
+failure. Report and hash-list temporary files are flushed and fsynced before
+promotion, and the report directory is synced after the promotion when the
+platform supports directory fsync.
 The native hash list follows the same artifact safety rule: stale regular hash
 lists may be cleared, but symlinked, hard-linked, or non-regular final and
 temporary hash-list paths are refused.

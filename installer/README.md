@@ -244,6 +244,11 @@ make -C installer local-example
 make -C installer verify-local
 ```
 
+The verification path is limited to the guarded user-local Latticra prefixes under
+`~/.local/share/latticra` and `~/.local/share/latticra-validation`. It rejects
+non-absolute paths, parent-directory traversal, and symlink prefixes before it
+reads install metadata.
+
 ## Open after install
 
 ```sh
