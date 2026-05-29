@@ -40,3 +40,20 @@ latticra_status_t latticra_runtime_boundary_domain_matrix_report(
     }
     return LATTICRA_STATUS_OK;
 }
+
+int latticra_runtime_boundary_domain_matrix_effect_is_blocked(
+    const latticra_runtime_boundary_domain_matrix_result_t *m)
+{
+    if (m == 0) return 1; /* conservative on null */
+
+    if (m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_BLOCKED ||
+        m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_INVALID ||
+        m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_UNKNOWN) {
+        return 1;
+    }
+
+    if (m->domain_future_gated) return 1;
+    if (!m->domain_effect_allowed) return 1;
+
+    return 0;
+}

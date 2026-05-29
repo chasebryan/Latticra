@@ -43,6 +43,14 @@ latticra_status_t latticra_runtime_boundary_domain_matrix_report(
     char *buffer,
     size_t buffer_len);
 
+/* High-level convenience query.
+ * Returns non-zero if the evaluated domain would block the requested effect
+ * under current policy and boundary classification.
+ * This is pure query/report surface — no authority is granted.
+ */
+int latticra_runtime_boundary_domain_matrix_effect_is_blocked(
+    const latticra_runtime_boundary_domain_matrix_result_t *matrix_result);
+
 #ifdef __cplusplus
 }
 #endif

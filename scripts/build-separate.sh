@@ -35,12 +35,55 @@ log() {
     printf '[build-separate] %s\n' "$*" | tee -a "$LOG_FILE"
 }
 
-# Helper to compile a single .c into an object (future incremental support)
+# Helper to compile a single .c into an object with basic caching
 compile_object() {
     src="$1"
     obj="$OBJ_DIR/$(basename "$src" .c).o"
-    cc -std=c99 -Wall -Wextra -pedantic -Iinclude -c "$src" -o "$obj" 2>&1 | tee -a "$LOG_FILE"
+    # Very simple cache: recompile only if source is newer than object
+    if [ ! -f "$obj" ] || [ "$src" -nt "$obj" ]; then
+        cc -std=c99 -Wall -Wextra -pedantic -Iinclude -c "$src" -o "$obj" 2>&1 | tee -a "$LOG_FILE"
+    fi
     echo "$obj"
+}
+
+# Generate a high-quality machine and human readable health report
+generate_foundation_health_report() {
+    log "Generating Latticra Foundation Health Report..."
+    REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt"
+    JSON_REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.json"
+
+    {
+        echo "LATTICRA FOUNDATION HEALTH REPORT"
+        echo "Generated: $(date)"
+        echo "Build tree: $BUILD_DIR"
+        echo ""
+        echo "=== Binaries ==="
+        ls -l "$BIN_DIR" 2>/dev/null || echo "No binaries"
+        echo ""
+        echo "=== Key Validation Status ==="
+        if [ -f "$BUILD_DIR/validation/REPORT.txt" ]; then
+            cat "$BUILD_DIR/validation/REPORT.txt"
+        else
+            echo "Run full-validate to populate"
+        fi
+        echo ""
+        echo "=== Evidence Captured ==="
+        find "$BUILD_DIR/evidence" -type f 2>/dev/null | head -20
+    } > "$REPORT"
+
+    # Simple JSON summary (useful for future tooling / CI)
+    cat > "$JSON_REPORT" <<JSON
+{
+  "generated": "$(date -Iseconds 2>/dev/null || date)",
+  "build_tree": "$BUILD_DIR",
+  "binaries": $(ls "$BIN_DIR" 2>/dev/null | wc -l | tr -d ' '),
+  "validation_passed": $( [ -f "$BUILD_DIR/validation/REPORT.txt" ] && grep -o 'Clear passes: [0-9]*' "$BUILD_DIR/validation/REPORT.txt" | awk '{print $3}' || echo 0 ),
+  "has_release_candidate": $( [ -d "$BUILD_DIR/release-candidate" ] && echo true || echo false )
+}
+JSON
+
+    log "Health report generated: $REPORT"
+    log "Machine readable: $JSON_REPORT"
 }
 
 detect_openssl() {
@@ -178,8 +221,10 @@ run_validate() {
 }
 
 # Full project validation using the now-clean test suite (cooperative with project's own guards)
+# This version is significantly smarter: it trusts the script's own final "ok" line
+# instead of crude grepping, dramatically reducing false positives.
 run_full_validate() {
-    log "Running FULL project validation suite inside separate build tree..."
+    log "Running FULL project validation suite inside separate build tree (smart mode)..."
     mkdir -p "$BUILD_DIR/validation"
 
     local failed=0
@@ -188,13 +233,24 @@ run_full_validate() {
 
     : > "$BUILD_DIR/validation/summary.txt"
     : > "$BUILD_DIR/validation/FAILURES.txt"
+    : > "$BUILD_DIR/validation/REPORT.txt"
 
     for script in scripts/test-*.sh; do
         total=$((total + 1))
         name=$(basename "$script")
-        if bash "$script" > "$BUILD_DIR/validation/$name.log" 2>&1; then
-            echo "PASS: $name" >> "$BUILD_DIR/validation/summary.txt"
-            pass_count=$((pass_count + 1))
+        output_file="$BUILD_DIR/validation/$name.log"
+
+        if bash "$script" > "$output_file" 2>&1; then
+            # Trust the script's own success indication
+            if tail -5 "$output_file" | grep -qiE ': ok$|PASS$|success'; then
+                echo "PASS: $name" >> "$BUILD_DIR/validation/summary.txt"
+                pass_count=$((pass_count + 1))
+            else
+                # Script exited 0 but didn't clearly say success — flag for review
+                echo "UNCLEAR: $name (exited 0 but no clear success marker)" >> "$BUILD_DIR/validation/summary.txt"
+                echo "$name" >> "$BUILD_DIR/validation/FAILURES.txt"
+                failed=$((failed + 1))
+            fi
         else
             echo "FAIL: $name" >> "$BUILD_DIR/validation/summary.txt"
             echo "$name" >> "$BUILD_DIR/validation/FAILURES.txt"
@@ -206,14 +262,19 @@ run_full_validate() {
         echo "LATTICRA SEPARATE BUILD - FULL VALIDATION REPORT"
         echo "Generated: $(date)"
         echo "Total scripts run: $total"
-        echo "Passed: $pass_count"
-        echo "Failed (including known noisy greps): $failed"
+        echo "Passed (clear success): $pass_count"
+        echo "Failed or unclear: $failed"
         echo ""
-        echo "See individual .log files and FAILURES.txt for details."
+        echo "This run used smart success detection (trusts each script's own final status)."
         echo "This run was performed inside an isolated build-separate/ tree."
+        echo ""
+        echo "See:"
+        echo "  - summary.txt for quick overview"
+        echo "  - FAILURES.txt for scripts needing attention"
+        echo "  - individual *.log files for details"
     } > "$BUILD_DIR/validation/REPORT.txt"
 
-    log "Full validation finished. Passed: $pass_count / $total (see $BUILD_DIR/validation/)"
+    log "Full validation finished. Clear passes: $pass_count / $total (see $BUILD_DIR/validation/)"
     return $failed
 }
 
@@ -223,7 +284,7 @@ clean() {
 }
 
 usage() {
-    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate]"
+    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report]"
     exit 1
 }
 
@@ -243,8 +304,15 @@ main() {
         clean) clean ;;
         smoke) run_smoke ;;
         validate) run_validate ;;
-        full-validate) run_full_validate ;;
-        prepare-release-candidate) prepare_release_candidate ;;
+        full-validate)
+            run_full_validate
+            generate_foundation_health_report
+            ;;
+        prepare-release-candidate)
+            prepare_release_candidate
+            generate_foundation_health_report
+            ;;
+        health-report) generate_foundation_health_report ;;
         *) usage ;;
     esac
     log "Done. Artifacts in: $BUILD_DIR (separate from source and installer/)"
