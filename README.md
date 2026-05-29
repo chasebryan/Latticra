@@ -16,11 +16,14 @@ The Nucleus Supervisor Architecture academic presentation is available here:
 
 This presentation explains the Nucleus supervisor model, request lifecycle, effect gates, task reports, runtime boundary, update/server gates, and evidence recorder.
 
-README route refreshed: 2026-05-27 CDT
+README route refreshed: 2026-05-29 CDT
 Default branch: `main`
-Edge edition checkpoint: `v0.2.0edge`
+Edge edition checkpoint: `v0.3.0edge`
+Next main edge line: `v0.4.0edge`
 
-`v0.2.0edge` is the main-line edge edition for active validation work after the v0.1.0 reference-manual checkpoint. It is not a standard release, product-readiness claim, API-stability guarantee, or replacement for the generated v0.1.0 reference manual package.
+`v0.3.0edge` is the current working edge checkpoint for active validation work after the v0.1.0 reference-manual checkpoint and the v0.2.0edge no-effect validation checkpoint. It now recognizes bounded local operator effects, such as user-local install, local copy, receipt-writing, and operator-bundle staging surfaces, while root, network, USB, QEMU, package-manager, kernel, service, boot, production-readiness, and distribution-readiness authority remain closed unless a narrower record says otherwise. It is not a standard release, product-readiness claim, API-stability guarantee, or replacement for the generated v0.1.0 reference manual package.
+
+`v0.4.0edge` will be the next main edge line for the effect-substrate and Model-1 bridge path. Preparing for it does not make `v0.4.0edge` the current checkpoint, cut a tag, accept mixed-build artifacts, launch Model-1, dispatch effects, or grant runtime authority.
 
 Latticra is an early-stage systems substrate. It is built around a simple rule: before a system action becomes operational, the request, identity, capability, policy, boundary, and evidence posture should be explicit, inspectable, denied by default, and backed by reproducible records.
 
@@ -29,6 +32,26 @@ It is not a production platform, certified security product, hardened sandbox, r
 ## Current status at a glance
 
 The current public posture is tracked in [STATUS.md](STATUS.md), [docs/status/CURRENT_STATUS.md](docs/status/CURRENT_STATUS.md), and [docs/status/ANNOUNCEMENTS.md](docs/status/ANNOUNCEMENTS.md). The [Production quality blocker ledger](docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md) keeps the green local quality signal separate from production readiness claims. The production-installer release artifact staging directory, release worktree cleanliness audit with stdout-only dirty inventory, release toolchain availability audit, release signing identity reference, release artifact candidate preflight, release artifact evidence template, and release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence intake validators are present. The SBOM and transcript evidence templates are also present for future reviewed SBOM and dry-run transcript bundles. They can check future tagged artifact evidence bundles, but they do not create or sign release artifacts, clean or revert tracked files, write dirty-inventory evidence, install release tools, generate or attach an SBOM, accept evidence, pass promotion, record transcripts, validate lifecycle, recovery, or multi-VM behavior, or claim production readiness. Strategy and near-term direction live in [docs/strategy/README.md](docs/strategy/README.md), [docs/project_notes/README.md](docs/project_notes/README.md), [docs/project_notes/CURRENT_DIRECTION.md](docs/project_notes/CURRENT_DIRECTION.md), and [docs/project_notes/UPCOMING_WORK.md](docs/project_notes/UPCOMING_WORK.md).
+
+The [effect substrate transition intake](docs/LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE.md) records the review order for future effect-runner, build-profile, and Model-1 bridge work before any capability promotion.
+
+The [effect contract schema](docs/LATTICRA_EFFECT_CONTRACT_SCHEMA.md) satisfies the first transition-intake prerequisite by defining required contract and evidence-record fields while keeping effect execution, command execution, file mutation, Model-1 bridge execution, and runtime authority closed.
+
+The [effect allowlist and build-profile boundary](docs/LATTICRA_EFFECT_ALLOWLIST_BUILD_PROFILE_BOUNDARY_CONTRACT.md) satisfies the second transition-intake prerequisite and requires a concrete operator-usable workflow before any effect-runner, build-profile, or Model-1 bridge promotion review.
+
+The [effect runner implementation review boundary](docs/LATTICRA_EFFECT_RUNNER_IMPLEMENTATION_REVIEW_BOUNDARY.md) satisfies the third transition-intake boundary by defining runner classification and review evidence requirements while keeping runner dispatch, effect execution, command execution, file mutation, and runtime authority closed.
+
+The [separate-build platform integration review boundary](docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md) records the observed `~/Latticra` branch, build layout, artifacts, build profiles, and Model-1 tree as review inputs while keeping build execution, artifact import, artifact acceptance, mixed-build promotion, and Model-1 bridge execution closed.
+
+For `v0.4.0edge`, the README integration posture is:
+
+| Gate | README meaning |
+| --- | --- |
+| Current checkpoint | `v0.3.0edge` remains the current public edge checkpoint |
+| Next main edge line | `v0.4.0edge` is the next main edge line, not yet a tag or release claim |
+| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, and separate-build platform review boundary |
+| Required before integration | Model-1 bridge protocol contract, Model-1 import and mixed-build review, and guarded Model-1 effect demonstration evidence |
+| Still closed | Model-1 launch, effect dispatch, command execution, file mutation, artifact acceptance, mixed-build promotion, runtime authority, and production readiness |
 
 ```text
 release_artifact_candidate_preflight_present=1
@@ -195,7 +218,8 @@ Planning estimates are not release promises, product-readiness metrics, or secur
 
 | Field | Current public marker |
 | --- | --- |
-| Edge edition checkpoint | `v0.2.0edge` |
+| Edge edition checkpoint | `v0.3.0edge` |
+| Next main edge line | `v0.4.0edge` |
 | Current public estimate | Roughly 48% overall system planning estimate |
 | Estimate source | Current public estimate table below, mirrored from `STATUS.md` and `docs/status/CURRENT_STATUS.md` |
 | Foundation documents and contracts | Mature relative to implementation; around 96% planning estimate |
@@ -2861,7 +2885,11 @@ macos_dry_run_plan_adapter_present=1
 macos_app_bundle_writer_dry_run_present=1
 macos_commit_gate_contract_present=1
 macos_reset_uninstall_dry_run_contract_present=1
+macos_codesigning_notarization_plan_present=1
 reset_uninstall_dry_run_planner_transcript_present=1
+codesigning_notarization_plan_state=defined-no-effect
+codesign_invocation_performed=0
+notary_submission_performed=0
 
 live_execution_preflight_blocking=1
 live_execution_preflight_deletion_enabled=0
@@ -2925,6 +2953,7 @@ Installer, macOS, Fedora, Ubuntu, Debian, FreeBSD, OpenBSD, and openSUSE directi
 docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md
 docs/MACOS_APP_BUNDLE_WRITER_DRY_RUN.md
 docs/MACOS_COMMIT_GATE_CONTRACT.md
+docs/MACOS_CODESIGNING_NOTARIZATION_PLAN.md
 docs/MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT.md
 docs/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER.md
 docs/MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER.md

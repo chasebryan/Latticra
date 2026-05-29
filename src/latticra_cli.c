@@ -52,6 +52,33 @@ static void latticra_cli_print_version(void) {
     puts("runtime_behavior=disabled");
 }
 
+static void latticra_cli_print_effect_status(void) {
+    puts("LATTICRA EFFECT STATUS REPORT");
+    puts("project=latticra");
+    puts("edge_checkpoint=v0.3.0edge");
+    puts("effect_surface_version=1");
+    puts("cli_report_mode=effect-status-report");
+    puts("cli_effect_performed=0");
+    puts("local_operator_effects_present=1");
+    puts("user_local_install_effect_present=1");
+    puts("user_local_copy_effect_present=1");
+    puts("receipt_write_effect_present=1");
+    puts("operator_bundle_write_effect_present=1");
+    puts("effect_boundary=bounded-user-local-or-requested-output-dir");
+    puts("effect_gate=scripted-guarded-path");
+    puts("effect_authority=bounded-local-visible");
+    puts("host_mutation_allowed=0");
+    puts("root_authority_allowed=0");
+    puts("network_allowed=0");
+    puts("kernel_operation_allowed=0");
+    puts("service_operation_allowed=0");
+    puts("package_manager_operation_allowed=0");
+    puts("boot_operation_allowed=0");
+    puts("usb_write_allowed=0");
+    puts("qemu_run_allowed=0");
+    puts("production_readiness_claim=0");
+}
+
 static void latticra_cli_print_prevention_research(void) {
     puts("LATTICRA PREVENTION RESEARCH REPORT");
     puts("project=latticra");
@@ -294,7 +321,7 @@ static int latticra_cli_print_prevention_method(const char *method_id) {
 }
 
 static void latticra_cli_print_usage(void) {
-    fputs("usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]\n", stderr);
+    fputs("usage: latticra [--status|--version|--report|--effect-status|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]\n", stderr);
 }
 
 int main(int argc, char **argv) {
@@ -310,6 +337,11 @@ int main(int argc, char **argv) {
 
     if (argc == 2 && strcmp(argv[1], "--version") == 0) {
         latticra_cli_print_version();
+        return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--effect-status") == 0) {
+        latticra_cli_print_effect_status();
         return 0;
     }
 

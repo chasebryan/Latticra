@@ -1,7 +1,7 @@
 # Latticra Panel Test UI Lane Status
 
 Status: isolated GUI test development lane
-Date: 2026-05-28 CDT
+Date: 2026-05-29 CDT
 
 Scope: high-fidelity Latticra Panel UI iteration in a separate test development area. This status record does not migrate the guarded Rust Panel UI, does not define an edge GUI implementation, and does not widen installer authority.
 
@@ -206,6 +206,10 @@ production_blocker_ledger_surface_present=1
 production_blocker_filter_present=1
 production_blocker_count_visible=1
 production_blocker_filter_deep_link_present=1
+production_blocker_filter_summary_present=1
+production_blocker_filter_input_clamp_present=1
+production_blocker_filter_context_binding_present=1
+production_blocker_filter_receipt_binding_present=1
 production_blocker_drilldown_present=1
 production_blocker_selection_persistence_present=1
 production_blocker_deep_link_present=1
@@ -907,7 +911,7 @@ action_feedback_model=live-region-toast-v0-initial-pass
 production_quality_gate_summary=verified-and-pending-gates-v0-initial-pass
 qa_state_override_model=url-query-v0-initial-pass
 production_blocker_ledger_surface=installer-blockers-v0-initial-pass
-production_blocker_filter_model=url-query-and-local-state-v0-initial-pass
+production_blocker_filter_model=visible-filter-summary-and-replay-clamp-v0-sixty-ninth-pass
 production_blocker_drilldown_model=selected-production-blocker-remediation-v0-nineteenth-pass
 production_blocker_proof_model=selected-production-blocker-proof-checklist-v0-fortieth-pass
 selectable_ledger_focus_retention_model=post-render-roving-focus-retention-v0-twentieth-pass

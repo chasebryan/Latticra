@@ -4542,10 +4542,12 @@ p:last-child {
   justify-content: flex-end;
 }
 
-.component-summary {
+.component-summary,
+.blocker-filter-summary {
   display: inline-flex;
   min-height: 30px;
   align-items: center;
+  max-width: 100%;
   padding: 4px 8px;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -4553,6 +4555,11 @@ p:last-child {
   color: var(--muted-strong);
   font-size: 0.78rem;
   font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.readiness-filter-controls {
+  min-width: min(100%, 360px);
 }
 
 .search-input {
@@ -5662,7 +5669,8 @@ p:last-child {
     justify-content: stretch;
   }
 
-  .component-summary {
+  .component-summary,
+  .blocker-filter-summary {
     flex: 1 1 100%;
     justify-content: center;
   }

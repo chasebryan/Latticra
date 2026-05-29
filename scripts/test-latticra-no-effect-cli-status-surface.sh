@@ -41,6 +41,7 @@ require_file "$consistency_guard"
 require_contains 'latticra --status' "$contract"
 require_contains 'latticra --version' "$contract"
 require_contains 'latticra --report' "$contract"
+require_contains 'latticra --effect-status' "$contract"
 require_contains 'latticra --prevention-research' "$contract"
 require_contains 'latticra --prevention-boundary' "$contract"
 require_contains 'latticra --prevention-evidence' "$contract"
@@ -72,6 +73,16 @@ require_contains 'package_manager_operation=0' "$cli"
 require_contains 'boot_operation=0' "$cli"
 require_contains 'selinux_policy_operation=0' "$cli"
 require_contains 'effect_authority=denied' "$cli"
+require_contains 'LATTICRA EFFECT STATUS REPORT' "$cli"
+require_contains 'edge_checkpoint=v0.3.0edge' "$cli"
+require_contains 'local_operator_effects_present=1' "$cli"
+require_contains 'user_local_install_effect_present=1' "$cli"
+require_contains 'receipt_write_effect_present=1' "$cli"
+require_contains 'operator_bundle_write_effect_present=1' "$cli"
+require_contains 'effect_authority=bounded-local-visible' "$cli"
+require_contains 'root_authority_allowed=0' "$cli"
+require_contains 'usb_write_allowed=0' "$cli"
+require_contains 'qemu_run_allowed=0' "$cli"
 require_contains 'LATTICRA PREVENTION RESEARCH REPORT' "$cli"
 require_contains 'LATTICRA PREVENTION BOUNDARY REPORT' "$cli"
 require_contains 'LATTICRA PREVENTION EVIDENCE REPORT' "$cli"
@@ -134,6 +145,7 @@ require_contains 'operator_visible_evidence_required=1' "$cli"
 require_contains 'strcmp(argv[1], "--status")' "$cli"
 require_contains 'strcmp(argv[1], "--version")' "$cli"
 require_contains 'strcmp(argv[1], "--report")' "$cli"
+require_contains 'strcmp(argv[1], "--effect-status")' "$cli"
 require_contains 'strcmp(argv[1], "--prevention-research")' "$cli"
 require_contains 'strcmp(argv[1], "--prevention-boundary")' "$cli"
 require_contains 'strcmp(argv[1], "--prevention-evidence")' "$cli"
@@ -167,6 +179,8 @@ bin="$tmpdir/latticra"
 status_out="$tmpdir/status.out"
 status_expected="$tmpdir/status.expected"
 report_out="$tmpdir/report.out"
+effect_out="$tmpdir/effect-status.out"
+effect_expected="$tmpdir/effect-status.expected"
 research_out="$tmpdir/prevention-research.out"
 research_expected="$tmpdir/prevention-research.expected"
 boundary_out="$tmpdir/prevention-boundary.out"
@@ -208,6 +222,35 @@ cmp "$status_expected" "$status_out"
 
 "$bin" --report > "$report_out"
 cmp "$status_expected" "$report_out"
+
+"$bin" --effect-status > "$effect_out"
+cat > "$effect_expected" <<'EOF'
+LATTICRA EFFECT STATUS REPORT
+project=latticra
+edge_checkpoint=v0.3.0edge
+effect_surface_version=1
+cli_report_mode=effect-status-report
+cli_effect_performed=0
+local_operator_effects_present=1
+user_local_install_effect_present=1
+user_local_copy_effect_present=1
+receipt_write_effect_present=1
+operator_bundle_write_effect_present=1
+effect_boundary=bounded-user-local-or-requested-output-dir
+effect_gate=scripted-guarded-path
+effect_authority=bounded-local-visible
+host_mutation_allowed=0
+root_authority_allowed=0
+network_allowed=0
+kernel_operation_allowed=0
+service_operation_allowed=0
+package_manager_operation_allowed=0
+boot_operation_allowed=0
+usb_write_allowed=0
+qemu_run_allowed=0
+production_readiness_claim=0
+EOF
+cmp "$effect_expected" "$effect_out"
 
 "$bin" --prevention-research > "$research_out"
 cat > "$research_expected" <<'EOF'
@@ -484,7 +527,7 @@ if [ "$code" -ne 2 ]; then
 fi
 
 cat > "$usage_expected" <<'EOF'
-usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]
+usage: latticra [--status|--version|--report|--effect-status|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]
 EOF
 cmp "$usage_expected" "$usage_err"
 

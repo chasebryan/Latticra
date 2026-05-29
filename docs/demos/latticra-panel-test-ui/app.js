@@ -15,6 +15,7 @@ const SAVED_RECEIPT_LIMIT = 8;
 const SNAPSHOT_LABEL_MAX_LENGTH = 48;
 const COMMAND_PALETTE_RESULT_LIMIT = 12;
 const QA_REPLAY_VISIBLE_CHIP_LIMIT = 6;
+const BLOCKER_FILTER_MAX_LENGTH = 64;
 
 const components = [
   {
@@ -253,6 +254,21 @@ const receiptFields = [
     value: () => "0",
     source: () => "Production readiness ledger",
     status: () => "blocked",
+  },
+  {
+    key: "production_blocker_filter",
+    value: () => productionBlockerSummary().filter || "none",
+    source: () => "Readiness blocker filter",
+    status: () => (productionBlockerSummary().filter_active ? "guarded" : "live"),
+  },
+  {
+    key: "production_blocker_visible",
+    value: () => {
+      const summary = productionBlockerSummary();
+      return `${summary.visible}/${summary.total}`;
+    },
+    source: () => "Readiness blocker filter",
+    status: () => "live",
   },
   {
     key: "main_gui_mutation_required",
@@ -1326,6 +1342,19 @@ const receiptDiffFields = [
     key: "review_filter",
     label: "review filter",
     read: (receipt) => receipt.review_filter || "all",
+  },
+  {
+    key: "blocker_filter",
+    label: "blocker filter",
+    read: (receipt) => receipt.production_blocker_drilldown?.summary?.filter || "none",
+  },
+  {
+    key: "blocker_visible",
+    label: "blocker visible",
+    read: (receipt) => {
+      const summary = receipt.production_blocker_drilldown?.summary;
+      return summary ? `${summary.visible}/${summary.total}` : "0/0";
+    },
   },
 ];
 
@@ -3771,14 +3800,39 @@ function productionBlockerRows() {
   );
 }
 
+function normalizeBlockerFilter(value = state.blockerFilter) {
+  return String(value || "").trim().slice(0, BLOCKER_FILTER_MAX_LENGTH);
+}
+
+function productionBlockerMatchesFilter(row, normalizedFilter) {
+  if (!normalizedFilter) {
+    return true;
+  }
+  return `${row.group} ${row.label} ${row.status} ${row.evidence} ${row.owner} ${row.next_action}`
+    .toLowerCase()
+    .includes(normalizedFilter.toLowerCase());
+}
+
+function productionBlockerVisibleRows(rows = productionBlockerRows(), filter = state.blockerFilter) {
+  const normalized = normalizeBlockerFilter(filter);
+  return rows.filter((row) => productionBlockerMatchesFilter(row, normalized));
+}
+
 function productionBlockerSummary(rows = productionBlockerRows()) {
+  const filter = normalizeBlockerFilter();
+  const visibleRows = productionBlockerVisibleRows(rows, filter);
   const selected =
     rows.find((row) => row.key === state.productionBlockerSelection) ||
     rows.find((row) => row.status === "blocked") ||
     rows[0];
   return {
     total: rows.length,
+    visible: visibleRows.length,
     blocked: rows.filter((row) => row.status === "blocked").length,
+    filter,
+    filter_active: filter.length > 0,
+    filter_limit: BLOCKER_FILTER_MAX_LENGTH,
+    filter_status: filter.length > 0 ? "filtered" : "all",
     selected_key: selected?.key || "none",
     selected_status: selected?.status || "none",
     selected_owner: selected?.owner || "none",
@@ -4943,6 +4997,7 @@ function contextInspectorSummary() {
   const savedTrust = savedReceiptTrustSummary();
   const promotion = selectedPromotionGateRow();
   const blocker = selectedProductionBlockerRow();
+  const blockerSummary = productionBlockerSummary();
   const acceptance = selectedReleaseAcceptanceRow();
   const compare = selectedReadinessComparisonRow();
   const compareAlignment = readinessComparisonAlignmentSummary();
@@ -5064,6 +5119,11 @@ function contextInspectorSummary() {
     promotion_status: promotion?.status || "none",
     production_blocker: blocker?.label || "none",
     production_blocker_status: blocker?.status || "none",
+    production_blocker_visible: blockerSummary.visible,
+    production_blocker_total: blockerSummary.total,
+    production_blocker_filter: blockerSummary.filter || "none",
+    production_blocker_filter_status: blockerSummary.filter_status,
+    production_blocker_filter_limit: blockerSummary.filter_limit,
     release_acceptance: acceptance?.label || "none",
     release_acceptance_status: acceptance?.status || "none",
     readiness_compare: compare?.label || "none",
@@ -5212,7 +5272,8 @@ function renderContextInspector() {
   qs("#context-updater-gate").textContent =
     `${summary.updater_gate_state}: ${summary.updater_gate_blocked}/${summary.updater_gate_required} blocked / preview ${summary.updater_gate_preview_status} / apply ${summary.updater_gate_can_apply ? "yes" : "no"} / zero authority ${summary.updater_gate_zero_authority ? "yes" : "no"}`;
   qs("#context-promotion-gate").textContent = `${summary.promotion_gate} / ${summary.promotion_status}`;
-  qs("#context-production-blocker").textContent = `${summary.production_blocker} / ${summary.production_blocker_status}`;
+  qs("#context-production-blocker").textContent =
+    `${summary.production_blocker} / ${summary.production_blocker_status} / ${summary.production_blocker_visible}/${summary.production_blocker_total} visible / filter ${summary.production_blocker_filter}`;
   qs("#context-release-acceptance").textContent = `${summary.release_acceptance} / ${summary.release_acceptance_status}`;
   qs("#context-readiness-compare").textContent = `${summary.readiness_compare} / ${summary.readiness_compare_status}`;
   qs("#context-compare-alignment").textContent =
@@ -6863,7 +6924,7 @@ function applyStoredState() {
     state.evidenceFilter = stored.evidenceFilter.slice(0, 64);
   }
   if (typeof stored.blockerFilter === "string") {
-    state.blockerFilter = stored.blockerFilter;
+    state.blockerFilter = normalizeBlockerFilter(stored.blockerFilter);
   }
   if (reviewFilterOptions.includes(stored.reviewFilter)) {
     state.reviewFilter = stored.reviewFilter;
@@ -7006,7 +7067,7 @@ function applyUrlStateOverrides() {
     state.prefix = prefix;
   }
   if (blocker !== null) {
-    state.blockerFilter = blocker;
+    state.blockerFilter = normalizeBlockerFilter(blocker);
   }
   if (reviewFilterOptions.includes(review)) {
     state.reviewFilter = review;
@@ -9447,17 +9508,21 @@ function movePromotionGateFocus(currentButton, direction) {
 
 function renderProductionBlockers(filter = "") {
   const board = qs("#blocker-board");
-  const normalized = filter.trim().toLowerCase();
+  const normalized = normalizeBlockerFilter(filter);
+  state.blockerFilter = normalized;
   const rows = productionBlockerRows();
+  const summary = productionBlockerSummary(rows);
   const selected = selectedProductionBlockerRow();
   renderProductionBlockerDetail(selected);
   renderProductionBlockerProof(selected);
   board.innerHTML = "";
-  const visibleRows = rows.filter((row) =>
-    `${row.group} ${row.label} ${row.status} ${row.evidence} ${row.owner} ${row.next_action}`.toLowerCase().includes(normalized)
-  );
-  qs("#blocker-count").textContent = `${productionBlockerCount()} open`;
-  qs("#blocker-search").value = filter;
+  const visibleRows = productionBlockerVisibleRows(rows, normalized);
+  qs("#blocker-count").textContent = `${summary.blocked} open`;
+  qs("#blocker-search").value = normalized;
+  qs("#blocker-filter-summary").textContent =
+    summary.filter_active
+      ? `${summary.visible} of ${summary.total} blockers for "${summary.filter}"`
+      : `${summary.visible} of ${summary.total} blockers`;
 
   visibleRows.forEach((item) => {
     const row = document.createElement("button");
@@ -10306,8 +10371,9 @@ function wireEvents() {
     safeWriteState();
   });
   qs("#blocker-search").addEventListener("input", (event) => {
-    state.blockerFilter = event.target.value;
+    state.blockerFilter = normalizeBlockerFilter(event.target.value);
     renderProductionBlockers(state.blockerFilter);
+    renderReceiptPreview();
     safeWriteState();
   });
   qs("#profile-select").addEventListener("change", (event) => {

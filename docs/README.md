@@ -2,7 +2,7 @@
 
 Status: active reader-facing documentation hub
 
-Last updated: 2026-05-27 CDT
+Last updated: 2026-05-29 CDT
 Scope: public orientation, live status, foundation contracts, subsystem records, installer and packaging docs, security baselines, academic presentation routes, strategy notes, and documentation maintenance.
 
 ## Purpose
@@ -32,6 +32,13 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | [Quick Start Cheat Sheet](QUICK_START_CHEATSHEET.md) | Shortest safe user-local install, run, update, reset, and cleanup route |
 | [Status](../STATUS.md) | Public status shortcut and estimate mirror |
 | [Current Status](status/CURRENT_STATUS.md) | Current progress, estimates, and next priorities |
+| [Effect Status Surface](status/LATTICRA_EFFECT_STATUS_SURFACE_STATUS.md) | v0.3.0edge working checkpoint record for bounded local operator effects and still-closed root, network, USB, QEMU, package-manager, and production-readiness authority |
+| [Effect Substrate Transition Intake](LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE.md) | No-effect intake contract for reviewing future effect-substrate, build-profile, and Model-1 bridge work before any capability promotion |
+| [Effect Contract Schema](LATTICRA_EFFECT_CONTRACT_SCHEMA.md) | No-effect schema for future effect contracts and effect evidence records before effect-runner, build-profile, or Model-1 bridge acceptance |
+| [Effect Allowlist and Build-Profile Boundary](LATTICRA_EFFECT_ALLOWLIST_BUILD_PROFILE_BOUNDARY_CONTRACT.md) | No-effect allowlist, build-profile, and operator-usable workflow boundary before effect-runner or Model-1 bridge acceptance |
+| [Effect Runner Implementation Review Boundary](LATTICRA_EFFECT_RUNNER_IMPLEMENTATION_REVIEW_BOUNDARY.md) | No-effect review boundary for future effect-runner implementation work before any runner dispatch, acceptance, or Model-1 bridge work |
+| [Separate-Build Platform Integration Review Boundary](LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md) | No-effect review boundary for the `~/Latticra` separate-build lane before artifact import, mixed-build promotion, or Model-1 bridge acceptance |
+| [Model-1 Bridge Protocol Contract](LATTICRA_MODEL1_BRIDGE_PROTOCOL_CONTRACT.md) | No-effect bridge protocol contract for future Substrate-to-Model-1 message format, trace correlation, authority handoff, target evidence, and denial behavior |
 | [Foundation Index](FOUNDATION_INDEX.md) | Exhaustive architecture, implementation, guard, status, and evidence index |
 | [Academic presentation](../build/presentation/latticra-academic/video/latticra-academic-presentation.mp4) | Colorado Technical University Latticra Substrate theorem presentation |
 | [Reference Manual](latticra-reference-manual/README.md) | Generated v0.1.0 book assembled from the current documentation corpus |

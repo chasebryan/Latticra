@@ -1,9 +1,16 @@
 # Latticra Status
 
 Status: public status shortcut
-Last updated: 2026-05-28 CDT
-Edge edition checkpoint: `v0.2.0edge`
+Last updated: 2026-05-29 CDT
+Edge edition checkpoint: `v0.3.0edge`
 Documentation hub: [docs/README.md](docs/README.md)
+Latest Latticra effect status surface note: 2026-05-29 CDT
+Latest Latticra effect substrate transition intake note: 2026-05-29 CDT
+Latest Latticra effect contract schema note: 2026-05-29 CDT
+Latest Latticra effect allowlist/build-profile boundary note: 2026-05-29 CDT
+Latest Latticra effect runner implementation review boundary note: 2026-05-29 CDT
+Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
+Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -54,6 +61,7 @@ Latest Lat LIR first transition-source edge endpoint span evidence propagation n
 Latest Lat LIR first transition-source edge span evidence propagation note: 2026-05-26 CDT
 Latest kernel lifecycle evidence status note: 2026-05-27 CDT
 Latest macOS integration transferability map note: 2026-05-25 CDT
+Latest macOS codesigning and notarization plan note: 2026-05-29 CDT
 Latest macOS reset/uninstall live-target classifier note: 2026-05-25 CDT
 Latest macOS reset/uninstall dry-run planner note: 2026-05-25 CDT
 Latest macOS reset/uninstall absence-report contract note: 2026-05-25 CDT
@@ -701,10 +709,47 @@ Completion percentage review
 ## Current next step
 
 ```text
-Continue small guarded report/status alignment only when drift appears
+Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 ```
 
-Completion estimate review only if capability posture changes remains the estimate rule after this non-change review.
+Completion estimate review should now treat bounded local effects as a capability-posture change, but it must not turn local effect visibility into a production-readiness claim.
+
+The effect-substrate transition intake now records that future effect-runner, build-profile, and Model-1 bridge work must land through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, and Model-1 bridge contract before any capability promotion.
+
+The effect contract schema and evidence record contract now satisfy the first transition-intake prerequisite while preserving denied effect execution, command execution, file mutation, Model-1 bridge execution, runtime authority, production-readiness, and distribution-readiness claims.
+
+The effect allowlist and build-profile boundary now satisfies the second transition-intake prerequisite and requires `operator_usable_workflow_required=1` before any effect-runner, build-profile, or Model-1 bridge promotion review.
+
+The effect runner implementation review boundary now satisfies the third transition-intake boundary by requiring runner request classification, allowlist decisions, build-profile decisions, operator-workflow references, and evidence-record fields while preserving denied runner dispatch, effect execution, command execution, file mutation, and runtime authority.
+
+The separate-build platform integration review boundary now satisfies the fourth transition-intake boundary by recording the observed `~/Latticra` branch, build layout, artifacts, build profiles, and Model-1 tree while preserving denied build execution, artifact import, artifact acceptance, mixed-build promotion, and Model-1 bridge execution.
+
+The Model-1 bridge protocol contract now satisfies the fifth transition-intake boundary by defining bridge message format, trace correlation, authority handoff, target evidence fields, and denial behavior while preserving denied Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
+
+```text
+Model-1 import and mixed-build review boundary.
+```
+
+## Current Latticra effect status surface
+
+The `latticra --effect-status` report is present as a no-effect CLI report for the v0.3.0edge working checkpoint. It records that bounded local operator effects exist in guarded adjacent lanes while the CLI report itself performs no effects.
+
+```text
+latticra_effect_status_surface_present=1
+edge_checkpoint=v0.3.0edge
+cli_effect_performed=0
+local_operator_effects_present=1
+user_local_install_effect_present=1
+user_local_copy_effect_present=1
+receipt_write_effect_present=1
+operator_bundle_write_effect_present=1
+host_mutation_allowed=0
+root_authority_allowed=0
+network_allowed=0
+usb_write_allowed=0
+qemu_run_allowed=0
+production_readiness_claim=0
+```
 
 ## Current Seal crypto verify backend boundary
 
@@ -2718,6 +2763,8 @@ The current high-level estimate table above is the live reader-facing estimate s
 Current estimate mathematical rebase records the live table as a weighted planning estimate after recent guarded Seal signed-receipt proof-path, Panel signed-updater denial/disposition, OS image artifact manifest, platform boot/firmware integrity, supply-chain guard, installer UI sanitization, public documentation, strategy, and public-entry alignment work. It changes the planning estimate table only; it does not change production behavior, security claims, public readiness claims, product readiness claims, update authority, bootable OS readiness, runtime enforcement, or runtime authority.
 
 The macOS integration transferability status summary now surfaces the top-level transferability map, dedicated guard, and pull-request workflow for adapting current no-effect, receipt-first, user-local Latticra surfaces into a future macOS lane without claiming app-bundle creation, install verification, host mutation, runtime authority, launchd behavior, Keychain behavior, Secure Enclave behavior, notarization, or production readiness.
+
+The macOS codesigning and notarization plan now records the future signing-identity, entitlements, notarization submission, stapling, and review prerequisites while preserving zero signing, zero Apple account access, zero network use, zero host mutation, and zero runtime authority.
 
 Current completion estimate review fields:
 

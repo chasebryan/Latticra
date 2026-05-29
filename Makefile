@@ -7,7 +7,14 @@
 .PHONY: nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
 .PHONY: nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
 
-.PHONY: quality quality-worktree quality-worktree-stability quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status production-quality-blocker-ledger boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-runner fedora-vm-cli-payload-repeatability-evidence-review-gate fedora-vm-cli-payload-repeatability-evidence-acceptance-contract fedora-vm-cli-payload-repeatability-evidence-status-template fedora-vm-cli-payload-repeatability-evidence-status-review-validator fedora-vm-cli-payload-repeatability-evidence-publication-gate fedora-vm-cli-payload-repeatability-transcript-template fedora-vm-cli-payload-repeatability-transcript-review-validator fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane ubuntu-lintian-static-metadata-contract ubuntu-local-deb-build-transcript-acceptance-gate-contract opensuse-local-rpm-build-gate-contract opensuse-local-rpm-build-environment-contract macos-verification-transcript-contract macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript macos-reset-uninstall-live-runner-acceptance-denial-review macos-reset-uninstall-live-runner-acceptance-denial-disposition macos-reset-uninstall-live-runner-acceptance-denial-disposition-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition nadia-commands nadia-production-readiness-blocker-status-contract high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline cyber-incident-reporting-response-baseline vulnerability-management-release-gate-baseline cryptographic-assurance-key-management-baseline latticra-panel-signed-updater-delivery-gate
+.PHONY: latticra-effect-status-surface
+.PHONY: latticra-effect-substrate-transition-intake
+.PHONY: latticra-effect-contract-schema
+.PHONY: latticra-effect-allowlist-build-profile-boundary
+.PHONY: latticra-effect-runner-implementation-review-boundary
+.PHONY: latticra-separate-build-platform-integration-review-boundary
+.PHONY: latticra-model1-bridge-protocol-contract
+.PHONY: quality quality-worktree quality-worktree-stability quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status production-quality-blocker-ledger boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-runner fedora-vm-cli-payload-repeatability-evidence-review-gate fedora-vm-cli-payload-repeatability-evidence-acceptance-contract fedora-vm-cli-payload-repeatability-evidence-status-template fedora-vm-cli-payload-repeatability-evidence-status-review-validator fedora-vm-cli-payload-repeatability-evidence-publication-gate fedora-vm-cli-payload-repeatability-transcript-template fedora-vm-cli-payload-repeatability-transcript-review-validator fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane ubuntu-lintian-static-metadata-contract ubuntu-local-deb-build-transcript-acceptance-gate-contract opensuse-local-rpm-build-gate-contract opensuse-local-rpm-build-environment-contract macos-verification-transcript-contract macos-codesigning-notarization-plan macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript macos-reset-uninstall-live-runner-acceptance-denial-review macos-reset-uninstall-live-runner-acceptance-denial-disposition macos-reset-uninstall-live-runner-acceptance-denial-disposition-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition nadia-commands nadia-production-readiness-blocker-status-contract high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline cyber-incident-reporting-response-baseline vulnerability-management-release-gate-baseline cryptographic-assurance-key-management-baseline latticra-panel-signed-updater-delivery-gate
 .PHONY: fedora-vm-cli-payload-repeatability-publication-review-template
 .PHONY: fedora-vm-cli-payload-repeatability-publication-review-validator
 .PHONY: fedora-vm-cli-payload-repeatability-publication-receipt-template
@@ -659,6 +666,7 @@ quality-macos:
 	sh ./scripts/test-macos-readme-installer-usage.sh
 	sh ./scripts/test-macos-integration-transferability.sh
 	sh ./scripts/test-macos-verification-transcript-contract.sh
+	sh ./scripts/test-macos-codesigning-notarization-plan.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-transcript-contract.sh
 	sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-review-contract.sh
@@ -709,7 +717,35 @@ quality-macos:
 
 quality-status:
 	sh ./scripts/test-current-estimate-table-source-alignment.sh
+	sh ./scripts/test-latticra-effect-status-surface.sh
+	sh ./scripts/test-latticra-effect-contract-schema.sh
+	sh ./scripts/test-latticra-effect-allowlist-build-profile-boundary.sh
+	sh ./scripts/test-latticra-effect-runner-implementation-review-boundary.sh
+	sh ./scripts/test-latticra-separate-build-platform-integration-review-boundary.sh
+	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
+	sh ./scripts/test-latticra-effect-substrate-transition-intake.sh
 	sh ./scripts/test-production-quality-blocker-ledger.sh
+
+latticra-effect-status-surface:
+	sh ./scripts/test-latticra-effect-status-surface.sh
+
+latticra-effect-substrate-transition-intake:
+	sh ./scripts/test-latticra-effect-substrate-transition-intake.sh
+
+latticra-effect-contract-schema:
+	sh ./scripts/test-latticra-effect-contract-schema.sh
+
+latticra-effect-allowlist-build-profile-boundary:
+	sh ./scripts/test-latticra-effect-allowlist-build-profile-boundary.sh
+
+latticra-effect-runner-implementation-review-boundary:
+	sh ./scripts/test-latticra-effect-runner-implementation-review-boundary.sh
+
+latticra-separate-build-platform-integration-review-boundary:
+	sh ./scripts/test-latticra-separate-build-platform-integration-review-boundary.sh
+
+latticra-model1-bridge-protocol-contract:
+	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
 
 production-quality-blocker-ledger:
 	sh ./scripts/test-production-quality-blocker-ledger.sh
@@ -1179,6 +1215,9 @@ opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-revi
 
 macos-verification-transcript-contract:
 	sh ./scripts/test-macos-verification-transcript-contract.sh
+
+macos-codesigning-notarization-plan:
+	sh ./scripts/test-macos-codesigning-notarization-plan.sh
 
 macos-reset-uninstall-live-denial-transcript:
 	sh ./scripts/test-macos-reset-uninstall-live-denial-transcript-contract.sh

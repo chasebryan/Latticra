@@ -1,7 +1,14 @@
 # Latticra Current Direction
 
 Status: active project note
-Last updated: 2026-05-27 CDT
+Last updated: 2026-05-29 CDT
+Latest Latticra effect status surface note: 2026-05-29 CDT
+Latest Latticra effect substrate transition intake note: 2026-05-29 CDT
+Latest Latticra effect contract schema note: 2026-05-29 CDT
+Latest Latticra effect allowlist/build-profile boundary note: 2026-05-29 CDT
+Latest Latticra effect runner implementation review boundary note: 2026-05-29 CDT
+Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
+Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -205,6 +212,8 @@ constrained C/C++ foundation
 ```
 
 The current security-guidance posture is aligned across the high-assurance baseline, memory-safety roadmap, supply-chain baseline, zero-trust runtime authority baseline, and runtime-boundary policy expansion. Those records now carry explicit workload or service identity, operator identity, host or device integrity, command-boundary, update-integrity, and retained-C/C++ hazard-class expectations while preserving Latticra's no-compliance-claim and no-production-security-boundary posture.
+
+The current working edge checkpoint is `v0.3.0edge`: Latticra now recognizes bounded local operator effects in guarded adjacent lanes. That posture is visible through the no-effect `latticra --effect-status` report and does not open root authority, network authority, USB writes, QEMU runs, package-manager operations, kernel/service/boot authority, or production-readiness claims.
 
 ## C/C++ foundation checkpoint
 
@@ -615,12 +624,16 @@ Latticra Seal signed receipt proof path surface/status renders that deterministi
 The current recommended review lane is:
 
 ```text
-signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority
+Model-1 import and mixed-build review boundary.
 ```
 
-Completion estimate review only if capability posture changes remains the estimate rule after this non-change review.
+Completion estimate review should now treat bounded local effects as a capability-posture change, but it must not turn local effect visibility into a production-readiness claim.
 
-If capability posture does not change, the project should follow this rule: Continue small guarded report/status alignment only when drift appears.
+The current project rule is: Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
+
+The current transition-intake rule is: future effect-runner, build-profile, and Model-1 bridge work must pass through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, and Model-1 bridge contract before capability promotion.
+
+The first through fifth transition-intake boundaries are now satisfied by the no-effect effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, effect-runner implementation review boundary, separate-build platform integration review boundary, and Model-1 bridge protocol contract. The allowlist boundary still requires `operator_usable_workflow_required=1`. The bridge protocol records `bridge_message_format_required=1`, `trace_correlation_required=1`, `authority_handoff_required=1`, and `target_evidence_fields_required=1` while keeping `model1_bridge_execution_performed=0`, `model1_process_launch_performed=0`, and `runtime_authority_granted=0`. The next natural path is the Model-1 import and mixed-build review boundary, still without launching Model-1 or dispatching effects.
 
 ## Current non-claim
 

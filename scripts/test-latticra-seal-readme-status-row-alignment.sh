@@ -88,14 +88,14 @@ require_contains 'runtime_execution_added=0' STATUS.md
 require_contains 'effect_execution_added=0' STATUS.md
 require_contains 'capability_enforcement_added=0' STATUS.md
 require_contains 'runtime_authority_granted=0' STATUS.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' STATUS.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' STATUS.md
 
 require_contains 'SEAL_README_STATUS_ROW_ALIGNMENT.md' docs/status/README.md
 require_contains 'seal_readme_status_row_alignment_present=1' docs/status/README.md
 require_contains 'SEAL_README_STATUS_ROW_ALIGNMENT.md' docs/status/CURRENT_STATUS.md
 require_contains 'Seal README status row alignment' docs/status/CURRENT_STATUS.md
 require_contains 'seal_readme_status_row_alignment_present=1' docs/status/CURRENT_STATUS.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' docs/status/CURRENT_STATUS.md
 
 require_contains 'SEAL_README_STATUS_ROW_ALIGNMENT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal README status row alignment' docs/FOUNDATION_INDEX.md

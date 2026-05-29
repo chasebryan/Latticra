@@ -1,0 +1,21 @@
+name: Latticra Separate Build Platform Integration Review Boundary
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Latticra separate-build platform integration review boundary guard
+        run: sh scripts/test-latticra-separate-build-platform-integration-review-boundary.sh

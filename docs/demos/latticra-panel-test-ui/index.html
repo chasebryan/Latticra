@@ -28,6 +28,7 @@
   <p class="sr-only" id="receipt-export-validation-description">Export validation checks local-only schema, watermark, zero authority fields, selected snapshot, and diff filter binding before a local JSON preview is considered ready.</p>
   <p class="sr-only" id="qa-handoff-description">QA handoff link and manifest are local no-effect review aids. They do not create production evidence, host writes, or main or edge GUI mutations.</p>
   <p class="sr-only" id="qa-replay-description">QA replay strip summarizes requested URL state, applied local UI state, and zero-authority boundaries for the isolated test lane.</p>
+  <p class="sr-only" id="blocker-filter-description">Production blocker filtering is local review state only. It is capped before storage, replay, context, and receipts.</p>
   <p class="sr-only" id="release-acceptance-description">Release acceptance rows combine local UI proof, migration, engine, accessibility, and production evidence gates without granting production promotion authority.</p>
   <p class="sr-only" id="assistive-evidence-description">Assistive evidence rows track keyboard, screen-reader, and live-region proof needed before any guarded Panel migration.</p>
   <p class="sr-only" id="component-toggle-policy">Component toggles update only the isolated test-lane plan and receipt preview.</p>
@@ -953,7 +954,10 @@ production_installer_ready=0</pre>
               <p class="kicker">Production Readiness</p>
               <h2>The test UI can improve while production claims stay blocked.</h2>
             </div>
-            <input class="search-input" id="blocker-search" type="search" placeholder="Filter blockers" aria-label="Filter production blockers">
+            <div class="view-actions readiness-filter-controls">
+              <span class="blocker-filter-summary" id="blocker-filter-summary" role="status" aria-live="polite">0 of 0 blockers</span>
+              <input class="search-input" id="blocker-search" type="search" placeholder="Filter blockers" aria-label="Filter production blockers" aria-describedby="blocker-filter-summary blocker-filter-description" maxlength="64">
+            </div>
           </div>
           <section class="readiness-summary" aria-label="Production readiness summary">
             <article>

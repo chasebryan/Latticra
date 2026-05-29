@@ -78,7 +78,7 @@ require_contains 'capability_enforcement_added=0' STATUS.md
 require_contains 'security_hardening_changed=0' STATUS.md
 require_contains 'public_readiness_changed=0' STATUS.md
 require_contains 'runtime_authority_granted=0' STATUS.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' STATUS.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' STATUS.md
 require_contains '| Overall Latticra system | 48% |' STATUS.md
 require_contains '| Latticra Seal / local evidence layer | 45% |' STATUS.md
 require_contains '| Security-hardening implementation | 14% |' STATUS.md
@@ -92,7 +92,7 @@ require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/statu
 require_contains 'Completion estimate review README/status alignment' docs/status/CURRENT_STATUS.md
 require_contains 'completion_estimate_review_readme_status_alignment_present=1' docs/status/CURRENT_STATUS.md
 require_contains 'estimate_adjustment_required=0' docs/status/CURRENT_STATUS.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' docs/status/CURRENT_STATUS.md
 require_contains '| Overall Latticra system | 48% |' docs/status/CURRENT_STATUS.md
 require_contains '| Public product readiness | 13% |' docs/status/CURRENT_STATUS.md
 
@@ -104,11 +104,11 @@ require_contains 'completion_estimate_after_runtime_boundary_abuse_case_fixtures
 
 require_contains 'Latest completion estimate review README/status alignment note: 2026-05-25 CDT' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Completion estimate review README/status alignment' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latest completion estimate review README/status alignment note: 2026-05-25 CDT' docs/project_notes/UPCOMING_WORK.md
 require_contains 'Completion estimate review README/status alignment' docs/project_notes/UPCOMING_WORK.md
 require_contains 'completion_estimate_review_readme_status_alignment_present=1' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md' docs/project_notes/README.md
 
 require_contains 'sh scripts/test-completion-estimate-review-readme-status-alignment.sh' .github/workflows/completion-estimate-review-readme-status-alignment.yml

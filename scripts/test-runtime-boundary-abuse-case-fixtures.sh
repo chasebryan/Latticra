@@ -101,19 +101,19 @@ require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' READM
 require_contains 'docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' README.md
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' STATUS.md
 require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' STATUS.md
-require_contains 'Completion estimate review only if capability posture changes' STATUS.md
+require_contains 'Completion estimate review should now treat bounded local effects as a capability-posture change' STATUS.md
 require_contains 'RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' docs/status/README.md
 require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' docs/status/README.md
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/status/CURRENT_STATUS.md
 require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' docs/status/CURRENT_STATUS.md
-require_contains 'Completion estimate review only if capability posture changes' docs/status/CURRENT_STATUS.md
+require_contains 'Completion estimate review should now treat bounded local effects as a capability-posture change' docs/status/CURRENT_STATUS.md
 require_contains 'RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' docs/FOUNDATION_INDEX.md
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/FOUNDATION_INDEX.md
 require_contains 'runtime_boundary_abuse_case_fixture_expansion_present=1' docs/FOUNDATION_INDEX.md
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/project_notes/CURRENT_DIRECTION.md
-require_contains 'Completion estimate review only if capability posture changes' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Completion estimate review should now treat bounded local effects as a capability-posture change' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Runtime boundary abuse-case fixture expansion after policy expansion' docs/project_notes/UPCOMING_WORK.md
-require_contains 'Completion estimate review only if capability posture changes' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Completion estimate review should now treat bounded local effects as a capability-posture change' docs/project_notes/UPCOMING_WORK.md
 require_contains 'docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md' docs/project_notes/README.md
 require_contains 'sh scripts/test-runtime-boundary-abuse-case-fixtures.sh' .github/workflows/runtime-boundary-abuse-case-fixtures.yml
 

@@ -1,7 +1,14 @@
 # Latticra Upcoming Work
 
 Status: active project note
-Last updated: 2026-05-27 CDT
+Last updated: 2026-05-29 CDT
+Latest Latticra effect status surface note: 2026-05-29 CDT
+Latest Latticra effect substrate transition intake note: 2026-05-29 CDT
+Latest Latticra effect contract schema note: 2026-05-29 CDT
+Latest Latticra effect allowlist/build-profile boundary note: 2026-05-29 CDT
+Latest Latticra effect runner implementation review boundary note: 2026-05-29 CDT
+Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
+Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -216,18 +223,30 @@ Latticra Seal signed receipt proof path surface/status is complete for the deter
 ## Latest completed planning slice
 
 ```text
-Latticra Seal signed receipt proof path surface/status
+Latticra CLI effect status surface
 ```
 
 Purpose completed:
 
 ```text
-render the deterministic verification-only proof-path summary while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
+add a deterministic no-effect `latticra --effect-status` report that makes bounded local operator effects visible for the v0.3.0edge working checkpoint while preserving no root authority, no network authority, no USB write, no QEMU run, no package-manager operation, no kernel/service/boot authority, and no production-readiness claim
 ```
 
 ## Latest completed implementation slice
 
 ```text
+Latticra CLI effect status surface
+```
+
+Purpose completed:
+
+```text
+add a deterministic no-effect `latticra --effect-status` report that makes bounded local operator effects visible for the v0.3.0edge working checkpoint while preserving no root authority, no network authority, no USB write, no QEMU run, no package-manager operation, no kernel/service/boot authority, and no production-readiness claim
+```
+
+## Previous implementation slice
+
+```text
 Latticra Seal signed receipt proof path surface/status
 ```
 
@@ -235,18 +254,6 @@ Purpose completed:
 
 ```text
 render the deterministic verification-only proof-path summary while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
-```
-
-## Previous implementation slice
-
-```text
-Latticra Seal local capability registry schema implementation
-```
-
-Purpose completed:
-
-```text
-add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
 ```
 
 ## Earlier implementation slice
@@ -1396,26 +1403,35 @@ Current estimate table source alignment is the source-map cleanup for the public
 Recommended next slice:
 
 ```text
-Continue small guarded report/status alignment only when drift appears
+Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 ```
 
-Completion estimate review only if capability posture changes remains the estimate rule after this non-change review.
+Completion estimate review should now treat bounded local effects as a capability-posture change, but it must not turn local effect visibility into a production-readiness claim.
+
+The effect allowlist and build-profile boundary now satisfies the second transition-intake prerequisite and requires `operator_usable_workflow_required=1` before any effect-runner, build-profile, or Model-1 bridge promotion review.
 
 Purpose:
 
 ```text
-continue small guarded report/status alignment only when drift appears while preserving no runtime execution, no effect execution, no capability enforcement, no cryptographic verification, no signing, no host behavior, no network behavior, no MCP behavior, no AI agent execution, no model execution, no tool execution, no shell execution, production protection, and no runtime authority
+keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, production readiness, distribution readiness, runtime authority, and unrestricted host authority
+```
+
+Effect-substrate transition intake follow-up:
+
+```text
+Model-1 import and mixed-build review boundary.
 ```
 
 ## Near-term queue
 
-1. Continue small guarded report/status alignment only when drift appears.
-2. Authority status announcement only if public messaging changes.
-3. C++ authority expansion contract only if new authority behavior is proposed.
-4. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-5. Runtime boundary domain matrix report status audit only if new status drift appears.
-6. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-7. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
+1. Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
+2. Model-1 import and mixed-build review boundary.
+3. Authority status announcement only if public messaging changes.
+4. C++ authority expansion contract only if new authority behavior is proposed.
+5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+6. Runtime boundary domain matrix report status audit only if new status drift appears.
+7. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+8. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 

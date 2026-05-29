@@ -116,7 +116,7 @@ require_contains 'current_estimate_mathematical_rebase_present=1' docs/status/CU
 require_contains 'source_alignment_estimate_changed=0' docs/status/CURRENT_STATUS.md
 require_contains 'mathematical_rebase_estimate_changed=1' docs/status/CURRENT_STATUS.md
 require_contains 'estimate_adjustment_required=0' docs/status/CURRENT_STATUS.md
-require_contains 'Continue small guarded report/status alignment only when drift appears' docs/status/CURRENT_STATUS.md
+require_contains 'Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.' docs/status/CURRENT_STATUS.md
 
 require_contains 'CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md' docs/FOUNDATION_INDEX.md
 require_contains 'CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md' docs/FOUNDATION_INDEX.md

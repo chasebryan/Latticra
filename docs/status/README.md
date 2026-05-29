@@ -1,7 +1,7 @@
 # Latticra Status Index
 
 Status: active status index
-Last updated: 2026-05-28
+Last updated: 2026-05-29
 Scope: public status, milestone estimates, announcements, and completion percentages.
 
 For reader-facing documentation navigation, start with [`../README.md`](../README.md). This file remains the detailed status index.
@@ -25,6 +25,13 @@ non-claims
 ## Current documents
 
 - [`CURRENT_STATUS.md`](CURRENT_STATUS.md) — current project status, completion estimates, and next priorities.
+- [`LATTICRA_EFFECT_STATUS_SURFACE_STATUS.md`](LATTICRA_EFFECT_STATUS_SURFACE_STATUS.md) - current v0.3.0edge working checkpoint effect-status record for bounded local operator effects, CLI no-effect reporting, and closed root, network, USB, QEMU, package-manager, and production-readiness authority.
+- [`LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE_STATUS.md`](LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE_STATUS.md) - no-effect transition intake status for reviewing future effect-substrate, build-profile, and Model-1 bridge work before any capability promotion.
+- [`LATTICRA_EFFECT_CONTRACT_SCHEMA_STATUS.md`](LATTICRA_EFFECT_CONTRACT_SCHEMA_STATUS.md) - no-effect schema status for future effect contracts and effect evidence records before effect-runner, build-profile, or Model-1 bridge acceptance.
+- [`LATTICRA_EFFECT_ALLOWLIST_BUILD_PROFILE_BOUNDARY_STATUS.md`](LATTICRA_EFFECT_ALLOWLIST_BUILD_PROFILE_BOUNDARY_STATUS.md) - no-effect allowlist and build-profile boundary status requiring denied effect classes, profile limits, and an operator-usable workflow before effect-runner or Model-1 bridge acceptance.
+- [`LATTICRA_EFFECT_RUNNER_IMPLEMENTATION_REVIEW_BOUNDARY_STATUS.md`](LATTICRA_EFFECT_RUNNER_IMPLEMENTATION_REVIEW_BOUNDARY_STATUS.md) - no-effect runner implementation review boundary status requiring request classification, allowlist decisions, build-profile decisions, operator-workflow references, and evidence records before runner acceptance.
+- [`LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY_STATUS.md`](LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY_STATUS.md) - no-effect separate-build platform integration review boundary status for observed `~/Latticra` source, build layout, artifact, build-profile, and Model-1 tree inputs without import, execution, acceptance, or promotion.
+- [`LATTICRA_MODEL1_BRIDGE_PROTOCOL_STATUS.md`](LATTICRA_MODEL1_BRIDGE_PROTOCOL_STATUS.md) - no-effect Model-1 bridge protocol status requiring message format, trace correlation, authority handoff, target evidence fields, and denial behavior before Model-1 import or bridge implementation review.
 - [`../DOCUMENTATION_STATUS_RECORD_STANDARD.md`](../DOCUMENTATION_STATUS_RECORD_STANDARD.md) — documentation standard for status record shape, status-index entries, public mirrors, evidence, validation, non-claims, and boundaries.
 - [`PRODUCTION_QUALITY_BLOCKER_LEDGER.md`](PRODUCTION_QUALITY_BLOCKER_LEDGER.md) - production-quality blocker ledger for keeping the green local `make quality` signal separate from production installer, production AI, production cryptography, production enforcement, and distribution-readiness claims.
 - [`../PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md`](../PRODUCTION_INSTALLER_ARTIFACT_INTEGRITY_STATUS_CONTRACT.md) - no-effect production-installer artifact integrity status contract for measuring the fixture manifest while keeping release artifact checksum, signature, public-key, and verification blockers closed.
@@ -126,6 +133,7 @@ non-claims
 - [`MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md`](MACOS_DRY_RUN_WRITER_CANDIDATE_INTEGRATION_STATUS.md) - macOS dry-run writer candidate integration status for proving accepted local candidates can move the writer dry-run to its future commit-gate decision without writes.
 - [`MACOS_COMMIT_GATE_CONTRACT_STATUS.md`](MACOS_COMMIT_GATE_CONTRACT_STATUS.md) - macOS commit gate contract status for keeping future user-local managed app bundle writes closed until implementation and verification evidence exist.
 - [`MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md`](MACOS_VERIFICATION_TRANSCRIPT_CONTRACT_STATUS.md) - macOS verification transcript contract status for exact post-write evidence required before any user-local install can be called verified.
+- [`MACOS_CODESIGNING_NOTARIZATION_PLAN_STATUS.md`](MACOS_CODESIGNING_NOTARIZATION_PLAN_STATUS.md) - macOS codesigning and notarization plan status for the future signing/notarization review lane after user-local verification evidence exists.
 - [`MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md`](MACOS_RESET_UNINSTALL_DRY_RUN_CONTRACT_STATUS.md) - macOS reset/uninstall dry-run contract status for managed-target removal order and preservation rules without deleting files.
 - [`MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md`](MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER_STATUS.md) - macOS reset/uninstall live-target classifier status for read-only managed, unmanaged, and absent target reports.
 - [`MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md`](MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER_STATUS.md) - macOS reset/uninstall dry-run planner status for converting live target classifications into an ordered no-effect transcript.

@@ -84,6 +84,7 @@ The first CLI payload may only expose deterministic status, report, prevention-r
 latticra --status
 latticra --version
 latticra --report
+latticra --effect-status
 latticra --prevention-research
 latticra --prevention-boundary
 latticra --prevention-evidence
@@ -114,6 +115,39 @@ effect_authority=denied
 ```
 
 The exact implementation may add fields only if they preserve the no-effect boundary and are covered by a guard.
+
+## Required effect-status output shape
+
+The future `latticra --effect-status` output must remain a no-effect CLI report while making the current bounded local-effect posture visible:
+
+```text
+LATTICRA EFFECT STATUS REPORT
+project=latticra
+edge_checkpoint=v0.3.0edge
+effect_surface_version=1
+cli_report_mode=effect-status-report
+cli_effect_performed=0
+local_operator_effects_present=1
+user_local_install_effect_present=1
+user_local_copy_effect_present=1
+receipt_write_effect_present=1
+operator_bundle_write_effect_present=1
+effect_boundary=bounded-user-local-or-requested-output-dir
+effect_gate=scripted-guarded-path
+effect_authority=bounded-local-visible
+host_mutation_allowed=0
+root_authority_allowed=0
+network_allowed=0
+kernel_operation_allowed=0
+service_operation_allowed=0
+package_manager_operation_allowed=0
+boot_operation_allowed=0
+usb_write_allowed=0
+qemu_run_allowed=0
+production_readiness_claim=0
+```
+
+The effect-status command reports existing effect-bearing lanes; it must not perform installation, copying, receipt writing, bundle writing, package-manager operations, network access, USB writes, QEMU runs, root operations, or production-readiness promotion.
 
 ## Required prevention research output shape
 
