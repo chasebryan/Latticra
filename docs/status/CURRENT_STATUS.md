@@ -24,6 +24,7 @@ Latest Latticra identity-replay impedance L0 mass-ratio runner note: 2026-05-29 
 Latest Latticra identity-replay impedance L1 constrained substrate search note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3049,6 +3050,8 @@ The identity-replay impedance L2 pre-registration gate now locks a candidate law
 
 The identity-replay impedance L3 external blinded-holdout intake now binds to the L2 pre-registration receipt, defines the external oracle schema, and records `external_blinded_holdout_oracle_received=0`, `holdout_execution_ready=0`, `holdout_evaluation_performed=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay impedance L4 blinded-holdout execution gate now binds to the L3 intake receipt and L2 pre-registration receipt, defines the prediction execution rule and acceptance boundary, and records `oracle_received=0`, `holdout_execution_ready=0`, `holdout_execution_performed=0`, `candidate_promoted=0`, and `higgs_checkmate_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3085,10 +3088,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance L3 external blinded-holdout intake.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance L4 blinded-holdout execution gate.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance L5 blinded-holdout oracle evidence review.
 ```
 
 Follow-on proof lanes:

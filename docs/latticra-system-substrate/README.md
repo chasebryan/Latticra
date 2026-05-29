@@ -26,6 +26,8 @@ The L2 pre-registration gate now locks a candidate law receipt and an external b
 
 The L3 external blinded-holdout intake validator now binds future oracle data to the L2 receipt and keeps holdout execution closed while no oracle is present. It strengthens the proof lane by making the external evidence boundary machine-checkable before any hidden target is evaluated.
 
+The L4 blinded-holdout execution gate now defines the L2 prediction execution rule and acceptance boundary while keeping execution, survival, and proof promotion closed in the no-oracle state. It strengthens the Higgs counterplay lane by making the next claim depend on a receipt-bound holdout run instead of persuasive language.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
