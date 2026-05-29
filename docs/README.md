@@ -64,6 +64,7 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | [Model-3 Topological Amplification Pre-Registration](LATTICRA_IDENTITY_REPLAY_MODEL3_TOPOLOGICAL_AMPLIFICATION_PREREGISTRATION.md) | Guarded target-blind Model-3 pre-registration and range-capacity gate authorizing a prediction-only runner |
 | [Model-3 Prediction Runner](LATTICRA_IDENTITY_REPLAY_MODEL3_PREDICTION_RUNNER.md) | Guarded topological amplification prediction runner whose first deterministic law is rejected by the target table |
 | [Model-3 Rejection Analysis](LATTICRA_IDENTITY_REPLAY_MODEL3_REJECTION_ANALYSIS.md) | Guarded rejection analysis deriving the next sector-resolved topological charge and family-monotonicity requirement |
+| [Higgs Challenge One Page](LATTICRA_HIGGS_CHALLENGE_ONE_PAGE.md) | Concise public entrypoint and `make verify-higgs-chain` reproduction command for the guarded Higgs causal-closure challenge |
 | [Foundation Index](FOUNDATION_INDEX.md) | Exhaustive architecture, implementation, guard, status, and evidence index |
 | [Academic presentation](../build/presentation/latticra-academic/video/latticra-academic-presentation.mp4) | Colorado Technical University Latticra Substrate theorem presentation |
 | [Reference Manual](latticra-reference-manual/README.md) | Generated v0.1.0 book assembled from the current documentation corpus |

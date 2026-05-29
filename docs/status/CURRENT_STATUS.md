@@ -35,6 +35,7 @@ Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 rejection analysis note: 2026-05-29 CDT
+Latest Latticra Higgs challenge one-page verifier note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3081,6 +3082,8 @@ The identity-replay Model-3 topological amplification pre-registration now locks
 The identity-replay Model-3 prediction runner now emits topological amplification predictions before target loading, validates the receipt before evaluation, and rejects the first deterministic Model-3 prediction law against the guarded target table. It records `prediction_dynamic_range=61685.116071428571428571428571428571428571428571428571428571428571428571428571427`, `target_dynamic_range=337691.49623497269417`, `candidate_survives_target_table=0`, `model3_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
 The identity-replay Model-3 rejection analysis now records why the first topological amplification law failed: the dynamic range is still short by `5.4744404767584652275663280083338001338306169886721631882430541171586743908036395`, the predicted identity order is wrong, Higgs and Z fall below electron-scale impedance, and a single global amplifier is insufficient. It records `required_refined_model3_property=target_blind_sector_resolved_topological_charge_with_family_monotonicity`, `refined_model3_preregistration_authorized=1`, `refined_model3_prediction_runner_authorized=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
+The Higgs challenge one-page verifier now gives outsiders a concise public entrypoint plus `make verify-higgs-chain`, a single command that runs the guarded Proof Object 2/3/4 through Model-3 rejection-analysis chain. It records `single_command_reproduction_present=1`, `current_best_failure=Model-3 rejection analysis`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
 
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 

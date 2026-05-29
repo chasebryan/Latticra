@@ -33,6 +33,7 @@ Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 rejection analysis note: 2026-05-29 CDT
+Latest Latticra Higgs challenge one-page verifier note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -665,7 +666,7 @@ The computational math and physics evaluation now places math review before phys
 
 The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
 
-The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, the L1 constrained search, the L2 pre-registration gate, the L3 external blinded-holdout intake, the L4 blinded-holdout execution gate, the L5 oracle evidence-review gate, the Model-1 dynamic substrate runner, the Model-1 bounded range falsifier, the Model-2 hierarchical pre-registration, the Model-2 prediction runner, the Model-2 prediction failure analysis, the Model-3 worthiness gate, the Model-3 topological amplification pre-registration, the Model-3 prediction runner, and the Model-3 rejection analysis. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
+The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, the L1 constrained search, the L2 pre-registration gate, the L3 external blinded-holdout intake, the L4 blinded-holdout execution gate, the L5 oracle evidence-review gate, the Model-1 dynamic substrate runner, the Model-1 bounded range falsifier, the Model-2 hierarchical pre-registration, the Model-2 prediction runner, the Model-2 prediction failure analysis, the Model-3 worthiness gate, the Model-3 topological amplification pre-registration, the Model-3 prediction runner, the Model-3 rejection analysis, and the Higgs challenge one-page verifier. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
 
 ```text
 Identity-replay impedance candidate particle table.

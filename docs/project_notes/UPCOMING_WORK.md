@@ -33,6 +33,7 @@ Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 rejection analysis note: 2026-05-29 CDT
+Latest Latticra Higgs challenge one-page verifier note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
