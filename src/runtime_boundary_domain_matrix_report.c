@@ -44,7 +44,7 @@ latticra_status_t latticra_runtime_boundary_domain_matrix_report(
 int latticra_runtime_boundary_domain_matrix_effect_is_blocked(
     const latticra_runtime_boundary_domain_matrix_result_t *m)
 {
-    if (m == 0) return 1; /* conservative on null */
+    if (m == 0) return 1;
 
     if (m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_BLOCKED ||
         m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_INVALID ||
@@ -56,4 +56,22 @@ int latticra_runtime_boundary_domain_matrix_effect_is_blocked(
     if (!m->domain_effect_allowed) return 1;
 
     return 0;
+}
+
+int latticra_runtime_boundary_domain_matrix_is_declarative(
+    const latticra_runtime_boundary_domain_matrix_result_t *m)
+{
+    return m && m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_DECLARATIVE;
+}
+
+int latticra_runtime_boundary_domain_matrix_is_operational(
+    const latticra_runtime_boundary_domain_matrix_result_t *m)
+{
+    return m && m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_OPERATIONAL;
+}
+
+int latticra_runtime_boundary_domain_matrix_is_future_gated(
+    const latticra_runtime_boundary_domain_matrix_result_t *m)
+{
+    return m && m->cell == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MATRIX_FUTURE_GATED;
 }

@@ -51,6 +51,16 @@ latticra_status_t latticra_runtime_boundary_domain_matrix_report(
 int latticra_runtime_boundary_domain_matrix_effect_is_blocked(
     const latticra_runtime_boundary_domain_matrix_result_t *matrix_result);
 
+/* Additional high-level queries for evidence and reporting surfaces */
+int latticra_runtime_boundary_domain_matrix_is_declarative(
+    const latticra_runtime_boundary_domain_matrix_result_t *m);
+
+int latticra_runtime_boundary_domain_matrix_is_operational(
+    const latticra_runtime_boundary_domain_matrix_result_t *m);
+
+int latticra_runtime_boundary_domain_matrix_is_future_gated(
+    const latticra_runtime_boundary_domain_matrix_result_t *m);
+
 #ifdef __cplusplus
 }
 #endif

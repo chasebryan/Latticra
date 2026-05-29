@@ -166,30 +166,57 @@ build_visual_engines() {
     fi
 }
 
-# Prepare a clean "release-candidate" layout inside the separate tree.
-# This mirrors concepts from the project's production release artifact contracts
-# without claiming any actual release readiness.
+# Prepare a rich "release-candidate" layout inside the separate tree.
+# This is deliberately comprehensive and mirrors many concepts from the
+# project's own production release artifact contracts (evidence, inventories,
+# reports, etc.) while remaining strictly no-effect and exploratory.
 prepare_release_candidate() {
-    log "Preparing release-candidate layout inside separate build tree..."
+    log "Preparing rich release-candidate layout inside separate build tree..."
     CANDIDATE_DIR="$BUILD_DIR/release-candidate"
     rm -rf "$CANDIDATE_DIR"
-    mkdir -p "$CANDIDATE_DIR/bin" "$CANDIDATE_DIR/share/doc/latticra" "$CANDIDATE_DIR/share/seal"
 
-    # Copy key no-effect artifacts
+    mkdir -p \
+        "$CANDIDATE_DIR/bin" \
+        "$CANDIDATE_DIR/share/doc/latticra" \
+        "$CANDIDATE_DIR/share/seal" \
+        "$CANDIDATE_DIR/evidence" \
+        "$CANDIDATE_DIR/reports" \
+        "$CANDIDATE_DIR/inventory"
+
+    # Binaries
     cp -f "$BIN_DIR/latticra" "$CANDIDATE_DIR/bin/" 2>/dev/null || true
     cp -f "$BIN_DIR/latticra-seal" "$CANDIDATE_DIR/bin/" 2>/dev/null || true
 
-    # Documentation snapshot (no-effect)
-    cp -f README.md "$CANDIDATE_DIR/share/doc/latticra/" 2>/dev/null || true
-    cp -f STATUS.md "$CANDIDATE_DIR/share/doc/latticra/" 2>/dev/null || true
-    cp -f LICENSE "$CANDIDATE_DIR/share/doc/latticra/" 2>/dev/null || true
+    # Core documentation
+    cp -f README.md STATUS.md LICENSE "$CANDIDATE_DIR/share/doc/latticra/" 2>/dev/null || true
 
-    # Seal baseline artifacts if present
-    cp -f latticra.seal "$CANDIDATE_DIR/share/seal/" 2>/dev/null || true
-    cp -f latticra.seal.lock "$CANDIDATE_DIR/share/seal/" 2>/dev/null || true
+    # Seal artifacts
+    cp -f latticra.seal latticra.seal.lock "$CANDIDATE_DIR/share/seal/" 2>/dev/null || true
 
-    log "Release-candidate layout ready at: $CANDIDATE_DIR"
-    log "This is a hygiene / exploration artifact only. No production claims."
+    # Health and validation reports (very valuable)
+    cp -f "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" "$CANDIDATE_DIR/reports/" 2>/dev/null || true
+    cp -f "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.json" "$CANDIDATE_DIR/reports/" 2>/dev/null || true
+    cp -rf "$BUILD_DIR/validation" "$CANDIDATE_DIR/reports/validation" 2>/dev/null || true
+
+    # Evidence bundles
+    cp -rf "$BUILD_DIR/evidence" "$CANDIDATE_DIR/evidence/" 2>/dev/null || true
+
+    # Simple inventory
+    {
+        echo "Latticra Release Candidate Inventory"
+        echo "Generated inside isolated build-separate/"
+        echo "Date: $(date)"
+        echo ""
+        echo "Binaries:"
+        ls -1 "$CANDIDATE_DIR/bin" 2>/dev/null || echo "  (none in this run)"
+        echo ""
+        echo "Reports:"
+        ls -1 "$CANDIDATE_DIR/reports" 2>/dev/null
+    } > "$CANDIDATE_DIR/inventory/INVENTORY.txt"
+
+    log "Rich release-candidate layout ready at: $CANDIDATE_DIR"
+    log "Contains binaries, docs, health reports, validation results, evidence, and inventory."
+    log "This remains a no-effect exploration artifact."
 }
 
 run_smoke() {
