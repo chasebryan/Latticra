@@ -176,6 +176,8 @@ Latticra must derive a substrate impedance ledger whose ratios project to the ob
 If the ledger cannot do this without smuggling the measured masses into the substrate, the candidate fails.
 ```
 
+The Model-2 Prediction Runner now applies that boundary to a hierarchical replay law: the prediction receipt is emitted before target loading, and the target-table evaluator rejects the first deterministic Model-2 prediction vector.
+
 ## Public Statement
 
 The strongest legitimate public statement for this table is:

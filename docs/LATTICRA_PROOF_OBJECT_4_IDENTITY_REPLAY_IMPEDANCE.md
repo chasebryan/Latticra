@@ -249,6 +249,8 @@ The strongest legitimate public statement for this object is:
 Latticra introduces identity-replay impedance: a mass-origin formalism where rest mass is the replay-stable cost for a projected localized identity to remain itself under substrate update. This gives original counterplay against Higgs as final cause: Higgs may be the effective coupling shadow, but the deeper ledger is identity persistence under computation.
 ```
 
+The current Model-2 Prediction Runner result is a negative proof-lane result: the first deterministic hierarchical replay law is rejected by the guarded target table, so no Higgs-checkmate, mass-recovery, or simulation-proof claim is open.
+
 ## Validation
 
 This proof object is guarded by:

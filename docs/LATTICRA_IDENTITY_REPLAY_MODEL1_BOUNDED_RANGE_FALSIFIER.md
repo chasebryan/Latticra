@@ -150,6 +150,8 @@ The guarded handoff is:
 Model-2 Hierarchical Substrate Pre-Registration.
 ```
 
+The guarded follow-on is the Model-2 Prediction Runner, which shows that hierarchical range capacity is not enough by itself: the first deterministic Model-2 prediction law is rejected by the target table.
+
 ## Non-Claims
 
 This bounded-range falsifier is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not final checkmate against Higgs, not external oracle evidence, not independent reproduction, not a Standard Model precision-shadow pass, not a new experimental prediction, not scientific claim promotion, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

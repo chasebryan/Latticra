@@ -36,6 +36,8 @@ The Model-1 bounded range falsifier records the first hard conclusion from that 
 
 The Model-2 hierarchical substrate pre-registration now supplies that necessary hierarchical range-capacity gate. It locks a four-scale multiplicative replay law before target loading, then confirms after receipt generation that the hierarchical range bound spans the target vector while keeping mass prediction, mass recovery, and Higgs-checkmate claims closed.
 
+The Model-2 prediction runner now closes the next stricter test: it emits hierarchical replay predictions before target loading and rejects the first deterministic prediction law against the guarded target table. This is a useful negative result for the proof lane, not a Higgs defeat or simulation proof.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

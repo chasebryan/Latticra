@@ -114,6 +114,8 @@ Model-2 prediction-only hierarchical replay runner.
 
 That runner must emit candidate `Z_L` ratios before loading the target table.
 
+That follow-on artifact now exists as the Model-2 Prediction Runner. Its first deterministic hierarchical replay law is rejected by the guarded target table, so the range-capacity pass remains a necessary-condition pass rather than a mass-ratio recovery.
+
 ## Invocation
 
 Pre-register before target loading:

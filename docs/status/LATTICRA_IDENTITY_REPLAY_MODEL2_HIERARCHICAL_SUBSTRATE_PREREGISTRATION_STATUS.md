@@ -82,6 +82,8 @@ The careful public meaning is:
 Model-2 hierarchical replay clears the necessary dynamic-range capacity gate that killed Model-1. It is now eligible for a prediction-only hierarchical replay runner, but no mass-ratio recovery or Higgs-checkmate claim is open.
 ```
 
+The follow-on Model-2 Prediction Runner now records that the first deterministic hierarchical replay prediction law is rejected by the guarded target table.
+
 ## Guard Validation
 
 This status record is guarded by:
