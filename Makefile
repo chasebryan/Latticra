@@ -2038,6 +2038,12 @@ build-separate-platform-effect:
 build-separate-effect-tools:
 	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh build_effect_enabled_tools 2>/dev/null || true
 
+# Quick way to build just the experimental guarded execution runner
+.PHONY: build-separate-effect-runner
+build-separate-effect-runner:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh build_effect_enabled_tools 2>/dev/null || true
+	@echo "Experimental effect runner (if built): build-separate/bin/latticra-effect-runner"
+
 build-separate-full-validate:
 	sh ./scripts/build-separate.sh full-validate
 

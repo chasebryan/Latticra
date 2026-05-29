@@ -337,28 +337,27 @@ build_effect_enabled_tools() {
     # Build the core Seal/CLI with effect support
     build_seal
 
-    # Future: We will also build a dedicated effect executor binary
-    # that links against the new substrate/effect layer.
-    # For now we just ensure the dispatcher compiles.
-    if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS \
-        -Iinclude \
+    # Compile the new effect layer
+    gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         -c src/substrate/effect/effect_dispatcher.c \
-        -o "$OBJ_DIR/effect_dispatcher.o" 2>&1 | tee -a "$LOG_FILE"; then
-        log "  effect_dispatcher.o compiled successfully"
-    else
-        log "  WARNING: effect_dispatcher compilation had issues"
-    fi
+        -o "$OBJ_DIR/effect_dispatcher.o" 2>&1 | tee -a "$LOG_FILE"
 
-    if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS \
-        -Iinclude \
+    gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         -c src/substrate/effect/effect_command.c \
-        -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE"; then
-        log "  effect_command.o compiled successfully"
+        -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE"
+
+    # Build a small standalone effect runner for experimentation
+    # (links the new guarded command execution)
+    if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
+        "$OBJ_DIR/effect_dispatcher.o" \
+        "$OBJ_DIR/effect_command.o" \
+        -o "$BIN_DIR/latticra-effect-runner" 2>&1 | tee -a "$LOG_FILE"; then
+        log "  Built experimental effect runner: $BIN_DIR/latticra-effect-runner"
     else
-        log "  WARNING: effect_command compilation had issues"
+        log "  WARNING: Failed to link experimental effect runner"
     fi
 
-    log "Effect-enabled tool build step complete (more capabilities coming)."
+    log "Effect-enabled tool build complete."
 }
 
 build_core_tests() {
@@ -641,6 +640,9 @@ main() {
             log "  - $BUILD_DIR/inventory/ARTIFACT_INVENTORY.txt"
             log "  - $BUILD_DIR/release-candidate/"
             log "  - $BUILD_DIR/validation/REPORT.txt"
+            if [ "$BUILD_PROFILE" = "effect-enabled" ] && [ -x "$BUILD_DIR/bin/latticra-effect-runner" ]; then
+                log "  - $BUILD_DIR/bin/latticra-effect-runner (experimental guarded execution)"
+            fi
             log "Primary artifacts in: $BUILD_DIR"
             log ""
 
@@ -653,6 +655,11 @@ main() {
             log ""
             log "Tip: For the absolute cleanest experience on macOS, you can also run:"
             log "      make seal-cli && sh scripts/build-separate.sh dashboard"
+
+            if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
+                log ""
+                log "Effect-enabled mode active. Experimental guarded execution tools available."
+            fi
 
             # Always succeed the platform command even if validation had issues.
             # The platform's job is to produce the deliverables and reports.
