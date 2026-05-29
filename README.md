@@ -1,7 +1,7 @@
 # Latticra
 
 **Status:** early-stage, evidence-bound systems architecture repository  
-**README review snapshot:** 2026-05-24 CDT  
+**README review snapshot:** 2026-05-29 CDT  
 **Default branch:** `main`
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
@@ -26,6 +26,7 @@ This repository is foundational engineering work. It is not a deployed platform,
 - [What exists today](#what-exists-today)
 - [What Latticra does not claim](#what-latticra-does-not-claim)
 - [Quick start](#quick-start)
+- [Latticra Development Platform](#latticra-development-platform)
 - [Latticra Panel](#latticra-panel)
 - [Lat, LIR, and L-UI](#lat-lir-and-l-ui)
 - [Nucleus and Runtime Boundary](#nucleus-and-runtime-boundary)
@@ -86,7 +87,9 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 | L-UI | Parser, validation, and report/rendering foundations exist; no interactive terminal-control renderer |
 | Nucleus | Report-only task-boundary and classification work exists; no effect-performing execution |
 | Runtime Boundary | Denied-by-default classification and reporting exists; no runtime authority |
-| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, and crypto-profile planning surfaces exist; no production enforcement |
+| Latticra Seal | Report-only tool-boundary, runtime dry-run, guarded allowlist, crypto-profile planning, and Q-Seal (post-quantum) posture surfaces exist; no production enforcement |
+| Development Platform | Isolated `build-separate/` platform with `make build-separate-platform`, dashboards, health reports, artifact inventories with provenance, and Q-Seal report generation |
+| Q-Seal (Post-Quantum) | Dedicated planning surfaces and platform integration for ML-DSA/ML-KEM profiles as a core next-gen priority (report-only) |
 | Fedora integration | Local-only package and validation lanes exist; not Fedora-approved or distribution-ready |
 | Latticra Panel | GUI-first local installer/control workbench exists; user-local and guarded |
 | Security hardening | Early; no production security boundary claimed |
@@ -175,6 +178,10 @@ nucleus_report_only_task_boundary_present=1
 latticra_seal_report_only_tool_boundary_metadata_present=1
 latticra_seal_runtime_dry_run_report_surface_present=1
 latticra_seal_guarded_allowlist_report_surface_present=1
+q_seal_post_quantum_planning_surface_present=1
+separate_build_platform_present=1
+rbdm_advanced_query_surfaces_present=1
+clean_validation_platform_present=1
 latticra_panel_gui_workbench_present=1
 fedora_local_rpm_draft_present=1
 visual_theorem_engines_present=1
@@ -241,18 +248,28 @@ sed -n '1,220p' STATUS.md
 sed -n '1,260p' docs/status/CURRENT_STATUS.md
 ```
 
-Build and run the current no-effect CLI status surface (or use the dedicated separate build structure for clean isolation from installer/ artifacts):
+Build and run using the recommended Latticra Development Platform (isolated, reproducible, with dashboards, health reports, Q-Seal posture artifacts, and full validation):
 
 ```sh
-# Simple in-tree
-mkdir -p build
-cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
-./build/latticra --status
+# The primary command for serious work on the project
+make build-separate-platform
+# or
+sh scripts/build-separate.sh platform
 
-# Recommended: clean separate build tree (handles macOS OpenSSL, produces latticra + latticra-seal)
+# This produces (all inside build-separate/):
+# - latticra + latticra-seal binaries
+# - Visual engines
+# - Full validation (currently 0 real issues)
+# - Rich health reports + SHA256 artifact inventory
+# - Human-facing DASHBOARD.txt
+# - Dedicated Q-Seal (post-quantum) posture report
+# - Release-candidate layout with provenance
+```
+
+For a quick no-effect CLI smoke test only:
+```sh
 make build-separate
-./build-separate/latticra --status
-make build-separate-validate   # runs key guards + captures evidence under build-separate/evidence/
+./build-separate/bin/latticra --status
 ```
 
 Expected posture from the CLI is no-effect:
@@ -293,6 +310,31 @@ sh scripts/test-fedora-build-lane.sh
 sh scripts/test-fedora-developer-workflow.sh
 sh scripts/test-fedora-local-rpm-spec-skeleton.sh
 ```
+
+---
+
+## Latticra Development Platform
+
+The recommended way to work on Latticra is through the isolated `build-separate/` platform:
+
+```sh
+make build-separate-platform
+# or
+sh scripts/build-separate.sh platform
+```
+
+This single command delivers a complete, reproducible environment:
+- Core binaries (`latticra`, `latticra-seal`)
+- Visual theorem engines
+- Full deterministic validation suite (currently zero real issues)
+- Human-readable `DASHBOARD.txt`
+- Detailed health reports + SHA256 artifact inventory
+- Dedicated `q-seal/` posture report (elevated next-gen priority)
+- Rich release-candidate layout with provenance
+
+All outputs stay inside `build-separate/` — no pollution of source or the Rust installer tree. The platform makes Q-Seal (post-quantum) planning surfaces, RBDM advanced queries, and evidence artifacts first-class and automatically generated.
+
+See the generated `DASHBOARD.txt` and `FOUNDATION_HEALTH_REPORT.txt` after running the platform for the current state.
 
 ---
 
@@ -650,6 +692,14 @@ Latticra Seal has report-only runtime dry-run and guarded allowlist candidate-de
 Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
 report-only runtime dry-run path with operator-visible denial reporting
 ```
+
+**Q-Seal (Post-Quantum) Priority**  
+Q-Seal is treated as a core next-gen differentiator. The platform and Seal status surfaces now explicitly track:
+- `q_seal_post_quantum_profile_planned=1`
+- `post_quantum_signature_support_planned=1` (ML-DSA target)
+- `post_quantum_key_establishment_planned=1` (ML-KEM target)
+
+All Q-Seal surfaces remain strictly report-only, no-effect planning metadata with full provenance in the isolated development platform. No post-quantum implementation or claims exist today.
 
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
 
