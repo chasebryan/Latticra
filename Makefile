@@ -110,3 +110,7 @@ build-separate-health-report:
 
 build-separate-platform:
 	sh scripts/build-separate.sh platform
+
+.PHONY: build-separate-dashboard
+build-separate-dashboard:
+	sh scripts/build-separate.sh dashboard

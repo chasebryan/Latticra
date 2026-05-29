@@ -124,6 +124,47 @@ JSON
     log "  Inventory: $INVENTORY_FILE"
 }
 
+# Generate a nice human-facing project dashboard
+generate_dashboard() {
+    log "Generating Latticra Project Dashboard..."
+    DASH="$BUILD_DIR/DASHBOARD.txt"
+
+    {
+        echo "╔════════════════════════════════════════════════════════════╗"
+        echo "║           LATTICRA FOUNDATION DASHBOARD                    ║"
+        echo "╚════════════════════════════════════════════════════════════╝"
+        echo ""
+        echo "Generated: $(date)"
+        echo "Mode: Isolated development platform (build-separate/)"
+        echo ""
+        echo "────────────────────────────────────────────────────────────"
+        echo " CORE CAPABILITIES"
+        echo "────────────────────────────────────────────────────────────"
+        echo "  • No-effect CLI (latticra)"
+        echo "  • Seal trust-boundary tooling (latticra-seal)"
+        echo "  • Visual theorem engines (substrate + theorem)"
+        echo "  • Comprehensive validation guard suite"
+        echo ""
+        echo "────────────────────────────────────────────────────────────"
+        echo " CURRENT STATE (from latest platform run)"
+        echo "────────────────────────────────────────────────────────────"
+        if [ -f "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" ]; then
+            grep -A 30 "=== Core Binaries ===" "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" | head -20
+        fi
+        echo ""
+        echo "────────────────────────────────────────────────────────────"
+        echo " HOW TO USE THIS PLATFORM"
+        echo "────────────────────────────────────────────────────────────"
+        echo "  sh scripts/build-separate.sh platform"
+        echo "  make build-separate-platform"
+        echo ""
+        echo "This dashboard and all artifacts are generated automatically."
+        echo "Everything stays strictly evidence-bound and no-effect."
+    } > "$DASH"
+
+    log "Dashboard generated: $DASH"
+}
+
 detect_openssl() {
     OPENSSL_CFLAGS=""
     OPENSSL_LIBS="-lcrypto"
@@ -358,8 +399,9 @@ clean() {
 }
 
 usage() {
-    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|platform]"
-    echo "  platform   - Recommended: runs the full modern Latticra development flow"
+    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|platform]"
+    echo "  platform   - The main command. Runs the complete modern Latticra development flow."
+    echo "  dashboard  - Generate a human-friendly project dashboard."
     exit 1
 }
 
@@ -388,6 +430,7 @@ main() {
             generate_foundation_health_report
             ;;
         health-report) generate_foundation_health_report ;;
+        dashboard) generate_dashboard ;;
         platform)
             # The new recommended "do everything important" flow
             log "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
@@ -398,6 +441,7 @@ main() {
             run_full_validate
             prepare_release_candidate
             generate_foundation_health_report
+            generate_dashboard
             log "=== PLATFORM RUN COMPLETE ==="
             log "Primary artifacts in: $BUILD_DIR"
             ;;
