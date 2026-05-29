@@ -441,7 +441,12 @@ run_full_validate() {
     for script in scripts/test-*.sh; do
         total=$((total + 1))
         name=$(basename "$script")
-        output_file="$BUILD_DIR/validation/$name.log"
+
+        # Safe log filename: truncate + hash to avoid "File name too long" on macOS for very long test names
+        short_name=$(echo "$name" | cut -c1-80)
+        name_hash=$(echo -n "$name" | shasum -a 256 | cut -c1-8)
+        safe_log_name="${short_name}-${name_hash}.log"
+        output_file="$BUILD_DIR/validation/$safe_log_name"
 
         if echo "$KNOWN_ENVIRONMENT_SPECIFIC_SCRIPTS" | grep -q "$name"; then
             echo "ENV-SPECIFIC: $name (Fedora validation lane - expected limited outside Fedora)" >> "$BUILD_DIR/validation/summary.txt"
@@ -469,12 +474,14 @@ run_full_validate() {
 
     {
         echo "LATTICRA SEPARATE BUILD - FULL VALIDATION REPORT"
+        echo "Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT"
         echo "Generated: $(date)"
         echo "Total scripts considered: $total"
         echo "Clear passes: $pass_count"
         echo "Environment-specific (Fedora etc.): $env_specific"
         echo "Real issues: $failed"
         echo ""
+        echo "Note: Log filenames are safely truncated+hashed to avoid macOS filename length limits on some very long test scripts."
         echo "Environment-specific scripts are intentionally limited outside their target platform."
         echo "This run was executed inside a completely isolated build-separate/ tree."
     } > "$BUILD_DIR/validation/REPORT.txt"
