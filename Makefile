@@ -2012,3 +2012,25 @@ seal-demo: seal-cli
 seal-docs:
 	sh scripts/test-latticra-seal-docs.sh
 
+# Isolated build-separate/ platform targets (delegated to scripts/build-separate.sh)
+# These exist so `make build-separate` and `make build-separate-platform` etc. work
+# as documented, instead of Make reporting "Nothing to be done" due to the
+# build-separate/ directory existing with no rule.
+.PHONY: build-separate build-separate-platform build-separate-full-validate build-separate-clean
+
+build-separate:
+	sh ./scripts/build-separate.sh all
+
+build-separate-platform:
+	sh ./scripts/build-separate.sh platform
+
+build-separate-full-validate:
+	sh ./scripts/build-separate.sh full-validate
+
+build-separate-clean:
+	sh ./scripts/build-separate.sh clean
+
+# Catch-all for other subcommands supported by the script (e.g. build-separate-cli,
+# build-separate-q-seal, build-separate-dashboard, build-separate-prepare-release-candidate, etc.)
+build-separate-%:
+	sh ./scripts/build-separate.sh $*
