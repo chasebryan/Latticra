@@ -46,44 +46,82 @@ compile_object() {
     echo "$obj"
 }
 
-# Generate a high-quality machine and human readable health report
+# Generate a high-quality machine and human readable health report + artifact inventory
 generate_foundation_health_report() {
-    log "Generating Latticra Foundation Health Report..."
+    log "Generating Latticra Foundation Health Report + Artifact Inventory..."
     REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt"
     JSON_REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.json"
+    INVENTORY_DIR="$BUILD_DIR/inventory"
+    mkdir -p "$INVENTORY_DIR"
 
+    # Human readable report
     {
         echo "LATTICRA FOUNDATION HEALTH REPORT"
         echo "Generated: $(date)"
-        echo "Build tree: $BUILD_DIR"
+        echo "Build tree: $BUILD_DIR (completely isolated)"
         echo ""
-        echo "=== Binaries ==="
-        ls -l "$BIN_DIR" 2>/dev/null || echo "No binaries"
+        echo "=== Core Binaries ==="
+        ls -lh "$BIN_DIR" 2>/dev/null || echo "(none built in this run)"
         echo ""
-        echo "=== Key Validation Status ==="
+        echo "=== Validation Status ==="
         if [ -f "$BUILD_DIR/validation/REPORT.txt" ]; then
             cat "$BUILD_DIR/validation/REPORT.txt"
         else
-            echo "Run full-validate to populate"
+            echo "Run full-validate for detailed results"
         fi
         echo ""
-        echo "=== Evidence Captured ==="
-        find "$BUILD_DIR/evidence" -type f 2>/dev/null | head -20
+        echo "=== Visual Engines ==="
+        ls -lh "$BUILD_DIR/visual-engines" 2>/dev/null || echo "(not built)"
+        echo ""
+        echo "=== Release Candidate ==="
+        if [ -d "$BUILD_DIR/release-candidate" ]; then
+            du -sh "$BUILD_DIR/release-candidate"
+            find "$BUILD_DIR/release-candidate" -type f | wc -l | awk '{print $1 " files"}'
+        else
+            echo "Not generated in this run"
+        fi
     } > "$REPORT"
 
-    # Simple JSON summary (useful for future tooling / CI)
+    # Machine readable
     cat > "$JSON_REPORT" <<JSON
 {
   "generated": "$(date -Iseconds 2>/dev/null || date)",
   "build_tree": "$BUILD_DIR",
-  "binaries": $(ls "$BIN_DIR" 2>/dev/null | wc -l | tr -d ' '),
-  "validation_passed": $( [ -f "$BUILD_DIR/validation/REPORT.txt" ] && grep -o 'Clear passes: [0-9]*' "$BUILD_DIR/validation/REPORT.txt" | awk '{print $3}' || echo 0 ),
+  "binaries_count": $(ls "$BIN_DIR" 2>/dev/null | wc -l | tr -d ' '),
+  "validation": {
+    "passes": $( [ -f "$BUILD_DIR/validation/REPORT.txt" ] && grep -o 'Passes: [0-9]*' "$BUILD_DIR/validation/REPORT.txt" | awk '{print $2}' || echo 0 ),
+    "env_specific": $( [ -f "$BUILD_DIR/validation/REPORT.txt" ] && grep -o 'Env-specific: [0-9]*' "$BUILD_DIR/validation/REPORT.txt" | awk '{print $2}' || echo 0 ),
+    "issues": $( [ -f "$BUILD_DIR/validation/REPORT.txt" ] && grep -o 'Issues: [0-9]*' "$BUILD_DIR/validation/REPORT.txt" | awk '{print $2}' || echo 0 )
+  },
   "has_release_candidate": $( [ -d "$BUILD_DIR/release-candidate" ] && echo true || echo false )
 }
 JSON
 
-    log "Health report generated: $REPORT"
-    log "Machine readable: $JSON_REPORT"
+    # Artifact inventory with hashes (serious platform behavior)
+    INVENTORY_FILE="$INVENTORY_DIR/ARTIFACT_INVENTORY.txt"
+    {
+        echo "LATTICRA SEPARATE BUILD - ARTIFACT INVENTORY"
+        echo "Generated: $(date)"
+        echo "Tree: $BUILD_DIR"
+        echo ""
+        echo "=== Hashed Artifacts ==="
+    } > "$INVENTORY_FILE"
+
+    find "$BUILD_DIR" -type f \( -name "*.txt" -o -name "*.json" -o -name "latticra*" -o -name "*.log" \) 2>/dev/null | while read f; do
+        if command -v shasum >/dev/null 2>&1; then
+            hash=$(shasum -a 256 "$f" 2>/dev/null | awk '{print $1}')
+        else
+            hash=$(sha256sum "$f" 2>/dev/null | awk '{print $1}')
+        fi
+        rel=$(echo "$f" | sed "s|$BUILD_DIR/||")
+        size=$(du -h "$f" | awk '{print $1}')
+        echo "$hash  $size  $rel" >> "$INVENTORY_FILE"
+    done
+
+    log "Health report + inventory generated"
+    log "  Human: $REPORT"
+    log "  JSON:  $JSON_REPORT"
+    log "  Inventory: $INVENTORY_FILE"
 }
 
 detect_openssl() {
@@ -320,7 +358,8 @@ clean() {
 }
 
 usage() {
-    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report]"
+    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|platform]"
+    echo "  platform   - Recommended: runs the full modern Latticra development flow"
     exit 1
 }
 
@@ -349,6 +388,19 @@ main() {
             generate_foundation_health_report
             ;;
         health-report) generate_foundation_health_report ;;
+        platform)
+            # The new recommended "do everything important" flow
+            log "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
+            build_cli
+            build_seal || true
+            build_core_tests
+            build_visual_engines
+            run_full_validate
+            prepare_release_candidate
+            generate_foundation_health_report
+            log "=== PLATFORM RUN COMPLETE ==="
+            log "Primary artifacts in: $BUILD_DIR"
+            ;;
         *) usage ;;
     esac
     log "Done. Artifacts in: $BUILD_DIR (separate from source and installer/)"

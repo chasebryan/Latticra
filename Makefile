@@ -104,6 +104,9 @@ build-separate-visual:
 build-separate-release-candidate:
 	sh scripts/build-separate.sh prepare-release-candidate
 
-.PHONY: build-separate-health-report
+.PHONY: build-separate-health-report build-separate-platform
 build-separate-health-report:
 	sh scripts/build-separate.sh health-report
+
+build-separate-platform:
+	sh scripts/build-separate.sh platform
