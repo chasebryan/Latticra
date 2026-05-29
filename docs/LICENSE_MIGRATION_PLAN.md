@@ -53,6 +53,10 @@ recorded before release
 
 No file should be relicensed silently.
 
+## Edge-label cleanup rule
+
+`v0.3.0edge` and `v0.4.0edge` should use the same canonical hybrid license posture recorded in `LICENSE`, `LICENSES/README.md`, `docs/LICENSE_POLICY.md`, and this migration plan. Future README or release-note edits should not add duplicate edge-specific license lists unless a reviewed path-level migration actually changes the license facts.
+
 ## Phase 1: governance baseline
 
 Status: complete

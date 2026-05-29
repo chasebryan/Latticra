@@ -25,6 +25,17 @@ Next main edge line: `v0.4.0edge`
 
 `v0.4.0edge` will be the next main edge line for the effect-substrate and Model-1 bridge path. Preparing for it does not make `v0.4.0edge` the current checkpoint, cut a tag, accept mixed-build artifacts, launch Model-1, dispatch effects, or grant runtime authority.
 
+## Edge and license posture
+
+The edge labels describe validation posture only. They do not change the repository license model, create a product release, or silently relicense files.
+
+| Edge line | Public meaning | License posture |
+| --- | --- | --- |
+| `v0.3.0edge` | Current working edge checkpoint for bounded local operator-effect visibility | Hybrid posture in [LICENSE](LICENSE): core/runtime/security substrate direction is AGPL-3.0-or-later, adoption-facing helpers stay Apache-2.0, documentation is CC-BY-4.0, and marks remain separate |
+| `v0.4.0edge` | Next main edge line for the effect-substrate and Model-1 bridge path; not a release or tag claim here | Same hybrid posture; no new license listing, license-compliance claim, archive-readiness claim, or relicensing action is implied |
+
+Use [LICENSES/README.md](LICENSES/README.md), [docs/LICENSE_POLICY.md](docs/LICENSE_POLICY.md), and [docs/DOCUMENTATION_LICENSE.md](docs/DOCUMENTATION_LICENSE.md) for the canonical license index.
+
 Latticra is an early-stage systems substrate. It is built around a simple rule: before a system action becomes operational, the request, identity, capability, policy, boundary, and evidence posture should be explicit, inspectable, denied by default, and backed by reproducible records.
 
 It is not a production platform, certified security product, hardened sandbox, root installer, network authority, operating-system replacement, Fedora-approved package, Ubuntu archive-ready package, Debian archive-ready package, FreeBSD official port, OpenBSD official port, or openSUSE official package.
@@ -43,15 +54,30 @@ The [effect runner implementation review boundary](docs/LATTICRA_EFFECT_RUNNER_I
 
 The [separate-build platform integration review boundary](docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md) records the observed `~/Latticra` branch, build layout, artifacts, build profiles, and Model-1 tree as review inputs while keeping build execution, artifact import, artifact acceptance, mixed-build promotion, and Model-1 bridge execution closed.
 
+The [Model-1 bridge protocol contract](docs/LATTICRA_MODEL1_BRIDGE_PROTOCOL_CONTRACT.md) satisfies the fifth transition-intake boundary by defining message format, trace correlation, authority handoff, target evidence, and denial behavior while keeping Model-1 launch, bridge execution, and runtime authority closed.
+
+The [Model-1 import and mixed-build review boundary](docs/LATTICRA_MODEL1_IMPORT_MIXED_BUILD_REVIEW_BOUNDARY.md) satisfies the sixth transition-intake boundary by defining import scope, source provenance, mixed-build layout, target identity, bridge-protocol compatibility, target evidence, and non-claim evidence while keeping Model-1 import acceptance, mixed-build promotion, and effect dispatch closed.
+
+The [computational proof foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) begins the explicit computer-science and science framing for investigating simulation-bound reality hypotheses through proof objects, falsifiability, observer boundaries, physics constraint modeling, receipts, replay, and adversarial review while keeping `simulation_proven=0`.
+
+The [computational math and physics evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) records the first proof-lane order: evaluate the math, couple reviewed math to physics-model fields, then prepare a substrate-engine visual demonstration while keeping visual evidence and scientific claims closed.
+
+The [Speculum premise](docs/LATTICRA_SPECULUM_PREMISE.md) now names the clarifying mirror beside the simulacrum so simulation-bound reality language remains a bounded research premise, not a public reality claim.
+
+The proof-object lane now includes [Proof Object 1](docs/LATTICRA_PROOF_OBJECT_1_EMERGENT_PARTICLE_MASS.md), [Proof Object 2](docs/LATTICRA_PROOF_OBJECT_2_HIGGS_COUNTERPLAY.md), [Proof Object 3](docs/LATTICRA_PROOF_OBJECT_3_HIGGS_CAUSAL_CLOSURE_NO_GO.md), [Proof Object 4](docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md), and the [Candidate Particle Table](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md). The original Latticra claim is identity-replay impedance: mass as the replay-stable cost for a projected localized identity to remain itself under substrate update, with Higgs treated as effective physics that a deeper substrate ledger must reproduce.
+
 For `v0.4.0edge`, the README integration posture is:
 
 | Gate | README meaning |
 | --- | --- |
 | Current checkpoint | `v0.3.0edge` remains the current public edge checkpoint |
 | Next main edge line | `v0.4.0edge` is the next main edge line, not yet a tag or release claim |
-| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, and separate-build platform review boundary |
-| Required before integration | Model-1 bridge protocol contract, Model-1 import and mixed-build review, and guarded Model-1 effect demonstration evidence |
+| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, separate-build platform review boundary, Model-1 bridge protocol contract, and Model-1 import/mixed-build review boundary |
+| Required before integration | guarded Model-1 effect demonstration evidence |
 | Still closed | Model-1 launch, effect dispatch, command execution, file mutation, artifact acceptance, mixed-build promotion, runtime authority, and production readiness |
+
+<details>
+<summary>Release artifact and installer evidence markers</summary>
 
 ```text
 release_artifact_candidate_preflight_present=1
@@ -213,6 +239,8 @@ docs/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md
 docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 ```
 
+</details>
+
 Planning estimates are status markers, not release commitments, product readiness claims, or security guarantees.
 Planning estimates are not release promises, product-readiness metrics, or security guarantees.
 
@@ -268,6 +296,12 @@ The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTE
 | Choose a reading path by role | [Documentation Reader Journey Map](docs/DOCUMENTATION_READER_JOURNEY_MAP.md) |
 | Read the generated v0.1.0 reference manual | [Reference Manual](docs/latticra-reference-manual/README.md) |
 | Read the project handbook | [The Latticra System Substrate](docs/latticra-system-substrate/README.md) |
+| Understand the computational proof frame | [Computational Proof Foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) |
+| Follow the math-first physics coupling lane | [Computational Math and Physics Evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) |
+| Read the original mass-origin theorem | [Proof Object 4](docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md) |
+| Review the mass-ratio target table | [Candidate Particle Table](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md) |
+| Review Higgs counterplay | [Proof Object 2](docs/LATTICRA_PROOF_OBJECT_2_HIGGS_COUNTERPLAY.md) and [Proof Object 3](docs/LATTICRA_PROOF_OBJECT_3_HIGGS_CAUSAL_CLOSURE_NO_GO.md) |
+| Clarify the simulation premise | [Speculum Premise](docs/LATTICRA_SPECULUM_PREMISE.md) |
 | Review the main evidence and architecture index | [Foundation Index](docs/FOUNDATION_INDEX.md) |
 | Use the guarded local Panel workbench | [Latticra Panel](installer/README.md) |
 | Inspect the trust-boundary subsystem | [Latticra Seal docs](docs/latticra-seal/README.md) |
@@ -286,6 +320,7 @@ The durable project direction is:
 C is the metal.
 C++ is the disciplined structure.
 Latticra is the contract.
+Computational proof is the scientific restraint.
 ```
 
 That direction does not mean unrestricted low-level code. It means each language and subsystem must earn its authority through explicit contracts, constrained boundaries, tests, reports, and status records.
@@ -2854,6 +2889,9 @@ make quality
 
 The macOS installer lane targets macOS infrastructure specifically. It is a guarded no-effect route for installer planning, dry-run bundle shape checks, reset/uninstall denial handling, and status evidence only. It cannot yet create, install, sign, notarize, open, verify, reset, or uninstall a real macOS `.app`.
 
+<details>
+<summary>macOS installer no-effect audit markers</summary>
+
 ```text
 macos_readme_installer_usage_present=1
 app_support_prefix=$HOME/Library/Application Support/Latticra
@@ -2959,6 +2997,8 @@ docs/MACOS_RESET_UNINSTALL_LIVE_TARGET_CLASSIFIER.md
 docs/MACOS_RESET_UNINSTALL_DRY_RUN_PLANNER.md
 docs/MACOS_RESET_UNINSTALL_ABSENCE_REPORT_CONTRACT.md
 ```
+
+</details>
 
 <details>
 <summary>macOS reset/uninstall no-effect checkpoint details</summary>

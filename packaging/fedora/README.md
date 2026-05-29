@@ -13,6 +13,15 @@ The current spec is a local-only draft used by static guards. It is not a Fedora
 - Fedora readiness plan: [`../../docs/FEDORA_READINESS_PLAN.md`](../../docs/FEDORA_READINESS_PLAN.md)
 - Current status: [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md)
 
+## Public summary
+
+Use this directory as a local Fedora packaging record, not as a package submission. The draft RPM spec currently records the local package payload license expression as `AGPL-3.0-or-later AND CC-BY-4.0`; repository-wide licensing still follows [`../../LICENSE`](../../LICENSE), and this README does not claim Fedora approval, package readiness, or license-compliance completion.
+
+## Audit appendix
+
+<details>
+<summary>Guarded files, static markers, and contract chain</summary>
+
 Current guarded files:
 
 ```text
@@ -270,3 +279,5 @@ fedora_submission_claimed=0
 fedora_approval_claimed=0
 production_readiness_claimed=0
 ```
+
+</details>

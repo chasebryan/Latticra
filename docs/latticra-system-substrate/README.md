@@ -8,6 +8,16 @@ This handbook supersedes the former standalone **Latticra Seal Documentation Han
 
 The Seal handbook was useful as a subsystem reference. This new handbook expands the scope into a computer-science-oriented project book: Latticra as an evidence-bound system substrate for local integrity, authority boundaries, reproducible reports, receipts, policy semantics, and future runtime-handoff research.
 
+The computational proof foundation extends that scope into scientific modeling: Latticra should preserve proof objects, falsifiability criteria, observer boundaries, state-transition models, physics constraint models, receipts, replay requirements, and adversarial review before any simulation-bound reality claim can be promoted.
+
+The math and physics evaluation lane tightens the order: evaluate state space, transition operators, invariants, observer projection, and falsifier conditions before coupling to physical observables or preparing the substrate-engine visual demonstration.
+
+The Speculum premise now names the clarifying mirror beside the simulacrum: simulation language may frame a bounded research hypothesis, but it may not become a public reality claim without proof objects, falsifiers, measurements or derivations, receipts, replay, and review.
+
+Proof Object 1, Proof Object 2, Proof Object 3, and Proof Object 4 now define the computational-proof spine from emergent particle mass through Higgs counterplay and the identity-replay impedance theorem. Proof Object 4 is the original Latticra mass-origin concept: a projected identity class must pay replay-stable substrate cost to remain itself under update, and Higgs-level coupling becomes a shadow to reproduce rather than the final causal ledger.
+
+The candidate-particle target table now gives that theorem a measured target surface: electron, muon, tau, W, Z, Higgs, and top mass ratios that a later identity-replay impedance runner must derive from replay receipts and counterfactual repair costs without inserting measured masses into the substrate.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

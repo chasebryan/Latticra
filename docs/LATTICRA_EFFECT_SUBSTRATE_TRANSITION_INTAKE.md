@@ -36,11 +36,16 @@ effect_runner_review_boundary_reference=docs/LATTICRA_EFFECT_RUNNER_IMPLEMENTATI
 model1_bridge_contract_required=1
 model1_bridge_contract_intake_satisfied=1
 model1_bridge_protocol_reference=docs/LATTICRA_MODEL1_BRIDGE_PROTOCOL_CONTRACT.md
+model1_import_mixed_build_review_boundary_required=1
+model1_import_mixed_build_review_boundary_intake_satisfied=1
+model1_import_mixed_build_review_boundary_reference=docs/LATTICRA_MODEL1_IMPORT_MIXED_BUILD_REVIEW_BOUNDARY.md
 model1_import_review_required=1
 model1_import_review_satisfied=0
 separate_build_platform_review_required=1
 separate_build_platform_review_boundary_intake_satisfied=1
 separate_build_platform_review_boundary_reference=docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md
+guarded_model1_effect_demonstration_required=1
+guarded_model1_effect_demonstration_satisfied=0
 operator_demo_non_claim_review_required=1
 operator_usable_workflow_required=1
 operator_workflow_reference_required=1
@@ -64,8 +69,8 @@ Future intake should proceed in this order:
 3. effect runner implementation review boundary - satisfied
 4. separate-build platform integration review boundary - satisfied
 5. Model-1 bridge protocol contract - satisfied
-6. Model-1 import and mixed-build review
-7. guarded Model-1 effect demonstration
+6. Model-1 import and mixed-build review boundary - satisfied
+7. guarded Model-1 effect demonstration evidence
 ```
 
 No later item should be treated as accepted just because an earlier item exists.
@@ -103,10 +108,10 @@ runtime_authority_granted=0
 ## Next Recommended Slice
 
 ```text
-Model-1 import and mixed-build review boundary.
+Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-That next slice should remain no-effect until it proves import scope, source provenance, mixed-build layout, target identity, bridge protocol compatibility, and non-claim evidence without launching Model-1 or dispatching effects.
+That next slice should remain no-effect until it proves request contract, bridge request and response evidence, deny-by-default behavior, operator workflow, target evidence, redaction, and non-claim review without launching Model-1 or dispatching effects.
 
 ## Validation
 

@@ -35,11 +35,16 @@ effect_runner_review_boundary_reference=docs/LATTICRA_EFFECT_RUNNER_IMPLEMENTATI
 model1_bridge_contract_required=1
 model1_bridge_contract_intake_satisfied=1
 model1_bridge_protocol_reference=docs/LATTICRA_MODEL1_BRIDGE_PROTOCOL_CONTRACT.md
+model1_import_mixed_build_review_boundary_required=1
+model1_import_mixed_build_review_boundary_intake_satisfied=1
+model1_import_mixed_build_review_boundary_reference=docs/LATTICRA_MODEL1_IMPORT_MIXED_BUILD_REVIEW_BOUNDARY.md
 model1_import_review_required=1
 model1_import_review_satisfied=0
 separate_build_platform_review_required=1
 separate_build_platform_review_boundary_intake_satisfied=1
 separate_build_platform_review_boundary_reference=docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md
+guarded_model1_effect_demonstration_required=1
+guarded_model1_effect_demonstration_satisfied=0
 operator_demo_non_claim_review_required=1
 operator_usable_workflow_required=1
 operator_workflow_reference_required=1
@@ -98,7 +103,7 @@ latticra_effect_substrate_transition_intake: ok
 ## Next Recommended Lane
 
 ```text
-Model-1 import and mixed-build review boundary.
+Guarded Model-1 effect demonstration evidence boundary.
 ```
 
 ## Non-Claims

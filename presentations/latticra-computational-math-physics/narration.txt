@@ -1,0 +1,49 @@
+Latticra computational math and physics evaluation begins with restraint.
+The question is not whether we can say reality is a simulation. The question
+is whether a candidate model is mathematical enough, physical enough, and
+falsifiable enough to deserve the next review step.
+
+The first layer is the state space. A state is not a feeling, a slogan, or a
+scene in a video. It must be a defined object with variables, boundaries,
+initial conditions, and allowed transformations. In Latticra terms, the state
+space is the place where an observation, a claim, and a substrate trace can be
+compared without pretending they are already the same thing.
+
+The second layer is the transition operator. A simulation-like hypothesis only
+becomes scientific when it says how one state becomes another. The operator
+must identify a step parameter, preserve the invariants it claims to preserve,
+and expose the conditions under which the transition fails. If the transition
+cannot be replayed or rejected, it is not a proof object yet.
+
+The third layer is the invariant surface. Physics lives on constraints:
+conservation, symmetry, scale, locality, measurement limits, and the refusal
+of some states to appear. Latticra can model those constraints as surfaces
+inside the substrate, but the model must not claim to be the physics. It is a
+candidate representation of physical law, and it remains weaker than the law
+until measurement and review close the gap.
+
+The fourth layer is the observer projection. Any claim about simulated reality
+has an observer problem. The observer is inside the system being measured, and
+the measurement changes what can be known. Latticra therefore requires an
+observer frame, a measurement mapping, error terms, and alternative
+explanations. A model that cannot name the observer boundary is not ready for
+physics coupling.
+
+The fifth layer is physics coupling. Only after the math review names the
+state space, transition operator, invariants, and observer projection can the
+model touch physical observables. The coupling must name units, scale,
+measurement protocol, noise model, symmetry reference, and negative-result
+handling. A negative result is not a failure of the project. It is evidence
+that narrows the model.
+
+The sixth layer is the visual theorem engine. This video is a demonstration
+surface, not proof. The field shows state, transition, constraint, observer,
+coupling, and falsifier gate as a moving substrate. It helps a reviewer see
+the shape of the idea, but it does not promote the claim. The claim remains
+closed until proof objects, receipts, replay, and adversarial review support
+it.
+
+So the sequence is simple and severe: evaluate the math, couple it to physics,
+prepare the visual demonstration, then build the proof object. Latticra exists
+to keep that order honest. The hypothesis can be bold. The proof chain must be
+stricter than the hypothesis.

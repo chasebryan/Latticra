@@ -9,6 +9,15 @@ Latest Latticra effect allowlist/build-profile boundary note: 2026-05-29 CDT
 Latest Latticra effect runner implementation review boundary note: 2026-05-29 CDT
 Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
+Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
+Latest Latticra computational proof foundation note: 2026-05-29 CDT
+Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
+Latest Latticra Speculum premise note: 2026-05-29 CDT
+Latest Latticra proof object 1 emergent particle mass note: 2026-05-29 CDT
+Latest Latticra proof object 2 Higgs counterplay note: 2026-05-29 CDT
+Latest Latticra proof object 3 Higgs causal closure no-go note: 2026-05-29 CDT
+Latest Latticra proof object 4 identity-replay impedance note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance candidate particle table note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -1410,6 +1419,17 @@ Completion estimate review should now treat bounded local effects as a capabilit
 
 The effect allowlist and build-profile boundary now satisfies the second transition-intake prerequisite and requires `operator_usable_workflow_required=1` before any effect-runner, build-profile, or Model-1 bridge promotion review.
 
+The Model-1 import and mixed-build review boundary now satisfies the sixth transition-intake boundary by requiring import scope, source provenance, mixed-build layout, target identity, bridge-protocol compatibility, target evidence, and non-claim evidence while preserving denied Model-1 import acceptance, mixed-build promotion, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
+
+The computational proof foundation now records Latticra's science and computer-science framing for simulation-bound reality research while preserving `simulation_proven=0`, `reality_simulation_claimed=0`, and `physics_bound_by_simulative_concepts_claimed=0`.
+
+The computational math and physics evaluation now records the proof-lane order: math review first, physics coupling second, substrate-engine visual demonstration preparation third.
+
+The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
+
+Completed follow-on lane: Model-1 import and mixed-build review boundary.
+Completed computational-proof companion lane: Latticra Speculum premise.
+
 Purpose:
 
 ```text
@@ -1419,19 +1439,41 @@ keep v0.3.0edge effect posture aligned while bounded local effects remain separa
 Effect-substrate transition intake follow-up:
 
 ```text
-Model-1 import and mixed-build review boundary.
+Guarded Model-1 effect demonstration evidence boundary.
+```
+
+Completed computational-proof follow-up:
+
+```text
+Identity-replay impedance candidate particle table.
+```
+
+Computational-proof follow-up:
+
+```text
+Identity-replay impedance toy substrate L0 mass-ratio runner.
+```
+
+Follow-on proof lanes:
+
+```text
+Computational proof object schema contract.
+Measured Latticra candidate L0 specification.
+Measured Latticra electroweak-substrate candidate L0 specification.
+Latticra substrate impedance mass-ratio derivation.
 ```
 
 ## Near-term queue
 
 1. Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
-2. Model-1 import and mixed-build review boundary.
-3. Authority status announcement only if public messaging changes.
-4. C++ authority expansion contract only if new authority behavior is proposed.
-5. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
-6. Runtime boundary domain matrix report status audit only if new status drift appears.
-7. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
-8. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
+2. Guarded Model-1 effect demonstration evidence boundary.
+3. Identity-replay impedance toy substrate L0 mass-ratio runner.
+4. Authority status announcement only if public messaging changes.
+5. C++ authority expansion contract only if new authority behavior is proposed.
+6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
+7. Runtime boundary domain matrix report status audit only if new status drift appears.
+8. Lat pipeline diagnostic README follow-up only if future guard requirements demand additional public links.
+9. Runtime behavior expansion only after separate contract, plan, tests, and explicit non-claim review.
 
 ## Quality rules
 

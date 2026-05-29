@@ -13,6 +13,15 @@ The current debian metadata is a local-only draft used by static guards. It is n
 - Ubuntu readiness plan: [`../../docs/UBUNTU_READINESS_PLAN.md`](../../docs/UBUNTU_READINESS_PLAN.md)
 - Current status: [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md)
 
+## Public summary
+
+Use this directory as a local Ubuntu packaging record, not as an archive or PPA submission. The draft Debian metadata records the existing-code default as `Apache-2.0`, the local no-effect CLI payload as `AGPL-3.0-or-later`, and documentation as `CC-BY-4.0`; repository-wide licensing still follows [`../../LICENSE`](../../LICENSE), and this README does not claim Ubuntu archive readiness, PPA readiness, Canonical approval, or license-compliance completion.
+
+## Audit appendix
+
+<details>
+<summary>Guarded files, static markers, and publication-denial chain</summary>
+
 Current guarded files:
 
 ```text
@@ -743,3 +752,5 @@ publication_evidence_denial_archive_record_write_allowed=0
 ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1
 ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_closed=1
 ```
+
+</details>

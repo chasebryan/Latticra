@@ -29,6 +29,15 @@ reader-facing project material are licensed under:
 
     CC-BY-4.0
 
+Edge Label Note
+---------------
+
+The `v0.3.0edge` and `v0.4.0edge` labels describe validation posture and
+project direction. They do not create separate license listings, release a
+different license package, or silently relicense files. File-level SPDX
+identifiers, path-level notices, and reviewed migration records remain the
+source of truth.
+
 The Latticra and Bryforge names, logos, marks, slogans, and distinctive
 identity are not open-licensed by default. They are governed separately
 by:

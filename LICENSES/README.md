@@ -63,6 +63,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 Existing files should not be silently re-tagged. Path-by-path migration should happen through reviewed PRs.
 
+## Edge label note
+
+`v0.3.0edge` and `v0.4.0edge` are validation and direction labels. They do not create separate license listings, override file-level SPDX identifiers, or imply license-compliance completion.
+
 ## Trademark boundary
 
 Software and documentation licenses do not grant rights to use Latticra or Bryforge names, logos, marks, slogans, or identity in a confusing way.

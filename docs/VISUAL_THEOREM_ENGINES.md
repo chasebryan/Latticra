@@ -53,6 +53,27 @@ Output:
 
     scripts/render-visual-theorem-engines.sh all 96
 
+## Computational math and physics evaluation
+
+The computational proof lane should use the substrate engine as the first
+visual demonstration candidate after math-first and physics-coupling review.
+That demonstration remains a storyboard and review target until the math model,
+physics coupling, source record, accessible text, and non-claim boundary are
+accepted.
+
+Current no-effect evaluation route:
+
+    docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md
+
+Candidate visual output after a later render review:
+
+    build/visual-engines/latticra-substrate-engine.mp4
+
+The planned scene order is state space, transition operator, invariant
+constraint surfaces, observer projection, physics coupling, and falsifier gate.
+The visual does not prove the simulation hypothesis, measure physics, or promote
+a scientific claim.
+
 ## Academic presentation production engine
 
 The university presentation path is separate from the older C-only theorem

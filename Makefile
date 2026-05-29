@@ -14,6 +14,15 @@
 .PHONY: latticra-effect-runner-implementation-review-boundary
 .PHONY: latticra-separate-build-platform-integration-review-boundary
 .PHONY: latticra-model1-bridge-protocol-contract
+.PHONY: latticra-model1-import-mixed-build-review-boundary
+.PHONY: latticra-computational-proof-foundation
+.PHONY: latticra-computational-math-physics-evaluation
+.PHONY: latticra-speculum-premise
+.PHONY: latticra-proof-object-1-emergent-particle-mass
+.PHONY: latticra-proof-object-2-higgs-counterplay
+.PHONY: latticra-proof-object-3-higgs-causal-closure-no-go
+.PHONY: latticra-proof-object-4-identity-replay-impedance
+.PHONY: latticra-identity-replay-impedance-candidate-particle-table
 .PHONY: quality quality-worktree quality-worktree-stability quality-safety-guards quality-defensive-threat-model quality-security-standards quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status production-quality-blocker-ledger boot-compatibility boot-preview-preflight boot-evidence-template boot-evidence-validate boot-qemu-argv-template boot-artifact-template boot-artifact-validate fedora-vm-cli-payload-readme-alignment fedora-vm-cli-payload-repeatability-runner-plan fedora-vm-cli-payload-repeatability-runner fedora-vm-cli-payload-repeatability-evidence-review-gate fedora-vm-cli-payload-repeatability-evidence-acceptance-contract fedora-vm-cli-payload-repeatability-evidence-status-template fedora-vm-cli-payload-repeatability-evidence-status-review-validator fedora-vm-cli-payload-repeatability-evidence-publication-gate fedora-vm-cli-payload-repeatability-transcript-template fedora-vm-cli-payload-repeatability-transcript-review-validator fedora-vm-cli-payload-repeatability-transcript-contract debian-freebsd-openbsd-package-input-handoff-lane ubuntu-lintian-static-metadata-contract ubuntu-local-deb-build-transcript-acceptance-gate-contract opensuse-local-rpm-build-gate-contract opensuse-local-rpm-build-environment-contract macos-verification-transcript-contract macos-codesigning-notarization-plan macos-reset-uninstall-live-denial-transcript macos-reset-uninstall-live-runner-interface macos-reset-uninstall-live-runner-noop-prototype macos-reset-uninstall-live-runner-denied-dispatch-transcript macos-reset-uninstall-live-runner-denied-dispatch-review macos-reset-uninstall-live-runner-acceptance-gate macos-reset-uninstall-live-runner-acceptance-denial-transcript macos-reset-uninstall-live-runner-acceptance-denial-review macos-reset-uninstall-live-runner-acceptance-denial-disposition macos-reset-uninstall-live-runner-acceptance-denial-disposition-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition nadia-commands nadia-production-readiness-blocker-status-contract high-assurance-security-baseline memory-safety-roadmap supply-chain-security-baseline zero-trust-runtime-authority-baseline cyber-incident-reporting-response-baseline vulnerability-management-release-gate-baseline cryptographic-assurance-key-management-baseline latticra-panel-signed-updater-delivery-gate
 .PHONY: fedora-vm-cli-payload-repeatability-publication-review-template
 .PHONY: fedora-vm-cli-payload-repeatability-publication-review-validator
@@ -723,6 +732,15 @@ quality-status:
 	sh ./scripts/test-latticra-effect-runner-implementation-review-boundary.sh
 	sh ./scripts/test-latticra-separate-build-platform-integration-review-boundary.sh
 	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
+	sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh
+	sh ./scripts/test-latticra-computational-proof-foundation.sh
+	sh ./scripts/test-latticra-computational-math-physics-evaluation.sh
+	sh ./scripts/test-latticra-speculum-premise.sh
+	sh ./scripts/test-latticra-proof-object-1-emergent-particle-mass.sh
+	sh ./scripts/test-latticra-proof-object-2-higgs-counterplay.sh
+	sh ./scripts/test-latticra-proof-object-3-higgs-causal-closure-no-go.sh
+	sh ./scripts/test-latticra-proof-object-4-identity-replay-impedance.sh
+	sh ./scripts/test-latticra-identity-replay-impedance-candidate-particle-table.sh
 	sh ./scripts/test-latticra-effect-substrate-transition-intake.sh
 	sh ./scripts/test-production-quality-blocker-ledger.sh
 
@@ -746,6 +764,33 @@ latticra-separate-build-platform-integration-review-boundary:
 
 latticra-model1-bridge-protocol-contract:
 	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
+
+latticra-model1-import-mixed-build-review-boundary:
+	sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh
+
+latticra-computational-proof-foundation:
+	sh ./scripts/test-latticra-computational-proof-foundation.sh
+
+latticra-computational-math-physics-evaluation:
+	sh ./scripts/test-latticra-computational-math-physics-evaluation.sh
+
+latticra-speculum-premise:
+	sh ./scripts/test-latticra-speculum-premise.sh
+
+latticra-proof-object-1-emergent-particle-mass:
+	sh ./scripts/test-latticra-proof-object-1-emergent-particle-mass.sh
+
+latticra-proof-object-2-higgs-counterplay:
+	sh ./scripts/test-latticra-proof-object-2-higgs-counterplay.sh
+
+latticra-proof-object-3-higgs-causal-closure-no-go:
+	sh ./scripts/test-latticra-proof-object-3-higgs-causal-closure-no-go.sh
+
+latticra-proof-object-4-identity-replay-impedance:
+	sh ./scripts/test-latticra-proof-object-4-identity-replay-impedance.sh
+
+latticra-identity-replay-impedance-candidate-particle-table:
+	sh ./scripts/test-latticra-identity-replay-impedance-candidate-particle-table.sh
 
 production-quality-blocker-ledger:
 	sh ./scripts/test-production-quality-blocker-ledger.sh

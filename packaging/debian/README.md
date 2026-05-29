@@ -12,6 +12,15 @@ The current debian metadata is a local-only draft used by static guards. It is n
 - Debian status: [`../../docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md`](../../docs/status/DEBIAN_ECOSYSTEM_INTEGRATION_STATUS.md)
 - Current status: [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md)
 
+## Public summary
+
+Use this directory as a local Debian packaging record, not as an archive, mentors, sponsorship, or ftp-master submission. The draft Debian metadata records the existing-code default as `Apache-2.0`, the local no-effect CLI payload as `AGPL-3.0-or-later`, and documentation as `CC-BY-4.0`; repository-wide licensing still follows [`../../LICENSE`](../../LICENSE), and this README does not claim Debian archive readiness or license-compliance completion.
+
+## Audit appendix
+
+<details>
+<summary>Guarded files, static markers, and build-denial chain</summary>
+
 Current guarded files:
 
 ```text
@@ -477,3 +486,5 @@ The package build-evidence intake denial disposition closeout archive gate revie
 The package build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract is recorded in [`../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md`](../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md). It closes out the reviewed Debian archive gate disposition closeout archive gate review disposition closeout archive gate review disposition while preserving `debian_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closed_out=1`, `debian_denial_archive_allowed=0`, `debian_denial_re_request_allowed=0`, and `debian_platform_build_evidence_accepted=0`.
 
 The package build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract is recorded in [`../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md`](../../docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md). It keeps the reviewed Debian archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout unarchived while preserving `debian_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_closed=1`, `debian_denial_archive_allowed=0`, `debian_denial_re_request_allowed=0`, and `debian_platform_build_evidence_accepted=0`.
+
+</details>

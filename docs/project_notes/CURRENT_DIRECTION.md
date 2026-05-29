@@ -9,6 +9,15 @@ Latest Latticra effect allowlist/build-profile boundary note: 2026-05-29 CDT
 Latest Latticra effect runner implementation review boundary note: 2026-05-29 CDT
 Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
+Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
+Latest Latticra computational proof foundation note: 2026-05-29 CDT
+Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
+Latest Latticra Speculum premise note: 2026-05-29 CDT
+Latest Latticra proof object 1 emergent particle mass note: 2026-05-29 CDT
+Latest Latticra proof object 2 Higgs counterplay note: 2026-05-29 CDT
+Latest Latticra proof object 3 Higgs causal closure no-go note: 2026-05-29 CDT
+Latest Latticra proof object 4 identity-replay impedance note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance candidate particle table note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -624,16 +633,43 @@ Latticra Seal signed receipt proof path surface/status renders that deterministi
 The current recommended review lane is:
 
 ```text
-Model-1 import and mixed-build review boundary.
+Guarded Model-1 effect demonstration evidence boundary.
 ```
 
 Completion estimate review should now treat bounded local effects as a capability-posture change, but it must not turn local effect visibility into a production-readiness claim.
 
 The current project rule is: Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 
-The current transition-intake rule is: future effect-runner, build-profile, and Model-1 bridge work must pass through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, and Model-1 bridge contract before capability promotion.
+The current transition-intake rule is: future effect-runner, build-profile, and Model-1 bridge work must pass through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, Model-1 bridge contract, and Model-1 import/mixed-build review boundary before capability promotion.
 
-The first through fifth transition-intake boundaries are now satisfied by the no-effect effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, effect-runner implementation review boundary, separate-build platform integration review boundary, and Model-1 bridge protocol contract. The allowlist boundary still requires `operator_usable_workflow_required=1`. The bridge protocol records `bridge_message_format_required=1`, `trace_correlation_required=1`, `authority_handoff_required=1`, and `target_evidence_fields_required=1` while keeping `model1_bridge_execution_performed=0`, `model1_process_launch_performed=0`, and `runtime_authority_granted=0`. The next natural path is the Model-1 import and mixed-build review boundary, still without launching Model-1 or dispatching effects.
+The first through sixth transition-intake boundaries are now satisfied by the no-effect effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, effect-runner implementation review boundary, separate-build platform integration review boundary, Model-1 bridge protocol contract, and Model-1 import and mixed-build review boundary. The allowlist boundary still requires `operator_usable_workflow_required=1`. The bridge protocol records `bridge_message_format_required=1`, `trace_correlation_required=1`, `authority_handoff_required=1`, and `target_evidence_fields_required=1`; the import/mixed-build boundary records `import_scope_review_required=1`, `mixed_build_layout_review_required=1`, and `bridge_protocol_compatibility_required=1` while keeping `model1_bridge_execution_performed=0`, `model1_process_launch_performed=0`, `model1_import_accepted=0`, `mixed_build_promotion_accepted=0`, and `runtime_authority_granted=0`. The next natural path is the guarded Model-1 effect demonstration evidence boundary, still without launching Model-1 or dispatching effects.
+
+The computational proof foundation now makes Latticra's scientific direction explicit: simulation-bound reality remains a research hypothesis, not a claim, and any future proof lane must expose proof objects, falsifier conditions, observer boundaries, physics constraint models, receipts, replay requirements, and adversarial review before promotion.
+
+The computational math and physics evaluation now places math review before physics coupling and visual demonstration. It requires state-space, transition-operator, invariant, observer-projection, measurement, physics-observable, alternative-explanation, and falsifier fields before the substrate-engine visual storyboard can be treated as ready for rendering review. The parallel next proof lane is:
+
+The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
+
+The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, and the candidate-particle target table. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
+
+```text
+Identity-replay impedance candidate particle table.
+```
+
+The next proof-lane runner should move from target table to toy computation:
+
+```text
+Identity-replay impedance toy substrate L0 mass-ratio runner.
+```
+
+Follow-on proof lanes remain:
+
+```text
+Computational proof object schema contract.
+Measured Latticra candidate L0 specification.
+Measured Latticra electroweak-substrate candidate L0 specification.
+Latticra substrate impedance mass-ratio derivation.
+```
 
 ## Current non-claim
 

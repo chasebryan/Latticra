@@ -13,6 +13,15 @@ The current spec and `.changes` metadata are a local-only draft used by static g
 - openSUSE readiness plan: [`../../docs/OPENSUSE_READINESS_PLAN.md`](../../docs/OPENSUSE_READINESS_PLAN.md)
 - Current status: [`../../docs/status/CURRENT_STATUS.md`](../../docs/status/CURRENT_STATUS.md)
 
+## Public summary
+
+Use this directory as a local openSUSE packaging record, not as an OBS publication or official-package submission. The draft RPM spec currently records the local package payload license expression as `AGPL-3.0-or-later AND CC-BY-4.0`; repository-wide licensing still follows [`../../LICENSE`](../../LICENSE), and this README does not claim openSUSE approval, OBS readiness, package readiness, or license-compliance completion.
+
+## Audit appendix
+
+<details>
+<summary>Guarded files, static markers, and build-denial chain</summary>
+
 Current guarded files:
 
 ```text
@@ -586,3 +595,5 @@ The draft payload remains intentionally narrow:
 The CLI reports no-effect status and disabled runtime behavior.
 
 The `.changes` file records local-only openSUSE maintenance history. It is not accepted Open Build Service history, package submission evidence, or production maintenance evidence.
+
+</details>

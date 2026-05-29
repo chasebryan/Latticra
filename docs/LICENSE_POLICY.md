@@ -38,6 +38,10 @@ names/logos/identity: TRADEMARK_POLICY.md
 
 Existing repository code remains Apache-2.0 unless a file-level SPDX identifier, path-level notice, or reviewed migration explicitly marks it otherwise.
 
+## Edge labels and public listings
+
+`v0.3.0edge` and `v0.4.0edge` are validation-posture labels. They do not create separate license listings, change the hybrid policy, mark a release artifact license review as complete, or silently relicense any path.
+
 ## Core software direction
 
 The intended software licensing direction for new software work is:
