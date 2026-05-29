@@ -69,7 +69,9 @@ require_contains "checked_array_capacity" seal/latticra-seal.c
 require_contains "checked_char_capacity" seal/latticra-seal.c
 require_contains "current > SIZE_MAX / 2" seal/latticra-seal.c
 require_contains "candidate > SIZE_MAX / item_size" seal/latticra-seal.c
+require_contains "*len > SIZE_MAX - 1" seal/latticra-seal.c
 require_contains "part_len > SIZE_MAX - *len - 1" seal/latticra-seal.c
+require_contains "marker_overlap > SIZE_MAX - read_chunk" seal/latticra-seal.c
 require_contains "sha256_bytes((const unsigned char *)manifest" seal/latticra-seal.c
 require_contains "uc < 32" seal/latticra-seal.c
 require_contains "uc == 127" seal/latticra-seal.c
@@ -131,9 +133,15 @@ require_contains "return ok && list->len > 0" seal/latticra-seal.c
 require_contains "hash list artifact is malformed" seal/latticra-seal.c
 require_contains "report artifact is empty" seal/latticra-seal.c
 require_contains "OPENSSL_cleanse(record, sizeof(record))" seal/latticra-seal.c
+require_contains "OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext))" seal/latticra-seal.c
+require_contains "OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment))" seal/latticra-seal.c
 require_contains "OPENSSL_cleanse(recovered, sizeof(recovered))" seal/latticra-seal.c
+require_contains "OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered))" seal/latticra-seal.c
 require_contains "cli_record_buffer_zeroized=1" seal/latticra-seal.c
+require_contains "cli_committed_ciphertext_buffer_zeroized=1" seal/latticra-seal.c
+require_contains "cli_committed_secret_outputs_zeroized=1" seal/latticra-seal.c
 require_contains "cli_recovered_plaintext_buffer_zeroized=1" seal/latticra-seal.c
+require_contains "cli_committed_recovered_plaintext_buffer_zeroized=1" seal/latticra-seal.c
 require_contains "O_EXCL" seal/latticra-seal.c
 require_contains "fchmod(fd, 0600) != 0" seal/latticra-seal.c
 if grep -Fq "O_TRUNC" seal/latticra-seal.c; then

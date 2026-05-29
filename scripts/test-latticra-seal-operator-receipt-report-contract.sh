@@ -83,6 +83,6 @@ require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTA
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$contract"
 require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$contract"
 require_contains 'Seal Panel dashboard view-model implementation plan' "$contract"
-require_contains 'signed receipt proof path' "$contract"
+require_contains 'signed receipt trust-root boundary contract' "$contract"
 
 printf 'latticra seal operator receipt report contract: ok\n'

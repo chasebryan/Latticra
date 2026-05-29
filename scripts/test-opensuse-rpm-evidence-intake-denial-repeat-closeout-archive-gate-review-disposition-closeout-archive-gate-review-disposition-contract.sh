@@ -55,7 +55,10 @@ for file in \
   packaging/opensuse/latticra.changes \
   README.md \
   Makefile \
-  "$workflow"
+  "$workflow" \
+  "$next_closeout_contract" \
+  "$next_closeout_script" \
+  "$next_closeout_workflow"
 do
   require_file "$file"
 done

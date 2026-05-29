@@ -10,12 +10,15 @@ Latticra now has a dedicated macOS integration transferability plan.
 
 The plan maps current Latticra surfaces into a cautious macOS lane: preserve no-effect reports, Panel-guided operator review, receipt-first installation, user-local artifacts, denied-by-default authority, and future-gated platform integrations.
 
+The transferability guard is also wired into a dedicated GitHub workflow so the macOS mapping stays checked on pull requests and pushes to `main`.
+
 This is planning/status work only. It does not implement macOS installation, app bundle creation, launchd behavior, Keychain behavior, Secure Enclave behavior, sandboxing, notarization, Endpoint Security behavior, System Extension behavior, Network Extension behavior, privileged helper behavior, or production macOS readiness.
 
 ## Status Fields
 
 ```text
 macos_integration_transferability_map_present=1
+macos_integration_transferability_workflow_present=1
 macos_build_platform_probe_present=1
 macos_dry_run_plan_adapter_present=1
 macos_user_local_app_bundle_contract_present=1
@@ -1066,16 +1069,81 @@ live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_fi
 live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_dispatch_enabled=0
 live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_deletion_enabled=0
 
+Current live-runner closeout audit5 review closeout audit review disposition closeout audit contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit contract that audits the closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_contract_state=audited-closed-recorded-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_deletion_enabled=0
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_contract_state=reviewed-audited-closed-recorded-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_deletion_enabled=0
+
+Current live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition contract that records the reviewed audited closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit as a no-effect disposition without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_contract_state=disposed-reviewed-audited-closed-recorded-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_deletion_enabled=0
+
+Current live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition closeout contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition closeout contract that closes the recorded reviewed audited closed no-effect closeout audit5 review disposition closeout audit review disposition without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_state=closed-recorded-reviewed-audited-closed-no-effect-closeout-audit5-review-disposition-closeout-audit-review-disposition
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0
+
+Current live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition closeout audit contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition closeout audit contract that audits the closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit review disposition closeout without opening dispatch or deletion.
+```
+
+macos_reset_uninstall_live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_contract_present=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_contract_state=audited-closed-recorded-reviewed-audited-no-effect-closeout-audit5-review-disposition-closeout-audit-review-disposition-closeout
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_stdout_only=1
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_file_write_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_dispatch_enabled=0
+live_runner_closeout_audit5_review_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_deletion_enabled=0
+
 Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract lane:
 
 ```text
 Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract that audits the no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout without opening dispatch or deletion.
 ```
 
+Current live-runner closeout audit5 review closeout audit review disposition closeout audit review contract lane:
+
+```text
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit review contract that reviews the audited closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit without opening dispatch or deletion.
+```
+
 ## Next Recommended Lane
 
 ```text
-Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit contract that audits the closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit without opening dispatch or deletion.
+Add a macOS reset/uninstall live-runner closeout audit5 review closeout audit review disposition closeout audit review disposition closeout audit review contract that reviews the audited closed recorded reviewed audited no-effect closeout audit5 review disposition closeout audit review disposition closeout audit without opening dispatch or deletion.
 ```
 
 ## Non-Claims

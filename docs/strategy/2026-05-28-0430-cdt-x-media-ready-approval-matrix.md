@@ -75,10 +75,10 @@ That later instruction, not this matrix by itself, authorized the exact publicat
 | Package | Topic | Execution State | CDT Time | Verification |
 | --- | --- | --- | --- | --- |
 | 1 | Public Research Standard | Published | 2026-05-28 05:16:28 | https://x.com/Latticra/status/2059941871787347985 |
-| 2 | Boundary Literacy | Scheduled | 2026-05-28 10:00 | X confirmation toast observed |
-| 3 | Evidence Before Claims | Scheduled | 2026-05-28 15:00 | X confirmation toast observed |
-| 4 | Denial Is Legible | Scheduled | 2026-05-28 20:00 | X confirmation toast observed |
-| 5 | Cryptography Without Hype | Scheduled | 2026-05-29 01:00 | X confirmation toast observed |
+| 2 | Boundary Literacy | Published | 2026-05-28 10:00:02 | https://x.com/Latticra/status/2060013233248104679 |
+| 3 | Evidence Before Claims | Corrected and published | 2026-05-28 15:18:45 | https://x.com/Latticra/status/2060093439945936993 |
+| 4 | Denial Is Legible | Canceled from X scheduled drafts | 2026-05-28 15:20 | Available for manual approval only |
+| 5 | Cryptography Without Hype | Canceled from X scheduled drafts | 2026-05-28 15:20 | Available for manual approval only |
 
 ## Approval Packages
 
@@ -239,7 +239,7 @@ Latticra educational card on a luminous white and pale blue glass background. Th
 Approval line:
 
 ```text
-owner approved; scheduled 2026-05-28 20:00 CDT
+owner approved; original scheduled draft canceled; manual public posting requires exact action-time approval
 ```
 
 ### Package 5
@@ -278,7 +278,7 @@ Latticra educational card on a luminous white and pale blue glass background. Th
 Approval line:
 
 ```text
-owner approved; scheduled 2026-05-29 01:00 CDT
+owner approved; original scheduled draft canceled; manual public posting requires exact action-time approval
 ```
 
 ## Approval Options

@@ -54,6 +54,8 @@ installer_console_config_reflection_denial_required=1
 installer_console_control_character_sanitization_required=1
 installer_console_secret_redaction_required=1
 installer_console_line_length_cap_required=1
+installer_ui_console_navigation_root_boundary_required=1
+installer_ui_console_navigation_path_reflection_denial_required=1
 locked_dependency_builds_required=1
 offline_installer_builds_required=1
 ad_hoc_network_client_commands_forbidden_without_guard=1
@@ -83,6 +85,7 @@ sh scripts/test-installer-config-authority-allowlist.sh
 sh scripts/test-installer-ui-artifact-authority.sh
 sh scripts/test-installer-console-output-authority.sh
 sh scripts/test-installer-console-display-sanitization.sh
+sh scripts/test-installer-ui-console-navigation-boundary.sh
 ```
 
 Expected output:

@@ -88,7 +88,7 @@ require_contains 'proof_path_state=unsupported-revocation' "$status_file"
 require_contains 'proof_path_state=unverified-metadata' "$status_file"
 require_contains 'proof_path_state=verification-only-blocked' "$status_file"
 require_contains 'The signed receipt proof path implementation is now represented by `docs/LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md`.' "$status_file"
-require_contains 'The current next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
+require_contains 'The current next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-signed-receipt-proof-path-contract-status.sh' .github/workflows/latticra-seal-signed-receipt-proof-path-contract-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-signed-receipt-proof-path-contract-status.yml
 
@@ -97,7 +97,8 @@ require_contains 'signed_receipt_proof_path_contract_status=1' "$product_doc"
 require_contains 'signed_receipt_proof_path_contract_present=1' "$product_doc"
 require_contains 'signed_receipt_proof_path_contract_status_present=1' "$product_doc"
 require_contains 'signed_receipt_proof_path_implementation=1' "$product_doc"
-require_contains 'signed receipt proof path report surface/status checkpoint' "$product_doc"
+require_contains 'signed_receipt_proof_path_surface=1' "$product_doc"
+require_contains 'signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority' "$product_doc"
 require_contains 'signed_receipt_proof_path_contract_present=1' "$seal_status"
 require_contains 'signed_receipt_proof_path_contract_status_present=1' "$seal_status"
 require_contains 'seal_signed_receipt_proof_path_contract_present=1' README.md

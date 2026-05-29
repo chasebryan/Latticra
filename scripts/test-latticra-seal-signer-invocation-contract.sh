@@ -77,6 +77,7 @@ require_contains 'latticra_seal_signer_invocation_from_handoff' docs/LATTICRA_SE
 require_contains 'signer_invocation_state=invocation-metadata-only' docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_contains 'signer_invocation_ready=1' docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_contains 'signer_invoked=0' docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
+require_contains 'stale crypto graduation evidence when the gate-present flag is unset' docs/LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md
 require_contains 'latticra_seal_signer_invocation_t' include/latticra/seal_signer_invocation.h
 require_contains 'latticra_seal_signer_invocation_from_handoff' src/seal_signer_invocation.c
 require_contains 'seal signer invocation invariants: ok' tests/seal_signer_invocation_invariants.c

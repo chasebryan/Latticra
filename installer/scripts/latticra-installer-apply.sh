@@ -501,6 +501,7 @@ LC_SERVICE_SCHEMA_CONTRACT_PROFILE=$(cfg_section lc service_schema_contract_prof
 LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE=$(cfg_section lc service_definitions_contract_profile lc-service-definitions-v0)
 LC_SERVICE_PLAN_CONTRACT_PROFILE=$(cfg_section lc service_plan_contract_profile lc-service-plan-v0)
 LC_SERVICE_RUNTIME_CONTRACT_PROFILE=$(cfg_section lc service_runtime_contract_profile lc-service-runtime-v0)
+LC_PROCESSES_CONTRACT_PROFILE=$(cfg_section lc processes_contract_profile lc-processes-v0)
 LC_RECEIPT_REQUEST_CONTRACT_PROFILE=$(cfg_section lc receipt_request_contract_profile lc-receipt-request-v0)
 LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE=$(cfg_section lc receipt_payload_schema_profile lc-receipt-payload-schema-v0)
 LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE=$(cfg_section lc receipt_payload_artifact_draft_profile lc-receipt-payload-artifact-draft-v0)
@@ -532,6 +533,7 @@ LC_REQUIRE_SERVICE_SCHEMA_CONTRACT=$(cfg_section lc require_service_schema_contr
 LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT=$(cfg_section lc require_service_definitions_contract true)
 LC_REQUIRE_SERVICE_PLAN_CONTRACT=$(cfg_section lc require_service_plan_contract true)
 LC_REQUIRE_SERVICE_RUNTIME_CONTRACT=$(cfg_section lc require_service_runtime_contract true)
+LC_REQUIRE_PROCESSES_CONTRACT=$(cfg_section lc require_processes_contract true)
 LC_REQUIRE_RECEIPT_REQUEST_CONTRACT=$(cfg_section lc require_receipt_request_contract true)
 LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA=$(cfg_section lc require_receipt_payload_schema true)
 LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT=$(cfg_section lc require_receipt_payload_artifact_draft true)
@@ -626,6 +628,7 @@ for authority_field in \
   "LC service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE" \
   "LC service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE" \
   "LC service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE" \
+  "LC processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE" \
   "LC receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE" \
   "LC receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE" \
   "LC receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE" \
@@ -786,6 +789,9 @@ service_plan_contract_present=1
 service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
 service_runtime_contract_status=metadata-only-contract
 service_runtime_contract_present=1
+processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE
+processes_contract_status=metadata-only-contract
+processes_contract_present=1
 panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -811,6 +817,7 @@ service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
 service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
+processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE
 receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE
 receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE
 receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE
@@ -841,6 +848,7 @@ service_schema_contract_required=$LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
 service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
 service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT
 service_runtime_contract_required=$LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
+processes_contract_required=$LC_REQUIRE_PROCESSES_CONTRACT
 receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -2011,6 +2019,8 @@ lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
 lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
 lc_service_runtime_contract_present=true
+lc_processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE
+lc_processes_contract_present=true
 lc_service_schema_contract_profile=$LC_SERVICE_SCHEMA_CONTRACT_PROFILE
 lc_service_schema_contract_present=true
 lc_service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE
@@ -2019,6 +2029,8 @@ lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
 lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
 lc_service_runtime_contract_present=true
+lc_processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE
+lc_processes_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 plan_file=$PLAN
@@ -2256,6 +2268,7 @@ service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+processes_contract_profile = "$LC_PROCESSES_CONTRACT_PROFILE"
 receipt_request_contract_profile = "$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_artifact_draft_profile = "$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -2286,6 +2299,7 @@ service_schema_contract_required = $LC_REQUIRE_SERVICE_SCHEMA_CONTRACT
 service_definitions_contract_required = $LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT
 service_plan_contract_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
 service_runtime_contract_required = $LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
+processes_contract_required = $LC_REQUIRE_PROCESSES_CONTRACT
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_artifact_draft_required = $LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT
@@ -2364,12 +2378,14 @@ service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+processes_contract_profile = "$LC_PROCESSES_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
 service_definitions_contract_present = true
 service_plan_contract_present = true
 service_runtime_contract_present = true
+processes_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2414,12 +2430,14 @@ service_schema_contract_profile = "$LC_SERVICE_SCHEMA_CONTRACT_PROFILE"
 service_definitions_contract_profile = "$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
 service_plan_contract_profile = "$LC_SERVICE_PLAN_CONTRACT_PROFILE"
 service_runtime_contract_profile = "$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+processes_contract_profile = "$LC_PROCESSES_CONTRACT_PROFILE"
 init_contract_present = true
 services_contract_present = true
 service_schema_contract_present = true
 service_definitions_contract_present = true
 service_plan_contract_present = true
 service_runtime_contract_present = true
+processes_contract_present = true
 panel_embedded_console = $LC_INSTALL_PANEL_EMBEDDED_CONSOLE
 write_config_file = $LC_INSTALL_WRITE_CONFIG_FILE
 write_profile_presets = $LC_INSTALL_WRITE_PROFILE_PRESETS
@@ -2455,6 +2473,7 @@ service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
 service_runtime_contract_profile = "lc-service-runtime-v0"
+processes_contract_profile = "lc-processes-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2485,6 +2504,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2527,6 +2547,7 @@ service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
 service_runtime_contract_profile = "lc-service-runtime-v0"
+processes_contract_profile = "lc-processes-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2557,6 +2578,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2596,6 +2618,7 @@ service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
 service_runtime_contract_profile = "lc-service-runtime-v0"
+processes_contract_profile = "lc-processes-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2626,6 +2649,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2665,6 +2689,7 @@ service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
 service_runtime_contract_profile = "lc-service-runtime-v0"
+processes_contract_profile = "lc-processes-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2695,6 +2720,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -2734,6 +2760,7 @@ service_schema_contract_profile = "lc-service-schema-v0"
 service_definitions_contract_profile = "lc-service-definitions-v0"
 service_plan_contract_profile = "lc-service-plan-v0"
 service_runtime_contract_profile = "lc-service-runtime-v0"
+processes_contract_profile = "lc-processes-v0"
 receipt_request_contract_profile = "lc-receipt-request-v0"
 receipt_payload_schema_profile = "lc-receipt-payload-schema-v0"
 receipt_payload_artifact_draft_profile = "lc-receipt-payload-artifact-draft-v0"
@@ -2764,6 +2791,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 receipt_request_contract_required = true
 receipt_payload_schema_required = true
 receipt_payload_artifact_draft_required = true
@@ -3116,6 +3144,7 @@ service_schema_contract_required = true
 service_definitions_contract_required = true
 service_plan_contract_required = true
 service_runtime_contract_required = true
+processes_contract_required = true
 init_contract_required = true
 rootfs_contract_required = true
 packages_contract_required = true
@@ -3131,6 +3160,7 @@ related_service_schema_command = "lc service-schema"
 related_service_definitions_command = "lc service-definitions"
 related_service_plan_command = "lc service-plan"
 related_service_runtime_command = "lc service-runtime"
+related_processes_command = "lc processes"
 related_init_command = "lc init"
 related_packages_command = "lc packages"
 related_rootfs_command = "lc rootfs"
@@ -3183,6 +3213,7 @@ service_health_check_allowed = false
 process_supervision_allowed = false
 service_definitions_contract_required = true
 services_contract_required = true
+processes_contract_required = true
 init_contract_required = true
 rootfs_contract_required = true
 packages_contract_required = true
@@ -3389,6 +3420,7 @@ related_service_definitions_command = "lc service-definitions"
 related_service_schema_command = "lc service-schema"
 related_services_command = "lc services"
 related_init_command = "lc init"
+related_processes_command = "lc processes"
 related_os_contract_command = "lc os-contract"
 promotion_gate = "lc_service_runtime_contract_before_executor_handoff_or_supervision"
 no_effect = true
@@ -3403,6 +3435,72 @@ runtime_enforcement_allowed = false
 boot_allowed = false
 production_os_claim = false
 LC_SERVICE_RUNTIME_CONTRACT
+  write_file "$PREFIX/share/latticra/lc/processes/contract.toml" 0644 <<LC_PROCESSES_CONTRACT
+contract_name = "Latticra Console Processes Contract"
+contract_profile = "$LC_PROCESSES_CONTRACT_PROFILE"
+contract_status = "metadata-only"
+processes_contract_present = true
+processes_kind = "lc-process-envelope"
+processes_root = "$LC_INSTALL_SHARE_PATH/processes"
+processes_state_source = "metadata-only"
+processes_file = "contract.toml"
+processes_artifact_present = true
+process_table_present = false
+process_table_created = false
+process_table_read_allowed = false
+process_table_write_allowed = false
+process_record_materialized = false
+process_record_write_allowed = false
+process_spawn_allowed = false
+process_exec_allowed = false
+process_fork_allowed = false
+process_signal_allowed = false
+process_termination_allowed = false
+process_supervision_allowed = false
+process_health_observation_allowed = false
+process_restart_policy_allowed = false
+pid_allocation_allowed = false
+pid_namespace_binding_allowed = false
+scheduler_binding_allowed = false
+service_process_launch_allowed = false
+service_executor_allowed = false
+service_runtime_handoff_allowed = false
+init_process_launch_allowed = false
+pid1_claim_allowed = false
+host_process_inspection_allowed = false
+host_process_launch_allowed = false
+host_process_signal_allowed = false
+host_process_termination_allowed = false
+service_runtime_contract_required = true
+service_plan_contract_required = true
+service_definitions_contract_required = true
+services_contract_required = true
+init_contract_required = true
+namespace_contract_required = true
+session_contract_required = true
+os_base_contract_required = true
+runtime_boundary_required = true
+seal_capability_labels_required = true
+receipt_required_before_process_runtime = true
+command_surface = "lc processes"
+related_service_runtime_command = "lc service-runtime"
+related_service_plan_command = "lc service-plan"
+related_services_command = "lc services"
+related_init_command = "lc init"
+related_namespace_command = "lc namespace"
+related_os_contract_command = "lc os-contract"
+promotion_gate = "lc_processes_contract_before_process_table_or_supervision"
+no_effect = true
+file_read_allowed = false
+file_write_allowed = false
+host_file_read_allowed = false
+host_file_write_allowed = false
+host_mutation_allowed = false
+network_allowed = false
+runtime_enforcement_allowed = false
+boot_allowed = false
+production_os_claim = false
+LC_PROCESSES_CONTRACT
   write_file "$PREFIX/share/latticra/lc/host-embedding/contract.toml" 0644 <<LC_HOST_CONTRACT
 contract_name = "Latticra Console Host Embedding Contract"
 contract_profile = "$LC_HOST_EMBEDDING_CONTRACT_PROFILE"
@@ -3498,7 +3596,7 @@ receipt_contract_profile = "$LC_RECEIPT_CONTRACT_PROFILE"
 signature_request_profile = "latticra-seal-signature-request/0.1"
 requested_receipt_profile = "latticra-seal-verified-receipt/0.1"
 requested_capability = "verified-receipt-report"
-requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
+requested_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,processes,host-contract,host-inventory,host-adapter,runtime-boundary"
 receipt_payload_schema_profile = "$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
 receipt_payload_schema_present = true
@@ -4036,6 +4134,8 @@ service_plan_contract_receipt_required = $LC_REQUIRE_SERVICE_PLAN_CONTRACT
 service_plan_contract_present = true
 service_runtime_contract_receipt_required = $LC_REQUIRE_SERVICE_RUNTIME_CONTRACT
 service_runtime_contract_present = true
+processes_contract_receipt_required = $LC_REQUIRE_PROCESSES_CONTRACT
+processes_contract_present = true
 receipt_request_contract_required = $LC_REQUIRE_RECEIPT_REQUEST_CONTRACT
 receipt_request_contract_present = true
 receipt_payload_schema_required = $LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA
@@ -4075,6 +4175,7 @@ service_schema_contract_command = "lc service-schema"
 service_definitions_contract_command = "lc service-definitions"
 service_plan_contract_command = "lc service-plan"
 service_runtime_contract_command = "lc service-runtime"
+processes_contract_command = "lc processes"
 seal_signature_planned = true
 seal_signature_present = false
 seal_signing_authority_present = false
@@ -4083,7 +4184,7 @@ receipt_signed = false
 receipt_hash_recorded = false
 receipt_path_recorded = false
 receipt_format = "metadata-only-contract"
-receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
+receipt_surfaces = "profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,processes,host-contract,host-inventory,host-adapter,runtime-boundary"
 promotion_gate = "lc_receipts_before_host_adapter_or_os_base"
 command_surface = "lc receipts"
 no_effect = true
@@ -4348,6 +4449,7 @@ name=lc service-schema category=core effect=none capability=lc.service.schema.co
 name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract
 name=lc service-plan category=core effect=none capability=lc.service.plan.contract
 name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract
+name=lc processes category=core effect=none capability=lc.processes.contract
 name=lc profiles category=core effect=none capability=lc.core.profiles
 name=lc receipts category=core effect=none capability=lc.receipts.inspect
 name=lc receipt-request category=core effect=none capability=lc.receipt.request
@@ -5509,6 +5611,7 @@ case "\${1:-status}" in
         echo "network_fetch_authority_denied=1"
         echo "network_authority=0"
         echo "network_authority_denied=1"
+        echo "network_performed=0"
         echo "root_authority=0"
         echo "system_mutation_authority=0"
         ;;
@@ -5519,6 +5622,9 @@ case "\${1:-status}" in
         echo "updater_update_channel=$UPDATER_UPDATE_CHANNEL"
         echo "network_authority=0"
         echo "network_authority_denied=1"
+        echo "network_fetch_authority=0"
+        echo "network_fetch_authority_denied=1"
+        echo "network_performed=0"
         exec "\$HOME/.local/bin/latticra-panel"
         ;;
       dry-run|preview|apply)
@@ -5527,6 +5633,9 @@ case "\${1:-status}" in
         echo "Open Latticra Panel and use the Updater workspace."
         echo "network_authority=0"
         echo "network_authority_denied=1"
+        echo "network_fetch_authority=0"
+        echo "network_fetch_authority_denied=1"
+        echo "network_performed=0"
         exec "\$HOME/.local/bin/latticra-panel"
         ;;
       *)
@@ -5674,6 +5783,7 @@ render_lc_man() {
   echo "  \$LC_COMMAND_WRAPPER service-definitions"
   echo "  \$LC_COMMAND_WRAPPER service-plan"
   echo "  \$LC_COMMAND_WRAPPER service-runtime"
+  echo "  \$LC_COMMAND_WRAPPER processes"
   echo "  \$LC_COMMAND_WRAPPER profiles"
   echo "  \$LC_COMMAND_WRAPPER receipts"
   echo "  \$LC_COMMAND_WRAPPER receipt-request"
@@ -5813,18 +5923,25 @@ case "\${1:-status}" in
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+    echo "processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE"
+    echo "processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE"
     echo "init_contract_status=metadata-only-contract"
     echo "services_contract_status=metadata-only-contract"
     echo "service_schema_contract_status=metadata-only-contract"
     echo "service_definitions_contract_status=metadata-only-contract"
     echo "service_plan_contract_status=metadata-only-contract"
     echo "service_runtime_contract_status=metadata-only-contract"
+    echo "processes_contract_status=metadata-only-contract"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
     echo "service_definitions_contract_present=1"
     echo "service_plan_contract_present=1"
     echo "service_runtime_contract_present=1"
+    echo "processes_contract_status=metadata-only-contract"
+    echo "processes_contract_present=1"
+    echo "processes_contract_required=$LC_REQUIRE_PROCESSES_CONTRACT"
+    echo "processes_contract_present=1"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -5851,6 +5968,7 @@ case "\${1:-status}" in
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+    echo "processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE"
     echo "receipt_request_contract_profile=$LC_RECEIPT_REQUEST_CONTRACT_PROFILE"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_artifact_draft_profile=$LC_RECEIPT_PAYLOAD_ARTIFACT_DRAFT_PROFILE"
@@ -5881,6 +5999,7 @@ case "\${1:-status}" in
     echo "service_definitions_contract_required=$LC_REQUIRE_SERVICE_DEFINITIONS_CONTRACT"
     echo "service_plan_contract_required=$LC_REQUIRE_SERVICE_PLAN_CONTRACT"
     echo "service_runtime_contract_required=$LC_REQUIRE_SERVICE_RUNTIME_CONTRACT"
+    echo "processes_contract_required=$LC_REQUIRE_PROCESSES_CONTRACT"
     echo "receipt_request_contract_required=$LC_REQUIRE_RECEIPT_REQUEST_CONTRACT"
     echo "receipt_payload_schema_required=$LC_REQUIRE_RECEIPT_PAYLOAD_SCHEMA"
     echo "receipt_payload_artifact_draft_required=$LC_REQUIRE_RECEIPT_PAYLOAD_ARTIFACT_DRAFT"
@@ -5932,6 +6051,7 @@ case "\${1:-status}" in
     echo "operator_shell_present=1"
     echo "future_os_base_claim=planned_not_claimed"
     echo "execution_allowed=0"
+    echo "host_process_launch_allowed=0"
     echo "host_mutation_allowed=0"
     echo "file_io_allowed=0"
     echo "network_allowed=0"
@@ -5989,12 +6109,16 @@ case "\${1:-status}" in
     echo "service_definitions_contract_profile=$LC_SERVICE_DEFINITIONS_CONTRACT_PROFILE"
     echo "service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE"
     echo "service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE"
+    echo "processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE"
     echo "init_contract_present=1"
     echo "services_contract_present=1"
     echo "service_schema_contract_present=1"
     echo "service_definitions_contract_present=1"
     echo "service_plan_contract_present=1"
     echo "service_runtime_contract_present=1"
+    echo "processes_contract_status=metadata-only-contract"
+    echo "processes_contract_present=1"
+    echo "processes_contract_required=$LC_REQUIRE_PROCESSES_CONTRACT"
     echo "panel_embedded_console=$LC_INSTALL_PANEL_EMBEDDED_CONSOLE"
     echo "write_config_file=$LC_INSTALL_WRITE_CONFIG_FILE"
     echo "write_profile_presets=$LC_INSTALL_WRITE_PROFILE_PRESETS"
@@ -6614,6 +6738,7 @@ case "\${1:-status}" in
     echo "service_definitions_contract_required=1"
     echo "service_schema_contract_required=1"
     echo "services_contract_required=1"
+    echo "processes_contract_required=1"
     echo "init_contract_required=1"
     echo "rootfs_contract_required=1"
     echo "packages_contract_required=1"
@@ -6630,12 +6755,80 @@ case "\${1:-status}" in
     echo "related_service_schema_command=lc service-schema"
     echo "related_services_command=lc services"
     echo "related_init_command=lc init"
+    echo "related_processes_command=lc processes"
     echo "related_os_contract_command=lc os-contract"
     echo "promotion_gate=lc_service_runtime_contract_before_executor_handoff_or_supervision"
     echo "no_effect=1"
     echo "file_read_allowed=0"
     echo "file_write_allowed=0"
     echo "host_process_launch_allowed=0"
+    echo "host_file_read_allowed=0"
+    echo "host_file_write_allowed=0"
+    echo "host_mutation_allowed=0"
+    echo "network_allowed=0"
+    echo "runtime_enforcement_allowed=0"
+    echo "boot_allowed=0"
+    echo "production_os_claim=0"
+    ;;
+  processes|processes-contract|process-envelope|lc-processes)
+    echo "LATTICRA CONSOLE PROCESSES CONTRACT"
+    echo "processes_profile=$LC_PROCESSES_CONTRACT_PROFILE"
+    echo "processes_status=metadata-only-contract"
+    echo "processes_contract_file=\$LC_DIR/processes/contract.toml"
+    echo "processes_contract_present=1"
+    echo "processes_kind=lc-process-envelope"
+    echo "processes_root=\$LC_DIR/processes"
+    echo "processes_state_source=metadata-only"
+    echo "processes_file=contract.toml"
+    echo "processes_artifact_present=1"
+    echo "process_table_present=0"
+    echo "process_table_created=0"
+    echo "process_table_read_allowed=0"
+    echo "process_table_write_allowed=0"
+    echo "process_record_materialized=0"
+    echo "process_record_write_allowed=0"
+    echo "process_spawn_allowed=0"
+    echo "process_exec_allowed=0"
+    echo "process_fork_allowed=0"
+    echo "process_signal_allowed=0"
+    echo "process_termination_allowed=0"
+    echo "process_supervision_allowed=0"
+    echo "process_health_observation_allowed=0"
+    echo "process_restart_policy_allowed=0"
+    echo "pid_allocation_allowed=0"
+    echo "pid_namespace_binding_allowed=0"
+    echo "scheduler_binding_allowed=0"
+    echo "service_process_launch_allowed=0"
+    echo "service_executor_allowed=0"
+    echo "service_runtime_handoff_allowed=0"
+    echo "init_process_launch_allowed=0"
+    echo "pid1_claim_allowed=0"
+    echo "host_process_inspection_allowed=0"
+    echo "host_process_launch_allowed=0"
+    echo "host_process_signal_allowed=0"
+    echo "host_process_termination_allowed=0"
+    echo "service_runtime_contract_required=1"
+    echo "service_plan_contract_required=1"
+    echo "service_definitions_contract_required=1"
+    echo "services_contract_required=1"
+    echo "init_contract_required=1"
+    echo "namespace_contract_required=1"
+    echo "session_contract_required=1"
+    echo "os_base_contract_required=1"
+    echo "runtime_boundary_required=1"
+    echo "seal_capability_labels_required=1"
+    echo "receipt_required_before_process_runtime=1"
+    echo "command_surface=lc processes"
+    echo "related_service_runtime_command=lc service-runtime"
+    echo "related_service_plan_command=lc service-plan"
+    echo "related_services_command=lc services"
+    echo "related_init_command=lc init"
+    echo "related_namespace_command=lc namespace"
+    echo "related_os_contract_command=lc os-contract"
+    echo "promotion_gate=lc_processes_contract_before_process_table_or_supervision"
+    echo "no_effect=1"
+    echo "file_read_allowed=0"
+    echo "file_write_allowed=0"
     echo "host_file_read_allowed=0"
     echo "host_file_write_allowed=0"
     echo "host_mutation_allowed=0"
@@ -6686,6 +6879,8 @@ case "\${1:-status}" in
     echo "service_plan_contract_present=1"
     echo "service_runtime_contract_receipt_required=1"
     echo "service_runtime_contract_present=1"
+    echo "processes_contract_receipt_required=1"
+    echo "processes_contract_present=1"
     echo "receipt_request_contract_required=1"
     echo "receipt_request_contract_present=1"
     echo "receipt_payload_schema_required=1"
@@ -6725,6 +6920,7 @@ case "\${1:-status}" in
     echo "service_definitions_contract_command=lc service-definitions"
     echo "service_plan_contract_command=lc service-plan"
     echo "service_runtime_contract_command=lc service-runtime"
+    echo "processes_contract_command=lc processes"
     echo "seal_signature_planned=1"
     echo "seal_signature_present=0"
     echo "seal_signing_authority_present=0"
@@ -6733,7 +6929,7 @@ case "\${1:-status}" in
     echo "receipt_hash_recorded=0"
     echo "receipt_path_recorded=0"
     echo "receipt_format=metadata-only-contract"
-    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "receipt_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,processes,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "promotion_gate=lc_receipts_before_host_adapter_or_os_base"
     echo "command_surface=lc receipts"
     echo "no_effect=1"
@@ -6756,7 +6952,7 @@ case "\${1:-status}" in
     echo "signature_request_profile=latticra-seal-signature-request/0.1"
     echo "requested_receipt_profile=latticra-seal-verified-receipt/0.1"
     echo "requested_capability=verified-receipt-report"
-    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,host-contract,host-inventory,host-adapter,runtime-boundary"
+    echo "requested_surfaces=profile,session,workspace,namespace,rootfs,packages,init,services,service-schema,service-definitions,service-plan,service-runtime,processes,host-contract,host-inventory,host-adapter,runtime-boundary"
     echo "receipt_payload_schema_profile=$LC_RECEIPT_PAYLOAD_SCHEMA_PROFILE"
     echo "receipt_payload_schema_required=1"
     echo "receipt_payload_schema_present=1"
@@ -7465,7 +7661,7 @@ case "\${1:-status}" in
     echo "\$LC_DIR"
     ;;
   *)
-    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
+    echo "usage: \$LC_COMMAND_WRAPPER {status|help|man|boundary|commands|install-config|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|processes|substrate|host|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence|os|path}" >&2
     exit 64
     ;;
 esac
@@ -7525,6 +7721,7 @@ render_nadia_commands() {
   echo "NADIA COMMAND SURFACE"
   echo "wrapper=latticra-nadia"
   echo "component=Nadia offline AI foundation"
+  echo "command=audit stage=51 output=stdout authority=metadata-only-command-surface-audit"
   echo "command=status stage=50 output=stdout authority=metadata-only-status"
   echo "command=status stage=51 output=stdout authority=metadata-only-status"
   echo "command=context-pack stage=1 output=\$NADIA_DIR/context-packs authority=local-context-metadata"
@@ -7579,6 +7776,10 @@ render_nadia_commands() {
   echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release stage=50 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-contract-metadata"
   echo "command=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt stage=51 output=\$NADIA_DIR/prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt authority=prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-metadata"
   echo "command=path stage=0 output=\$NADIA_DIR authority=path-report"
+  echo "audit_command=latticra-nadia audit"
+  echo "command_surface_stage_floor=1"
+  echo "command_surface_stage_ceiling=51"
+  echo "command_surface_no_effect=1"
   echo "network_authority=0"
   echo "tool_execution_authority=0"
   echo "runtime_invocation_authority=0"
@@ -7587,9 +7788,33 @@ render_nadia_commands() {
   echo "model_load_authority=0"
   echo "source_mutation_authority=0"
 }
+
+render_nadia_audit() {
+  echo "NADIA COMMAND SURFACE AUDIT"
+  echo "wrapper=latticra-nadia"
+  echo "installed_wrapper=latticra-nadia"
+  echo "commands_command=latticra-nadia commands"
+  echo "audit_command=latticra-nadia audit"
+  echo "via_latticra_command=latticra nadia audit"
+  echo "command_surface_stage_floor=1"
+  echo "command_surface_stage_ceiling=51"
+  echo "command_surface_no_effect=1"
+  echo "network_authority=0"
+  echo "tool_execution_authority=0"
+  echo "runtime_invocation_authority=0"
+  echo "prompt_evaluation_authority=0"
+  echo "inference_authority=0"
+  echo "model_load_authority=0"
+  echo "source_mutation_authority=0"
+  echo "no_effect=1"
+  render_nadia_commands
+}
 case "\${1:-status}" in
   commands|help)
     render_nadia_commands
+    ;;
+  audit)
+    render_nadia_audit
     ;;
   status)
     echo "NADIA OFFLINE AI FOUNDATION"
@@ -7606,6 +7831,7 @@ case "\${1:-status}" in
     echo "prefix=\$PREFIX"
     echo "config=\$PREFIX/etc/latticra/nadia.toml"
     echo "commands_command=latticra-nadia commands"
+    echo "audit_command=latticra-nadia audit"
     echo "context_packs=\$NADIA_DIR/context-packs"
     echo "model_registry=\$NADIA_DIR/model-registry"
     echo "productivity_ledger=\$NADIA_DIR/productivity-ledger"
@@ -9344,7 +9570,7 @@ case "\${1:-status}" in
 	    echo "\$NADIA_DIR"
 	    ;;
 	  *)
-	    echo "usage: latticra-nadia {status|commands|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|path}" >&2
+	    echo "usage: latticra-nadia {status|commands|audit|context-pack|runtime-profile|prompt-plan|mode-validate|productivity-ledger|protective-safety|tool-preflight|prompt-contract|model-registry|inference-readiness|runtime-invocation|model-load|prompt-receipt|prompt-materialization|awareness-dialogue|prompt-evaluation-handoff|tokenization-boundary|tokenizer-specification|tokenizer-manifest|tokenizer-artifact-inventory|tokenizer-artifact-measurement|tokenizer-artifact-verification|tokenizer-artifact-binding|tokenizer-runtime-attachment|prompt-tokenization|prompt-token-sequence|context-window-assembly|prompt-evaluation-input|prompt-evaluation-runtime-handoff|prompt-evaluation-invocation|prompt-evaluation-result|prompt-evaluation-result-review|prompt-evaluation-result-disposition|prompt-evaluation-result-release|prompt-evaluation-result-release-receipt|prompt-evaluation-result-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release|prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt|path}" >&2
 	    exit 64
 	    ;;
 esac
@@ -9517,6 +9743,8 @@ lc_service_plan_contract_profile=$LC_SERVICE_PLAN_CONTRACT_PROFILE
 lc_service_plan_contract_present=true
 lc_service_runtime_contract_profile=$LC_SERVICE_RUNTIME_CONTRACT_PROFILE
 lc_service_runtime_contract_present=true
+lc_processes_contract_profile=$LC_PROCESSES_CONTRACT_PROFILE
+lc_processes_contract_present=true
 lc_install_user_wrapper=$LC_INSTALL_USER_WRAPPER
 lc_allow_external_host_commands=$LC_INSTALL_ALLOW_EXTERNAL_HOST_COMMANDS
 

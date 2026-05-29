@@ -145,6 +145,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_run(
     EVP_PKEY_CTX *encaps_ctx = NULL;
     EVP_PKEY_CTX *decaps_ctx = NULL;
     EVP_PKEY_CTX *tamper_decaps_ctx = NULL;
+    EVP_PKEY_CTX *malformed_decaps_ctx = NULL;
     EVP_PKEY *keypair = NULL;
     EVP_PKEY *public_key = NULL;
     unsigned char ciphertext[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_MAX_CIPHERTEXT_BYTES];
@@ -155,11 +156,13 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_run(
     unsigned char encapsulated_secret[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_SHARED_SECRET_BYTES];
     unsigned char decapsulated_secret[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_SHARED_SECRET_BYTES];
     unsigned char tampered_secret[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_SHARED_SECRET_BYTES];
+    unsigned char malformed_secret[LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_SHARED_SECRET_BYTES];
     size_t ciphertext_len = 0u;
     size_t public_key_der_len = 0u;
     size_t encapsulated_secret_len = 0u;
     size_t decapsulated_secret_len = 0u;
     size_t tampered_secret_len = 0u;
+    size_t malformed_secret_len = 0u;
     unsigned secrets_equal = 0u;
     unsigned tampered_secret_equal = 1u;
 
@@ -174,6 +177,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_run(
     memset(encapsulated_secret, 0, sizeof(encapsulated_secret));
     memset(decapsulated_secret, 0, sizeof(decapsulated_secret));
     memset(tampered_secret, 0, sizeof(tampered_secret));
+    memset(malformed_secret, 0, sizeof(malformed_secret));
 
     if (latticra_q_seal_ml_kem_parameters(parameter_set, &parameters) !=
             LATTICRA_Q_SEAL_STATUS_OK ||
@@ -390,12 +394,61 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_run(
     out->tampered_ciphertext_shared_secret_mismatch = 1u;
     out->tampered_ciphertext_rejected = 1u;
 
+    if (ciphertext_len < 2u) {
+        self_test_fail(
+            out,
+            LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "provider-malformed-ciphertext-length-setup-failed",
+            "openssl-ml-kem-malformed-ciphertext-length-setup-failed",
+            "ml-kem-provider-failure");
+        goto cleanup;
+    }
+    malformed_secret_len = sizeof(malformed_secret);
+    malformed_decaps_ctx = EVP_PKEY_CTX_new_from_pkey(NULL, keypair, NULL);
+    if (malformed_decaps_ctx == NULL ||
+        EVP_PKEY_decapsulate_init(malformed_decaps_ctx, NULL) <= 0) {
+        self_test_fail(
+            out,
+            LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "provider-malformed-ciphertext-length-decapsulation-init-failed",
+            "openssl-ml-kem-malformed-ciphertext-length-decapsulation-init-failed",
+            "ml-kem-provider-failure");
+        goto cleanup;
+    }
+    if (EVP_PKEY_decapsulate(
+            malformed_decaps_ctx,
+            malformed_secret,
+            &malformed_secret_len,
+            ciphertext,
+            ciphertext_len - 1u) > 0) {
+        self_test_fail(
+            out,
+            LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "provider-malformed-ciphertext-length-accepted",
+            "openssl-ml-kem-malformed-ciphertext-length-accepted",
+            "ml-kem-provider-failure");
+        goto cleanup;
+    }
+    out->malformed_ciphertext_length_decapsulation_rejected = 1u;
+    out->malformed_ciphertext_length_no_secret_output =
+        buffer_is_zero(malformed_secret, sizeof(malformed_secret));
+    if (out->malformed_ciphertext_length_no_secret_output != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "provider-malformed-ciphertext-length-wrote-secret",
+            "openssl-ml-kem-malformed-ciphertext-length-wrote-secret",
+            "ml-kem-provider-failure");
+        goto cleanup;
+    }
+
     out->error = LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST_OK;
     copy_literal(out->operation_state, sizeof(out->operation_state), "provider-self-test-passed");
     copy_literal(out->blocked_reason, sizeof(out->blocked_reason), "authority-remains-denied");
     copy_literal(out->status, sizeof(out->status), "ml-kem-provider-self-test-passed");
 
 cleanup:
+    EVP_PKEY_CTX_free(malformed_decaps_ctx);
     EVP_PKEY_CTX_free(tamper_decaps_ctx);
     EVP_PKEY_CTX_free(decaps_ctx);
     EVP_PKEY_CTX_free(encaps_ctx);
@@ -414,11 +467,15 @@ cleanup:
     (void)latticra_q_seal_ml_kem_secure_zero(
         tampered_secret,
         sizeof(tampered_secret));
+    (void)latticra_q_seal_ml_kem_secure_zero(
+        malformed_secret,
+        sizeof(malformed_secret));
     (void)latticra_q_seal_ml_kem_secure_zero(ciphertext, sizeof(ciphertext));
     out->shared_secret_zeroized =
         buffer_is_zero(encapsulated_secret, sizeof(encapsulated_secret)) == 1u &&
         buffer_is_zero(decapsulated_secret, sizeof(decapsulated_secret)) == 1u &&
-        buffer_is_zero(tampered_secret, sizeof(tampered_secret)) == 1u
+        buffer_is_zero(tampered_secret, sizeof(tampered_secret)) == 1u &&
+        buffer_is_zero(malformed_secret, sizeof(malformed_secret)) == 1u
             ? 1u
             : 0u;
     out->ciphertext_zeroized =
@@ -482,6 +539,8 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_report(
         "tampered_ciphertext_decapsulation_performed=%u\n"
         "tampered_ciphertext_shared_secret_mismatch=%u\n"
         "tampered_ciphertext_rejected=%u\n"
+        "malformed_ciphertext_length_decapsulation_rejected=%u\n"
+        "malformed_ciphertext_length_no_secret_output=%u\n"
         "shared_secret_internal_buffers_used=%u\n"
         "shared_secret_match=%u\n"
         "shared_secret_constant_time_compare=%u\n"
@@ -523,6 +582,8 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_provider_self_test_report(
         self_test->tampered_ciphertext_decapsulation_performed,
         self_test->tampered_ciphertext_shared_secret_mismatch,
         self_test->tampered_ciphertext_rejected,
+        self_test->malformed_ciphertext_length_decapsulation_rejected,
+        self_test->malformed_ciphertext_length_no_secret_output,
         self_test->shared_secret_internal_buffers_used,
         self_test->shared_secret_match,
         self_test->shared_secret_constant_time_compare,

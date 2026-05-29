@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
     char service_definitions_contract_report[LATTICRA_CONSOLE_SERVICE_DEFINITIONS_CONTRACT_REPORT_MAX];
     char service_plan_contract_report[LATTICRA_CONSOLE_SERVICE_PLAN_CONTRACT_REPORT_MAX];
     char service_runtime_contract_report[LATTICRA_CONSOLE_SERVICE_RUNTIME_CONTRACT_REPORT_MAX];
+    char processes_contract_report[LATTICRA_CONSOLE_PROCESSES_CONTRACT_REPORT_MAX];
     char host_contract_report[LATTICRA_CONSOLE_HOST_CONTRACT_REPORT_MAX];
     char host_inventory_report[LATTICRA_CONSOLE_HOST_INVENTORY_REPORT_MAX];
     char host_adapter_report[LATTICRA_CONSOLE_HOST_ADAPTER_REPORT_MAX];
@@ -39,7 +40,7 @@ int main(int argc, char **argv) {
     char vm_evidence_report[LATTICRA_CONSOLE_VM_EVIDENCE_REPORT_MAX];
 
     if (argc > 2) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|processes|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -263,6 +264,21 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    if (argc == 2 &&
+        (strcmp(argv[1], "processes") == 0 ||
+         strcmp(argv[1], "processes-contract") == 0 ||
+         strcmp(argv[1], "process-envelope") == 0 ||
+         strcmp(argv[1], "lc-processes") == 0)) {
+        if (latticra_console_processes_contract_report(
+                processes_contract_report,
+                sizeof(processes_contract_report)) != LATTICRA_STATUS_OK) {
+            fputs("latticra_console_report: processes contract report render failed\n", stderr);
+            return 1;
+        }
+        fputs(processes_contract_report, stdout);
+        return 0;
+    }
+
     if (argc == 2 && strcmp(argv[1], "host-contract") == 0) {
         if (latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)) != LATTICRA_STATUS_OK) {
             fputs("latticra_console_report: host contract report render failed\n", stderr);
@@ -440,7 +456,7 @@ int main(int argc, char **argv) {
     }
 
     if (argc == 2 && strcmp(argv[1], "report") != 0) {
-        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
+        fputs("usage: latticra_console_report [report|registry|help|man|boundary|standalone|session|workspace|namespace|rootfs|packages|init|services|service-schema|service-definitions|service-plan|service-runtime|processes|host-contract|host-inventory|host-adapter|receipt-request|receipt-payload|receipt-artifact|receipt-artifact-review|receipt-review-receipt|receipt-review-draft|receipt-materialization-plan|signature-request|receipts|os-contract|vm-evidence]\n", stderr);
         return 64;
     }
 
@@ -594,6 +610,16 @@ int main(int argc, char **argv) {
     }
 
     fputs(service_runtime_contract_report, stdout);
+    fputc('\n', stdout);
+
+    if (latticra_console_processes_contract_report(
+            processes_contract_report,
+            sizeof(processes_contract_report)) != LATTICRA_STATUS_OK) {
+        fputs("latticra_console_report: processes contract report render failed\n", stderr);
+        return 1;
+    }
+
+    fputs(processes_contract_report, stdout);
     fputc('\n', stdout);
 
     if (latticra_console_host_contract_report(host_contract_report, sizeof(host_contract_report)) != LATTICRA_STATUS_OK) {

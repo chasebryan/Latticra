@@ -121,7 +121,7 @@ Add Panel signed-updater state transition denial disposition closeout without en
 ## Next Recommended Lane
 
 ```text
-Add Panel signed-updater state transition denial disposition closeout audit review disposition review without enabling transition execution or update apply.
+Add Panel signed-updater state transition denial disposition closeout audit review disposition review closeout without enabling transition execution or update apply.
 ```
 
 ## Non-Claims

@@ -44,6 +44,7 @@ static latticra_seal_signing_operation_t fixture_operation(const char *mode) {
         sizeof(operation.message_digest_hex),
         "aaaabbbbccccddddeeeeffff0000111122223333444455556666777788889999");
     set_string(operation.public_key_identity_label, sizeof(operation.public_key_identity_label), "rfc8032-test-key");
+    set_string(operation.crypto_graduation_gate_state, sizeof(operation.crypto_graduation_gate_state), "not-required");
     set_string(operation.requested_capability, sizeof(operation.requested_capability), "verified-receipt-report");
     set_string(operation.requested_effect, sizeof(operation.requested_effect), requested_mode);
     set_string(operation.requested_handoff, sizeof(operation.requested_handoff), requested_mode);

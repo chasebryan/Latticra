@@ -130,6 +130,8 @@ control bytes; the native CLI interprets accepted array tokens as literal
 local metadata.
 Native array parsing and content-marker assembly must fail closed if dynamic
 capacity growth would overflow an allocation size.
+Policy marker scan buffers must fail closed if marker overlap would overflow
+their allocation size.
 Exclude entries must stay relative to the project root and must not contain
 absolute paths, `.` or `..` path segments, control characters, backslashes, or
 multiple wildcards.

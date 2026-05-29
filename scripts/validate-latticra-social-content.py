@@ -28,6 +28,15 @@ EARLY_MONITORING_CHECKPOINT = ROOT / "docs" / "strategy" / "2026-05-28-0601-cdt-
 TEN_AM_VERIFICATION_RUNBOOK = ROOT / "docs" / "strategy" / "2026-05-28-0606-cdt-x-10am-verification-runbook.md"
 SCHEDULED_QUEUE_VERIFICATION_CHAIN = ROOT / "docs" / "strategy" / "2026-05-28-0610-cdt-x-scheduled-queue-verification-chain.md"
 NEXT_SEQUENCE_PACKET = ROOT / "docs" / "strategy" / "2026-05-28-0555-cdt-x-next-education-sequence-packet.md"
+NEXT_MANUAL_APPROVAL_PACKET = ROOT / "docs" / "strategy" / "2026-05-28-1605-cdt-x-next-manual-post-approval-packet.md"
+GROWTH_CONVERSATION_PACKET = ROOT / "docs" / "strategy" / "2026-05-28-1905-cdt-x-growth-conversation-packet.md"
+APPROVAL_SHORTLIST_LADDER = ROOT / "docs" / "strategy" / "2026-05-28-1908-cdt-x-approval-shortlist-cadence-ladder.md"
+DENIAL_POST_HANDOFF = ROOT / "docs" / "strategy" / "2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md"
+DENIAL_POST_DECISION_PACKET = ROOT / "docs" / "strategy" / "2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md"
+CRYPTOGRAPHY_POST_HANDOFF = ROOT / "docs" / "strategy" / "2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md"
+ROLLING_APPROVAL_CALENDAR = ROOT / "docs" / "strategy" / "2026-05-28-1918-cdt-x-rolling-approval-calendar.md"
+LIVE_GROWTH_CHECKPOINT = ROOT / "docs" / "strategy" / "2026-05-28-1924-cdt-x-live-growth-checkpoint.md"
+PROFILE_PIN_DECISION_PACKET = ROOT / "docs" / "strategy" / "2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md"
 SOCIAL_DIR = ROOT / "assets" / "social"
 BACKGROUND_SOURCE = SOCIAL_DIR / "sources" / "latticra-glass-background-source-v1.png"
 BACKGROUND_BASE = SOCIAL_DIR / "latticra-glass-background-v1.png"
@@ -264,8 +273,9 @@ def validate_next_sequence_packet() -> None:
         "no public post without exact owner approval",
         "assets/social/review/latticra-glass-base-series-02-contact-sheet.png",
         "not approved for public posting",
-        "earliest practical next slot after the active queue: 2026-05-29 06:00 CDT",
+        "earliest practical next slot after the corrected Evidence post: 2026-05-28 20:00 CDT",
         "more conservative next slot: 2026-05-29 10:00 CDT",
+        "2026-05-28-1605-cdt-x-next-manual-post-approval-packet.md",
     ):
         if required not in packet:
             fail(f"next sequence packet missing required item: {required}")
@@ -484,6 +494,15 @@ def validate_growth_artifacts() -> None:
         TEN_AM_VERIFICATION_RUNBOOK,
         SCHEDULED_QUEUE_VERIFICATION_CHAIN,
         NEXT_SEQUENCE_PACKET,
+        NEXT_MANUAL_APPROVAL_PACKET,
+        GROWTH_CONVERSATION_PACKET,
+        APPROVAL_SHORTLIST_LADDER,
+        DENIAL_POST_HANDOFF,
+        DENIAL_POST_DECISION_PACKET,
+        CRYPTOGRAPHY_POST_HANDOFF,
+        ROLLING_APPROVAL_CALENDAR,
+        LIVE_GROWTH_CHECKPOINT,
+        PROFILE_PIN_DECISION_PACKET,
     ):
         if not path.exists():
             fail(f"missing growth artifact: {path.relative_to(ROOT)}")
@@ -497,6 +516,14 @@ def validate_growth_artifacts() -> None:
         "Non-Claim Guard",
         "Mention Readiness",
         "ask for exact action-time approval before posting",
+        "docs/strategy/2026-05-28-1905-cdt-x-growth-conversation-packet.md",
+        "docs/strategy/2026-05-28-1908-cdt-x-approval-shortlist-cadence-ladder.md",
+        "docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md",
+        "docs/strategy/2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md",
+        "docs/strategy/2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md",
+        "docs/strategy/2026-05-28-1918-cdt-x-rolling-approval-calendar.md",
+        "docs/strategy/2026-05-28-1924-cdt-x-live-growth-checkpoint.md",
+        "docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md",
     ):
         if required not in playbook:
             fail(f"engagement playbook missing required rule: {required}")
@@ -504,6 +531,8 @@ def validate_growth_artifacts() -> None:
         "Baseline follower count: 1",
         "First public X action is logged.",
         "https://x.com/Latticra/status/2059941871787347985",
+        "https://x.com/Latticra/status/2060013233248104679",
+        "https://x.com/Latticra/status/2060093439945936993",
         "2026-05-28 10:00",
         "2026-05-28 15:00",
         "2026-05-28 20:00",
@@ -514,15 +543,38 @@ def validate_growth_artifacts() -> None:
         "Early Performance Checkpoints",
         "first_post_visible_views=15",
         "recommended_public_replies=0",
-        "Upcoming Verification",
-        "follow_up_automation=verify-latticra-10am-post",
+        "Current Verification",
+        "next_public_action_status=approval required",
         "Scheduled queue verification chain",
-        "checkpoint_4=2026-05-29 01:05 CDT Cryptography Without Hype",
+        "remaining_scheduled_queue=deleted from X scheduled drafts at 2026-05-28 15:20 CDT",
+        "new_posting_rule=attach media, add alt text, paste caption from clipboard, visually verify visible caption text in composer, then post",
+        "scheduled_posts_visible_in_x=0",
+        "next_recommended_window=2026-05-28 20:00 CDT only if owner explicitly approves a manually verified post",
+        "checkpoint_4=2026-05-29 01:05 CDT Cryptography Without Hype canceled from X scheduled drafts",
+        "live_growth_checkpoint=docs/strategy/2026-05-28-1924-cdt-x-live-growth-checkpoint.md",
+        "checked_at_cdt=2026-05-28 19:24",
+        "first_post_visible_views=24",
+        "boundary_post_visible_views=4",
+        "evidence_post_visible_views=38",
+        "known_image_only_duplicate_urls_unavailable=yes",
+        "log=docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md",
+        "public_research_standard_visible_views=25",
+        "evidence_before_claims_visible_views=39",
+        "profile_action_status=approval required",
+        "recommended_profile_default=wait until the 24-hour review before pinning or editing the bio",
+        "profile_pin_decision_at_1932=wait until the 24-hour review unless the owner gives exact approval for an immediate pin",
     ):
         if required not in ledger:
             fail(f"performance ledger missing required baseline: {required}")
     profile = PROFILE_CONVERSION.read_text(encoding="utf-8")
-    for required in ("Bio Option C", "Pinned Option A", "No profile action is approved by this packet alone.", "followers: 1"):
+    for required in (
+        "Bio Option C",
+        "Pinned Option A",
+        "No profile action is approved by this packet alone.",
+        "followers: 1",
+        "docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md",
+        "before approving any pin, unpin, bio edit, header edit, or pinned-orientation post",
+    ):
         if required not in profile:
             fail(f"profile conversion packet missing required item: {required}")
     publish_packet = PUBLISH_PACKET.read_text(encoding="utf-8")
@@ -557,6 +609,167 @@ def validate_growth_artifacts() -> None:
     ):
         if required not in first_packet:
             fail(f"first live post packet missing required item: {required}")
+    manual_packet = NEXT_MANUAL_APPROVAL_PACKET.read_text(encoding="utf-8")
+    for required in (
+        "No public X action is approved by this packet alone.",
+        "next_public_action_status=approval required",
+        "candidate_window_cdt=2026-05-28 20:00",
+        "assets/social/latticra-denial-is-legible-glass-base-card.png",
+        "assets/social/latticra-cryptography-without-hype-glass-base-card.png",
+        "paste caption from clipboard",
+        "visually verify visible caption text in composer",
+        "latticra-3-day-content-cadence",
+        "no public reply, like, repost, follow, message, schedule action, or new post without exact owner approval",
+        "docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md",
+    ):
+        if required not in manual_packet:
+            fail(f"next manual approval packet missing required item: {required}")
+    growth_packet = GROWTH_CONVERSATION_PACKET.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "no public X action is approved by this packet alone",
+        "exact owner approval is required at action time",
+        "no production-readiness claim",
+        "Conversation Post Seeds",
+        "Reply Starters",
+        "What Are You Building?",
+        "Crypto Question",
+        "approval_shortlist=docs/strategy/2026-05-28-1908-cdt-x-approval-shortlist-cadence-ladder.md",
+        "recommended_public_action_now=none without exact owner approval",
+    ):
+        if required not in growth_packet:
+            fail(f"growth conversation packet missing required item: {required}")
+    ladder = APPROVAL_SHORTLIST_LADDER.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "no public X action is approved by this ladder alone",
+        "exact owner approval is required for each post, media item, alt text, and action time",
+        "last_live_time_cdt=2026-05-28 15:18:45",
+        "next_even_hour_candidate=2026-05-28 20:00 CDT",
+        "docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md",
+        "post_publication_decision=docs/strategy/2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md",
+        "Execution handoff: docs/strategy/2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md",
+        "rolling_calendar=docs/strategy/2026-05-28-1918-cdt-x-rolling-approval-calendar.md",
+        "assets/social/latticra-denial-is-legible-glass-base-card.png",
+        "assets/social/latticra-cryptography-without-hype-glass-base-card.png",
+        "AI tools make intent easy to express.",
+        "Linux-native evaluation matters because people can challenge the work locally.",
+        "long-term content automation remains approval-only through latticra-3-day-content-cadence",
+    ):
+        if required not in ladder:
+            fail(f"approval shortlist ladder missing required item: {required}")
+    handoff = DENIAL_POST_HANDOFF.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "no public X action is approved by this handoff alone",
+        "exact owner approval is required at action time",
+        "do not schedule this post unless the owner explicitly approves scheduling",
+        "assets/social/latticra-denial-is-legible-glass-base-card.png",
+        "A denied action should still produce useful information:",
+        "Latticra educational card on a luminous white and pale blue glass background.",
+        "previous_public_time_cdt=2026-05-28 15:18:45",
+        "target_window_cdt=2026-05-28 20:00:00",
+        "paste caption from clipboard and visually verify it before pressing Post",
+        "post_publication_decision_packet=docs/strategy/2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md",
+        "public_action_status=not approved",
+    ):
+        if required not in handoff:
+            fail(f"denial post handoff missing required item: {required}")
+    decision_packet = DENIAL_POST_DECISION_PACKET.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "No public action is approved by this packet alone.",
+        "handoff=docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md",
+        "handoff_packet=docs/strategy/2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md",
+        "expected_media=assets/social/latticra-denial-is-legible-glass-base-card.png",
+        "python3 scripts/latticra-x-status-metrics.py https://x.com/Latticra/status/<status_id>",
+        "do not decide the 01:00 follow-up from views alone",
+        "candidate_window_cdt=2026-05-29 01:00",
+        "candidate_media=assets/social/latticra-cryptography-without-hype-glass-base-card.png",
+        "resume_candidate_source=docs/strategy/2026-05-28-1918-cdt-x-rolling-approval-calendar.md",
+        "the owner explicitly approves the 01:00 post text, media, alt text, and action time",
+        "no public reply, like, repost, follow, message, schedule action, profile edit, or new post without exact owner approval",
+    ):
+        if required not in decision_packet:
+            fail(f"denial post decision packet missing required item: {required}")
+    crypto_handoff = CRYPTOGRAPHY_POST_HANDOFF.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "no public X action is approved by this handoff alone",
+        "exact owner approval is required at action time",
+        "denial_post_status=published and verified",
+        "assets/social/latticra-cryptography-without-hype-glass-base-card.png",
+        "Cryptography without hype:",
+        "Quantum-resistant planning should not begin with promises.",
+        "does not claim quantum resistance is delivered",
+        "expected_previous_public_time_cdt=2026-05-28 20:00:00",
+        "target_window_cdt=2026-05-29 01:00:00",
+        "public_action_status=not approved",
+    ):
+        if required not in crypto_handoff:
+            fail(f"cryptography post handoff missing required item: {required}")
+    rolling_calendar = ROLLING_APPROVAL_CALENDAR.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public action approved",
+        "no public X action is approved by this calendar alone",
+        "keep at least one prepared educational post available every 3 days",
+        "Friday, 2026-05-29, 10:00 CDT",
+        "AI tools make intent easy to express.",
+        "Linux-native evaluation matters because people can challenge the work locally.",
+        "Careful cryptography language should leave room for inspection.",
+        "automation_id=latticra-3-day-content-cadence",
+        "public_action_status=approval required",
+    ):
+        if required not in rolling_calendar:
+            fail(f"rolling approval calendar missing required item: {required}")
+    live_checkpoint = LIVE_GROWTH_CHECKPOINT.read_text(encoding="utf-8")
+    for required in (
+        "read-only monitoring and owner-review packet; no public action approved",
+        "no public X action is approved by this checkpoint alone",
+        "exact owner approval is required for any post, reply, like, repost, follow, schedule action, message, or profile edit",
+        "public_action_taken=none",
+        "visible_profile_posts=Public Research Standard, Boundary Literacy, Evidence Before Claims",
+        "unexpected_card_only_duplicate_seen=no",
+        "https://x.com/Latticra/status/2060088723979808903 unavailable; X showed page does not exist",
+        "https://x.com/Latticra/status/2060092399032893780 unavailable; X showed page does not exist",
+        "first_post_visible_views=24",
+        "boundary_post_visible_views=4",
+        "evidence_post_visible_views=38",
+        "outside_commenters_seen=0",
+        "recommended_public_replies=0",
+        "docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md",
+        "assets/social/latticra-denial-is-legible-glass-base-card.png",
+        "resume from docs/strategy/2026-05-28-1918-cdt-x-rolling-approval-calendar.md",
+        "preferred_resume_window=2026-05-29 10:00 CDT or the next owner-approved 10:00 CDT slot",
+        "AI tools make intent easy to express.",
+        "no public reply, like, repost, follow, message, schedule action, profile edit, or new post without exact owner approval",
+    ):
+        if required not in live_checkpoint:
+            fail(f"live growth checkpoint missing required item: {required}")
+    profile_pin_packet = PROFILE_PIN_DECISION_PACKET.read_text(encoding="utf-8")
+    for required in (
+        "prepared for owner review; no public profile action approved",
+        "no public X action is approved by this packet alone",
+        "pinning, unpinning, editing the bio, editing the header, or publishing a pinned-orientation post all require exact owner approval",
+        "do not change the profile before the 2026-05-28 20:00 CDT Denial decision window",
+        "public_action_taken=none",
+        "Evidence Before Claims",
+        "https://x.com/Latticra/status/2060093439945936993",
+        "https://x.com/Latticra/status/2059941871787347985",
+        "public_research_standard_visible_views=25",
+        "boundary_literacy_visible_views=4",
+        "evidence_before_claims_visible_views=39",
+        "outside_commenters_seen=0",
+        "Option A - Pin Evidence Before Claims",
+        "Option B - Pin Public Research Standard",
+        "Option C - Wait And Pin After 24-Hour Review",
+        "What to expect here:",
+        "Systems research for Linux-native secure substrates. Teaching boundary literacy, operator-visible evidence, and cryptographic planning without hype.",
+        "wait until the 24-hour review before pinning or editing the bio",
+        "no profile edit, pin, unpin, post, reply, like, repost, follow, message, or schedule action without exact owner approval",
+    ):
+        if required not in profile_pin_packet:
+            fail(f"profile pin conversion packet missing required item: {required}")
 
 
 def main() -> None:
@@ -569,7 +782,17 @@ def main() -> None:
     validate_post_lengths(TEN_AM_VERIFICATION_RUNBOOK)
     validate_post_lengths(SCHEDULED_QUEUE_VERIFICATION_CHAIN)
     validate_post_lengths(NEXT_SEQUENCE_PACKET)
+    validate_post_lengths(NEXT_MANUAL_APPROVAL_PACKET)
+    validate_post_lengths(GROWTH_CONVERSATION_PACKET)
+    validate_post_lengths(APPROVAL_SHORTLIST_LADDER)
+    validate_post_lengths(DENIAL_POST_HANDOFF)
+    validate_post_lengths(DENIAL_POST_DECISION_PACKET)
+    validate_post_lengths(CRYPTOGRAPHY_POST_HANDOFF)
+    validate_post_lengths(ROLLING_APPROVAL_CALENDAR)
+    validate_post_lengths(LIVE_GROWTH_CHECKPOINT)
+    validate_post_lengths(PROFILE_PIN_DECISION_PACKET)
     validate_reply_lengths(MENTION_RESPONSE_PACKET)
+    validate_reply_lengths(GROWTH_CONVERSATION_PACKET)
     validate_media_references(QUEUE)
     validate_media_references(CALENDAR)
     validate_media_references(TEXT_BANK)
@@ -578,7 +801,16 @@ def main() -> None:
     validate_media_references(FIRST_LIVE_POST_PACKET)
     validate_media_references(TEN_AM_VERIFICATION_RUNBOOK)
     validate_media_references(SCHEDULED_QUEUE_VERIFICATION_CHAIN)
+    validate_media_references(NEXT_MANUAL_APPROVAL_PACKET)
     validate_media_references(NEXT_SEQUENCE_PACKET)
+    validate_media_references(GROWTH_CONVERSATION_PACKET)
+    validate_media_references(APPROVAL_SHORTLIST_LADDER)
+    validate_media_references(DENIAL_POST_HANDOFF)
+    validate_media_references(DENIAL_POST_DECISION_PACKET)
+    validate_media_references(CRYPTOGRAPHY_POST_HANDOFF)
+    validate_media_references(ROLLING_APPROVAL_CALENDAR)
+    validate_media_references(LIVE_GROWTH_CHECKPOINT)
+    validate_media_references(PROFILE_PIN_DECISION_PACKET)
     validate_images()
     validate_wordmark_rule()
     validate_visual_series_artifacts()

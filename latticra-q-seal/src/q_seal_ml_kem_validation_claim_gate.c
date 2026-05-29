@@ -28,6 +28,7 @@ static unsigned required_items_satisfied(
     satisfied += one_if(gate->implementation_binding_manifest_bound);
     satisfied += one_if(gate->readiness_profile_bound);
     satisfied += one_if(gate->module_boundary_gate_bound);
+    satisfied += one_if(gate->security_policy_gate_bound);
     satisfied += one_if(gate->code_owner_review_bound);
     satisfied += one_if(gate->review_disposition_ledger_bound);
     satisfied += one_if(gate->reviewer_role_mapping_bound);
@@ -115,6 +116,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_validation_claim_gate_prepare(
     out->implementation_binding_manifest_bound = 1u;
     out->readiness_profile_bound = 1u;
     out->module_boundary_gate_bound = 1u;
+    out->security_policy_gate_bound = 1u;
     out->code_owner_review_bound = 1u;
     out->review_disposition_ledger_bound = 1u;
     out->reviewer_role_mapping_bound = 1u;
@@ -152,7 +154,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_validation_claim_gate_prepare(
     out->production_crypto_claim_allowed = 0u;
     out->operation_execution_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_validation_claim_items_total = 41u;
+    out->required_validation_claim_items_total = 42u;
     out->required_validation_claim_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -210,6 +212,7 @@ int latticra_q_seal_ml_kem_validation_claim_gate_allows_validation_claims(
            gate->implementation_binding_manifest_bound == 1u &&
            gate->readiness_profile_bound == 1u &&
            gate->module_boundary_gate_bound == 1u &&
+           gate->security_policy_gate_bound == 1u &&
            gate->code_owner_review_bound == 1u &&
            gate->review_disposition_ledger_bound == 1u &&
            gate->reviewer_role_mapping_bound == 1u &&
@@ -278,6 +281,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_validation_claim_gate_report(
         "implementation_binding_manifest_bound=%u\n"
         "readiness_profile_bound=%u\n"
         "module_boundary_gate_bound=%u\n"
+        "security_policy_gate_bound=%u\n"
         "code_owner_review_bound=%u\n"
         "review_disposition_ledger_bound=%u\n"
         "reviewer_role_mapping_bound=%u\n"
@@ -335,6 +339,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_validation_claim_gate_report(
         gate->implementation_binding_manifest_bound,
         gate->readiness_profile_bound,
         gate->module_boundary_gate_bound,
+        gate->security_policy_gate_bound,
         gate->code_owner_review_bound,
         gate->review_disposition_ledger_bound,
         gate->reviewer_role_mapping_bound,

@@ -14,6 +14,8 @@ Attached records append an HMAC-SHA256 commitment over `LSEHCOM1 || record-heade
 
 The committed detached API, `latticra_seal_hybrid_envelope_encrypt_committed`, `latticra_seal_hybrid_envelope_decrypt_committed`, `latticra_seal_hybrid_envelope_seal_committed`, and `latticra_seal_hybrid_envelope_open_committed`, keeps the detached salt, nonce, tag, ciphertext, and caller AAD field model while adding a 32-byte HMAC-SHA256 key commitment. The commitment covers `LSEDCOM1 || suite-id || kdf-domain || salt || nonce || tag || caller-aad-length || caller-aad || ciphertext-length || ciphertext` under a separate HKDF-SHA256 output label, is computed through provider-backed HMAC-SHA256 with a 256-bit commitment key, and is verified before AES-GCM decrypt or detached AAD framing can stage plaintext.
 
+The `latticra-seal hybrid` CLI self-check exercises both the attached-record path and the committed-detached path. It redacts secret material, salt, nonce, ciphertext, tag, commitment, and record bytes, verifies committed-detached commitment tampering is rejected before decrypt, and cleanses CLI-owned record, ciphertext, commitment, salt, nonce, tag, and plaintext buffers before reporting success.
+
 Detached and attached-record commitment verification uses OpenSSL `CRYPTO_memcmp` for the computed-versus-received HMAC comparison. The result surface records this as `detached_commitment_constant_time_compare` and `record_commitment_constant_time_compare`, and tamper invariants require the constant-time compare path before authentication failure and before any plaintext staging.
 
 The detached API also frames caller AAD before AES-GCM as `LSEDAAD1 || caller-aad-length || caller-aad`. That keeps low-level detached encryption from authenticating a bare byte string with no substrate context.
@@ -43,6 +45,8 @@ Writable outputs are checked for unsafe overlap with input buffers before crypto
 Tamper invariants cover detached ciphertext, detached salt, detached nonce, committed-detached ciphertext, salt, nonce, tag, AAD, and commitment changes, plus attached-record ciphertext, attached-record nonce, attached-record caller AAD, and attached-record commitment changes. Legacy detached tampering must fail AES-GCM authentication, cleanse caller-owned plaintext output, cleanse staged plaintext, and keep plaintext unreleased. Committed-detached and record byte or caller-AAD tampering must fail the key commitment before AES-GCM decryption stages plaintext.
 
 HKDF input buffers are passed through the OpenSSL EVP_KDF HKDF provider API in extract-and-expand mode with SHA-256 bound in the provider parameters. AES-256-GCM is fetched by provider algorithm name with a 96-bit nonce and 128-bit authentication tag bound through the EVP AEAD controls. HKDF input material is cleansed before the KDF helper returns. The derived AEAD key is cleansed before encrypt or decrypt returns, including authentication-failure paths where plaintext is not released.
+
+Hybrid envelope report rendering rejects zero-capacity buffers before formatting and validates the append cursor before every remaining-capacity subtraction. Tiny report buffers fail closed with `LATTICRA_STATUS_BUFFER_TOO_SMALL` and leave no partial report claim behind.
 
 seal_hybrid_envelope_present=1
 seal_hybrid_envelope_profile=latticra-seal-hybrid-envelope/0.1
@@ -172,6 +176,8 @@ failed_record_output_cleared=1
 successful_ciphertext_tail_cleared=1
 successful_plaintext_tail_cleared=1
 successful_record_tail_cleared=1
+report_zero_capacity_rejected=1
+report_append_cursor_guarded=1
 unsafe_buffer_overlap_rejected=1
 hkdf_intermediate_material_zeroized=1
 associated_data_supported=1
@@ -286,9 +292,16 @@ cli_salt_output=redacted
 cli_nonce_output=redacted
 cli_ciphertext_output=redacted
 cli_tag_output=redacted
+cli_commitment_output=redacted
 cli_record_output=redacted
 cli_record_buffer_zeroized=1
+cli_committed_ciphertext_buffer_zeroized=1
+cli_committed_secret_outputs_zeroized=1
 cli_recovered_plaintext_buffer_zeroized=1
+cli_committed_recovered_plaintext_buffer_zeroized=1
+cli_committed_tamper_plaintext_buffer_zeroized=1
+cli_committed_detached_envelope_checked=1
+cli_committed_detached_commitment_tampering_rejected_before_decrypt=1
 production_crypto_claim_allowed=0
 fips_claim_allowed=0
 runtime_authority_granted=0

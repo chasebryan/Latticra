@@ -31,6 +31,9 @@ static unsigned required_items_satisfied(
     satisfied += one_if(evidence->acvp_verdict_receipt_gate_bound);
     satisfied += one_if(evidence->validation_claim_gate_bound);
     satisfied += one_if(evidence->module_boundary_gate_bound);
+    satisfied += one_if(evidence->security_policy_gate_bound);
+    satisfied += one_if(evidence->evidence_import_packet_manifest_bound);
+    satisfied += one_if(evidence->evidence_import_review_gate_bound);
     satisfied += one_if(evidence->kat_acvp_gate_passing_recorded);
     satisfied += one_if(evidence->constant_time_gate_passing_recorded);
     satisfied += one_if(evidence->memory_safety_gate_passing_recorded);
@@ -98,6 +101,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_prepare(
     out->acvp_verdict_receipt_gate_bound = 1u;
     out->validation_claim_gate_bound = 1u;
     out->module_boundary_gate_bound = 1u;
+    out->security_policy_gate_bound = 1u;
+    out->evidence_import_packet_manifest_bound = 1u;
+    out->evidence_import_review_gate_bound = 1u;
     out->kat_acvp_gate_passing_recorded = 0u;
     out->constant_time_gate_passing_recorded = 0u;
     out->memory_safety_gate_passing_recorded = 0u;
@@ -112,12 +118,12 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_prepare(
     out->production_crypto_claim_allowed = 0u;
     out->fips_claim_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_promotion_items_total = 23u;
+    out->required_promotion_items_total = 26u;
     out->required_promotion_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
         sizeof(out->blocked_reason),
-        "ci-vector-acvp-verdict-validation-claim-module-boundary-constant-time-memory-side-channel-provider-binding-workflow-release-evidence-missing");
+        "ci-vector-acvp-verdict-validation-claim-module-boundary-security-policy-evidence-import-constant-time-memory-side-channel-provider-binding-workflow-release-evidence-missing");
     out->error = LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_BLOCKED;
     copy_literal(out->status, sizeof(out->status), "ml-kem-ci-promotion-evidence-blocked");
     return LATTICRA_Q_SEAL_STATUS_OK;
@@ -156,6 +162,9 @@ int latticra_q_seal_ml_kem_ci_promotion_evidence_allows_implementation_promotion
            evidence->acvp_verdict_receipt_gate_bound == 1u &&
            evidence->validation_claim_gate_bound == 1u &&
            evidence->module_boundary_gate_bound == 1u &&
+           evidence->security_policy_gate_bound == 1u &&
+           evidence->evidence_import_packet_manifest_bound == 1u &&
+           evidence->evidence_import_review_gate_bound == 1u &&
            evidence->kat_acvp_gate_passing_recorded == 1u &&
            evidence->constant_time_gate_passing_recorded == 1u &&
            evidence->memory_safety_gate_passing_recorded == 1u &&
@@ -203,6 +212,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_report(
         "acvp_verdict_receipt_gate_bound=%u\n"
         "validation_claim_gate_bound=%u\n"
         "module_boundary_gate_bound=%u\n"
+        "security_policy_gate_bound=%u\n"
+        "evidence_import_packet_manifest_bound=%u\n"
+        "evidence_import_review_gate_bound=%u\n"
         "kat_acvp_gate_passing_recorded=%u\n"
         "constant_time_gate_passing_recorded=%u\n"
         "memory_safety_gate_passing_recorded=%u\n"
@@ -241,6 +253,9 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_ci_promotion_evidence_report(
         evidence->acvp_verdict_receipt_gate_bound,
         evidence->validation_claim_gate_bound,
         evidence->module_boundary_gate_bound,
+        evidence->security_policy_gate_bound,
+        evidence->evidence_import_packet_manifest_bound,
+        evidence->evidence_import_review_gate_bound,
         evidence->kat_acvp_gate_passing_recorded,
         evidence->constant_time_gate_passing_recorded,
         evidence->memory_safety_gate_passing_recorded,

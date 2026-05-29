@@ -51,6 +51,8 @@ signed_receipt_proof_path_contract=1
 signed_receipt_proof_path_contract_status=1
 signed_receipt_proof_path_implementation=1
 signed_receipt_proof_path_status=1
+signed_receipt_proof_path_surface=1
+signed_receipt_proof_path_surface_status=1
 operator_visible_reports=1
 production_security_product=0
 runtime_authority_granted=0
@@ -139,7 +141,7 @@ seal_local_capability_registry_schema=report-surface
 seal_panel_status_surface=planning-checkpoint
 seal_panel_dashboard=view-model-report-surface
 seal_panel_dashboard_view_model=report-surface
-seal_signed_receipt_proof_path=verification-only-implementation
+seal_signed_receipt_proof_path=verification-only-report-surface
 seal_receipt_bundle=partial-local
 seal_operator_review_queue=planned
 ```
@@ -162,10 +164,11 @@ Completed recent checkpoints:
 12. A Seal Panel dashboard view-model report surface/status checkpoint that exposes the deterministic fixture without Panel UI, root, network, host scanning, or runtime authority.
 13. A signed receipt proof path contract/status checkpoint that defines the future verification-only proof chain while preserving no signing, no signature verification, no trust-root loading, no revocation lookup, no effects, and no runtime authority.
 14. A signed receipt proof path verification-only implementation that confirms local receipt and signing-operation metadata agree on digest and key identity while preserving no production proof, trust-root loading, revocation lookup, signing, effects, or authority.
+15. A signed receipt proof path report surface/status checkpoint that renders the deterministic verification-only proof summary while preserving no production proof, trust-root loading, revocation lookup, signing, effects, or authority.
 
 The product path should now prioritize:
 
-1. A signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.
+1. A signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.
 2. A Seal Panel UI integration contract that stays read-only and consumes the report surface without launching authority.
 3. A future enforcement preflight contract that keeps enforce mode closed until all predecessor evidence is present.
 
@@ -197,6 +200,8 @@ signed_receipt_proof_path_contract_present=1
 signed_receipt_proof_path_contract_status_present=1
 signed_receipt_proof_path_implementation_present=1
 signed_receipt_proof_path_status_present=1
+signed_receipt_proof_path_surface_present=1
+signed_receipt_proof_path_surface_status_present=1
 ```
 
 ## Non-Claims

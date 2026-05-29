@@ -68,9 +68,12 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.review_disposition_ledger_present == 1u, "disposition");
     EXPECT_TRUE(readiness.reviewer_identity_fixture_present == 1u, "identity");
     EXPECT_TRUE(readiness.reviewer_role_mapping_present == 1u, "role mapping");
+    EXPECT_TRUE(readiness.evidence_import_packet_manifest_present == 1u, "evidence packet");
+    EXPECT_TRUE(readiness.evidence_import_review_gate_present == 1u, "evidence import");
     EXPECT_TRUE(readiness.ci_promotion_evidence_present == 1u, "ci promotion");
     EXPECT_TRUE(readiness.validation_claim_gate_present == 1u, "validation claim");
     EXPECT_TRUE(readiness.module_boundary_gate_present == 1u, "module boundary");
+    EXPECT_TRUE(readiness.security_policy_gate_present == 1u, "security policy");
     EXPECT_TRUE(readiness.constant_time_review_present == 1u, "constant time");
     EXPECT_TRUE(readiness.randomness_source_contract_present == 1u, "randomness");
     EXPECT_TRUE(readiness.zeroization_evidence_present == 1u, "zeroization");
@@ -90,11 +93,11 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(readiness.apple_corecrypto_code_copied == 0u, "apple code");
     EXPECT_TRUE(readiness.external_provider_code_copied == 0u, "provider code");
     EXPECT_TRUE(readiness.provider_runtime_used == 0u, "provider runtime");
-    EXPECT_TRUE(readiness.components_total == 52u, "components total");
-    EXPECT_TRUE(readiness.components_present == 52u, "components present");
-    EXPECT_TRUE(readiness.runtime_blockers_total == 49u, "runtime blockers");
-    EXPECT_TRUE(readiness.required_readiness_items_total == 1487u, "readiness total");
-    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 1029u, "readiness satisfied");
+    EXPECT_TRUE(readiness.components_total == 55u, "components total");
+    EXPECT_TRUE(readiness.components_present == 55u, "components present");
+    EXPECT_TRUE(readiness.runtime_blockers_total == 52u, "runtime blockers");
+    EXPECT_TRUE(readiness.required_readiness_items_total == 1611u, "readiness total");
+    EXPECT_TRUE(readiness.required_readiness_items_satisfied == 1123u, "readiness satisfied");
     EXPECT_TRUE(readiness.design_frame_integration_ready == 1u, "design frame");
     EXPECT_TRUE(readiness.runtime_crypto_ready == 0u, "runtime crypto");
     EXPECT_TRUE(readiness.operations_enabled == 0u, "operations");
@@ -117,7 +120,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
             LATTICRA_Q_SEAL_STATUS_OK,
         "report");
     EXPECT_TRUE(strstr(rendered, "LATTICRA Q-SEAL READINESS PROFILE") != 0, "header");
-    EXPECT_TRUE(strstr(rendered, "components_present=52") != 0, "components report");
+    EXPECT_TRUE(strstr(rendered, "components_present=55") != 0, "components report");
     EXPECT_TRUE(
         strstr(rendered, "fips_conformance_matrix_present=1") != 0,
         "conformance report");
@@ -184,6 +187,12 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "reviewer_role_mapping_present=1") != 0,
         "role report");
+    EXPECT_TRUE(
+        strstr(rendered, "evidence_import_packet_manifest_present=1") != 0,
+        "evidence packet report");
+    EXPECT_TRUE(
+        strstr(rendered, "evidence_import_review_gate_present=1") != 0,
+        "evidence import report");
     EXPECT_TRUE(strstr(rendered, "ci_promotion_evidence_present=1") != 0, "ci report");
     EXPECT_TRUE(
         strstr(rendered, "validation_claim_gate_present=1") != 0,
@@ -191,6 +200,9 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "module_boundary_gate_present=1") != 0,
         "module boundary report");
+    EXPECT_TRUE(
+        strstr(rendered, "security_policy_gate_present=1") != 0,
+        "security policy report");
     EXPECT_TRUE(strstr(rendered, "constant_time_review_present=1") != 0, "constant report");
     EXPECT_TRUE(
         strstr(rendered, "randomness_source_contract_present=1") != 0,
@@ -221,7 +233,7 @@ static int readiness_profile_aggregates_fail_closed_state(void) {
     EXPECT_TRUE(
         strstr(rendered, "primitive_source_acceptance_gate_present=1") != 0,
         "source acceptance report");
-    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=49") != 0, "blockers report");
+    EXPECT_TRUE(strstr(rendered, "runtime_blockers_total=52") != 0, "blockers report");
     EXPECT_TRUE(
         strstr(rendered, "design_frame_integration_ready=1") != 0,
         "design report");

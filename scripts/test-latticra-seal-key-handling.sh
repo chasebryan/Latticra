@@ -17,9 +17,13 @@ require_contains() {
 }
 
 require_contains 'bounded_string_is' src/seal_key_handling.c
+require_contains 'bounded_string_empty' src/seal_key_handling.c
+require_contains 'crypto_graduation_gate_passed == 0u' src/seal_key_handling.c
 require_contains 'unterminated requested key handling status' tests/seal_key_handling_invariants.c
 require_contains 'authority key handling render rejected' tests/seal_key_handling_invariants.c
 require_contains 'ready flag key handling render rejected' tests/seal_key_handling_invariants.c
+require_contains 'absent crypto gate authority status' tests/seal_key_handling_invariants.c
+require_contains 'absent crypto gate stale render rejected' tests/seal_key_handling_invariants.c
 require_contains 'unterminated requested key handling -> denied-key-handling without copying caller bytes' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 
 $CC $CFLAGS -Iinclude src/seal_key_handling.c tests/seal_key_handling_invariants.c -o "$tmpdir/latticra-seal-key-handling-invariants"

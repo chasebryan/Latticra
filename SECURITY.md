@@ -211,6 +211,10 @@ The platform boot and firmware integrity baseline is recorded in `docs/PLATFORM_
 
 It keeps bootable OS readiness, Secure Boot, measured boot, TPM attestation, firmware update, firmware recovery, bootloader signing, boot policy enforcement, hardware root-of-trust, and platform integrity claims blocked until platform inventory, boot mode, Secure Boot state, PK/KEK/DB/DBX inventory, boot binary inventory, TPM/PCR measurement policy, firmware version inventory, firmware update provenance, firmware recovery path, boot integrity logging, platform administrator access, rollback planning, incident handoff, and exception ownership are recorded. Latticra does not implement Secure Boot enforcement, measured boot, TPM attestation, firmware mutation, firmware recovery, boot policy enforcement, platform integrity enforcement, or bootable OS readiness.
 
+The security validation and assessment baseline is recorded in `docs/SECURITY_VALIDATION_ASSESSMENT_BASELINE.md`.
+
+It keeps security-release, third-party validation, penetration-test, red-team, certification, compliance, production-protection, and high-assurance assessment claims blocked until authorization boundary, assessment scope, rules of engagement, test authorization, control objective mapping, safe test environment, static/dynamic/fuzz results, vulnerability scan results, manual review, findings ownership, remediation, retest, residual risk acceptance, independent review, security assessment report, POA&M or exception record, continuous monitoring, and public claim review are recorded. Latticra does not conduct penetration testing, red teaming, vulnerability scanning, certification, accreditation, third-party assessment, exploitation, evasion, offensive operations, or production security validation.
+
 This posture is an allocation of required work, not a compliance claim. It does not certify Latticra, accredit Latticra, make Latticra a production security product, or create a hardened runtime boundary.
 
 ## Contact and attribution

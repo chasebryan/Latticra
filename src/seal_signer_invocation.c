@@ -60,6 +60,10 @@ static int bounded_string_is(const char *value, size_t max_len, const char *expe
     return value_len == expected_len && memcmp(value, expected, value_len) == 0;
 }
 
+static int bounded_string_empty(const char *value, size_t max_len) {
+    return bounded_string_is(value, max_len, "");
+}
+
 static int is_allowed_signature(const char *signature) {
     return bounded_string_is(signature,
                              LATTICRA_SEAL_SIGNER_INVOCATION_LABEL_MAX,
@@ -142,6 +146,36 @@ static int handoff_flags_valid(const latticra_seal_signer_handoff_t *handoff) {
            boolean_flag_valid(handoff->host_read_performed) &&
            boolean_flag_valid(handoff->host_write_performed) &&
            boolean_flag_valid(handoff->network_performed);
+}
+
+static int handoff_crypto_graduation_gate_valid(
+    const latticra_seal_signer_handoff_t *handoff) {
+    if (handoff == NULL) {
+        return 0;
+    }
+    if (handoff->crypto_graduation_gate_present == 0u) {
+        return handoff->crypto_graduation_gate_passed == 0u &&
+               handoff->standard_expectations_met == 0u &&
+               handoff->local_verify_graduated == 0u &&
+               handoff->receipt_promotion_graduated == 0u &&
+               handoff->authority_promotion_allowed == 0u &&
+               bounded_string_empty(handoff->crypto_graduation_profile,
+                                    LATTICRA_SEAL_SIGNER_HANDOFF_PROFILE_MAX) &&
+               bounded_string_empty(handoff->assurance_baseline_profile,
+                                    LATTICRA_SEAL_SIGNER_HANDOFF_PROFILE_MAX) &&
+               bounded_string_is(handoff->crypto_graduation_gate_state,
+                                 LATTICRA_SEAL_SIGNER_HANDOFF_STATE_MAX,
+                                 "not-required");
+    }
+
+    return handoff->crypto_graduation_gate_passed == 1u &&
+           handoff->standard_expectations_met == 1u &&
+           handoff->local_verify_graduated == 1u &&
+           handoff->receipt_promotion_graduated == 1u &&
+           handoff->authority_promotion_allowed == 0u &&
+           bounded_string_is(handoff->crypto_graduation_gate_state,
+                             LATTICRA_SEAL_SIGNER_HANDOFF_STATE_MAX,
+                             "graduated-authority-neutral");
 }
 
 static int handoff_ready_state_valid(
@@ -231,6 +265,9 @@ static int requested_signer_invocation_present(
            requested_signer_invocation[0] != '\0';
 }
 
+static int invocation_crypto_graduation_gate_valid(
+    const latticra_seal_signer_invocation_t *invocation);
+
 static int invocation_ready_state_valid(
     const latticra_seal_signer_invocation_t *invocation) {
     if (invocation == NULL ||
@@ -248,15 +285,7 @@ static int invocation_ready_state_valid(
     return invocation->error == LATTICRA_SEAL_SIGNER_INVOCATION_OK &&
            invocation->signing_authorization_ready == 1u &&
            invocation->signer_handoff_ready == 1u &&
-           (invocation->crypto_graduation_gate_present == 0u ||
-            (invocation->crypto_graduation_gate_passed == 1u &&
-             invocation->standard_expectations_met == 1u &&
-             invocation->local_verify_graduated == 1u &&
-             invocation->receipt_promotion_graduated == 1u &&
-             invocation->authority_promotion_allowed == 0u &&
-             bounded_string_is(invocation->crypto_graduation_gate_state,
-                               LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
-                               "graduated-authority-neutral"))) &&
+           invocation_crypto_graduation_gate_valid(invocation) &&
            bounded_string_is(invocation->requested_signature,
                              LATTICRA_SEAL_SIGNER_INVOCATION_LABEL_MAX,
                              "Ed25519-development") &&
@@ -281,6 +310,36 @@ static int invocation_ready_state_valid(
            bounded_string_is(invocation->status,
                              LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
                              "signer-invocation-metadata");
+}
+
+static int invocation_crypto_graduation_gate_valid(
+    const latticra_seal_signer_invocation_t *invocation) {
+    if (invocation == NULL) {
+        return 0;
+    }
+    if (invocation->crypto_graduation_gate_present == 0u) {
+        return invocation->crypto_graduation_gate_passed == 0u &&
+               invocation->standard_expectations_met == 0u &&
+               invocation->local_verify_graduated == 0u &&
+               invocation->receipt_promotion_graduated == 0u &&
+               invocation->authority_promotion_allowed == 0u &&
+               bounded_string_empty(invocation->crypto_graduation_profile,
+                                    LATTICRA_SEAL_SIGNER_INVOCATION_PROFILE_MAX) &&
+               bounded_string_empty(invocation->assurance_baseline_profile,
+                                    LATTICRA_SEAL_SIGNER_INVOCATION_PROFILE_MAX) &&
+               bounded_string_is(invocation->crypto_graduation_gate_state,
+                                 LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
+                                 "not-required");
+    }
+
+    return invocation->crypto_graduation_gate_passed == 1u &&
+           invocation->standard_expectations_met == 1u &&
+           invocation->local_verify_graduated == 1u &&
+           invocation->receipt_promotion_graduated == 1u &&
+           invocation->authority_promotion_allowed == 0u &&
+           bounded_string_is(invocation->crypto_graduation_gate_state,
+                             LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
+                             "graduated-authority-neutral");
 }
 
 static const char *safe_requested_signer_invocation_for_copy(
@@ -464,15 +523,7 @@ latticra_status_t latticra_seal_signer_invocation_from_handoff(
         return LATTICRA_STATUS_OK;
     }
 
-    if (handoff->crypto_graduation_gate_present != 0u &&
-        (handoff->crypto_graduation_gate_passed != 1u ||
-         handoff->standard_expectations_met != 1u ||
-         handoff->local_verify_graduated != 1u ||
-         handoff->receipt_promotion_graduated != 1u ||
-         handoff->authority_promotion_allowed != 0u ||
-         !bounded_string_is(handoff->crypto_graduation_gate_state,
-                            LATTICRA_SEAL_SIGNER_HANDOFF_STATE_MAX,
-                            "graduated-authority-neutral"))) {
+    if (!handoff_crypto_graduation_gate_valid(handoff)) {
         out->error = LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_CRYPTO_GRADUATION_GATE;
         copy_literal(out->signer_invocation_state, sizeof(out->signer_invocation_state), "denied-crypto-graduation-gate");
         copy_literal(out->status, sizeof(out->status), "denied-crypto-graduation-gate");
@@ -616,6 +667,7 @@ int latticra_seal_signer_invocation_is_metadata_only(
            boolean_flag_valid(invocation->authority_promotion_allowed) &&
            boolean_flag_valid(invocation->signing_authorization_ready) &&
            boolean_flag_valid(invocation->signer_handoff_ready) &&
+           invocation_crypto_graduation_gate_valid(invocation) &&
            invocation_ready_state_valid(invocation) &&
            bounded_string_is(invocation->signer_invocation_profile,
                              LATTICRA_SEAL_SIGNER_INVOCATION_PROFILE_MAX,

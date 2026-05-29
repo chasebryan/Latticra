@@ -3,7 +3,7 @@
 Status: FIPS module boundary and security-policy gate
 Scope: fail-closed ML-KEM cryptographic module boundary, FIPS 140-3 security policy, CMVP submission, and ACVP certificate evidence before any FIPS, validation, migration, production, or runtime claim.
 
-This gate records the module-boundary evidence Q-Seal must require before ML-KEM can be described as a FIPS/CMVP-ready module or included in validation-language release claims. It separates algorithm-level evidence from cryptographic-module evidence: ACVP verdicts, KAT replay, source digests, and local provider tests do not establish a FIPS 140-3 module boundary, module version, security policy, roles/services table, operational environment, entropy boundary, zeroization review, or CMVP submission record. It does not execute ML-KEM, grant production cryptography, claim FIPS validation, import Apple or external provider code, mutate host files, open a network session, or grant runtime authority.
+This gate records the module-boundary evidence Q-Seal must require before ML-KEM can be described as a FIPS/CMVP-ready module or included in validation-language release claims. It separates algorithm-level evidence from cryptographic-module evidence: ACVP verdicts, KAT replay, source digests, local provider tests, and security-policy templates do not establish a FIPS 140-3 module boundary, module version, accepted security-policy gate, roles/services table, operational environment, entropy boundary, zeroization review, or CMVP submission record. It does not execute ML-KEM, grant production cryptography, claim FIPS validation, import Apple or external provider code, mutate host files, open a network session, or grant runtime authority.
 
 ```text
 module_boundary_gate_present=1
@@ -16,6 +16,7 @@ fips_203_algorithm_bound=1
 fips_140_3_module_security_bound=1
 cmvp_program_bound=1
 validation_claim_gate_bound=1
+security_policy_gate_bound=1
 acvp_verdict_receipt_gate_bound=1
 ci_promotion_evidence_bound=1
 implementation_binding_manifest_bound=1
@@ -60,8 +61,8 @@ production_crypto_claim_allowed=0
 fips_claim_allowed=0
 operation_execution_allowed=0
 runtime_authority_granted=0
-required_module_boundary_items_total=45
-required_module_boundary_items_satisfied=30
+required_module_boundary_items_total=46
+required_module_boundary_items_satisfied=31
 status=ml-kem-module-boundary-gate-blocked
 ```
 
@@ -70,7 +71,7 @@ status=ml-kem-module-boundary-gate-blocked
 Before Q-Seal can accept a module boundary, it must record:
 
 - cryptographic module name, version, source digest, and release artifact binding;
-- FIPS 140-3 security policy draft or final record for the claimed module;
+- accepted security-policy gate evidence for the claimed module;
 - operational environment and build configuration for the module;
 - services, roles, authentication, self-test, approved-algorithm inventory, entropy boundary, and zeroization boundary evidence;
 - ACVP algorithm certificate identifiers and CMVP submission identifiers when validation wording depends on them;

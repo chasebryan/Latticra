@@ -43,6 +43,10 @@ readme='README.md'
 packaging_readme='packaging/fedora/README.md'
 test_script='scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh'
 workflow='.github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml'
+closeout_doc='docs/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md'
+closeout_status='docs/status/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md'
+closeout_test='scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh'
+closeout_workflow='.github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml'
 review_doc='docs/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md'
 review_status='docs/status/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT_STATUS.md'
 review_test='scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh'
@@ -63,6 +67,10 @@ for file in \
   "$packaging_readme" \
   "$test_script" \
   "$workflow" \
+  "$closeout_doc" \
+  "$closeout_status" \
+  "$closeout_test" \
+  "$closeout_workflow" \
   "$review_doc" \
   "$review_status" \
   "$review_test" \
@@ -164,6 +172,13 @@ require_contains "$test_script" "$review_doc"
 require_contains "$workflow" "$review_doc"
 require_contains "$doc" "$review_status"
 require_contains "$status" "$review_status"
+require_contains "$closeout_doc" "$doc"
+require_contains "$closeout_status" "$doc"
+require_contains "$closeout_test" "$doc"
+require_contains "$closeout_workflow" "$doc"
+require_contains "$closeout_doc" "$status"
+require_contains "$closeout_status" "$status"
+require_contains 'fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' "$closeout_doc"
 require_contains 'fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' "$review_test"
 require_contains 'fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' "$matrix_script"
 require_contains 'fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' "$matrix_test"

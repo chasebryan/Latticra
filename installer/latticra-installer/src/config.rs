@@ -256,6 +256,7 @@ pub struct LatticraConsoleConfig {
     pub service_definitions_contract_profile: String,
     pub service_plan_contract_profile: String,
     pub service_runtime_contract_profile: String,
+    pub processes_contract_profile: String,
     pub receipt_request_contract_profile: String,
     pub receipt_payload_schema_profile: String,
     pub receipt_payload_artifact_draft_profile: String,
@@ -287,6 +288,7 @@ pub struct LatticraConsoleConfig {
     pub require_service_definitions_contract: bool,
     pub require_service_plan_contract: bool,
     pub require_service_runtime_contract: bool,
+    pub require_processes_contract: bool,
     pub require_receipt_request_contract: bool,
     pub require_receipt_payload_schema: bool,
     pub require_receipt_payload_artifact_draft: bool,
@@ -323,6 +325,7 @@ impl Default for LatticraConsoleConfig {
             service_definitions_contract_profile: "lc-service-definitions-v0".to_owned(),
             service_plan_contract_profile: "lc-service-plan-v0".to_owned(),
             service_runtime_contract_profile: "lc-service-runtime-v0".to_owned(),
+            processes_contract_profile: "lc-processes-v0".to_owned(),
             receipt_request_contract_profile: "lc-receipt-request-v0".to_owned(),
             receipt_payload_schema_profile: "lc-receipt-payload-schema-v0".to_owned(),
             receipt_payload_artifact_draft_profile: "lc-receipt-payload-artifact-draft-v0"
@@ -359,6 +362,7 @@ impl Default for LatticraConsoleConfig {
             require_service_definitions_contract: true,
             require_service_plan_contract: true,
             require_service_runtime_contract: true,
+            require_processes_contract: true,
             require_receipt_request_contract: true,
             require_receipt_payload_schema: true,
             require_receipt_payload_artifact_draft: true,
@@ -425,6 +429,7 @@ impl LatticraConsoleConfig {
         self.service_definitions_contract_profile = "lc-service-definitions-v0".to_owned();
         self.service_plan_contract_profile = "lc-service-plan-v0".to_owned();
         self.service_runtime_contract_profile = "lc-service-runtime-v0".to_owned();
+        self.processes_contract_profile = "lc-processes-v0".to_owned();
         self.receipt_request_contract_profile = "lc-receipt-request-v0".to_owned();
         self.receipt_payload_schema_profile = "lc-receipt-payload-schema-v0".to_owned();
         self.receipt_payload_artifact_draft_profile =
@@ -459,6 +464,7 @@ impl LatticraConsoleConfig {
         self.require_service_definitions_contract = true;
         self.require_service_plan_contract = true;
         self.require_service_runtime_contract = true;
+        self.require_processes_contract = true;
         self.require_receipt_request_contract = true;
         self.require_receipt_payload_schema = true;
         self.require_receipt_payload_artifact_draft = true;
@@ -544,6 +550,10 @@ impl LatticraConsoleConfig {
             (
                 "LC service runtime contract profile",
                 self.service_runtime_contract_profile.as_str(),
+            ),
+            (
+                "LC processes contract profile",
+                self.processes_contract_profile.as_str(),
             ),
             (
                 "LC receipt request contract profile",
@@ -1337,6 +1347,13 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     let _ = writeln!(out, "service_runtime_contract_present=1");
     let _ = writeln!(
         out,
+        "processes_contract_profile={}",
+        config.lc.processes_contract_profile
+    );
+    let _ = writeln!(out, "processes_contract_status=metadata-only-contract");
+    let _ = writeln!(out, "processes_contract_present=1");
+    let _ = writeln!(
+        out,
         "panel_embedded_console={}",
         config.lc.install.panel_embedded_console
     );
@@ -1457,6 +1474,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "service_runtime_contract_profile={}",
         config.lc.service_runtime_contract_profile
+    );
+    let _ = writeln!(
+        out,
+        "processes_contract_profile={}",
+        config.lc.processes_contract_profile
     );
     let _ = writeln!(
         out,
@@ -1604,6 +1626,11 @@ pub fn render_plan(config: &InstallerConfig) -> String {
     );
     let _ = writeln!(
         out,
+        "processes_contract_required={}",
+        config.lc.require_processes_contract
+    );
+    let _ = writeln!(
+        out,
         "receipt_request_contract_required={}",
         config.lc.require_receipt_request_contract
     );
@@ -1695,6 +1722,7 @@ pub fn render_plan(config: &InstallerConfig) -> String {
         out,
         "service_runtime_contract_status=metadata-only-contract"
     );
+    let _ = writeln!(out, "processes_contract_status=metadata-only-contract");
     let _ = writeln!(
         out,
         "receipt_request_contract_status=metadata-only-contract"

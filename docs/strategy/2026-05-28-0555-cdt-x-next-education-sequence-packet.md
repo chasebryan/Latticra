@@ -3,13 +3,13 @@
 Status: prepared for owner review; no public posting approved
 Created: 2026-05-28 05:55 CDT
 Account: @Latticra
-Scope: second glass-base educational sequence, exact draft copy, media paths, alt text, and suggested cadence after the active scheduled queue.
+Scope: second glass-base educational sequence, exact draft copy, media paths, alt text, and suggested cadence after the corrected first launch sequence.
 
 ## Purpose
 
 This packet prepares the next educational sequence without taking any public X action.
 
-It keeps the account ready to continue growing after the first five-card launch sequence runs, while preserving the approval boundary:
+It keeps the account ready to continue growing after the corrected first launch sequence, while preserving the approval boundary:
 
 ```text
 no public post without exact owner approval
@@ -20,21 +20,22 @@ keep public language evidence-bound
 
 ## Current Queue Boundary
 
-The active scheduled queue already occupies:
+The initial scheduled queue was canceled after the Evidence Before Claims image-only incident:
 
 ```text
-2026-05-28 10:00 CDT
-2026-05-28 15:00 CDT
-2026-05-28 20:00 CDT
-2026-05-29 01:00 CDT
+2026-05-28 10:00 CDT Boundary Literacy published
+2026-05-28 15:00 CDT Evidence Before Claims corrected and published at 15:18:45 CDT
+2026-05-28 20:00 CDT Denial Is Legible canceled from X scheduled drafts
+2026-05-29 01:00 CDT Cryptography Without Hype canceled from X scheduled drafts
 ```
 
 Recommended next review point:
 
 ```text
-review the first live post and scheduled queue before approving more public actions
-earliest practical next slot after the active queue: 2026-05-29 06:00 CDT
+review the corrected first three live posts before approving more public actions
+earliest practical next slot after the corrected Evidence post: 2026-05-28 20:00 CDT
 more conservative next slot: 2026-05-29 10:00 CDT
+use docs/strategy/2026-05-28-1605-cdt-x-next-manual-post-approval-packet.md for the next approved first-sequence manual candidate
 ```
 
 ## Review Contact Sheet

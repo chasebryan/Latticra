@@ -12,6 +12,8 @@ The header primary action rail now uses iconized, stable-width controls with exp
 
 The dashboard posture strip now exposes state-bearing cards for plan flow, user-local prefix guard, root authority, and production claim. Each card carries a data status, badge, stronger scan styling, right-inspector summary, and no-effect receipt binding so critical posture is inspectable without relying on color alone.
 
+The posture strip also uses a responsive minimum-width guard and normal word wrapping so readiness cards reflow instead of splitting status text into unreadable fragments, with the guard recorded in the right context summary and receipt posture model.
+
 The dashboard Components card now reports component health instead of only listing selected items: selected count, omitted optional count, core coverage, dashboard state, right-inspector context, and receipt rows all come from the same local component toggle model while production/main/edge authority stays zero.
 
 The workspace toolbar now includes a compact route strip that keeps active tab, profile, evidence detail, and the local-only boundary visible beside the main title. The same route state is mirrored into the right context inspector and no-effect receipt so QA can confirm orientation after deep links, profile changes, and evidence-detail adjustments.
@@ -84,7 +86,15 @@ The Delivery receipt checklist is stateful, persisted locally, guarded by mode a
 
 The Updater signed-delivery gate now renders manifest, artifact hash, rollback, confirmation, preview, apply, and authority state from one local-only gate model. Preview events can be recorded, but signed apply remains closed with zero production, network, main GUI, and edge GUI authority in the context inspector and no-effect receipt.
 
+The Evidence Queue filter now reports visible rows, guarded evidence rows, active filter text, zero-authority boundary, right-context summary, and receipt rows from one local queue model.
+
+The Event Trail card now reports retained event count, blocked event count, latest local event, safe DOM-rendered rows, zero-authority boundary, right-context summary, and receipt rows from one local event ledger model.
+
+The Receipt Preview now has a trust strip above the JSON payload with schema, event count, checklist progress, local-only scope, zero-authority boundary, right-context summary, and receipt-bound summary rows before QA relies on the full preview.
+
 The Evidence tab saves local no-effect receipt snapshots, keeps a selectable snapshot list, and compares saved event, checklist, schema, mode, and prefix state against the current preview.
+
+The Saved Receipts panel now exposes a trust strip for retained count, selected snapshot, diff state, export validation, zero-authority boundary, right-context summary, and receipt-bound trust rows from one local snapshot model.
 
 Selected saved receipts expose a local JSON export preview and download link that embeds a `NOT PRODUCTION EVIDENCE` watermark plus zero host-write, main GUI, and edge GUI authority fields.
 
@@ -116,7 +126,11 @@ Missing replay requests are explicit: the strip shows whether the requested snap
 
 The global QA replay strip summarizes active URL-requested state across tabs, mode, filters, selected gates, blocker items, snapshots, and digests, then binds that applied/ignored count into the no-effect receipt with production, main GUI, and edge GUI authority held at zero.
 
+The QA replay strip now uses a bounded wrapped chip layout: the first visible chips remain readable in the first viewport, additional requested parameters collapse into a local summary chip, and the full replay row set remains in the no-effect receipt.
+
 The right context inspector now mirrors brand emblem load state, selected promotion gate, production blocker, release acceptance, readiness comparison, comparison alignment, readiness trace, trace alignment, QA replay, and saved receipt context so reviewers retain orientation while moving across tabs, with the same local-only summary embedded in the receipt.
+
+The right context inspector also has a width guard for long replay and receipt summaries so local context can wrap inside the inspector without creating page-level horizontal overflow.
 
 The right Live Evidence card now renders from receipt-bound evidence rows instead of static mini-log copy. Its visible row count, guarded boundary rows, latest local event, zero-authority boundary, context inspector summary, and no-effect receipt section all share the same local-only state model.
 

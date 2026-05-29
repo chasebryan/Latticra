@@ -35,6 +35,7 @@ Known current evidence includes:
 - bounded no-effect Seal Panel dashboard view-model implementation with caller-provided report strings only
 - Seal Panel dashboard view-model report surface/status checkpoint with deterministic local fixture output only
 - signed receipt proof path verification-only implementation with digest/key agreement and no trust-root loading, revocation lookup, signing, effects, or authority
+- signed receipt proof path report surface/status checkpoint with deterministic local fixture output only and no trust-root loading, revocation lookup, signing, effects, or authority
 
 ## Current authority limits
 
@@ -78,6 +79,8 @@ signed_receipt_proof_path_contract_present=1
 signed_receipt_proof_path_contract_status_present=1
 signed_receipt_proof_path_implementation_present=1
 signed_receipt_proof_path_status_present=1
+signed_receipt_proof_path_surface_present=1
+signed_receipt_proof_path_surface_status_present=1
 panel_bridge_planning=1
 runtime_enforcement=0
 network_operation=0

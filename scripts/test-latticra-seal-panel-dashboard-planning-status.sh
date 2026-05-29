@@ -77,7 +77,7 @@ require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md' "$s
 require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md' "$status_file"
 require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md' "$status_file"
 require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md' "$status_file"
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$status_file"
+require_contains 'The next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-planning-status.sh' .github/workflows/latticra-seal-panel-dashboard-planning-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-planning-status.yml
 
@@ -93,7 +93,7 @@ require_contains 'panel_dashboard_planning_checkpoint_present=1' "$product_doc"
 require_contains 'panel_dashboard_planning_status_present=1' "$product_doc"
 require_contains 'Seal Panel dashboard view-model implementation plan' "$product_doc"
 require_contains 'bounded no-effect Seal Panel dashboard view-model implementation' "$product_doc"
-require_contains 'signed receipt proof path' "$product_doc"
+require_contains 'signed receipt trust-root boundary contract' "$product_doc"
 
 require_contains 'panel_dashboard_planning_checkpoint_present=1' "$seal_status"
 require_contains 'panel_dashboard_planning_status_present=1' "$seal_status"

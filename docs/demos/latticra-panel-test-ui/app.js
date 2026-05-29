@@ -14,6 +14,7 @@ const STORAGE_KEY = "latticra-panel-test-ui-state-v1";
 const SAVED_RECEIPT_LIMIT = 8;
 const SNAPSHOT_LABEL_MAX_LENGTH = 48;
 const COMMAND_PALETTE_RESULT_LIMIT = 12;
+const QA_REPLAY_VISIBLE_CHIP_LIMIT = 6;
 
 const components = [
   {
@@ -136,6 +137,7 @@ const state = {
   prefix: "~/.local",
   prefixValid: true,
   evidenceDetail: 2,
+  evidenceFilter: "",
   blockerFilter: "",
   reviewFilter: "all",
   receiptDiffFilter: "all",
@@ -1569,6 +1571,194 @@ function deliveryPlanPreviewText(rows = deliveryPlanRows()) {
     .join("\n");
 }
 
+function evidenceQueueRows(filter = state.evidenceFilter) {
+  const normalized = (filter || "").trim().toLowerCase();
+  return evidence.map(([key, value, group], index) => {
+    const status = group === "plan" || group === "lane" ? "ready" : "guarded";
+    const haystack = `${key} ${value} ${group}`.toLowerCase();
+    return {
+      key,
+      value,
+      group,
+      status,
+      visible: normalized.length === 0 || haystack.includes(normalized),
+      order: index + 1,
+      filter: normalized || "none",
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    };
+  });
+}
+
+function evidenceQueueSummary(rows = evidenceQueueRows()) {
+  const visibleRows = rows.filter((row) => row.visible);
+  const guarded = visibleRows.filter((row) => row.status === "guarded").length;
+  const ready = visibleRows.filter((row) => row.status === "ready").length;
+  const filter = rows[0]?.filter || "none";
+  return {
+    state: visibleRows.length > 0 ? "ready" : "empty",
+    total: rows.length,
+    visible: visibleRows.length,
+    ready,
+    guarded,
+    filter,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
+function eventTrailRows() {
+  return state.events
+    .map((event, index) => ({
+      key: `event_${index + 1}`,
+      label: event.label,
+      detail: event.detail,
+      timestamp: event.timestamp,
+      status: event.level === "blocked" ? "blocked" : "ready",
+      order: index + 1,
+      local_only: true,
+      production_evidence_claim: 0,
+      host_write_authority: 0,
+      runtime_enforcement_authority: 0,
+      main_gui_mutation_required: 0,
+      edge_gui_mutation_required: 0,
+    }))
+    .reverse();
+}
+
+function eventTrailSummary(rows = eventTrailRows()) {
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const ready = rows.filter((row) => row.status === "ready").length;
+  const latest = rows[0]?.label || "none";
+  return {
+    state: rows.length === 0 ? "empty" : blocked > 0 ? "review" : "ready",
+    total: rows.length,
+    ready,
+    blocked,
+    latest,
+    retained_limit: 24,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
+function receiptPreviewRows() {
+  const checklist = receiptChecklistSummary();
+  const checklistStatus = checklist.blocked > 0 ? "blocked" : checklist.pending > 0 ? "review" : "ready";
+  const boundary = {
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+  return [
+    {
+      key: "schema",
+      label: "schema",
+      value: "latticra-panel-test-ui-receipt-v0",
+      status: "ready",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "event_count",
+      label: "events",
+      value: String(state.events.length),
+      status: "ready",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "checklist",
+      label: "checklist",
+      value: `${checklist.recorded}/${checklist.total}`,
+      status: checklistStatus,
+      pending: checklist.pending,
+      blocked: checklist.blocked,
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "scope",
+      label: "scope",
+      value: "local-only",
+      status: "ready",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      value: "production=0 / host=0 / runtime=0 / main=0 / edge=0",
+      status: "guarded",
+      local_only: true,
+      ...boundary,
+    },
+  ];
+}
+
+function receiptPreviewSummary(rows = receiptPreviewRows()) {
+  const blocked = rows.filter((row) => row.status === "blocked").length;
+  const review = rows.filter((row) => row.status === "review" || row.status === "guarded").length;
+  const checklist = rows.find((row) => row.key === "checklist");
+  const schema = rows.find((row) => row.key === "schema");
+  const events = rows.find((row) => row.key === "event_count");
+  const scope = rows.find((row) => row.key === "scope");
+  return {
+    state: blocked > 0 || review > 0 ? "review" : "ready",
+    schema: schema?.value || "receipt-v0",
+    event_count: Number(events?.value || 0),
+    checklist: checklist?.value || "0/0",
+    checklist_pending: checklist?.pending || 0,
+    checklist_blocked: checklist?.blocked || 0,
+    scope: scope?.value || "local-only",
+    row_count: rows.length,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
+  };
+}
+
 function updaterGateRows() {
   const previewRecorded = state.events.some((event) => event.label === "Updater preview");
   return [
@@ -1852,6 +2042,9 @@ function workspacePostureSummary(rows = workspacePostureRows()) {
     ready: rows.filter((row) => row.state === "ready" || row.state === "armed").length,
     guarded: rows.filter((row) => row.state === "guarded").length,
     blocked: rows.filter((row) => blockedStates.includes(row.state)).length,
+    layout_guard: "responsive-min-width",
+    wrap_guard: "normal-word-wrap",
+    layout_stable: true,
     zero_authority: rows.every(
       (row) =>
         row.production_evidence_claim === 0 &&
@@ -2721,6 +2914,94 @@ function receiptDiffSummary(snapshot, currentReceipt = buildReceiptPreview()) {
     visible_count: visibleRows.length,
     status: snapshot ? (changedCount > 0 ? "changed" : "same") : "none",
     rows,
+  };
+}
+
+function savedReceiptTrustRows(snapshot = selectedSavedReceipt(), currentReceipt = null, artifact = null) {
+  const diff = artifact?.field_comparison || (snapshot && currentReceipt
+    ? receiptDiffSummary(snapshot, currentReceipt)
+    : { status: snapshot ? "pending" : "none", changed_count: 0, row_count: 0 });
+  const exportState = artifact
+    ? exportValidationSummary(artifact)
+    : { status: snapshot ? "pending" : "none", passed: 0, total: 0 };
+  const boundary = {
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+  };
+  return [
+    {
+      key: "saved_count",
+      label: "saved",
+      value: `${state.savedReceipts.length}/${SAVED_RECEIPT_LIMIT}`,
+      status: state.savedReceipts.length > 0 ? "ready" : "review",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "selected_snapshot",
+      label: "selected",
+      value: snapshot?.label || "none",
+      status: snapshot ? "ready" : "review",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "diff_state",
+      label: "diff",
+      value: snapshot && currentReceipt ? `${diff.status}:${diff.changed_count}/${diff.row_count}` : diff.status,
+      status: snapshot && currentReceipt && diff.status === "same" ? "ready" : "review",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "export_validation",
+      label: "export",
+      value: artifact ? `${exportState.status}:${exportState.passed}/${exportState.total}` : exportState.status,
+      status: artifact && exportState.status === "passed" ? "ready" : "review",
+      local_only: true,
+      ...boundary,
+    },
+    {
+      key: "authority_boundary",
+      label: "authority boundary",
+      value: "production=0 / host=0 / main=0 / edge=0",
+      status: "ready",
+      local_only: true,
+      ...boundary,
+    },
+  ];
+}
+
+function savedReceiptTrustSummary(rows = savedReceiptTrustRows()) {
+  const selected = rows.find((row) => row.key === "selected_snapshot");
+  const count = rows.find((row) => row.key === "saved_count");
+  const diff = rows.find((row) => row.key === "diff_state");
+  const exportState = rows.find((row) => row.key === "export_validation");
+  const review = rows.filter((row) => row.status === "review").length;
+  return {
+    state: selected?.value === "none" ? "empty" : review > 0 ? "review" : "ready",
+    saved_count: count?.value || `0/${SAVED_RECEIPT_LIMIT}`,
+    selected: selected?.value || "none",
+    diff: diff?.value || "none",
+    export_state: exportState?.value || "none",
+    row_count: rows.length,
+    local_only: true,
+    production_evidence_claim: 0,
+    host_write_authority: 0,
+    runtime_enforcement_authority: 0,
+    main_gui_mutation_required: 0,
+    edge_gui_mutation_required: 0,
+    zero_authority: rows.every(
+      (row) =>
+        row.production_evidence_claim === 0 &&
+        row.host_write_authority === 0 &&
+        row.runtime_enforcement_authority === 0 &&
+        row.main_gui_mutation_required === 0 &&
+        row.edge_gui_mutation_required === 0,
+    ),
   };
 }
 
@@ -4515,10 +4796,26 @@ function qaReplayRows(params = queryParams()) {
   });
 }
 
+function qaReplayVisibleRows(rows = qaReplayRows(), limit = QA_REPLAY_VISIBLE_CHIP_LIMIT) {
+  const activeRows = rows.filter((row) => row.requested);
+  const displayRows = activeRows.length > 0 ? activeRows : rows.slice(0, 3);
+  const visibleRows = displayRows.slice(0, limit);
+  return {
+    rows: visibleRows,
+    total_chips: displayRows.length,
+    visible_chips: visibleRows.length,
+    hidden_chips: Math.max(displayRows.length - visibleRows.length, 0),
+    chip_limit: limit,
+    chip_layout: "bounded-wrap",
+    overflow_guard: "no-horizontal-scroll",
+  };
+}
+
 function qaReplaySummary(rows = qaReplayRows(), params = queryParams()) {
   const requested = rows.filter((row) => row.requested);
   const knownKeys = qaReplaySpecs().map((spec) => spec.param);
   const extraParams = Array.from(params.keys()).filter((key) => !knownKeys.includes(key));
+  const visible = qaReplayVisibleRows(rows);
   return {
     active: requested.length > 0 || extraParams.length > 0,
     route: state.activeTab,
@@ -4527,6 +4824,11 @@ function qaReplaySummary(rows = qaReplayRows(), params = queryParams()) {
     applied: requested.filter((row) => row.status === "applied" || row.status === "captured").length,
     ignored: requested.filter((row) => row.status === "ignored").length,
     extra_params: extraParams.length,
+    visible_chips: visible.visible_chips,
+    hidden_chips: visible.hidden_chips,
+    chip_limit: visible.chip_limit,
+    chip_layout: visible.chip_layout,
+    overflow_guard: visible.overflow_guard,
     local_only: true,
     production_evidence_claim: 0,
     host_write_authority: 0,
@@ -4634,7 +4936,11 @@ function contextInspectorSummary() {
   const workflow = operatorWorkflowSummary();
   const deliveryPlan = deliveryPlanSummary();
   const updaterGate = updaterGateSummary();
+  const evidenceQueue = evidenceQueueSummary();
+  const eventTrail = eventTrailSummary();
+  const receiptPreview = receiptPreviewSummary();
   const saved = selectedSavedReceipt();
+  const savedTrust = savedReceiptTrustSummary();
   const promotion = selectedPromotionGateRow();
   const blocker = selectedProductionBlockerRow();
   const acceptance = selectedReleaseAcceptanceRow();
@@ -4679,6 +4985,9 @@ function contextInspectorSummary() {
     posture_ready: posture.ready,
     posture_guarded: posture.guarded,
     posture_blocked: posture.blocked,
+    posture_layout_guard: posture.layout_guard,
+    posture_wrap_guard: posture.wrap_guard,
+    posture_layout_stable: posture.layout_stable,
     posture_zero_authority: posture.zero_authority,
     workspace_route_tab: route.active_tab,
     workspace_route_profile: route.profile,
@@ -4728,6 +5037,29 @@ function contextInspectorSummary() {
     updater_gate_preview_status: updaterGate.preview_status,
     updater_gate_can_apply: updaterGate.can_apply,
     updater_gate_zero_authority: updaterGate.zero_authority,
+    evidence_queue_state: evidenceQueue.state,
+    evidence_queue_visible: evidenceQueue.visible,
+    evidence_queue_total: evidenceQueue.total,
+    evidence_queue_guarded: evidenceQueue.guarded,
+    evidence_queue_filter: evidenceQueue.filter,
+    evidence_queue_zero_authority: evidenceQueue.zero_authority,
+    event_trail_state: eventTrail.state,
+    event_trail_total: eventTrail.total,
+    event_trail_blocked: eventTrail.blocked,
+    event_trail_latest: eventTrail.latest,
+    event_trail_zero_authority: eventTrail.zero_authority,
+    receipt_preview_state: receiptPreview.state,
+    receipt_preview_schema: receiptPreview.schema,
+    receipt_preview_events: receiptPreview.event_count,
+    receipt_preview_checklist: receiptPreview.checklist,
+    receipt_preview_scope: receiptPreview.scope,
+    receipt_preview_zero_authority: receiptPreview.zero_authority,
+    saved_receipt_trust_state: savedTrust.state,
+    saved_receipt_trust_count: savedTrust.saved_count,
+    saved_receipt_trust_selected: savedTrust.selected,
+    saved_receipt_trust_diff: savedTrust.diff,
+    saved_receipt_trust_export: savedTrust.export_state,
+    saved_receipt_trust_zero_authority: savedTrust.zero_authority,
     promotion_gate: promotion?.label || "none",
     promotion_status: promotion?.status || "none",
     production_blocker: blocker?.label || "none",
@@ -4749,6 +5081,9 @@ function contextInspectorSummary() {
     qa_replay_state: replay.active ? (replay.ignored > 0 ? "partial" : "active") : "none",
     qa_replay_requested: replay.requested,
     qa_replay_ignored: replay.ignored,
+    qa_replay_visible_chips: replay.visible_chips,
+    qa_replay_hidden_chips: replay.hidden_chips,
+    qa_replay_overflow_guard: replay.overflow_guard,
     saved_receipt: saved?.label || "none",
     saved_receipt_id: saved?.id || "none",
     local_only: true,
@@ -4764,16 +5099,20 @@ function renderQaReplayStrip() {
   const strip = qs("#qa-replay-strip");
   const rows = qaReplayRows();
   const summary = qaReplaySummary(rows);
-  const activeRows = rows.filter((row) => row.requested);
+  const visible = qaReplayVisibleRows(rows);
   strip.dataset.replayStatus = summary.active ? (summary.ignored > 0 ? "partial" : "active") : "idle";
+  strip.dataset.replayChipLayout = summary.chip_layout;
+  strip.dataset.replayOverflowGuard = summary.overflow_guard;
   qs("#qa-replay-state").textContent = summary.active ? (summary.ignored > 0 ? "partial replay" : "replay active") : "no replay";
-  qs("#qa-replay-summary").textContent = `${summary.requested} requested / ${summary.applied} applied / ${summary.ignored} ignored`;
+  qs("#qa-replay-summary").textContent =
+    `${summary.requested} requested / ${summary.applied} applied / ${summary.ignored} ignored / chips ${summary.visible_chips}/${summary.visible_chips + summary.hidden_chips}`;
   qs("#qa-replay-boundary").textContent = `production=${summary.production_evidence_claim} main=${summary.main_gui_mutation_required} edge=${summary.edge_gui_mutation_required}`;
 
   const chips = qs("#qa-replay-chips");
   chips.innerHTML = "";
-  const visibleRows = activeRows.length > 0 ? activeRows : rows.slice(0, 3);
-  visibleRows.forEach((row) => {
+  chips.dataset.replayVisibleCount = String(summary.visible_chips);
+  chips.dataset.replayHiddenCount = String(summary.hidden_chips);
+  visible.rows.forEach((row) => {
     const chip = document.createElement("span");
     chip.className = "qa-replay-chip";
     chip.dataset.replayParamStatus = row.status;
@@ -4784,6 +5123,17 @@ function renderQaReplayStrip() {
     chip.append(label, value);
     chips.append(chip);
   });
+  if (summary.hidden_chips > 0) {
+    const summaryChip = document.createElement("span");
+    summaryChip.className = "qa-replay-chip";
+    summaryChip.dataset.replayParamStatus = "summary";
+    const label = document.createElement("strong");
+    label.textContent = "More";
+    const value = document.createElement("code");
+    value.textContent = `${summary.hidden_chips} retained in receipt rows`;
+    summaryChip.append(label, value);
+    chips.append(summaryChip);
+  }
 }
 
 function renderVisualIdentityPanel() {
@@ -4840,7 +5190,7 @@ function renderContextInspector() {
   qs("#context-action-rail").textContent =
     `${summary.primary_action_rail_status}: ${summary.primary_action_count} actions / ${summary.primary_action_iconized_count} icons / primary ${summary.primary_action_key}`;
   qs("#context-posture-strip").textContent =
-    `${summary.posture_ready} ready / ${summary.posture_guarded} guarded / ${summary.posture_blocked} blocked / zero authority ${summary.posture_zero_authority ? "yes" : "no"}`;
+    `${summary.posture_ready} ready / ${summary.posture_guarded} guarded / ${summary.posture_blocked} blocked / layout ${summary.posture_layout_stable ? "stable" : "review"} / zero authority ${summary.posture_zero_authority ? "yes" : "no"}`;
   qs("#context-component-health").textContent =
     `${summary.component_health_state}: ${summary.component_health_selected}/${summary.component_health_total} selected / core ${summary.component_health_core_coverage} / omitted ${summary.component_health_omitted} / zero authority ${summary.component_health_zero_authority ? "yes" : "no"}`;
   qs("#context-workspace-route").textContent =
@@ -4870,11 +5220,18 @@ function renderContextInspector() {
   qs("#context-readiness-trace").textContent = `${summary.readiness_trace} / ${summary.readiness_trace_status}`;
   qs("#context-trace-alignment").textContent =
     `${summary.trace_alignment_status}: ${summary.trace_alignment_aligned} aligned, ${summary.trace_alignment_review} review`;
+  qs("#context-evidence-queue").textContent =
+    `${summary.evidence_queue_state}: ${summary.evidence_queue_visible}/${summary.evidence_queue_total} visible / guarded ${summary.evidence_queue_guarded} / filter ${summary.evidence_queue_filter} / zero authority ${summary.evidence_queue_zero_authority ? "yes" : "no"}`;
+  qs("#context-event-trail").textContent =
+    `${summary.event_trail_state}: ${summary.event_trail_total} events / blocked ${summary.event_trail_blocked} / latest ${summary.event_trail_latest} / zero authority ${summary.event_trail_zero_authority ? "yes" : "no"}`;
+  qs("#context-receipt-preview").textContent =
+    `${summary.receipt_preview_state}: ${summary.receipt_preview_schema} / events ${summary.receipt_preview_events} / checklist ${summary.receipt_preview_checklist} / ${summary.receipt_preview_scope} / zero authority ${summary.receipt_preview_zero_authority ? "yes" : "no"}`;
   qs("#context-qa-replay").textContent =
     summary.qa_replay_state === "none"
       ? "none"
-      : `${summary.qa_replay_state}: ${summary.qa_replay_requested} requested, ${summary.qa_replay_ignored} ignored`;
-  qs("#context-saved-receipt").textContent = summary.saved_receipt;
+      : `${summary.qa_replay_state}: ${summary.qa_replay_requested} requested, ${summary.qa_replay_ignored} ignored, chips ${summary.qa_replay_visible_chips}/${summary.qa_replay_visible_chips + summary.qa_replay_hidden_chips}, ${summary.qa_replay_overflow_guard}`;
+  qs("#context-saved-receipt").textContent =
+    `${summary.saved_receipt_trust_state}: ${summary.saved_receipt_trust_count} saved / selected ${summary.saved_receipt_trust_selected} / diff ${summary.saved_receipt_trust_diff} / export ${summary.saved_receipt_trust_export} / zero authority ${summary.saved_receipt_trust_zero_authority ? "yes" : "no"}`;
 }
 
 function renderWorkspaceRoute() {
@@ -5458,6 +5815,18 @@ function buildReceiptPreview() {
       summary: updaterGateSummary(),
       rows: updaterGateRows(),
     },
+    evidence_queue: {
+      summary: evidenceQueueSummary(),
+      rows: evidenceQueueRows(),
+    },
+    event_trail: {
+      summary: eventTrailSummary(),
+      rows: eventTrailRows().slice(0, 6),
+    },
+    receipt_preview_state: {
+      summary: receiptPreviewSummary(),
+      rows: receiptPreviewRows(),
+    },
     inspector_live_evidence: {
       summary: inspectorLiveEvidenceSummary(),
       rows: inspectorLiveEvidenceRows(),
@@ -5661,6 +6030,8 @@ function buildReceiptPreview() {
       qa_handoff_replay_restored: false,
       qa_handoff_replay_digest_status: "none",
       qa_handoff_local_only: true,
+      trust_summary: savedReceiptTrustSummary(savedReceiptTrustRows(selectedSnapshot, null, null)),
+      trust_rows: savedReceiptTrustRows(selectedSnapshot, null, null),
     },
     event_count: state.events.length,
     recent_events: state.events.slice(-6),
@@ -5677,6 +6048,9 @@ function buildReceiptPreview() {
     },
   };
   const selectedArtifact = selectedSnapshot ? buildReceiptExportArtifact(selectedSnapshot, receipt) : null;
+  const selectedTrustRows = savedReceiptTrustRows(selectedSnapshot, receipt, selectedArtifact);
+  receipt.saved_receipts.trust_summary = savedReceiptTrustSummary(selectedTrustRows);
+  receipt.saved_receipts.trust_rows = selectedTrustRows;
   const selectedContextDrift = selectedArtifact?.context_drift || receiptContextDriftSummary(null, receipt);
   receipt.saved_receipts.context_drift_status = selectedContextDrift.status;
   receipt.saved_receipts.context_drift_changed = selectedContextDrift.changed_count;
@@ -5730,7 +6104,8 @@ function buildReceiptPreview() {
 }
 
 function renderReceiptPreview() {
-  qs("#event-count").textContent = `${state.events.length} events`;
+  renderEventTrailSummary();
+  renderReceiptPreviewSummary();
   renderProfileScopeControl();
   renderEvidenceDetailControl();
   renderReadinessRail();
@@ -5752,11 +6127,39 @@ function renderReceiptPreview() {
   renderSavedReceipts();
 }
 
+function renderReceiptPreviewSummary(summary = receiptPreviewSummary()) {
+  const panel = qs("#receipt-preview-summary");
+  if (panel instanceof HTMLElement) {
+    panel.dataset.receiptPreviewState = summary.state;
+  }
+  qs("#receipt-preview-schema").textContent = summary.schema.replace("latticra-panel-test-ui-", "");
+  qs("#receipt-preview-events").textContent = String(summary.event_count);
+  qs("#receipt-preview-checklist").textContent = summary.checklist;
+  qs("#receipt-preview-scope").textContent = summary.scope;
+  qs("#receipt-preview-boundary").textContent =
+    `production=${summary.production_evidence_claim} / host=${summary.host_write_authority} / runtime=${summary.runtime_enforcement_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+}
+
+function renderEventTrailSummary(summary = eventTrailSummary()) {
+  const panel = qs("#event-trail-summary");
+  if (panel instanceof HTMLElement) {
+    panel.dataset.eventTrailState = summary.state;
+  }
+  qs("#event-count").textContent = `${summary.total} events`;
+  qs("#event-trail-total").textContent = String(summary.total);
+  qs("#event-trail-blocked").textContent = String(summary.blocked);
+  qs("#event-trail-retained").textContent = `${summary.total}/${summary.retained_limit}`;
+  qs("#event-trail-latest").textContent = summary.latest;
+  qs("#event-trail-boundary").textContent =
+    `production=${summary.production_evidence_claim} / host=${summary.host_write_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+}
+
 function renderEventTrail() {
   const trail = qs("#event-trail");
   trail.innerHTML = "";
-  const events = state.events.slice().reverse();
-  if (events.length === 0) {
+  const rows = eventTrailRows();
+  renderEventTrailSummary(eventTrailSummary(rows));
+  if (rows.length === 0) {
     const empty = document.createElement("article");
     empty.className = "empty-state";
     empty.textContent = "No operator events recorded in this test lane.";
@@ -5764,17 +6167,22 @@ function renderEventTrail() {
     renderReceiptPreview();
     return;
   }
-  events.forEach((event) => {
+  rows.forEach((event) => {
     const row = document.createElement("article");
     row.className = "event-row";
-    row.innerHTML = `
-      <span class="swatch ${event.level === "blocked" ? "stop" : "ok"}" aria-hidden="true"></span>
-      <div>
-        <strong>${event.label}</strong>
-        <small>${event.detail}</small>
-        <code>${event.timestamp}</code>
-      </div>
-    `;
+    row.dataset.eventStatus = event.status;
+    const swatch = document.createElement("span");
+    swatch.className = `swatch ${event.status === "blocked" ? "stop" : "ok"}`;
+    swatch.setAttribute("aria-hidden", "true");
+    const copy = document.createElement("div");
+    const label = document.createElement("strong");
+    label.textContent = event.label;
+    const detail = document.createElement("small");
+    detail.textContent = event.detail;
+    const timestamp = document.createElement("code");
+    timestamp.textContent = event.timestamp;
+    copy.append(label, detail, timestamp);
+    row.append(swatch, copy);
     trail.append(row);
   });
   renderReceiptPreview();
@@ -5788,6 +6196,26 @@ function renderReceiptDelta(snapshot) {
   qs("#receipt-delta-blocked").textContent = delta.blocked;
   qs("#receipt-delta-mode").textContent = delta.mode;
   qs("#receipt-delta-prefix").textContent = delta.prefix;
+}
+
+function renderSavedReceiptTrust(snapshot, artifact = null) {
+  const rows = savedReceiptTrustRows(snapshot, artifact?.selected_snapshot?.receipt || null, artifact);
+  const summary = savedReceiptTrustSummary(rows);
+  const panel = qs("#saved-receipt-trust");
+  if (panel instanceof HTMLElement) {
+    panel.dataset.savedReceiptState = summary.state;
+  }
+  qs("#saved-receipt-trust-count").textContent = summary.saved_count;
+  qs("#saved-receipt-trust-selected").textContent = summary.selected;
+  qs("#saved-receipt-trust-diff").textContent = summary.diff;
+  qs("#saved-receipt-trust-export").textContent = summary.export_state;
+  qs("#saved-receipt-trust-boundary").textContent =
+    `production=${summary.production_evidence_claim} / host=${summary.host_write_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
+  const context = qs("#context-saved-receipt");
+  if (context) {
+    context.textContent =
+      `${summary.state}: ${summary.saved_count} saved / selected ${summary.selected} / diff ${summary.diff} / export ${summary.export_state} / zero authority ${summary.zero_authority ? "yes" : "no"}`;
+  }
 }
 
 function appendReceiptDiffCell(row, text, className) {
@@ -6131,8 +6559,7 @@ function renderQaHandoff(snapshot, artifact = null) {
   renderQaHandoffValidation(handoff);
 }
 
-function renderReceiptExportPreview(snapshot) {
-  const artifact = buildReceiptExportArtifact(snapshot);
+function renderReceiptExportPreview(snapshot, artifact = buildReceiptExportArtifact(snapshot)) {
   const pre = qs("#receipt-export-artifact");
   const link = qs("#receipt-export-download");
   if (!pre || !link) {
@@ -6145,6 +6572,7 @@ function renderReceiptExportPreview(snapshot) {
     qs("#receipt-export-digest").textContent = "none";
     pre.textContent = "No saved receipt selected.";
     setLocalActionLink(link, false);
+    renderSavedReceiptTrust(null, null);
     renderReceiptExportValidation(null);
     renderQaHandoff(null, null);
     return;
@@ -6202,7 +6630,8 @@ function renderSavedReceipts() {
     renderReceiptDelta(null);
     renderReceiptDiffDetail(null);
     renderReceiptContextDrift(null);
-    renderReceiptExportPreview(null);
+    renderSavedReceiptTrust(null, null);
+    renderReceiptExportPreview(null, null);
     return;
   }
 
@@ -6243,10 +6672,12 @@ function renderSavedReceipts() {
     deleteButton.disabled = !snapshot;
     deleteButton.setAttribute("aria-disabled", String(!snapshot));
   }
+  const artifact = buildReceiptExportArtifact(snapshot);
+  renderSavedReceiptTrust(snapshot, artifact);
   renderReceiptDelta(snapshot);
   renderReceiptDiffDetail(snapshot);
   renderReceiptContextDrift(snapshot);
-  renderReceiptExportPreview(snapshot);
+  renderReceiptExportPreview(snapshot, artifact);
 }
 
 function selectSavedReceipt(snapshotId, record = false, focusAfterRender = false) {
@@ -6372,6 +6803,7 @@ function safeWriteState() {
         prefix: state.prefix,
         prefixValid: state.prefixValid,
         evidenceDetail: state.evidenceDetail,
+        evidenceFilter: state.evidenceFilter,
         blockerFilter: state.blockerFilter,
         reviewFilter: state.reviewFilter,
         receiptDiffFilter: state.receiptDiffFilter,
@@ -6426,6 +6858,9 @@ function applyStoredState() {
   }
   if (typeof stored.evidenceDetail === "number") {
     state.evidenceDetail = Math.max(1, Math.min(3, Math.round(stored.evidenceDetail)));
+  }
+  if (typeof stored.evidenceFilter === "string") {
+    state.evidenceFilter = stored.evidenceFilter.slice(0, 64);
   }
   if (typeof stored.blockerFilter === "string") {
     state.blockerFilter = stored.blockerFilter;
@@ -9149,18 +9584,37 @@ function moveProductionBlockerFocus(currentButton, direction) {
 
 function renderEvidence(filter = "") {
   const list = qs("#evidence-list");
-  const normalized = filter.trim().toLowerCase();
+  state.evidenceFilter = filter.trim().slice(0, 64);
+  const rows = evidenceQueueRows(state.evidenceFilter);
+  const summary = evidenceQueueSummary(rows);
   list.innerHTML = "";
-  evidence
-    .filter(([key, value, group]) => {
-      return `${key} ${value} ${group}`.toLowerCase().includes(normalized);
-    })
-    .forEach(([key, value, group]) => {
+  rows
+    .filter((row) => row.visible)
+    .forEach((row) => {
       const item = document.createElement("article");
       item.className = "evidence-item";
-      item.innerHTML = `<div><strong>${key}</strong><small>${group}</small></div><code>${value}</code>`;
+      item.dataset.evidenceKey = row.key;
+      item.dataset.evidenceStatus = row.status;
+      item.innerHTML = `<div><strong>${row.key}</strong><small>${row.group}</small></div><code>${row.value}</code>`;
       list.append(item);
     });
+  if (summary.visible === 0) {
+    const empty = document.createElement("article");
+    empty.className = "empty-state";
+    empty.textContent = "No evidence rows match the current filter.";
+    list.append(empty);
+  }
+  const strip = qs("#evidence-queue-strip");
+  if (strip instanceof HTMLElement) {
+    strip.dataset.evidenceQueueState = summary.state;
+  }
+  qs("#evidence-queue-visible").textContent = String(summary.visible);
+  qs("#evidence-queue-guarded").textContent = String(summary.guarded);
+  qs("#evidence-queue-filter").textContent = summary.filter;
+  qs("#evidence-queue-filter-summary").textContent =
+    `${summary.visible} of ${summary.total} evidence rows`;
+  qs("#evidence-queue-boundary").textContent =
+    `production=${summary.production_evidence_claim} / host=${summary.host_write_authority} / main=${summary.main_gui_mutation_required} / edge=${summary.edge_gui_mutation_required}`;
 }
 
 function setProgress(progress, label) {
@@ -9274,6 +9728,7 @@ function resetState() {
   state.prefix = "~/.local";
   state.prefixValid = true;
   state.evidenceDetail = 2;
+  state.evidenceFilter = "";
   state.blockerFilter = "";
   state.reviewFilter = "all";
   state.receiptDiffFilter = "all";
@@ -9303,6 +9758,7 @@ function resetState() {
   qs("#profile-select").value = state.profile;
   qs("#prefix-input").value = state.prefix;
   qs("#detail-range").value = String(state.evidenceDetail);
+  qs("#evidence-search").value = state.evidenceFilter;
   qs("#blocker-search").value = state.blockerFilter;
   qs("#console-input").value = state.consoleLastCommand;
   qs("#palette-search").value = state.paletteQuery;
@@ -9310,6 +9766,7 @@ function resetState() {
   qs("#inspector-title").textContent = state.profile;
   renderComponentStack();
   renderComponentTable(qs("#component-search").value);
+  renderEvidence(state.evidenceFilter);
   renderQaRunbook();
   renderEngineBinding();
   renderVisualBaseline();
@@ -9845,6 +10302,8 @@ function wireEvents() {
   });
   qs("#evidence-search").addEventListener("input", (event) => {
     renderEvidence(event.target.value);
+    renderReceiptPreview();
+    safeWriteState();
   });
   qs("#blocker-search").addEventListener("input", (event) => {
     state.blockerFilter = event.target.value;
@@ -9953,6 +10412,7 @@ applyUrlStateOverrides();
 qs("#profile-select").value = state.profile;
 qs("#prefix-input").value = state.prefix;
 qs("#detail-range").value = String(state.evidenceDetail);
+qs("#evidence-search").value = state.evidenceFilter;
 qs("#blocker-search").value = state.blockerFilter;
 qs("#console-input").value = state.consoleLastCommand === "empty command" ? "" : state.consoleLastCommand;
 qs("#palette-search").value = state.paletteQuery;
@@ -9960,7 +10420,7 @@ qs("#step-profile").textContent = state.profile;
 qs("#inspector-title").textContent = state.profile;
 renderComponentStack();
 renderComponentTable();
-renderEvidence();
+renderEvidence(state.evidenceFilter);
 renderQualityGates();
 renderEvidenceMatrix();
 renderAccessibilityAudit();

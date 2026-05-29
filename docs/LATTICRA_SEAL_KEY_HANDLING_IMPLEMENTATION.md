@@ -1,13 +1,15 @@
 # Latticra Seal Key-Handling Implementation
 
-Status: initial key-handling metadata implementation
-Scope: bounded C metadata surface for classifying Seal key-handling eligibility after ready signing operation metadata. This slice does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
+Status: key-handling metadata implementation with crypto graduation evidence carry-forward
+Scope: bounded C metadata surface for classifying Seal key-handling eligibility after ready signing operation metadata, including read-only crypto graduation evidence when the signing operation carries it. This slice does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store loading, revocation lookup, cryptographic signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, runtime authority, host reads, host writes, network behavior, shell execution, tool execution, capability enforcement, policy persistence, kernel behavior, Fedora approval claims, production readiness, or operating-system behavior.
 
 ## Purpose
 
-This document records the first Latticra Seal key-handling metadata implementation.
+This document records the Latticra Seal key-handling metadata implementation.
 
 The implementation consumes ready signing operation metadata and classifies whether the request remains eligible for a future metadata-only key-handling path.
+
+When signing operation metadata carries crypto graduation metadata, key-handling copies that evidence forward and requires it to remain passed, standard-aligned, locally graduated, receipt-promotion graduated, and authority-neutral.
 
 It is key-handling path classification only.
 
@@ -65,6 +67,14 @@ The implementation:
 accepts signing operation metadata
 requires signing_operation_ready=1
 requires signing_operation_state=operation-metadata-only
+copies crypto graduation gate metadata when present
+requires crypto_graduation_gate_passed=1 when crypto_graduation_gate_present=1
+requires standard_expectations_met=1 when crypto_graduation_gate_present=1
+requires local_verify_graduated=1 when crypto_graduation_gate_present=1
+requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
+requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
+requires crypto_graduation_gate_state=graduated-authority-neutral when crypto_graduation_gate_present=1
+requires crypto graduation fields to remain neutral when crypto_graduation_gate_present=0
 requires requested_signature=Ed25519-development
 requires requested_signing_authorization=metadata-only
 requires requested_signer_handoff=metadata-only
@@ -132,6 +142,29 @@ mode=metadata-only
 status=key-handling-metadata
 ```
 
+Crypto-bound key-handling metadata records:
+
+```text
+crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1
+assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1
+crypto_graduation_gate_state=graduated-authority-neutral
+crypto_graduation_gate_present=1
+crypto_graduation_gate_passed=1
+standard_expectations_met=1
+local_verify_graduated=1
+receipt_promotion_graduated=1
+authority_promotion_allowed=0
+key_handling_state=key-handling-metadata-only
+key_handling_ready=1
+public_key_parsed=0
+key_material_loaded=0
+private_key_handling=0
+key_generation_performed=0
+hardware_key_used=0
+trust_store_loaded=0
+runtime_authority_granted=0
+```
+
 ## Failure behavior
 
 The implementation fails closed for:
@@ -142,6 +175,9 @@ null signing operation
 invalid signing operation
 unterminated signing operation strings
 invalid signing operation boolean flags
+failed crypto graduation gate evidence
+authority-bearing crypto graduation evidence
+stale crypto graduation evidence when the gate-present flag is unset
 signing_operation_ready=0
 signing_operation_state not operation-metadata-only
 requested_signing_operation not metadata-only
@@ -205,6 +241,6 @@ seal key-handling invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is bounded no-effect key parsing implementation or another narrow status/index alignment follow-up that still must not add signing without separate key-material, signing, and guard contracts.
+The next valid Latticra Seal planning slice is key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate key-material, signing, and guard contracts.
 
 The key-handling metadata implementation is a guarded checkpoint. Future work must not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, verification, signer invocation behavior, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

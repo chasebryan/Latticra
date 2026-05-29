@@ -7,7 +7,7 @@ Scope: bounded local OpenSSL EVP self-test for ML-KEM key generation, encapsulat
 
 This slice adds a true ML-KEM mechanism check to Q-Seal without changing the existing clean-room parameter and readiness gates.
 
-The self-test runs the OpenSSL EVP ML-KEM provider for each FIPS 203 parameter set, verifies that generated and reimported keys remain bound to the requested ML-KEM algorithm identity, reimports the generated public key before encapsulation, verifies that public-key encapsulation and private-key decapsulation recover the same 32-byte shared secret through constant-time equality, verifies through the same constant-time comparison path that a tampered ciphertext decapsulates to a different shared secret, and then zeroizes the internal shared-secret and ciphertext buffers before returning.
+The self-test runs the OpenSSL EVP ML-KEM provider for each FIPS 203 parameter set, verifies that generated and reimported keys remain bound to the requested ML-KEM algorithm identity, reimports the generated public key before encapsulation, verifies that public-key encapsulation and private-key decapsulation recover the same 32-byte shared secret through constant-time equality, verifies through the same constant-time comparison path that a tampered ciphertext decapsulates to a different shared secret, verifies malformed ciphertext length rejection without secret output, and then zeroizes the internal shared-secret and ciphertext buffers before returning.
 
 ## Added Files
 
@@ -40,6 +40,8 @@ decapsulation_performed=1
 tampered_ciphertext_decapsulation_performed=1
 tampered_ciphertext_shared_secret_mismatch=1
 tampered_ciphertext_rejected=1
+malformed_ciphertext_length_decapsulation_rejected=1
+malformed_ciphertext_length_no_secret_output=1
 shared_secret_internal_buffers_used=1
 shared_secret_match=1
 shared_secret_constant_time_compare=1
@@ -67,6 +69,7 @@ encapsulates through the reimported public key
 decapsulates the ciphertext with the generated private key
 compares the encapsulated and decapsulated shared secrets using constant-time equality
 mutates the ciphertext and verifies through constant-time equality that the tampered decapsulation does not preserve the shared secret
+attempts a malformed-length ciphertext decapsulation and requires provider rejection without writing a secret output buffer
 zeroizes shared-secret buffers before returning
 zeroizes the local ciphertext buffer before returning
 does not return, print, log, or persist shared-secret bytes

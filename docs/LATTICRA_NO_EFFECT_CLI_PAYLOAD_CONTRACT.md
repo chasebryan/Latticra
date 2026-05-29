@@ -78,7 +78,7 @@ cli_exit_status_deterministic=1
 
 ## Allowed initial command surface
 
-The first CLI payload may only expose deterministic status, report, prevention-research, prevention-boundary, and prevention-method commands:
+The first CLI payload may only expose deterministic status, report, prevention-research, prevention-boundary, prevention-evidence, prevention-gate, prevention-fixtures, and prevention-method commands:
 
 ```text
 latticra --status
@@ -86,6 +86,9 @@ latticra --version
 latticra --report
 latticra --prevention-research
 latticra --prevention-boundary
+latticra --prevention-evidence
+latticra --prevention-gate
+latticra --prevention-fixtures
 latticra --prevention-method <id>
 ```
 
@@ -122,6 +125,8 @@ installed_system_scope=1
 dynamic_research_network=0
 production_protection_claim=0
 source_refresh_date=<date>
+source_owasp_input_validation=https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+source_owasp_asvs=https://owasp.org/www-project-application-security-verification-standard/
 prevention_method_matrix_version=1
 prevention_method_count=16
 method_sql=bind-parameters-for-values
@@ -141,6 +146,12 @@ method_log=structured-logging-newline-neutralization
 method_secret=never-log-secrets-or-tokens
 method_failure=fail-closed-before-interpreter-boundary
 prevention_pipeline_order=parse-canonicalize-validate-bind-or-encode
+input_validation_position=early-syntactic-and-semantic-gate
+input_validation_not_primary_sql_xss_defense=1
+allowlist_validation_primary_required=1
+server_side_validation_required=1
+canonicalization_before_validation_required=1
+schema_or_type_validation_required=1
 sql_prepared_statements_required=1
 nosql_structured_query_object_required=1
 ldap_context_escape_required=1
@@ -180,6 +191,109 @@ safe_api_or_encoding_required=1
 adversarial_fixture_required=1
 evidence_artifact_required=1
 review_on_new_boundary_required=1
+host_mutation=0
+network=0
+host_scan=0
+production_protection_claim=0
+source=owasp-injection-and-nist-ssdf
+```
+
+## Required prevention evidence output shape
+
+The future `latticra --prevention-evidence` output must remain a local, deterministic checklist for proving that application-owned controls cover the prevention boundary inventory. It must not read application code, scan the host, contact the network, mutate host state, or claim that Latticra prevents attacks.
+
+```text
+LATTICRA PREVENTION EVIDENCE REPORT
+installed_system_scope=1
+evidence_schema_version=1
+evidence_scope=application-owned-controls
+evidence_boundary_inventory_required=1
+evidence_source_sink_map_required=1
+evidence_method_selection_required=1
+evidence_negative_case_required=1
+evidence_safe_api_trace_required=1
+evidence_review_owner_required=1
+evidence_release_gate_required=1
+gate_unmapped_boundary_blocks_release=1
+gate_missing_method_blocks_release=1
+gate_missing_negative_fixture_blocks_release=1
+gate_missing_safe_api_trace_blocks_release=1
+gate_missing_owner_review_blocks_release=1
+gate_missing_repeatability_blocks_release=1
+gate_secret_capture_blocks_release=1
+gate_production_claim_without_runtime_evidence_blocks_release=1
+evidence_repeatability_required=1
+evidence_redaction_required=1
+evidence_timestamp_and_revision_required=1
+evidence_fail_closed_result_required=1
+evidence_no_secret_capture_required=1
+host_mutation=0
+network=0
+host_scan=0
+production_protection_claim=0
+source=owasp-injection-and-nist-ssdf
+```
+
+## Required prevention gate output shape
+
+The future `latticra --prevention-gate` output must remain a local, deterministic release-decision checklist for application-owned injection-prevention evidence. It must not inspect applications, scan the host, contact the network, mutate host state, grant release authority, or claim that Latticra prevents attacks.
+
+```text
+LATTICRA PREVENTION GATE REPORT
+installed_system_scope=1
+gate_schema_version=1
+gate_scope=application-release-decision-support
+gate_default=block-until-evidence-complete
+gate_boundary_inventory_required=1
+gate_method_matrix_required=1
+gate_fixture_coverage_required=1
+gate_safe_api_trace_required=1
+gate_owner_review_required=1
+gate_repeatable_result_required=1
+gate_secret_redaction_required=1
+gate_fail_closed_result_required=1
+gate_new_boundary_review_required=1
+gate_runtime_evidence_required_for_protection_claim=1
+release_without_complete_evidence_allowed=0
+production_claim_without_runtime_evidence_allowed=0
+decision_authority=application-owner
+host_mutation=0
+network=0
+host_scan=0
+production_protection_claim=0
+source=owasp-injection-and-nist-ssdf
+```
+
+## Required prevention fixture output shape
+
+The future `latticra --prevention-fixtures` output must remain a local, deterministic fixture-class checklist for adversarial negative tests. It must describe fixture classes rather than concrete attack payload strings, and it must not scan the host, contact the network, mutate host state, or claim that Latticra prevents attacks.
+
+```text
+LATTICRA PREVENTION FIXTURE REPORT
+installed_system_scope=1
+fixture_schema_version=1
+fixture_scope=adversarial-negative-tests
+fixture_set_count=16
+fixture_sql=data-value-separator-rejection
+fixture_sql_identifier=unknown-name-and-reserved-word-rejection
+fixture_nosql=operator-key-smuggling-rejection
+fixture_ldap=filter-metacharacter-neutralization
+fixture_xpath=expression-control-character-rejection
+fixture_os_command=separator-and-option-smuggling-rejection
+fixture_program_argument=end-of-options-boundary
+fixture_xss=contextual-output-escape-set
+fixture_ssrf=scheme-host-port-and-rebind-deny
+fixture_path=traversal-and-link-escape-deny
+fixture_xml=external-entity-and-dtd-deny
+fixture_deserialization=native-object-graph-deny
+fixture_template=user-template-code-deny
+fixture_log=crlf-neutralization
+fixture_secret=secret-redaction-before-record
+fixture_failure=deny-before-boundary
+fixture_payload_strings_in_report=0
+fixture_safe_harness_required=1
+fixture_ci_gate_required=1
+fixture_regression_on_new_boundary_required=1
 host_mutation=0
 network=0
 host_scan=0
@@ -271,6 +385,10 @@ cli_status_command_recorded=1
 cli_version_command_recorded=1
 cli_report_command_recorded=1
 cli_prevention_boundary_command_recorded=1
+cli_prevention_evidence_command_recorded=1
+cli_prevention_gate_command_recorded=1
+cli_prevention_fixtures_command_recorded=1
+cli_prevention_surface_consistency_guard_passed=1
 cli_status_output_matches_contract=1
 cli_no_root_required=1
 cli_no_host_mutation_observed=1
@@ -301,12 +419,14 @@ immutable_fedora_ready=0
 ## Validation
 
 ```sh
+sh scripts/test-latticra-prevention-surface-consistency.sh
 sh scripts/test-latticra-no-effect-cli-payload-contract.sh
 ```
 
 Expected output:
 
 ```text
+latticra_prevention_surface_consistency: ok
 latticra_no_effect_cli_payload_contract: ok
 ```
 

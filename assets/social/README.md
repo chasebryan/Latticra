@@ -61,10 +61,11 @@ Publication execution:
 
 ```text
 latticra-public-research-standard-glass-base-card.png posted at 2026-05-28 05:16:28 CDT
-latticra-boundary-literacy-glass-base-card.png scheduled for 2026-05-28 10:00 CDT
-latticra-evidence-before-claims-glass-base-card.png scheduled for 2026-05-28 15:00 CDT
-latticra-denial-is-legible-glass-base-card.png scheduled for 2026-05-28 20:00 CDT
-latticra-cryptography-without-hype-glass-base-card.png scheduled for 2026-05-29 01:00 CDT
+latticra-boundary-literacy-glass-base-card.png posted at 2026-05-28 10:00:02 CDT
+latticra-evidence-before-claims-glass-base-card.png corrected and posted at 2026-05-28 15:18:45 CDT
+latticra-denial-is-legible-glass-base-card.png canceled from X scheduled drafts at 2026-05-28 15:20 CDT
+latticra-cryptography-without-hype-glass-base-card.png canceled from X scheduled drafts at 2026-05-28 15:20 CDT
+next publication mode: approval-only manual posting with visible caption verification before the Post button is pressed
 ```
 
 Review contact sheet:
@@ -90,7 +91,7 @@ Second sequence status:
 ```text
 internal candidates only
 not approved for public posting
-prepared for owner review after the active scheduled queue
+prepared for owner review after the corrected first launch sequence
 ```
 
 Second sequence contact sheet:

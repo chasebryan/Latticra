@@ -114,6 +114,12 @@ static int provider_self_test_passes(void) {
     EXPECT_TRUE(
         self_test.ml_kem_ciphertext_tampering_rejected_total == 3u,
         "ml-kem ciphertext tampering cases");
+    EXPECT_TRUE(
+        self_test.ml_kem_malformed_ciphertext_length_decapsulation_rejected_total == 3u,
+        "ml-kem malformed ciphertext length rejected cases");
+    EXPECT_TRUE(
+        self_test.ml_kem_malformed_ciphertext_length_staged_secret_cleared_total == 3u,
+        "ml-kem malformed ciphertext length staged secret cleared cases");
     EXPECT_TRUE(self_test.ml_kem_parameter_sets_tested == 3u, "ml-kem parameter sets");
     EXPECT_TRUE(self_test.ml_kem_512_key_generation_performed == 1u, "ml-kem-512 keygen");
     EXPECT_TRUE(self_test.ml_kem_512_encapsulation_performed == 1u, "ml-kem-512 encaps");
@@ -153,6 +159,35 @@ static int provider_self_test_passes(void) {
     EXPECT_TRUE(
         self_test.hybrid_envelope_records_authenticated_total == 3u,
         "records authenticated total");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_sealed == 1u,
+        "committed detached sealed");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_opened == 1u,
+        "committed detached opened");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_authenticated == 1u,
+        "committed detached authenticated");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_provider_crypto_evidence_bound == 1u,
+        "committed detached provider crypto evidence");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_provider_crypto_cases_total == 3u,
+        "committed detached provider crypto cases");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_tampering_rejected_total == 3u,
+        "committed detached tampering rejected");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_constant_time_compare_cases_total == 3u,
+        "committed detached constant-time compare cases");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total ==
+            3u,
+        "committed detached ciphertext tail cleared cases");
+    EXPECT_TRUE(
+        self_test.hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total ==
+            3u,
+        "committed detached plaintext tail cleared cases");
     EXPECT_TRUE(
         self_test.hybrid_envelope_provider_crypto_evidence_bound == 1u,
         "envelope provider crypto evidence bound");
@@ -292,12 +327,41 @@ static int provider_self_test_passes(void) {
     EXPECT_TRUE(
         strstr(rendered, "ml_kem_ciphertext_tampering_rejected_total=3") != 0,
         "report ml-kem ciphertext tamper");
+    EXPECT_TRUE(
+        strstr(rendered, "ml_kem_malformed_ciphertext_length_decapsulation_rejected_total=3") != 0,
+        "report ml-kem malformed length rejected");
+    EXPECT_TRUE(
+        strstr(rendered, "ml_kem_malformed_ciphertext_length_staged_secret_cleared_total=3") != 0,
+        "report ml-kem malformed length staged secret cleared");
     EXPECT_TRUE(strstr(rendered, "ml_kem_parameter_sets_tested=3") != 0, "report parameter sets");
     EXPECT_TRUE(strstr(rendered, "ml_kem_768_shared_secret_match=1") != 0, "report ml-kem-768");
     EXPECT_TRUE(strstr(rendered, "ml_kem_1024_shared_secret_match=1") != 0, "report ml-kem-1024");
     EXPECT_TRUE(
         strstr(rendered, "hybrid_envelope_records_authenticated_total=3") != 0,
         "report record total");
+    EXPECT_TRUE(
+        strstr(rendered, "hybrid_envelope_committed_detached_provider_crypto_cases_total=3") != 0,
+        "report committed detached provider crypto cases");
+    EXPECT_TRUE(
+        strstr(rendered, "hybrid_envelope_committed_detached_tampering_rejected_total=3") != 0,
+        "report committed detached tampering rejected");
+    EXPECT_TRUE(
+        strstr(
+            rendered,
+            "hybrid_envelope_committed_detached_constant_time_compare_cases_total=3") != 0,
+        "report committed detached constant-time compare cases");
+    EXPECT_TRUE(
+        strstr(
+            rendered,
+            "hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total=3") !=
+            0,
+        "report committed detached ciphertext tail cleared cases");
+    EXPECT_TRUE(
+        strstr(
+            rendered,
+            "hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total=3") !=
+            0,
+        "report committed detached plaintext tail cleared cases");
     EXPECT_TRUE(
         strstr(rendered, "hybrid_envelope_provider_crypto_cases_total=3") != 0,
         "report provider crypto cases");

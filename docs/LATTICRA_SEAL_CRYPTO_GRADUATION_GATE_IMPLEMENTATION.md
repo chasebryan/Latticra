@@ -181,6 +181,6 @@ The guard compiles the Ed25519 verify-only implementation, verified receipt prom
 
 ## Current Next Valid Slice
 
-The next valid Latticra Seal cryptographic slice is to carry crypto-graduation-gated signing operation evidence into the key-handling and policy decision report chains as read-only evidence.
+The next valid Latticra Seal cryptographic slice is to carry crypto-graduation-gated key-handling evidence into key-material and policy decision report chains as read-only evidence.
 
 That future slice must still not add signing, key generation, key storage, private-key handling, trust-store loading, revocation lookup, network lookup, capability enforcement, effect execution, host behavior, FIPS claims, production cryptography claims, or runtime authority unless separately implemented and guarded.

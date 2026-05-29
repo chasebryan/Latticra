@@ -82,6 +82,6 @@ require_contains 'turning receipt evidence into execution grants' "$contract"
 require_contains 'turning receipt evidence into effect grants' "$contract"
 require_contains 'This contract does not authorize a signed receipt proof implementation.' "$contract"
 require_contains 'The signed receipt proof path implementation is now represented by `docs/LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md`.' "$contract"
-require_contains 'The current next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$contract"
+require_contains 'The current next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.' "$contract"
 
 printf 'latticra seal signed receipt proof path contract: ok\n'

@@ -3169,6 +3169,49 @@ p:last-child {
   max-width: 1120px;
 }
 
+.not-found-recovery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.not-found-recovery a {
+  display: flex;
+  min-width: 0;
+  min-height: 168px;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid rgba(224, 232, 244, 0.34);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+  text-decoration: none;
+}
+
+.not-found-recovery a:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.not-found-recovery span {
+  color: var(--mint);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.not-found-recovery strong {
+  margin: 12px 0 8px;
+  font-size: 1.02rem;
+}
+
+.not-found-recovery em {
+  color: rgba(239, 246, 255, 0.78);
+  font-size: 0.9rem;
+  font-style: normal;
+}
+
 .pathway-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3784,6 +3827,7 @@ p:last-child {
   .resource-summary,
   .resource-directory,
   .resource-grid,
+  .not-found-recovery,
   .start-shortcuts,
   .status-shortcuts,
   .evidence-shortcuts,
@@ -3976,6 +4020,7 @@ p:last-child {
   .hero-facts,
   .metrics-grid,
   .pathway-grid,
+  .not-found-recovery,
   .map-shortcuts,
   .status-source-grid,
   .start-shortcuts,

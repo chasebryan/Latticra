@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX 128u
+#define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_LABEL_MAX 192u
 #define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_REPORT_MAX 65536u
 #define LATTICRA_KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY_ENTRY_MAX \
     LATTICRA_KERNEL_SUBSYSTEM_REGISTRY_ENTRY_MAX
@@ -70,6 +70,7 @@ typedef struct {
     int runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed;
     int runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed;
     int runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed;
+    int runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_allowed;
     int runtime_entry_recovery_audit_review_observation_view_allowed;
     int runtime_entry_recovery_audit_observation_view_allowed;
     int runtime_entry_recovery_closeout_observation_view_allowed;
@@ -117,6 +118,8 @@ typedef struct {
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed;
     int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_allowed;
+    int recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_allowed;
     int recovery_audit_review_allowed;
     int recovery_audit_review_observation_allowed;
     int recovery_audit_allowed;

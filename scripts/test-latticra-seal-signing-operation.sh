@@ -17,10 +17,14 @@ require_contains() {
 }
 
 require_contains 'bounded_string_is' src/seal_signing_operation.c
+require_contains 'bounded_string_empty' src/seal_signing_operation.c
 require_contains 'unterminated requested signing operation status' tests/seal_signing_operation_invariants.c
 require_contains 'authority signing operation render rejected' tests/seal_signing_operation_invariants.c
 require_contains 'ready flag signing operation render rejected' tests/seal_signing_operation_invariants.c
+require_contains 'absent crypto gate authority status' tests/seal_signing_operation_invariants.c
+require_contains 'absent crypto gate stale render rejected' tests/seal_signing_operation_invariants.c
 require_contains 'unterminated requested signing operation -> denied-signing-operation without copying caller bytes' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'stale crypto graduation evidence when the gate-present flag is unset' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 
 $CC $CFLAGS -Iinclude src/seal_signing_operation.c tests/seal_signing_operation_invariants.c -o "$tmpdir/latticra-seal-signing-operation-invariants"
 "$tmpdir/latticra-seal-signing-operation-invariants"

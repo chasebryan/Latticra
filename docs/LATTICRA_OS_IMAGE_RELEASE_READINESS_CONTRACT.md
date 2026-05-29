@@ -17,6 +17,7 @@ os_image_artifact_manifest_template_present=1
 os_image_artifact_manifest_generator_present=1
 os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
+os_image_operator_bundle_generator_present=1
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
 os_image_input_bundle_manifest_generator_present=1
@@ -26,6 +27,7 @@ boot_seed_build_script_present=1
 boot_seed_qemu_smoke_script_present=1
 boot_seed_vm_image_build_script_present=1
 boot_seed_vm_qcow2_artifact_present=0
+boot_seed_sbom_generator_present=1
 boot_seed_full_os_ready=0
 os_image_toolchain_preflight_present=1
 os_image_toolchain_ready=0
@@ -146,6 +148,7 @@ sh scripts/latticra-boot-seed-build.sh --output-dir build/boot-seed
 sh scripts/latticra-boot-seed-qemu-smoke.sh --iso build/boot-seed/latticra-boot-seed.iso --output-dir build/boot-seed/qemu-smoke
 sh scripts/latticra-boot-seed-vm-image-build.sh --kernel build/boot-seed/latticra-boot-seed.elf --output-dir build/boot-seed
 sh scripts/latticra-boot-seed-qemu-smoke.sh --disk-image build/boot-seed/latticra-boot-seed.qcow2 --format qcow2 --output-dir build/boot-seed/vm-qemu-smoke
+sh scripts/latticra-boot-seed-sbom-generate.sh --iso build/boot-seed/latticra-boot-seed.iso --vm-image build/boot-seed/latticra-boot-seed.qcow2 --kernel build/boot-seed/latticra-boot-seed.elf --efi-bootloader build/boot-seed/BOOTX64.EFI --esp-raw build/boot-seed/latticra-boot-seed-esp.raw
 ```
 
 Generate the future input bundle manifest from already-built kernel, initramfs,
@@ -172,6 +175,13 @@ Validate the current fixture or a future artifact manifest candidate:
 ```sh
 sh scripts/latticra-os-image-artifact-manifest-validate.sh
 sh scripts/latticra-os-image-artifact-manifest-validate.sh --artifact-manifest artifacts/os-images/<version>/manifest.txt
+```
+
+Stage a local operator review bundle from an already validated artifact
+manifest:
+
+```sh
+sh scripts/latticra-os-image-operator-bundle-from-artifacts.sh --artifact-manifest artifacts/os-images/<version>/manifest.txt --output-dir artifacts/os-images/<version>/operator-bundle
 ```
 
 Generate a Linux USB write command for operator review:
@@ -253,6 +263,42 @@ qemu_boot_execution_recorded=0
 host_mutation_performed=0
 ```
 
+For UEFI VM images, the command template records the OVMF/EDK2 pflash path:
+
+```text
+uefi_ovmf_required=1
+uefi_firmware_path=<path-or-missing>
+```
+
+## Operator Bundle Boundary
+
+The operator bundle generator may copy already-built artifacts into a review
+directory and write checksum files plus command-template files:
+
+```text
+latticra_os_image_operator_bundle_generator_present=1
+artifact_manifest_ready_for_operator_review=1
+operator_bundle_ready_for_local_review=1
+usb_write_linux_template_path=<bundle-path>
+usb_write_macos_template_path=<bundle-path>
+vm_test_command_template_path=<bundle-path>
+operator_bundle_readme_path=<bundle-path>
+```
+
+The bundle is a local handoff package only. It must preserve:
+
+```text
+usb_write_execution_allowed=0
+usb_write_executed=0
+qemu_execution_allowed_by_guard=0
+qemu_run_performed=0
+qemu_boot_execution_recorded=0
+hardware_install_ready=0
+full_os_install_ready=0
+bootable_os_ready=0
+production_os_claim=0
+```
+
 ## Required Promotion Evidence
 
 Before any future claim changes from `0` to `1`, the project needs reviewed evidence for:
@@ -289,6 +335,7 @@ sh scripts/test-latticra-os-image-release-readiness-contract.sh
 sh scripts/test-latticra-os-image-artifact-manifest-template.sh
 sh scripts/test-latticra-os-image-artifact-manifest-from-files.sh
 sh scripts/test-latticra-os-image-artifact-manifest-validate.sh
+sh scripts/test-latticra-os-image-operator-bundle-from-artifacts.sh
 sh scripts/test-latticra-os-image-usb-write-command.sh
 sh scripts/test-latticra-os-image-vm-test-command.sh
 ```
@@ -300,6 +347,7 @@ latticra_os_image_release_readiness_contract: ok
 latticra_os_image_artifact_manifest_template: ok
 latticra_os_image_artifact_manifest_from_files: ok
 latticra_os_image_artifact_manifest_validate: ok
+latticra_os_image_operator_bundle_from_artifacts: ok
 latticra_os_image_usb_write_command: ok
 latticra_os_image_vm_test_command: ok
 ```
@@ -314,6 +362,7 @@ os_image_artifact_manifest_template_present=1
 os_image_artifact_manifest_generator_present=1
 os_image_artifact_manifest_validation_present=1
 os_image_artifact_manifest_candidate_present=0
+os_image_operator_bundle_generator_present=1
 os_image_build_preflight_present=1
 os_image_build_execution_allowed=0
 os_image_input_bundle_manifest_generator_present=1
@@ -323,6 +372,7 @@ boot_seed_build_script_present=1
 boot_seed_qemu_smoke_script_present=1
 boot_seed_vm_image_build_script_present=1
 boot_seed_vm_qcow2_artifact_present=0
+boot_seed_sbom_generator_present=1
 boot_seed_full_os_ready=0
 os_image_toolchain_preflight_present=1
 os_image_toolchain_ready=0

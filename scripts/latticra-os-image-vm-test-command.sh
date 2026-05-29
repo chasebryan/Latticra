@@ -5,7 +5,7 @@ set -eu
 usage() {
   cat <<'USAGE'
 Usage:
-  latticra-os-image-vm-test-command.sh --image <path> --format raw|qcow2|iso [--firmware seabios|uefi] [--memory-mib <n>] [--cpus <n>] [--serial-log <path>] [--manifest <path>]
+  latticra-os-image-vm-test-command.sh --image <path> --format raw|qcow2|iso [--firmware seabios|uefi] [--uefi-firmware <path|auto>] [--memory-mib <n>] [--cpus <n>] [--serial-log <path>] [--manifest <path>]
 
 Prints a no-effect QEMU test command for a future Latticra VM image or ISO. It
 validates the release fixture and the command shape, but it does not run QEMU,
@@ -51,10 +51,32 @@ positive_integer() {
   esac
 }
 
+resolve_firmware() {
+  candidate="$1"
+  if [ "$candidate" != "auto" ]; then
+    printf '%s\n' "$candidate"
+    return
+  fi
+
+  for path in \
+    /opt/homebrew/share/qemu/edk2-x86_64-code.fd \
+    /usr/share/OVMF/OVMF_CODE.fd \
+    /usr/share/edk2/ovmf/OVMF_CODE.fd
+  do
+    if [ -f "$path" ]; then
+      printf '%s\n' "$path"
+      return
+    fi
+  done
+
+  printf 'missing\n'
+}
+
 MANIFEST="installer/manifests/latticra-os-image-release.toml"
 IMAGE=""
 FORMAT=""
 FIRMWARE="seabios"
+UEFI_FIRMWARE="auto"
 MEMORY_MIB="2048"
 CPUS="2"
 SERIAL_LOG="reports/latticra-os-image-vm-serial.log"
@@ -79,6 +101,11 @@ while [ "$#" -gt 0 ]; do
     --firmware)
       [ "$#" -ge 2 ] || fail "missing value for --firmware" 64
       FIRMWARE="$2"
+      shift 2
+      ;;
+    --uefi-firmware)
+      [ "$#" -ge 2 ] || fail "missing value for --uefi-firmware" 64
+      UEFI_FIRMWARE="$2"
       shift 2
       ;;
     --memory-mib)
@@ -147,22 +174,40 @@ fi
 
 MACHINE="pc-i440fx"
 UEFI_OVMF_REQUIRED=0
+UEFI_FIRMWARE_PATH=not-required
+UEFI_FIRMWARE_EXISTS=0
 if [ "$FIRMWARE" = "uefi" ]; then
   MACHINE="q35"
   UEFI_OVMF_REQUIRED=1
+  UEFI_FIRMWARE_PATH=$(resolve_firmware "$UEFI_FIRMWARE")
+  if [ "$UEFI_FIRMWARE_PATH" != "missing" ] && [ -f "$UEFI_FIRMWARE_PATH" ]; then
+    UEFI_FIRMWARE_EXISTS=1
+  fi
 fi
 
 IMAGE_Q=$(shell_quote "$IMAGE")
 SERIAL_LOG_Q=$(shell_quote "$SERIAL_LOG")
+UEFI_DRIVE_ARG=""
+if [ "$FIRMWARE" = "uefi" ]; then
+  if [ "$UEFI_FIRMWARE_PATH" = "missing" ]; then
+    FIRMWARE_Q="'<uefi-firmware-path-required>'"
+  else
+    FIRMWARE_Q=$(shell_quote "$UEFI_FIRMWARE_PATH")
+  fi
+  UEFI_DRIVE_ARG="-drive if=pflash,format=raw,readonly=on,file=$FIRMWARE_Q "
+fi
 
 if [ "$FORMAT" = "iso" ]; then
-  QEMU_TEST_COMMAND="qemu-system-x86_64 -m $MEMORY_MIB -smp $CPUS -machine $MACHINE -display none -serial file:$SERIAL_LOG_Q -drive file=$IMAGE_Q,media=cdrom,readonly=on"
+  QEMU_TEST_COMMAND="qemu-system-x86_64 -m $MEMORY_MIB -smp $CPUS -machine $MACHINE -display none -serial file:$SERIAL_LOG_Q ${UEFI_DRIVE_ARG}-drive file=$IMAGE_Q,media=cdrom,readonly=on"
 else
-  QEMU_TEST_COMMAND="qemu-system-x86_64 -m $MEMORY_MIB -smp $CPUS -machine $MACHINE -display none -serial file:$SERIAL_LOG_Q -drive file=$IMAGE_Q,format=$FORMAT,if=virtio,readonly=on"
+  QEMU_TEST_COMMAND="qemu-system-x86_64 -m $MEMORY_MIB -smp $CPUS -machine $MACHINE -display none -serial file:$SERIAL_LOG_Q ${UEFI_DRIVE_ARG}-drive file=$IMAGE_Q,format=$FORMAT,if=virtio,readonly=on"
 fi
 
 VM_TEST_COMMAND_READY=0
 if [ "$IMAGE_EXISTS" = "1" ] && [ "$FIRMWARE" = "seabios" ]; then
+  VM_TEST_COMMAND_READY=1
+fi
+if [ "$IMAGE_EXISTS" = "1" ] && [ "$FIRMWARE" = "uefi" ] && [ "$UEFI_FIRMWARE_EXISTS" = "1" ]; then
   VM_TEST_COMMAND_READY=1
 fi
 
@@ -185,6 +230,8 @@ memory_mib=$MEMORY_MIB
 cpus=$CPUS
 serial_log_path=$SERIAL_LOG
 uefi_ovmf_required=$UEFI_OVMF_REQUIRED
+uefi_firmware_path=$UEFI_FIRMWARE_PATH
+uefi_firmware_exists=$UEFI_FIRMWARE_EXISTS
 vm_test_command_ready=$VM_TEST_COMMAND_READY
 qemu_test_command=$QEMU_TEST_COMMAND
 checksum_verification_required=1

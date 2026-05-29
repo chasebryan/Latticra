@@ -76,9 +76,12 @@ require_contains 'host_read_performed=0' "$contract"
 require_contains 'host_write_performed=0' "$contract"
 require_contains 'network_performed=0' "$contract"
 require_contains 'key-handling metadata implementation' "$contract"
-require_contains 'Status: initial key-handling metadata implementation' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+require_contains 'Status: key-handling metadata implementation with crypto graduation evidence carry-forward' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_contains 'latticra_seal_key_handling_t' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_contains 'latticra_seal_key_handling_from_operation' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+require_contains 'copies crypto graduation gate metadata when present' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+require_contains 'authority-bearing crypto graduation evidence' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
+require_contains 'stale crypto graduation evidence when the gate-present flag is unset' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_contains 'key_handling_state=key-handling-metadata-only' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_contains 'key_handling_ready=1' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md
 require_contains 'public_key_parsed=0' docs/LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md

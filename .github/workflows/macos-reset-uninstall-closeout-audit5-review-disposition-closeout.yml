@@ -8,19 +8,12 @@ permissions:
   contents: read
 
 jobs:
-  closeout-audit5-review-disposition-closeout-contract:
+  audit5-review-disposition-closeout-contract:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
-      - name: Validate no-effect closeout audit review disposition closeout contract
-        run: |
-          script='scripts/test-macos-reset-uninstall-live-runner-acceptance-denial'
-          script="${script}-disposition-closeout-audit-review-disposition"
-          script="${script}-closeout-audit-review-disposition"
-          script="${script}-closeout-audit-review-disposition"
-          script="${script}-closeout-audit-review-disposition"
-          script="${script}-closeout-audit5-review-disposition-closeout.sh"
-          sh "$script"
+      - name: Validate no-effect audit review disposition closeout
+        run: sh scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit5-review-disposition-closeout.sh

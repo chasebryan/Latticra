@@ -21,6 +21,7 @@ ci_promotion_evidence_bound=1
 implementation_binding_manifest_bound=1
 readiness_profile_bound=1
 module_boundary_gate_bound=1
+security_policy_gate_bound=1
 code_owner_review_bound=1
 review_disposition_ledger_bound=1
 reviewer_role_mapping_bound=1
@@ -58,8 +59,8 @@ post_quantum_migration_claim_allowed=0
 production_crypto_claim_allowed=0
 operation_execution_allowed=0
 runtime_authority_granted=0
-required_validation_claim_items_total=41
-required_validation_claim_items_satisfied=32
+required_validation_claim_items_total=42
+required_validation_claim_items_satisfied=33
 status=ml-kem-validation-claim-gate-blocked
 ```
 
@@ -70,7 +71,7 @@ Before any public validation claim can be accepted, Q-Seal must record:
 - implementation evidence tied to reviewed source digests and release artifacts;
 - ACVP pass evidence bound to the ACVP verdict receipt gate;
 - CMVP certificate or explicit validation record when FIPS wording is used;
-- accepted module-boundary gate evidence and security policy evidence for the claimed cryptographic module;
+- accepted module-boundary gate evidence and accepted security-policy gate evidence for the claimed cryptographic module;
 - release artifact digests and public documentation review showing exact claim wording;
 - reviewer disposition and rollback/revocation plan for claim correction.
 

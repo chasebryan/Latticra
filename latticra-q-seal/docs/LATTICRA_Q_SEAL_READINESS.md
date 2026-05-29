@@ -49,6 +49,7 @@ acvp_submission_package_contract_present=1
 acvp_verdict_receipt_gate_present=1
 validation_claim_gate_present=1
 module_boundary_gate_present=1
+security_policy_gate_present=1
 vector_schema_present=1
 vector_source_intake_present=1
 vector_fixture_lock_present=1
@@ -64,6 +65,8 @@ code_owner_review_present=1
 review_disposition_ledger_present=1
 reviewer_identity_fixture_present=1
 reviewer_role_mapping_present=1
+evidence_import_packet_manifest_present=1
+evidence_import_review_gate_present=1
 ci_promotion_evidence_present=1
 constant_time_review_present=1
 randomness_source_contract_present=1
@@ -84,11 +87,11 @@ clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=52
-components_present=52
-runtime_blockers_total=49
-required_readiness_items_total=1487
-required_readiness_items_satisfied=1029
+components_total=55
+components_present=55
+runtime_blockers_total=52
+required_readiness_items_total=1611
+required_readiness_items_satisfied=1123
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0
@@ -104,7 +107,7 @@ status=q-seal-readiness-profile-blocked
 
 ## Runtime Blockers
 
-Runtime cryptography remains blocked by forty-nine aggregate blockers:
+Runtime cryptography remains blocked by fifty-two aggregate blockers:
 
 - ML-KEM evidence gate is missing KAT, ACVP, errata, constant-time, side-channel, randomness, zeroization, review, fuzzing, and CI evidence.
 - ML-KEM FIPS 203 conformance matrix has no per-parameter trace, keygen step trace, encapsulation step trace, decapsulation step trace, encoding tests, decapsulation failure-semantics tests, primitive mapping review, errata review, implementation trace acceptance, or conformance matrix acceptance.
@@ -123,6 +126,7 @@ Runtime cryptography remains blocked by forty-nine aggregate blockers:
 - ACVP verdict receipt gate has no bound submission receipt, validation-server acceptance, pass verdict record, certificate identifier, verified receipt digest, reviewer disposition, or accepted verdict receipt.
 - ML-KEM validation claim gate has no implementation claim evidence, ACVP pass evidence, CMVP certificate, module boundary, security policy, release artifact digest, public claim review, reviewer disposition, or accepted claim gate.
 - ML-KEM module-boundary gate has no cryptographic module name, module version, operational environment, FIPS 140-3 security policy, roles/services/authentication record, self-test policy, approved algorithm inventory, entropy boundary, zeroization boundary review, ACVP algorithm certificate, CMVP submission identifier, boundary review, reviewer disposition, or accepted boundary evidence.
+- ML-KEM security-policy gate has no security-policy evidence, document digest, module name/version, security level table, approved security functions table, services/roles table, self-test table, entropy statement, operational environment, guidance statement, reviewer disposition, or accepted policy evidence.
 - ML-KEM vector schema has no reviewed vector source, digest, license review, loader, JSON parser, response generator, vector execution, or ACVP submission authority.
 - ML-KEM vector source intake has no reviewed bundle URL, digest, size, license review, hash verification, schema crosscheck, errata binding, offline storage path, or import review.
 - ML-KEM vector fixture lock has no fixture source digest, license review, storage path, schema crosscheck, parameter coverage, negative-case coverage, import review, loaded bundle, vector execution, or runtime authority.
@@ -143,7 +147,9 @@ Runtime cryptography remains blocked by forty-nine aggregate blockers:
 - ML-KEM review disposition ledger has no reviewer identity disposition, code-owner disposition, cryptography disposition, security disposition, standards traceability disposition, side-channel disposition, source-digest disposition, closed findings, or approval receipt.
 - ML-KEM reviewer identity fixture has no imported reviewer identities, cryptography reviewer identity, security reviewer identity, code-owner identity, independence attestation, identity import review, or approval authority.
 - ML-KEM reviewer role mapping has no imported role records, cryptography role mapping, security role mapping, code-owner role mapping, standards traceability role mapping, side-channel role mapping, source-digest role mapping, separation review, or approval-authority mapping.
-- ML-KEM CI promotion evidence has no KAT/ACVP passing record, ACVP verdict receipt record, validation-claim gate, constant-time passing record, memory-safety passing record, side-channel passing record, negative-test passing record, provider differential passing record, implementation-binding CI result, promotion workflow record, release-claim gate, or signed artifact receipt.
+- ML-KEM evidence import packet manifest has no imported fixture digest packet rows, receipt replay packet rows, source digest packet rows, reviewer role packet rows, coverage packet rows, tamper packet rows, packet review, or packet acceptance.
+- ML-KEM evidence import review gate has no imported fixture digest rows, receipt replay transcripts, reviewer role records, source digest receipts, parameter-set coverage, operation-family coverage, negative-case coverage, replay tamper evidence, import review, or accepted import gate.
+- ML-KEM CI promotion evidence has no KAT/ACVP passing record, ACVP verdict receipt record, validation-claim gate, security-policy gate, constant-time passing record, memory-safety passing record, side-channel passing record, negative-test passing record, provider differential passing record, implementation-binding CI result, promotion workflow record, release-claim gate, or signed artifact receipt.
 - ML-KEM constant-time review has no timing measurement, static-analysis record, assembly review, optimizer review, secret-state binding, negative timing tests, cross-platform review, formal signoff, CI gate, or implementation binding.
 - ML-KEM randomness source has no entropy-source inventory, entropy validation, DRBG selection, security-strength review, seed derivation policy, reseed policy, prediction-resistance policy, health-test policy, failure-mode policy, platform RNG boundary, entropy signoff, or implementation binding.
 - ML-KEM zeroization evidence has no selected wipe primitive, implemented wipe primitive, compiler dead-store review, volatile or intrinsic strategy, stack/heap/register policy, error-path zeroization, decapsulation-failure zeroization, memory-scan test, assembly review, cross-platform review, formal review, or implementation binding.
@@ -183,6 +189,7 @@ latticra-q-seal/evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
 latticra-q-seal/evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
 latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 latticra-q-seal/evidence/ML_KEM_MODULE_BOUNDARY_GATE.md
+latticra-q-seal/evidence/ML_KEM_SECURITY_POLICY_GATE.md
 latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_RECEIPT.md
 latticra-q-seal/evidence/ML_KEM_SOURCE_DIGEST_VERIFICATION.md
 latticra-q-seal/evidence/ML_KEM_RECEIPT_REPLAY_RESULTS.md
@@ -191,6 +198,8 @@ latticra-q-seal/evidence/ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md
 latticra-q-seal/evidence/ML_KEM_REVIEW_DISPOSITION_LEDGER.md
 latticra-q-seal/evidence/ML_KEM_REVIEWER_IDENTITY_FIXTURE.md
 latticra-q-seal/evidence/ML_KEM_REVIEWER_ROLE_MAPPING.md
+latticra-q-seal/evidence/ML_KEM_EVIDENCE_IMPORT_PACKET_MANIFEST.md
+latticra-q-seal/evidence/ML_KEM_EVIDENCE_IMPORT_REVIEW_GATE.md
 latticra-q-seal/evidence/ML_KEM_SOURCE_LAYOUT_GATE.md
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-fips-conformance-matrix.sh
 latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-sp800-227-usage-profile.sh
@@ -214,6 +223,7 @@ scripts/test-latticra-q-seal-ml-kem-acvp-response-contract.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-response-fixture.sh
 scripts/test-latticra-q-seal-ml-kem-acvp-submission-package-contract.sh
 scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+scripts/test-latticra-q-seal-ml-kem-security-policy-gate.sh
 scripts/test-latticra-q-seal-ml-kem-source-digest-receipt.sh
 scripts/test-latticra-q-seal-ml-kem-source-digest-verification.sh
 scripts/test-latticra-q-seal-ml-kem-receipt-replay-results.sh
@@ -222,6 +232,7 @@ scripts/test-latticra-q-seal-ml-kem-vector-fixture-digest-ledger.sh
 scripts/test-latticra-q-seal-ml-kem-review-disposition-ledger.sh
 scripts/test-latticra-q-seal-ml-kem-reviewer-identity-fixture.sh
 scripts/test-latticra-q-seal-ml-kem-reviewer-role-mapping.sh
+scripts/test-latticra-q-seal-ml-kem-evidence-import-review-gate.sh
 scripts/test-latticra-q-seal-readiness.sh
 ```
 
@@ -232,6 +243,10 @@ sh latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
 sh scripts/test-latticra-q-seal-readiness.sh
 sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
 sh scripts/test-latticra-q-seal-ml-kem-module-boundary-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-security-policy-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-security-policy-gate.sh
+sh latticra-q-seal/scripts/test-latticra-q-seal-ml-kem-evidence-import-review-gate.sh
+sh scripts/test-latticra-q-seal-ml-kem-evidence-import-review-gate.sh
 make latticra-q-seal-readiness
 ```
 
@@ -242,4 +257,8 @@ latticra q-seal readiness invariants: ok
 latticra q-seal readiness: ok
 latticra q-seal ml-kem module boundary gate invariants: ok
 latticra q-seal ml-kem module boundary gate: ok
+latticra q-seal ml-kem security policy gate invariants: ok
+latticra q-seal ml-kem security policy gate: ok
+latticra q-seal ml-kem evidence import review gate invariants: ok
+latticra q-seal ml-kem evidence import review gate: ok
 ```

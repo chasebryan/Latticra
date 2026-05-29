@@ -39,6 +39,7 @@ typedef struct {
     unsigned implementation_binding_manifest_bound;
     unsigned readiness_profile_bound;
     unsigned module_boundary_gate_bound;
+    unsigned security_policy_gate_bound;
     unsigned code_owner_review_bound;
     unsigned review_disposition_ledger_bound;
     unsigned reviewer_role_mapping_bound;

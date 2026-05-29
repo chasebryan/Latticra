@@ -42,6 +42,7 @@ require_file docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
 require_file docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
 require_file docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md
 require_file docs/PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md
+require_file docs/SECURITY_VALIDATION_ASSESSMENT_BASELINE.md
 require_file docs/security/C_CPP_SECURITY_PROFILE.md
 require_file docs/security/C_ABI_BOUNDARY_POLICY.md
 require_file docs/status/README.md
@@ -61,6 +62,7 @@ require_file scripts/test-network-exposure-remote-access-baseline.sh
 require_file scripts/test-data-classification-protection-baseline.sh
 require_file scripts/test-ai-agentic-automation-security-baseline.sh
 require_file scripts/test-platform-boot-firmware-integrity-baseline.sh
+require_file scripts/test-security-validation-assessment-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
@@ -109,6 +111,7 @@ require_contains 'NSA Boot Security Modes and Recommendations' "$doc"
 require_contains 'NSA UEFI Secure Boot Customization' "$doc"
 require_contains 'CISA UEFI cybersecurity guidance' "$doc"
 require_contains 'NIST SP 800-193, SP 800-147, and SP 800-155' "$doc"
+require_contains 'NIST SP 800-115, SP 800-37 Rev. 2, and SP 800-53A Rev. 5' "$doc"
 require_contains 'NSA/CISA/FBI and partners Deploying AI Systems Securely' "$doc"
 require_contains 'CISA and NCSC Guidelines for Secure AI System Development' "$doc"
 require_contains 'NSA AISC MCP Security Design Considerations for AI-Driven Automation' "$doc"
@@ -140,6 +143,7 @@ for field in \
   'data_classification_protection_baseline_present=1' \
   'ai_agentic_automation_security_baseline_present=1' \
   'platform_boot_firmware_integrity_baseline_present=1' \
+  'security_validation_assessment_baseline_present=1' \
   'kev_release_review_required=1' \
   'fips_crypto_boundary_required_before_production_crypto=1' \
   'phishing_resistant_mfa_required_before_remote_privileged_access=1' \
@@ -150,6 +154,7 @@ for field in \
   'data_classification_review_required_before_hosted_service=1' \
   'ai_agentic_automation_security_required_before_model_or_tool_authority=1' \
   'platform_integrity_review_required_before_bootable_os_claim=1' \
+  'security_validation_required_before_security_release_claim=1' \
   'sbom_required_before_production_installer=1' \
   'third_party_security_validation_required_before_security_release=1' \
   'incident_response_plan_required_before_production_service=1' \
@@ -227,6 +232,8 @@ for allocation in \
   'require AI adversarial testing, monitoring, rollback, human oversight, and incident handoff before model, MCP, tool, or autonomous-effect claims' \
   'define boot mode, Secure Boot, TPM/PCR, firmware update, firmware recovery, and platform administrator evidence' \
   'require platform boot and firmware integrity evidence before bootable OS, Secure Boot, measured boot, TPM attestation, firmware recovery, or platform-integrity claims' \
+  'define assessment scope, rules of engagement, test authorization, control-objective mapping, findings ownership, remediation, retest, and independent-review evidence' \
+  'require security validation and assessment evidence before security-release, penetration-test, red-team, third-party validation, certification, compliance, or production-protection claims' \
   'publish a cyber incident reporting and response baseline before any incident-response feature' \
   'schedule table-top or third-party validation before security release'
 do
@@ -253,6 +260,7 @@ require_contains 'docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md' SECURITY.md
 require_contains 'docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md' SECURITY.md
 require_contains 'docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md' SECURITY.md
 require_contains 'docs/PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md' SECURITY.md
+require_contains 'docs/SECURITY_VALIDATION_ASSESSMENT_BASELINE.md' SECURITY.md
 require_contains 'high_assurance_security_baseline_present=1' README.md
 require_contains 'memory_safety_roadmap_present=1' README.md
 require_contains 'supply_chain_security_baseline_present=1' README.md
@@ -267,6 +275,7 @@ require_contains 'network_exposure_remote_access_baseline_present=1' README.md
 require_contains 'data_classification_protection_baseline_present=1' README.md
 require_contains 'ai_agentic_automation_security_baseline_present=1' README.md
 require_contains 'platform_boot_firmware_integrity_baseline_present=1' README.md
+require_contains 'security_validation_assessment_baseline_present=1' README.md
 require_contains 'source_refresh_date=2026-05-26' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
@@ -282,6 +291,8 @@ require_contains 'network_exposure_remote_access_baseline_present=1' STATUS.md
 require_contains 'data_classification_protection_baseline_present=1' STATUS.md
 require_contains 'ai_agentic_automation_security_baseline_present=1' STATUS.md
 require_contains 'platform_boot_firmware_integrity_baseline_present=1' STATUS.md
+require_contains 'security_validation_assessment_baseline_present=1' STATUS.md
+require_contains 'security_validation_required_before_security_release_claim=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
@@ -301,6 +312,7 @@ require_contains 'sh ./scripts/test-network-exposure-remote-access-baseline.sh' 
 require_contains 'sh ./scripts/test-data-classification-protection-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-ai-agentic-automation-security-baseline.sh' Makefile
 require_contains 'sh ./scripts/test-platform-boot-firmware-integrity-baseline.sh' Makefile
+require_contains 'sh ./scripts/test-security-validation-assessment-baseline.sh' Makefile
 require_contains 'quality-security-standards:' Makefile
 require_contains 'quality-security-standards' Makefile
 require_contains 'test-high-assurance-security-baseline.sh' scripts/test-quality-safety-guards.sh

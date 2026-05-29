@@ -447,6 +447,42 @@ static int invocation_fails_closed(void) {
             "authority crypto gate status") != 0) {
         return 1;
     }
+    handoff = fixture_handoff("report-only");
+    handoff.crypto_graduation_gate_passed = 1u;
+    if (expect_denial(
+            &handoff,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate stale pass status") != 0) {
+        return 1;
+    }
+    handoff = fixture_handoff("report-only");
+    handoff.authority_promotion_allowed = 1u;
+    if (expect_denial(
+            &handoff,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate authority status") != 0) {
+        return 1;
+    }
+    handoff = fixture_handoff("report-only");
+    set_string(
+        handoff.crypto_graduation_profile,
+        sizeof(handoff.crypto_graduation_profile),
+        "latticra-seal-crypto-graduation-gate/0.1");
+    if (expect_denial(
+            &handoff,
+            "metadata-only",
+            LATTICRA_SEAL_SIGNER_INVOCATION_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate stale profile status") != 0) {
+        return 1;
+    }
     EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(&handoff, "metadata-only", 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small render");
@@ -498,6 +534,21 @@ static int invocation_fails_closed(void) {
     EXPECT_TRUE(rendered[0] == '\0', "ready flag signer invocation render cleared");
     EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(&invocation) == 0,
                 "ready flag signer invocation helper rejected");
+
+    handoff = fixture_handoff("report-only");
+    EXPECT_TRUE(latticra_seal_signer_invocation_from_handoff(
+                    &handoff,
+                    "metadata-only",
+                    &invocation) == LATTICRA_STATUS_OK,
+                "absent crypto gate render source");
+    invocation.crypto_graduation_gate_passed = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signer_invocation_render(&invocation, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "absent crypto gate stale render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "absent crypto gate stale render cleared");
+    EXPECT_TRUE(latticra_seal_signer_invocation_is_metadata_only(&invocation) == 0,
+                "absent crypto gate stale helper rejected");
     return 0;
 }
 

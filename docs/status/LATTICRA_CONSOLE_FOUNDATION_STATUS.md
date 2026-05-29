@@ -2,7 +2,7 @@
 
 Status: active Stage-0 foundation
 Date: 2026-05-28
-Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, processes contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
 
 ## Current Evidence
 
@@ -103,6 +103,14 @@ service_runtime_handoff_allowed=0
 service_executor_allowed=0
 service_process_launch_allowed=0
 service_supervision_allowed=0
+processes_contract_status=metadata-only-contract
+processes_contract_present=1
+processes_contract_command=lc processes
+processes_contract_profile=lc-processes-v0
+process_table_present=0
+process_spawn_allowed=0
+process_signal_allowed=0
+process_supervision_allowed=0
 service_definition_validation_allowed=0
 host_path_projection_allowed=0
 namespace_mutation_allowed=0

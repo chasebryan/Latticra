@@ -1249,6 +1249,11 @@ static bool file_contains_secret_marker(
 
     size_t max_marker_len = pathlist_max_len(markers);
     size_t marker_overlap = max_marker_len == 0 ? 0 : max_marker_len - 1;
+
+    if (marker_overlap > SIZE_MAX - read_chunk) {
+        return false;
+    }
+
     unsigned char *buf = malloc(marker_overlap + read_chunk);
     size_t prefix_len = 0;
     FILE *f = open_collected_file_for_read(file);
@@ -2060,7 +2065,7 @@ static bool parse_string_array(const char *value, size_t value_len, PathList *ou
 static bool append_string(char **buf, size_t *len, size_t *cap, const char *part) {
     size_t part_len = strlen(part);
 
-    if (part_len > SIZE_MAX - *len - 1) {
+    if (*len > SIZE_MAX - 1 || part_len > SIZE_MAX - *len - 1) {
         return false;
     }
 
@@ -4083,21 +4088,58 @@ static int print_hybrid_provider_self_test_result(
     return stdout_is_healthy() ? 0 : stdout_failure("hybrid provider self-test report");
 }
 
+static bool bytes_are_zero(const unsigned char *buffer, size_t buffer_len) {
+    unsigned char aggregate = 0u;
+
+    for (size_t index = 0; index < buffer_len; index++) {
+        aggregate = (unsigned char)(aggregate | buffer[index]);
+    }
+
+    return aggregate == 0u;
+}
+
 static int command_hybrid(void) {
     unsigned char record[
         LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES +
             sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u +
             LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES
     ];
+    unsigned char committed_ciphertext[sizeof(HYBRID_SELF_CHECK_PLAINTEXT) + 19u];
+    unsigned char committed_salt[LATTICRA_SEAL_HYBRID_SALT_BYTES];
+    unsigned char committed_nonce[LATTICRA_SEAL_HYBRID_NONCE_BYTES];
+    unsigned char committed_tag[LATTICRA_SEAL_HYBRID_TAG_BYTES];
+    unsigned char committed_commitment[LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES];
+    unsigned char tampered_committed_commitment[LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES];
     unsigned char recovered[sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u];
+    unsigned char committed_recovered[sizeof(HYBRID_SELF_CHECK_PLAINTEXT) + 17u];
+    unsigned char committed_tamper_recovered[sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u];
     size_t record_len = 0u;
+    size_t committed_ciphertext_len = 0u;
     size_t recovered_len = 0u;
+    size_t committed_recovered_len = 0u;
+    size_t committed_tamper_recovered_len = 42u;
     latticra_seal_hybrid_envelope_result_t seal_result;
     latticra_seal_hybrid_envelope_result_t open_result;
+    latticra_seal_hybrid_envelope_result_t committed_seal_result;
+    latticra_seal_hybrid_envelope_result_t committed_open_result;
+    latticra_seal_hybrid_envelope_result_t committed_tamper_result;
     int exit_code = 1;
 
     memset(record, 0, sizeof(record));
+    memset(committed_ciphertext, 0, sizeof(committed_ciphertext));
+    memset(committed_salt, 0, sizeof(committed_salt));
+    memset(committed_nonce, 0, sizeof(committed_nonce));
+    memset(committed_tag, 0, sizeof(committed_tag));
+    memset(committed_commitment, 0, sizeof(committed_commitment));
+    memset(tampered_committed_commitment, 0, sizeof(tampered_committed_commitment));
     memset(recovered, 0, sizeof(recovered));
+    memset(committed_recovered, 0, sizeof(committed_recovered));
+    memset(committed_tamper_recovered, 0, sizeof(committed_tamper_recovered));
+    memset(&seal_result, 0, sizeof(seal_result));
+    memset(&open_result, 0, sizeof(open_result));
+    memset(&committed_seal_result, 0, sizeof(committed_seal_result));
+    memset(&committed_open_result, 0, sizeof(committed_open_result));
+    memset(&committed_tamper_result, 0, sizeof(committed_tamper_result));
 
     puts("LATTICRA SEAL HYBRID ENVELOPE SELF-CHECK");
     puts("secret_material_output=redacted");
@@ -4105,6 +4147,7 @@ static int command_hybrid(void) {
     puts("nonce_output=redacted");
     puts("ciphertext_output=redacted");
     puts("tag_output=redacted");
+    puts("commitment_output=redacted");
     puts("record_output=redacted");
 
     if (latticra_seal_hybrid_envelope_seal_record(
@@ -4155,16 +4198,149 @@ static int command_hybrid(void) {
         goto cleanup;
     }
 
+    if (latticra_seal_hybrid_envelope_seal_committed(
+            HYBRID_SELF_CHECK_CLASSICAL_SECRET,
+            sizeof(HYBRID_SELF_CHECK_CLASSICAL_SECRET),
+            HYBRID_SELF_CHECK_PQC_SECRET,
+            sizeof(HYBRID_SELF_CHECK_PQC_SECRET),
+            HYBRID_SELF_CHECK_AAD,
+            sizeof(HYBRID_SELF_CHECK_AAD) - 1u,
+            HYBRID_SELF_CHECK_PLAINTEXT,
+            sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u,
+            committed_ciphertext,
+            sizeof(committed_ciphertext),
+            &committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            committed_commitment,
+            sizeof(committed_commitment),
+            &committed_seal_result) != LATTICRA_STATUS_OK ||
+        committed_seal_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
+        (void)print_hybrid_result("committed-seal", &committed_seal_result);
+        fprintf(stderr, "hybrid committed-detached seal self-check failed\n");
+        goto cleanup;
+    }
+
+    if (print_hybrid_result("committed-seal", &committed_seal_result) != 0) {
+        goto cleanup;
+    }
+
+    if (latticra_seal_hybrid_envelope_open_committed(
+            HYBRID_SELF_CHECK_CLASSICAL_SECRET,
+            sizeof(HYBRID_SELF_CHECK_CLASSICAL_SECRET),
+            HYBRID_SELF_CHECK_PQC_SECRET,
+            sizeof(HYBRID_SELF_CHECK_PQC_SECRET),
+            HYBRID_SELF_CHECK_AAD,
+            sizeof(HYBRID_SELF_CHECK_AAD) - 1u,
+            committed_ciphertext,
+            committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            committed_commitment,
+            sizeof(committed_commitment),
+            committed_recovered,
+            sizeof(committed_recovered),
+            &committed_recovered_len,
+            &committed_open_result) != LATTICRA_STATUS_OK ||
+        committed_open_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK ||
+        committed_recovered_len != sizeof(HYBRID_SELF_CHECK_PLAINTEXT) - 1u ||
+        memcmp(committed_recovered, HYBRID_SELF_CHECK_PLAINTEXT, committed_recovered_len) != 0 ||
+        committed_open_result.authentication_tag_verified != 1u ||
+        committed_open_result.detached_commitment_checked_before_decrypt != 1u ||
+        committed_open_result.detached_commitment_constant_time_compare != 1u ||
+        committed_open_result.detached_commitment_verified != 1u ||
+        committed_open_result.plaintext_released_after_authentication != 1u) {
+        (void)print_hybrid_result("committed-open", &committed_open_result);
+        fprintf(stderr, "hybrid committed-detached open self-check failed\n");
+        goto cleanup;
+    }
+
+    if (print_hybrid_result("committed-open", &committed_open_result) != 0) {
+        goto cleanup;
+    }
+
+    memcpy(
+        tampered_committed_commitment,
+        committed_commitment,
+        sizeof(tampered_committed_commitment));
+    tampered_committed_commitment[0] ^= 0x01u;
+    if (latticra_seal_hybrid_envelope_open_committed(
+            HYBRID_SELF_CHECK_CLASSICAL_SECRET,
+            sizeof(HYBRID_SELF_CHECK_CLASSICAL_SECRET),
+            HYBRID_SELF_CHECK_PQC_SECRET,
+            sizeof(HYBRID_SELF_CHECK_PQC_SECRET),
+            HYBRID_SELF_CHECK_AAD,
+            sizeof(HYBRID_SELF_CHECK_AAD) - 1u,
+            committed_ciphertext,
+            committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            tampered_committed_commitment,
+            sizeof(tampered_committed_commitment),
+            committed_tamper_recovered,
+            sizeof(committed_tamper_recovered),
+            &committed_tamper_recovered_len,
+            &committed_tamper_result) != LATTICRA_STATUS_OK ||
+        committed_tamper_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_AUTHENTICATION_FAILED ||
+        committed_tamper_result.detached_commitment_checked_before_decrypt != 1u ||
+        committed_tamper_result.detached_commitment_constant_time_compare != 1u ||
+        committed_tamper_result.detached_commitment_tampering_rejected != 1u ||
+        committed_tamper_result.authentication_tag_verified != 0u ||
+        committed_tamper_result.plaintext_released_after_authentication != 0u ||
+        committed_tamper_recovered_len != 0u ||
+        !bytes_are_zero(committed_tamper_recovered, sizeof(committed_tamper_recovered))) {
+        (void)print_hybrid_result("committed-commitment-tamper", &committed_tamper_result);
+        fprintf(stderr, "hybrid committed-detached tamper self-check failed\n");
+        goto cleanup;
+    }
+
+    if (print_hybrid_result("committed-commitment-tamper", &committed_tamper_result) != 0) {
+        goto cleanup;
+    }
+
     OPENSSL_cleanse(record, sizeof(record));
+    OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext));
+    OPENSSL_cleanse(committed_salt, sizeof(committed_salt));
+    OPENSSL_cleanse(committed_nonce, sizeof(committed_nonce));
+    OPENSSL_cleanse(committed_tag, sizeof(committed_tag));
+    OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment));
+    OPENSSL_cleanse(tampered_committed_commitment, sizeof(tampered_committed_commitment));
     OPENSSL_cleanse(recovered, sizeof(recovered));
+    OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered));
+    OPENSSL_cleanse(committed_tamper_recovered, sizeof(committed_tamper_recovered));
     puts("cli_record_buffer_zeroized=1");
+    puts("cli_committed_ciphertext_buffer_zeroized=1");
+    puts("cli_committed_secret_outputs_zeroized=1");
     puts("cli_recovered_plaintext_buffer_zeroized=1");
+    puts("cli_committed_recovered_plaintext_buffer_zeroized=1");
+    puts("cli_committed_tamper_plaintext_buffer_zeroized=1");
+    puts("committed_detached_envelope_self_check=pass");
     puts("hybrid_envelope_self_check=pass");
     exit_code = stdout_is_healthy() ? 0 : stdout_failure("hybrid envelope self-check");
 
 cleanup:
     OPENSSL_cleanse(record, sizeof(record));
+    OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext));
+    OPENSSL_cleanse(committed_salt, sizeof(committed_salt));
+    OPENSSL_cleanse(committed_nonce, sizeof(committed_nonce));
+    OPENSSL_cleanse(committed_tag, sizeof(committed_tag));
+    OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment));
+    OPENSSL_cleanse(tampered_committed_commitment, sizeof(tampered_committed_commitment));
     OPENSSL_cleanse(recovered, sizeof(recovered));
+    OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered));
+    OPENSSL_cleanse(committed_tamper_recovered, sizeof(committed_tamper_recovered));
     return exit_code;
 }
 

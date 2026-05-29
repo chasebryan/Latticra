@@ -42,6 +42,7 @@ static int validation_claim_gate_is_fail_closed(void) {
     EXPECT_TRUE(gate.implementation_binding_manifest_bound == 1u, "binding");
     EXPECT_TRUE(gate.readiness_profile_bound == 1u, "readiness");
     EXPECT_TRUE(gate.module_boundary_gate_bound == 1u, "module boundary");
+    EXPECT_TRUE(gate.security_policy_gate_bound == 1u, "security policy gate");
     EXPECT_TRUE(gate.code_owner_review_bound == 1u, "owner");
     EXPECT_TRUE(gate.review_disposition_ledger_bound == 1u, "disposition");
     EXPECT_TRUE(gate.reviewer_role_mapping_bound == 1u, "role");
@@ -81,8 +82,8 @@ static int validation_claim_gate_is_fail_closed(void) {
     EXPECT_TRUE(gate.production_crypto_claim_allowed == 0u, "production");
     EXPECT_TRUE(gate.operation_execution_allowed == 0u, "operation");
     EXPECT_TRUE(gate.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(gate.required_validation_claim_items_total == 41u, "total");
-    EXPECT_TRUE(gate.required_validation_claim_items_satisfied == 32u, "satisfied");
+    EXPECT_TRUE(gate.required_validation_claim_items_total == 42u, "total");
+    EXPECT_TRUE(gate.required_validation_claim_items_satisfied == 33u, "satisfied");
     EXPECT_TRUE(gate.error == LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_validation_claim_gate_is_no_effect(&gate) == 1,
@@ -101,10 +102,13 @@ static int validation_claim_gate_is_fail_closed(void) {
         "header");
     EXPECT_TRUE(strstr(rendered, "validation_claim_gate_present=1") != 0, "present report");
     EXPECT_TRUE(strstr(rendered, "module_boundary_gate_bound=1") != 0, "boundary report");
+    EXPECT_TRUE(
+        strstr(rendered, "security_policy_gate_bound=1") != 0,
+        "security policy report");
     EXPECT_TRUE(strstr(rendered, "cmvp_certificate_required=1") != 0, "cmvp report");
     EXPECT_TRUE(strstr(rendered, "public_validation_claim_allowed=0") != 0, "claim report");
     EXPECT_TRUE(
-        strstr(rendered, "required_validation_claim_items_total=41") != 0,
+        strstr(rendered, "required_validation_claim_items_total=42") != 0,
         "total report");
     EXPECT_TRUE(
         strstr(rendered, "status=ml-kem-validation-claim-gate-blocked") != 0,

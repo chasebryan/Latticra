@@ -20,6 +20,7 @@ ci_promotion_evidence_bound=1
 implementation_binding_manifest_bound=1
 readiness_profile_bound=1
 module_boundary_gate_bound=1
+security_policy_gate_bound=1
 code_owner_review_bound=1
 review_disposition_ledger_bound=1
 reviewer_role_mapping_bound=1
@@ -57,14 +58,14 @@ post_quantum_migration_claim_allowed=0
 production_crypto_claim_allowed=0
 operation_execution_allowed=0
 runtime_authority_granted=0
-required_validation_claim_items_total=41
-required_validation_claim_items_satisfied=32
+required_validation_claim_items_total=42
+required_validation_claim_items_satisfied=33
 status=ml-kem-validation-claim-gate-blocked
 ```
 
 ## Guardrail
 
-This gate keeps Q-Seal honest at the language boundary. Local KATs, ACVP replay, provider self-tests, and even ACVP verdict receipts are not enough to publish FIPS or production cryptography wording without accepted module-boundary gate evidence, certificate, release-artifact, public-docs, and reviewer-disposition evidence.
+This gate keeps Q-Seal honest at the language boundary. Local KATs, ACVP replay, provider self-tests, and even ACVP verdict receipts are not enough to publish FIPS or production cryptography wording without accepted module-boundary gate evidence, accepted security-policy gate evidence, certificate, release-artifact, public-docs, and reviewer-disposition evidence.
 
 ## Validation
 

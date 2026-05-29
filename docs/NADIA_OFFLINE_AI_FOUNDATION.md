@@ -131,17 +131,20 @@ Stage-0 Console behavior is metadata-only:
 ```text
 nadia status
 nadia commands
+nadia audit
 ```
 
-The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-51 command map. Neither command launches an external host process.
+The `nadia status` command reports whether the Panel configuration has selected the Nadia component and repeats the denied authority posture. The `nadia commands` command lists the Stage-1 through Stage-51 command map. The `nadia audit` command repeats the no-effect command authority summary for local operator review. None of these commands launches an external host process.
 
 After user-local installation, the CLI surface is:
 
 ```text
 latticra-nadia status
 latticra-nadia commands
+latticra-nadia audit
 latticra nadia status
 latticra nadia commands
+latticra nadia audit
 ```
 
 The installed shim reports Stage-0 metadata and a no-effect command map only.

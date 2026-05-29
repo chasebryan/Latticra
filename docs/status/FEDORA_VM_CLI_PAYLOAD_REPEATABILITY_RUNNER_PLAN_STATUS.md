@@ -10,7 +10,7 @@ Latticra now has a plan and manually gated runner for disposable Fedora VM CLI p
 
 The plan maps the repeatability transcript contract into a runner shape, and the runner is present as a manual-only script.
 
-The plan now explicitly carries the installed prevention research, boundary, and method surfaces through repeatability validation.
+The plan now explicitly carries the installed prevention research, boundary, evidence, gate, fixture, and method surfaces through repeatability validation.
 
 The runner remains gated by:
 
@@ -38,6 +38,9 @@ second_disposable_vm_cli_validation_completed=0
 cli_payload_repeatability_evidence_present=0
 cli_prevention_research_repeatability_planned=1
 cli_prevention_boundary_repeatability_planned=1
+cli_prevention_evidence_repeatability_planned=1
+cli_prevention_gate_repeatability_planned=1
+cli_prevention_fixtures_repeatability_planned=1
 cli_prevention_method_repeatability_planned=1
 host_install_ready_for_cli_payload=1
 production_installer_ready=0

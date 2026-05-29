@@ -416,6 +416,128 @@ static int record_envelope_provider_crypto_evidence(
     return 1;
 }
 
+static int committed_detached_envelope_provider_crypto_evidence(
+    latticra_seal_hybrid_provider_self_test_t *out,
+    const latticra_seal_hybrid_envelope_result_t *seal_result,
+    const latticra_seal_hybrid_envelope_result_t *open_result,
+    const latticra_seal_hybrid_envelope_result_t *tamper_result) {
+    int hkdf_provider_evidence;
+    int hkdf_sha256_evidence;
+    int aes_gcm_provider_evidence;
+    int aes_gcm_nonce_evidence;
+    int aes_gcm_tag_evidence;
+    int commitment_mac_provider_evidence;
+    int commitment_mac_sha256_evidence;
+    int detached_commitment_evidence;
+    int random_bytes_ex_evidence;
+    int no_legacy_fallback_evidence;
+    int successful_tail_clear_evidence;
+
+    if (out == NULL || seal_result == NULL || open_result == NULL || tamper_result == NULL) {
+        return 0;
+    }
+
+    hkdf_provider_evidence =
+        seal_result->hkdf_provider_api_used == 1u &&
+        seal_result->hkdf_extract_expand_standard_api_used == 1u &&
+        seal_result->hkdf_manual_fallback_used == 0u &&
+        open_result->hkdf_provider_api_used == 1u &&
+        open_result->hkdf_extract_expand_standard_api_used == 1u &&
+        open_result->hkdf_manual_fallback_used == 0u;
+    hkdf_sha256_evidence =
+        seal_result->hkdf_sha256_digest_bound == 1u &&
+        open_result->hkdf_sha256_digest_bound == 1u;
+    aes_gcm_provider_evidence =
+        seal_result->aes_gcm_provider_api_used == 1u &&
+        seal_result->aes_gcm_provider_cipher_fetched == 1u &&
+        seal_result->aes_gcm_static_cipher_fallback_used == 0u &&
+        open_result->aes_gcm_provider_api_used == 1u &&
+        open_result->aes_gcm_provider_cipher_fetched == 1u &&
+        open_result->aes_gcm_static_cipher_fallback_used == 0u;
+    aes_gcm_nonce_evidence =
+        seal_result->aes_gcm_96bit_nonce_configured == 1u &&
+        open_result->aes_gcm_96bit_nonce_configured == 1u;
+    aes_gcm_tag_evidence =
+        seal_result->aes_gcm_128bit_tag_bound == 1u &&
+        open_result->aes_gcm_128bit_tag_bound == 1u;
+    commitment_mac_provider_evidence =
+        seal_result->commitment_mac_provider_api_used == 1u &&
+        seal_result->commitment_mac_provider_fetched == 1u &&
+        seal_result->commitment_mac_legacy_fallback_used == 0u &&
+        open_result->commitment_mac_provider_api_used == 1u &&
+        open_result->commitment_mac_provider_fetched == 1u &&
+        open_result->commitment_mac_legacy_fallback_used == 0u &&
+        tamper_result->commitment_mac_provider_api_used == 1u &&
+        tamper_result->commitment_mac_provider_fetched == 1u &&
+        tamper_result->commitment_mac_legacy_fallback_used == 0u;
+    commitment_mac_sha256_evidence =
+        seal_result->commitment_mac_hmac_sha256_digest_bound == 1u &&
+        seal_result->commitment_mac_256bit_key_used == 1u &&
+        seal_result->commitment_mac_input_streamed == 1u &&
+        open_result->commitment_mac_hmac_sha256_digest_bound == 1u &&
+        open_result->commitment_mac_256bit_key_used == 1u &&
+        open_result->commitment_mac_input_streamed == 1u &&
+        tamper_result->commitment_mac_hmac_sha256_digest_bound == 1u &&
+        tamper_result->commitment_mac_256bit_key_used == 1u &&
+        tamper_result->commitment_mac_input_streamed == 1u;
+    detached_commitment_evidence =
+        seal_result->detached_commitment_key_kdf_bound == 1u &&
+        seal_result->detached_commitment_caller_aad_bound == 1u &&
+        seal_result->detached_commitment_input_streamed == 1u &&
+        open_result->detached_commitment_checked_before_decrypt == 1u &&
+        open_result->detached_commitment_constant_time_compare == 1u &&
+        open_result->detached_commitment_verified == 1u &&
+        tamper_result->detached_commitment_checked_before_decrypt == 1u &&
+        tamper_result->detached_commitment_constant_time_compare == 1u &&
+        tamper_result->detached_commitment_tampering_rejected == 1u;
+    random_bytes_ex_evidence =
+        seal_result->random_bytes_ex_api_used == 1u &&
+        seal_result->random_bytes_strength_bits_requested ==
+            LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS &&
+        seal_result->random_bytes_manual_fallback_used == 0u &&
+        seal_result->generated_salt_csprng_success == 1u &&
+        seal_result->generated_nonce_csprng_success == 1u &&
+        seal_result->generated_salt_random_bytes == LATTICRA_SEAL_HYBRID_SALT_BYTES &&
+        seal_result->generated_nonce_random_bytes == LATTICRA_SEAL_HYBRID_NONCE_BYTES;
+    no_legacy_fallback_evidence =
+        seal_result->hkdf_manual_fallback_used == 0u &&
+        open_result->hkdf_manual_fallback_used == 0u &&
+        seal_result->aes_gcm_static_cipher_fallback_used == 0u &&
+        open_result->aes_gcm_static_cipher_fallback_used == 0u &&
+        seal_result->commitment_mac_legacy_fallback_used == 0u &&
+        open_result->commitment_mac_legacy_fallback_used == 0u &&
+        tamper_result->commitment_mac_legacy_fallback_used == 0u &&
+        seal_result->random_bytes_manual_fallback_used == 0u;
+    successful_tail_clear_evidence =
+        seal_result->successful_ciphertext_tail_cleared == 1u &&
+        open_result->successful_plaintext_tail_cleared == 1u;
+
+    if (!hkdf_provider_evidence ||
+        !hkdf_sha256_evidence ||
+        !aes_gcm_provider_evidence ||
+        !aes_gcm_nonce_evidence ||
+        !aes_gcm_tag_evidence ||
+        !commitment_mac_provider_evidence ||
+        !commitment_mac_sha256_evidence ||
+        !detached_commitment_evidence ||
+        !random_bytes_ex_evidence ||
+        !no_legacy_fallback_evidence ||
+        !successful_tail_clear_evidence) {
+        return 0;
+    }
+
+    out->hybrid_envelope_committed_detached_sealed = 1u;
+    out->hybrid_envelope_committed_detached_opened = 1u;
+    out->hybrid_envelope_committed_detached_authenticated = 1u;
+    out->hybrid_envelope_committed_detached_provider_crypto_evidence_bound = 1u;
+    out->hybrid_envelope_committed_detached_provider_crypto_cases_total++;
+    out->hybrid_envelope_committed_detached_tampering_rejected_total++;
+    out->hybrid_envelope_committed_detached_constant_time_compare_cases_total++;
+    out->hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total++;
+    out->hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total++;
+    return 1;
+}
+
 static void self_test_init(latticra_seal_hybrid_provider_self_test_t *out) {
     memset(out, 0, sizeof(*out));
     copy_literal(
@@ -589,6 +711,7 @@ static int run_ml_kem_envelope_case(
     unsigned *envelope_authenticated) {
     EVP_PKEY *ml_kem_key = NULL;
     EVP_PKEY *ml_kem_public_key_only = NULL;
+    EVP_PKEY_CTX *malformed_decaps_ctx = NULL;
     unsigned char ml_kem_sender_secret[LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES];
     unsigned char ml_kem_recipient_secret[LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES];
     unsigned char ml_kem_ciphertext
@@ -598,27 +721,44 @@ static int run_ml_kem_envelope_case(
     unsigned char ml_kem_public_key
         [LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_MAX_ML_KEM_PUBLIC_KEY_DER_BYTES];
     unsigned char tampered_ml_kem_secret[LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES];
+    unsigned char malformed_ml_kem_secret[LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES];
     unsigned char transcript_aad[LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_TRANSCRIPT_AAD_MAX];
     unsigned char tampered_transcript_aad
         [LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_TRANSCRIPT_AAD_MAX];
     unsigned char record[LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_RECORD_MAX];
+    unsigned char committed_ciphertext[sizeof(self_test_plaintext) + 19u];
+    unsigned char committed_salt[LATTICRA_SEAL_HYBRID_SALT_BYTES];
+    unsigned char committed_nonce[LATTICRA_SEAL_HYBRID_NONCE_BYTES];
+    unsigned char committed_tag[LATTICRA_SEAL_HYBRID_TAG_BYTES];
+    unsigned char committed_commitment[LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES];
+    unsigned char tampered_committed_commitment
+        [LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES];
     unsigned char recovered[sizeof(self_test_plaintext) + 15u];
+    unsigned char committed_recovered[sizeof(self_test_plaintext) + 17u];
     unsigned char wrong_secret_recovered[sizeof(self_test_plaintext) - 1u];
     unsigned char tamper_recovered[sizeof(self_test_plaintext) - 1u];
+    unsigned char committed_tamper_recovered[sizeof(self_test_plaintext) - 1u];
     size_t ml_kem_sender_secret_len = 0u;
     size_t ml_kem_recipient_secret_len = 0u;
     size_t ml_kem_ciphertext_len = 0u;
     size_t ml_kem_public_key_len = 0u;
     size_t tampered_ml_kem_secret_len = 0u;
+    size_t malformed_ml_kem_secret_len = 0u;
     size_t transcript_aad_len = 0u;
     size_t record_len = 0u;
+    size_t committed_ciphertext_len = 0u;
     size_t recovered_len = 0u;
+    size_t committed_recovered_len = 0u;
     size_t wrong_secret_recovered_len = 42u;
     size_t tamper_recovered_len = 42u;
+    size_t committed_tamper_recovered_len = 42u;
     latticra_seal_hybrid_envelope_result_t seal_result;
     latticra_seal_hybrid_envelope_result_t open_result;
+    latticra_seal_hybrid_envelope_result_t committed_seal_result;
+    latticra_seal_hybrid_envelope_result_t committed_open_result;
     latticra_seal_hybrid_envelope_result_t wrong_secret_result;
     latticra_seal_hybrid_envelope_result_t tamper_result;
+    latticra_seal_hybrid_envelope_result_t committed_tamper_result;
     int ok = 0;
     unsigned case_secret_zeroized = 0u;
     unsigned case_record_zeroized = 0u;
@@ -630,16 +770,28 @@ static int run_ml_kem_envelope_case(
     memset(tampered_ml_kem_ciphertext, 0, sizeof(tampered_ml_kem_ciphertext));
     memset(ml_kem_public_key, 0, sizeof(ml_kem_public_key));
     memset(tampered_ml_kem_secret, 0, sizeof(tampered_ml_kem_secret));
+    memset(malformed_ml_kem_secret, 0, sizeof(malformed_ml_kem_secret));
     memset(transcript_aad, 0, sizeof(transcript_aad));
     memset(tampered_transcript_aad, 0, sizeof(tampered_transcript_aad));
     memset(record, 0x8c, sizeof(record));
+    memset(committed_ciphertext, 0x8d, sizeof(committed_ciphertext));
+    memset(committed_salt, 0x8e, sizeof(committed_salt));
+    memset(committed_nonce, 0x8f, sizeof(committed_nonce));
+    memset(committed_tag, 0x90, sizeof(committed_tag));
+    memset(committed_commitment, 0x91, sizeof(committed_commitment));
+    memset(tampered_committed_commitment, 0, sizeof(tampered_committed_commitment));
     memset(recovered, 0x7f, sizeof(recovered));
+    memset(committed_recovered, 0x7e, sizeof(committed_recovered));
     memset(wrong_secret_recovered, 0x7f, sizeof(wrong_secret_recovered));
     memset(tamper_recovered, 0x7f, sizeof(tamper_recovered));
+    memset(committed_tamper_recovered, 0x7e, sizeof(committed_tamper_recovered));
     memset(&seal_result, 0, sizeof(seal_result));
     memset(&open_result, 0, sizeof(open_result));
+    memset(&committed_seal_result, 0, sizeof(committed_seal_result));
+    memset(&committed_open_result, 0, sizeof(committed_open_result));
     memset(&wrong_secret_result, 0, sizeof(wrong_secret_result));
     memset(&tamper_result, 0, sizeof(tamper_result));
+    memset(&committed_tamper_result, 0, sizeof(committed_tamper_result));
 
     if (!generate_ml_kem_key(algorithm_name, &ml_kem_key)) {
         self_test_fail(
@@ -785,6 +937,56 @@ static int run_ml_kem_envelope_case(
     out->ml_kem_tampered_ciphertext_shared_secret_mismatch_total++;
     out->ml_kem_ciphertext_tampering_rejected_total++;
 
+    if (ml_kem_ciphertext_len < 2u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "ml-kem-malformed-ciphertext-length-setup-failed",
+            "openssl-ml-kem-malformed-ciphertext-length-setup-failed",
+            "hybrid-provider-self-test-provider-failure");
+        goto cleanup;
+    }
+    malformed_decaps_ctx = EVP_PKEY_CTX_new_from_pkey(NULL, ml_kem_key, NULL);
+    if (malformed_decaps_ctx == NULL ||
+        EVP_PKEY_decapsulate_init(malformed_decaps_ctx, NULL) <= 0) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "ml-kem-malformed-ciphertext-length-decapsulation-init-failed",
+            "openssl-ml-kem-malformed-ciphertext-length-decapsulation-init-failed",
+            "hybrid-provider-self-test-provider-failure");
+        goto cleanup;
+    }
+    malformed_ml_kem_secret_len = sizeof(malformed_ml_kem_secret);
+    if (EVP_PKEY_decapsulate(
+            malformed_decaps_ctx,
+            malformed_ml_kem_secret,
+            &malformed_ml_kem_secret_len,
+            ml_kem_ciphertext,
+            ml_kem_ciphertext_len - 1u) > 0) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "ml-kem-malformed-ciphertext-length-accepted",
+            "openssl-ml-kem-malformed-ciphertext-length-accepted",
+            "hybrid-provider-self-test-provider-failure");
+        goto cleanup;
+    }
+    out->ml_kem_malformed_ciphertext_length_decapsulation_rejected_total++;
+    (void)OPENSSL_cleanse(malformed_ml_kem_secret, sizeof(malformed_ml_kem_secret));
+    EVP_PKEY_CTX_free(malformed_decaps_ctx);
+    malformed_decaps_ctx = NULL;
+    if (buffer_is_zero(malformed_ml_kem_secret, sizeof(malformed_ml_kem_secret)) != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_PROVIDER_FAILURE,
+            "ml-kem-malformed-ciphertext-length-staging-cleanse-failed",
+            "openssl-ml-kem-malformed-ciphertext-length-staging-cleanse-failed",
+            "hybrid-provider-self-test-provider-failure");
+        goto cleanup;
+    }
+    out->ml_kem_malformed_ciphertext_length_staged_secret_cleared_total++;
+
     if (!build_hybrid_transcript_aad(
             algorithm_name,
             p256_sealer_public_key,
@@ -897,6 +1099,152 @@ static int run_ml_kem_envelope_case(
         goto cleanup;
     }
 
+    if (latticra_seal_hybrid_envelope_seal_committed(
+            classical_sealer_secret,
+            LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES,
+            ml_kem_sender_secret,
+            sizeof(ml_kem_sender_secret),
+            transcript_aad,
+            transcript_aad_len,
+            self_test_plaintext,
+            sizeof(self_test_plaintext) - 1u,
+            committed_ciphertext,
+            sizeof(committed_ciphertext),
+            &committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            committed_commitment,
+            sizeof(committed_commitment),
+            &committed_seal_result) != LATTICRA_STATUS_OK ||
+        committed_seal_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-committed-seal-failed",
+            "provider-secrets-did-not-seal-committed-detached-envelope",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
+    }
+
+    if (latticra_seal_hybrid_envelope_open_committed(
+            classical_opener_secret,
+            LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES,
+            ml_kem_recipient_secret,
+            sizeof(ml_kem_recipient_secret),
+            transcript_aad,
+            transcript_aad_len,
+            committed_ciphertext,
+            committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            committed_commitment,
+            sizeof(committed_commitment),
+            committed_recovered,
+            sizeof(committed_recovered),
+            &committed_recovered_len,
+            &committed_open_result) != LATTICRA_STATUS_OK ||
+        committed_open_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_OK ||
+        committed_recovered_len != sizeof(self_test_plaintext) - 1u ||
+        CRYPTO_memcmp(committed_recovered, self_test_plaintext, committed_recovered_len) != 0 ||
+        committed_open_result.authentication_tag_verified != 1u ||
+        committed_open_result.detached_commitment_checked_before_decrypt != 1u ||
+        committed_open_result.detached_commitment_constant_time_compare != 1u ||
+        committed_open_result.detached_commitment_verified != 1u ||
+        committed_open_result.plaintext_released_after_authentication != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-committed-open-failed",
+            "provider-secrets-did-not-open-committed-detached-envelope",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
+    }
+    if (committed_ciphertext_len >= sizeof(committed_ciphertext) ||
+        committed_seal_result.successful_ciphertext_tail_cleared != 1u ||
+        buffer_tail_is_zero(
+            committed_ciphertext,
+            sizeof(committed_ciphertext),
+            committed_ciphertext_len) != 1u ||
+        committed_recovered_len >= sizeof(committed_recovered) ||
+        committed_open_result.successful_plaintext_tail_cleared != 1u ||
+        buffer_tail_is_zero(
+            committed_recovered,
+            sizeof(committed_recovered),
+            committed_recovered_len) != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-committed-success-tail-clear-missing",
+            "provider-backed-committed-envelope-output-tail-not-cleared",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
+    }
+
+    memcpy(
+        tampered_committed_commitment,
+        committed_commitment,
+        sizeof(tampered_committed_commitment));
+    tampered_committed_commitment[0] ^= 0x01u;
+    if (latticra_seal_hybrid_envelope_open_committed(
+            classical_opener_secret,
+            LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES,
+            ml_kem_recipient_secret,
+            sizeof(ml_kem_recipient_secret),
+            transcript_aad,
+            transcript_aad_len,
+            committed_ciphertext,
+            committed_ciphertext_len,
+            committed_salt,
+            sizeof(committed_salt),
+            committed_nonce,
+            sizeof(committed_nonce),
+            committed_tag,
+            sizeof(committed_tag),
+            tampered_committed_commitment,
+            sizeof(tampered_committed_commitment),
+            committed_tamper_recovered,
+            sizeof(committed_tamper_recovered),
+            &committed_tamper_recovered_len,
+            &committed_tamper_result) != LATTICRA_STATUS_OK ||
+        committed_tamper_result.error != LATTICRA_SEAL_HYBRID_ENVELOPE_AUTHENTICATION_FAILED ||
+        committed_tamper_result.detached_commitment_checked_before_decrypt != 1u ||
+        committed_tamper_result.detached_commitment_constant_time_compare != 1u ||
+        committed_tamper_result.detached_commitment_tampering_rejected != 1u ||
+        committed_tamper_result.authentication_tag_verified != 0u ||
+        committed_tamper_result.plaintext_released_after_authentication != 0u ||
+        committed_tamper_recovered_len != 0u ||
+        buffer_is_zero(committed_tamper_recovered, sizeof(committed_tamper_recovered)) != 1u) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-committed-tamper-accepted",
+            "tampered-committed-detached-envelope-opened",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
+    }
+
+    if (!committed_detached_envelope_provider_crypto_evidence(
+            out,
+            &committed_seal_result,
+            &committed_open_result,
+            &committed_tamper_result)) {
+        self_test_fail(
+            out,
+            LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST_ENVELOPE_FAILURE,
+            "hybrid-envelope-committed-provider-crypto-evidence-missing",
+            "seal-committed-detached-provider-crypto-evidence-missing",
+            "hybrid-provider-self-test-envelope-failure");
+        goto cleanup;
+    }
+
     if (latticra_seal_hybrid_envelope_open_record(
             classical_opener_secret,
             LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES,
@@ -966,6 +1314,7 @@ static int run_ml_kem_envelope_case(
     ok = 1;
 
 cleanup:
+    EVP_PKEY_CTX_free(malformed_decaps_ctx);
     EVP_PKEY_free(ml_kem_public_key_only);
     EVP_PKEY_free(ml_kem_key);
     OPENSSL_cleanse(ml_kem_sender_secret, sizeof(ml_kem_sender_secret));
@@ -974,23 +1323,35 @@ cleanup:
     OPENSSL_cleanse(tampered_ml_kem_ciphertext, sizeof(tampered_ml_kem_ciphertext));
     OPENSSL_cleanse(ml_kem_public_key, sizeof(ml_kem_public_key));
     OPENSSL_cleanse(tampered_ml_kem_secret, sizeof(tampered_ml_kem_secret));
+    OPENSSL_cleanse(malformed_ml_kem_secret, sizeof(malformed_ml_kem_secret));
     OPENSSL_cleanse(transcript_aad, sizeof(transcript_aad));
     OPENSSL_cleanse(tampered_transcript_aad, sizeof(tampered_transcript_aad));
     OPENSSL_cleanse(record, sizeof(record));
+    OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext));
+    OPENSSL_cleanse(committed_salt, sizeof(committed_salt));
+    OPENSSL_cleanse(committed_nonce, sizeof(committed_nonce));
+    OPENSSL_cleanse(committed_tag, sizeof(committed_tag));
+    OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment));
+    OPENSSL_cleanse(tampered_committed_commitment, sizeof(tampered_committed_commitment));
     OPENSSL_cleanse(recovered, sizeof(recovered));
+    OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered));
     OPENSSL_cleanse(wrong_secret_recovered, sizeof(wrong_secret_recovered));
     OPENSSL_cleanse(tamper_recovered, sizeof(tamper_recovered));
+    OPENSSL_cleanse(committed_tamper_recovered, sizeof(committed_tamper_recovered));
     case_secret_zeroized =
         buffer_is_zero(ml_kem_sender_secret, sizeof(ml_kem_sender_secret)) == 1u &&
         buffer_is_zero(ml_kem_recipient_secret, sizeof(ml_kem_recipient_secret)) == 1u &&
-        buffer_is_zero(tampered_ml_kem_secret, sizeof(tampered_ml_kem_secret)) == 1u
+        buffer_is_zero(tampered_ml_kem_secret, sizeof(tampered_ml_kem_secret)) == 1u &&
+        buffer_is_zero(malformed_ml_kem_secret, sizeof(malformed_ml_kem_secret)) == 1u
             ? 1u
             : 0u;
     case_record_zeroized = buffer_is_zero(record, sizeof(record));
     case_plaintext_zeroized =
         buffer_is_zero(recovered, sizeof(recovered)) == 1u &&
+        buffer_is_zero(committed_recovered, sizeof(committed_recovered)) == 1u &&
         buffer_is_zero(wrong_secret_recovered, sizeof(wrong_secret_recovered)) == 1u &&
-        buffer_is_zero(tamper_recovered, sizeof(tamper_recovered)) == 1u
+        buffer_is_zero(tamper_recovered, sizeof(tamper_recovered)) == 1u &&
+        buffer_is_zero(committed_tamper_recovered, sizeof(committed_tamper_recovered)) == 1u
             ? 1u
             : 0u;
     out->pqc_secret_zeroized =
@@ -1306,14 +1667,31 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
     char *buffer,
     size_t buffer_len) {
     int written;
+    size_t used = 0u;
+
+#define APPEND_REPORT_CHUNK(...)                                             \
+    do {                                                                     \
+        if (used >= buffer_len) {                                            \
+            if (buffer_len > 0u) {                                           \
+                buffer[0] = '\0';                                           \
+            }                                                                \
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;                         \
+        }                                                                    \
+        written = snprintf(buffer + used, buffer_len - used, __VA_ARGS__);    \
+        if (written < 0 || (size_t)written >= buffer_len - used) {           \
+            if (buffer_len > 0u) {                                           \
+                buffer[0] = '\0';                                           \
+            }                                                                \
+            return LATTICRA_STATUS_BUFFER_TOO_SMALL;                         \
+        }                                                                    \
+        used += (size_t)written;                                             \
+    } while (0)
 
     if (self_test == NULL || buffer == NULL) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
-    written = snprintf(
-        buffer,
-        buffer_len,
+    APPEND_REPORT_CHUNK(
         "LATTICRA SEAL HYBRID PROVIDER SELF-TEST\n"
         "self_test_profile=%s\n"
         "formal_title=%s\n"
@@ -1344,6 +1722,8 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "ml_kem_encapsulation_public_key_only_cases_total=%u\n"
         "ml_kem_tampered_ciphertext_shared_secret_mismatch_total=%u\n"
         "ml_kem_ciphertext_tampering_rejected_total=%u\n"
+        "ml_kem_malformed_ciphertext_length_decapsulation_rejected_total=%u\n"
+        "ml_kem_malformed_ciphertext_length_staged_secret_cleared_total=%u\n"
         "ml_kem_parameter_sets_tested=%u\n"
         "ml_kem_512_key_generation_performed=%u\n"
         "ml_kem_512_encapsulation_performed=%u\n"
@@ -1362,7 +1742,59 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "ml_kem_1024_decapsulation_performed=%u\n"
         "ml_kem_1024_shared_secret_match=%u\n"
         "ml_kem_1024_ciphertext_bytes=%u\n"
-        "ml_kem_1024_hybrid_envelope_authenticated=%u\n"
+        "ml_kem_1024_hybrid_envelope_authenticated=%u\n",
+        self_test->self_test_profile,
+        self_test->formal_title,
+        self_test->classical_provider_name,
+        self_test->pqc_provider_name,
+        self_test->classical_algorithm_name,
+        self_test->pqc_algorithm_name,
+        self_test->envelope_algorithm_name,
+        self_test->standards_source,
+        self_test->provider_linked,
+        self_test->classical_provider_available,
+        self_test->pqc_provider_available,
+        self_test->provider_runtime_used,
+        self_test->p256_key_generation_performed,
+        self_test->p256_peer_public_keys_reimported,
+        self_test->p256_ecdh_peer_public_key_only,
+        self_test->p256_ecdh_derive_performed,
+        self_test->p256_shared_secret_match,
+        self_test->p256_shared_secret_bytes,
+        self_test->ml_kem_key_generation_performed,
+        self_test->ml_kem_encapsulation_performed,
+        self_test->ml_kem_decapsulation_performed,
+        self_test->ml_kem_shared_secret_match,
+        self_test->ml_kem_shared_secret_bytes,
+        self_test->ml_kem_keypair_algorithm_identity_verified_cases_total,
+        self_test->ml_kem_public_key_reimported_cases_total,
+        self_test->ml_kem_public_key_algorithm_identity_verified_cases_total,
+        self_test->ml_kem_encapsulation_public_key_only_cases_total,
+        self_test->ml_kem_tampered_ciphertext_shared_secret_mismatch_total,
+        self_test->ml_kem_ciphertext_tampering_rejected_total,
+        self_test->ml_kem_malformed_ciphertext_length_decapsulation_rejected_total,
+        self_test->ml_kem_malformed_ciphertext_length_staged_secret_cleared_total,
+        self_test->ml_kem_parameter_sets_tested,
+        self_test->ml_kem_512_key_generation_performed,
+        self_test->ml_kem_512_encapsulation_performed,
+        self_test->ml_kem_512_decapsulation_performed,
+        self_test->ml_kem_512_shared_secret_match,
+        self_test->ml_kem_512_ciphertext_bytes,
+        self_test->ml_kem_512_hybrid_envelope_authenticated,
+        self_test->ml_kem_768_key_generation_performed,
+        self_test->ml_kem_768_encapsulation_performed,
+        self_test->ml_kem_768_decapsulation_performed,
+        self_test->ml_kem_768_shared_secret_match,
+        self_test->ml_kem_768_ciphertext_bytes,
+        self_test->ml_kem_768_hybrid_envelope_authenticated,
+        self_test->ml_kem_1024_key_generation_performed,
+        self_test->ml_kem_1024_encapsulation_performed,
+        self_test->ml_kem_1024_decapsulation_performed,
+        self_test->ml_kem_1024_shared_secret_match,
+        self_test->ml_kem_1024_ciphertext_bytes,
+        self_test->ml_kem_1024_hybrid_envelope_authenticated);
+
+    APPEND_REPORT_CHUNK(
         "hybrid_envelope_record_sealed=%u\n"
         "hybrid_envelope_record_opened=%u\n"
         "hybrid_envelope_authenticated=%u\n"
@@ -1370,6 +1802,15 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "hybrid_envelope_records_sealed_total=%u\n"
         "hybrid_envelope_records_opened_total=%u\n"
         "hybrid_envelope_records_authenticated_total=%u\n"
+        "hybrid_envelope_committed_detached_sealed=%u\n"
+        "hybrid_envelope_committed_detached_opened=%u\n"
+        "hybrid_envelope_committed_detached_authenticated=%u\n"
+        "hybrid_envelope_committed_detached_provider_crypto_evidence_bound=%u\n"
+        "hybrid_envelope_committed_detached_provider_crypto_cases_total=%u\n"
+        "hybrid_envelope_committed_detached_tampering_rejected_total=%u\n"
+        "hybrid_envelope_committed_detached_constant_time_compare_cases_total=%u\n"
+        "hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total=%u\n"
+        "hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total=%u\n"
         "hybrid_envelope_provider_crypto_evidence_bound=%u\n"
         "hybrid_envelope_provider_crypto_cases_total=%u\n"
         "hybrid_envelope_hkdf_provider_cases_total=%u\n"
@@ -1384,7 +1825,40 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "hybrid_envelope_random_bytes_strength_bits_requested=%u\n"
         "hybrid_envelope_no_legacy_crypto_fallback_cases_total=%u\n"
         "hybrid_envelope_successful_record_tail_cleared_cases_total=%u\n"
-        "hybrid_envelope_successful_plaintext_tail_cleared_cases_total=%u\n"
+        "hybrid_envelope_successful_plaintext_tail_cleared_cases_total=%u\n",
+        self_test->hybrid_envelope_record_sealed,
+        self_test->hybrid_envelope_record_opened,
+        self_test->hybrid_envelope_authenticated,
+        self_test->hybrid_envelope_plaintext_recovered,
+        self_test->hybrid_envelope_records_sealed_total,
+        self_test->hybrid_envelope_records_opened_total,
+        self_test->hybrid_envelope_records_authenticated_total,
+        self_test->hybrid_envelope_committed_detached_sealed,
+        self_test->hybrid_envelope_committed_detached_opened,
+        self_test->hybrid_envelope_committed_detached_authenticated,
+        self_test->hybrid_envelope_committed_detached_provider_crypto_evidence_bound,
+        self_test->hybrid_envelope_committed_detached_provider_crypto_cases_total,
+        self_test->hybrid_envelope_committed_detached_tampering_rejected_total,
+        self_test->hybrid_envelope_committed_detached_constant_time_compare_cases_total,
+        self_test->hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total,
+        self_test->hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total,
+        self_test->hybrid_envelope_provider_crypto_evidence_bound,
+        self_test->hybrid_envelope_provider_crypto_cases_total,
+        self_test->hybrid_envelope_hkdf_provider_cases_total,
+        self_test->hybrid_envelope_hkdf_sha256_cases_total,
+        self_test->hybrid_envelope_aes_gcm_provider_cases_total,
+        self_test->hybrid_envelope_aes_gcm_96bit_nonce_cases_total,
+        self_test->hybrid_envelope_aes_gcm_128bit_tag_cases_total,
+        self_test->hybrid_envelope_commitment_mac_provider_cases_total,
+        self_test->hybrid_envelope_commitment_mac_hmac_sha256_cases_total,
+        self_test->hybrid_envelope_commitment_constant_time_compare_cases_total,
+        self_test->hybrid_envelope_random_bytes_ex_cases_total,
+        self_test->hybrid_envelope_random_bytes_strength_bits_requested,
+        self_test->hybrid_envelope_no_legacy_crypto_fallback_cases_total,
+        self_test->hybrid_envelope_successful_record_tail_cleared_cases_total,
+        self_test->hybrid_envelope_successful_plaintext_tail_cleared_cases_total);
+
+    APPEND_REPORT_CHUNK(
         "hybrid_transcript_aad_bound=%u\n"
         "hybrid_transcript_aad_size_bytes=%u\n"
         "hybrid_transcript_cases_bound_total=%u\n"
@@ -1417,76 +1891,6 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         "blocked_reason=%s\n"
         "error=%s\n"
         "status=%s\n",
-        self_test->self_test_profile,
-        self_test->formal_title,
-        self_test->classical_provider_name,
-        self_test->pqc_provider_name,
-        self_test->classical_algorithm_name,
-        self_test->pqc_algorithm_name,
-        self_test->envelope_algorithm_name,
-        self_test->standards_source,
-        self_test->provider_linked,
-        self_test->classical_provider_available,
-        self_test->pqc_provider_available,
-        self_test->provider_runtime_used,
-        self_test->p256_key_generation_performed,
-        self_test->p256_peer_public_keys_reimported,
-        self_test->p256_ecdh_peer_public_key_only,
-        self_test->p256_ecdh_derive_performed,
-        self_test->p256_shared_secret_match,
-        self_test->p256_shared_secret_bytes,
-        self_test->ml_kem_key_generation_performed,
-        self_test->ml_kem_encapsulation_performed,
-        self_test->ml_kem_decapsulation_performed,
-        self_test->ml_kem_shared_secret_match,
-        self_test->ml_kem_shared_secret_bytes,
-        self_test->ml_kem_keypair_algorithm_identity_verified_cases_total,
-        self_test->ml_kem_public_key_reimported_cases_total,
-        self_test->ml_kem_public_key_algorithm_identity_verified_cases_total,
-        self_test->ml_kem_encapsulation_public_key_only_cases_total,
-        self_test->ml_kem_tampered_ciphertext_shared_secret_mismatch_total,
-        self_test->ml_kem_ciphertext_tampering_rejected_total,
-        self_test->ml_kem_parameter_sets_tested,
-        self_test->ml_kem_512_key_generation_performed,
-        self_test->ml_kem_512_encapsulation_performed,
-        self_test->ml_kem_512_decapsulation_performed,
-        self_test->ml_kem_512_shared_secret_match,
-        self_test->ml_kem_512_ciphertext_bytes,
-        self_test->ml_kem_512_hybrid_envelope_authenticated,
-        self_test->ml_kem_768_key_generation_performed,
-        self_test->ml_kem_768_encapsulation_performed,
-        self_test->ml_kem_768_decapsulation_performed,
-        self_test->ml_kem_768_shared_secret_match,
-        self_test->ml_kem_768_ciphertext_bytes,
-        self_test->ml_kem_768_hybrid_envelope_authenticated,
-        self_test->ml_kem_1024_key_generation_performed,
-        self_test->ml_kem_1024_encapsulation_performed,
-        self_test->ml_kem_1024_decapsulation_performed,
-        self_test->ml_kem_1024_shared_secret_match,
-        self_test->ml_kem_1024_ciphertext_bytes,
-        self_test->ml_kem_1024_hybrid_envelope_authenticated,
-        self_test->hybrid_envelope_record_sealed,
-        self_test->hybrid_envelope_record_opened,
-        self_test->hybrid_envelope_authenticated,
-        self_test->hybrid_envelope_plaintext_recovered,
-        self_test->hybrid_envelope_records_sealed_total,
-        self_test->hybrid_envelope_records_opened_total,
-        self_test->hybrid_envelope_records_authenticated_total,
-        self_test->hybrid_envelope_provider_crypto_evidence_bound,
-        self_test->hybrid_envelope_provider_crypto_cases_total,
-        self_test->hybrid_envelope_hkdf_provider_cases_total,
-        self_test->hybrid_envelope_hkdf_sha256_cases_total,
-        self_test->hybrid_envelope_aes_gcm_provider_cases_total,
-        self_test->hybrid_envelope_aes_gcm_96bit_nonce_cases_total,
-        self_test->hybrid_envelope_aes_gcm_128bit_tag_cases_total,
-        self_test->hybrid_envelope_commitment_mac_provider_cases_total,
-        self_test->hybrid_envelope_commitment_mac_hmac_sha256_cases_total,
-        self_test->hybrid_envelope_commitment_constant_time_compare_cases_total,
-        self_test->hybrid_envelope_random_bytes_ex_cases_total,
-        self_test->hybrid_envelope_random_bytes_strength_bits_requested,
-        self_test->hybrid_envelope_no_legacy_crypto_fallback_cases_total,
-        self_test->hybrid_envelope_successful_record_tail_cleared_cases_total,
-        self_test->hybrid_envelope_successful_plaintext_tail_cleared_cases_total,
         self_test->hybrid_transcript_aad_bound,
         self_test->hybrid_transcript_aad_size_bytes,
         self_test->hybrid_transcript_cases_bound_total,
@@ -1520,12 +1924,6 @@ latticra_status_t latticra_seal_hybrid_provider_self_test_report(
         latticra_seal_hybrid_provider_self_test_error_label(self_test->error),
         self_test->status);
 
-    if (written < 0 || (size_t)written >= buffer_len) {
-        if (buffer_len > 0u) {
-            buffer[0] = '\0';
-        }
-        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
-    }
-
+#undef APPEND_REPORT_CHUNK
     return LATTICRA_STATUS_OK;
 }

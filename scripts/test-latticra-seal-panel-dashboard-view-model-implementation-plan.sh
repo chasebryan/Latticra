@@ -112,7 +112,7 @@ require_contains 'authority_absent_for_all_rows=1' "$plan"
 require_contains 'caller-provided source reports are accepted without file loading' "$plan"
 require_contains 'turning dashboard rows into execution grants' "$plan"
 require_contains 'turning dashboard rows into effect grants' "$plan"
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$plan"
+require_contains 'The next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.' "$plan"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-implementation-plan.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-implementation-plan.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-implementation-plan.yml
 

@@ -3932,6 +3932,15 @@ static latticra_status_t append_hybrid_envelope_report_chunk(
     size_t buffer_len,
     size_t *used,
     int appended) {
+    if (buffer == NULL || used == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (*used >= buffer_len) {
+        if (buffer_len > 0u) {
+            buffer[0] = '\0';
+        }
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
     if (appended < 0 || (size_t)appended >= buffer_len - *used) {
         if (buffer_len > 0u) {
             buffer[0] = '\0';
@@ -3954,6 +3963,10 @@ latticra_status_t latticra_seal_hybrid_envelope_report(
     if (result == NULL || buffer == NULL) {
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    buffer[0] = '\0';
 
     used = 0u;
     appended = snprintf(

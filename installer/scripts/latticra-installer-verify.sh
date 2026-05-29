@@ -113,6 +113,7 @@ LC_SERVICE_SCHEMA_CONTRACT="$PREFIX/share/latticra/lc/services/definition-schema
 LC_SERVICE_DEFINITIONS_CONTRACT="$PREFIX/share/latticra/lc/services/definitions.toml"
 LC_SERVICE_PLAN_CONTRACT="$PREFIX/share/latticra/lc/services/plan.toml"
 LC_SERVICE_RUNTIME_CONTRACT="$PREFIX/share/latticra/lc/services/runtime.toml"
+LC_PROCESSES_CONTRACT="$PREFIX/share/latticra/lc/processes/contract.toml"
 UPDATER_CONFIG="$PREFIX/etc/latticra/updater.toml"
 UPDATER_POLICY="$PREFIX/share/latticra/updater/policy.toml"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/latticra-installer-verify.XXXXXX")"
@@ -241,6 +242,7 @@ check "LC service schema contract" "$LC_SERVICE_SCHEMA_CONTRACT"
 check "LC service definitions contract" "$LC_SERVICE_DEFINITIONS_CONTRACT"
 check "LC service plan contract" "$LC_SERVICE_PLAN_CONTRACT"
 check "LC service runtime contract" "$LC_SERVICE_RUNTIME_CONTRACT"
+check "LC processes contract" "$LC_PROCESSES_CONTRACT"
 check "updater config" "$UPDATER_CONFIG"
 check "updater policy" "$UPDATER_POLICY"
 
@@ -271,6 +273,8 @@ check_contains "LC service plan contract profile" 'service_plan_contract_profile
 check_contains "LC service plan contract metadata" 'service_plan_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC service runtime contract profile" 'service_runtime_contract_profile = "lc-service-runtime-v0"' "$LC_INSTALL_CONFIG"
 check_contains "LC service runtime contract metadata" 'service_runtime_contract_present = true' "$LC_INSTALL_CONFIG"
+check_contains "LC processes contract profile" 'processes_contract_profile = "lc-processes-v0"' "$LC_INSTALL_CONFIG"
+check_contains "LC processes contract metadata" 'processes_contract_present = true' "$LC_INSTALL_CONFIG"
 check_contains "LC external host command authority disabled" 'allow_external_host_commands = false' "$LC_INSTALL_CONFIG"
 check_contains "LC install-config registry command" 'name=lc install-config category=core effect=none capability=lc.install.config' "$LC_COMMAND_REGISTRY"
 check_contains "LC standalone registry command" 'name=lc standalone category=core effect=none capability=lc.standalone.inspect' "$LC_COMMAND_REGISTRY"
@@ -285,6 +289,7 @@ check_contains "LC service schema registry command" 'name=lc service-schema cate
 check_contains "LC service definitions registry command" 'name=lc service-definitions category=core effect=none capability=lc.service.definitions.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC service plan registry command" 'name=lc service-plan category=core effect=none capability=lc.service.plan.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC service runtime registry command" 'name=lc service-runtime category=core effect=none capability=lc.service.runtime.contract' "$LC_COMMAND_REGISTRY"
+check_contains "LC processes registry command" 'name=lc processes category=core effect=none capability=lc.processes.contract' "$LC_COMMAND_REGISTRY"
 check_contains "LC workspace command surface" 'command_surface = "lc workspace"' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace mount denied" 'workspace_mount_allowed = false' "$LC_WORKSPACE_CONTRACT"
 check_contains "LC workspace host process denied" 'host_process_launch_allowed = false' "$LC_WORKSPACE_CONTRACT"
@@ -336,6 +341,12 @@ check_contains "LC service runtime handoff denied" 'service_runtime_handoff_allo
 check_contains "LC service runtime executor denied" 'service_executor_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
 check_contains "LC service runtime supervision denied" 'service_supervision_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
 check_contains "LC service runtime host process denied" 'host_process_launch_allowed = false' "$LC_SERVICE_RUNTIME_CONTRACT"
+check_contains "LC processes command surface" 'command_surface = "lc processes"' "$LC_PROCESSES_CONTRACT"
+check_contains "LC processes table denied" 'process_table_present = false' "$LC_PROCESSES_CONTRACT"
+check_contains "LC processes spawn denied" 'process_spawn_allowed = false' "$LC_PROCESSES_CONTRACT"
+check_contains "LC processes signal denied" 'process_signal_allowed = false' "$LC_PROCESSES_CONTRACT"
+check_contains "LC processes supervision denied" 'process_supervision_allowed = false' "$LC_PROCESSES_CONTRACT"
+check_contains "LC processes host process launch denied" 'host_process_launch_allowed = false' "$LC_PROCESSES_CONTRACT"
 check_contains "updater panel-owned config" 'panel_owned = true' "$UPDATER_CONFIG"
 check_contains "updater network authority disabled" 'allow_network_fetch = false' "$UPDATER_CONFIG"
 check_contains "updater apply mode" 'update_apply_mode = "guarded-local-prefix-reinstall"' "$UPDATER_CONFIG"
@@ -394,6 +405,7 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper service definitions contract present" 'service_definitions_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper service plan contract present" 'service_plan_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper service runtime contract present" 'service_runtime_contract_present=1' "$TMP_DIR/lc-install-config.txt"
+    check_contains "LC wrapper processes contract present" 'processes_contract_present=1' "$TMP_DIR/lc-install-config.txt"
     check_contains "LC wrapper host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-install-config.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER install-config" >&2
@@ -527,6 +539,18 @@ if [ -x "$LC_COMMAND" ]; then
     check_contains "LC wrapper service runtime host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-service-runtime.txt"
   else
     echo "failed: $LC_COMMAND_WRAPPER service-runtime" >&2
+    failures=$((failures + 1))
+  fi
+
+  if "$LC_COMMAND" processes > "$TMP_DIR/lc-processes.txt"; then
+    check_contains "LC wrapper processes report" 'LATTICRA CONSOLE PROCESSES CONTRACT' "$TMP_DIR/lc-processes.txt"
+    check_contains "LC wrapper processes command surface" 'command_surface=lc processes' "$TMP_DIR/lc-processes.txt"
+    check_contains "LC wrapper processes table denied" 'process_table_present=0' "$TMP_DIR/lc-processes.txt"
+    check_contains "LC wrapper processes spawn denied" 'process_spawn_allowed=0' "$TMP_DIR/lc-processes.txt"
+    check_contains "LC wrapper processes supervision denied" 'process_supervision_allowed=0' "$TMP_DIR/lc-processes.txt"
+    check_contains "LC wrapper processes host process launch denied" 'host_process_launch_allowed=0' "$TMP_DIR/lc-processes.txt"
+  else
+    echo "failed: $LC_COMMAND_WRAPPER processes" >&2
     failures=$((failures + 1))
   fi
 fi

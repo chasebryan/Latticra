@@ -27,6 +27,7 @@ network exposure and remote access requirements
 data classification and protection requirements
 AI and agentic automation security requirements
 platform boot and firmware integrity requirements
+security validation and assessment requirements
 incident-response and disclosure requirements
 non-claims that remain closed
 ```
@@ -76,6 +77,7 @@ Date checked: 2026-05-26
 | NIST SP 800-207A | Zero-trust access in multi-location environments uses policy decisions, service/workload identity, and distributed access control. | Keep service access and workload network authority denied until per-request policy evidence exists. |
 | NIST SP 800-92 and SP 800-92 Rev. 1 draft | Log management requires planning for generation, transmission, storage, access, analysis, retention, and disposal. | Use SP 800-92 vocabulary for future audit-event selection, log lifecycle, retention, access, and disposal evidence. |
 | NIST SP 800-218 SSDF v1.1 | Secure development should prepare the organization, protect software, produce well-secured software, and respond to vulnerabilities. | Keep tests, threat-model docs, protected source/build processes, vulnerability handling, and root-cause-driven fixes in the quality gate. |
+| NIST SP 800-115, SP 800-37 Rev. 2, and SP 800-53A Rev. 5 | Security testing and assessment require planned scope, authorization, techniques, result analysis, mitigation strategy, assessment reporting, authorization boundary, POA&M, and continuous monitoring. | Require a security validation and assessment baseline before security-release, penetration-test, red-team, third-party validation, certification, compliance, or production-protection claims. |
 | NIST SP 800-53 Rev. 5, Release 5.2.0 | Control families cover access, audit, configuration, identification, incident response, risk assessment, system acquisition, system integrity, and supply-chain risk management. | Use SP 800-53 as the high-assurance control vocabulary for future production profiles, not as a current compliance claim. |
 | NIST SP 800-160 Vol. 2 Rev. 1 | Cyber-resilient systems should anticipate, withstand, recover from, and adapt to adverse conditions and attacks. | Keep rollback, recovery, degraded-mode, auditability, and no-hidden-effect requirements ahead of any mutating infrastructure behavior. |
 | NIST SP 800-207 Zero Trust Architecture | Zero trust removes implicit trust and makes access decisions resource-focused and least-privilege. | Runtime and agentic automation authority must remain per-request, least-privilege, auditable, and denied unless prerequisites pass. |
@@ -128,6 +130,7 @@ network_exposure_remote_access_baseline_present=1
 data_classification_protection_baseline_present=1
 ai_agentic_automation_security_baseline_present=1
 platform_boot_firmware_integrity_baseline_present=1
+security_validation_assessment_baseline_present=1
 kev_release_review_required=1
 fips_crypto_boundary_required_before_production_crypto=1
 phishing_resistant_mfa_required_before_remote_privileged_access=1
@@ -138,6 +141,7 @@ network_exposure_review_required_before_hosted_service=1
 data_classification_review_required_before_hosted_service=1
 ai_agentic_automation_security_required_before_model_or_tool_authority=1
 platform_integrity_review_required_before_bootable_os_claim=1
+security_validation_required_before_security_release_claim=1
 sbom_required_before_production_installer=1
 third_party_security_validation_required_before_security_release=1
 incident_response_plan_required_before_production_service=1
@@ -361,6 +365,8 @@ Before any production service, hosted system, or critical infrastructure deploym
 - require AI adversarial testing, monitoring, rollback, human oversight, and incident handoff before model, MCP, tool, or autonomous-effect claims;
 - define boot mode, Secure Boot, TPM/PCR, firmware update, firmware recovery, and platform administrator evidence;
 - require platform boot and firmware integrity evidence before bootable OS, Secure Boot, measured boot, TPM attestation, firmware recovery, or platform-integrity claims;
+- define assessment scope, rules of engagement, test authorization, control-objective mapping, findings ownership, remediation, retest, and independent-review evidence;
+- require security validation and assessment evidence before security-release, penetration-test, red-team, third-party validation, certification, compliance, or production-protection claims;
 - require MFA/SSO for privileged accounts;
 - require phishing-resistant MFA planning for remote and privileged access;
 - prohibit shared administrative accounts and default credentials;
@@ -396,6 +402,7 @@ docs/NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md
 docs/DATA_CLASSIFICATION_PROTECTION_BASELINE.md
 docs/AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md
 docs/PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md
+docs/SECURITY_VALIDATION_ASSESSMENT_BASELINE.md
 docs/security/C_CPP_SECURITY_PROFILE.md
 docs/security/C_ABI_BOUNDARY_POLICY.md
 scripts/test-quality-safety-guards.sh
@@ -416,6 +423,7 @@ scripts/test-network-exposure-remote-access-baseline.sh
 scripts/test-data-classification-protection-baseline.sh
 scripts/test-ai-agentic-automation-security-baseline.sh
 scripts/test-platform-boot-firmware-integrity-baseline.sh
+scripts/test-security-validation-assessment-baseline.sh
 ```
 
 ## Non-Claims

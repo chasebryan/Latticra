@@ -102,7 +102,7 @@ require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTA
 require_contains 'docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md' "$status_file"
 require_contains 'docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md' "$status_file"
 require_contains 'Seal Panel dashboard view-model implementation plan' "$status_file"
-require_contains 'signed receipt proof path' "$status_file"
+require_contains 'signed receipt trust-root boundary contract' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-operator-receipt-report-status.sh' .github/workflows/latticra-seal-operator-receipt-report-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-operator-receipt-report-status.yml
 

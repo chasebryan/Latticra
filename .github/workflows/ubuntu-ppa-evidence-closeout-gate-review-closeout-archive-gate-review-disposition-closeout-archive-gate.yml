@@ -1,0 +1,25 @@
+name: Ubuntu PPA Closeout Archive Gate Review
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-ppa-closeout-archive-gate-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Ubuntu PPA closeout archive gate review guard
+        run: |
+          script=scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-
+          script=${script}archive-gate-review-disposition-closeout-archive-gate.sh
+          sh "$script"

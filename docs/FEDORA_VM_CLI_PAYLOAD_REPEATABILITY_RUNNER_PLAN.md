@@ -112,31 +112,35 @@ The runner performs this sequence only after the hard gate passes:
 1. Verify disposable Fedora VM target evidence.
 2. Verify accepted prior CLI payload evidence records.
 3. Verify repeatability transcript contract fields.
-4. Run the no-effect CLI status-surface guard.
-5. Capture source tree revision.
-6. Capture Fedora os-release and kernel version.
-7. Capture packaging/fedora/latticra.spec checksum.
-8. Build a temporary source archive from the current tree.
-9. Capture source archive checksum.
-10. Build the local binary RPM with rpmbuild.
-11. Capture RPM NEVRA, path, arch, and metadata.
-12. Capture RPM payload listing.
-13. Confirm expected CLI payload surfaces.
-14. Confirm forbidden payload surfaces are absent.
-15. Confirm package is absent before install.
-16. Install the RPM into the disposable Fedora VM.
-17. Query installed package state and payload.
-18. Run rpm -V for the installed package.
-19. Execute latticra --status without root.
-20. Execute latticra --version without root.
-21. Execute latticra --report without root.
-22. Execute latticra --prevention-research without root.
-23. Execute latticra --prevention-boundary without root.
-24. Execute latticra --prevention-method sql without root.
-25. Verify invalid CLI usage exits with code 2.
-26. Remove the RPM from the disposable Fedora VM.
-27. Confirm package, CLI, and README absence after removal.
-28. Emit the repeatability transcript and deterministic report.
+4. Run the prevention surface consistency guard.
+5. Run the no-effect CLI status-surface guard.
+6. Capture source tree revision.
+7. Capture Fedora os-release and kernel version.
+8. Capture packaging/fedora/latticra.spec checksum.
+9. Build a temporary source archive from the current tree.
+10. Capture source archive checksum.
+11. Build the local binary RPM with rpmbuild.
+12. Capture RPM NEVRA, path, arch, and metadata.
+13. Capture RPM payload listing.
+14. Confirm expected CLI payload surfaces.
+15. Confirm forbidden payload surfaces are absent.
+16. Confirm package is absent before install.
+17. Install the RPM into the disposable Fedora VM.
+18. Query installed package state and payload.
+19. Run rpm -V for the installed package.
+20. Execute latticra --status without root.
+21. Execute latticra --version without root.
+22. Execute latticra --report without root.
+23. Execute latticra --prevention-research without root.
+24. Execute latticra --prevention-boundary without root.
+25. Execute latticra --prevention-evidence without root.
+26. Execute latticra --prevention-gate without root.
+27. Execute latticra --prevention-fixtures without root.
+28. Execute latticra --prevention-method sql without root.
+29. Verify invalid CLI usage exits with code 2.
+30. Remove the RPM from the disposable Fedora VM.
+31. Confirm package, CLI, and README absence after removal.
+32. Emit the repeatability transcript and deterministic report.
 ```
 
 ## Expected payload
@@ -195,7 +199,11 @@ cli_version_output_recorded=1
 cli_report_output_recorded=1
 cli_prevention_research_output_recorded=1
 cli_prevention_boundary_output_recorded=1
+cli_prevention_evidence_output_recorded=1
+cli_prevention_gate_output_recorded=1
+cli_prevention_fixtures_output_recorded=1
 cli_prevention_method_output_recorded=1
+cli_prevention_surface_consistency_guard_passed=1
 cli_invalid_command_exit_recorded=1
 validated_cli_mode_still_no_effect=1
 validated_runtime_behavior_still_disabled=1

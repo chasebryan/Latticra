@@ -18,6 +18,8 @@
 #include "latticra/q_seal_ml_kem_constant_time_review.h"
 #include "latticra/q_seal_ml_kem_clean_room_author_attestation_gate.h"
 #include "latticra/q_seal_ml_kem_evidence_gate.h"
+#include "latticra/q_seal_ml_kem_evidence_import_packet_manifest.h"
+#include "latticra/q_seal_ml_kem_evidence_import_review_gate.h"
 #include "latticra/q_seal_ml_kem_fips_conformance_matrix.h"
 #include "latticra/q_seal_ml_kem_implementation_binding_manifest.h"
 #include "latticra/q_seal_ml_kem_implementation_file_digest_plan.h"
@@ -40,6 +42,7 @@
 #include "latticra/q_seal_ml_kem_review_disposition_ledger.h"
 #include "latticra/q_seal_ml_kem_reviewer_identity_fixture.h"
 #include "latticra/q_seal_ml_kem_reviewer_role_mapping.h"
+#include "latticra/q_seal_ml_kem_security_policy_gate.h"
 #include "latticra/q_seal_ml_kem_secret_state_contract.h"
 #include "latticra/q_seal_ml_kem_side_channel_review.h"
 #include "latticra/q_seal_ml_kem_source_digest_manifest.h"
@@ -116,9 +119,12 @@ typedef struct {
     unsigned review_disposition_ledger_present;
     unsigned reviewer_identity_fixture_present;
     unsigned reviewer_role_mapping_present;
+    unsigned evidence_import_packet_manifest_present;
+    unsigned evidence_import_review_gate_present;
     unsigned ci_promotion_evidence_present;
     unsigned validation_claim_gate_present;
     unsigned module_boundary_gate_present;
+    unsigned security_policy_gate_present;
     unsigned constant_time_review_present;
     unsigned randomness_source_contract_present;
     unsigned zeroization_evidence_present;

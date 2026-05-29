@@ -23,6 +23,7 @@ static unsigned required_items_satisfied(
     satisfied += one_if(gate->fips_140_3_module_security_bound);
     satisfied += one_if(gate->cmvp_program_bound);
     satisfied += one_if(gate->validation_claim_gate_bound);
+    satisfied += one_if(gate->security_policy_gate_bound);
     satisfied += one_if(gate->acvp_verdict_receipt_gate_bound);
     satisfied += one_if(gate->ci_promotion_evidence_bound);
     satisfied += one_if(gate->implementation_binding_manifest_bound);
@@ -114,6 +115,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_module_boundary_gate_prepare(
     out->fips_140_3_module_security_bound = 1u;
     out->cmvp_program_bound = 1u;
     out->validation_claim_gate_bound = 1u;
+    out->security_policy_gate_bound = 1u;
     out->acvp_verdict_receipt_gate_bound = 1u;
     out->ci_promotion_evidence_bound = 1u;
     out->implementation_binding_manifest_bound = 1u;
@@ -158,7 +160,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_module_boundary_gate_prepare(
     out->fips_claim_allowed = 0u;
     out->operation_execution_allowed = 0u;
     out->runtime_authority_granted = 0u;
-    out->required_module_boundary_items_total = 45u;
+    out->required_module_boundary_items_total = 46u;
     out->required_module_boundary_items_satisfied = required_items_satisfied(out);
     copy_literal(
         out->blocked_reason,
@@ -209,6 +211,7 @@ int latticra_q_seal_ml_kem_module_boundary_gate_allows_boundary_acceptance(
            gate->fips_140_3_module_security_bound == 1u &&
            gate->cmvp_program_bound == 1u &&
            gate->validation_claim_gate_bound == 1u &&
+           gate->security_policy_gate_bound == 1u &&
            gate->acvp_verdict_receipt_gate_bound == 1u &&
            gate->ci_promotion_evidence_bound == 1u &&
            gate->implementation_binding_manifest_bound == 1u &&
@@ -279,6 +282,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_module_boundary_gate_report(
         "fips_140_3_module_security_bound=%u\n"
         "cmvp_program_bound=%u\n"
         "validation_claim_gate_bound=%u\n"
+        "security_policy_gate_bound=%u\n"
         "acvp_verdict_receipt_gate_bound=%u\n"
         "ci_promotion_evidence_bound=%u\n"
         "implementation_binding_manifest_bound=%u\n"
@@ -338,6 +342,7 @@ latticra_q_seal_status_t latticra_q_seal_ml_kem_module_boundary_gate_report(
         gate->fips_140_3_module_security_bound,
         gate->cmvp_program_bound,
         gate->validation_claim_gate_bound,
+        gate->security_policy_gate_bound,
         gate->acvp_verdict_receipt_gate_bound,
         gate->ci_promotion_evidence_bound,
         gate->implementation_binding_manifest_bound,

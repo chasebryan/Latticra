@@ -27,6 +27,7 @@ stage_6_protective_safety_boundary_status_present=1
 stage_15_awareness_dialogue_status_present=1
 stage_51_release_receipt_status_present=1
 nadia_command_surface_status_present=1
+nadia_command_surface_audit_present=1
 absolute_protective_boundary_required=1
 sexual_user_request_authority=0
 sexual_content_generation=0

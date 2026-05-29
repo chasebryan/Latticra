@@ -141,7 +141,7 @@ static latticra_status_t build_ready_lifecycle(
     }
     request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
     request.target_state =
-        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
     request.max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return latticra_kernel_lifecycle_run(&request, lifecycle);
 }
@@ -417,6 +417,22 @@ build_ready_recovery_audit_review_disposition_review_closeout_archive_gate_revie
             recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view);
 }
 
+static latticra_status_t
+build_ready_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view(
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_result_t
+        *recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view) {
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_request_t
+        request;
+    if (latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_default_request(
+            &request) != LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    return
+        latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_evaluate(
+            &request,
+            recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view);
+}
+
 static const latticra_kernel_runtime_entry_register_view_result_t *
 register_view_from_idle_return_observation(
     const latticra_kernel_runtime_entry_idle_return_observation_view_result_t
@@ -609,6 +625,8 @@ typedef struct {
         recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view;
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_result_t
         recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_result_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view;
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_observation_view_result_t
         *recovery_audit_review_disposition_view;
     latticra_kernel_runtime_entry_recovery_audit_review_observation_view_result_t
@@ -663,6 +681,11 @@ static int build_ready_recovery_tail_fixture(recovery_tail_fixture_t *fixture) {
     }
     if (build_ready_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view(
             &fixture->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view) !=
+            LATTICRA_STATUS_OK) {
+        return 1;
+    }
+    if (build_ready_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view(
+            &fixture->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view) !=
             LATTICRA_STATUS_OK) {
         return 1;
     }
@@ -744,6 +767,9 @@ static int build_ready_recovery_tail_fixture(recovery_tail_fixture_t *fixture) {
     fixture->request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         &fixture->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
+    fixture->request.
+        runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view =
+        &fixture->recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view;
     return 0;
 }
 
@@ -765,6 +791,8 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
         recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view;
     latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_result_t
         recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
+    latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_result_t
+        recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view;
     const latticra_kernel_runtime_entry_recovery_audit_review_observation_view_result_t
         *recovery_audit_review_view;
     const latticra_kernel_runtime_entry_recovery_audit_observation_view_result_t
@@ -819,6 +847,10 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
             &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view) ==
             LATTICRA_STATUS_OK,
         "ready recovery audit review disposition review closeout archive gate review disposition closeout observation view");
+    EXPECT_TRUE(build_ready_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view(
+            &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view) ==
+            LATTICRA_STATUS_OK,
+        "ready recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation view");
     recovery_audit_review_view =
         &recovery_audit_review_disposition_review_view.
             runtime_entry_recovery_audit_review_disposition_observation_view.
@@ -877,6 +909,8 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
         &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_view;
     request.runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_view;
+    request.runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view =
+        &recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_view;
     EXPECT_TRUE(latticra_nucleus_kernel_coupling_evaluate(&request, &result) ==
             LATTICRA_STATUS_OK,
         "coupling evaluates");
@@ -901,7 +935,7 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
     EXPECT_STR_EQ(result.record.kernel_lifecycle_status, "lifecycle-complete",
         "lifecycle status");
     EXPECT_STR_EQ(result.record.kernel_lifecycle_final_state,
-        "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready",
+        "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready",
         "lifecycle final state");
     EXPECT_STR_EQ(result.record.runtime_register_view_status,
         "runtime-entry-register-view-seed-ready", "runtime register status");
@@ -989,9 +1023,9 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
     EXPECT_TRUE(result.record.accepted_task_count == 1u, "accepted task count");
     EXPECT_TRUE(result.record.subsystem_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
         "subsystem count");
-    EXPECT_TRUE(result.record.lifecycle_step_count == 54u,
+    EXPECT_TRUE(result.record.lifecycle_step_count == 55u,
         "lifecycle step count");
-    EXPECT_TRUE(result.record.lifecycle_state_change_count == 54u,
+    EXPECT_TRUE(result.record.lifecycle_state_change_count == 55u,
         "lifecycle state change count");
     EXPECT_TRUE(result.record.register_view_count == 4u, "register view count");
     EXPECT_TRUE(result.record.process_return_observation_view_count == 4u,
@@ -1140,7 +1174,7 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
     EXPECT_TRUE(
         result.record.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed == 0,
         "recovery audit review disposition review closeout archive gate review disposition observation denied");
-    EXPECT_TRUE(result.record.evidence_level == 57u, "evidence level");
+    EXPECT_TRUE(result.record.evidence_level == 58u, "evidence level");
 
     EXPECT_TRUE(latticra_nucleus_kernel_coupling_report(&result, report,
             sizeof(report)) == LATTICRA_STATUS_OK,
@@ -1156,9 +1190,9 @@ static int ready_evidence_produces_os_metadata_ready_report(void) {
             "kernel_lifecycle_status=lifecycle-complete\n") != 0,
         "lifecycle status emitted");
     EXPECT_TRUE(strstr(report,
-            "kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready\n") != 0,
+            "kernel_lifecycle_final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready\n") != 0,
         "lifecycle final state emitted");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=54\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=55\n") != 0,
         "lifecycle step count emitted");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "lifecycle complete emitted");
@@ -1372,11 +1406,11 @@ static int default_evaluator_builds_ready_coupling(void) {
     EXPECT_TRUE(result.record.subsystem_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
         "default subsystem count");
     EXPECT_STR_EQ(result.record.kernel_lifecycle_final_state,
-        "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready",
+        "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready",
         "default lifecycle final state");
-    EXPECT_TRUE(result.record.lifecycle_step_count == 54u,
+    EXPECT_TRUE(result.record.lifecycle_step_count == 55u,
         "default lifecycle step count");
-    EXPECT_TRUE(result.record.lifecycle_state_change_count == 54u,
+    EXPECT_TRUE(result.record.lifecycle_state_change_count == 55u,
         "default lifecycle state change count");
     EXPECT_TRUE(result.record.lifecycle_complete == 1,
         "default lifecycle complete");
@@ -1518,7 +1552,7 @@ static int default_evaluator_builds_ready_coupling(void) {
     EXPECT_TRUE(result.record.boot_allowed == 0, "default boot denied");
     EXPECT_TRUE(result.record.host_effect_allowed == 0,
         "default host effect denied");
-    EXPECT_TRUE(result.record.evidence_level == 57u,
+    EXPECT_TRUE(result.record.evidence_level == 58u,
         "default evidence level");
 
     EXPECT_TRUE(latticra_nucleus_kernel_coupling_report(&result, report,
@@ -1552,7 +1586,7 @@ static int default_evaluator_builds_ready_coupling(void) {
     EXPECT_TRUE(strstr(report,
             "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_count=4\n") != 0,
         "default archive gate review disposition observation count emitted");
-    EXPECT_TRUE(strstr(report, "evidence_level=57\n") != 0,
+    EXPECT_TRUE(strstr(report, "evidence_level=58\n") != 0,
         "default evidence level emitted");
     return 0;
 }
@@ -2790,6 +2824,13 @@ static int expect_tail_denial(
     return 0;
 }
 
+static void clear_recovery_terminal_observation_view(
+    recovery_tail_fixture_t *fixture) {
+    fixture->request.
+        runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view =
+        0;
+}
+
 static void clear_after_recovery_disposition(recovery_tail_fixture_t *fixture) {
     fixture->request.runtime_recovery_outcome_observation_view = 0;
     fixture->request.runtime_recovery_closeout_observation_view = 0;
@@ -2814,6 +2855,7 @@ static void clear_after_recovery_disposition(recovery_tail_fixture_t *fixture) {
     fixture->request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(fixture);
 }
 
 static void clear_after_recovery_audit(recovery_tail_fixture_t *fixture) {
@@ -2837,6 +2879,7 @@ static void clear_after_recovery_audit(recovery_tail_fixture_t *fixture) {
     fixture->request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(fixture);
 }
 
 static void clear_after_recovery_audit_review(
@@ -2860,6 +2903,7 @@ static void clear_after_recovery_audit_review(
     fixture->request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(fixture);
 }
 
 static int missing_recovery_disposition_observation_blocks_coupling(void) {
@@ -2965,6 +3009,7 @@ missing_recovery_audit_review_disposition_review_observation_blocks_coupling(
     fixture.request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(&fixture);
     return expect_tail_denial(&fixture.request,
         LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_MISSING,
         "reason=runtime-recovery-audit-review-disposition-review-observation-view-missing\n");
@@ -3006,6 +3051,7 @@ missing_recovery_audit_review_disposition_review_closeout_observation_blocks_cou
     fixture.request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(&fixture);
     return expect_tail_denial(&fixture.request,
         LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_MISSING,
         "reason=runtime-recovery-audit-review-disposition-review-closeout-observation-view-missing\n");
@@ -3044,6 +3090,7 @@ missing_recovery_audit_review_disposition_review_closeout_archive_gate_observati
     fixture.request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(&fixture);
     return expect_tail_denial(&fixture.request,
         LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_MISSING,
         "reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-observation-view-missing\n");
@@ -3076,6 +3123,7 @@ missing_recovery_audit_review_disposition_review_closeout_archive_gate_review_di
     fixture.request.
         runtime_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view =
         0;
+    clear_recovery_terminal_observation_view(&fixture);
     return expect_tail_denial(&fixture.request,
         LATTICRA_NUCLEUS_KERNEL_COUPLING_DENIAL_RUNTIME_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_MISSING,
         "reason=runtime-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-missing\n");

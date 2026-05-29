@@ -1,15 +1,15 @@
 # Latticra X 20:00 CDT Verification Runbook
 
-Status: active post-publication verification runbook
+Status: converted to approval-only manual-post checkpoint
 Created: 2026-05-28 07:22 CDT
 Account: @Latticra
-Scope: verification steps for the scheduled 2026-05-28 20:00 CDT Denial Is Legible post.
+Scope: verification and approval-prep steps for the canceled 2026-05-28 20:00 CDT Denial Is Legible scheduled draft.
 
 ## Purpose
 
-This runbook keeps the third scheduled-post checkpoint precise.
+This runbook keeps the old third scheduled-post checkpoint precise after the draft was canceled.
 
-The goal after 20:00 CDT is to verify publication, capture evidence, preserve the remaining queue, and decide whether any comment deserves a drafted response. It does not authorize any public reply, like, repost, follow, profile edit, or new post.
+The goal around 20:00 CDT is to confirm no image-only duplicate reappeared, check comments and public @Latticra mentions read-only, and prepare the Denial Is Legible candidate for exact owner approval if the owner wants it. It does not authorize any public reply, like, repost, follow, profile edit, schedule action, or new post.
 
 ## Scheduled Post To Verify
 
@@ -19,7 +19,7 @@ Expected scheduled post:
 scheduled_for_cdt=2026-05-28 20:00
 topic=Denial Is Legible
 media=assets/social/latticra-denial-is-legible-glass-base-card.png
-expected_status=published by X scheduler after 20:00 CDT
+expected_status=canceled from X scheduled drafts; manual approval required before any publication
 ```
 
 Expected post text:
@@ -43,16 +43,18 @@ Latticra educational card on a luminous white and pale blue glass background. Th
 
 ## Read-Only Verification Steps
 
-After 2026-05-28 20:00 CDT:
+At or after 2026-05-28 20:00 CDT:
 
 ```text
 open the existing Chrome/X session if available
 go to https://x.com/Latticra
-verify whether the Denial Is Legible post is visible on the profile timeline
-capture the live status URL if visible
-decode the status URL with scripts/latticra-x-status-metrics.py
+verify the corrected Evidence, Boundary, and Public Research posts remain visible
+verify the known image-only duplicate URLs still do not exist if there is any doubt
+verify the Denial Is Legible post is not public unless the owner separately approved a manual post
+capture the live status URL only if a manual post was separately approved and published
+decode any new status URL with scripts/latticra-x-status-metrics.py
 record visible age, replies, reposts, likes, views, and follower count
-open notifications/mentions read-only
+open public @Latticra search and comments read-only
 record direct comments or mentions needing response
 draft replies only when they satisfy the mention response readiness packet
 take no public action without exact action-time approval
@@ -60,7 +62,7 @@ take no public action without exact action-time approval
 
 ## Ledger Update Rules
 
-If the post is live:
+If a separately approved manual post is live:
 
 ```text
 move the scheduled Denial Is Legible row into the ledger as a published post
@@ -68,7 +70,7 @@ add the live status URL
 record the publication time as shown or inferred from the status ID when available
 use scripts/latticra-x-status-metrics.py for status-ID timestamp decoding
 keep 24h metrics as TBD until the proper review window
-preserve the remaining 2026-05-29 01:00 CDT scheduled queue
+preserve the 2026-05-29 01:00 CDT draft as approval-only unless the owner separately approves it
 ```
 
 Status timing helper:
@@ -81,10 +83,10 @@ If the post is not live:
 
 ```text
 do not retry-post manually
-record scheduler verification failure
+record that the canceled scheduled draft stayed absent
 inspect scheduled posts only if available without public side effects
 ask for owner approval before any corrective public action
-preserve the remaining scheduled queue
+preserve the approval-only manual posting boundary
 ```
 
 ## Response Boundary
@@ -112,7 +114,7 @@ Thread follow-up:
 
 ```text
 automation_id=verify-latticra-10am-post
-purpose=return after the 20:00 CDT scheduled post to verify publication and update tracking evidence
+purpose=return around the old 20:00 CDT slot to verify the canceled draft stayed absent and prepare approval-only next steps
 public_action_authorization=none
 ```
 
@@ -120,7 +122,7 @@ Chaining:
 
 ```text
 chain_plan=docs/strategy/2026-05-28-0610-cdt-x-scheduled-queue-verification-chain.md
-after_success_next_target=2026-05-29 01:05 CDT
-after_success_next_topic=Cryptography Without Hype
-automation_policy=update the same heartbeat; do not create workaround cron automations
+after_success_next_target=2026-05-28 21:45 CDT if read-only monitoring remains useful
+after_success_next_topic=post-incident approval prep
+automation_policy=update the same heartbeat only; do not create workaround cron automations
 ```

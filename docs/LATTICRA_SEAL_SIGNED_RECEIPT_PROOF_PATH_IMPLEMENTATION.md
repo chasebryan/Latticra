@@ -135,6 +135,6 @@ It proves that local verified receipt metadata and metadata-only signing-operati
 
 The signed receipt proof path contract is represented by `docs/LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT.md`, with status in `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`.
 
-The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.
+The next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.
 
 That future slice must preserve the no-effect posture and must not perform effects, verify signatures, create signatures, load trust roots, perform revocation lookup, or grant authority.

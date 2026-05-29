@@ -73,10 +73,12 @@ static void latticra_cli_print_prevention_research(void) {
     puts("source_owasp_ssrf=https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html");
     puts("source_owasp_deserialization=https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html");
     puts("source_owasp_injection=https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html");
+    puts("source_owasp_input_validation=https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html");
     puts("source_owasp_nosql=https://cheatsheetseries.owasp.org/cheatsheets/NoSQL_Security_Cheat_Sheet.html");
     puts("source_owasp_ldap=https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html");
     puts("source_owasp_xxe=https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html");
     puts("source_owasp_logging=https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html");
+    puts("source_owasp_asvs=https://owasp.org/www-project-application-security-verification-standard/");
     puts("source_nist_ssdf=https://csrc.nist.gov/pubs/sp/800/218/final");
     puts("source_mitre_cwe_top25_2025=https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html");
     puts("prevention_method_matrix_version=1");
@@ -98,6 +100,12 @@ static void latticra_cli_print_prevention_research(void) {
     puts("method_secret=never-log-secrets-or-tokens");
     puts("method_failure=fail-closed-before-interpreter-boundary");
     puts("prevention_pipeline_order=parse-canonicalize-validate-bind-or-encode");
+    puts("input_validation_position=early-syntactic-and-semantic-gate");
+    puts("input_validation_not_primary_sql_xss_defense=1");
+    puts("allowlist_validation_primary_required=1");
+    puts("server_side_validation_required=1");
+    puts("canonicalization_before_validation_required=1");
+    puts("schema_or_type_validation_required=1");
     puts("sql_prepared_statements_required=1");
     puts("sql_dynamic_identifier_allowlist_required=1");
     puts("nosql_structured_query_object_required=1");
@@ -158,6 +166,103 @@ static void latticra_cli_print_prevention_boundary(void) {
     puts("source=owasp-injection-and-nist-ssdf");
 }
 
+static void latticra_cli_print_prevention_evidence(void) {
+    puts("LATTICRA PREVENTION EVIDENCE REPORT");
+    puts("project=latticra");
+    puts("mode=no-effect");
+    puts("installed_system_scope=1");
+    puts("evidence_schema_version=1");
+    puts("evidence_scope=application-owned-controls");
+    puts("evidence_boundary_inventory_required=1");
+    puts("evidence_source_sink_map_required=1");
+    puts("evidence_method_selection_required=1");
+    puts("evidence_negative_case_required=1");
+    puts("evidence_safe_api_trace_required=1");
+    puts("evidence_review_owner_required=1");
+    puts("evidence_release_gate_required=1");
+    puts("gate_unmapped_boundary_blocks_release=1");
+    puts("gate_missing_method_blocks_release=1");
+    puts("gate_missing_negative_fixture_blocks_release=1");
+    puts("gate_missing_safe_api_trace_blocks_release=1");
+    puts("gate_missing_owner_review_blocks_release=1");
+    puts("gate_missing_repeatability_blocks_release=1");
+    puts("gate_secret_capture_blocks_release=1");
+    puts("gate_production_claim_without_runtime_evidence_blocks_release=1");
+    puts("evidence_repeatability_required=1");
+    puts("evidence_redaction_required=1");
+    puts("evidence_timestamp_and_revision_required=1");
+    puts("evidence_fail_closed_result_required=1");
+    puts("evidence_no_secret_capture_required=1");
+    puts("host_mutation=0");
+    puts("network=0");
+    puts("host_scan=0");
+    puts("production_protection_claim=0");
+    puts("source=owasp-injection-and-nist-ssdf");
+}
+
+static void latticra_cli_print_prevention_gate(void) {
+    puts("LATTICRA PREVENTION GATE REPORT");
+    puts("project=latticra");
+    puts("mode=no-effect");
+    puts("installed_system_scope=1");
+    puts("gate_schema_version=1");
+    puts("gate_scope=application-release-decision-support");
+    puts("gate_default=block-until-evidence-complete");
+    puts("gate_boundary_inventory_required=1");
+    puts("gate_method_matrix_required=1");
+    puts("gate_fixture_coverage_required=1");
+    puts("gate_safe_api_trace_required=1");
+    puts("gate_owner_review_required=1");
+    puts("gate_repeatable_result_required=1");
+    puts("gate_secret_redaction_required=1");
+    puts("gate_fail_closed_result_required=1");
+    puts("gate_new_boundary_review_required=1");
+    puts("gate_runtime_evidence_required_for_protection_claim=1");
+    puts("release_without_complete_evidence_allowed=0");
+    puts("production_claim_without_runtime_evidence_allowed=0");
+    puts("decision_authority=application-owner");
+    puts("host_mutation=0");
+    puts("network=0");
+    puts("host_scan=0");
+    puts("production_protection_claim=0");
+    puts("source=owasp-injection-and-nist-ssdf");
+}
+
+static void latticra_cli_print_prevention_fixtures(void) {
+    puts("LATTICRA PREVENTION FIXTURE REPORT");
+    puts("project=latticra");
+    puts("mode=no-effect");
+    puts("installed_system_scope=1");
+    puts("fixture_schema_version=1");
+    puts("fixture_scope=adversarial-negative-tests");
+    puts("fixture_set_count=16");
+    puts("fixture_sql=data-value-separator-rejection");
+    puts("fixture_sql_identifier=unknown-name-and-reserved-word-rejection");
+    puts("fixture_nosql=operator-key-smuggling-rejection");
+    puts("fixture_ldap=filter-metacharacter-neutralization");
+    puts("fixture_xpath=expression-control-character-rejection");
+    puts("fixture_os_command=separator-and-option-smuggling-rejection");
+    puts("fixture_program_argument=end-of-options-boundary");
+    puts("fixture_xss=contextual-output-escape-set");
+    puts("fixture_ssrf=scheme-host-port-and-rebind-deny");
+    puts("fixture_path=traversal-and-link-escape-deny");
+    puts("fixture_xml=external-entity-and-dtd-deny");
+    puts("fixture_deserialization=native-object-graph-deny");
+    puts("fixture_template=user-template-code-deny");
+    puts("fixture_log=crlf-neutralization");
+    puts("fixture_secret=secret-redaction-before-record");
+    puts("fixture_failure=deny-before-boundary");
+    puts("fixture_payload_strings_in_report=0");
+    puts("fixture_safe_harness_required=1");
+    puts("fixture_ci_gate_required=1");
+    puts("fixture_regression_on_new_boundary_required=1");
+    puts("host_mutation=0");
+    puts("network=0");
+    puts("host_scan=0");
+    puts("production_protection_claim=0");
+    puts("source=owasp-injection-and-nist-ssdf");
+}
+
 static int latticra_cli_print_prevention_method(const char *method_id) {
     size_t i;
 
@@ -189,7 +294,7 @@ static int latticra_cli_print_prevention_method(const char *method_id) {
 }
 
 static void latticra_cli_print_usage(void) {
-    fputs("usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-method <id>]\n", stderr);
+    fputs("usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]\n", stderr);
 }
 
 int main(int argc, char **argv) {
@@ -215,6 +320,21 @@ int main(int argc, char **argv) {
 
     if (argc == 2 && strcmp(argv[1], "--prevention-boundary") == 0) {
         latticra_cli_print_prevention_boundary();
+        return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--prevention-evidence") == 0) {
+        latticra_cli_print_prevention_evidence();
+        return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--prevention-gate") == 0) {
+        latticra_cli_print_prevention_gate();
+        return 0;
+    }
+
+    if (argc == 2 && strcmp(argv[1], "--prevention-fixtures") == 0) {
+        latticra_cli_print_prevention_fixtures();
         return 0;
     }
 

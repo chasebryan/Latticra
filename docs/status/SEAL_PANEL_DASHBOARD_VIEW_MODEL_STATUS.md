@@ -151,6 +151,6 @@ It does not add Panel UI behavior, report file loading, host scanning, network l
 
 The Seal Panel dashboard view-model report surface is now represented by `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md`.
 
-The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.
+The next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.
 
 That future slice must preserve the no-effect posture and must not perform effects or grant authority.

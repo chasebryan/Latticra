@@ -37,6 +37,7 @@ static int module_boundary_gate_is_fail_closed(void) {
     EXPECT_TRUE(gate.fips_140_3_module_security_bound == 1u, "fips 140-3");
     EXPECT_TRUE(gate.cmvp_program_bound == 1u, "cmvp");
     EXPECT_TRUE(gate.validation_claim_gate_bound == 1u, "claim gate");
+    EXPECT_TRUE(gate.security_policy_gate_bound == 1u, "security policy gate");
     EXPECT_TRUE(gate.acvp_verdict_receipt_gate_bound == 1u, "acvp verdict");
     EXPECT_TRUE(gate.ci_promotion_evidence_bound == 1u, "ci");
     EXPECT_TRUE(gate.implementation_binding_manifest_bound == 1u, "binding");
@@ -81,8 +82,8 @@ static int module_boundary_gate_is_fail_closed(void) {
     EXPECT_TRUE(gate.fips_claim_allowed == 0u, "fips claim");
     EXPECT_TRUE(gate.operation_execution_allowed == 0u, "operation");
     EXPECT_TRUE(gate.runtime_authority_granted == 0u, "runtime");
-    EXPECT_TRUE(gate.required_module_boundary_items_total == 45u, "total");
-    EXPECT_TRUE(gate.required_module_boundary_items_satisfied == 30u, "satisfied");
+    EXPECT_TRUE(gate.required_module_boundary_items_total == 46u, "total");
+    EXPECT_TRUE(gate.required_module_boundary_items_satisfied == 31u, "satisfied");
     EXPECT_TRUE(gate.error == LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_BLOCKED, "blocked");
     EXPECT_TRUE(
         latticra_q_seal_ml_kem_module_boundary_gate_is_no_effect(&gate) == 1,
@@ -101,10 +102,13 @@ static int module_boundary_gate_is_fail_closed(void) {
         "header");
     EXPECT_TRUE(strstr(rendered, "module_boundary_gate_present=1") != 0, "present");
     EXPECT_TRUE(
+        strstr(rendered, "security_policy_gate_bound=1") != 0,
+        "security policy gate report");
+    EXPECT_TRUE(
         strstr(rendered, "fips_140_3_security_policy_recorded=0") != 0,
         "policy");
     EXPECT_TRUE(
-        strstr(rendered, "required_module_boundary_items_total=45") != 0,
+        strstr(rendered, "required_module_boundary_items_total=46") != 0,
         "total report");
     EXPECT_TRUE(
         strstr(rendered, "status=ml-kem-module-boundary-gate-blocked") != 0,

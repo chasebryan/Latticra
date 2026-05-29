@@ -187,7 +187,7 @@
           </div>
         </div>
 
-        <section class="qa-replay-strip" id="qa-replay-strip" aria-label="QA replay state" aria-describedby="qa-replay-description" data-replay-status="idle">
+        <section class="qa-replay-strip" id="qa-replay-strip" aria-label="QA replay state" aria-describedby="qa-replay-description" data-replay-status="idle" data-replay-chip-layout="bounded-wrap" data-replay-overflow-guard="no-horizontal-scroll">
           <div class="qa-replay-heading">
             <p class="kicker">QA Replay</p>
             <strong id="qa-replay-state">no replay</strong>
@@ -197,7 +197,7 @@
           <div class="qa-replay-boundary" id="qa-replay-boundary">production=0 main=0 edge=0</div>
         </section>
 
-        <section class="status-strip" aria-label="Current posture">
+        <section class="status-strip" aria-label="Current posture" data-posture-layout="responsive-min-width" data-wrap-guard="normal-word-wrap">
           <article class="status-card" data-posture-key="plan_flow" data-posture-state="ready">
             <span class="status-dot ok" aria-hidden="true"></span>
             <div>
@@ -541,8 +541,17 @@ production_installer_ready=0</pre>
               <p class="kicker">Evidence Queue</p>
               <h2>Receipts are readable before they become claims.</h2>
             </div>
-            <input class="search-input" id="evidence-search" type="search" placeholder="Filter evidence" aria-label="Filter evidence">
+            <div class="view-actions evidence-queue-controls">
+              <span class="evidence-queue-filter-summary" id="evidence-queue-filter-summary" role="status" aria-live="polite">8 of 8 evidence rows</span>
+              <input class="search-input" id="evidence-search" type="search" placeholder="Filter evidence" aria-label="Filter evidence" aria-describedby="evidence-queue-filter-summary evidence-queue-boundary" maxlength="64">
+            </div>
           </div>
+          <section class="evidence-queue-strip" id="evidence-queue-strip" data-evidence-queue-state="ready" aria-label="Evidence queue summary" aria-describedby="evidence-queue-boundary">
+            <span><strong id="evidence-queue-visible">8</strong><small>visible</small></span>
+            <span><strong id="evidence-queue-guarded">6</strong><small>guarded</small></span>
+            <span><strong id="evidence-queue-filter">none</strong><small>filter</small></span>
+            <div class="evidence-queue-boundary" id="evidence-queue-boundary">production=0 / host=0 / main=0 / edge=0</div>
+          </section>
           <div class="evidence-layout">
             <article class="receipt-preview">
               <div class="section-title inline-title">
@@ -552,6 +561,13 @@ production_installer_ready=0</pre>
                 </div>
                 <span class="badge ok" id="event-count">0 events</span>
               </div>
+              <section class="receipt-preview-summary" id="receipt-preview-summary" data-receipt-preview-state="review" aria-label="Receipt preview trust summary" aria-describedby="receipt-preview-boundary receipt-preview-description">
+                <span><strong id="receipt-preview-schema">receipt-v0</strong><small>schema</small></span>
+                <span><strong id="receipt-preview-events">0</strong><small>events</small></span>
+                <span><strong id="receipt-preview-checklist">0/0</strong><small>checklist</small></span>
+                <span><strong id="receipt-preview-scope">local-only</strong><small>scope</small></span>
+                <div class="receipt-preview-boundary" id="receipt-preview-boundary">production=0 / host=0 / runtime=0 / main=0 / edge=0</div>
+              </section>
               <pre id="receipt-preview" tabindex="0" aria-label="Receipt preview" aria-describedby="receipt-preview-description"></pre>
             </article>
             <article class="event-trail-card">
@@ -562,6 +578,13 @@ production_installer_ready=0</pre>
                 </div>
                 <button class="ghost-button" type="button" data-action="clear-events">Clear events</button>
               </div>
+              <section class="event-trail-summary" id="event-trail-summary" data-event-trail-state="empty" aria-label="Event trail summary" aria-describedby="event-trail-boundary">
+                <span><strong id="event-trail-total">0</strong><small>events</small></span>
+                <span><strong id="event-trail-blocked">0</strong><small>blocked</small></span>
+                <span><strong id="event-trail-retained">0/24</strong><small>retained</small></span>
+                <span><strong id="event-trail-latest">none</strong><small>latest</small></span>
+                <div class="event-trail-boundary" id="event-trail-boundary">production=0 / host=0 / main=0 / edge=0</div>
+              </section>
               <div class="event-trail" id="event-trail" aria-label="Recent operator events"></div>
             </article>
           </div>
@@ -581,6 +604,13 @@ production_installer_ready=0</pre>
               <button class="ghost-button" type="button" data-action="delete-saved-receipt" disabled aria-disabled="true" aria-describedby="saved-receipt-maintenance-description">Delete selected</button>
               <span class="snapshot-limit" id="saved-receipt-limit">retains last 8 local snapshots</span>
             </div>
+            <section class="saved-receipt-trust" id="saved-receipt-trust" data-saved-receipt-state="empty" aria-label="Saved receipt trust summary" aria-describedby="saved-receipt-trust-boundary saved-receipts-description">
+              <span><strong id="saved-receipt-trust-count">0/8</strong><small>saved</small></span>
+              <span><strong id="saved-receipt-trust-selected">none</strong><small>selected</small></span>
+              <span><strong id="saved-receipt-trust-diff">none</strong><small>diff</small></span>
+              <span><strong id="saved-receipt-trust-export">none</strong><small>export</small></span>
+              <div class="saved-receipt-trust-boundary" id="saved-receipt-trust-boundary">production=0 / host=0 / main=0 / edge=0</div>
+            </section>
             <div class="snapshot-layout">
               <div class="saved-receipts-list" id="saved-receipts-list" role="listbox" aria-label="Saved receipts" aria-describedby="saved-receipts-description"></div>
               <div class="receipt-delta" id="receipt-delta" aria-live="polite" aria-label="Current versus saved receipt comparison">
@@ -1191,6 +1221,9 @@ production_installer_ready=0</pre>
             <div><span>compare alignment</span><strong id="context-compare-alignment">review</strong></div>
             <div><span>readiness trace</span><strong id="context-readiness-trace">local UI trace</strong></div>
             <div><span>trace alignment</span><strong id="context-trace-alignment">review</strong></div>
+            <div><span>evidence queue</span><strong id="context-evidence-queue">8/8 visible / guarded 6</strong></div>
+            <div><span>event trail</span><strong id="context-event-trail">empty / 0 events</strong></div>
+            <div><span>receipt preview</span><strong id="context-receipt-preview">review / local-only</strong></div>
             <div><span>live evidence</span><strong id="context-live-evidence">3 rows / local only</strong></div>
             <div><span>QA replay</span><strong id="context-qa-replay">none</strong></div>
             <div><span>saved receipt</span><strong id="context-saved-receipt">none</strong></div>

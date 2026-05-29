@@ -72,6 +72,8 @@ Latest Seal product-surface note: Latticra Seal signed receipt proof path contra
 
 Latest Seal product-surface note: Latticra Seal signed receipt proof path implementation uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`.
 
+Latest Seal product-surface note: Latticra Seal signed receipt proof path surface/status uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md`.
+
 Latest Seal predecessor note: Latticra Seal capability gate predecessor status alignment uses `docs/status/SEAL_CAPABILITY_GATE_STATUS.md` with predecessor `docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`.
 
 - `STATUS.md`

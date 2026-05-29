@@ -84,6 +84,7 @@ require_contains 'latticra_seal_signing_operation_t' docs/LATTICRA_SEAL_SIGNING_
 require_contains 'latticra_seal_signing_operation_from_invocation' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_contains 'copies crypto graduation gate metadata when present' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_contains 'authority-bearing crypto graduation evidence' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
+require_contains 'stale crypto graduation evidence when the gate-present flag is unset' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_contains 'signing_operation_state=operation-metadata-only' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_contains 'signing_operation_ready=1' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_contains 'signer_invoked=0' docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md

@@ -243,7 +243,7 @@ docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DIS
 
 The local RPM build gate remains closed. This disposition only records that the upheld repeat closeout archive gate review disposition closeout archive gate review is disposed while the validation promotion blocker matrix remains closed.
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition can be archived or re-requested.
@@ -256,6 +256,20 @@ scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-re
 ```
 
 That lane should close out the disposed repeat closeout archive gate review disposition closeout archive gate review disposition while preserving RPM build and readiness blockers.
+
+## Next Recommended Lane
+
+```text
+Add openSUSE RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout can be archived or re-requested.
+```
+
+```text
+docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+.github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate.yml
+```
+
+That lane should keep the closed-out repeat closeout archive gate review disposition closeout archive gate review disposition unarchived while preserving RPM build and readiness blockers.
 
 ## Validation
 

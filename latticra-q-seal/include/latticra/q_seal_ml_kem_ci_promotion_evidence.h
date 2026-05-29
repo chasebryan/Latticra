@@ -40,6 +40,9 @@ typedef struct {
     unsigned acvp_verdict_receipt_gate_bound;
     unsigned validation_claim_gate_bound;
     unsigned module_boundary_gate_bound;
+    unsigned security_policy_gate_bound;
+    unsigned evidence_import_packet_manifest_bound;
+    unsigned evidence_import_review_gate_bound;
     unsigned kat_acvp_gate_passing_recorded;
     unsigned constant_time_gate_passing_recorded;
     unsigned memory_safety_gate_passing_recorded;

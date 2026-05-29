@@ -5,6 +5,12 @@ Created: 2026-05-28 04:03 CDT
 Account: @Latticra
 Scope: profile clarity, bio options, pinned-post options, and conversion guardrails.
 
+Latest profile pin conversion decision packet:
+
+```text
+docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md
+```
+
 ## Purpose
 
 This packet improves the chance that a new profile visitor understands why @Latticra is worth following.
@@ -162,6 +168,12 @@ no cramped explanatory text
 ## Profile Action Approval Queue
 
 No profile action is approved by this packet alone.
+
+Current first-day recommendation:
+
+```text
+use docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md before approving any pin, unpin, bio edit, header edit, or pinned-orientation post
+```
 
 Candidate actions:
 

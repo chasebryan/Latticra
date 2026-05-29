@@ -311,6 +311,9 @@ require_contains 'clear_record_output_buffer' src/seal_hybrid_envelope.c
 require_contains 'clear_successful_ciphertext_tail' src/seal_hybrid_envelope.c
 require_contains 'clear_successful_plaintext_tail' src/seal_hybrid_envelope.c
 require_contains 'clear_successful_record_tail' src/seal_hybrid_envelope.c
+require_contains 'append_hybrid_envelope_report_chunk' src/seal_hybrid_envelope.c
+require_contains '*used >= buffer_len' src/seal_hybrid_envelope.c
+require_contains 'buffer_len == 0u' src/seal_hybrid_envelope.c
 require_contains 'staged_plaintext' src/seal_hybrid_envelope.c
 require_contains 'unauthenticated_plaintext_staged' src/seal_hybrid_envelope.c
 require_contains 'staged_plaintext_cleared' src/seal_hybrid_envelope.c
@@ -385,17 +388,29 @@ require_contains 'committed detached commitment tamper status' tests/seal_hybrid
 require_contains 'committed encrypt invalid commitment size status' tests/seal_hybrid_envelope_invariants.c
 require_contains 'failed_commitment_output_cleared == 1u' tests/seal_hybrid_envelope_invariants.c
 require_contains 'record caller aad tamper status' tests/seal_hybrid_envelope_invariants.c
+require_contains 'zero-capacity report' tests/seal_hybrid_envelope_invariants.c
+require_contains 'tiny report clear' tests/seal_hybrid_envelope_invariants.c
 require_contains 'seal hybrid envelope invariants: ok' tests/seal_hybrid_envelope_invariants.c
 require_contains '#include "latticra/seal_hybrid_envelope.h"' seal/latticra-seal.c
 require_contains 'latticra_seal_hybrid_envelope_seal_record' seal/latticra-seal.c
 require_contains 'latticra_seal_hybrid_envelope_open_record' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_seal_committed' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_open_committed' seal/latticra-seal.c
 require_contains 'latticra-seal hybrid' seal/latticra-seal.c
 require_contains 'secret_material_output=redacted' seal/latticra-seal.c
+require_contains 'commitment_output=redacted' seal/latticra-seal.c
 require_contains 'record_output=redacted' seal/latticra-seal.c
 require_contains 'OPENSSL_cleanse(record, sizeof(record))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment))' seal/latticra-seal.c
 require_contains 'OPENSSL_cleanse(recovered, sizeof(recovered))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered))' seal/latticra-seal.c
 require_contains 'cli_record_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_ciphertext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_secret_outputs_zeroized=1' seal/latticra-seal.c
 require_contains 'cli_recovered_plaintext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_recovered_plaintext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'committed_detached_envelope_self_check=pass' seal/latticra-seal.c
 require_contains 'seal_hybrid_envelope_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'seal_hybrid_envelope_cli_command=latticra-seal hybrid' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'NIST-SP-800-56C-REV2' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -523,6 +538,8 @@ require_contains 'failed_record_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVE
 require_contains 'successful_ciphertext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'successful_plaintext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'successful_record_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'report_zero_capacity_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'report_append_cursor_guarded=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'unauthenticated_plaintext_staged=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'staged_plaintext_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
 require_contains 'plaintext_released_after_authentication=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
@@ -665,6 +682,8 @@ require_contains 'failed_record_output_cleared=1' docs/status/SEAL_HYBRID_ENVELO
 require_contains 'successful_ciphertext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'successful_plaintext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'successful_record_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'report_zero_capacity_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'report_append_cursor_guarded=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'unauthenticated_plaintext_staged=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'staged_plaintext_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
 require_contains 'plaintext_released_after_authentication=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
@@ -709,9 +728,17 @@ require_contains 'salt_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'nonce_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'ciphertext_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'tag_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'cli_record_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_ciphertext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_secret_outputs_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'cli_recovered_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_recovered_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_tamper_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-seal ==' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-open ==' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-commitment-tamper ==' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'aead_algorithm=AES-256-GCM' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'NIST-SP-800-56C-REV2' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_format_present=1' "$tmpdir/latticra-seal-hybrid.out"
@@ -732,6 +759,15 @@ require_contains 'record_commitment_caller_aad_bound=1' "$tmpdir/latticra-seal-h
 require_contains 'record_commitment_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_commitment_constant_time_compare=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'record_commitment_key_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_key_commitment_present=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_key_kdf_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_verified=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_checked_before_decrypt=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_caller_aad_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_constant_time_compare=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_tampering_rejected=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_key_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'commitment_mac_provider_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'commitment_mac_provider_fetched=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'commitment_mac_hmac_sha256_digest_bound=1' "$tmpdir/latticra-seal-hybrid.out"
@@ -816,6 +852,7 @@ require_contains 'staged_plaintext_cleared=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'plaintext_released_after_authentication=1' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'secret_material_emitted=0' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'hkdf_intermediate_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'committed_detached_envelope_self_check=pass' "$tmpdir/latticra-seal-hybrid.out"
 require_contains 'hybrid_envelope_self_check=pass' "$tmpdir/latticra-seal-hybrid.out"
 
 printf 'latticra seal hybrid envelope: ok\n'

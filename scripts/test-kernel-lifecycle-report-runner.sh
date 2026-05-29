@@ -72,6 +72,7 @@ cc $CFLAGS \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view.c \
   src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view.c \
+  src/kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view.c \
   src/kernel_state.c \
   src/kernel_state_machine.c \
   src/kernel_lifecycle.c \
@@ -83,14 +84,14 @@ cc $CFLAGS \
 grep -Fq 'LATTICRA KERNEL LIFECYCLE REPORT' "$report_txt"
 grep -Fq 'lifecycle_status=lifecycle-complete' "$report_txt"
 grep -Fq 'policy_status=gate-allowed' "$report_txt"
-grep -Fq 'final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready' "$report_txt"
-grep -Fq 'step_count=54' "$report_txt"
-grep -Fq 'state_change_count=54' "$report_txt"
+grep -Fq 'final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready' "$report_txt"
+grep -Fq 'step_count=55' "$report_txt"
+grep -Fq 'state_change_count=55' "$report_txt"
 grep -Fq 'lifecycle_complete=1' "$report_txt"
 grep -Fq 'external_effect_performed=0' "$report_txt"
 grep -Fq 'network_allowed=0' "$report_txt"
 grep -Fq 'machine_network_allowed=0' "$report_txt"
-grep -Fq 'machine_log_count=54' "$report_txt"
+grep -Fq 'machine_log_count=55' "$report_txt"
 grep -Fq 'evidence_level=10' "$report_txt"
 grep -Fq 'log[0].from=created' "$report_txt"
 grep -Fq 'log[0].to=initialized' "$report_txt"
@@ -290,5 +291,9 @@ grep -Fq 'log[53].from=runtime-entry-recovery-audit-review-disposition-review-cl
 grep -Fq 'log[53].to=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready' "$report_txt"
 grep -Fq 'log[53].state_change_performed=1' "$report_txt"
 grep -Fq 'log[53].external_effect_performed=0' "$report_txt"
+grep -Fq 'log[54].from=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-ready' "$report_txt"
+grep -Fq 'log[54].to=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready' "$report_txt"
+grep -Fq 'log[54].state_change_performed=1' "$report_txt"
+grep -Fq 'log[54].external_effect_performed=0' "$report_txt"
 
 printf 'kernel_lifecycle_report_runner: ok\n'

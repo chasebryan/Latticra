@@ -1,7 +1,7 @@
 # Production Quality Blocker Ledger
 
 Status: active blocker ledger
-Date: 2026-05-27
+Date: 2026-05-28
 Scope: current blockers before Latticra, the installer, Seal, or Nadia can be described as production quality or production ready.
 
 ## Current Local Quality Signal
@@ -10,7 +10,7 @@ The current local quality gate is:
 
 ```text
 local_quality_gate_command=make quality
-local_quality_gate_last_observed=pass-2026-05-27
+local_quality_gate_last_observed=pass-2026-05-28
 local_quality_gate_scope=worktree-whitespace-safety-security-rust-panel-installer-packaging-nadia-c-foundation-macos-status
 ```
 
@@ -217,6 +217,13 @@ release_artifact_candidate_preflight_mode=no-effect-build-signing-readiness
 release_artifact_candidate_preflight_no_effect=1
 release_artifact_candidate_preflight_passed=0
 release_artifact_candidate_inputs_satisfied=0
+release_artifact_candidate_blocker_count=<observed>
+release_artifact_candidate_blockers=<observed-or-none>
+release_artifact_candidate_tracked_worktree_blocked=<observed>
+release_artifact_candidate_toolchain_blocked=<observed>
+release_artifact_candidate_rpmbuild_blocked=<observed>
+release_artifact_candidate_rpm_blocked=<observed>
+release_artifact_candidate_signing_identity_reference_blocked=<observed>
 release_artifact_candidate_tag_exists=1
 release_artifact_candidate_parent_dir_exists=1
 release_worktree_cleanliness_audit_present=1

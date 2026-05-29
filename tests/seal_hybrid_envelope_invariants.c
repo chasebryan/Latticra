@@ -4479,6 +4479,11 @@ static int invalid_inputs_fail_closed(void) {
         latticra_seal_hybrid_envelope_report(&result, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL,
         "tiny report");
     EXPECT_TRUE(tiny[0] == '\0', "tiny report clear");
+    tiny[0] = 'x';
+    EXPECT_TRUE(
+        latticra_seal_hybrid_envelope_report(&result, tiny, 0u) == LATTICRA_STATUS_BUFFER_TOO_SMALL,
+        "zero-capacity report");
+    EXPECT_TRUE(tiny[0] == 'x', "zero-capacity report leaves caller storage untouched");
     EXPECT_TRUE(
         latticra_seal_hybrid_envelope_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT,
         "null report result");

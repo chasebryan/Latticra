@@ -2,7 +2,7 @@
 
 Status: active documentation review template
 Last updated: 2026-05-27 CDT
-Scope: documentation-only changes that affect public wording, reader routes, product-facing pages, command examples, non-claims, status records, status mirrors, lifecycle states, stale records, superseded records, archive boundaries, impact radius, platform posture, installer posture, package posture, subsystem landing pages, or documentation navigation.
+Scope: documentation-only changes that affect public wording, reader routes, product-facing pages, command examples, visual assets, non-claims, status records, status mirrors, lifecycle states, stale records, superseded records, archive boundaries, impact radius, platform posture, installer posture, package posture, subsystem landing pages, or documentation navigation.
 
 ## Purpose
 
@@ -37,6 +37,7 @@ documentation_change_review_packet:
   change_type:
     public_wording:
     command_example:
+    visual_asset:
     reader_route:
     status_record:
     status_mirror:
@@ -68,6 +69,7 @@ documentation_change_review_packet:
   documentation_change_impact_radius_guide_checked:
   documentation_status_record_standard_checked:
   documentation_command_example_standard_checked:
+  documentation_visual_asset_standard_checked:
   documentation_health_scorecard_checked:
   subsystem_documentation_standard_checked:
   public_site_mirror_standard_checked:
@@ -95,17 +97,18 @@ documentation_change_review_packet:
 8. Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) to name the review radius and touched or intentionally untouched surfaces.
 9. Apply [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when status records, status-index entries, status mirrors, estimate records, or public-entry alignment notes change.
 10. Apply [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when runnable commands, validation command lists, install/update/reset/uninstall snippets, platform prerequisites, or public HTML command examples change.
-11. Score broad route, command example, public HTML, platform, security, estimate, freshness, lifecycle, status-record, or subsystem landing-page changes with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md).
-12. Compare subsystem landing-page changes against [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md).
-13. Compare static HTML changes against [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md).
-14. Compare source records, mirrors, validation, lifecycle state, status-record shape, command-example boundaries, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
-15. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
-16. Choose a drift-response, narrowing, or demotion path with [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when records disagree.
-17. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-18. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
-19. Confirm that adjacent non-claims remain visible.
-20. Run the narrowest relevant validation commands.
-21. Name how to demote or roll back the wording if the evidence changes.
+11. Apply [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) when screenshots, diagrams, public images, generated visuals, presentation visuals, social/review cards, or `docs/assets/` files change.
+12. Score broad route, command example, visual asset, public HTML, platform, security, estimate, freshness, lifecycle, status-record, or subsystem landing-page changes with [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md).
+13. Compare subsystem landing-page changes against [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md).
+14. Compare static HTML changes against [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md).
+15. Compare source records, mirrors, validation, lifecycle state, status-record shape, command-example boundaries, visual-asset boundaries, and non-claim boundaries against [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md).
+16. Select validation commands with [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md).
+17. Choose a drift-response, narrowing, or demotion path with [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when records disagree.
+18. Compare terminology, headings, dates, and replacement wording against [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+19. Compare mirror requirements against [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md).
+20. Confirm that adjacent non-claims remain visible.
+21. Run the narrowest relevant validation commands.
+22. Name how to demote or roll back the wording if the evidence changes.
 
 ## Claim Classification
 
@@ -114,6 +117,7 @@ documentation_change_review_packet:
 | Navigation-only | Links, entry points, or ordering changed without claim change. | Check local links and affected reader routes. |
 | Wording-only | Existing evidence is described more clearly without capability change. | Check claims ledger, non-claims, and source records. |
 | Command example | A runnable snippet, validation command list, install/update/reset/uninstall command, platform prerequisite, or public HTML command example changed. | Apply the command example standard and preserve effect boundary, expected output, cleanup route, and blocked adjacent claims. |
+| Visual asset | A screenshot, diagram, public image, Markdown image, generated visual, presentation visual, social/review card, or docs asset changed. | Apply the visual asset standard and preserve source context, alt text, freshness, visual non-claims, and public/source consistency. |
 | Status record | A status record, status-index entry, current-status mirror, estimate source, or public-entry alignment status note changed. | Apply the status record standard and keep current posture, evidence, validation, public mirrors, non-claims, next valid work, and boundary clear. |
 | Status mirror | Public status wording is mirrored from an existing status record. | Check `STATUS.md`, `docs/status/CURRENT_STATUS.md`, and status index alignment. |
 | Estimate mirror | Planning estimate wording or displayed values changed. | Check estimate source alignment and static HTML mirrors. |

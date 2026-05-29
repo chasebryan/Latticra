@@ -60,6 +60,10 @@ static int bounded_string_is(const char *value, size_t max_len, const char *expe
     return value_len == expected_len && memcmp(value, expected, value_len) == 0;
 }
 
+static int bounded_string_empty(const char *value, size_t max_len) {
+    return bounded_string_is(value, max_len, "");
+}
+
 static int is_allowed_signature(const char *signature) {
     return bounded_string_is(signature,
                              LATTICRA_SEAL_SIGNING_OPERATION_LABEL_MAX,
@@ -103,7 +107,18 @@ static int invocation_crypto_graduation_gate_valid(
         return 0;
     }
     if (invocation->crypto_graduation_gate_present == 0u) {
-        return 1;
+        return invocation->crypto_graduation_gate_passed == 0u &&
+               invocation->standard_expectations_met == 0u &&
+               invocation->local_verify_graduated == 0u &&
+               invocation->receipt_promotion_graduated == 0u &&
+               invocation->authority_promotion_allowed == 0u &&
+               bounded_string_empty(invocation->crypto_graduation_profile,
+                                    LATTICRA_SEAL_SIGNER_INVOCATION_PROFILE_MAX) &&
+               bounded_string_empty(invocation->assurance_baseline_profile,
+                                    LATTICRA_SEAL_SIGNER_INVOCATION_PROFILE_MAX) &&
+               bounded_string_is(invocation->crypto_graduation_gate_state,
+                                 LATTICRA_SEAL_SIGNER_INVOCATION_STATE_MAX,
+                                 "not-required");
     }
 
     return invocation->crypto_graduation_gate_passed == 1u &&
@@ -122,7 +137,18 @@ static int operation_crypto_graduation_gate_valid(
         return 0;
     }
     if (operation->crypto_graduation_gate_present == 0u) {
-        return 1;
+        return operation->crypto_graduation_gate_passed == 0u &&
+               operation->standard_expectations_met == 0u &&
+               operation->local_verify_graduated == 0u &&
+               operation->receipt_promotion_graduated == 0u &&
+               operation->authority_promotion_allowed == 0u &&
+               bounded_string_empty(operation->crypto_graduation_profile,
+                                    LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX) &&
+               bounded_string_empty(operation->assurance_baseline_profile,
+                                    LATTICRA_SEAL_SIGNING_OPERATION_PROFILE_MAX) &&
+               bounded_string_is(operation->crypto_graduation_gate_state,
+                                 LATTICRA_SEAL_SIGNING_OPERATION_STATE_MAX,
+                                 "not-required");
     }
 
     return operation->crypto_graduation_gate_passed == 1u &&

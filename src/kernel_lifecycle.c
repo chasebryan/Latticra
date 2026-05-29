@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void lifecycle_copy(char *dst, size_t dst_len, const char *src) {
@@ -34,7 +35,7 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
     request->target_state =
-        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -122,7 +123,9 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state ==
                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY ||
            state ==
-               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -263,6 +266,9 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
             return
                 LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
         case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY:
         default:
             return state;
     }
@@ -277,8 +283,8 @@ static void finalize_result(latticra_kernel_lifecycle_result_t *result) {
 latticra_status_t latticra_kernel_lifecycle_run(
     const latticra_kernel_lifecycle_request_t *request,
     latticra_kernel_lifecycle_result_t *result) {
-    latticra_kernel_state_machine_step_request_t step_request;
-    latticra_kernel_state_machine_step_result_t step_result;
+    latticra_kernel_state_machine_step_request_t *step_request = 0;
+    latticra_kernel_state_machine_step_result_t *step_result = 0;
     latticra_kernel_state_kind_t next_state;
     size_t max_steps;
     latticra_status_t status;
@@ -292,11 +298,22 @@ latticra_status_t latticra_kernel_lifecycle_run(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
+    step_request = (latticra_kernel_state_machine_step_request_t *)calloc(1u, sizeof(*step_request));
+    step_result = (latticra_kernel_state_machine_step_result_t *)calloc(1u, sizeof(*step_result));
+    if (step_request == 0 || step_result == 0) {
+        free(step_result);
+        free(step_request);
+        result->status = LATTICRA_STATUS_ALLOCATION_FAILED;
+        lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status),
+            "step-storage-unavailable");
+        return result->status;
+    }
+
     status = latticra_kernel_state_machine_init(&result->machine);
     if (status != LATTICRA_STATUS_OK) {
         result->status = status;
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "machine-init-failed");
-        return status;
+        goto cleanup;
     }
 
     result->final_state = result->machine.current_state;
@@ -305,7 +322,7 @@ latticra_status_t latticra_kernel_lifecycle_run(
         lifecycle_copy(result->policy_status, sizeof(result->policy_status), "gate-denied");
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "not-started");
         finalize_result(result);
-        return result->status;
+        goto cleanup;
     }
 
     lifecycle_copy(result->policy_status, sizeof(result->policy_status), "gate-allowed");
@@ -313,7 +330,7 @@ latticra_status_t latticra_kernel_lifecycle_run(
     if (!state_is_known(request->target_state)) {
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "invalid-target");
         finalize_result(result);
-        return result->status;
+        goto cleanup;
     }
 
     max_steps = request->max_steps;
@@ -325,48 +342,48 @@ latticra_status_t latticra_kernel_lifecycle_run(
         if (result->machine.current_state > request->target_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "target-before-current");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
         next_state = next_state_after(result->machine.current_state);
         if (next_state == result->machine.current_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "no-forward-step");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
-        status = latticra_kernel_state_machine_default_step_request(&step_request);
+        status = latticra_kernel_state_machine_default_step_request(step_request);
         if (status != LATTICRA_STATUS_OK) {
             result->status = status;
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-request-failed");
             finalize_result(result);
-            return status;
+            goto cleanup;
         }
 
-        step_request.target_state = next_state;
-        step_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+        step_request->target_state = next_state;
+        step_request->gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
 
-        status = latticra_kernel_state_machine_step(&result->machine, &step_request, &step_result);
+        status = latticra_kernel_state_machine_step(&result->machine, step_request, step_result);
         if (status != LATTICRA_STATUS_OK) {
             result->status = status;
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-failed");
             finalize_result(result);
-            return status;
+            goto cleanup;
         }
 
         result->step_count += 1u;
-        if (step_result.state_mutated) result->state_change_count += 1u;
+        if (step_result->state_mutated) result->state_change_count += 1u;
 
-        if (step_result.external_effect_performed) {
+        if (step_result->external_effect_performed) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "external-effect-blocked");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
-        if (!step_result.state_mutated && result->machine.current_state != request->target_state) {
+        if (!step_result->state_mutated && result->machine.current_state != request->target_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-did-not-advance");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
     }
 
@@ -374,6 +391,9 @@ latticra_status_t latticra_kernel_lifecycle_run(
     result->lifecycle_complete = result->final_state == request->target_state;
     lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status),
         result->lifecycle_complete ? "lifecycle-complete" : "step-limit-reached");
+cleanup:
+    free(step_result);
+    free(step_request);
     return result->status;
 }
 

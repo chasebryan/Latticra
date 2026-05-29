@@ -32,7 +32,7 @@ done
 
 require_contains 'Status: active blocker ledger' "$ledger"
 require_contains 'local_quality_gate_command=make quality' "$ledger"
-require_contains 'local_quality_gate_last_observed=pass-2026-05-27' "$ledger"
+require_contains 'local_quality_gate_last_observed=pass-2026-05-28' "$ledger"
 require_contains 'This is a strong local validation signal. It is not a production-readiness claim.' "$ledger"
 require_contains 'production_platform_claim_allowed=0' "$ledger"
 require_contains 'production_installer_ready=0' "$ledger"

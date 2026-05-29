@@ -103,6 +103,7 @@ require_contains 'standard_expectations_met=1' "$status_file"
 require_contains 'local_verify_graduated=1' "$status_file"
 require_contains 'receipt_promotion_graduated=1' "$status_file"
 require_contains 'authority_promotion_allowed=0' "$status_file"
+require_contains 'signing_operation_crypto_graduation_gate_absent_requires_neutral_metadata=1' "$status_file"
 require_contains 'signing_authorization_state=authorized-metadata-only' "$status_file"
 require_contains 'signing_authorization_ready=1' "$status_file"
 require_contains 'signer_handoff_state=handoff-metadata-only' "$status_file"
@@ -141,13 +142,17 @@ require_contains 'effect_execution_added=0' "$status_file"
 require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'network_behavior_changed=0' "$status_file"
 require_contains 'host_behavior_changed=0' "$status_file"
-require_contains 'key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata' "$status_file"
+require_contains 'key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata' "$status_file"
 require_contains 'seal signing operation status: ok' "$status_file"
 
 require_contains 'LATTICRA_SEAL_SIGNING_OPERATION_DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_signing_operation.h
 require_contains 'denied-crypto-graduation-gate' src/seal_signing_operation.c
+require_contains 'bounded_string_empty' src/seal_signing_operation.c
+require_contains 'crypto_graduation_gate_passed == 0u' src/seal_signing_operation.c
 require_contains 'crypto_graduation_gate_present=%u' src/seal_signing_operation.c
 require_contains 'standard_expectations_met=%u' src/seal_signing_operation.c
+require_contains 'absent crypto gate authority status' tests/seal_signing_operation_invariants.c
+require_contains 'absent crypto gate stale render rejected' tests/seal_signing_operation_invariants.c
 
 require_contains 'SEAL_SIGNING_OPERATION_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md' README.md

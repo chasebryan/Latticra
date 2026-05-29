@@ -87,6 +87,7 @@ standard_expectations_met=1
 local_verify_graduated=1
 receipt_promotion_graduated=1
 authority_promotion_allowed=0
+signer_invocation_crypto_graduation_gate_absent_requires_neutral_metadata=1
 signing_authorization_state=authorized-metadata-only
 signing_authorization_ready=1
 signer_handoff_state=handoff-metadata-only
@@ -171,6 +172,6 @@ It does not add signing, verification, signer invocation behavior, signer proces
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata, key-handling status/workflow guard alignment, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal slice is key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata, key-material status/workflow guard alignment, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 That future slice must not add signing, verification, signer invocation behavior, private-key handling, key generation, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -3,7 +3,7 @@
 Status: design-frame ready; runtime cryptography blocked
 Date: 2026-05-27
 
-This evidence record aggregates the Q-Seal foundation, ML-KEM parameter packet, evidence gate, FIPS 203 conformance matrix, SP 800-227 usage profile, KAT manifest, KAT runner contract, KAT result schema, KAT result row fixture, ACVP intake, ACVP capability matrix, ACVP fixture row plan, ACVP fixture digest row template, ACVP parser contract, ACVP response contract, ACVP response fixture, ACVP submission-package contract, ACVP verdict receipt gate, validation claim gate, module-boundary gate, vector schema, vector source intake, vector fixture lock, vector fixture digest ledger, negative-test evidence, memory-safety evidence, API misuse-resistance evidence, source digest manifest, source digest receipt, source digest verification, receipt replay results, code-owner review, review disposition ledger, reviewer identity fixture, reviewer role mapping, CI promotion evidence, constant-time review, randomness-source contract, zeroization evidence, side-channel review, provider differential contract, implementation-binding manifest, source layout gate, implementation file digest plan, clean-room author attestation gate, per-file standards trace gate, per-file test trace gate, implementation traceability matrix, primitive source acceptance gate, implementation frame, and secret-state contract into one fail-closed readiness profile.
+This evidence record aggregates the Q-Seal foundation, ML-KEM parameter packet, evidence gate, FIPS 203 conformance matrix, SP 800-227 usage profile, KAT manifest, KAT runner contract, KAT result schema, KAT result row fixture, ACVP intake, ACVP capability matrix, ACVP fixture row plan, ACVP fixture digest row template, ACVP parser contract, ACVP response contract, ACVP response fixture, ACVP submission-package contract, ACVP verdict receipt gate, validation claim gate, module-boundary gate, security-policy gate, vector schema, vector source intake, vector fixture lock, vector fixture digest ledger, negative-test evidence, memory-safety evidence, API misuse-resistance evidence, source digest manifest, source digest receipt, source digest verification, receipt replay results, code-owner review, review disposition ledger, reviewer identity fixture, reviewer role mapping, evidence import packet manifest, evidence import review gate, CI promotion evidence, constant-time review, randomness-source contract, zeroization evidence, side-channel review, provider differential contract, implementation-binding manifest, source layout gate, implementation file digest plan, clean-room author attestation gate, per-file standards trace gate, per-file test trace gate, implementation traceability matrix, primitive source acceptance gate, implementation frame, and secret-state contract into one fail-closed readiness profile.
 
 ```text
 q_seal_readiness_profile_present=1
@@ -33,6 +33,7 @@ acvp_submission_package_contract_present=1
 acvp_verdict_receipt_gate_present=1
 validation_claim_gate_present=1
 module_boundary_gate_present=1
+security_policy_gate_present=1
 vector_schema_present=1
 vector_source_intake_present=1
 vector_fixture_lock_present=1
@@ -48,6 +49,8 @@ code_owner_review_present=1
 review_disposition_ledger_present=1
 reviewer_identity_fixture_present=1
 reviewer_role_mapping_present=1
+evidence_import_packet_manifest_present=1
+evidence_import_review_gate_present=1
 ci_promotion_evidence_present=1
 constant_time_review_present=1
 randomness_source_contract_present=1
@@ -68,11 +71,11 @@ clean_room_boundary_recorded=1
 apple_corecrypto_code_copied=0
 external_provider_code_copied=0
 provider_runtime_used=0
-components_total=52
-components_present=52
-runtime_blockers_total=49
-required_readiness_items_total=1487
-required_readiness_items_satisfied=1029
+components_total=55
+components_present=55
+runtime_blockers_total=52
+required_readiness_items_total=1611
+required_readiness_items_satisfied=1123
 design_frame_integration_ready=1
 runtime_crypto_ready=0
 operations_enabled=0

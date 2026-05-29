@@ -77,7 +77,7 @@ require_contains 'can_read_host=0' "$status_file"
 require_contains 'can_write_host=0' "$status_file"
 require_contains 'can_use_network=0' "$status_file"
 require_contains 'grants_runtime_authority=0' "$status_file"
-require_contains 'signed receipt proof path' "$status_file"
+require_contains 'signed receipt trust-root boundary contract' "$status_file"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-surface.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-surface.yml
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-status.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-status.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-surface.yml
@@ -89,7 +89,7 @@ require_contains 'panel_dashboard_view_model_surface_present=1' "$product_doc"
 require_contains 'panel_dashboard_view_model_status_present=1' "$product_doc"
 require_contains 'seal_panel_dashboard=view-model-report-surface' "$product_doc"
 require_contains 'seal_panel_dashboard_view_model=report-surface' "$product_doc"
-require_contains 'signed receipt proof path' "$product_doc"
+require_contains 'signed receipt trust-root boundary contract' "$product_doc"
 
 require_contains 'panel_dashboard_view_model_surface_present=1' "$seal_status"
 require_contains 'panel_dashboard_view_model_status_present=1' "$seal_status"

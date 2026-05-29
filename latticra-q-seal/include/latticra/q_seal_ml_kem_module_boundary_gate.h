@@ -31,6 +31,7 @@ typedef struct {
     unsigned fips_140_3_module_security_bound;
     unsigned cmvp_program_bound;
     unsigned validation_claim_gate_bound;
+    unsigned security_policy_gate_bound;
     unsigned acvp_verdict_receipt_gate_bound;
     unsigned ci_promotion_evidence_bound;
     unsigned implementation_binding_manifest_bound;

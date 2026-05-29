@@ -24,6 +24,8 @@ Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_
 
 Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when drift appears in runnable commands, validation command lists, platform prerequisites, install/update/reset/uninstall snippets, or public HTML command examples.
 
+Use [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) when drift appears in screenshots, diagrams, image alt text, captions, generated visuals, presentation visuals, social/review cards, or public media.
+
 This playbook does not promote claims. It narrows or aligns documentation until the evidence supports stronger wording.
 
 ## Drift Types
@@ -46,6 +48,7 @@ This playbook does not promote claims. It narrows or aligns documentation until 
 | Freshness or lifecycle drift | A stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked record drives public wording as if it were current authority. | Apply the freshness lifecycle policy, add a lifecycle boundary or supersession block, then align public mirrors. |
 | Impact-radius drift | A change affected reader understanding but only the touched file was reviewed, or a local-only edit was expanded mechanically without a claim reason. | Apply the impact radius guide, identify missed or unnecessary surfaces, then align only the surfaces whose reader-facing claim changed. |
 | Command-example drift | A runnable command omits effect boundaries, prerequisites, expected output, cleanup, or blocked adjacent claims. | Apply the command example standard and narrow the command context or remove the snippet from public quick-start surfaces. |
+| Visual-asset drift | A visual asset, caption, or alt text implies stronger posture than source records or lacks source, freshness, accessibility, or non-claim context. | Apply the visual asset standard, update context, narrow the caption or alt text, or move the asset out of public surfaces. |
 
 ## Response Order
 

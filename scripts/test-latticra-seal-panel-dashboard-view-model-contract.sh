@@ -88,7 +88,7 @@ require_contains 'operator_review_required_for_any_missing_source=1' "$contract"
 require_contains 'authority_absent_for_all_rows=1' "$contract"
 require_contains 'docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md' "$contract"
 require_contains 'docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md' "$contract"
-require_contains 'The next valid Latticra Seal slice is a signed receipt proof path report surface/status checkpoint that remains verification-only until trust-root and revocation boundaries are implemented.' "$contract"
+require_contains 'The next valid Latticra Seal slice is a signed receipt trust-root boundary contract that remains metadata-only and does not load trust roots, perform revocation lookup, use networks, or grant authority.' "$contract"
 require_contains 'sh scripts/test-latticra-seal-panel-dashboard-view-model-contract.sh' .github/workflows/latticra-seal-panel-dashboard-view-model-contract.yml
 require_contains 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' .github/workflows/latticra-seal-panel-dashboard-view-model-contract.yml
 

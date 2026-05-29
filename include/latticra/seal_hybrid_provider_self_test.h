@@ -57,6 +57,8 @@ typedef struct {
     unsigned ml_kem_encapsulation_public_key_only_cases_total;
     unsigned ml_kem_tampered_ciphertext_shared_secret_mismatch_total;
     unsigned ml_kem_ciphertext_tampering_rejected_total;
+    unsigned ml_kem_malformed_ciphertext_length_decapsulation_rejected_total;
+    unsigned ml_kem_malformed_ciphertext_length_staged_secret_cleared_total;
     unsigned ml_kem_parameter_sets_tested;
     unsigned ml_kem_512_key_generation_performed;
     unsigned ml_kem_512_encapsulation_performed;
@@ -83,6 +85,15 @@ typedef struct {
     unsigned hybrid_envelope_records_sealed_total;
     unsigned hybrid_envelope_records_opened_total;
     unsigned hybrid_envelope_records_authenticated_total;
+    unsigned hybrid_envelope_committed_detached_sealed;
+    unsigned hybrid_envelope_committed_detached_opened;
+    unsigned hybrid_envelope_committed_detached_authenticated;
+    unsigned hybrid_envelope_committed_detached_provider_crypto_evidence_bound;
+    unsigned hybrid_envelope_committed_detached_provider_crypto_cases_total;
+    unsigned hybrid_envelope_committed_detached_tampering_rejected_total;
+    unsigned hybrid_envelope_committed_detached_constant_time_compare_cases_total;
+    unsigned hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total;
+    unsigned hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total;
     unsigned hybrid_envelope_provider_crypto_evidence_bound;
     unsigned hybrid_envelope_provider_crypto_cases_total;
     unsigned hybrid_envelope_hkdf_provider_cases_total;

@@ -70,6 +70,7 @@ requires local_verify_graduated=1 when crypto_graduation_gate_present=1
 requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
 requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
 requires crypto_graduation_gate_state=graduated-authority-neutral when crypto_graduation_gate_present=1
+requires crypto graduation fields to remain neutral when crypto_graduation_gate_present=0
 requires requested_signature=Ed25519-development
 requires requested_signing_authorization=metadata-only
 requires requested_signer_handoff=metadata-only
@@ -155,6 +156,7 @@ unterminated signer handoff strings
 invalid signer handoff boolean flags
 failed crypto graduation gate evidence
 authority-bearing crypto graduation evidence
+stale crypto graduation evidence when the gate-present flag is unset
 signer_handoff_ready=0
 signer_handoff_state not handoff-metadata-only
 requested_signer_handoff not metadata-only
@@ -207,6 +209,6 @@ seal signer invocation status: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
+The next valid Latticra Seal planning slice is key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without separate implementation, key-handling, key-material, and guard contracts.
 
 The signer invocation status/public-entry alignment, signing operation contract, signing operation metadata implementation, signing operation status/public-entry alignment, key-handling boundary contract, and key-handling metadata implementation now exist as guarded checkpoints. Future work must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

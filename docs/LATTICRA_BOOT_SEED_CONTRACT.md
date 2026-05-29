@@ -17,6 +17,7 @@ boot_seed_build_script_present=1
 boot_seed_qemu_smoke_script_present=1
 boot_seed_vm_image_build_script_present=1
 boot_seed_vm_qcow2_artifact_present=0
+boot_seed_sbom_generator_present=1
 boot_seed_kernel_artifact_created_by_build=<0-or-1>
 boot_seed_iso_artifact_created_by_build=<0-or-1>
 boot_seed_vm_qcow2_artifact_created_by_build=<0-or-1>
@@ -59,6 +60,12 @@ Smoke boot the qcow2 VM image under QEMU/UEFI:
 
 ```sh
 sh scripts/latticra-boot-seed-qemu-smoke.sh --disk-image build/boot-seed/latticra-boot-seed.qcow2 --format qcow2 --output-dir build/boot-seed/vm-qemu-smoke
+```
+
+Generate the local boot-seed SBOM:
+
+```sh
+sh scripts/latticra-boot-seed-sbom-generate.sh --iso build/boot-seed/latticra-boot-seed.iso --vm-image build/boot-seed/latticra-boot-seed.qcow2 --kernel build/boot-seed/latticra-boot-seed.elf --efi-bootloader build/boot-seed/BOOTX64.EFI --esp-raw build/boot-seed/latticra-boot-seed-esp.raw > build/boot-seed/sbom.spdx.json
 ```
 
 The QEMU smoke script records a serial log and passes only when the log contains:

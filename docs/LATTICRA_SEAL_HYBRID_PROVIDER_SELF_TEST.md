@@ -1,13 +1,13 @@
 # Latticra Seal Hybrid Provider Self-Test
 
 Status: local provider-backed hybrid key-establishment self-test
-Scope: authority-neutral OpenSSL EVP self-test that derives a classical NIST P-256 ECDH shared secret and ML-KEM-512, ML-KEM-768, and ML-KEM-1024 shared secrets, binds provider transcript material into Seal AAD, then feeds those secrets into the existing Seal HKDF-SHA256/AES-256-GCM attached-record envelope while requiring provider HKDF, provider AES-GCM, provider HMAC commitments, and `RAND_bytes_ex` evidence from the envelope itself. This does not add production crypto claims, FIPS validation claims, key storage, secret output, record output, release signing, update signing, receipt signing, capability enforcement, or runtime authority.
+Scope: authority-neutral OpenSSL EVP self-test that derives a classical NIST P-256 ECDH shared secret and ML-KEM-512, ML-KEM-768, and ML-KEM-1024 shared secrets, binds provider transcript material into Seal AAD, then feeds those secrets into the existing Seal HKDF-SHA256/AES-256-GCM attached-record and committed-detached envelopes while requiring provider HKDF, provider AES-GCM, provider HMAC commitments, and `RAND_bytes_ex` evidence from the envelope itself. This does not add production crypto claims, FIPS validation claims, key storage, secret output, record output, release signing, update signing, receipt signing, capability enforcement, or runtime authority.
 
 ## Purpose
 
 This slice closes the gap between the provider-level Q-Seal ML-KEM self-test and the existing Seal hybrid envelope.
 
-The self-test proves that the local substrate can obtain a classical provider-derived 32-byte P-256 ECDH shared secret and provider-derived 32-byte ML-KEM shared secrets for all three FIPS 203 parameter sets, verify that generated and reimported ML-KEM keys retain the requested parameter-set identity, reimport public keys before peer ECDH and ML-KEM encapsulation, bind the P-256 public keys, ML-KEM public encapsulation keys, ML-KEM ciphertext, and algorithm labels into authenticated transcript AAD, pass each pairing into the hybrid envelope, authenticate attached records, reject tampered ML-KEM ciphertext shared secrets and wrong-PQC-secret record opens before plaintext release, reject tampered transcript AAD before plaintext release, confirm the record envelope used provider-backed HKDF-SHA256, AES-256-GCM, HMAC-SHA256 commitments, constant-time commitment comparison, 256-bit-strength `RAND_bytes_ex` salt/nonce generation without legacy fallback paths, and successful record/plaintext output tail cleansing under nonzero sentinels, and zeroize all local secret and record buffers before returning.
+The self-test proves that the local substrate can obtain a classical provider-derived 32-byte P-256 ECDH shared secret and provider-derived 32-byte ML-KEM shared secrets for all three FIPS 203 parameter sets, verify that generated and reimported ML-KEM keys retain the requested parameter-set identity, reimport public keys before peer ECDH and ML-KEM encapsulation, bind the P-256 public keys, ML-KEM public encapsulation keys, ML-KEM ciphertext, and algorithm labels into authenticated transcript AAD, pass each pairing into the hybrid envelope, authenticate attached records and committed-detached envelopes, reject tampered ML-KEM ciphertext shared secrets, reject malformed-length ML-KEM ciphertext decapsulation through an internal staging buffer that is cleansed before any return/report, reject wrong-PQC-secret record opens before plaintext release, reject tampered transcript AAD before plaintext release, reject committed-detached commitment tampering before decrypt, confirm the envelope paths used provider-backed HKDF-SHA256, AES-256-GCM, HMAC-SHA256 commitments, constant-time commitment comparison, 256-bit-strength `RAND_bytes_ex` salt/nonce generation without legacy fallback paths, and successful record/ciphertext/plaintext output tail cleansing under nonzero sentinels, and zeroize all local secret and record buffers before returning.
 
 ## Current Fields
 
@@ -39,6 +39,8 @@ ml_kem_public_key_algorithm_identity_verified_cases_total=3
 ml_kem_encapsulation_public_key_only_cases_total=3
 ml_kem_tampered_ciphertext_shared_secret_mismatch_total=3
 ml_kem_ciphertext_tampering_rejected_total=3
+ml_kem_malformed_ciphertext_length_decapsulation_rejected_total=3
+ml_kem_malformed_ciphertext_length_staged_secret_cleared_total=3
 ml_kem_parameter_sets_tested=3
 ml_kem_512_key_generation_performed=1
 ml_kem_512_encapsulation_performed=1
@@ -65,6 +67,15 @@ hybrid_envelope_plaintext_recovered=1
 hybrid_envelope_records_sealed_total=3
 hybrid_envelope_records_opened_total=3
 hybrid_envelope_records_authenticated_total=3
+hybrid_envelope_committed_detached_sealed=1
+hybrid_envelope_committed_detached_opened=1
+hybrid_envelope_committed_detached_authenticated=1
+hybrid_envelope_committed_detached_provider_crypto_evidence_bound=1
+hybrid_envelope_committed_detached_provider_crypto_cases_total=3
+hybrid_envelope_committed_detached_tampering_rejected_total=3
+hybrid_envelope_committed_detached_constant_time_compare_cases_total=3
+hybrid_envelope_committed_detached_successful_ciphertext_tail_cleared_cases_total=3
+hybrid_envelope_committed_detached_successful_plaintext_tail_cleared_cases_total=3
 hybrid_envelope_provider_crypto_evidence_bound=1
 hybrid_envelope_provider_crypto_cases_total=3
 hybrid_envelope_hkdf_provider_cases_total=3

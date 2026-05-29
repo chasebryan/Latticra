@@ -222,6 +222,80 @@ if [ "$TAG_EXISTS" = "1" ] &&
   RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED=1
 fi
 
+BLOCKER_COUNT=0
+BLOCKERS='none'
+add_blocker() {
+  blocker="$1"
+  if [ "$BLOCKERS" = "none" ]; then
+    BLOCKERS="$blocker"
+  else
+    BLOCKERS="$BLOCKERS,$blocker"
+  fi
+  BLOCKER_COUNT=$((BLOCKER_COUNT + 1))
+}
+
+TAG_BLOCKED=0
+ARTIFACT_PARENT_DIR_BLOCKED=0
+TRACKED_WORKTREE_BLOCKED=0
+RELEASE_TOOLCHAIN_BLOCKED=0
+GIT_BLOCKED=0
+TAR_BLOCKED=0
+GZIP_BLOCKED=0
+RPMBUILD_BLOCKED=0
+RPM_BLOCKED=0
+GPG_BLOCKED=0
+SHA256_TOOL_BLOCKED=0
+SIGNING_IDENTITY_REFERENCE_BLOCKED=0
+
+if [ "$TAG_EXISTS" != "1" ]; then
+  TAG_BLOCKED=1
+  add_blocker 'tag_missing'
+fi
+if [ "$ARTIFACT_PARENT_DIR_EXISTS" != "1" ]; then
+  ARTIFACT_PARENT_DIR_BLOCKED=1
+  add_blocker 'artifact_parent_dir_missing'
+fi
+if [ "$TRACKED_WORKTREE_CLEAN" != "1" ]; then
+  TRACKED_WORKTREE_BLOCKED=1
+  add_blocker 'tracked_worktree_dirty'
+fi
+if [ "$RELEASE_TOOLCHAIN_READY" != "1" ]; then
+  RELEASE_TOOLCHAIN_BLOCKED=1
+fi
+if [ "$GIT_AVAILABLE" != "1" ]; then
+  GIT_BLOCKED=1
+  add_blocker 'git_missing'
+fi
+if [ "$TAR_AVAILABLE" != "1" ]; then
+  TAR_BLOCKED=1
+  add_blocker 'tar_missing'
+fi
+if [ "$GZIP_AVAILABLE" != "1" ]; then
+  GZIP_BLOCKED=1
+  add_blocker 'gzip_missing'
+fi
+if [ "$RPMBUILD_AVAILABLE" != "1" ]; then
+  RPMBUILD_BLOCKED=1
+  add_blocker 'rpmbuild_missing'
+fi
+if [ "$RPM_AVAILABLE" != "1" ]; then
+  RPM_BLOCKED=1
+  add_blocker 'rpm_missing'
+fi
+if [ "$GPG_AVAILABLE" != "1" ]; then
+  GPG_BLOCKED=1
+  add_blocker 'gpg_missing'
+fi
+if [ "$SHA256_TOOL_AVAILABLE" != "1" ]; then
+  SHA256_TOOL_BLOCKED=1
+  add_blocker 'sha256_tool_missing'
+fi
+if [ "$SIGNING_IDENTITY_REFERENCE_PRESENT" != "1" ] ||
+   [ "$SIGNING_IDENTITY_REFERENCE_FORMAT_VALID" != "1" ]; then
+  SIGNING_IDENTITY_REFERENCE_BLOCKED=1
+  add_blocker 'signing_identity_reference_missing_or_invalid'
+fi
+
 cat <<REPORT
 LATTICRA PRODUCTION INSTALLER RELEASE ARTIFACT CANDIDATE PREFLIGHT
 preflight_status=ok
@@ -230,6 +304,20 @@ release_artifact_candidate_preflight_mode=no-effect-build-signing-readiness
 release_artifact_candidate_preflight_no_effect=1
 release_artifact_candidate_preflight_passed=$RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED
 release_artifact_candidate_inputs_satisfied=$RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED
+release_artifact_candidate_blocker_count=$BLOCKER_COUNT
+release_artifact_candidate_blockers=$BLOCKERS
+release_artifact_candidate_tag_blocked=$TAG_BLOCKED
+release_artifact_candidate_parent_dir_blocked=$ARTIFACT_PARENT_DIR_BLOCKED
+release_artifact_candidate_tracked_worktree_blocked=$TRACKED_WORKTREE_BLOCKED
+release_artifact_candidate_toolchain_blocked=$RELEASE_TOOLCHAIN_BLOCKED
+release_artifact_candidate_git_blocked=$GIT_BLOCKED
+release_artifact_candidate_tar_blocked=$TAR_BLOCKED
+release_artifact_candidate_gzip_blocked=$GZIP_BLOCKED
+release_artifact_candidate_rpmbuild_blocked=$RPMBUILD_BLOCKED
+release_artifact_candidate_rpm_blocked=$RPM_BLOCKED
+release_artifact_candidate_gpg_blocked=$GPG_BLOCKED
+release_artifact_candidate_sha256_tool_blocked=$SHA256_TOOL_BLOCKED
+release_artifact_candidate_signing_identity_reference_blocked=$SIGNING_IDENTITY_REFERENCE_BLOCKED
 release_artifact_candidate_tag=$TAG
 release_artifact_candidate_tag_exists=$TAG_EXISTS
 release_artifact_candidate_tag_available=$TAG_EXISTS

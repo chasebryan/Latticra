@@ -44,6 +44,7 @@ static latticra_seal_signing_operation_t fixture_operation(const char *mode) {
         sizeof(operation.message_digest_hex),
         "aaaabbbbccccddddeeeeffff0000111122223333444455556666777788889999");
     set_string(operation.public_key_identity_label, sizeof(operation.public_key_identity_label), "rfc8032-test-key");
+    set_string(operation.crypto_graduation_gate_state, sizeof(operation.crypto_graduation_gate_state), "not-required");
     set_string(operation.requested_capability, sizeof(operation.requested_capability), "verified-receipt-report");
     set_string(operation.requested_effect, sizeof(operation.requested_effect), requested_mode);
     set_string(operation.requested_handoff, sizeof(operation.requested_handoff), requested_mode);
@@ -79,6 +80,23 @@ static latticra_seal_signing_operation_t fixture_operation(const char *mode) {
     set_string(operation.mode, sizeof(operation.mode), "metadata-only");
     operation.error = LATTICRA_SEAL_SIGNING_OPERATION_OK;
     set_string(operation.status, sizeof(operation.status), "signing-operation-metadata");
+    return operation;
+}
+
+static latticra_seal_signing_operation_t fixture_crypto_bound_operation(const char *mode) {
+    latticra_seal_signing_operation_t operation = fixture_operation(mode);
+    set_string(operation.crypto_graduation_profile, sizeof(operation.crypto_graduation_profile), "latticra-seal-crypto-graduation-gate/0.1");
+    set_string(
+        operation.assurance_baseline_profile,
+        sizeof(operation.assurance_baseline_profile),
+        "latticra-cryptographic-assurance-key-management/0.1");
+    set_string(operation.crypto_graduation_gate_state, sizeof(operation.crypto_graduation_gate_state), "graduated-authority-neutral");
+    operation.crypto_graduation_gate_present = 1u;
+    operation.crypto_graduation_gate_passed = 1u;
+    operation.standard_expectations_met = 1u;
+    operation.local_verify_graduated = 1u;
+    operation.receipt_promotion_graduated = 1u;
+    operation.authority_promotion_allowed = 0u;
     return operation;
 }
 
@@ -133,6 +151,9 @@ static int key_handling_allows_report_only_metadata(void) {
     EXPECT_TRUE(strcmp(key_handling.message_digest_algorithm, "SHA-256") == 0, "digest algorithm");
     EXPECT_TRUE(strcmp(key_handling.message_digest_hex, operation.message_digest_hex) == 0, "digest hex");
     EXPECT_TRUE(strcmp(key_handling.public_key_identity_label, "rfc8032-test-key") == 0, "public key identity");
+    EXPECT_TRUE(strcmp(key_handling.crypto_graduation_gate_state, "not-required") == 0, "crypto gate legacy");
+    EXPECT_TRUE(key_handling.crypto_graduation_gate_present == 0u, "crypto present legacy");
+    EXPECT_TRUE(key_handling.standard_expectations_met == 0u, "standard legacy");
     EXPECT_TRUE(strcmp(key_handling.requested_capability, "verified-receipt-report") == 0, "requested capability");
     EXPECT_TRUE(strcmp(key_handling.requested_effect, "report-only") == 0, "requested effect");
     EXPECT_TRUE(strcmp(key_handling.requested_handoff, "report-only") == 0, "requested handoff");
@@ -187,6 +208,44 @@ static int key_handling_allows_report_only_metadata(void) {
     EXPECT_TRUE(strstr(rendered, "hardware_key_used=0") != 0, "render hardware key");
     EXPECT_TRUE(strstr(rendered, "trust_store_loaded=0") != 0, "render trust store");
     EXPECT_TRUE(strstr(rendered, "runtime_authority_granted=0") != 0, "render runtime");
+    return 0;
+}
+
+static int key_handling_carries_crypto_graduation_evidence(void) {
+    latticra_seal_signing_operation_t operation = fixture_crypto_bound_operation("report-only");
+    latticra_seal_key_handling_t key_handling;
+    char rendered[LATTICRA_SEAL_KEY_HANDLING_RENDER_MAX];
+
+    EXPECT_TRUE(
+        latticra_seal_key_handling_from_operation(&operation, "metadata-only", &key_handling) ==
+            LATTICRA_STATUS_OK,
+        "crypto key handling status");
+    EXPECT_TRUE(key_handling.error == LATTICRA_SEAL_KEY_HANDLING_OK, "crypto key handling ok");
+    EXPECT_TRUE(strcmp(key_handling.crypto_graduation_profile, "latticra-seal-crypto-graduation-gate/0.1") == 0, "crypto profile");
+    EXPECT_TRUE(strcmp(key_handling.assurance_baseline_profile, "latticra-cryptographic-assurance-key-management/0.1") == 0, "assurance profile");
+    EXPECT_TRUE(strcmp(key_handling.crypto_graduation_gate_state, "graduated-authority-neutral") == 0, "crypto state");
+    EXPECT_TRUE(key_handling.crypto_graduation_gate_present == 1u, "crypto present");
+    EXPECT_TRUE(key_handling.crypto_graduation_gate_passed == 1u, "crypto passed");
+    EXPECT_TRUE(key_handling.standard_expectations_met == 1u, "standards");
+    EXPECT_TRUE(key_handling.local_verify_graduated == 1u, "local verify");
+    EXPECT_TRUE(key_handling.receipt_promotion_graduated == 1u, "receipt promotion");
+    EXPECT_TRUE(key_handling.authority_promotion_allowed == 0u, "authority promotion");
+    EXPECT_TRUE(key_handling.key_handling_ready == 1u, "crypto key handling ready");
+    EXPECT_TRUE(strcmp(key_handling.key_handling_state, "key-handling-metadata-only") == 0, "crypto key handling state");
+    EXPECT_TRUE(key_handling.public_key_parsed == 0u, "crypto public key parsed");
+    EXPECT_TRUE(key_handling.key_material_loaded == 0u, "crypto key material");
+    EXPECT_TRUE(key_handling.private_key_handling == 0u, "crypto private key");
+    EXPECT_TRUE(key_handling.key_generation_performed == 0u, "crypto key generation");
+    EXPECT_TRUE(key_handling.hardware_key_used == 0u, "crypto hardware key");
+    EXPECT_TRUE(key_handling.trust_store_loaded == 0u, "crypto trust store");
+    EXPECT_TRUE(key_handling.runtime_authority_granted == 0u, "crypto runtime");
+    EXPECT_TRUE(key_handling.host_read_performed == 0u, "crypto host read");
+    EXPECT_TRUE(key_handling.host_write_performed == 0u, "crypto host write");
+    EXPECT_TRUE(key_handling.network_performed == 0u, "crypto network");
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "crypto render");
+    EXPECT_TRUE(strstr(rendered, "crypto_graduation_gate_present=1") != 0, "render crypto present");
+    EXPECT_TRUE(strstr(rendered, "standard_expectations_met=1") != 0, "render standard");
+    EXPECT_TRUE(strstr(rendered, "authority_promotion_allowed=0") != 0, "render authority promotion");
     return 0;
 }
 
@@ -454,6 +513,64 @@ static int key_handling_fails_closed(void) {
     if (expect_denial(&operation, "metadata-only", LATTICRA_SEAL_KEY_HANDLING_DENIED_HOST_EFFECT, "denied-host-effect", "denied-host-effect", "host write status") != 0) {
         return 1;
     }
+    operation = fixture_crypto_bound_operation("report-only");
+    operation.standard_expectations_met = 0u;
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "failed crypto gate status") != 0) {
+        return 1;
+    }
+    operation = fixture_crypto_bound_operation("report-only");
+    operation.authority_promotion_allowed = 1u;
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "authority crypto gate status") != 0) {
+        return 1;
+    }
+    operation = fixture_operation("report-only");
+    operation.crypto_graduation_gate_passed = 1u;
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate stale pass status") != 0) {
+        return 1;
+    }
+    operation = fixture_operation("report-only");
+    operation.authority_promotion_allowed = 1u;
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate authority status") != 0) {
+        return 1;
+    }
+    operation = fixture_operation("report-only");
+    set_string(
+        operation.crypto_graduation_profile,
+        sizeof(operation.crypto_graduation_profile),
+        "latticra-seal-crypto-graduation-gate/0.1");
+    if (expect_denial(
+            &operation,
+            "metadata-only",
+            LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE,
+            "denied-crypto-graduation-gate",
+            "denied-crypto-graduation-gate",
+            "absent crypto gate stale profile status") != 0) {
+        return 1;
+    }
     EXPECT_TRUE(
         latticra_seal_key_handling_from_operation(&operation, "metadata-only", 0) ==
             LATTICRA_STATUS_NULL_ARGUMENT,
@@ -511,11 +628,29 @@ static int key_handling_fails_closed(void) {
     EXPECT_TRUE(rendered[0] == '\0', "ready flag key handling render cleared");
     EXPECT_TRUE(latticra_seal_key_handling_is_metadata_only(&key_handling) == 0,
                 "ready flag key handling helper rejected");
+
+    operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    "metadata-only",
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "absent crypto gate render source");
+    key_handling.crypto_graduation_gate_passed = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "absent crypto gate stale render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "absent crypto gate stale render cleared");
+    EXPECT_TRUE(latticra_seal_key_handling_is_metadata_only(&key_handling) == 0,
+                "absent crypto gate stale helper rejected");
     return 0;
 }
 
 int main(void) {
     if (key_handling_allows_report_only_metadata() != 0) {
+        return 1;
+    }
+    if (key_handling_carries_crypto_graduation_evidence() != 0) {
         return 1;
     }
     if (key_handling_allows_evaluate_only_metadata() != 0) {

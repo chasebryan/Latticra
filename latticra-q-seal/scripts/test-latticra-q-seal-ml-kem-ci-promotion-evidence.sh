@@ -43,7 +43,10 @@ require_contains 'replay_transcript_gate_bound = 1u' latticra-q-seal/src/q_seal_
 require_contains 'acvp_verdict_receipt_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
 require_contains 'validation_claim_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
 require_contains 'module_boundary_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
-require_contains 'required_promotion_items_total = 23u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
+require_contains 'security_policy_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
+require_contains 'evidence_import_packet_manifest_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
+require_contains 'evidence_import_review_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
+require_contains 'required_promotion_items_total = 26u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
 require_contains 'operation_execution_allowed == 1u' latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c
 require_contains 'latticra q-seal ml-kem ci promotion evidence invariants: ok' latticra-q-seal/tests/q_seal_ml_kem_ci_promotion_evidence_invariants.c
 require_contains 'ml_kem_ci_promotion_evidence_present=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
@@ -52,8 +55,11 @@ require_contains 'replay_transcript_gate_bound=1' latticra-q-seal/evidence/ML_KE
 require_contains 'acvp_verdict_receipt_gate_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
 require_contains 'validation_claim_gate_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
 require_contains 'module_boundary_gate_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
+require_contains 'security_policy_gate_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
+require_contains 'evidence_import_packet_manifest_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
+require_contains 'evidence_import_review_gate_bound=1' latticra-q-seal/evidence/ML_KEM_CI_PROMOTION_EVIDENCE.md
 require_contains 'operation_execution_allowed=0' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md
-require_contains 'required_promotion_items_total=23' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md
+require_contains 'required_promotion_items_total=26' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md
 
 cc $CFLAGS -Ilatticra-q-seal/include \
   latticra-q-seal/src/q_seal_ml_kem.c \

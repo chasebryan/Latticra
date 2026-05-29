@@ -125,6 +125,12 @@ static int expect_provider_self_test(
         self_test.tampered_ciphertext_shared_secret_mismatch == 1u,
         "tampered mismatch");
     EXPECT_TRUE(self_test.tampered_ciphertext_rejected == 1u, "tampered rejected");
+    EXPECT_TRUE(
+        self_test.malformed_ciphertext_length_decapsulation_rejected == 1u,
+        "malformed ciphertext length rejected");
+    EXPECT_TRUE(
+        self_test.malformed_ciphertext_length_no_secret_output == 1u,
+        "malformed ciphertext length no secret");
     EXPECT_TRUE(self_test.shared_secret_internal_buffers_used == 1u, "secret buffers");
     EXPECT_TRUE(self_test.shared_secret_match == 1u, "secret match");
     EXPECT_TRUE(
@@ -174,6 +180,12 @@ static int expect_provider_self_test(
     EXPECT_TRUE(
         strstr(rendered, "tampered_ciphertext_rejected=1") != 0,
         "report tampered rejected");
+    EXPECT_TRUE(
+        strstr(rendered, "malformed_ciphertext_length_decapsulation_rejected=1") != 0,
+        "report malformed ciphertext length rejected");
+    EXPECT_TRUE(
+        strstr(rendered, "malformed_ciphertext_length_no_secret_output=1") != 0,
+        "report malformed ciphertext length no secret");
     EXPECT_TRUE(strstr(rendered, "shared_secret_match=1") != 0, "report match");
     EXPECT_TRUE(
         strstr(rendered, "shared_secret_constant_time_compare=1") != 0,

@@ -2,7 +2,7 @@
 
 Status: active documentation maintenance guide
 Last updated: 2026-05-27 CDT
-Scope: public documentation entry points, command examples, status records, status mirrors, estimate sources, static HTML mirrors, platform guides, change-impact radius, and documentation-only validation.
+Scope: public documentation entry points, command examples, visual assets, status records, status mirrors, estimate sources, static HTML mirrors, platform guides, change-impact radius, and documentation-only validation.
 
 ## Purpose
 
@@ -21,6 +21,7 @@ Use it when a change affects public wording, capability posture, estimates, plat
 | Documentation change impact radius | [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) | Review packets, public entry points, source records, status records, static HTML pages, validation paths, and non-claims |
 | Documentation status records | [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`status/README.md`](status/README.md) | [`../STATUS.md`](../STATUS.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), public summaries, static HTML pages, source records, and status-index entries |
 | Documentation command examples | [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md) | Public HTML command snippets, installer docs, platform README files, validation pages, package docs, security docs, reset/uninstall docs, and review packets |
+| Documentation visual assets | [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md), assets under `docs/assets/` | Public HTML images, Markdown images, screenshots, diagrams, generated visuals, presentation visuals, social/review cards, and source/status records |
 | Documentation navigation | [`README.md`](README.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md) | [`../README.md`](../README.md), [`map.html`](map.html), [`project_notes/README.md`](project_notes/README.md) |
 | Public site mirrors | [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) | Static HTML pages under `docs/`, source Markdown records, status records, estimate records |
 | Documentation health | [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets |
@@ -64,6 +65,8 @@ Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_
 Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) before creating or updating a status record, status-index entry, status mirror, estimate record, or public-entry alignment status note.
 
 Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) before changing runnable commands, command snippets, validation command lists, install/update/reset/uninstall examples, platform prerequisite commands, or public HTML command examples.
+
+Use [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) before adding or changing screenshots, diagrams, public images, generated visuals, presentation visuals, social/review cards, or visual assets under `docs/assets/`.
 
 Use [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) when a public-entry change needs a source-record, mirror, validation, or non-claim lookup.
 

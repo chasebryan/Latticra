@@ -138,6 +138,13 @@ require_contains 'prompt_evaluated=0' "$review_script"
 require_contains 'token_generation_performed=0' "$review_script"
 require_contains 'inference_performed=0' "$review_script"
 require_contains 'outside Nadia prompt-evaluation-result-review boundary' "$review_script"
+require_contains 'write_file "$REPORT" <<REPORT' "$review_script"
+require_contains 'write_file "$OUT_DIR/latest-prompt-evaluation-result-review-contract.txt" < "$REPORT"' "$review_script"
+require_contains 'refusing to overwrite symlink report:' "$review_script"
+if grep -Fq 'cp "$REPORT"' "$review_script"; then
+  printf 'nadia prompt evaluation result review contract stage 32: review contract still uses direct report copy\n' >&2
+  exit 1
+fi
 
 tmp_root="${TMPDIR:-/tmp}"
 tmp_root="${tmp_root%/}"
@@ -296,6 +303,32 @@ require_contains 'qa_dialogue_generated=0' "$report"
 require_contains 'answer_text_generated=0' "$report"
 require_contains 'sexual_request_refusal=always' "$report"
 require_contains 'manipulation_resistance=required' "$report"
+
+symlink_out="$tmpdir/symlink-out"
+symlink_stdout="$tmpdir/symlink.out"
+symlink_target="$tmpdir/outside-latest.txt"
+mkdir -p "$symlink_out"
+printf 'outside\n' > "$symlink_target"
+ln -s "$symlink_target" "$symlink_out/latest-prompt-evaluation-result-review-contract.txt"
+
+if NADIA_PROMPT_EVALUATION_RESULT_REVIEW_TIMESTAMP=stage32-symlink sh "$review_script" \
+  --prompt-evaluation-result "$result" \
+  --request-class awareness-education \
+  --review-family operator-reviewed-prompt-evaluation-result-review \
+  --review-format contract-only-offline-evaluation-result-review \
+  --output "$symlink_out" >"$symlink_stdout" 2>&1; then
+  printf 'nadia prompt evaluation result review contract stage 32: symlink latest report overwrite was not rejected\n' >&2
+  exit 1
+fi
+require_contains 'refusing to overwrite symlink report:' "$symlink_stdout"
+if [ "$(cat "$symlink_target")" != "outside" ]; then
+  printf 'nadia prompt evaluation result review contract stage 32: symlink target was modified\n' >&2
+  exit 1
+fi
+if [ ! -L "$symlink_out/latest-prompt-evaluation-result-review-contract.txt" ]; then
+  printf 'nadia prompt evaluation result review contract stage 32: latest report symlink was replaced\n' >&2
+  exit 1
+fi
 
 if sh "$review_script" \
   --prompt-evaluation-result "$result" \

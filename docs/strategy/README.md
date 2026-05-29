@@ -1,7 +1,7 @@
 # Latticra Strategy Index
 
 Status: active strategy index
-Last updated: 2026-05-28 07:22 CDT
+Last updated: 2026-05-28 19:32 CDT
 Scope: dated strategy records, mission alignment, review cadence, and quality expectations.
 
 ## Purpose
@@ -338,6 +338,12 @@ Latest X scheduled 8pm verification runbook:
 2026-05-28-0722-cdt-x-8pm-verification-runbook.md
 ```
 
+Latest X scheduled 1am verification runbook:
+
+```text
+2026-05-28-1552-cdt-x-1am-verification-runbook.md
+```
+
 Latest X scheduled queue verification chain:
 
 ```text
@@ -350,12 +356,73 @@ Latest X next education sequence packet:
 2026-05-28-0555-cdt-x-next-education-sequence-packet.md
 ```
 
+Latest X next manual post approval packet:
+
+```text
+2026-05-28-1605-cdt-x-next-manual-post-approval-packet.md
+```
+
+Latest X growth conversation packet:
+
+```text
+2026-05-28-1905-cdt-x-growth-conversation-packet.md
+```
+
+Latest X approval shortlist and cadence ladder:
+
+```text
+2026-05-28-1908-cdt-x-approval-shortlist-cadence-ladder.md
+```
+
+Latest X 20:00 CDT Denial post handoff:
+
+```text
+2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md
+```
+
+Latest X Denial post verification decision packet:
+
+```text
+2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md
+```
+
+Latest X 01:00 CDT Cryptography post handoff:
+
+```text
+2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md
+```
+
+Latest X rolling approval calendar:
+
+```text
+2026-05-28-1918-cdt-x-rolling-approval-calendar.md
+```
+
+Latest X live growth checkpoint:
+
+```text
+2026-05-28-1924-cdt-x-live-growth-checkpoint.md
+```
+
+Latest X profile pin conversion decision packet:
+
+```text
+2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md
+```
+
 Current X launch publication state:
 
 ```text
 first post live at 2026-05-28 05:16:28 CDT
 live URL: https://x.com/Latticra/status/2059941871787347985
-scheduled follow-ups: 2026-05-28 10:00 CDT, 15:00 CDT, 20:00 CDT, and 2026-05-29 01:00 CDT
+Boundary Literacy live at 2026-05-28 10:00:02 CDT
+Evidence Before Claims corrected live at 2026-05-28 15:18:45 CDT
+corrected Evidence URL: https://x.com/Latticra/status/2060093439945936993
+scheduled follow-ups: none visible in X after the remaining 20:00 CDT and 2026-05-29 01:00 CDT drafts were deleted
+next public action: approval-only; paste caption from clipboard and visually verify visible caption before posting
+next manual approval packet: 2026-05-28-1605-cdt-x-next-manual-post-approval-packet.md
+latest read-only growth checkpoint: 2026-05-28-1924-cdt-x-live-growth-checkpoint.md
+latest profile pin conversion packet: 2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md
 status timing helper: scripts/latticra-x-status-metrics.py
 ```
 

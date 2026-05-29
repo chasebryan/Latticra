@@ -72,6 +72,7 @@ requires local_verify_graduated=1 when crypto_graduation_gate_present=1
 requires receipt_promotion_graduated=1 when crypto_graduation_gate_present=1
 requires authority_promotion_allowed=0 when crypto_graduation_gate_present=1
 requires crypto_graduation_gate_state=graduated-authority-neutral when crypto_graduation_gate_present=1
+requires crypto graduation fields to remain neutral when crypto_graduation_gate_present=0
 requires requested_signature=Ed25519-development
 requires requested_signing_authorization=metadata-only
 requires requested_signer_handoff=metadata-only
@@ -162,6 +163,7 @@ unterminated signer invocation strings
 invalid signer invocation boolean flags
 failed crypto graduation gate evidence
 authority-bearing crypto graduation evidence
+stale crypto graduation evidence when the gate-present flag is unset
 signer_invocation_ready=0
 signer_invocation_state not invocation-metadata-only
 requested_signer_invocation not metadata-only
@@ -215,6 +217,6 @@ seal signing operation invariants: ok
 
 ## Next valid slice
 
-The next valid Latticra Seal planning slice is key-handling or policy decision report propagation from ready crypto-graduation-gated signing operation metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
+The next valid Latticra Seal planning slice is key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata, bounded no-effect key parsing implementation, or another narrow status/index alignment follow-up that still must not add signing without a separate implementation contract, key-handling contract, key-material contract, and guards.
 
 The signing operation metadata implementation and its status/public-entry checkpoint are guarded checkpoints. Future work must not add private-key handling, signing, verification, signer invocation behavior, trust-store behavior, revocation lookup, host behavior, network behavior, runtime authority, capability enforcement, object sealing, or kernel behavior unless separately implemented and guarded.

@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void machine_copy(char *dst, size_t dst_len, const char *src) {
@@ -369,6 +370,14 @@ latticra_status_t latticra_kernel_state_machine_default_step_request(
     request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request.
         runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request =
         request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request;
+    if (latticra_kernel_runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_default_request(
+            &request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_request) !=
+        LATTICRA_STATUS_OK) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_request.
+        runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request =
+        request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request;
     request->target_state = LATTICRA_KERNEL_STATE_INITIALIZED;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     return LATTICRA_STATUS_OK;
@@ -408,7 +417,7 @@ latticra_status_t latticra_kernel_state_machine_step(
     latticra_kernel_state_machine_t *machine,
     const latticra_kernel_state_machine_step_request_t *request,
     latticra_kernel_state_machine_step_result_t *result) {
-    latticra_kernel_state_request_t transition_request;
+    latticra_kernel_state_request_t *transition_request_storage;
     latticra_status_t status;
 
     if (result == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
@@ -420,6 +429,16 @@ latticra_status_t latticra_kernel_state_machine_step(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
+    transition_request_storage =
+        (latticra_kernel_state_request_t *)calloc(1u, sizeof(*transition_request_storage));
+    if (transition_request_storage == 0) {
+        result->status = LATTICRA_STATUS_ALLOCATION_FAILED;
+        machine_copy(result->step_status, sizeof(result->step_status),
+            "transition-storage-unavailable");
+        return result->status;
+    }
+
+#define transition_request (*transition_request_storage)
     memset(&transition_request, 0, sizeof(transition_request));
     transition_request.memory_map_request = request->memory_map_request;
     transition_request.process_table_request = request->process_table_request;
@@ -508,11 +527,15 @@ latticra_status_t latticra_kernel_state_machine_step(
         request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_request;
     transition_request.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request =
         request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_request;
+    transition_request.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_request =
+        request->runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_request;
     transition_request.current_state = machine->current_state;
     transition_request.target_state = request->target_state;
     transition_request.gate = request->gate;
 
     status = latticra_kernel_state_transition(&transition_request, &result->transition);
+#undef transition_request
+    free(transition_request_storage);
     result->status = status;
     result->machine_state_before = machine->current_state;
     result->machine_state_after = result->transition.next_state;

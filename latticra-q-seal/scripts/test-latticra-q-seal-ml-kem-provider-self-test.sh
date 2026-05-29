@@ -76,6 +76,8 @@ require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/docs
 require_contains 'encapsulation_public_key_only=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_shared_secret_mismatch=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_rejected=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'malformed_ciphertext_length_decapsulation_rejected=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'malformed_ciphertext_length_no_secret_output=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_constant_time_compare=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_constant_time_compare=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'ML-KEM-512-provider_self_test_passed=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
@@ -89,6 +91,8 @@ require_contains 'public_key_algorithm_identity_verified=1' latticra-q-seal/evid
 require_contains 'encapsulation_public_key_only=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_shared_secret_mismatch=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_rejected=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'malformed_ciphertext_length_decapsulation_rejected=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
+require_contains 'malformed_ciphertext_length_no_secret_output=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'tampered_ciphertext_constant_time_compare=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'shared_secret_zeroized=1' latticra-q-seal/evidence/ML_KEM_PROVIDER_SELF_TEST.md
 require_contains 'latticra q-seal ml-kem provider self-test invariants: ok' latticra-q-seal/tests/q_seal_ml_kem_provider_self_test_invariants.c

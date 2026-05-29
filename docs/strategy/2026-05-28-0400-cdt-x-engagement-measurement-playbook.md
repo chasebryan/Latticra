@@ -11,6 +11,54 @@ Mention response packet:
 docs/strategy/2026-05-28-0552-cdt-x-mention-response-readiness-packet.md
 ```
 
+Growth conversation packet:
+
+```text
+docs/strategy/2026-05-28-1905-cdt-x-growth-conversation-packet.md
+```
+
+Approval shortlist and cadence ladder:
+
+```text
+docs/strategy/2026-05-28-1908-cdt-x-approval-shortlist-cadence-ladder.md
+```
+
+20:00 Denial post handoff:
+
+```text
+docs/strategy/2026-05-28-1910-cdt-x-20pm-denial-post-handoff.md
+```
+
+Denial post verification decision packet:
+
+```text
+docs/strategy/2026-05-28-1913-cdt-x-denial-post-verification-decision-packet.md
+```
+
+01:00 Cryptography post handoff:
+
+```text
+docs/strategy/2026-05-28-1916-cdt-x-1am-cryptography-post-handoff.md
+```
+
+Rolling approval calendar:
+
+```text
+docs/strategy/2026-05-28-1918-cdt-x-rolling-approval-calendar.md
+```
+
+Live growth checkpoint:
+
+```text
+docs/strategy/2026-05-28-1924-cdt-x-live-growth-checkpoint.md
+```
+
+Profile pin conversion decision packet:
+
+```text
+docs/strategy/2026-05-28-1932-cdt-x-profile-pin-conversion-decision-packet.md
+```
+
 ## Purpose
 
 This playbook keeps @Latticra's growth work professional and evidence-bound.

@@ -43,17 +43,19 @@ require_contains 'latticra-q-seal-ml-kem-validation-claim-gate/0.1' latticra-q-s
 require_contains 'NIST-FIPS-203,NIST-ACVP-ML-KEM,NIST-CMVP,NIST-SP-800-218-SSDF' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'acvp_verdict_receipt_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'module_boundary_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
+require_contains 'security_policy_gate_bound = 1u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'cmvp_certificate_required = 1u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'public_validation_claim_allowed = 0u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'operation_execution_allowed = 0u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
-require_contains 'required_validation_claim_items_total = 41u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
+require_contains 'required_validation_claim_items_total = 42u' latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c
 require_contains 'latticra q-seal ml-kem validation claim gate invariants: ok' latticra-q-seal/tests/q_seal_ml_kem_validation_claim_gate_invariants.c
 require_contains 'validation_claim_gate_present=1' latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 require_contains 'module_boundary_gate_bound=1' latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
+require_contains 'security_policy_gate_bound=1' latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 require_contains 'cmvp_certificate_required=1' latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 require_contains 'public_validation_claim_allowed=0' latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 require_contains 'production_crypto_claim_allowed=0' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md
-require_contains 'required_validation_claim_items_total=41' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md
+require_contains 'required_validation_claim_items_total=42' latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md
 require_contains 'sh ./scripts/test-latticra-q-seal-ml-kem-validation-claim-gate.sh' Makefile
 require_contains 'latticra-q-seal-ml-kem-validation-claim-gate:' Makefile
 require_contains 'LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md' docs/FOUNDATION_INDEX.md

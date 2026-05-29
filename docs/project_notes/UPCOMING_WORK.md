@@ -37,6 +37,7 @@ Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge endpoint evidence propagation note: 2026-05-28 CDT
 Latest Lat LIR first-edge endpoint payload evidence propagation note: 2026-05-28 CDT
+Latest Lat LIR first-edge endpoint topology evidence propagation note: 2026-05-28 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
@@ -67,7 +68,7 @@ Latest Seal signing authorization predecessor status alignment note: 2026-05-27 
 Latest Seal signer handoff predecessor status alignment note: 2026-05-27 CDT
 Latest Seal signer invocation predecessor status alignment note: 2026-05-27 CDT
 Latest Seal signing operation predecessor status alignment note: 2026-05-28 CDT
-Latest Seal key-handling predecessor status alignment note: 2026-05-26 CDT
+Latest Seal key-handling predecessor status alignment note: 2026-05-28 CDT
 Latest Seal key-material predecessor status alignment note: 2026-05-26 CDT
 Latest Seal public-key parsing predecessor status alignment note: 2026-05-26 CDT
 Latest Seal key parsing predecessor status alignment note: 2026-05-26 CDT
@@ -100,6 +101,7 @@ Latest Lat LIR first transition-node span evidence propagation note: 2026-05-26 
 Latest Lat LIR first-edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first-edge endpoint evidence propagation note: 2026-05-28 CDT
 Latest Lat LIR first-edge endpoint payload evidence propagation note: 2026-05-28 CDT
+Latest Lat LIR first-edge endpoint topology evidence propagation note: 2026-05-28 CDT
 Latest Lat LIR first-edge span evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge evidence propagation note: 2026-05-26 CDT
 Latest Lat LIR first transition-source edge endpoint evidence propagation note: 2026-05-26 CDT
@@ -125,6 +127,7 @@ Latest Seal Panel dashboard view-model implementation note: 2026-05-27 CDT
 Latest Seal Panel dashboard view-model surface/status note: 2026-05-27 CDT
 Latest Seal signed receipt proof path contract note: 2026-05-28 CDT
 Latest Seal signed receipt proof path implementation note: 2026-05-28 CDT
+Latest Seal signed receipt proof path surface/status note: 2026-05-28 CDT
 
 ## Purpose
 
@@ -162,7 +165,7 @@ Latticra Seal signer invocation predecessor status alignment is complete for the
 
 Latticra Seal signing operation predecessor status alignment is complete for the existing metadata-only signing operation status surface with crypto graduation evidence preserved when present. It does not add signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, key generation, private-key handling, trust-store behavior, revocation lookup, host behavior, network behavior, or production cryptography claims.
 
-Latticra Seal key-handling predecessor status alignment is complete for the existing metadata-only key-handling status surface. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, host behavior, network behavior, or production cryptography claims.
+Latticra Seal key-handling predecessor status alignment is complete for the existing metadata-only key-handling status surface with crypto graduation evidence preserved when present. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, host behavior, network behavior, or production cryptography claims.
 
 Latticra Seal key-material predecessor status alignment is complete for the existing metadata-only key-material status surface. It does not add public-key parsing, key material loading, private-key handling, key generation, hardware-key use, trust-store behavior, revocation lookup, signing, signature verification, signer invocation behavior, signer process execution, object sealing, runtime handoff execution, capability enforcement, runtime authority, host behavior, network behavior, or production cryptography claims.
 
@@ -208,28 +211,30 @@ Latticra Seal signed receipt proof path contract is complete for the future veri
 
 Latticra Seal signed receipt proof path implementation is complete for the local verification-only proof-path summary. It does not add production proof, trust-root loading, revocation lookup, signing, signer invocation, key handling, policy enforcement, capability enforcement, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production security claims.
 
+Latticra Seal signed receipt proof path surface/status is complete for the deterministic local verification-only proof-path report. It does not add production proof, trust-root loading, revocation lookup, signing, signer invocation, key handling, policy enforcement, capability enforcement, runtime execution, runtime authority, effect execution, host behavior, network behavior, or production security claims.
+
 ## Latest completed planning slice
 
 ```text
-Latticra Seal signed receipt proof path implementation
+Latticra Seal signed receipt proof path surface/status
 ```
 
 Purpose completed:
 
 ```text
-summarize local verified receipt metadata and metadata-only signing-operation metadata while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
+render the deterministic verification-only proof-path summary while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
 ```
 
 ## Latest completed implementation slice
 
 ```text
-Latticra Seal signed receipt proof path implementation
+Latticra Seal signed receipt proof path surface/status
 ```
 
 Purpose completed:
 
 ```text
-summarize local verified receipt metadata and metadata-only signing-operation metadata while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
+render the deterministic verification-only proof-path summary while preserving no production proof, no signing, no trust-root loading, no revocation lookup, no effects, and no runtime authority
 ```
 
 ## Previous implementation slice
@@ -242,6 +247,18 @@ Purpose completed:
 
 ```text
 add bounded local schema records, deterministic validation, a default descriptive fixture entry, and negative-case invariants while preserving no registry loader, no registry file access, no tool execution, no host mutation, no network behavior, no capability enforcement, no effects, and no runtime authority
+```
+
+## Earlier implementation slice
+
+```text
+Lat LIR first-edge endpoint topology evidence propagation
+```
+
+Purpose completed:
+
+```text
+copy the first Lat-specific LIR edge endpoint node parent indices, first-child indices, and child counts into runtime-boundary records/reports so boundary evidence keeps endpoint graph topology for the first Lat-derived edge visible while preserving no Lat execution, no LIR execution, no operator evaluation, no runtime execution, no state mutation, no file I/O, no network I/O, and no runtime authority
 ```
 
 ## Earlier implementation slice

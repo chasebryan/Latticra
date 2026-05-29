@@ -33,6 +33,7 @@ require_file scripts/test-latticra-seal-key-material-contract.sh
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md
 require_file docs/LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md
 require_file docs/status/SEAL_SIGNING_OPERATION_STATUS.md
+require_file docs/status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md
 require_file include/latticra/seal_signing_operation.h
 require_file src/seal_signing_operation.c
 require_file tests/seal_signing_operation_invariants.c
@@ -68,6 +69,7 @@ require_contains 'seal_signing_operation_implementation_present=1' "$status_file
 require_contains 'seal_signing_operation_status_present=1' "$status_file"
 require_contains 'seal_signing_operation_status_runner_present=1' "$status_file"
 require_contains 'seal_signing_operation_status_workflow_present=1' "$status_file"
+require_contains 'seal_crypto_graduation_gate_status_present=1' "$status_file"
 require_contains 'key_handling_predecessor_signing_operation_status_present=1' "$status_file"
 require_contains 'readme_links_key_handling_status=1' "$status_file"
 require_contains 'root_status_mentions_key_handling_status=1' "$status_file"
@@ -79,12 +81,22 @@ require_contains 'signer_invocation_profile=latticra-seal-signer-invocation/0.1'
 require_contains 'signer_handoff_profile=latticra-seal-signer-handoff/0.1' "$status_file"
 require_contains 'signing_authorization_profile=latticra-seal-signing-authorization/0.1' "$status_file"
 require_contains 'signature_request_profile=latticra-seal-signature-request/0.1' "$status_file"
+require_contains 'crypto_graduation_profile=latticra-seal-crypto-graduation-gate/0.1' "$status_file"
+require_contains 'assurance_baseline_profile=latticra-cryptographic-assurance-key-management/0.1' "$status_file"
+require_contains 'crypto_graduation_gate_state=graduated-authority-neutral' "$status_file"
 require_contains 'requested_signature=Ed25519-development' "$status_file"
 require_contains 'requested_signing_authorization=metadata-only' "$status_file"
 require_contains 'requested_signer_handoff=metadata-only' "$status_file"
 require_contains 'requested_signer_invocation=metadata-only' "$status_file"
 require_contains 'requested_signing_operation=metadata-only' "$status_file"
 require_contains 'requested_key_handling=metadata-only' "$status_file"
+require_contains 'crypto_graduation_gate_present=1' "$status_file"
+require_contains 'crypto_graduation_gate_passed=1' "$status_file"
+require_contains 'standard_expectations_met=1' "$status_file"
+require_contains 'local_verify_graduated=1' "$status_file"
+require_contains 'receipt_promotion_graduated=1' "$status_file"
+require_contains 'authority_promotion_allowed=0' "$status_file"
+require_contains 'crypto_graduation_gate_absent_requires_neutral_metadata=1' "$status_file"
 require_contains 'signing_operation_state=operation-metadata-only' "$status_file"
 require_contains 'signing_operation_ready=1' "$status_file"
 require_contains 'key_handling_state=key-handling-metadata-only' "$status_file"
@@ -123,8 +135,17 @@ require_contains 'effect_execution_added=0' "$status_file"
 require_contains 'capability_enforcement_added=0' "$status_file"
 require_contains 'network_behavior_changed=0' "$status_file"
 require_contains 'host_behavior_changed=0' "$status_file"
-require_contains 'key-material status/workflow guard alignment' "$status_file"
+require_contains 'key-material or policy decision report propagation from ready crypto-graduation-gated key-handling metadata' "$status_file"
 require_contains 'seal key-handling status: ok' "$status_file"
+
+require_contains 'LATTICRA_SEAL_KEY_HANDLING_DENIED_CRYPTO_GRADUATION_GATE' include/latticra/seal_key_handling.h
+require_contains 'denied-crypto-graduation-gate' src/seal_key_handling.c
+require_contains 'crypto_graduation_gate_present=%u' src/seal_key_handling.c
+require_contains 'standard_expectations_met=%u' src/seal_key_handling.c
+require_contains 'bounded_string_empty' src/seal_key_handling.c
+require_contains 'crypto_graduation_gate_passed == 0u' src/seal_key_handling.c
+require_contains 'absent crypto gate authority status' tests/seal_key_handling_invariants.c
+require_contains 'absent crypto gate stale render rejected' tests/seal_key_handling_invariants.c
 
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' README.md
 require_contains 'LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md' README.md
@@ -132,6 +153,11 @@ require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' README.md
 require_contains 'latticra_seal_key_handling_status_present=1' README.md
 require_contains 'latticra_seal_key_handling_metadata_present=1' README.md
 require_contains 'key-handling status record now ties that metadata-only checkpoint to the guarded signing-operation status predecessor' README.md
+require_contains 'key-handling status record now preserves crypto graduation evidence from the guarded signing-operation predecessor without key handling' README.md
+require_contains 'key_handling_crypto_graduation_gate_present=1' README.md
+require_contains 'key_handling_crypto_graduation_gate_passed=1' README.md
+require_contains 'key_handling_standard_expectations_met=1' README.md
+require_contains 'key_handling_authority_promotion_allowed=0' README.md
 require_contains 'latticra_seal_key_material_contract_present=1' README.md
 require_contains 'seal_key_handling_status_present=1' README.md
 require_contains 'seal_key_handling_metadata_present=1' README.md
@@ -141,16 +167,29 @@ require_contains 'Seal key-handling predecessor status alignment' STATUS.md
 require_contains 'Seal key-material boundary contract' STATUS.md
 require_contains 'seal_key_handling_status_present=1' STATUS.md
 require_contains 'key_handling_predecessor_signing_operation_status_present=1' STATUS.md
+require_contains 'key_handling_crypto_graduation_gate_present=1' STATUS.md
+require_contains 'key_handling_crypto_graduation_gate_passed=1' STATUS.md
+require_contains 'key_handling_standard_expectations_met=1' STATUS.md
+require_contains 'key_handling_authority_promotion_allowed=0' STATUS.md
 require_contains 'seal_key_material_contract_present=1' STATUS.md
 require_contains 'seal_key_handling_status_present=1' docs/status/README.md
 require_contains 'key_handling_predecessor_signing_operation_status_present=1' docs/status/README.md
+require_contains 'key_handling_crypto_graduation_gate_present=1' docs/status/README.md
+require_contains 'key_handling_crypto_graduation_gate_passed=1' docs/status/README.md
+require_contains 'key_handling_standard_expectations_met=1' docs/status/README.md
+require_contains 'key_handling_authority_promotion_allowed=0' docs/status/README.md
 require_contains 'seal_key_material_contract_present=1' docs/status/README.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/status/README.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-handling predecessor status alignment' docs/status/CURRENT_STATUS.md
 require_contains 'key_handling_predecessor_signing_operation_status_present=1' docs/status/CURRENT_STATUS.md
+require_contains 'key_handling_crypto_graduation_gate_present=1' docs/status/CURRENT_STATUS.md
+require_contains 'key_handling_crypto_graduation_gate_passed=1' docs/status/CURRENT_STATUS.md
+require_contains 'key_handling_standard_expectations_met=1' docs/status/CURRENT_STATUS.md
+require_contains 'key_handling_authority_promotion_allowed=0' docs/status/CURRENT_STATUS.md
 require_contains 'Latticra Seal key-material boundary contract' docs/status/CURRENT_STATUS.md
 require_contains 'SEAL_KEY_HANDLING_STATUS.md' docs/FOUNDATION_INDEX.md
+require_contains 'key-handling metadata implementation with crypto graduation evidence carry-forward' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-handling predecessor status alignment' docs/FOUNDATION_INDEX.md
 require_contains 'LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md' docs/FOUNDATION_INDEX.md
 require_contains 'Latticra Seal key-handling status/public-entry alignment' docs/project_notes/CURRENT_DIRECTION.md

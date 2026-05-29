@@ -17,6 +17,7 @@ awareness purpose, and no-effect development state.
 ```text
 nadia_production_readiness_blocker_status_present=1
 nadia_production_readiness_status_no_effect=1
+nadia_command_surface_audit_present=1
 absolute_protective_boundary_required=1
 sexual_content_generation=0
 sexual_request_refusal=always

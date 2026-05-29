@@ -226,6 +226,7 @@ require_file packaging/fedora/latticra.spec
 require_file README.md
 require_file src/latticra_cli.c
 require_file scripts/test-latticra-no-effect-cli-status-surface.sh
+require_file scripts/test-latticra-prevention-surface-consistency.sh
 require_file docs/FEDORA_VM_CLI_TRANSCRIPT_CONTRACT.md
 require_file docs/FEDORA_VM_CLI_PAYLOAD_VALIDATION_LANE.md
 require_file docs/status/LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md
@@ -240,6 +241,7 @@ require_absent 'BuildArch:      noarch' packaging/fedora/latticra.spec
 require_contains 'fedora_spec_updated_for_cli=1' docs/status/LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md
 require_contains 'rpm_payload_expansion_performed=1' docs/status/LATTICRA_NO_EFFECT_CLI_RPM_SPEC_UPDATE_STATUS.md
 
+sh scripts/test-latticra-prevention-surface-consistency.sh
 sh scripts/test-latticra-no-effect-cli-status-surface.sh
 
 name="$(awk '/^Name:/ { print $2; exit }' packaging/fedora/latticra.spec)"
@@ -261,6 +263,9 @@ version_out="$workdir/cli-version.out"
 report_out="$workdir/cli-report.out"
 research_out="$workdir/cli-prevention-research.out"
 boundary_out="$workdir/cli-prevention-boundary.out"
+evidence_out="$workdir/cli-prevention-evidence.out"
+gate_out="$workdir/cli-prevention-gate.out"
+fixtures_out="$workdir/cli-prevention-fixtures.out"
 method_out="$workdir/cli-prevention-method-sql.out"
 invalid_out="$workdir/cli-invalid.out"
 invalid_err="$workdir/cli-invalid.err"
@@ -346,6 +351,8 @@ require_output_field 'LATTICRA PREVENTION RESEARCH REPORT' "$research_out"
 require_output_field 'installed_system_scope=1' "$research_out"
 require_output_field 'dynamic_research_network=0' "$research_out"
 require_output_field 'production_protection_claim=0' "$research_out"
+require_output_field 'source_owasp_input_validation=https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html' "$research_out"
+require_output_field 'source_owasp_asvs=https://owasp.org/www-project-application-security-verification-standard/' "$research_out"
 require_output_field 'prevention_method_matrix_version=1' "$research_out"
 require_output_field 'method_sql=bind-parameters-for-values' "$research_out"
 require_output_field 'method_nosql=driver-structured-query-objects' "$research_out"
@@ -353,6 +360,12 @@ require_output_field 'method_ldap=ldap-filter-or-dn-context-encoding' "$research
 require_output_field 'method_os_command=avoid-shell-use-fixed-argv' "$research_out"
 require_output_field 'method_xss=contextual-output-encoding-and-safe-sinks' "$research_out"
 require_output_field 'method_failure=fail-closed-before-interpreter-boundary' "$research_out"
+require_output_field 'input_validation_position=early-syntactic-and-semantic-gate' "$research_out"
+require_output_field 'input_validation_not_primary_sql_xss_defense=1' "$research_out"
+require_output_field 'allowlist_validation_primary_required=1' "$research_out"
+require_output_field 'server_side_validation_required=1' "$research_out"
+require_output_field 'canonicalization_before_validation_required=1' "$research_out"
+require_output_field 'schema_or_type_validation_required=1' "$research_out"
 require_output_field 'sql_prepared_statements_required=1' "$research_out"
 require_output_field 'nosql_structured_query_object_required=1' "$research_out"
 require_output_field 'ldap_context_escape_required=1' "$research_out"
@@ -381,6 +394,73 @@ require_output_field 'host_mutation=0' "$boundary_out"
 require_output_field 'network=0' "$boundary_out"
 require_output_field 'production_protection_claim=0' "$boundary_out"
 
+/usr/bin/latticra --prevention-evidence >"$evidence_out"
+require_output_field 'LATTICRA PREVENTION EVIDENCE REPORT' "$evidence_out"
+require_output_field 'installed_system_scope=1' "$evidence_out"
+require_output_field 'evidence_schema_version=1' "$evidence_out"
+require_output_field 'evidence_scope=application-owned-controls' "$evidence_out"
+require_output_field 'evidence_boundary_inventory_required=1' "$evidence_out"
+require_output_field 'evidence_source_sink_map_required=1' "$evidence_out"
+require_output_field 'evidence_method_selection_required=1' "$evidence_out"
+require_output_field 'evidence_negative_case_required=1' "$evidence_out"
+require_output_field 'evidence_safe_api_trace_required=1' "$evidence_out"
+require_output_field 'evidence_release_gate_required=1' "$evidence_out"
+require_output_field 'gate_unmapped_boundary_blocks_release=1' "$evidence_out"
+require_output_field 'gate_missing_method_blocks_release=1' "$evidence_out"
+require_output_field 'gate_missing_negative_fixture_blocks_release=1' "$evidence_out"
+require_output_field 'gate_missing_safe_api_trace_blocks_release=1' "$evidence_out"
+require_output_field 'gate_missing_owner_review_blocks_release=1' "$evidence_out"
+require_output_field 'gate_missing_repeatability_blocks_release=1' "$evidence_out"
+require_output_field 'gate_secret_capture_blocks_release=1' "$evidence_out"
+require_output_field 'gate_production_claim_without_runtime_evidence_blocks_release=1' "$evidence_out"
+require_output_field 'evidence_fail_closed_result_required=1' "$evidence_out"
+require_output_field 'evidence_no_secret_capture_required=1' "$evidence_out"
+require_output_field 'host_mutation=0' "$evidence_out"
+require_output_field 'network=0' "$evidence_out"
+require_output_field 'production_protection_claim=0' "$evidence_out"
+
+/usr/bin/latticra --prevention-gate >"$gate_out"
+require_output_field 'LATTICRA PREVENTION GATE REPORT' "$gate_out"
+require_output_field 'installed_system_scope=1' "$gate_out"
+require_output_field 'gate_schema_version=1' "$gate_out"
+require_output_field 'gate_scope=application-release-decision-support' "$gate_out"
+require_output_field 'gate_default=block-until-evidence-complete' "$gate_out"
+require_output_field 'gate_boundary_inventory_required=1' "$gate_out"
+require_output_field 'gate_method_matrix_required=1' "$gate_out"
+require_output_field 'gate_fixture_coverage_required=1' "$gate_out"
+require_output_field 'gate_safe_api_trace_required=1' "$gate_out"
+require_output_field 'gate_owner_review_required=1' "$gate_out"
+require_output_field 'gate_repeatable_result_required=1' "$gate_out"
+require_output_field 'gate_secret_redaction_required=1' "$gate_out"
+require_output_field 'gate_fail_closed_result_required=1' "$gate_out"
+require_output_field 'gate_new_boundary_review_required=1' "$gate_out"
+require_output_field 'gate_runtime_evidence_required_for_protection_claim=1' "$gate_out"
+require_output_field 'release_without_complete_evidence_allowed=0' "$gate_out"
+require_output_field 'production_claim_without_runtime_evidence_allowed=0' "$gate_out"
+require_output_field 'decision_authority=application-owner' "$gate_out"
+require_output_field 'host_mutation=0' "$gate_out"
+require_output_field 'network=0' "$gate_out"
+require_output_field 'production_protection_claim=0' "$gate_out"
+
+/usr/bin/latticra --prevention-fixtures >"$fixtures_out"
+require_output_field 'LATTICRA PREVENTION FIXTURE REPORT' "$fixtures_out"
+require_output_field 'installed_system_scope=1' "$fixtures_out"
+require_output_field 'fixture_schema_version=1' "$fixtures_out"
+require_output_field 'fixture_scope=adversarial-negative-tests' "$fixtures_out"
+require_output_field 'fixture_set_count=16' "$fixtures_out"
+require_output_field 'fixture_sql=data-value-separator-rejection' "$fixtures_out"
+require_output_field 'fixture_nosql=operator-key-smuggling-rejection' "$fixtures_out"
+require_output_field 'fixture_os_command=separator-and-option-smuggling-rejection' "$fixtures_out"
+require_output_field 'fixture_xss=contextual-output-escape-set' "$fixtures_out"
+require_output_field 'fixture_ssrf=scheme-host-port-and-rebind-deny' "$fixtures_out"
+require_output_field 'fixture_payload_strings_in_report=0' "$fixtures_out"
+require_output_field 'fixture_safe_harness_required=1' "$fixtures_out"
+require_output_field 'fixture_ci_gate_required=1' "$fixtures_out"
+require_output_field 'fixture_regression_on_new_boundary_required=1' "$fixtures_out"
+require_output_field 'host_mutation=0' "$fixtures_out"
+require_output_field 'network=0' "$fixtures_out"
+require_output_field 'production_protection_claim=0' "$fixtures_out"
+
 /usr/bin/latticra --prevention-method sql >"$method_out"
 require_output_field 'LATTICRA PREVENTION METHOD' "$method_out"
 require_output_field 'method_id=sql' "$method_out"
@@ -397,7 +477,7 @@ set +e
 invalid_status="$?"
 set -e
 [ "$invalid_status" -eq 2 ] || fail "invalid CLI command exited with $invalid_status instead of 2"
-require_output_field 'usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-method <id>]' "$invalid_err"
+require_output_field 'usage: latticra [--status|--version|--report|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]' "$invalid_err"
 
 sudo rpm -e "$name"
 if rpm -q "$name" >/dev/null 2>&1; then
@@ -434,6 +514,7 @@ buildarch_noarch_removed=1
 cli_status_surface_implemented=1
 cli_status_surface_guarded_before_packaging=1
 local_cli_guard_passed=1
+local_prevention_surface_consistency_guard_passed=1
 local_rpm_built_from_current_tree=1
 rpm_build_command_recorded=1
 rpm_name_is_latticra=1
@@ -458,6 +539,9 @@ cli_version_command_recorded=1
 cli_report_command_recorded=1
 cli_prevention_research_command_recorded=1
 cli_prevention_boundary_command_recorded=1
+cli_prevention_evidence_command_recorded=1
+cli_prevention_gate_command_recorded=1
+cli_prevention_fixtures_command_recorded=1
 cli_prevention_method_command_recorded=1
 cli_invalid_command_recorded=1
 cli_no_root_required=1
@@ -481,6 +565,9 @@ cli_version_validation_performed=1
 cli_report_validation_performed=1
 cli_prevention_research_validation_performed=1
 cli_prevention_boundary_validation_performed=1
+cli_prevention_evidence_validation_performed=1
+cli_prevention_gate_validation_performed=1
+cli_prevention_fixtures_validation_performed=1
 cli_prevention_method_validation_performed=1
 removal_validation_performed=1
 disposable_vm_cli_validation_completed=1

@@ -51,12 +51,15 @@ require_file latticra-q-seal/evidence/ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md
 require_file latticra-q-seal/evidence/ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md
 require_file latticra-q-seal/evidence/ML_KEM_VALIDATION_CLAIM_GATE.md
 require_file latticra-q-seal/evidence/ML_KEM_MODULE_BOUNDARY_GATE.md
+require_file latticra-q-seal/evidence/ML_KEM_SECURITY_POLICY_GATE.md
+require_file latticra-q-seal/evidence/ML_KEM_EVIDENCE_IMPORT_PACKET_MANIFEST.md
+require_file latticra-q-seal/evidence/ML_KEM_EVIDENCE_IMPORT_REVIEW_GATE.md
 require_file latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_file latticra-q-seal/scripts/test-latticra-q-seal-readiness.sh
 
 require_contains 'latticra_q_seal_readiness_prepare' latticra-q-seal/include/latticra/q_seal_readiness.h
 require_contains 'latticra-q-seal-readiness/0.1' latticra-q-seal/src/q_seal_readiness.c
-require_contains 'components_total = 52u' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'components_total = 55u' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_fips_conformance_matrix_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_sp800_227_usage_profile_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_implementation_traceability_matrix_prepare' latticra-q-seal/src/q_seal_readiness.c
@@ -94,9 +97,12 @@ require_contains 'latticra_q_seal_ml_kem_code_owner_review_prepare' latticra-q-s
 require_contains 'latticra_q_seal_ml_kem_review_disposition_ledger_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_reviewer_identity_fixture_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_reviewer_role_mapping_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_evidence_import_packet_manifest_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_evidence_import_review_gate_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_ci_promotion_evidence_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_validation_claim_gate_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_module_boundary_gate_prepare' latticra-q-seal/src/q_seal_readiness.c
+require_contains 'latticra_q_seal_ml_kem_security_policy_gate_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_constant_time_review_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_randomness_source_prepare' latticra-q-seal/src/q_seal_readiness.c
 require_contains 'latticra_q_seal_ml_kem_zeroization_evidence_prepare' latticra-q-seal/src/q_seal_readiness.c
@@ -129,10 +135,13 @@ require_contains 'acvp_submission_package_contract_present=1' latticra-q-seal/ev
 require_contains 'acvp_verdict_receipt_gate_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'validation_claim_gate_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'module_boundary_gate_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'components_total=52' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'runtime_blockers_total=49' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'required_readiness_items_total=1487' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'required_readiness_items_satisfied=1029' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'security_policy_gate_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'evidence_import_packet_manifest_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'evidence_import_review_gate_present=1' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'components_total=55' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'runtime_blockers_total=52' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_total=1611' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_satisfied=1123' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 require_contains 'q_seal_readiness_profile_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'standards_basis=NIST-FIPS-203,NIST-SP-800-227,NIST-ACVP-ML-KEM' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'fips_conformance_matrix_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
@@ -159,6 +168,7 @@ require_contains 'acvp_submission_package_contract_present=1' latticra-q-seal/do
 require_contains 'acvp_verdict_receipt_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'validation_claim_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'module_boundary_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'security_policy_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'vector_schema_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'vector_source_intake_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'vector_fixture_lock_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
@@ -174,6 +184,8 @@ require_contains 'code_owner_review_present=1' latticra-q-seal/docs/LATTICRA_Q_S
 require_contains 'review_disposition_ledger_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'reviewer_identity_fixture_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'reviewer_role_mapping_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'evidence_import_packet_manifest_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'evidence_import_review_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'ci_promotion_evidence_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'constant_time_review_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'randomness_source_contract_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
@@ -184,11 +196,11 @@ require_contains 'implementation_file_digest_plan_present=1' latticra-q-seal/doc
 require_contains 'clean_room_author_attestation_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'implementation_traceability_matrix_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 require_contains 'primitive_source_acceptance_gate_present=1' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'components_total=52' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'components_present=52' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'runtime_blockers_total=49' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'required_readiness_items_total=1487' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
-require_contains 'required_readiness_items_satisfied=1029' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'components_total=55' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'components_present=55' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'runtime_blockers_total=52' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_total=1611' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
+require_contains 'required_readiness_items_satisfied=1123' latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md
 
 cc $CFLAGS -Ilatticra-q-seal/include \
   latticra-q-seal/src/q_seal.c \
@@ -225,9 +237,12 @@ cc $CFLAGS -Ilatticra-q-seal/include \
   latticra-q-seal/src/q_seal_ml_kem_review_disposition_ledger.c \
   latticra-q-seal/src/q_seal_ml_kem_reviewer_identity_fixture.c \
   latticra-q-seal/src/q_seal_ml_kem_reviewer_role_mapping.c \
+  latticra-q-seal/src/q_seal_ml_kem_evidence_import_packet_manifest.c \
+  latticra-q-seal/src/q_seal_ml_kem_evidence_import_review_gate.c \
   latticra-q-seal/src/q_seal_ml_kem_ci_promotion_evidence.c \
   latticra-q-seal/src/q_seal_ml_kem_validation_claim_gate.c \
   latticra-q-seal/src/q_seal_ml_kem_module_boundary_gate.c \
+  latticra-q-seal/src/q_seal_ml_kem_security_policy_gate.c \
   latticra-q-seal/src/q_seal_ml_kem_constant_time_review.c \
   latticra-q-seal/src/q_seal_ml_kem_randomness_source.c \
   latticra-q-seal/src/q_seal_ml_kem_zeroization_evidence.c \

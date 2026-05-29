@@ -119,6 +119,9 @@ sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-ga
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh
 sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review-disposition.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review-disposition-closeout.sh
+sh scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate-review-disposition-closeout-archive-gate.sh
 sh scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh
 ```
 
@@ -172,6 +175,10 @@ sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate
 sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
 sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
 sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
 ```
 
 ## Run

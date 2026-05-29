@@ -50,6 +50,8 @@ typedef struct {
     unsigned tampered_ciphertext_decapsulation_performed;
     unsigned tampered_ciphertext_shared_secret_mismatch;
     unsigned tampered_ciphertext_rejected;
+    unsigned malformed_ciphertext_length_decapsulation_rejected;
+    unsigned malformed_ciphertext_length_no_secret_output;
     unsigned shared_secret_internal_buffers_used;
     unsigned shared_secret_match;
     unsigned shared_secret_constant_time_compare;

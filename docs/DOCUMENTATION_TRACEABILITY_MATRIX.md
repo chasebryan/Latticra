@@ -2,7 +2,7 @@
 
 Status: active documentation traceability matrix
 Last updated: 2026-05-27 CDT
-Scope: public entry points, command examples, source records, status records, mirrors, validation guards, non-claims, product surfaces, installer docs, package docs, security docs, subsystem maps, and change-impact radius.
+Scope: public entry points, command examples, visual assets, source records, status records, mirrors, validation guards, non-claims, product surfaces, installer docs, package docs, security docs, subsystem maps, and change-impact radius.
 
 ## Purpose
 
@@ -39,6 +39,7 @@ If that path is missing, keep the claim narrow or remove it until a source recor
 | Documentation change impact radius | Touched files, source records, status mirrors, public summaries, public HTML, validation paths, non-claims, and review packets | [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), changed source record, [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Radius-specific checks from the impact guide and validation playbook | Review radius must expand when reader understanding could change and stay contained when meaning does not change. |
 | Documentation status records | Status records, status index, current status, root status shortcut, public status pages, estimate records, and public-entry alignment notes | [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`status/README.md`](status/README.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) | Local link check, public-entry guard, estimate guard when estimates change, exact source guard when named | Status records must separate current posture, evidence, validation, mirrors, non-claims, next work, and boundary. |
 | Documentation command examples | Quick start, public HTML snippets, validation commands, installer commands, package commands, platform prerequisites, reset/uninstall commands, and update commands | [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), changed source record | Local link or href check, public-entry guard, exact guard named by the command example when applicable | Runnable snippets must not imply broader authority, approval, readiness, safety, or support than the source record proves. |
+| Documentation visual assets | Screenshots, diagrams, public HTML images, Markdown images, generated visuals, presentation visuals, social/review cards, and assets under `docs/assets/` | [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md), source Markdown or status record, changed asset path | Image path check, alt-text review, public/source consistency check, public-entry guard when public visuals change | Visuals must not imply product maturity, security posture, approval, authority, or readiness beyond source records. |
 | Project identity | [`../README.md`](../README.md), [`index.html`](index.html), [`map.html`](map.html) | [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`README.md`](README.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), `git diff --check` | [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) |
 | Current status and estimates | [`../README.md`](../README.md), [`../STATUS.md`](../STATUS.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html) | [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) | `sh scripts/test-current-estimate-table-source-alignment.sh` | Estimates are planning posture, not release promises. |
 | Documentation navigation | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Local link check, `git diff --check` | Navigation must not imply capability promotion. |
@@ -74,6 +75,7 @@ Treat these as documentation drift:
 - a change that affects reader understanding is reviewed only locally, or a local-only edit is expanded mechanically without a source, mirror, or claim reason;
 - a status record omits current posture, evidence, validation, mirrors, non-claims, next valid work, or boundary;
 - a command example omits working directory, effect boundary, expected output, cleanup route, or blocked adjacent claim when those are relevant;
+- a visual asset lacks source context, alt text or accessible equivalent, freshness boundary, or non-claim boundary when it implies product posture;
 - a subsystem landing page omits the evidence spine, guard, status record, non-claims, or stop signals required by [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md);
 - a quick-start path omits reset, cleanup, or non-claim context for a runnable local path.
 
@@ -88,13 +90,14 @@ When drift is found:
 5. Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) to decide whether the review stays local or expands to source records, mirrors, validation paths, public HTML, status, or non-claims.
 6. Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when status records, status-index entries, status mirrors, estimate records, or public-entry alignment notes change.
 7. Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when runnable commands, validation command lists, install/update/reset/uninstall snippets, platform prerequisites, or public HTML command examples change.
-8. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
-9. Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to mark watch or failing dimensions before editing broad public surfaces.
-10. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
-11. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
-12. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
-13. Run the selected validation commands.
-14. Update only the public surfaces whose reader-facing claim actually changed.
+8. Use [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) when screenshots, diagrams, public images, generated visuals, presentation visuals, social/review cards, or `docs/assets/` files change.
+9. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+10. Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to mark watch or failing dimensions before editing broad public surfaces.
+11. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
+12. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
+13. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
+14. Run the selected validation commands.
+15. Update only the public surfaces whose reader-facing claim actually changed.
 
 ## Boundary
 

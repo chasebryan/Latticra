@@ -64,7 +64,7 @@ LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run
 5. Review the embedded console, plan, and engine log.
 6. Enable guarded local-prefix writes only after the dry-run evidence looks correct.
 
-The **LC Standalone** profile narrows that flow to the Console component only. It records `lc-standalone-install-v0`, keeps `lc.profile = "standalone"`, installs standalone/session/workspace/namespace/rootfs/packages/init/services/service-schema/service-definitions/service-plan/service-runtime contracts, disables Panel embedding for the installed console, and preserves the no-effect host and network authority floor.
+The **LC Standalone** profile narrows that flow to the Console component only. It records `lc-standalone-install-v0`, keeps `lc.profile = "standalone"`, installs standalone/session/workspace/namespace/rootfs/packages/init/services/service-schema/service-definitions/service-plan/service-runtime/processes contracts, disables Panel embedding for the installed console, and preserves the no-effect host and network authority floor.
 
 ## SeaBIOS and GRUB compatibility boundary
 
@@ -135,6 +135,7 @@ updater apply
 reset
 nadia status
 nadia commands
+nadia audit
 nadia context
 nadia runtime
 nadia plan
@@ -294,14 +295,15 @@ latticra-lc service-schema
 latticra-lc service-definitions
 latticra-lc service-plan
 latticra-lc service-runtime
+latticra-lc processes
 latticra-lc substrate
 latticra-lc host
 latticra-lc os
 ```
 
-The Panel LC workspace includes LC install configuration for the local config path, share path, wrapper command, profile presets, command registry, the session envelope contract, workspace envelope contract, namespace envelope contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, contract files, and embedded Panel bridge. External host command launch remains disabled.
+The Panel LC workspace includes LC install configuration for the local config path, share path, wrapper command, profile presets, command registry, the session envelope contract, workspace envelope contract, namespace envelope contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, processes contract, contract files, and embedded Panel bridge. External host command launch remains disabled.
 
-LC does not launch external host commands, create runtime sessions, mount workspaces, mount namespaces, create or open rootfs images, read package catalogs, download packages, run package managers, install packages, claim PID 1, read service definitions, write service definitions, validate service definitions, materialize service definition stubs, resolve service dependencies, activate services, hand off service runtimes, launch service executors, launch service processes, write service registries, enable services, start services, reload services, supervise services or processes, mutate host files, use the network, grant runtime enforcement authority, boot hardware, or claim to be a production operating system.
+LC does not launch external host commands, create runtime sessions, mount workspaces, mount namespaces, create or open rootfs images, read package catalogs, download packages, run package managers, install packages, claim PID 1, read service definitions, write service definitions, validate service definitions, materialize service definition stubs, resolve service dependencies, activate services, hand off service runtimes, launch service executors, launch service processes, create process tables, spawn processes, send process signals, terminate processes, write service registries, enable services, start services, reload services, supervise services or processes, mutate host files, use the network, grant runtime enforcement authority, boot hardware, or claim to be a production operating system.
 
 ## Nadia offline AI foundation
 
@@ -341,6 +343,7 @@ After a guarded local install with Nadia enabled:
 
 ```sh
 latticra-nadia commands
+latticra-nadia audit
 latticra-nadia context-pack
 latticra-nadia runtime-profile
 latticra-nadia prompt-plan

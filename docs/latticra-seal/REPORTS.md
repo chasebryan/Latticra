@@ -112,7 +112,8 @@ Directory read or close failures make traversal incomplete and prevent fresh
 native hash-list promotion.
 Manifest array parsing, content-marker assembly, digest collection, and
 hash-list parsing fail closed if dynamic capacity growth would overflow an
-allocation size.
+allocation size. Policy marker scan buffers also fail closed if marker overlap
+would overflow their allocation size.
 Regular generated Seal artifacts are treated as built-in exclusions from
 native policy and digest evidence even when a custom manifest omits the default
 report, hash-list, or lockfile exclude patterns.
