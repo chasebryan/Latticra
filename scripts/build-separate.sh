@@ -43,13 +43,13 @@ LATTICRA_PLATFORM_CHECKPOINT="v0.3.0edge"
 BUILD_PROFILE="${BUILD_PROFILE:-report-only}"
 
 if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
-    log "WARNING: Building in EFFECT-ENABLED mode. Real system effects may be possible."
-    log "         This is experimental. Use with extreme caution."
+    plog "WARNING: Building in EFFECT-ENABLED mode. Real system effects may be possible."
+    plog "         This is experimental. Use with extreme caution."
 fi
 
 mkdir -p "$BIN_DIR" "$OBJ_DIR"
 
-log() {
+plog() {
     printf '[build-separate] %s\n' "$*" | tee -a "$LOG_FILE"
 }
 
@@ -66,7 +66,7 @@ compile_object() {
 
 # Generate a high-quality machine and human readable health report + artifact inventory
 generate_foundation_health_report() {
-    log "Generating Latticra Foundation Health Report + Artifact Inventory..."
+    plog "Generating Latticra Foundation Health Report + Artifact Inventory..."
     REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt"
     JSON_REPORT="$BUILD_DIR/FOUNDATION_HEALTH_REPORT.json"
     INVENTORY_DIR="$BUILD_DIR/inventory"
@@ -138,15 +138,15 @@ JSON
         echo "$hash  $size  $rel" >> "$INVENTORY_FILE"
     done
 
-    log "Health report + inventory generated"
-    log "  Human: $REPORT"
-    log "  JSON:  $JSON_REPORT"
-    log "  Inventory: $INVENTORY_FILE"
+    plog "Health report + inventory generated"
+    plog "  Human: $REPORT"
+    plog "  JSON:  $JSON_REPORT"
+    plog "  Inventory: $INVENTORY_FILE"
 }
 
 # Generate a nice human-facing project dashboard
 generate_dashboard() {
-    log "Generating Latticra Project Dashboard..."
+    plog "Generating Latticra Project Dashboard..."
     DASH="$BUILD_DIR/DASHBOARD.txt"
 
     {
@@ -195,12 +195,12 @@ generate_dashboard() {
         echo "safe AI-era and Linux-era automation boundaries."
     } > "$DASH"
 
-    log "Dashboard generated: $DASH"
+    plog "Dashboard generated: $DASH"
 }
 
 # Dedicated Q-Seal (post-quantum) posture report - elevated importance per direction
 generate_q_seal_report() {
-    log "Generating Latticra Q-Seal (Post-Quantum) Posture Report..."
+    plog "Generating Latticra Q-Seal (Post-Quantum) Posture Report..."
     QSEAL_DIR="$BUILD_DIR/q-seal"
     mkdir -p "$QSEAL_DIR"
 
@@ -255,7 +255,7 @@ QSEAL
 }
 JSON
 
-    log "Q-Seal report generated in $QSEAL_DIR/"
+    plog "Q-Seal report generated in $QSEAL_DIR/"
 }
 
 detect_openssl() {
@@ -281,9 +281,9 @@ detect_openssl() {
             OPENSSL_CFLAGS="-I/opt/homebrew/include"
             OPENSSL_LIBS="-L/opt/homebrew/lib -lssl -lcrypto"
         else
-            log "WARNING: Could not auto-detect OpenSSL on macOS."
-            log "         Try: brew install openssl@3"
-            log "         Then re-run. Or use 'make seal-cli' which has more robust detection."
+            plog "WARNING: Could not auto-detect OpenSSL on macOS."
+            plog "         Try: brew install openssl@3"
+            plog "         Then re-run. Or use 'make seal-cli' which has more robust detection."
         fi
     fi
 
@@ -291,16 +291,16 @@ detect_openssl() {
 }
 
 build_cli() {
-    log "Building no-effect CLI (latticra) ..."
+    plog "Building no-effect CLI (latticra) ..."
     cc -std=c99 -Wall -Wextra -pedantic \
        -Iinclude \
        src/latticra_cli.c \
        -o "$BIN_DIR/latticra"
-    log "CLI built: $BIN_DIR/latticra"
+    plog "CLI built: $BIN_DIR/latticra"
 }
 
 build_seal() {
-    log "Building Latticra Seal CLI (may require OpenSSL dev files) [profile=$BUILD_PROFILE] ..."
+    plog "Building Latticra Seal CLI (may require OpenSSL dev files) [profile=$BUILD_PROFILE] ..."
     detect_openssl
 
     # Match the current main Makefile seal-cli target as closely as possible
@@ -315,12 +315,12 @@ build_seal() {
         $OPENSSL_LIBS
 
     if [ $? -eq 0 ]; then
-        log "Seal CLI built: $BIN_DIR/latticra-seal"
+        plog "Seal CLI built: $BIN_DIR/latticra-seal"
     else
-        log "WARNING: Seal CLI build failed. Common macOS fixes:"
-        log "  - brew install openssl@3"
-        log "  - Ensure detect_openssl() is finding the right paths"
-        log "  - Try: make seal-cli   (uses the main Makefile which is usually more up-to-date)"
+        plog "WARNING: Seal CLI build failed. Common macOS fixes:"
+        plog "  - brew install openssl@3"
+        plog "  - Ensure detect_openssl() is finding the right paths"
+        plog "  - Try: make seal-cli   (uses the main Makefile which is usually more up-to-date)"
     fi
 }
 
@@ -328,11 +328,11 @@ build_seal() {
 # This is the beginning of producing real, useful binaries.
 build_effect_enabled_tools() {
     if [ "$BUILD_PROFILE" != "effect-enabled" ]; then
-        log "Skipping effect-enabled tool build (current profile is report-only)."
+        plog "Skipping effect-enabled tool build (current profile is report-only)."
         return 0
     fi
 
-    log "Building EFFECT-ENABLED tools (experimental - Phase 1)..."
+    plog "Building EFFECT-ENABLED tools (experimental - Phase 1)..."
 
     # Ensure directories exist
     mkdir -p "$BIN_DIR" "$OBJ_DIR"
@@ -359,21 +359,21 @@ build_effect_enabled_tools() {
         "$OBJ_DIR/effect_command.o" \
         "$OBJ_DIR/effect_runner_main.o" \
         -o "$BIN_DIR/latticra-effect-runner" $OPENSSL_LIBS 2>&1 | tee -a "$LOG_FILE"; then
-        log "  Built experimental effect runner: $BIN_DIR/latticra-effect-runner"
+        plog "  Built experimental effect runner: $BIN_DIR/latticra-effect-runner"
     else
-        log "  WARNING: Failed to link experimental effect runner (check OpenSSL paths)"
+        plog "  WARNING: Failed to link experimental effect runner (check OpenSSL paths)"
     fi
 
-    log "Effect-enabled tool build complete."
+    plog "Effect-enabled tool build complete."
 }
 
 build_core_tests() {
-    log "Core invariant tests are validated via dedicated scripts/test-*.sh (each test declares its exact sources)."
-    log "Skipping representative test compilation in platform mode (these are fragile after merges)."
-    log "For full results, run the individual scripts/test-*.sh commands instead."
-    log "  → Recommended: sh scripts/test-lat-pipeline.sh"
-    log "  → Recommended: sh scripts/test-runtime-boundary.sh"
-    log "  → etc."
+    plog "Core invariant tests are validated via dedicated scripts/test-*.sh (each test declares its exact sources)."
+    plog "Skipping representative test compilation in platform mode (these are fragile after merges)."
+    plog "For full results, run the individual scripts/test-*.sh commands instead."
+    plog "  → Recommended: sh scripts/test-lat-pipeline.sh"
+    plog "  → Recommended: sh scripts/test-runtime-boundary.sh"
+    plog "  → etc."
 
     mkdir -p "$BUILD_DIR/tests"
     # Note: We intentionally do *not* attempt partial compilations here anymore.
@@ -383,7 +383,7 @@ build_core_tests() {
 
 # Build the visual theorem engines (mathematical art / substrate demonstrations)
 build_visual_engines() {
-    log "Building visual theorem engines (substrate + theorem) into separate tree..."
+    plog "Building visual theorem engines (substrate + theorem) into separate tree..."
     mkdir -p "$BUILD_DIR/visual-engines"
 
     # These are intentionally separate from the main no-effect core
@@ -394,9 +394,9 @@ build_visual_engines() {
                 mv "./$engine" "$BUILD_DIR/visual-engines/" 2>/dev/null || true
             fi
         done
-        log "Visual engines built under $BUILD_DIR/visual-engines/"
+        plog "Visual engines built under $BUILD_DIR/visual-engines/"
     else
-        log "Visual engine build step completed with notes (see log). Requirements: gcc + ffmpeg + -lm"
+        plog "Visual engine build step completed with notes (see log). Requirements: gcc + ffmpeg + -lm"
     fi
 }
 
@@ -405,7 +405,7 @@ build_visual_engines() {
 # project's own production release artifact contracts (evidence, inventories,
 # reports, etc.) while remaining strictly no-effect and exploratory.
 prepare_release_candidate() {
-    log "Preparing rich release-candidate layout inside separate build tree..."
+    plog "Preparing rich release-candidate layout inside separate build tree..."
     CANDIDATE_DIR="$BUILD_DIR/release-candidate"
     rm -rf "$CANDIDATE_DIR"
 
@@ -448,25 +448,25 @@ prepare_release_candidate() {
         ls -1 "$CANDIDATE_DIR/reports" 2>/dev/null
     } > "$CANDIDATE_DIR/inventory/INVENTORY.txt"
 
-    log "Rich release-candidate layout ready at: $CANDIDATE_DIR"
-    log "Contains binaries, docs, health reports, validation results, evidence, and inventory."
-    log "This remains a no-effect exploration artifact."
+    plog "Rich release-candidate layout ready at: $CANDIDATE_DIR"
+    plog "Contains binaries, docs, health reports, validation results, evidence, and inventory."
+    plog "This remains a no-effect exploration artifact."
 }
 
 run_smoke() {
-    log "Running smoke verification in separate build tree ..."
+    plog "Running smoke verification in separate build tree ..."
     if [ -x "$BUILD_DIR/latticra" ]; then
         "$BUILD_DIR/latticra" --status | tee -a "$LOG_FILE"
     fi
     if [ -x "$BUILD_DIR/latticra-seal" ]; then
         "$BUILD_DIR/latticra-seal" version 2>&1 | tee -a "$LOG_FILE" || true
     fi
-    log "Separate build smoke complete."
+    plog "Separate build smoke complete."
 }
 
 # Run key deterministic guards and capture evidence in the separate tree
 run_validate() {
-    log "Running key validation guards (evidence captured under $BUILD_DIR/evidence/) ..."
+    plog "Running key validation guards (evidence captured under $BUILD_DIR/evidence/) ..."
     mkdir -p "$BUILD_DIR/evidence"
 
     # Core no-effect surfaces (these are fast and stable)
@@ -478,7 +478,7 @@ run_validate() {
     sh scripts/test-latticra-seal-unknown-tool-case.sh > "$BUILD_DIR/evidence/seal-unknown-tool.txt" 2>&1 || true
     sh scripts/test-latticra-seal-unsigned-request-case.sh > "$BUILD_DIR/evidence/seal-unsigned.txt" 2>&1 || true
 
-    log "Validation evidence written to $BUILD_DIR/evidence/"
+    plog "Validation evidence written to $BUILD_DIR/evidence/"
 }
 
 # Full project validation using the now-clean test suite (cooperative with project's own guards)
@@ -491,7 +491,7 @@ test-fedora-rpmlint-static-spec-lane.sh
 "
 
 run_full_validate() {
-    log "Running FULL project validation suite inside separate build tree (production-grade mode)..."
+    plog "Running FULL project validation suite inside separate build tree (production-grade mode)..."
     mkdir -p "$BUILD_DIR/validation"
 
     local failed=0
@@ -551,12 +551,12 @@ run_full_validate() {
         echo "This run was executed inside a completely isolated build-separate/ tree."
     } > "$BUILD_DIR/validation/REPORT.txt"
 
-    log "Full validation finished. Passes: $pass_count | Env-specific: $env_specific | Issues: $failed"
+    plog "Full validation finished. Passes: $pass_count | Env-specific: $env_specific | Issues: $failed"
     return $failed
 }
 
 clean() {
-    log "Removing separate build tree: $BUILD_DIR"
+    plog "Removing separate build tree: $BUILD_DIR"
     rm -rf "$BUILD_DIR"
 }
 
@@ -577,8 +577,8 @@ main() {
         visual) build_visual_engines ;;
         demo)
             # Focused, impressive demo for macOS / presentations
-            log "=== LATTICRA DEMO MODE (macOS-friendly) ==="
-            log "Building core deliverables + effect runner + key reports..."
+            plog "=== LATTICRA DEMO MODE (macOS-friendly) ==="
+            plog "Building core deliverables + effect runner + key reports..."
             build_cli
             build_seal || true
             build_effect_enabled_tools   # will build the effect runner if profile allows
@@ -591,15 +591,15 @@ main() {
 
             # Demonstrate the first real effect if available
             if [ "$BUILD_PROFILE" = "effect-enabled" ] && [ -x "$BIN_DIR/latticra-effect-runner" ]; then
-                log ""
-                log "=== Demonstrating Guarded Command Execution (first real effect) ==="
+                plog ""
+                plog "=== Demonstrating Guarded Command Execution (first real effect) ==="
                 export LATTICRA_EFFECT_ALLOWLIST="effect-allowlist.txt"
                 if [ -f "effect-allowlist.txt" ]; then
                     "$BIN_DIR/latticra-effect-runner" echo "Latticra effect layer executing real guarded commands on macOS at $LATTICRA_PLATFORM_CHECKPOINT"
                     "$BIN_DIR/latticra-effect-runner" date
                     "$BIN_DIR/latticra-effect-runner" uname -a
                 else
-                    log "No effect-allowlist.txt found — creating a safe default one."
+                    plog "No effect-allowlist.txt found — creating a safe default one."
                     echo -e "echo\ndate\nuname\npwd\nwhoami" > effect-allowlist.txt
                     "$BIN_DIR/latticra-effect-runner" echo "Latticra effect layer is live"
                 fi
@@ -607,25 +607,25 @@ main() {
 
             # Optional short visual demos if ffmpeg is present
             if command -v ffmpeg >/dev/null 2>&1; then
-                log ""
-                log "Rendering short (20s) visual theorem engine demos..."
+                plog ""
+                plog "Rendering short (20s) visual theorem engine demos..."
                 sh scripts/render-visual-theorem-engines.sh substrate 20 2>/dev/null || true
                 sh scripts/render-visual-theorem-engines.sh theorem 20 2>/dev/null || true
             else
-                log "Tip: brew install ffmpeg to also render the visual theorem engine videos for demos."
+                plog "Tip: brew install ffmpeg to also render the visual theorem engine videos for demos."
             fi
 
-            log ""
-            log "=== DEMO COMPLETE ==="
-            log "Key things to show:"
-            log "  - build-separate/DASHBOARD.txt"
-            log "  - build-separate/q-seal/Q-SEAL_POSTURE_REPORT.txt"
-            log "  - The effect runner actually executing real (guarded) commands"
-            log "  - Visual engine videos (if rendered)"
+            plog ""
+            plog "=== DEMO COMPLETE ==="
+            plog "Key things to show:"
+            plog "  - build-separate/DASHBOARD.txt"
+            plog "  - build-separate/q-seal/Q-SEAL_POSTURE_REPORT.txt"
+            plog "  - The effect runner actually executing real (guarded) commands"
+            plog "  - Visual engine videos (if rendered)"
             ;;
         all)
             build_cli
-            build_seal || log "WARNING: Seal build skipped or failed (OpenSSL may be missing)"
+            build_seal || plog "WARNING: Seal build skipped or failed (OpenSSL may be missing)"
             build_core_tests
             build_visual_engines
             run_smoke
@@ -646,14 +646,14 @@ main() {
         q-seal) generate_q_seal_report ;;
         platform)
             # The new recommended "do everything important" flow
-            log "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
-            log "This flow builds the main deliverables + rich reports."
-            log "Heavy test compilation is skipped here (use the dedicated scripts/test-*.sh instead)."
+            plog "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
+            plog "This flow builds the main deliverables + rich reports."
+            plog "Heavy test compilation is skipped here (use the dedicated scripts/test-*.sh instead)."
             build_cli
             build_seal || true
 
             if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
-                log "Building in EFFECT-ENABLED profile — preparing real capability paths."
+                plog "Building in EFFECT-ENABLED profile — preparing real capability paths."
                 build_effect_enabled_tools
             fi
 
@@ -673,36 +673,36 @@ main() {
             generate_dashboard
             generate_q_seal_report
 
-            log "=== PLATFORM RUN COMPLETE ==="
-            log "Key artifacts:"
-            log "  - $BUILD_DIR/DASHBOARD.txt"
-            log "  - $BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt + .json"
-            log "  - $BUILD_DIR/inventory/ARTIFACT_INVENTORY.txt"
-            log "  - $BUILD_DIR/release-candidate/"
-            log "  - $BUILD_DIR/validation/REPORT.txt"
+            plog "=== PLATFORM RUN COMPLETE ==="
+            plog "Key artifacts:"
+            plog "  - $BUILD_DIR/DASHBOARD.txt"
+            plog "  - $BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt + .json"
+            plog "  - $BUILD_DIR/inventory/ARTIFACT_INVENTORY.txt"
+            plog "  - $BUILD_DIR/release-candidate/"
+            plog "  - $BUILD_DIR/validation/REPORT.txt"
             if [ "$BUILD_PROFILE" = "effect-enabled" ] && [ -x "$BUILD_DIR/bin/latticra-effect-runner" ]; then
-                log "  - $BUILD_DIR/bin/latticra-effect-runner (experimental guarded execution)"
+                plog "  - $BUILD_DIR/bin/latticra-effect-runner (experimental guarded execution)"
                 # Demonstrate the first real effect
                 DEMO_OUT=$("$BUILD_DIR/bin/latticra-effect-runner" echo "Latticra effect layer active at $LATTICRA_PLATFORM_CHECKPOINT" 2>&1)
-                log "    Demo output: $DEMO_OUT"
+                plog "    Demo output: $DEMO_OUT"
             fi
-            log "Primary artifacts in: $BUILD_DIR"
-            log ""
+            plog "Primary artifacts in: $BUILD_DIR"
+            plog ""
 
             if [ $validation_rc -ne 0 ]; then
-                log "Note: Validation reported issues (common when running on macOS / non-Fedora)."
-                log "      This does not mean the platform failed. See the REPORT.txt above for details."
-                log "      Core no-effect invariants for Lat, RBDM, Seal, etc. are still exercised via the dedicated test scripts."
+                plog "Note: Validation reported issues (common when running on macOS / non-Fedora)."
+                plog "      This does not mean the platform failed. See the REPORT.txt above for details."
+                plog "      Core no-effect invariants for Lat, RBDM, Seal, etc. are still exercised via the dedicated test scripts."
             fi
 
-            log ""
-            log "Tip: For the absolute cleanest experience on macOS, you can also run:"
-            log "      make seal-cli && sh scripts/build-separate.sh dashboard"
+            plog ""
+            plog "Tip: For the absolute cleanest experience on macOS, you can also run:"
+            plog "      make seal-cli && sh scripts/build-separate.sh dashboard"
 
             if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
-                log ""
-                log "Effect-enabled mode active. Experimental guarded execution tools available."
-                log "  Set LATTICRA_EFFECT_ALLOWLIST=echo:date:ls to expand the allowlist for demo."
+                plog ""
+                plog "Effect-enabled mode active. Experimental guarded execution tools available."
+                plog "  Set LATTICRA_EFFECT_ALLOWLIST=echo:date:ls to expand the allowlist for demo."
             fi
 
             # Always succeed the platform command even if validation had issues.
@@ -711,7 +711,7 @@ main() {
             ;;
         *) usage ;;
     esac
-    log "Done. Artifacts in: $BUILD_DIR (separate from source and installer/)"
+    plog "Done. Artifacts in: $BUILD_DIR (separate from source and installer/)"
 }
 
 main "${1:-}"
