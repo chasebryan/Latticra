@@ -27,6 +27,7 @@ Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-1 bounded range falsifier note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3058,6 +3059,8 @@ The identity-replay impedance L5 blinded-holdout oracle evidence-review gate now
 
 The identity-replay Model-1 dynamic substrate runner now defines a finite local substrate, computes counterfactual repair-cost traces before loading measured targets, emits a prediction receipt, evaluates the receipt against the guarded target table only afterward, preserves photon/gluon zero-rest-mass controls, and records `candidate_survives_target_table=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay Model-1 bounded range falsifier now proves a scoped negative conclusion: the first finite bounded-cell Model-1 substrate class cannot span the measured mass-ratio vector, because its generous electron-normalized replay-cost ratio bound is `1088` while the guarded target table reaches `337691.49623497269417`; it records `model1_bounded_substrate_class_falsified=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3112,10 +3115,22 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-1 dynamic substrate runner.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance Model-1 substrate-law refinement gate.
+```
+
+Completed computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-1 bounded range falsifier.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-2 hierarchical substrate pre-registration.
 ```
 
 Follow-on proof lanes:

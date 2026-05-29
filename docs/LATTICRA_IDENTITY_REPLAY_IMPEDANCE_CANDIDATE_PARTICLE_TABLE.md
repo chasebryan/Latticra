@@ -252,6 +252,12 @@ The next dynamic replay artifact is:
 Model-1 Dynamic Substrate Runner.
 ```
 
+The first bounded-range conclusion artifact is:
+
+```text
+Model-1 Bounded Range Falsifier.
+```
+
 ## Non-Claims
 
 This table is not a Latticra mass computation, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

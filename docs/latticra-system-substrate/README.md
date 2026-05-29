@@ -32,6 +32,8 @@ The L5 blinded-holdout oracle evidence-review gate now separates execution from 
 
 The Model-1 dynamic replay substrate runner now makes the next proof step computational instead of rhetorical: it generates identity patterns from a finite substrate, computes `kappa` traces before target loading, emits a prediction receipt, and lets a separate evaluator reject the current candidate against the measured table while preserving the Higgs-as-effective-physics boundary.
 
+The Model-1 bounded range falsifier records the first hard conclusion from that runner: the finite bounded-cell substrate class cannot span the measured particle mass-ratio vector, so the next credible candidate must introduce hierarchical or multiscale impedance before any stronger Higgs-causal-closure language can be considered.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
