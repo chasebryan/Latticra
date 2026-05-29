@@ -59,6 +59,13 @@ latticra_seal_guarded_allowlist_t latticra_seal_guarded_allowlist_fixture(void) 
     return allowlist;
 }
 
+size_t latticra_seal_guarded_allowlist_entry_count(
+    const latticra_seal_guarded_allowlist_t *allowlist)
+{
+    if (allowlist == NULL) return 0;
+    return allowlist->allowlist_entry_count;
+}
+
 static int fixture_contains(const latticra_seal_guarded_allowlist_t *allowlist,
                             const char *tool_name) {
     unsigned i;

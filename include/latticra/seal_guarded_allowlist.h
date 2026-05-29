@@ -85,6 +85,9 @@ latticra_status_t latticra_seal_guarded_allowlist_report(
     char *buffer,
     size_t buffer_len);
 
+size_t latticra_seal_guarded_allowlist_entry_count(
+    const latticra_seal_guarded_allowlist_t *allowlist);
+
 #ifdef __cplusplus
 }
 #endif
