@@ -2028,6 +2028,12 @@ build-separate-platform:
 build-separate-demo:
 	sh ./scripts/build-separate.sh demo
 
+# Quick focused demo (binaries + effect runner + key reports, no heavy validation)
+.PHONY: build-separate-demo-quick
+build-separate-demo-quick:
+	@echo "Running focused demo (best for macOS presentations)..."
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh demo
+
 # Effect-enabled builds (experimental - Phase 1+)
 # Usage: make build-separate-platform-effect BUILD_PROFILE=effect-enabled
 .PHONY: build-separate-platform-effect

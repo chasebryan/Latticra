@@ -562,10 +562,10 @@ clean() {
 
 usage() {
     echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|q-seal|platform|demo]"
-    echo "  platform   - The main command. Runs the complete modern Latticra development flow."
-    echo "  demo       - Platform + short demo videos (great for presentations)."
-    echo "  q-seal     - Generate dedicated Q-Seal (post-quantum) posture report."
-    echo "  dashboard  - Generate a human-friendly project dashboard."
+    echo "  platform   - Full modern development flow."
+    echo "  demo       - Focused macOS-friendly demo: binaries + effect runner + Q-Seal + Dashboard (recommended for showcasing)."
+    echo "  q-seal     - Dedicated Q-Seal (post-quantum) posture report."
+    echo "  dashboard  - Human-friendly project dashboard."
     exit 1
 }
 
@@ -576,19 +576,52 @@ main() {
         tests) build_core_tests ;;
         visual) build_visual_engines ;;
         demo)
-            # Nice demo flow for presentations / visitors
-            log "=== LATTICRA DEMO MODE ==="
-            platform
-            log ""
-            log "Rendering short demo videos (30 seconds each)..."
-            if command -v ffmpeg >/dev/null 2>&1; then
-                sh scripts/render-visual-theorem-engines.sh substrate 30
-                sh scripts/render-visual-theorem-engines.sh theorem 30
-                log "Demo videos rendered into build-separate/visual-engines/"
-            else
-                log "ffmpeg not found — skipping video rendering."
-                log "Install with: brew install ffmpeg"
+            # Focused, impressive demo for macOS / presentations
+            log "=== LATTICRA DEMO MODE (macOS-friendly) ==="
+            log "Building core deliverables + effect runner + key reports..."
+            build_cli
+            build_seal || true
+            build_effect_enabled_tools   # will build the effect runner if profile allows
+            build_visual_engines
+
+            # Generate the nice human-facing artifacts
+            generate_foundation_health_report
+            generate_dashboard
+            generate_q_seal_report
+
+            # Demonstrate the first real effect if available
+            if [ "$BUILD_PROFILE" = "effect-enabled" ] && [ -x "$BIN_DIR/latticra-effect-runner" ]; then
+                log ""
+                log "=== Demonstrating Guarded Command Execution (first real effect) ==="
+                export LATTICRA_EFFECT_ALLOWLIST="effect-allowlist.txt"
+                if [ -f "effect-allowlist.txt" ]; then
+                    "$BIN_DIR/latticra-effect-runner" echo "Latticra effect layer executing real guarded commands on macOS at $LATTICRA_PLATFORM_CHECKPOINT"
+                    "$BIN_DIR/latticra-effect-runner" date
+                    "$BIN_DIR/latticra-effect-runner" uname -a
+                else
+                    log "No effect-allowlist.txt found — creating a safe default one."
+                    echo -e "echo\ndate\nuname\npwd\nwhoami" > effect-allowlist.txt
+                    "$BIN_DIR/latticra-effect-runner" echo "Latticra effect layer is live"
+                fi
             fi
+
+            # Optional short visual demos if ffmpeg is present
+            if command -v ffmpeg >/dev/null 2>&1; then
+                log ""
+                log "Rendering short (20s) visual theorem engine demos..."
+                sh scripts/render-visual-theorem-engines.sh substrate 20 2>/dev/null || true
+                sh scripts/render-visual-theorem-engines.sh theorem 20 2>/dev/null || true
+            else
+                log "Tip: brew install ffmpeg to also render the visual theorem engine videos for demos."
+            fi
+
+            log ""
+            log "=== DEMO COMPLETE ==="
+            log "Key things to show:"
+            log "  - build-separate/DASHBOARD.txt"
+            log "  - build-separate/q-seal/Q-SEAL_POSTURE_REPORT.txt"
+            log "  - The effect runner actually executing real (guarded) commands"
+            log "  - Visual engine videos (if rendered)"
             ;;
         all)
             build_cli
