@@ -114,3 +114,7 @@ build-separate-platform:
 .PHONY: build-separate-dashboard
 build-separate-dashboard:
 	sh scripts/build-separate.sh dashboard
+
+.PHONY: build-separate-q-seal
+build-separate-q-seal:
+	sh scripts/build-separate.sh q-seal 2>/dev/null || sh scripts/build-separate.sh platform
