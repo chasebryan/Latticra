@@ -647,6 +647,9 @@ main() {
             log "  - $BUILD_DIR/validation/REPORT.txt"
             if [ "$BUILD_PROFILE" = "effect-enabled" ] && [ -x "$BUILD_DIR/bin/latticra-effect-runner" ]; then
                 log "  - $BUILD_DIR/bin/latticra-effect-runner (experimental guarded execution)"
+                # Quick smoke of the first real effect
+                "$BUILD_DIR/bin/latticra-effect-runner" echo "Latticra effect layer active at $LATTICRA_PLATFORM_CHECKPOINT" > /dev/null 2>&1 || true
+                log "    (smoke test of guarded echo executed)"
             fi
             log "Primary artifacts in: $BUILD_DIR"
             log ""
