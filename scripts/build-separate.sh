@@ -170,7 +170,8 @@ generate_dashboard() {
         echo "  • Runtime Boundary Domain Matrix with advanced queries"
         echo "  • Rich artifact generation + provenance (hashes, inventories)"
         echo "  • Q-Seal (Post-Quantum) posture as core next-gen priority (ML-DSA/ML-KEM planned)"
-        echo "  • Effect Substrate Layer: early scaffolding (moving beyond report-only)"
+        echo "  • Effect Substrate Layer: active development (first real effects in progress)"
+        echo "    Current focus: Guarded Command Execution (see docs/transition/)"
         echo ""
         echo "────────────────────────────────────────────────────────────"
         echo " LATEST PLATFORM RUN ARTIFACTS"
@@ -323,19 +324,41 @@ build_seal() {
     fi
 }
 
-# Future: Build an effect-capable variant of core tools.
-# For now this is mostly a placeholder that can be expanded in Phase 1.
+# Build effect-capable tools when profile is effect-enabled.
+# This is the beginning of producing real, useful binaries.
 build_effect_enabled_tools() {
     if [ "$BUILD_PROFILE" != "effect-enabled" ]; then
         log "Skipping effect-enabled tool build (current profile is report-only)."
         return 0
     fi
 
-    log "Building EFFECT-ENABLED tools (experimental)..."
-    # TODO: In future this will link against the real effect_dispatcher
-    # and produce binaries that can actually perform gated mutations.
+    log "Building EFFECT-ENABLED tools (experimental - Phase 1)..."
+
+    # Build the core Seal/CLI with effect support
     build_seal
-    log "Effect-enabled tool build placeholder complete."
+
+    # Future: We will also build a dedicated effect executor binary
+    # that links against the new substrate/effect layer.
+    # For now we just ensure the dispatcher compiles.
+    if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS \
+        -Iinclude \
+        -c src/substrate/effect/effect_dispatcher.c \
+        -o "$OBJ_DIR/effect_dispatcher.o" 2>&1 | tee -a "$LOG_FILE"; then
+        log "  effect_dispatcher.o compiled successfully"
+    else
+        log "  WARNING: effect_dispatcher compilation had issues"
+    fi
+
+    if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS \
+        -Iinclude \
+        -c src/substrate/effect/effect_command.c \
+        -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE"; then
+        log "  effect_command.o compiled successfully"
+    else
+        log "  WARNING: effect_command compilation had issues"
+    fi
+
+    log "Effect-enabled tool build step complete (more capabilities coming)."
 }
 
 build_core_tests() {
@@ -589,7 +612,12 @@ main() {
             log "Heavy test compilation is skipped here (use the dedicated scripts/test-*.sh instead)."
             build_cli
             build_seal || true
-            build_effect_enabled_tools
+
+            if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
+                log "Building in EFFECT-ENABLED profile — preparing real capability paths."
+                build_effect_enabled_tools
+            fi
+
             build_core_tests
             build_visual_engines
 
