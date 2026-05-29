@@ -5,3 +5,5 @@ ls
 pwd
 whoami
 cat
+true
+false

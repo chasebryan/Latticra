@@ -1,31 +1,39 @@
 # Using the Experimental Guarded Command Runner (v0.3.0edge+)
 
-Build with effect-enabled profile first:
+## Easiest way on macOS (recommended for demos)
+
 ```sh
-BUILD_PROFILE=effect-enabled make build-separate-platform-effect
+# One command for a focused, impressive demo
+make build-separate-demo-quick
 # or
+BUILD_PROFILE=effect-enabled make build-separate-demo
+```
+
+This will:
+- Build the effect runner
+- Create a safe default allowlist
+- Exercise real guarded command execution
+- Generate Dashboard + Q-Seal report
+
+## Manual build + run
+
+```sh
 BUILD_PROFILE=effect-enabled make build-separate-effect-runner
 ```
 
-## Basic Usage
+Then run:
 
 ```sh
-./build-separate/bin/latticra-effect-runner echo "hello from guarded execution"
+export LATTICRA_EFFECT_ALLOWLIST="effect-allowlist.txt"
+./build-separate/bin/latticra-effect-runner echo "hello from the effect layer"
 ./build-separate/bin/latticra-effect-runner date
-./build-separate/bin/latticra-effect-runner uname -a
 ```
 
-## Extending the Allowlist (for safe experimentation)
+The root `effect-allowlist.txt` (checked into the repo) contains a safe default set.
 
-Set the environment variable (colon-separated):
+## How the allowlist works
 
-```sh
-export LATTICRA_EFFECT_ALLOWLIST="echo:date:uname:ls:pwd:whoami"
-./build-separate/bin/latticra-effect-runner ls -la
-```
+- `LATTICRA_EFFECT_ALLOWLIST` env var (colon-separated commands, or path to a file)
+- Falls back to `effect-allowlist.txt` in current directory
 
-Or create a file `effect-allowlist.txt` in the current directory (one command per line) and the runner will read it.
-
-Currently the runner only supports simple commands + args. No shell interpretation, pipes, or redirection for safety.
-
-This is the first real effect Latticra can perform. Everything is still heavily locked down and designed to produce rich evidence.
+This is the first real effectful capability in Latticra. Use it to show that the system can now actually execute (guarded) commands while producing evidence.
