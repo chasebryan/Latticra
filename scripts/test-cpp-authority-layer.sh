@@ -44,3 +44,5 @@ c++ $CXXFLAGS \
   -o /tmp/latticra-cpp-authority-layer-invariants
 
 /tmp/latticra-cpp-authority-layer-invariants
+
+printf 'test-cpp-authority-layer: ok\n'
