@@ -1,7 +1,7 @@
 # Latticra Project Notes
 
 Status: active project notes index
-Last updated: 2026-05-20 03:55 CDT
+Last updated: 2026-05-27 CDT
 
 ## Purpose
 
@@ -9,10 +9,14 @@ This folder collects short public notes about current Latticra direction, status
 
 The project notes are intentionally lighter than the foundation documents. They summarize the active direction and queue without replacing the guarded contracts, implementation records, status records, or announcement log.
 
+## Reader route
+
+Use [`../README.md`](../README.md) as the documentation hub, [`../FOUNDATION_INDEX.md`](../FOUNDATION_INDEX.md) as the exhaustive evidence index, and these project notes as short narrative orientation. The long slice names below are preserved because guard scripts assert public-entry alignment across recent milestones.
+
 ## Files
 
-- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Lat pipeline diagnostic, RBDM report, authority review, L-UI report, Nucleus task, runtime-boundary, README/status alignment, and no-new-announcement review slices.
-- `UPCOMING_WORK.md` — current near-term queue after the recent no-effect report, diagnostic, audit, README, foundation-index, announcement-review, public-entry, project-notes, and Nucleus report-only execution alignment slices.
+- `CURRENT_DIRECTION.md` — current technical lane, boundaries, non-claims, and project direction after the recent Latticra Seal local capability registry schema report surface/status checkpoint, Latticra Seal operator receipt report predecessor status alignment, Latticra Seal policy decision predecessor status alignment, Latticra Seal signed request predecessor status alignment, Latticra Seal request freshness predecessor status alignment, Latticra Seal parameter schema predecessor status alignment, Latticra Seal agentic automation security predecessor status alignment, Latticra Seal status rollup predecessor status alignment, Latticra Seal runtime handoff predecessor status alignment, Latticra Seal capability gate predecessor status alignment, Latticra Seal verification receipt predecessor status alignment, Latticra Seal verification policy predecessor status alignment, Latticra Seal key parsing predecessor status alignment, Latticra Seal public-key parsing predecessor status alignment, Seal key-material predecessor status alignment, Seal key-handling predecessor status alignment, Seal signing operation predecessor status alignment, Seal signer invocation status alignment, Seal signer handoff predecessor status alignment, Seal signing authorization predecessor status alignment, Seal signature request predecessor status alignment, Seal report envelope status/public-entry alignment, Seal runtime handoff report status/public-entry alignment, Seal runtime handoff evaluation status/public-entry alignment, Seal verified effect decision status/public-entry alignment, Seal verified capability gate status/public-entry alignment, Seal verified receipt promotion status/public-entry alignment, Seal Ed25519 verify-only status/public-entry alignment, Seal crypto verify backend status/public-entry alignment, Seal README status row alignment, completion estimate review README/status alignment, completion estimate review after runtime-boundary abuse-case fixtures, runtime boundary abuse-case fixture expansion, runtime boundary policy expansion after threat-model validation, defensive threat model validation refinement, Seal policy decision status/public-entry alignment, Seal signed request status/public-entry alignment, Seal request freshness status/public-entry alignment, Seal parameter schema status/public-entry alignment, Seal agentic automation security public-entrypoint alignment, Seal status rollup status alignment, Seal runtime handoff status alignment, Latticra Seal effect decision predecessor status alignment, Seal effect decision status alignment, Seal capability gate status alignment, Seal verification receipt status alignment, Seal verification policy status alignment, Seal key parsing status alignment, Seal key parsing implementation, Seal planning, Lat pipeline diagnostic, RBDM report, authority review, L-UI report, Nucleus task, runtime-boundary, README/status alignment, and no-new-announcement review slices. See `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`; predecessor `docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`.
+- `UPCOMING_WORK.md` — current near-term queue after the recent Latticra Seal local capability registry schema report surface/status checkpoint, Latticra Seal operator receipt report predecessor status alignment, Latticra Seal policy decision predecessor status alignment, Latticra Seal signed request predecessor status alignment, Latticra Seal request freshness predecessor status alignment, Latticra Seal parameter schema predecessor status alignment, Latticra Seal agentic automation security predecessor status alignment, Latticra Seal status rollup predecessor status alignment, Latticra Seal runtime handoff predecessor status alignment, Latticra Seal capability gate predecessor status alignment, Latticra Seal verification receipt predecessor status alignment, Latticra Seal verification policy predecessor status alignment, Latticra Seal key parsing predecessor status alignment, Latticra Seal public-key parsing predecessor status alignment, Seal key-material predecessor status alignment, Seal key-handling predecessor status alignment, Seal signing operation predecessor status alignment, Seal signer invocation status alignment, Seal signer handoff predecessor status alignment, Seal signing authorization predecessor status alignment, Seal signature request predecessor status alignment, Seal report envelope status/public-entry alignment, Seal runtime handoff report status/public-entry alignment, Seal runtime handoff evaluation status/public-entry alignment, Seal verified effect decision status/public-entry alignment, Seal verified capability gate status/public-entry alignment, Seal verified receipt promotion status/public-entry alignment, Seal Ed25519 verify-only status/public-entry alignment, Seal crypto verify backend status/public-entry alignment, Seal README status row alignment, completion estimate review README/status alignment, completion estimate review after runtime-boundary abuse-case fixtures, runtime boundary abuse-case fixture expansion, runtime boundary policy expansion after threat-model validation, defensive threat model validation refinement, Seal policy decision status/public-entry alignment, Seal signed request status/public-entry alignment, Seal request freshness status/public-entry alignment, Seal parameter schema status/public-entry alignment, Seal agentic automation security public-entrypoint alignment, Seal status rollup status alignment, Seal runtime handoff status alignment, Latticra Seal effect decision predecessor status alignment, Seal effect decision status alignment, Seal capability gate status alignment, Seal verification receipt status alignment, Seal verification policy status alignment, Seal key parsing status alignment, Seal key parsing implementation, Seal implementation plan, Seal contract, no-effect report, diagnostic, audit, README, foundation-index, announcement-review, public-entry, project-notes, and Nucleus report-only execution alignment slices. See `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`; predecessor `docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`.
 
 ## Current note posture
 
@@ -20,6 +24,8 @@ The project notes are intentionally lighter than the foundation documents. They 
 CURRENT_DIRECTION.md is the narrative direction note.
 UPCOMING_WORK.md is the queue and priority note.
 ```
+
+The project-level handbook in `docs/latticra-system-substrate/` should be kept current as these notes evolve. When a slice changes the durable project story, architecture, evidence posture, public wording, or non-claim boundary, reflect that change in the handbook path as part of the same working rhythm.
 
 Both notes should remain:
 
@@ -36,6 +42,40 @@ consistent with no-new-announcement decisions unless capability posture changes
 
 ## Related records
 
+Latest Seal chain note: Latticra Seal runtime handoff predecessor status alignment uses `docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md` with predecessor `docs/status/SEAL_EFFECT_DECISION_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal status rollup predecessor status alignment uses `docs/status/SEAL_STATUS_ROLLUP_STATUS.md` with predecessor `docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal agentic automation security predecessor status alignment uses `docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md` with predecessor `docs/status/SEAL_STATUS_ROLLUP_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal parameter schema predecessor status alignment uses `docs/status/SEAL_PARAMETER_SCHEMA_STATUS.md` with predecessor `docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal request freshness predecessor status alignment uses `docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md` with predecessor `docs/status/SEAL_PARAMETER_SCHEMA_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal signed request predecessor status alignment uses `docs/status/SEAL_SIGNED_REQUEST_STATUS.md` with predecessor `docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal policy decision predecessor status alignment uses `docs/status/SEAL_POLICY_DECISION_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_REQUEST_STATUS.md`.
+
+Latest Seal chain note: Latticra Seal local capability registry schema report surface/status checkpoint uses `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md` with predecessor `docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard planning checkpoint uses `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md` with predecessor `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model contract uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model implementation plan uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model implementation uses `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal Panel dashboard view-model surface/status uses `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md` with predecessor `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`.
+
+Latest Seal product-surface note: Latticra Seal signed receipt proof path contract uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md` with predecessor `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal signed receipt proof path implementation uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`.
+
+Latest Seal product-surface note: Latticra Seal signed receipt proof path surface/status uses `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE_STATUS.md` with predecessor `docs/status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md`.
+
+Latest Seal predecessor note: Latticra Seal capability gate predecessor status alignment uses `docs/status/SEAL_CAPABILITY_GATE_STATUS.md` with predecessor `docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`.
+
 - `STATUS.md`
 - `README.md`
 - `docs/status/CURRENT_STATUS.md`
@@ -51,6 +91,64 @@ consistent with no-new-announcement decisions unless capability posture changes
 - `docs/status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`
 - `docs/status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`
 - `docs/status/RBDM_REPORT_INTEGRATION_STATUS.md`
+- `docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md`
+- `docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md`
+- `docs/LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md`
+- `docs/status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`
+- `docs/status/SEAL_ED25519_VERIFY_STATUS.md`
+- `docs/status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md`
+- `docs/status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`
+- `docs/status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`
+- `docs/status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`
+- `docs/status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`
+- `docs/status/SEAL_REPORT_ENVELOPE_STATUS.md`
+- `docs/status/SEAL_SIGNATURE_REQUEST_STATUS.md`
+- `docs/status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`
+- `docs/status/SEAL_SIGNER_HANDOFF_STATUS.md`
+- `docs/status/SEAL_SIGNER_INVOCATION_STATUS.md`
+- `docs/status/SEAL_SIGNING_OPERATION_STATUS.md`
+- `docs/status/SEAL_KEY_HANDLING_STATUS.md`
+- `docs/status/SEAL_KEY_MATERIAL_STATUS.md`
+- `docs/status/SEAL_PUBLIC_KEY_PARSING_STATUS.md`
+- `docs/status/SEAL_KEY_PARSING_STATUS.md`
+- `docs/status/SEAL_VERIFICATION_POLICY_STATUS.md`
+- `docs/status/SEAL_VERIFICATION_RECEIPT_STATUS.md`
+- `docs/status/SEAL_CAPABILITY_GATE_STATUS.md`
+- `docs/status/SEAL_EFFECT_DECISION_STATUS.md`
+- `docs/status/SEAL_RUNTIME_HANDOFF_STATUS.md`
+- `docs/status/SEAL_STATUS_ROLLUP_STATUS.md`
+- `docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md`
+- `docs/status/SEAL_PARAMETER_SCHEMA_STATUS.md`
+- `docs/status/SEAL_REQUEST_FRESHNESS_STATUS.md`
+- `docs/status/SEAL_SIGNED_REQUEST_STATUS.md`
+- `docs/status/SEAL_POLICY_DECISION_STATUS.md`
+- `docs/status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`
+- `docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md`
+- `docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md`
+- `docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md`
+- `docs/LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md`
+- `docs/status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`
+- `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md`
+- `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md`
+- `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md`
+- `docs/LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md`
+- `docs/status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_PLANNING_CHECKPOINT.md`
+- `docs/status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md`
+- `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md`
+- `docs/status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`
+- `docs/LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`
+- `docs/status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`
+- `docs/status/SEAL_README_STATUS_ROW_ALIGNMENT.md`
+- `docs/status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`
+- `docs/status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`
+- `docs/status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`
+- `docs/status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`
+- `docs/RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`
+- `docs/RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`
+- `docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`
 - `docs/NUCLEUS_TASK_REPORT_ONLY_EXECUTION_REFINEMENT.md`
 - `docs/CPP_AUTHORITY_IMPLEMENTATION_REVIEW.md`
 - `docs/strategy/README.md`

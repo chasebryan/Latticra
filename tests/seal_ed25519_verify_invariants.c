@@ -28,8 +28,8 @@ static latticra_seal_crypto_verify_backend_t fixture_backend(void) {
     (void)snprintf(backend.signature_algorithm, sizeof(backend.signature_algorithm), "%s", "Ed25519-development");
     (void)snprintf(backend.public_key_identity_label, sizeof(backend.public_key_identity_label), "%s", "rfc8032-test-key");
     (void)snprintf(backend.trust_source, sizeof(backend.trust_source), "%s", "local-test-vector");
-    (void)snprintf(backend.crypto_verify_state, sizeof(backend.crypto_verify_state), "%s", "unsupported");
-    backend.cryptographic_verification_supported = 0u;
+    (void)snprintf(backend.crypto_verify_state, sizeof(backend.crypto_verify_state), "%s", "ready-local-ed25519");
+    backend.cryptographic_verification_supported = 1u;
     backend.cryptographic_verification_performed = 0u;
     backend.verified = 0u;
     backend.invalid = 0u;
@@ -37,7 +37,7 @@ static latticra_seal_crypto_verify_backend_t fixture_backend(void) {
     backend.capability_gate_allowed = 0u;
     backend.runtime_authority_granted = 0u;
     backend.error = LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_OK;
-    (void)snprintf(backend.status, sizeof(backend.status), "%s", "crypto-verify-backend-metadata");
+    (void)snprintf(backend.status, sizeof(backend.status), "%s", "crypto-verify-backend-ready");
     return backend;
 }
 
@@ -155,6 +155,41 @@ static int verify_invalid_signature_vector(void) {
     return 0;
 }
 
+static int verify_rejects_unsupported_backend_before_provider(void) {
+    unsigned char message[] = {0x72};
+    unsigned char public_key[LATTICRA_SEAL_ED25519_PUBLIC_KEY_BYTES] = {0};
+    unsigned char signature[LATTICRA_SEAL_ED25519_SIGNATURE_BYTES] = {0};
+    latticra_seal_crypto_verify_backend_t backend = fixture_backend();
+    latticra_seal_ed25519_verify_result_t result;
+
+    (void)snprintf(backend.crypto_verify_state, sizeof(backend.crypto_verify_state), "%s", "unsupported");
+    backend.cryptographic_verification_supported = 0u;
+    (void)snprintf(backend.status, sizeof(backend.status), "%s", "crypto-verify-backend-metadata");
+
+    EXPECT_TRUE(
+        latticra_seal_ed25519_verify_local(
+            &backend,
+            "unsupported-backend",
+            message,
+            sizeof(message),
+            public_key,
+            sizeof(public_key),
+            signature,
+            sizeof(signature),
+            &result) == LATTICRA_STATUS_OK,
+        "unsupported backend status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_ED25519_VERIFY_INVALID_BACKEND, "unsupported backend error");
+    EXPECT_TRUE(strcmp(result.crypto_verify_state, "invalid-backend") == 0, "unsupported backend state");
+    EXPECT_TRUE(result.cryptographic_verification_supported == 0u, "unsupported backend support");
+    EXPECT_TRUE(result.cryptographic_verification_performed == 0u, "unsupported backend performed");
+    EXPECT_TRUE(result.verified == 0u, "unsupported backend verified");
+    EXPECT_TRUE(result.invalid == 1u, "unsupported backend invalid");
+    EXPECT_TRUE(result.authority_usable == 0u, "unsupported backend authority");
+    EXPECT_TRUE(result.capability_gate_allowed == 0u, "unsupported backend capability");
+    EXPECT_TRUE(result.runtime_authority_granted == 0u, "unsupported backend runtime");
+    return 0;
+}
+
 static int verify_fails_closed(void) {
     unsigned char message[] = {0x72};
     unsigned char public_key[LATTICRA_SEAL_ED25519_PUBLIC_KEY_BYTES] = {0};
@@ -199,6 +234,9 @@ int main(void) {
         return 1;
     }
     if (verify_invalid_signature_vector() != 0) {
+        return 1;
+    }
+    if (verify_rejects_unsupported_backend_before_provider() != 0) {
         return 1;
     }
     if (verify_fails_closed() != 0) {

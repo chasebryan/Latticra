@@ -23,11 +23,13 @@ alignment='docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.
 evidence='docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md'
 readme='README.md'
 installer_readme='installer/README.md'
+quick_start='docs/QUICK_START_CHEATSHEET.md'
 
 require_file "$alignment"
 require_file "$evidence"
 require_file "$readme"
 require_file "$installer_readme"
+require_file "$quick_start"
 require_file installer/latticra-installer/src/ui.rs
 require_file scripts/test-latticra-panel-local-install-evidence-status.sh
 require_file scripts/check_latticra_panel_ui_design.py
@@ -63,17 +65,47 @@ require_contains '/usr/lib/modules' "$alignment"
 require_contains '/boot/latticra' "$alignment"
 require_contains 'Add status-index integration for Latticra Panel local-install evidence and public-entrypoint alignment' "$alignment"
 
-require_contains 'Latticra Panel is the GUI-first local installer and first-run control workbench for Latticra, Lat, LIR, and Latticra Seal.' "$readme"
+require_contains 'Latticra Panel is the GUI-first local installer and first-run control workbench for Latticra, Lat, LIR, Latticra Seal, and the optional Nadia offline AI foundation.' "$readme"
 require_contains 'make -C installer local-example' "$readme"
 require_contains 'make -C installer verify-local' "$readme"
+require_contains 'make -C installer reset-dry-run' "$readme"
+require_contains 'make -C installer reset-local' "$readme"
+require_contains 'make -C installer uninstall-dry-run' "$readme"
+require_contains 'make -C installer uninstall-local' "$readme"
+require_contains 'latticra reset --dry-run' "$readme"
+require_contains 'latticra reset' "$readme"
+require_contains 'latticra uninstall --dry-run' "$readme"
+require_contains 'latticra uninstall' "$readme"
+require_contains 'When a Panel specification changes, users can remove the managed local install before reinstalling:' "$readme"
+require_contains 'Reset and uninstall remove the same managed artifacts: command wrappers, the Panel desktop entry, known Panel icons, and the guarded local prefix.' "$readme"
 require_contains 'It is intentionally user-local. It does not use root authority, kernel mutation, systemd mutation, SELinux mutation, or network authority.' "$readme"
+require_contains 'If LC was installed with a custom `lc.install.command_wrapper`, set `LC_WRAPPER` to that command name; the default is `latticra-lc`.' "$readme"
+require_contains 'LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"' "$readme"
+require_contains '$HOME/.local/bin/$LC_WRAPPER' "$readme"
+require_contains '~/.local/bin/<lc.install.command_wrapper> (default: latticra-lc; when LC wrapper enabled)' "$readme"
 
-require_contains 'Graphical installer and first-run control panel for Latticra, Lat, LIR, and Latticra Seal.' "$installer_readme"
+require_contains 'Graphical installer and first-run control panel for Latticra, Lat, LIR, Latticra Seal, and the Nadia offline AI foundation.' "$installer_readme"
 require_contains 'The console in the upper-right of the panel is not a shell.' "$installer_readme"
 require_contains 'External host processes are not launched from the embedded console.' "$installer_readme"
+require_contains 'make -C installer reset-dry-run' "$installer_readme"
+require_contains 'make -C installer reset-local' "$installer_readme"
+require_contains 'make -C installer uninstall-dry-run' "$installer_readme"
+require_contains 'latticra reset --dry-run' "$installer_readme"
+require_contains 'latticra reset' "$installer_readme"
+require_contains 'latticra uninstall --dry-run' "$installer_readme"
+require_contains 'latticra uninstall' "$installer_readme"
+require_contains 'Reset and uninstall remove the same managed artifacts: command wrappers, the Panel desktop entry, known Panel icons, and the selected local prefix.' "$installer_readme"
 require_contains 'no root' "$installer_readme"
 require_contains 'no network authority' "$installer_readme"
 require_contains 'user-local prefix only' "$installer_readme"
+require_contains 'The default direct wrapper is `latticra-lc`; custom Panel installs use `lc.install.command_wrapper`.' "$installer_readme"
+require_contains 'If LC was installed with a custom `lc.install.command_wrapper`, set `LC_WRAPPER` to that command name; the default is `latticra-lc`.' "$installer_readme"
+require_contains '~/.local/bin/<lc.install.command_wrapper> (default: latticra-lc; when LC wrapper enabled)' "$installer_readme"
+require_contains 'LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"' "$installer_readme"
+require_contains '$HOME/.local/bin/$LC_WRAPPER' "$installer_readme"
+require_contains 'LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"' "$quick_start"
+require_contains 'If LC was installed with a custom `lc.install.command_wrapper`, set `LC_WRAPPER` to that command name; the default is `latticra-lc`.' "$quick_start"
+require_contains '$HOME/.local/bin/$LC_WRAPPER' "$quick_start"
 
 require_contains 'Status: evidence status alignment' "$evidence"
 require_contains 'latticra_panel_user_local_install_verified=1' "$evidence"

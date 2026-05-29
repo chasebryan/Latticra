@@ -1,0 +1,114 @@
+name = "latticra-os-image-release"
+status = "fixture-only"
+release_lane = "os-image-usb-vm"
+schema_version = 1
+
+[readiness]
+os_image_release_readiness_contract_present = true
+iso_artifact_present = false
+iso_artifact_path = "none"
+iso_artifact_sha256 = "none"
+iso_signature_path = "none"
+iso_sbom_path = "none"
+os_image_artifact_manifest_template_present = true
+os_image_artifact_manifest_generator_present = true
+os_image_artifact_manifest_validation_present = true
+os_image_artifact_manifest_candidate_present = false
+os_image_operator_bundle_generator_present = true
+os_image_build_recipe_contract_present = true
+os_image_toolchain_contract_present = true
+os_image_toolchain_preflight_present = true
+os_image_toolchain_ready = false
+os_image_build_preflight_present = true
+os_image_build_recipe_template_present = true
+os_image_build_execution_allowed = false
+os_image_input_source_manifest_template_present = true
+os_image_input_source_manifest_validation_present = true
+os_image_input_source_manifest_candidate_present = false
+os_image_input_source_ready_for_input_bundle = false
+os_image_input_bundle_manifest_template_present = true
+os_image_input_bundle_manifest_generator_present = true
+os_image_input_bundle_manifest_validation_present = true
+os_image_input_bundle_manifest_candidate_present = false
+os_image_input_bundle_ready_for_build_preflight = false
+boot_seed_contract_present = true
+boot_seed_source_present = true
+boot_seed_build_script_present = true
+boot_seed_qemu_smoke_script_present = true
+boot_seed_vm_image_build_script_present = true
+boot_seed_vm_qcow2_artifact_present = false
+boot_seed_sbom_generator_present = true
+boot_seed_full_os_ready = false
+kernel_image_input_path = "none"
+kernel_image_input_present = false
+initramfs_input_path = "none"
+initramfs_input_present = false
+rootfs_input_path = "none"
+rootfs_input_present = false
+usb_write_command_template_present = true
+usb_write_execution_allowed = false
+usb_write_execution_recorded = false
+vm_image_artifact_present = false
+vm_image_path = "none"
+vm_image_format = "none"
+vm_image_sha256 = "none"
+vm_signature_path = "none"
+vm_sbom_path = "none"
+vm_test_command_template_present = true
+qemu_execution_allowed_by_guard = false
+qemu_boot_execution_recorded = false
+serial_console_boot_log_recorded = false
+hardware_install_ready = false
+full_os_install_ready = false
+bootable_os_ready = false
+production_os_claim = false
+
+[authority]
+host_mutation_authority = false
+root_authority = false
+network_authority = false
+firmware_mutation_allowed = false
+bootloader_write_allowed = false
+partition_mutation_allowed = false
+usb_block_device_write_allowed = false
+qemu_execution_allowed = false
+
+[required_future_artifacts]
+iso_filename = "latticra-x86_64.iso"
+iso_checksum_filename = "latticra-x86_64.iso.sha256"
+iso_signature_filename = "latticra-x86_64.iso.sig"
+vm_qcow2_filename = "latticra-x86_64.qcow2"
+vm_qcow2_checksum_filename = "latticra-x86_64.qcow2.sha256"
+vm_qcow2_signature_filename = "latticra-x86_64.qcow2.sig"
+artifact_manifest_filename = "manifest.txt"
+sbom_filename = "sbom.spdx.json"
+
+[profiles.x86_64_usb_iso]
+profile = "x86_64-usb-iso"
+target_artifact_format = "iso"
+target_install_path = "hardware-usb"
+write_command_template_present = true
+write_execution_allowed = false
+checksum_verification_required = true
+operator_device_confirmation_required = true
+recovery_path_required = true
+
+[profiles.x86_64_qemu_qcow2]
+profile = "x86_64-qemu-qcow2"
+target_artifact_format = "qcow2"
+target_firmware = "seabios"
+qemu_binary = "qemu-system-x86_64"
+qemu_machine = "pc-i440fx"
+vm_test_command_template_present = true
+qemu_execution_allowed_by_guard = false
+serial_console_required = true
+
+[profiles.x86_64_qemu_iso]
+profile = "x86_64-qemu-iso"
+target_artifact_format = "iso"
+target_firmware = "seabios"
+qemu_binary = "qemu-system-x86_64"
+qemu_machine = "pc-i440fx"
+vm_test_command_template_present = true
+qemu_execution_allowed_by_guard = false
+serial_console_required = true

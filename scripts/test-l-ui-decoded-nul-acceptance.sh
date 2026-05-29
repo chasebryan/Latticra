@@ -3,12 +3,15 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-l-ui-decoded-nul-acceptance.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/l_ui_parser.c \
   src/l_ui_parser_ast.c \
   src/l_ui_parser_diagnostics.c \
   tests/l_ui_decoded_nul_acceptance_invariants.c \
-  -o /tmp/latticra-l-ui-decoded-nul-acceptance-invariants
+  -o "$tmpdir/latticra-l-ui-decoded-nul-acceptance-invariants"
 
-/tmp/latticra-l-ui-decoded-nul-acceptance-invariants
+"$tmpdir/latticra-l-ui-decoded-nul-acceptance-invariants"

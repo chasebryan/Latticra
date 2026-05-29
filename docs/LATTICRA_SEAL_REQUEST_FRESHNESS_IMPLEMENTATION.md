@@ -146,6 +146,6 @@ It moves the project closer by adding report-only metadata for freshness and rep
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a request freshness report surface or a signed request metadata contract.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not implement runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, freshness validation, replay detection, or authority grants unless a specific contract and validation path justify it.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

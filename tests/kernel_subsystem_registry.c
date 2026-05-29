@@ -44,7 +44,9 @@ static int registry_evaluates_kernel_subsystems(void) {
     EXPECT_TRUE(strcmp(result.registry_status, "registry-ready") == 0, "registry ready");
     EXPECT_TRUE(result.entry_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT, "entry count");
     EXPECT_TRUE(result.no_effect == 1, "registry no-effect");
+    EXPECT_TRUE(result.network_allowed == 0, "registry network denied");
     EXPECT_TRUE(result.kernel.no_effect == 1, "kernel no-effect");
+    EXPECT_TRUE(result.kernel.network_allowed == 0, "kernel network denied");
 
     entry = find_entry(&result, LATTICRA_KERNEL_SUBSYSTEM_BOOT);
     EXPECT_TRUE(entry != 0, "boot entry");
@@ -69,6 +71,8 @@ static int registry_evaluates_kernel_subsystems(void) {
     entry = find_entry(&result, LATTICRA_KERNEL_SUBSYSTEM_NETWORK);
     EXPECT_TRUE(entry != 0, "network entry");
     EXPECT_TRUE(strcmp(entry->status, "disabled") == 0, "network remains disabled");
+    EXPECT_TRUE(entry->network_allowed == 0, "network entry network denied");
+    EXPECT_TRUE(entry->no_effect == 1, "network entry remains no-effect");
 
     entry = find_entry(&result, LATTICRA_KERNEL_SUBSYSTEM_DEVICE);
     EXPECT_TRUE(entry != 0, "device entry");
@@ -100,6 +104,10 @@ static int registry_report_is_deterministic(void) {
         "registry status emitted");
     EXPECT_TRUE(strstr(report, "entry_count=9\n") != 0,
         "entry count emitted");
+    EXPECT_TRUE(strstr(report, "kernel_network_allowed=0\n") != 0,
+        "kernel network emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "registry network emitted");
     EXPECT_TRUE(strstr(report, "subsystem[0].name=boot\n") != 0,
         "boot emitted");
     EXPECT_TRUE(strstr(report, "subsystem[1].name=runtime\n") != 0,
@@ -112,6 +120,10 @@ static int registry_report_is_deterministic(void) {
         "filesystem emitted");
     EXPECT_TRUE(strstr(report, "subsystem[6].name=network\n") != 0,
         "network emitted");
+    EXPECT_TRUE(strstr(report, "subsystem[6].network_allowed=0\n") != 0,
+        "network entry network emitted");
+    EXPECT_TRUE(strstr(report, "subsystem[6].no_effect=1\n") != 0,
+        "network entry no-effect emitted");
     EXPECT_TRUE(strstr(report, "subsystem[7].name=device\n") != 0,
         "device emitted");
     EXPECT_TRUE(strstr(report, "subsystem[8].name=security\n") != 0,

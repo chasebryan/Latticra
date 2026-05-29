@@ -9,6 +9,8 @@ This document protects Latticra from premature, confusing, or unsafe claims.
 
 Latticra is an implementation track, but it is not automatically a finished implementation.
 
+For public wording that is currently allowed, blocked, or promotion-gated, see the [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+
 ## Current non-claims
 
 Latticra does not currently claim to be:
@@ -118,6 +120,7 @@ Every future claim should answer:
 5. What effects are possible?
 6. What effects are impossible?
 7. Is the user/operator boundary clear?
+8. Does the public claims ledger allow this wording?
 
 ## Current project status
 

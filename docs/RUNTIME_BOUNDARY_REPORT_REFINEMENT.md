@@ -200,6 +200,7 @@ unknown effect denial
 operator-confirmation non-override behavior
 small-buffer behavior
 Lat pipeline evidence fields
+Lat pipeline line-comment evidence fields
 Lat-specific LIR evidence fields
 ```
 

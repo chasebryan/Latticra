@@ -1,0 +1,246 @@
+#include "latticra/q_seal_ml_kem_implementation_binding_manifest.h"
+
+#include <stdio.h>
+#include <string.h>
+
+#define EXPECT_TRUE(condition, message) \
+    do { \
+        if (!(condition)) { \
+            fprintf(stderr, "FAIL: %s\n", message); \
+            return 1; \
+        } \
+    } while (0)
+
+static int implementation_binding_manifest_is_clean_room_no_effect(void) {
+    latticra_q_seal_ml_kem_implementation_binding_manifest_t manifest;
+    char rendered[LATTICRA_Q_SEAL_ML_KEM_BINDING_REPORT_MAX];
+
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_prepare(&manifest) ==
+            LATTICRA_Q_SEAL_STATUS_OK,
+        "prepare");
+    EXPECT_TRUE(
+        strcmp(
+            manifest.binding_profile,
+            "latticra-q-seal-ml-kem-implementation-binding-manifest/0.1") == 0,
+        "profile");
+    EXPECT_TRUE(
+        strcmp(
+            manifest.formal_title,
+            "Latticra Q-Seal ML-KEM Implementation Binding Manifest") == 0,
+        "title");
+    EXPECT_TRUE(
+        strcmp(manifest.standards_basis, "NIST-FIPS-203-and-SP-800-227") == 0,
+        "standards");
+    EXPECT_TRUE(strcmp(manifest.source_boundary, "clean-room-no-apple-code") == 0, "boundary");
+    EXPECT_TRUE(
+        strcmp(manifest.binding_state, "implementation-binding-blocked") == 0,
+        "state");
+    EXPECT_TRUE(manifest.implementation_binding_manifest_present == 1u, "present");
+    EXPECT_TRUE(manifest.clean_room_source_boundary_recorded == 1u, "clean room");
+    EXPECT_TRUE(manifest.apple_corecrypto_code_copied == 0u, "apple");
+    EXPECT_TRUE(manifest.external_provider_code_copied == 0u, "provider");
+    EXPECT_TRUE(manifest.planned_source_units_count == 9u, "source units");
+    EXPECT_TRUE(manifest.planned_test_units_count == 9u, "test units");
+    EXPECT_TRUE(manifest.fips_203_algorithm_bound == 1u, "fips203");
+    EXPECT_TRUE(manifest.sp_800_227_kem_usage_bound == 1u, "sp800227");
+    EXPECT_TRUE(manifest.fips_conformance_matrix_bound == 1u, "conformance matrix");
+    EXPECT_TRUE(manifest.sp800_227_usage_profile_bound == 1u, "usage profile");
+    EXPECT_TRUE(manifest.implementation_traceability_matrix_bound == 1u, "traceability");
+    EXPECT_TRUE(manifest.primitive_source_acceptance_gate_bound == 1u, "source acceptance");
+    EXPECT_TRUE(manifest.source_layout_gate_bound == 1u, "source layout");
+    EXPECT_TRUE(manifest.implementation_file_digest_plan_bound == 1u, "file digest plan");
+    EXPECT_TRUE(manifest.clean_room_author_attestation_gate_bound == 1u, "author attestation");
+    EXPECT_TRUE(manifest.per_file_standards_trace_gate_bound == 1u, "standards trace");
+    EXPECT_TRUE(manifest.per_file_test_trace_gate_bound == 1u, "test trace");
+    EXPECT_TRUE(manifest.kat_manifest_bound == 1u, "kat");
+    EXPECT_TRUE(manifest.acvp_intake_bound == 1u, "acvp");
+    EXPECT_TRUE(manifest.acvp_capability_matrix_bound == 1u, "acvp matrix");
+    EXPECT_TRUE(manifest.acvp_fixture_row_plan_bound == 1u, "acvp rows");
+    EXPECT_TRUE(
+        manifest.acvp_fixture_digest_row_template_bound == 1u,
+        "acvp digest row template");
+    EXPECT_TRUE(manifest.acvp_parser_contract_bound == 1u, "acvp parser");
+    EXPECT_TRUE(manifest.acvp_response_contract_bound == 1u, "acvp response");
+    EXPECT_TRUE(manifest.acvp_response_fixture_bound == 1u, "acvp response fixture");
+    EXPECT_TRUE(
+        manifest.acvp_submission_package_contract_bound == 1u,
+        "acvp submission package");
+    EXPECT_TRUE(manifest.vector_schema_bound == 1u, "schema");
+    EXPECT_TRUE(manifest.vector_source_bound == 1u, "source");
+    EXPECT_TRUE(manifest.vector_fixture_lock_bound == 1u, "fixture lock");
+    EXPECT_TRUE(manifest.vector_fixture_digest_ledger_bound == 1u, "fixture digest ledger");
+    EXPECT_TRUE(manifest.replay_transcript_gate_bound == 1u, "transcript gate");
+    EXPECT_TRUE(manifest.acvp_verdict_receipt_gate_bound == 1u, "verdict receipt");
+    EXPECT_TRUE(manifest.validation_claim_gate_bound == 1u, "validation claim");
+    EXPECT_TRUE(manifest.module_boundary_gate_bound == 1u, "module boundary");
+    EXPECT_TRUE(manifest.negative_test_evidence_bound == 1u, "negative");
+    EXPECT_TRUE(manifest.memory_safety_evidence_bound == 1u, "memory");
+    EXPECT_TRUE(manifest.api_misuse_resistance_bound == 1u, "api");
+    EXPECT_TRUE(manifest.constant_time_review_bound == 1u, "constant");
+    EXPECT_TRUE(manifest.randomness_source_bound == 1u, "randomness");
+    EXPECT_TRUE(manifest.zeroization_evidence_bound == 1u, "zeroization");
+    EXPECT_TRUE(manifest.side_channel_review_bound == 1u, "side channel");
+    EXPECT_TRUE(manifest.provider_differential_bound == 1u, "provider differential");
+    EXPECT_TRUE(manifest.secret_state_contract_bound == 1u, "secret state");
+    EXPECT_TRUE(manifest.ci_promotion_evidence_bound == 1u, "ci");
+    EXPECT_TRUE(manifest.module_to_gate_matrix_recorded == 1u, "matrix");
+    EXPECT_TRUE(manifest.implementation_files_created == 0u, "files");
+    EXPECT_TRUE(manifest.implementation_code_present == 0u, "code");
+    EXPECT_TRUE(manifest.primitive_operations_bound == 0u, "primitive");
+    EXPECT_TRUE(manifest.keygen_binding_approved == 0u, "keygen");
+    EXPECT_TRUE(manifest.encaps_binding_approved == 0u, "encaps");
+    EXPECT_TRUE(manifest.decaps_binding_approved == 0u, "decaps");
+    EXPECT_TRUE(manifest.implementation_file_digest_manifest_recorded == 0u, "digest");
+    EXPECT_TRUE(manifest.code_owner_review_recorded == 0u, "code owner");
+    EXPECT_TRUE(manifest.operation_execution_allowed == 0u, "operation");
+    EXPECT_TRUE(manifest.production_crypto_claim_allowed == 0u, "production");
+    EXPECT_TRUE(manifest.fips_claim_allowed == 0u, "fips");
+    EXPECT_TRUE(manifest.runtime_authority_granted == 0u, "runtime");
+    EXPECT_TRUE(manifest.required_binding_items_total == 48u, "total");
+    EXPECT_TRUE(manifest.required_binding_items_satisfied == 43u, "satisfied");
+    EXPECT_TRUE(manifest.error == LATTICRA_Q_SEAL_ML_KEM_BINDING_MANIFEST_BLOCKED, "blocked");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_is_clean_room_no_effect(
+            &manifest) == 1,
+        "no effect");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation(
+            &manifest) == 0,
+        "allows implementation");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_report(
+            &manifest,
+            rendered,
+            sizeof(rendered)) == LATTICRA_Q_SEAL_STATUS_OK,
+        "report");
+    EXPECT_TRUE(
+        strstr(rendered, "LATTICRA Q-SEAL ML-KEM IMPLEMENTATION BINDING MANIFEST") != 0,
+        "header");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_binding_manifest_present=1") != 0,
+        "present report");
+    EXPECT_TRUE(strstr(rendered, "planned_source_units_count=9") != 0, "source report");
+    EXPECT_TRUE(
+        strstr(rendered, "fips_conformance_matrix_bound=1") != 0,
+        "conformance matrix report");
+    EXPECT_TRUE(
+        strstr(rendered, "sp800_227_usage_profile_bound=1") != 0,
+        "usage profile report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_traceability_matrix_bound=1") != 0,
+        "traceability report");
+    EXPECT_TRUE(
+        strstr(rendered, "primitive_source_acceptance_gate_bound=1") != 0,
+        "source acceptance report");
+    EXPECT_TRUE(
+        strstr(rendered, "source_layout_gate_bound=1") != 0,
+        "source layout report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_file_digest_plan_bound=1") != 0,
+        "file digest plan report");
+    EXPECT_TRUE(
+        strstr(rendered, "clean_room_author_attestation_gate_bound=1") != 0,
+        "author attestation report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_standards_trace_gate_bound=1") != 0,
+        "standards trace report");
+    EXPECT_TRUE(
+        strstr(rendered, "per_file_test_trace_gate_bound=1") != 0,
+        "test trace report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_capability_matrix_bound=1") != 0,
+        "acvp matrix report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_row_plan_bound=1") != 0,
+        "acvp rows report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_fixture_digest_row_template_bound=1") != 0,
+        "acvp template report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_parser_contract_bound=1") != 0,
+        "acvp parser report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_contract_bound=1") != 0,
+        "acvp response report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_response_fixture_bound=1") != 0,
+        "acvp response fixture report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_submission_package_contract_bound=1") != 0,
+        "acvp submission package report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_lock_bound=1") != 0,
+        "fixture lock report");
+    EXPECT_TRUE(
+        strstr(rendered, "vector_fixture_digest_ledger_bound=1") != 0,
+        "fixture digest ledger report");
+    EXPECT_TRUE(
+        strstr(rendered, "replay_transcript_gate_bound=1") != 0,
+        "transcript gate report");
+    EXPECT_TRUE(
+        strstr(rendered, "acvp_verdict_receipt_gate_bound=1") != 0,
+        "verdict receipt report");
+    EXPECT_TRUE(
+        strstr(rendered, "validation_claim_gate_bound=1") != 0,
+        "validation claim report");
+    EXPECT_TRUE(
+        strstr(rendered, "module_boundary_gate_bound=1") != 0,
+        "module boundary report");
+    EXPECT_TRUE(
+        strstr(rendered, "implementation_code_present=0") != 0,
+        "code report");
+    EXPECT_TRUE(
+        strstr(rendered, "status=ml-kem-implementation-binding-blocked") != 0,
+        "status");
+    return 0;
+}
+
+static int invalid_and_buffer_paths_fail_closed(void) {
+    latticra_q_seal_ml_kem_implementation_binding_manifest_t manifest;
+    char tiny[1];
+
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_prepare(0) ==
+            LATTICRA_Q_SEAL_STATUS_NULL_ARGUMENT,
+        "null prepare");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_is_clean_room_no_effect(0) == 0,
+        "null no effect");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_allows_implementation(0) == 0,
+        "null implementation");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_prepare(&manifest) ==
+            LATTICRA_Q_SEAL_STATUS_OK,
+        "prepare");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_report(
+            &manifest,
+            tiny,
+            sizeof(tiny)) == LATTICRA_Q_SEAL_STATUS_BUFFER_TOO_SMALL,
+        "small report");
+    EXPECT_TRUE(tiny[0] == '\0', "small clear");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_report(0, tiny, sizeof(tiny)) ==
+            LATTICRA_Q_SEAL_STATUS_NULL_ARGUMENT,
+        "null report manifest");
+    EXPECT_TRUE(
+        latticra_q_seal_ml_kem_implementation_binding_manifest_report(
+            &manifest,
+            0,
+            sizeof(tiny)) == LATTICRA_Q_SEAL_STATUS_NULL_ARGUMENT,
+        "null report buffer");
+    return 0;
+}
+
+int main(void) {
+    if (implementation_binding_manifest_is_clean_room_no_effect() != 0) {
+        return 1;
+    }
+    if (invalid_and_buffer_paths_fail_closed() != 0) {
+        return 1;
+    }
+    printf("latticra q-seal ml-kem implementation binding manifest invariants: ok\n");
+    return 0;
+}

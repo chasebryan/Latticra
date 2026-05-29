@@ -1,0 +1,6 @@
+-------------------------------------------------------------------
+Tue May 26 00:00:00 UTC 2026 - Bryforge <noreply@example.invalid>
+
+- Add local-only openSUSE RPM packaging draft for the no-effect CLI payload.
+- Record openSUSE maintenance lane without Open Build Service publication,
+  official package, SUSE endorsement, or production readiness claims.

@@ -28,6 +28,8 @@ scripts/test-latticra-seal-agentic-automation-security-contract.sh
 scripts/test-latticra-seal-mcp-alignment-plan.sh
 scripts/test-latticra-seal-agentic-automation-security.sh
 scripts/test-latticra-seal-agentic-automation-security-status.sh
+scripts/test-latticra-seal-agentic-automation-security-public-entrypoint-alignment.sh
+docs/status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md
 ```
 
 ## Alignment checkpoint
@@ -41,6 +43,7 @@ seal_agentic_metadata_implementation_indexed=1
 seal_agentic_status_record_indexed=1
 seal_agentic_status_guard_indexed=1
 seal_agentic_index_alignment_record_present=1
+seal_agentic_public_entrypoint_alignment_present=1
 mode=doc-status-alignment
 implementation_behavior_changed=0
 runtime_authority_granted=0
@@ -95,6 +98,6 @@ It does not add MCP protocol behavior, MCP server behavior, MCP client behavior,
 
 ## Current next valid slice
 
-The next valid Latticra Seal slice is a public README/status/foundation entry-point refresh or a dedicated report command surface.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not change implementation behavior, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security Logging, Monitoring, and Detection | Latticra</title>
+  <meta name="description" content="A public overview of Latticra security logging, monitoring, and detection gates for event-source inventory, audit events, redaction, integrity, retention, triage, incident handoff, and monitoring non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Security Logging, Monitoring, and Detection">
+  <meta property="og:description" content="Logging and monitoring requirements, local report boundaries, redaction guards, and no SIEM, telemetry, or detection-service claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Security logging, monitoring, and detection</p>
+        <p class="eyebrow">Event Sources, Redaction, Triage, and Non-Claims</p>
+        <h1>Security logging, monitoring, and detection</h1>
+        <p class="page-lede">
+          Latticra records logging, monitoring, and detection requirements before hosted services, production monitoring, detection services, SIEM integration, telemetry export, or security operations claims can promote. It does not implement a log collector, SIEM, telemetry export, host sensor, network sensor, detection rule, alerting service, log storage, or monitoring authority.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Local reports are not monitoring services.</h2>
+        </div>
+        <p>
+          Current reporting work is deterministic, local, and no-effect. The baseline requires event-source inventory, audit event selection, runtime decision events, denial reasons, identity/access events, privileged actions, redaction, integrity controls, retention, disposal, triage ownership, and incident handoff before monitoring language can change.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Security logging monitoring detection overview">
+        <article>
+          <span>01</span>
+          <h3>Event source inventory</h3>
+          <p>Security event sources need owners, schemas, selected audit events, severity taxonomy, and time-source records before production audit claims.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Decision and access events</h3>
+          <p>Runtime decisions, denial reasons, identity/access events, privileged actions, configuration changes, and security errors must be explicit.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Redaction and integrity</h3>
+          <p>Logs require redaction review, secret-marker scanning, integrity controls, access controls, retention, and disposal process records.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Triage and handoff</h3>
+          <p>Critical log-source disable alerts, detection triage owners, and incident handoff paths are required before detection-service wording.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline is present, but monitoring authority is still zero.</h2>
+        <p>
+          These fields show requirements and denials. They are not evidence of live log collection, SIEM export, telemetry, sensors, alerting, or detection service operation.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Security logging monitoring status snapshot">
+        <article>
+          <span>security_logging_monitoring_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>runtime_authority_decision_logging_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>log_redaction_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>secret_free_log_guard_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>log_integrity_tamper_resistance_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>log_collector_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>telemetry_export_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>detection_service_claim_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Promotion Gate</p>
+          <h2>No monitoring or detection wording can promote without the logging gate.</h2>
+          <p>
+            A future monitoring surface must prove what it observes, how records are shaped, how sensitive material is excluded, how logs are protected, who triages events, and how incidents are handed off before public claims can change.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Security logging monitoring promotion gate">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Baseline record, status record, guard script, local deterministic report surfaces, report-redaction guard, secret-material guard, zero-trust decision-report context, incident handoff context, and supply-chain redaction expectations.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before promotion</span>
+            <p role="cell">Event-source inventory, log-source owner, schema or field contract, audit event selection, runtime decision events, denial reason events, identity/access events, privileged action events, configuration changes, security errors, severity taxonomy, time source, redaction review, secret-marker scan, integrity control, log access control, retention period, disposal process, centralization or export path, critical source disable alert, triage owner, incident handoff path, and operator-visible non-claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Production log monitoring, production audit claims, SIEM integration claims, telemetry export, host monitoring, network monitoring, alerting service, detection-service claims, security-operations claims, and log-collection service claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Latticra Boundary</p>
+        <h2>Reports stay local, deterministic, and guarded.</h2>
+        <p>
+          Latticra can report decisions and preserve redaction expectations, but it does not collect telemetry, monitor hosts, export to a SIEM, run sensors, or detect incidents.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Local</span>
+          <h3>Report metadata</h3>
+          <p>Local report surfaces can describe decisions and status without becoming a log collection service.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Local</span>
+          <h3>Policy decision reports</h3>
+          <p>Runtime policy decisions and denial reasons remain local report fields, not operational monitoring.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Guarded</span>
+          <h3>Redaction and secrets</h3>
+          <p>Report redaction and secret-material guards protect local evidence wording without claiming production log hygiene.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Telemetry and detection</h3>
+          <p>No log collector, remote telemetry, SIEM export, detection runtime, alerting service, or monitoring authority is added.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate logging requirements without enabling monitoring.</h2>
+        <p>
+          These checks validate records and local guardrails. They do not collect logs, export telemetry, run sensors, emit alerts, detect threats, or store monitoring data.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Logging baseline</h3>
+          <pre><code>sh scripts/test-security-logging-monitoring-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Report guards</h3>
+          <pre><code>sh scripts/test-report-redaction-boundary.sh
+sh scripts/test-secret-material-guard.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Security context</h3>
+          <pre><code>sh scripts/test-zero-trust-runtime-authority-baseline.sh
+sh scripts/test-cyber-incident-reporting-response-baseline.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating logging or monitoring wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="SECURITY_LOGGING_MONITORING_BASELINE.md"><strong>Security logging, monitoring, and detection baseline</strong><span>Event-source inventory, audit event selection, redaction, retention, detection triage, incident handoff, and monitoring non-claims.</span></a>
+        <a href="status/SECURITY_LOGGING_MONITORING_BASELINE_STATUS.md"><strong>Logging baseline status</strong><span>Status fields and expected guard output for the logging, monitoring, and detection baseline.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and future logging and detection control allocation.</span></a>
+        <a href="ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md"><strong>Zero-trust runtime authority baseline</strong><span>Audit-record, policy-decision, and denial-reason context for future authority requests.</span></a>
+        <a href="CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md"><strong>Incident reporting baseline</strong><span>Evidence preservation, audit records, reporting routes, and closed response authority.</span></a>
+        <a href="backup-recovery.html"><strong>Backup and recovery resilience</strong><span>Restore testing, recovery prioritization, RTO/RPO, rollback planning, and incident handoff context.</span></a>
+        <a href="configuration-change.html"><strong>Secure configuration and change management</strong><span>Configuration-change logging context, baselines, checklists, drift planning, and hardening non-claims.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Network log source inventory, flow visibility, incident handoff, and no network monitoring claims.</span></a>
+        <a href="data-protection.html"><strong>Data classification and protection</strong><span>Log/report redaction, retention, disposal, PII review, telemetry blockers, and no customer-data claims.</span></a>
+        <a href="SUPPLY_CHAIN_SECURITY_BASELINE.md"><strong>Supply-chain baseline</strong><span>Report redaction, installer log redaction, workflow authority, and release blockers.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+        <a href="incident-response.html"><strong>Incident response boundary</strong><span>Reporting routes, evidence preservation, response gates, and incident-response non-claims.</span></a>
+        <a href="identity-access.html"><strong>Identity and access management</strong><span>Identity/access event context, privileged behavior review, access exceptions, and hosted-access non-claims.</span></a>
+        <a href="runtime.html"><strong>Runtime boundary</strong><span>Default-deny runtime classification, policy matrix, and no-effect report surfaces.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, public claim boundaries, and exact source records.</span></a>
+        <a href="NON_CLAIMS.md"><strong>Non-claims</strong><span>Unsupported monitoring, detection, hosted-service, and production-readiness claims.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra security logging, monitoring, and detection.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

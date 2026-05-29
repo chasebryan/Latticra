@@ -12,12 +12,15 @@ permissions:
 jobs:
   fedora-rpmlint-availability:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     container:
       image: registry.fedoraproject.org/fedora:latest
     steps:
       - name: Prepare checkout tools
         run: dnf -y install git tar gzip
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run Fedora rpmlint availability guard
         run: sh scripts/test-fedora-rpmlint-availability.sh

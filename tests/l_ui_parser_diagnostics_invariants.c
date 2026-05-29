@@ -60,6 +60,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -98,6 +99,7 @@ static int expect_diagnostic(
     EXPECT_TRUE(diagnostic.execution_allowed == 0, "diagnostic execution flag");
     EXPECT_TRUE(diagnostic.mutation_allowed == 0, "diagnostic mutation flag");
     EXPECT_TRUE(diagnostic.server_allowed == 0, "diagnostic server flag");
+    EXPECT_TRUE(diagnostic.network_allowed == 0, "diagnostic network flag");
     EXPECT_TRUE(diagnostic.recovery_allowed == 0, "diagnostic recovery flag");
     EXPECT_TRUE(diagnostic.hardware_allowed == 0, "diagnostic hardware flag");
 
@@ -291,6 +293,7 @@ static int error_diagnostics_preserve_no_effect_flags(void) {
     EXPECT_TRUE(diagnostic.execution_allowed == 0, "error diagnostic execution");
     EXPECT_TRUE(diagnostic.mutation_allowed == 0, "error diagnostic mutation");
     EXPECT_TRUE(diagnostic.server_allowed == 0, "error diagnostic server");
+    EXPECT_TRUE(diagnostic.network_allowed == 0, "error diagnostic network");
     EXPECT_TRUE(diagnostic.recovery_allowed == 0, "error diagnostic recovery");
     EXPECT_TRUE(diagnostic.hardware_allowed == 0, "error diagnostic hardware");
     return 0;
@@ -343,6 +346,7 @@ static int diagnostic_report_contains_required_fields(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0") != 0, "report execution flag");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0") != 0, "report mutation flag");
     EXPECT_TRUE(strstr(report, "server_allowed=0") != 0, "report server flag");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "report network flag");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0") != 0, "report recovery flag");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0") != 0, "report hardware flag");
     return 0;

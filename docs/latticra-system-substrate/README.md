@@ -1,8 +1,8 @@
 # The Latticra System Substrate
 
-**Title:** *The Latticra System Substrate: An Effect at Modern Security*  
-**Edition:** Working Draft 0.1 — 2026-05-24  
-**Role:** Project-level technical handbook for Latticra, Latticra Seal, Panel, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
+**Title:** *The Latticra System Substrate: An Effect at Modern Security*<br>
+**Edition:** Working Draft 0.17 — 2026-05-28<br>
+**Role:** Project-level technical handbook for Latticra, Latticra Seal trust-boundary metadata, authority-neutral Ed25519 verification evidence, metadata-only capability/effect/handoff/report/envelope/signature-request/signing-operation classification and status guards, disposable Fedora VM CLI payload validation evidence, Latticra Console host/receipt/signature/OS/VM contract surfaces, Runtime Boundary Lat/LIR provenance records, Nucleus, Nadia Stage-51 contract-only offline-AI release/receipt/review/disposition metadata, Panel, platform install validation lanes, Lat/LIR contract surfaces, receipts, reports, and future runtime-boundary research.
 
 This handbook supersedes the former standalone **Latticra Seal Documentation Handbook** as the main reader-facing book for the project.
 
@@ -12,6 +12,15 @@ The Seal handbook was useful as a subsystem reference. This new handbook expands
 
 - [PDF edition](the-latticra-system-substrate.pdf)
 - [Editable DOCX edition](the-latticra-system-substrate.docx)
+- [Public repository folder](https://github.com/Bryforge/Latticra/tree/main/docs/latticra-system-substrate)
+
+## Living handbook cadence
+
+Treat this handbook as a live project artifact, not a finished release.
+
+As Latticra work progresses, material decisions, capability changes, boundary refinements, validation lanes, public wording, and evidence updates should be folded back into the handbook alongside the nearer-term project notes and status records.
+
+Handbook updates should stay evidence-bound: describe what is implemented, tested, measured, planned, or explicitly out of scope, and avoid promoting future runtime, enforcement, host-protection, packaging, or production claims ahead of reproducible evidence.
 
 ## Correct interpretation
 
@@ -38,9 +47,15 @@ The handbook's core claim is narrower and more useful: Latticra is a substrate f
 
 Latticra Seal remains the verification, reporting, manifest/hash baseline, and policy-boundary lane inside the Latticra ecosystem.
 
+Working Draft 0.17 carries the Seal trust/crypto ladder forward, keeps the current Latticra Console contract bundle, preserves Runtime Boundary Lat/LIR provenance records, keeps signing-operation status guard/predecessor alignment for the Seal signing path, folds in disposable Fedora VM CLI payload validation evidence and README/status alignment, and adds Nadia Stage-48 through Stage-51 release/receipt/review/disposition contract metadata on top of the Stage-39 through Stage-47 ladder. Seal documents signed request metadata, request freshness metadata, verification receipts, crypto verify backend metadata, local Ed25519 verify-only results, verified receipt promotion metadata, verified capability gate metadata, verified effect decision metadata, runtime handoff evaluation metadata, runtime handoff report metadata, report envelope metadata, signature request metadata, signing authorization metadata, signer handoff metadata, signer invocation metadata, signing-operation readiness metadata, effect decisions, runtime handoff boundaries, and report envelopes. Latticra Console documents metadata-only host-adapter, receipt-request, receipt-payload, payload-artifact-draft, signature-request-binding, OS-base, and VM-evidence contract surfaces. Runtime Boundary carries Lat pipeline first-clause evidence as provenance metadata. Fedora platform evidence distinguishes a bounded disposable-VM CLI payload, `/usr/bin/latticra` plus `/usr/share/doc/latticra/README.md`, with `host_install_ready_for_cli_payload=1` from `production_installer_ready=0`, `fedora_distribution_ready=0`, `fedora_approval_claimed=0`, `daily_driver_install_ready=0`, and `immutable_fedora_ready=0`. Nadia now records contract-only prompt-evaluation-result release receipt, review, disposition, release, receipt, review, disposition, release, receipt, review, disposition, release, and receipt metadata through Stage-51 while preserving `runtime_invoked=0`, `prompt_evaluated=0`, `token_generation_performed=0`, `inference_performed=0`, `qa_dialogue_generated=0`, `answer_text_generated=0`, `network_authority=0`, `tool_execution_authority=0`, `source_mutation_authority=0`, `sexual_request_refusal=always`, and `manipulation_resistance=required`. These surfaces do not claim host embedding, language execution, operator evaluation, payload materialization outside the validated package payload, receipt writing, signing, signer invocation, signature verification, private-key handling, key generation, trust-store behavior, revocation checks, object sealing, capability enforcement, effect execution, VM launch outside recorded validation, boot behavior, host effects beyond the disposable VM transcript, Nadia release/receipt/review/disposition recording, model-output recording, prompt evaluation, token generation, inference, dialogue generation, network authority, runtime authority, runtime handoff execution, production OS status, Fedora approval, daily-driver readiness, immutable Fedora readiness, security capability, update safety, recovery safety, sandboxing, malware prevention, ransomware prevention, OS-replacement readiness, or production cryptography.
+
 The new System Substrate handbook places Seal in the full project architecture alongside:
 
 - Latticra Panel
+- Latticra Console
+- Nucleus report-only task boundaries
+- Nadia Stage-51 offline AI contract metadata
+- macOS and Fedora platform validation lanes
 - guarded local-prefix installation
 - receipts and reports
 - command contracts

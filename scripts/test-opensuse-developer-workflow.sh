@@ -1,0 +1,555 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'opensuse developer workflow: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'opensuse developer workflow: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_file docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_file docs/OPENSUSE_READINESS_PLAN.md
+require_file docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md
+require_file docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_file docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_file docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_file docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_file docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+require_file docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_file docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_file docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file README.md
+require_file installer/README.md
+require_file packaging/opensuse/README.md
+require_file packaging/opensuse/latticra.spec
+require_file packaging/opensuse/latticra.changes
+require_file scripts/test-opensuse-rpmlint-osc-availability.sh
+require_file scripts/test-opensuse-rpmlint-static-spec-lane.sh
+require_file scripts/test-opensuse-rpmlint-findings-classification.sh
+require_file scripts/test-opensuse-source-archive-reproducibility-contract.sh
+require_file scripts/test-opensuse-source-archive-fixture-lane.sh
+require_file scripts/test-opensuse-rpm-topdir-handoff-lane.sh
+require_file scripts/test-opensuse-local-rpm-build-gate-contract.sh
+require_file scripts/test-opensuse-local-rpm-build-environment-contract.sh
+require_file scripts/test-opensuse-rpm-artifact-naming-contract.sh
+require_file scripts/test-opensuse-rpm-payload-inspection-contract.sh
+require_file scripts/test-opensuse-rpm-install-remove-transcript-contract.sh
+require_file scripts/test-opensuse-obs-publication-non-claim-review-contract.sh
+require_file scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh
+require_file scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh
+require_file .github/workflows/opensuse-developer-workflow.yml
+require_file .github/workflows/opensuse-rpmlint-osc-availability.yml
+require_file .github/workflows/opensuse-rpmlint-static-spec-lane.yml
+require_file .github/workflows/opensuse-rpmlint-findings-classification.yml
+require_file .github/workflows/opensuse-source-archive-reproducibility-contract.yml
+require_file .github/workflows/opensuse-source-archive-fixture-lane.yml
+require_file .github/workflows/opensuse-rpm-topdir-handoff-lane.yml
+require_file .github/workflows/opensuse-local-rpm-build-gate-contract.yml
+require_file .github/workflows/opensuse-local-rpm-build-environment-contract.yml
+require_file .github/workflows/opensuse-rpm-artifact-naming-contract.yml
+require_file .github/workflows/opensuse-rpm-payload-inspection-contract.yml
+require_file .github/workflows/opensuse-rpm-install-remove-transcript-contract.yml
+require_file .github/workflows/opensuse-obs-publication-non-claim-review-contract.yml
+require_file .github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.yml
+require_file .github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review.yml
+require_file .github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition.yml
+
+require_contains 'Status: developer workflow record' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'local openSUSE Linux commands for productive Latticra development' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'same guards as the Fedora and Ubuntu tracks' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper refresh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper install -y git gcc make coreutils findutils diffutils grep pkgconf' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+require_contains 'opensuse_developer_workflow: ok' docs/OPENSUSE_DEVELOPER_WORKFLOW.md
+
+require_contains 'Status: planning and maintenance record' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'same purpose as the Fedora and Ubuntu tracks' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'openSUSE integration and maintenance' docs/status/OPENSUSE_ECOSYSTEM_INTEGRATION_STATUS.md
+require_contains 'opensuse_developer_workflow_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_panel_prerequisites_documented=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_draft_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_static_validation_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_changes_file_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpmlint_osc_availability_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpmlint_static_spec_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpmlint_findings_classification_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_source_archive_reproducibility_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_source_archive_fixture_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_topdir_handoff_lane_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_build_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_payload_inspection_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_obs_publication_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'opensuse_official_package_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'suse_endorsement_claimed=0' docs/OPENSUSE_READINESS_PLAN.md
+require_contains 'Status: active tool availability lane' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'rpmlint installs' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'osc installs' docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md
+require_contains 'Status: active static spec lint lane' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'rpmlint can inspect packaging/opensuse/latticra.spec' docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md
+require_contains 'Status: active findings classification record' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'Expected Draft Finding Classes' docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md
+require_contains 'Status: active source archive reproducibility contract' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_contains 'source_archive_name=latticra-0.0.0.tar.gz' docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md
+require_contains 'Status: active fixture lane' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'source_archive_repeated_sha256_match=1' docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md
+require_contains 'Status: active temporary RPM topdir handoff lane' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_contains 'temporary_rpm_sources_archive_staged=1' docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md
+require_contains 'Status: active local RPM build evidence gate contract' docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+require_contains 'opensuse_rpm_build_gate_state=closed-no-effect' docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md
+require_contains 'Status: active local RPM build environment contract' docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md
+require_contains 'Status: active RPM artifact naming contract' docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md
+require_contains 'Status: active RPM payload inspection contract' docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_contains 'opensuse_rpm_payload_inspection_contract_state=specified-no-effect' docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md
+require_contains 'Status: active RPM install/remove transcript contract' docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect' docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md
+require_contains 'Status: active OBS publication non-claim review contract' docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM validation promotion blocker matrix contract' docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1' docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial review contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_contains 'Status: active RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout contract' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md
+
+require_contains 'openSUSE prerequisites' README.md
+require_contains '## openSUSE integration and maintenance' README.md
+require_contains 'docs/OPENSUSE_DEVELOPER_WORKFLOW.md' README.md
+require_contains 'docs/OPENSUSE_READINESS_PLAN.md' README.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_STATIC_VALIDATION.md' README.md
+require_contains 'docs/OPENSUSE_RPMLINT_OSC_AVAILABILITY.md' README.md
+require_contains 'docs/OPENSUSE_RPMLINT_STATIC_SPEC_LANE.md' README.md
+require_contains 'docs/OPENSUSE_RPMLINT_FINDINGS_CLASSIFICATION.md' README.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_SOURCE_ARCHIVE_FIXTURE_LANE.md' README.md
+require_contains 'docs/OPENSUSE_RPM_TOPDIR_HANDOFF_LANE.md' README.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_GATE_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_LOCAL_RPM_BUILD_ENVIRONMENT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_ARTIFACT_NAMING_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_PAYLOAD_INSPECTION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_INSTALL_REMOVE_TRANSCRIPT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_OBS_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'packaging/opensuse/README.md' README.md
+require_contains 'sh scripts/test-opensuse-developer-workflow.sh' README.md
+require_contains 'sh scripts/test-opensuse-local-rpm-static-validation.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpmlint-osc-availability.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpmlint-static-spec-lane.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpmlint-findings-classification.sh' README.md
+require_contains 'sh scripts/test-opensuse-source-archive-reproducibility-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-source-archive-fixture-lane.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-topdir-handoff-lane.sh' README.md
+require_contains 'sh scripts/test-opensuse-local-rpm-build-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' README.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' README.md
+
+require_contains 'openSUSE prerequisites:' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sudo zypper install -y rust cargo make gcc pkgconf' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-local-rpm-build-environment-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-artifact-naming-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-payload-inspection-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-install-remove-transcript-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-obs-publication-non-claim-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'openSUSE:' installer/README.md
+
+require_contains 'Status: local-only packaging draft' packaging/opensuse/README.md
+require_contains 'not an official openSUSE package' packaging/opensuse/README.md
+require_contains 'not Open Build Service publication evidence' packaging/opensuse/README.md
+require_contains 'opensuse_local_rpm_build_environment_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_environment_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_artifact_naming_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_payload_inspection_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_payload_inspection_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_install_remove_transcript_contract_state=specified-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_obs_publication_non_claim_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'obs_publication_non_claim_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'rpm_validation_result_promoted=0' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_validation_promotion_blocker_matrix_contract_present=1' packaging/opensuse/README.md
+require_contains 'validation_promotion_blocker_matrix_state=blocked-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_platform_build_evidence_accepted=0' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_state=denied-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_build_evidence_intake_denied=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_state=closed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_closed=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_evidence_intake_denial_repeat_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' packaging/opensuse/README.md
+require_contains 'build_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' packaging/opensuse/README.md
+require_contains 'denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' packaging/opensuse/README.md
+require_contains 'opensuse_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposed=1' packaging/opensuse/README.md
+require_contains 'opensuse_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' packaging/opensuse/README.md
+require_contains 'opensuse_build_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closed_out=1' packaging/opensuse/README.md
+require_contains 'denial_archive_allowed=0' packaging/opensuse/README.md
+require_contains 'denial_archive_record_write_allowed=0' packaging/opensuse/README.md
+require_contains 'denial_re_request_allowed=0' packaging/opensuse/README.md
+
+printf 'opensuse_developer_workflow: ok\n'

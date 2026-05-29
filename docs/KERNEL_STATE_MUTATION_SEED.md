@@ -30,7 +30,7 @@ docs/KERNEL_STATE_MUTATION_SEED.md
 
 ## State ladder
 
-The initial guarded ladder is:
+The current guarded ladder is:
 
 ```text
 created
@@ -38,6 +38,49 @@ initialized
 registry-ready
 scheduler-ready
 memory-map-ready
+process-table-ready
+syscall-table-ready
+ipc-table-ready
+vfs-namespace-ready
+device-registry-ready
+driver-catalog-ready
+interrupt-table-ready
+timer-source-ready
+scheduler-tick-ready
+run-queue-ready
+context-switch-ready
+time-accounting-ready
+preemption-ready
+scheduler-credit-ready
+scheduler-selection-ready
+scheduler-dispatch-ready
+scheduler-handoff-ready
+scheduler-activation-ready
+scheduler-run-entry-ready
+runtime-entry-admission-ready
+runtime-entry-frame-ready
+runtime-entry-register-view-ready
+runtime-entry-stack-view-ready
+runtime-entry-address-space-view-ready
+runtime-entry-privilege-level-view-ready
+runtime-entry-syscall-gate-view-ready
+runtime-entry-syscall-dispatch-view-ready
+runtime-entry-syscall-return-view-ready
+runtime-entry-syscall-exit-view-ready
+runtime-entry-user-mode-resume-view-ready
+runtime-entry-post-resume-observation-view-ready
+runtime-entry-scheduler-return-observation-view-ready
+runtime-entry-process-return-observation-view-ready
+runtime-entry-idle-return-observation-view-ready
+runtime-entry-quiescent-return-observation-view-ready
+runtime-entry-persistence-boundary-observation-view-ready
+runtime-entry-recovery-boundary-observation-view-ready
+runtime-entry-recovery-plan-observation-view-ready
+runtime-entry-recovery-disposition-observation-view-ready
+runtime-entry-recovery-outcome-observation-view-ready
+runtime-entry-recovery-closeout-observation-view-ready
+runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-review-observation-view-ready
 ```
 
 Allowed transitions are intentionally sequential:
@@ -47,6 +90,49 @@ created -> initialized
 initialized -> registry-ready
 registry-ready -> scheduler-ready
 scheduler-ready -> memory-map-ready
+memory-map-ready -> process-table-ready
+process-table-ready -> syscall-table-ready
+syscall-table-ready -> ipc-table-ready
+ipc-table-ready -> vfs-namespace-ready
+vfs-namespace-ready -> device-registry-ready
+device-registry-ready -> driver-catalog-ready
+driver-catalog-ready -> interrupt-table-ready
+interrupt-table-ready -> timer-source-ready
+timer-source-ready -> scheduler-tick-ready
+scheduler-tick-ready -> run-queue-ready
+run-queue-ready -> context-switch-ready
+context-switch-ready -> time-accounting-ready
+time-accounting-ready -> preemption-ready
+preemption-ready -> scheduler-credit-ready
+scheduler-credit-ready -> scheduler-selection-ready
+scheduler-selection-ready -> scheduler-dispatch-ready
+scheduler-dispatch-ready -> scheduler-handoff-ready
+scheduler-handoff-ready -> scheduler-activation-ready
+scheduler-activation-ready -> scheduler-run-entry-ready
+scheduler-run-entry-ready -> runtime-entry-admission-ready
+runtime-entry-admission-ready -> runtime-entry-frame-ready
+runtime-entry-frame-ready -> runtime-entry-register-view-ready
+runtime-entry-register-view-ready -> runtime-entry-stack-view-ready
+runtime-entry-stack-view-ready -> runtime-entry-address-space-view-ready
+runtime-entry-address-space-view-ready -> runtime-entry-privilege-level-view-ready
+runtime-entry-privilege-level-view-ready -> runtime-entry-syscall-gate-view-ready
+runtime-entry-syscall-gate-view-ready -> runtime-entry-syscall-dispatch-view-ready
+runtime-entry-syscall-dispatch-view-ready -> runtime-entry-syscall-return-view-ready
+runtime-entry-syscall-return-view-ready -> runtime-entry-syscall-exit-view-ready
+runtime-entry-syscall-exit-view-ready -> runtime-entry-user-mode-resume-view-ready
+runtime-entry-user-mode-resume-view-ready -> runtime-entry-post-resume-observation-view-ready
+runtime-entry-post-resume-observation-view-ready -> runtime-entry-scheduler-return-observation-view-ready
+runtime-entry-scheduler-return-observation-view-ready -> runtime-entry-process-return-observation-view-ready
+runtime-entry-process-return-observation-view-ready -> runtime-entry-idle-return-observation-view-ready
+runtime-entry-idle-return-observation-view-ready -> runtime-entry-quiescent-return-observation-view-ready
+runtime-entry-quiescent-return-observation-view-ready -> runtime-entry-persistence-boundary-observation-view-ready
+runtime-entry-persistence-boundary-observation-view-ready -> runtime-entry-recovery-boundary-observation-view-ready
+runtime-entry-recovery-boundary-observation-view-ready -> runtime-entry-recovery-plan-observation-view-ready
+runtime-entry-recovery-plan-observation-view-ready -> runtime-entry-recovery-disposition-observation-view-ready
+runtime-entry-recovery-disposition-observation-view-ready -> runtime-entry-recovery-outcome-observation-view-ready
+runtime-entry-recovery-outcome-observation-view-ready -> runtime-entry-recovery-closeout-observation-view-ready
+runtime-entry-recovery-closeout-observation-view-ready -> runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-observation-view-ready -> runtime-entry-recovery-audit-review-observation-view-ready
 ```
 
 No-op transitions are allowed when the gate allows them.
@@ -118,4 +204,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may add a kernel state machine runner or state persistence plan, but external effects should remain blocked until a separate effect contract and rollback policy exist.
+A later slice may add state persistence planning or rollback classification, but external effects should remain blocked until a separate effect contract and rollback policy exist.

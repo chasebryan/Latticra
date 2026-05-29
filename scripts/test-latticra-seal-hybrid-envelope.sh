@@ -1,0 +1,858 @@
+#!/usr/bin/env sh
+set -eu
+
+: "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
+
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-hybrid-envelope.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
+OPENSSL_CFLAGS="${OPENSSL_CFLAGS:-}"
+OPENSSL_LIBS="${OPENSSL_LIBS:-}"
+
+if [ -z "$OPENSSL_CFLAGS$OPENSSL_LIBS" ] && command -v pkg-config >/dev/null 2>&1; then
+  if pkg-config --exists openssl; then
+    OPENSSL_CFLAGS="$(pkg-config --cflags openssl)"
+    OPENSSL_LIBS="$(pkg-config --libs openssl)"
+  fi
+fi
+
+if [ -z "$OPENSSL_CFLAGS$OPENSSL_LIBS" ] && command -v brew >/dev/null 2>&1; then
+  openssl_prefix="$(brew --prefix openssl@3 2>/dev/null || brew --prefix openssl 2>/dev/null || true)"
+  if [ -n "$openssl_prefix" ]; then
+    OPENSSL_CFLAGS="-I$openssl_prefix/include"
+    OPENSSL_LIBS="-L$openssl_prefix/lib -lcrypto"
+  fi
+fi
+
+if [ -z "$OPENSSL_LIBS" ]; then
+  OPENSSL_LIBS="-lcrypto"
+fi
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'latticra seal hybrid envelope: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'latticra seal hybrid envelope: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_file include/latticra/seal_hybrid_envelope.h
+require_file include/latticra/seal_hybrid_provider_self_test.h
+require_file src/seal_hybrid_envelope.c
+require_file src/seal_hybrid_provider_self_test.c
+require_file tests/seal_hybrid_envelope_invariants.c
+require_file docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_file docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+
+require_contains 'LATTICRA_SEAL_HYBRID_CLASSICAL_SHARED_SECRET_BYTES 32u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_PQC_SHARED_SECRET_BYTES 32u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_NONCE_BYTES 12u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_TAG_BYTES 16u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_DETACHED_COMMITMENT_BYTES 32u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_COMMITMENT_BYTES 32u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_KDF_DOMAIN_DETACHED 1u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_KDF_DOMAIN_ATTACHED_RECORD 2u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_SUITE_HKDF_SHA256_AES_256_GCM 1u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_SUITE_HKDF_SHA256_AES_256_GCM 1u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_HEADER_BYTES 80u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_PROTECTED_HEADER_BYTES 64u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_DETACHED_AAD_LABEL_BYTES 8u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_DETACHED_CALLER_AAD_LENGTH_BYTES 8u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_DETACHED_AAD_FRAME_BYTES' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_AAD_LABEL_BYTES 8u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_CALLER_AAD_LENGTH_BYTES 8u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RECORD_AAD_FRAME_BYTES' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS 256u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_REUSE_GUARD_CAPACITY 64u' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_CLASSICAL_SHARED_SECRET' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_PQC_SHARED_SECRET' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_SALT' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_WEAK_NONCE' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_MISSING_COMMITMENT' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_INVALID_COMMITMENT_SIZE' include/latticra/seal_hybrid_envelope.h
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_reuse_guard_t' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_reuse_guard_init' include/latticra/seal_hybrid_envelope.h
+require_contains 'salt_nonzero' include/latticra/seal_hybrid_envelope.h
+require_contains 'nonce_nonzero' include/latticra/seal_hybrid_envelope.h
+require_contains 'aead_nonce_uniqueness_required' include/latticra/seal_hybrid_envelope.h
+require_contains 'salt_bound_to_hkdf' include/latticra/seal_hybrid_envelope.h
+require_contains 'nonce_bound_to_aead' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_key_nonce_pair_csprng_backed' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_required' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_tracking_present' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_capacity' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_guard_entries_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_tracked' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_salt_nonce_reuse_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'weak_salt_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'weak_nonce_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_salt_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_nonce_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_ciphertext_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_tag_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_commitment_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_plaintext_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'failed_record_output_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_ciphertext_tail_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_plaintext_tail_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'successful_record_tail_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'unauthenticated_plaintext_staged' include/latticra/seal_hybrid_envelope.h
+require_contains 'staged_plaintext_cleared' include/latticra/seal_hybrid_envelope.h
+require_contains 'plaintext_released_after_authentication' include/latticra/seal_hybrid_envelope.h
+require_contains 'unsafe_buffer_overlap_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'hkdf_intermediate_material_zeroized' include/latticra/seal_hybrid_envelope.h
+require_contains 'hkdf_provider_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'hkdf_extract_expand_standard_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'hkdf_sha256_digest_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'hkdf_manual_fallback_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'aes_gcm_provider_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'aes_gcm_provider_cipher_fetched' include/latticra/seal_hybrid_envelope.h
+require_contains 'aes_gcm_96bit_nonce_configured' include/latticra/seal_hybrid_envelope.h
+require_contains 'aes_gcm_128bit_tag_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'aes_gcm_static_cipher_fallback_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_key_material_zeroized' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_key_material_zeroized' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_salt_caller_supplied' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_nonce_caller_supplied' include/latticra/seal_hybrid_envelope.h
+require_contains 'attached_record_salt_generated' include/latticra/seal_hybrid_envelope.h
+require_contains 'attached_record_nonce_generated' include/latticra/seal_hybrid_envelope.h
+require_contains 'random_bytes_ex_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'random_bytes_strength_bits_requested' include/latticra/seal_hybrid_envelope.h
+require_contains 'random_bytes_manual_fallback_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_salt_csprng_success' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_nonce_csprng_success' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_salt_random_bytes' include/latticra/seal_hybrid_envelope.h
+require_contains 'generated_nonce_random_bytes' include/latticra/seal_hybrid_envelope.h
+require_contains 'kdf_domain_separated' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_kdf_domain' include/latticra/seal_hybrid_envelope.h
+require_contains 'attached_record_kdf_domain' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_suite_id' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_suite_kdf_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_suite_id' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_suite_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_kdf_domain_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_suite_kdf_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_salt_nonce_nonzero' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_header_shape_validated' include/latticra/seal_hybrid_envelope.h
+require_contains 'malformed_record_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_key_commitment_present' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_key_kdf_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_verified' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_checked_before_decrypt' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_caller_aad_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_constant_time_compare' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_commitment_tampering_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_key_commitment_present' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_key_kdf_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_verified' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_checked_before_decrypt' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_caller_aad_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_constant_time_compare' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_commitment_tampering_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_provider_api_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_provider_fetched' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_hmac_sha256_digest_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_256bit_key_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_input_streamed' include/latticra/seal_hybrid_envelope.h
+require_contains 'commitment_mac_legacy_fallback_used' include/latticra/seal_hybrid_envelope.h
+require_contains 'caller_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_aad_size_bytes' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_aad_framed' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_aad_label_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_caller_aad_length_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'detached_caller_aad_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_aad_framed' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_aad_label_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'record_caller_aad_authenticated' include/latticra/seal_hybrid_envelope.h
+require_contains 'classical_shared_secret_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'pqc_shared_secret_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'hybrid_secret_length_framed' include/latticra/seal_hybrid_envelope.h
+require_contains 'hybrid_secret_role_labeled' include/latticra/seal_hybrid_envelope.h
+require_contains 'hybrid_secret_algorithm_labeled' include/latticra/seal_hybrid_envelope.h
+require_contains 'hybrid_secret_order_bound' include/latticra/seal_hybrid_envelope.h
+require_contains 'hybrid_secret_components_distinct' include/latticra/seal_hybrid_envelope.h
+require_contains 'duplicate_hybrid_shared_secret_rejected' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_seal_committed' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_open_committed' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_seal_record' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_open_record' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_encrypt_guarded' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_encrypt_committed' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_encrypt_committed_guarded' include/latticra/seal_hybrid_envelope.h
+require_contains 'latticra_seal_hybrid_envelope_decrypt_committed' include/latticra/seal_hybrid_envelope.h
+require_contains 'HKDF-SHA256' src/seal_hybrid_envelope.c
+require_contains 'AES-256-GCM' src/seal_hybrid_envelope.c
+require_contains 'NIST-SP-800-56C-REV2' src/seal_hybrid_envelope.c
+require_contains 'EVP_KDF_fetch' src/seal_hybrid_envelope.c
+require_contains 'EVP_KDF_derive' src/seal_hybrid_envelope.c
+require_contains 'OSSL_KDF_PARAM_DIGEST' src/seal_hybrid_envelope.c
+require_contains 'EVP_KDF_HKDF_MODE_EXTRACT_AND_EXPAND' src/seal_hybrid_envelope.c
+require_contains 'hkdf_extract_expand_standard_api_used' src/seal_hybrid_envelope.c
+require_contains 'hkdf_sha256_digest_bound' src/seal_hybrid_envelope.c
+require_contains 'EVP_CIPHER_fetch' src/seal_hybrid_envelope.c
+require_contains 'AES-256-GCM' src/seal_hybrid_envelope.c
+require_contains 'EVP_CIPHER_free' src/seal_hybrid_envelope.c
+require_contains 'aes_gcm_provider_api_used' src/seal_hybrid_envelope.c
+require_contains 'aes_gcm_provider_cipher_fetched' src/seal_hybrid_envelope.c
+require_contains 'aes_gcm_static_cipher_fallback_used' src/seal_hybrid_envelope.c
+require_contains 'EVP_aes_256_gcm' src/seal_hybrid_envelope.c
+require_contains 'hybrid_hkdf_info_detached' src/seal_hybrid_envelope.c
+require_contains 'hybrid_hkdf_info_detached_commitment' src/seal_hybrid_envelope.c
+require_contains 'detached/suite-1/v1' src/seal_hybrid_envelope.c
+require_contains 'hybrid_hkdf_info_attached_record' src/seal_hybrid_envelope.c
+require_contains 'hybrid_hkdf_info_attached_record_commitment' src/seal_hybrid_envelope.c
+require_contains 'mark_kdf_domain' src/seal_hybrid_envelope.c
+require_contains 'OPENSSL_cleanse' src/seal_hybrid_envelope.c
+require_contains 'LSEHENV1' src/seal_hybrid_envelope.c
+require_contains 'LSEDAAD1' src/seal_hybrid_envelope.c
+require_contains 'LSEDCOM1' src/seal_hybrid_envelope.c
+require_contains 'LSEHAAD1' src/seal_hybrid_envelope.c
+require_contains 'LSEHCOM1' src/seal_hybrid_envelope.c
+require_contains 'build_detached_aad' src/seal_hybrid_envelope.c
+require_contains 'build_record_aad' src/seal_hybrid_envelope.c
+require_contains 'derive_detached_commitment_key' src/seal_hybrid_envelope.c
+require_contains 'compute_detached_commitment' src/seal_hybrid_envelope.c
+require_contains 'compute_record_commitment' src/seal_hybrid_envelope.c
+require_contains 'hmac_sha256_detached_commitment_stream' src/seal_hybrid_envelope.c
+require_contains 'hmac_sha256_commitment_stream' src/seal_hybrid_envelope.c
+require_contains 'mark_detached_commitment_precheck' src/seal_hybrid_envelope.c
+require_contains 'EVP_MAC_update' src/seal_hybrid_envelope.c
+require_contains 'EVP_MAC_fetch' src/seal_hybrid_envelope.c
+require_contains 'OSSL_MAC_PARAM_DIGEST' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_provider_api_used' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_hmac_sha256_digest_bound' src/seal_hybrid_envelope.c
+require_contains 'commitment_mac_legacy_fallback_used' src/seal_hybrid_envelope.c
+require_contains 'CRYPTO_memcmp' src/seal_hybrid_envelope.c
+require_contains 'record_header_authenticated' src/seal_hybrid_envelope.c
+require_contains 'record_suite_authenticated' src/seal_hybrid_envelope.c
+require_contains 'record_kdf_domain_authenticated' src/seal_hybrid_envelope.c
+require_contains 'record_suite_kdf_bound' src/seal_hybrid_envelope.c
+require_contains 'detached_suite_kdf_bound' src/seal_hybrid_envelope.c
+require_contains 'record_salt_nonce_nonzero' src/seal_hybrid_envelope.c
+require_contains 'record_header_shape_validated' src/seal_hybrid_envelope.c
+require_contains 'malformed_record_rejected' src/seal_hybrid_envelope.c
+require_contains 'detached_key_commitment_present' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_key_kdf_bound' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_verified' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_checked_before_decrypt' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_caller_aad_bound' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_input_streamed' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_constant_time_compare = 1u' src/seal_hybrid_envelope.c
+require_contains 'detached_commitment_tampering_rejected' src/seal_hybrid_envelope.c
+require_contains 'record_key_commitment_present' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_key_kdf_bound' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_verified' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_checked_before_decrypt' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_caller_aad_bound' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_input_streamed' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_constant_time_compare = 1u' src/seal_hybrid_envelope.c
+require_contains 'record_commitment_tampering_rejected' src/seal_hybrid_envelope.c
+require_contains 'CRYPTO_memcmp' src/seal_hybrid_envelope.c
+require_contains 'detached_aad_framed' src/seal_hybrid_envelope.c
+require_contains 'detached_aad_label_authenticated' src/seal_hybrid_envelope.c
+require_contains 'detached_caller_aad_length_authenticated' src/seal_hybrid_envelope.c
+require_contains 'detached_caller_aad_authenticated' src/seal_hybrid_envelope.c
+require_contains 'record_aad_framed' src/seal_hybrid_envelope.c
+require_contains 'record_aad_label_authenticated' src/seal_hybrid_envelope.c
+require_contains 'record_caller_aad_authenticated' src/seal_hybrid_envelope.c
+require_contains 'hybrid_classical_secret_role_label' src/seal_hybrid_envelope.c
+require_contains 'hybrid_pqc_secret_role_label' src/seal_hybrid_envelope.c
+require_contains 'classical_shared_secret_bound' src/seal_hybrid_envelope.c
+require_contains 'pqc_shared_secret_bound' src/seal_hybrid_envelope.c
+require_contains 'hybrid_secret_length_framed' src/seal_hybrid_envelope.c
+require_contains 'hybrid_secret_role_labeled' src/seal_hybrid_envelope.c
+require_contains 'hybrid_secret_algorithm_labeled' src/seal_hybrid_envelope.c
+require_contains 'hybrid_classical_secret_algorithm_label' src/seal_hybrid_envelope.c
+require_contains 'hybrid_pqc_secret_algorithm_label' src/seal_hybrid_envelope.c
+require_contains 'hybrid_secret_order_bound' src/seal_hybrid_envelope.c
+require_contains 'duplicate-hybrid-shared-secret' src/seal_hybrid_envelope.c
+require_contains 'duplicate_hybrid_shared_secret_rejected' src/seal_hybrid_envelope.c
+require_contains 'attached_record_sealed' src/seal_hybrid_envelope.c
+require_contains 'latticra_seal_hybrid_envelope_seal_committed' src/seal_hybrid_envelope.c
+require_contains 'latticra_seal_hybrid_envelope_open_committed' src/seal_hybrid_envelope.c
+require_contains 'latticra_seal_hybrid_envelope_encrypt_committed' src/seal_hybrid_envelope.c
+require_contains 'latticra_seal_hybrid_envelope_decrypt_committed' src/seal_hybrid_envelope.c
+require_contains 'bytes_are_nonzero' src/seal_hybrid_envelope.c
+require_contains 'weak-classical-shared-secret' src/seal_hybrid_envelope.c
+require_contains 'weak-pqc-shared-secret' src/seal_hybrid_envelope.c
+require_contains 'weak-salt' src/seal_hybrid_envelope.c
+require_contains 'weak-nonce' src/seal_hybrid_envelope.c
+require_contains 'reused-salt-nonce' src/seal_hybrid_envelope.c
+require_contains 'random_nonzero_bytes' src/seal_hybrid_envelope.c
+require_contains 'RAND_bytes_ex' src/seal_hybrid_envelope.c
+require_contains 'LATTICRA_SEAL_HYBRID_RANDOM_STRENGTH_BITS' src/seal_hybrid_envelope.c
+require_contains 'reuse_guard_record_salt_nonce_if_new' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_tracking_present = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_tracked = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_rejected = 1u' src/seal_hybrid_envelope.c
+require_contains 'random_bytes_ex_api_used' src/seal_hybrid_envelope.c
+require_contains 'salt_bound_to_hkdf = 1u' src/seal_hybrid_envelope.c
+require_contains 'nonce_bound_to_aead = 1u' src/seal_hybrid_envelope.c
+require_contains 'caller_salt_nonce_reuse_guard_required = 1u' src/seal_hybrid_envelope.c
+require_contains 'generated_salt_csprng_success' src/seal_hybrid_envelope.c
+require_contains 'generated_nonce_csprng_success' src/seal_hybrid_envelope.c
+require_contains 'clear_detached_output_buffers' src/seal_hybrid_envelope.c
+require_contains 'clear_seal_output_buffers' src/seal_hybrid_envelope.c
+require_contains 'clear_plaintext_output_buffer' src/seal_hybrid_envelope.c
+require_contains 'clear_record_output_buffer' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_ciphertext_tail' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_plaintext_tail' src/seal_hybrid_envelope.c
+require_contains 'clear_successful_record_tail' src/seal_hybrid_envelope.c
+require_contains 'append_hybrid_envelope_report_chunk' src/seal_hybrid_envelope.c
+require_contains '*used >= buffer_len' src/seal_hybrid_envelope.c
+require_contains 'buffer_len == 0u' src/seal_hybrid_envelope.c
+require_contains 'staged_plaintext' src/seal_hybrid_envelope.c
+require_contains 'unauthenticated_plaintext_staged' src/seal_hybrid_envelope.c
+require_contains 'staged_plaintext_cleared' src/seal_hybrid_envelope.c
+require_contains 'plaintext_released_after_authentication' src/seal_hybrid_envelope.c
+require_contains 'byte_ranges_overlap' src/seal_hybrid_envelope.c
+require_contains 'unsafe_buffer_overlap_rejected' src/seal_hybrid_envelope.c
+require_contains 'hkdf_intermediate_material_zeroized' src/seal_hybrid_envelope.c
+require_contains 'hkdf_provider_api_used' src/seal_hybrid_envelope.c
+require_contains 'hkdf_manual_fallback_used' src/seal_hybrid_envelope.c
+require_contains 'known_answer_vector_matches' tests/seal_hybrid_envelope_invariants.c
+require_contains 'known_answer_committed_detached_vector_opens' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_aad_frame_rejects_legacy_raw_aad_tag' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_suite_kdf_rejects_legacy_unsuite_bound_vector' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hybrid_secret_role_labels_reject_legacy_unlabeled_detached_vector' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hybrid_secret_algorithm_labels_reject_legacy_unlabeled_detached_vector' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hybrid_secret_role_labels_reject_legacy_unlabeled_record_vector' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hybrid_secret_algorithm_labels_reject_legacy_unlabeled_record_vector' tests/seal_hybrid_envelope_invariants.c
+require_contains 'known_answer_record_vector_opens' tests/seal_hybrid_envelope_invariants.c
+require_contains 'guarded_detached_reuse_guard_rejects_reused_salt_nonce' tests/seal_hybrid_envelope_invariants.c
+require_contains 'successful_output_tails_are_cleared' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hybrid_secret_components_are_bound' tests/seal_hybrid_envelope_invariants.c
+require_contains 'duplicate_hybrid_secret_components_are_rejected_before_kdf' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_ciphertext_salt_nonce_tampering_fails_closed' tests/seal_hybrid_envelope_invariants.c
+require_contains 'committed_detached_tampering_fails_before_decrypt' tests/seal_hybrid_envelope_invariants.c
+require_contains 'committed_seal_open_generates_salt_nonce_and_commitment' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record_ciphertext_and_nonce_tampering_fails_closed' tests/seal_hybrid_envelope_invariants.c
+require_contains 'malformed_attached_records_are_rejected_before_crypto' tests/seal_hybrid_envelope_invariants.c
+require_contains 'weak_shared_secrets_are_rejected' tests/seal_hybrid_envelope_invariants.c
+require_contains 'weak_salt_and_nonce_are_rejected' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expect_generated_random_evidence' tests/seal_hybrid_envelope_invariants.c
+require_contains 'random_bytes_ex_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'generated_salt_csprng_success == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'generated_nonce_csprng_success == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aead_nonce_uniqueness_required == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'salt_bound_to_hkdf == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_guard_required == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_tracking_present == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'caller_salt_nonce_reuse_rejected == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'LATTICRA_SEAL_HYBRID_ENVELOPE_REUSED_SALT_NONCE' tests/seal_hybrid_envelope_invariants.c
+require_contains 'unsafe_buffer_overlap_is_rejected' tests/seal_hybrid_envelope_invariants.c
+require_contains 'unauthenticated_plaintext_staged == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'staged_plaintext_cleared == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'plaintext_released_after_authentication == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'plaintext_released_after_authentication == 0u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record_commitment_input_streamed == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_commitment_checked_before_decrypt == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_commitment_input_streamed == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_commitment_constant_time_compare == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record_commitment_constant_time_compare == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'detached_commitment_tampering_rejected == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expect_commitment_mac_evidence' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_provider_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_hmac_sha256_digest_bound == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'commitment_mac_legacy_fallback_used == 0u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'unauthenticated_plaintext_staged == 0u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hkdf_provider_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hkdf_extract_expand_standard_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'hkdf_manual_fallback_used == 0u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aes_gcm_provider_api_used == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aes_gcm_provider_cipher_fetched == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aes_gcm_96bit_nonce_configured == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aes_gcm_128bit_tag_bound == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'aes_gcm_static_cipher_fallback_used == 0u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'standards nist hkdf' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expected_fixture_ciphertext' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expected_fixture_detached_commitment' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expected_fixture_record_ciphertext' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expected_fixture_record_tag' tests/seal_hybrid_envelope_invariants.c
+require_contains 'expected_fixture_record_commitment' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record commitment tamper status' tests/seal_hybrid_envelope_invariants.c
+require_contains 'committed detached commitment tamper status' tests/seal_hybrid_envelope_invariants.c
+require_contains 'committed encrypt invalid commitment size status' tests/seal_hybrid_envelope_invariants.c
+require_contains 'failed_commitment_output_cleared == 1u' tests/seal_hybrid_envelope_invariants.c
+require_contains 'record caller aad tamper status' tests/seal_hybrid_envelope_invariants.c
+require_contains 'zero-capacity report' tests/seal_hybrid_envelope_invariants.c
+require_contains 'tiny report clear' tests/seal_hybrid_envelope_invariants.c
+require_contains 'seal hybrid envelope invariants: ok' tests/seal_hybrid_envelope_invariants.c
+require_contains '#include "latticra/seal_hybrid_envelope.h"' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_seal_record' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_open_record' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_seal_committed' seal/latticra-seal.c
+require_contains 'latticra_seal_hybrid_envelope_open_committed' seal/latticra-seal.c
+require_contains 'latticra-seal hybrid' seal/latticra-seal.c
+require_contains 'secret_material_output=redacted' seal/latticra-seal.c
+require_contains 'commitment_output=redacted' seal/latticra-seal.c
+require_contains 'record_output=redacted' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(record, sizeof(record))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_ciphertext, sizeof(committed_ciphertext))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_commitment, sizeof(committed_commitment))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(recovered, sizeof(recovered))' seal/latticra-seal.c
+require_contains 'OPENSSL_cleanse(committed_recovered, sizeof(committed_recovered))' seal/latticra-seal.c
+require_contains 'cli_record_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_ciphertext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_secret_outputs_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'cli_committed_recovered_plaintext_buffer_zeroized=1' seal/latticra-seal.c
+require_contains 'committed_detached_envelope_self_check=pass' seal/latticra-seal.c
+require_contains 'seal_hybrid_envelope_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'seal_hybrid_envelope_cli_command=latticra-seal hybrid' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'NIST-SP-800-56C-REV2' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_extract_expand_standard_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_sha256_digest_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_provider_cipher_fetched=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_96bit_nonce_configured=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_128bit_tag_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aes_gcm_static_cipher_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'kdf_domain_separated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_kdf_domain_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'attached_record_kdf_domain_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_suite_id=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_suite_kdf_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'substrate_generates_salt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'substrate_generates_nonce=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_salt_caller_supplied_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_nonce_caller_supplied_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'attached_record_salt_generated_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'attached_record_nonce_generated_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_ex_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_strength_bits_requested=256' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'random_bytes_manual_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_salt_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_nonce_csprng_success=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'aead_nonce_uniqueness_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'salt_bound_to_hkdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonce_bound_to_aead=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_key_nonce_pair_csprng_backed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_required_reported=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_tracking_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guard_capacity=64' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'seal_open_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'attached_record_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_guarded_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_guarded_api_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_header_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_label=LSEDCOM1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_key_commitment_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_key_kdf_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_verified=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_checked_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_caller_aad_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_commitment_key_material_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_api_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_provider_fetched=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_key_commitment_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_key_kdf_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_verified=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_checked_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_caller_aad_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_input_streamed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_constant_time_compare=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_key_material_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_suite_id=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_suite_validated_before_open=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_suite_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_kdf_domain_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_suite_kdf_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_salt_nonce_nonzero=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_header_shape_validated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'malformed_record_rejected_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_aad_framed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_aad_framed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_aad_label_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_caller_aad_length_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_caller_aad_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_aad_label_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_caller_aad_authenticated=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'classical_shared_secret_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'pqc_shared_secret_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_length_framed=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_role_labeled=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_algorithm_labeled=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_order_bound=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_components_distinct=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'duplicate_hybrid_shared_secret_rejected_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_unlabeled_legacy_vector_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_algorithm_unlabeled_legacy_vector_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_component_mismatch_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_secret_component_swap_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_ciphertext_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_salt_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_nonce_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_ciphertext_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_salt_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_nonce_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_tag_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_aad_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_commitment_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_ciphertext_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_nonce_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_commitment_tampering_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_caller_aad_tampering_rejected_before_decrypt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonzero_classical_shared_secret_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonzero_pqc_shared_secret_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonzero_salt_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'nonzero_nonce_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'weak_shared_secret_rejected_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'weak_salt_rejected_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'weak_nonce_rejected_before_kdf=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'generated_salt_nonce_nonzero_required=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_seal_clears_ciphertext=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_seal_clears_salt=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_seal_clears_nonce=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_seal_clears_tag=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_encrypt_clears_ciphertext=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_encrypt_clears_tag=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_commitment_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_plaintext_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_record_output_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'successful_record_tail_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'report_zero_capacity_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'report_append_cursor_guarded=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'unauthenticated_plaintext_staged=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'staged_plaintext_cleared=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'plaintext_released_after_authentication=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'unsafe_buffer_overlap_rejected=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hkdf_intermediate_material_zeroized=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'known_answer_vector_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_known_answer_vector_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'detached_committed_known_answer_vector_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_known_answer_vector_present=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_known_answer_vector_bytes=178' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'record_known_answer_vector_commitment_bytes=32' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_decrypt_clears_plaintext=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_record_seal_clears_record=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'failed_record_open_clears_plaintext=1' docs/LATTICRA_SEAL_HYBRID_ENVELOPE_IMPLEMENTATION.md
+require_contains 'hybrid_classical_pqc_secret_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'seal_hybrid_envelope_cli_command=latticra-seal hybrid' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'NIST-SP-800-56C-REV2' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_extract_expand_standard_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_provider_cipher_fetched=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_96bit_nonce_configured=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_128bit_tag_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aes_gcm_static_cipher_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'kdf_domain_separated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_kdf_domain_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'attached_record_kdf_domain_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_suite_id=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_suite_kdf_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'substrate_generates_salt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'substrate_generates_nonce=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_salt_caller_supplied_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_nonce_caller_supplied_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'attached_record_salt_generated_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'attached_record_nonce_generated_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_ex_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_strength_bits_requested=256' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'random_bytes_manual_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_salt_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_nonce_csprng_success=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'aead_nonce_uniqueness_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'salt_bound_to_hkdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonce_bound_to_aead=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_key_nonce_pair_csprng_backed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guard_required_reported=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_tracking_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guard_capacity=64' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'caller_salt_nonce_reuse_guarded_encrypt_rejects_reuse_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'attached_record_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_guarded_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_guarded_api_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_bytes=32' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_label=LSEDCOM1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_header_bytes=80' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_protected_header_bytes=64' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_bytes=32' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_header_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_key_commitment_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_key_kdf_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_verified=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_checked_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_caller_aad_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_commitment_key_material_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_api_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_provider_fetched=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_256bit_key_used=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'commitment_mac_legacy_fallback_used=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_key_commitment_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_key_kdf_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_verified=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_checked_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_caller_aad_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_input_streamed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_constant_time_compare=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_key_material_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_suite_id=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_suite_validated_before_open=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_suite_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_kdf_domain_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_suite_kdf_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_salt_nonce_nonzero=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_header_shape_validated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'malformed_record_rejected_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_aad_framed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_aad_framed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_aad_label_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_caller_aad_length_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_caller_aad_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_aad_label_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_caller_aad_authenticated=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'classical_shared_secret_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'pqc_shared_secret_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_length_framed=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_role_labeled=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_algorithm_labeled=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_order_bound=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_components_distinct=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'duplicate_hybrid_shared_secret_rejected_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_unlabeled_legacy_vector_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_algorithm_unlabeled_legacy_vector_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_component_mismatch_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hybrid_secret_component_swap_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_ciphertext_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_salt_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_nonce_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_ciphertext_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_salt_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_nonce_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_tag_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_aad_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_commitment_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_ciphertext_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_nonce_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_commitment_tampering_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_caller_aad_tampering_rejected_before_decrypt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonzero_classical_shared_secret_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonzero_pqc_shared_secret_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonzero_salt_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'nonzero_nonce_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'weak_shared_secret_rejected_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'weak_salt_rejected_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'weak_nonce_rejected_before_kdf=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'generated_salt_nonce_nonzero_required=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_seal_clears_ciphertext=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_seal_clears_salt=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_seal_clears_nonce=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_seal_clears_tag=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_encrypt_clears_ciphertext=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_encrypt_clears_tag=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_commitment_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_plaintext_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_record_output_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_ciphertext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_plaintext_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'successful_record_tail_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'report_zero_capacity_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'report_append_cursor_guarded=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'unauthenticated_plaintext_staged=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'staged_plaintext_cleared=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'plaintext_released_after_authentication=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'unsafe_buffer_overlap_rejected=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'hkdf_intermediate_material_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'known_answer_vector_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_known_answer_vector_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'detached_committed_known_answer_vector_commitment_bytes=32' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_known_answer_vector_present=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_known_answer_vector_bytes=178' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'record_known_answer_vector_commitment_bytes=32' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_decrypt_clears_plaintext=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_record_seal_clears_record=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'failed_record_open_clears_plaintext=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_secret_material_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_salt_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_nonce_output=redacted' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_record_buffer_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'production_crypto_claim_allowed=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+require_contains 'fips_claim_allowed=0' docs/status/SEAL_HYBRID_ENVELOPE_STATUS.md
+
+cc $CFLAGS $OPENSSL_CFLAGS -Iinclude \
+  src/seal_hybrid_envelope.c \
+  tests/seal_hybrid_envelope_invariants.c \
+  $OPENSSL_LIBS \
+  -o "$tmpdir/latticra-seal-hybrid-envelope-invariants"
+
+"$tmpdir/latticra-seal-hybrid-envelope-invariants"
+
+cc $CFLAGS $OPENSSL_CFLAGS -Iinclude \
+  seal/latticra-seal.c \
+  src/seal_hybrid_envelope.c \
+  src/seal_hybrid_provider_self_test.c \
+  $OPENSSL_LIBS \
+  -o "$tmpdir/latticra-seal"
+
+"$tmpdir/latticra-seal" hybrid > "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'LATTICRA SEAL HYBRID ENVELOPE SELF-CHECK' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'secret_material_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'salt_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'nonce_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'ciphertext_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'tag_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_output=redacted' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_record_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_ciphertext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_secret_outputs_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_recovered_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_recovered_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'cli_committed_tamper_plaintext_buffer_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-seal ==' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-open ==' "$tmpdir/latticra-seal-hybrid.out"
+require_contains '== committed-commitment-tamper ==' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aead_algorithm=AES-256-GCM' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'NIST-SP-800-56C-REV2' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_format_present=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_header_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_suite_id=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_suite_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_kdf_domain_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_suite_kdf_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_salt_nonce_nonzero=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_header_shape_validated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'malformed_record_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_size_bytes=32' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_key_commitment_present=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_key_kdf_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_verified=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_checked_before_decrypt=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_caller_aad_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_constant_time_compare=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_commitment_key_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_key_commitment_present=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_key_kdf_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_verified=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_checked_before_decrypt=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_caller_aad_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_constant_time_compare=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_tampering_rejected=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_commitment_key_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_provider_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_provider_fetched=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_hmac_sha256_digest_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_256bit_key_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_input_streamed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'commitment_mac_legacy_fallback_used=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_aad_framed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_aad_framed=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_aad_label_authenticated=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_caller_aad_length_authenticated=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_caller_aad_authenticated=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_aad_label_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'record_caller_aad_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'classical_shared_secret_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'pqc_shared_secret_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_secret_length_framed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_secret_role_labeled=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_secret_algorithm_labeled=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_secret_order_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_secret_components_distinct=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'duplicate_hybrid_shared_secret_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'classical_shared_secret_nonzero=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'pqc_shared_secret_nonzero=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'salt_nonzero=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'nonce_nonzero=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'weak_shared_secret_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'weak_salt_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'weak_nonce_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'kdf_domain_separated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'kdf_domain_id=2' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_kdf_domain=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_suite_id=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_suite_kdf_bound=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_kdf_domain=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_salt_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_nonce_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_ciphertext_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_tag_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_plaintext_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'failed_record_output_cleared=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_ciphertext_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_plaintext_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'successful_record_tail_cleared=' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'unsafe_buffer_overlap_rejected=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_salt_caller_supplied=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'detached_nonce_caller_supplied=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_salt_generated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_nonce_generated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_sealed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_opened=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'attached_record_authenticated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_extract_expand_performed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_provider_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_extract_expand_standard_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_sha256_digest_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_manual_fallback_used=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aes_gcm_provider_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aes_gcm_provider_cipher_fetched=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aes_gcm_96bit_nonce_configured=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aes_gcm_128bit_tag_bound=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aes_gcm_static_cipher_fallback_used=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'salt_generated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'nonce_generated=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'random_bytes_ex_api_used=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'random_bytes_strength_bits_requested=256' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'random_bytes_manual_fallback_used=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_salt_csprng_success=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_nonce_csprng_success=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_salt_random_bytes=32' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_nonce_random_bytes=12' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'aead_nonce_uniqueness_required=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'salt_bound_to_hkdf=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'nonce_bound_to_aead=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'generated_key_nonce_pair_csprng_backed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'caller_salt_nonce_reuse_guard_required=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'caller_salt_nonce_reuse_tracking_present=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'encryption_performed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'decryption_performed=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'authentication_tag_verified=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'unauthenticated_plaintext_staged=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'staged_plaintext_cleared=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'plaintext_released_after_authentication=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'secret_material_emitted=0' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hkdf_intermediate_material_zeroized=1' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'committed_detached_envelope_self_check=pass' "$tmpdir/latticra-seal-hybrid.out"
+require_contains 'hybrid_envelope_self_check=pass' "$tmpdir/latticra-seal-hybrid.out"
+
+printf 'latticra seal hybrid envelope: ok\n'

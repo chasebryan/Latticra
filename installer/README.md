@@ -1,10 +1,22 @@
 # Latticra Panel
 
-Graphical installer and first-run control panel for Latticra, Lat, LIR, and Latticra Seal.
+Graphical installer and first-run control panel for Latticra, Lat, LIR, Latticra Seal, and the Nadia offline AI foundation. The current Panel package version is v1.0.0.
 
 The panel is designed as the main first impression for Latticra. It opens as a maximized, resizable GUI workbench with guided defaults, visible authority boundaries, component configuration, delivery controls, plan/evidence review, and an embedded Latticra Console for panel-aware commands.
 
+Installer-specific contracts are indexed in [`docs/README.md`](docs/README.md). Start there when reviewing installer authority, UI configuration, install-button behavior, receipts, or evidence wording.
+
 ## Prerequisites
+
+Ubuntu:
+
+```sh
+sudo apt-get update
+sudo apt-get install -y rustc cargo make gcc pkg-config \
+  libx11-dev libxcb1-dev libxcursor-dev libxrandr-dev libxi-dev \
+  libxkbcommon-dev libgl1-mesa-dev libwayland-dev desktop-file-utils \
+  libgtk-3-bin
+```
 
 Fedora:
 
@@ -12,6 +24,16 @@ Fedora:
 sudo dnf install -y rust cargo make gcc pkgconf-pkg-config \
   libX11-devel libxcb-devel libXcursor-devel libXrandr-devel libXi-devel \
   libxkbcommon-devel mesa-libGL-devel wayland-devel desktop-file-utils gtk3
+```
+
+openSUSE:
+
+```sh
+sudo zypper refresh
+sudo zypper install -y rust cargo make gcc pkgconf \
+  libX11-devel libxcb-devel libXcursor-devel libXrandr-devel libXi-devel \
+  libxkbcommon-devel Mesa-libGL-devel wayland-devel desktop-file-utils \
+  gtk3-tools
 ```
 
 User-local command path:
@@ -42,6 +64,56 @@ LATTICRA_INSTALLER_ROOT="$PWD/.." cargo run
 5. Review the embedded console, plan, and engine log.
 6. Enable guarded local-prefix writes only after the dry-run evidence looks correct.
 
+The **LC Standalone** profile narrows that flow to the Console component only. It records `lc-standalone-install-v0`, keeps `lc.profile = "standalone"`, installs standalone/session/workspace/namespace/rootfs/packages/init/services/service-schema/service-definitions/service-plan/service-runtime/processes contracts, disables Panel embedding for the installed console, and preserves the no-effect host and network authority floor.
+
+## SeaBIOS and GRUB compatibility boundary
+
+The current Panel installer is compatible with SeaBIOS and GRUB hosts by staying out of the boot path. It installs only to a guarded user-local prefix and does not write firmware, partitions, boot sectors, EFI variables, GRUB configuration, kernel images, initramfs files, services, or drivers.
+
+The guarded SeaBIOS and GRUB compatibility contract is [`../docs/SEABIOS_GRUB_COMPATIBILITY_CONTRACT.md`](../docs/SEABIOS_GRUB_COMPATIBILITY_CONTRACT.md).
+
+The SeaBIOS and GRUB boot-preview evidence contract is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CONTRACT.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CONTRACT.md). Its fixture manifest is [`manifests/seabios-grub-boot-preview.toml`](manifests/seabios-grub-boot-preview.toml) and preserves a non-booted preview lane for future QEMU, serial-console, checksum, and recovery-path evidence.
+
+The SeaBIOS and GRUB boot-preview preflight is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_PREFLIGHT.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_PREFLIGHT.md). It is available as `sh scripts/seabios-grub-boot-preview-preflight.sh` and emits a no-effect tool-visibility and manifest-validity report.
+
+The SeaBIOS and GRUB boot-preview evidence capture template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CAPTURE_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-evidence-template.sh` and emits the future evidence bundle shape without running a VM.
+
+The SeaBIOS and GRUB boot-preview evidence validation is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_VALIDATION.md). It is available as `sh scripts/seabios-grub-boot-preview-evidence-validate.sh` and rejects forged QEMU, serial-console, recovery, and bootability claims from the current fixture lane.
+
+The SeaBIOS and GRUB boot-preview QEMU argv template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_QEMU_ARGV_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-qemu-argv-template.sh` and emits future profile-specific QEMU argv record placeholders without running QEMU.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest template is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_TEMPLATE.md). It is available as `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-template.sh` and emits future artifact metadata placeholders without creating images or writing boot files.
+
+The SeaBIOS and GRUB boot-preview boot artifact manifest validation is [`../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md`](../docs/SEABIOS_GRUB_BOOT_PREVIEW_BOOT_ARTIFACT_MANIFEST_VALIDATION.md). It is available as `sh scripts/seabios-grub-boot-preview-boot-artifact-manifest-validate.sh` and rejects premature bootable, GRUB, QEMU, or production OS claims from the current fixture lane.
+
+```text
+installer_ready_for_user_local_panel=1
+installer_boot_safe_by_absence=1
+boot_preview_manifest_fixture_present=1
+seabios_grub_boot_preview_preflight_present=1
+seabios_grub_boot_preview_evidence_capture_template_present=1
+seabios_grub_boot_preview_evidence_validation_present=1
+seabios_grub_boot_preview_qemu_argv_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_template_present=1
+seabios_grub_boot_preview_boot_artifact_manifest_validation_present=1
+firmware_mutation_allowed=0
+bootloader_write_allowed=0
+partition_mutation_allowed=0
+grub_install_allowed=0
+efibootmgr_allowed=0
+qemu_execution_allowed_by_guard=0
+qemu_boot_execution_attempted=0
+qemu_argv_record_ready=0
+boot_evidence_record_ready=0
+boot_evidence_candidate_ready=0
+boot_artifact_manifest_candidate_ready=0
+boot_artifact_manifest_ready=0
+bootable_os_ready=0
+production_installer_ready=0
+```
+
+Future OS-base work must add QEMU/VM evidence for SeaBIOS, GRUB 2 BIOS, and GRUB 2 UEFI paths before any bootable image claim changes.
+
 ## Embedded Latticra Console
 
 The console in the upper-right of the panel is not a shell. It is a panel-aware operator console for common actions and local navigation only:
@@ -49,9 +121,72 @@ The console in the upper-right of the panel is not a shell. It is a panel-aware 
 ```text
 help
 status
+lc status
+lc commands
+lc substrate
+lc host
+lc os
 plan
 save
 dry-run
+updater status
+updater dry-run
+updater apply
+reset
+nadia status
+nadia commands
+nadia audit
+nadia context
+nadia runtime
+nadia plan
+nadia mode
+nadia ledger
+nadia safety
+nadia tool
+nadia prompt-contract
+nadia model-registry
+nadia inference-readiness
+nadia runtime-invocation
+nadia model-load
+nadia prompt-receipt
+nadia prompt-materialization
+nadia awareness-dialogue
+nadia prompt-evaluation-handoff
+nadia tokenization-boundary
+nadia tokenizer-specification
+nadia tokenizer-manifest
+nadia tokenizer-artifact-inventory
+nadia tokenizer-artifact-measurement
+nadia tokenizer-artifact-verification
+nadia tokenizer-artifact-binding
+nadia tokenizer-runtime-attachment
+nadia prompt-tokenization
+nadia prompt-token-sequence
+nadia context-window-assembly
+nadia prompt-evaluation-input
+nadia prompt-evaluation-runtime-handoff
+nadia prompt-evaluation-invocation
+nadia prompt-evaluation-result
+nadia prompt-evaluation-result-review
+nadia prompt-evaluation-result-disposition
+nadia prompt-evaluation-result-release
+nadia prompt-evaluation-result-release-receipt
+nadia prompt-evaluation-result-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
 profile guided
 profile seal
 profile fedora
@@ -64,11 +199,39 @@ clear
 
 External host processes are not launched from the embedded console. Installation and dry-run behavior must use dedicated panel commands or buttons such as `plan`, `save`, `dry-run`, `mode dry`, and `mode local`.
 
+## Update from the Panel
+
+Use the **Updater** workspace in Latticra Panel to preview and apply managed user-local updates from the current reviewed source checkout. The updater reuses the guarded installer engine, keeps network fetch authority disabled, and requires a successful updater dry-run before guarded apply by default.
+
+The installed umbrella command can report the Panel-owned updater policy without launching the GUI:
+
+```sh
+latticra updater status
+```
+
+That report includes the configured source strategy, update channel, `updater dry-run` preview command, `updater apply` command, guarded apply mode, receipt setting, and disabled network/root/system mutation authority.
+
 ## Dry-run
 
 ```sh
 make -C installer dry-run
 ```
+
+## Standalone LC dry-run
+
+```sh
+make -C installer lc-standalone-dry-run
+```
+
+This uses `configs/lc-standalone.installer.toml` and previews a standalone LC wrapper, registry, profile presets, and contract files without requiring Panel at runtime.
+
+## Standalone LC local install
+
+```sh
+make -C installer lc-standalone-local
+```
+
+This uses `configs/lc-standalone-local.installer.toml` and runs the guarded user-local standalone LC install path. It keeps Panel GUI build and desktop integration disabled while installing the direct `latticra-lc` wrapper and LC metadata.
 
 ## Install locally
 
@@ -82,6 +245,11 @@ make -C installer local-example
 make -C installer verify-local
 ```
 
+The verification path is limited to the guarded user-local Latticra prefixes under
+`~/.local/share/latticra` and `~/.local/share/latticra-validation`. It rejects
+non-absolute paths, parent-directory traversal, and symlink prefixes before it
+reads install metadata.
+
 ## Open after install
 
 ```sh
@@ -94,19 +262,223 @@ Or from the desktop app grid, open **Latticra Panel**.
 
 ```text
 ~/.local/bin/latticra
+~/.local/bin/<lc.install.command_wrapper> (default: latticra-lc; when LC wrapper enabled)
 ~/.local/bin/lat
 ~/.local/bin/latticra-seal
+~/.local/bin/latticra-nadia (when enabled)
 ~/.local/bin/latticra-panel
+~/.local/bin/latticra-installer (compatibility)
 ~/.local/share/applications/latticra-panel.desktop
 ~/.local/share/icons/hicolor/256x256/apps/latticra-panel.png
 ~/.local/share/latticra
 ```
 
+## Latticra Console (LC)
+
+LC is installed as the configurable operator base for Latticra substrate, Panel, standalone console use, and future host-embedded workflows. In this first slice it is metadata-only:
+
+The default direct wrapper is `latticra-lc`; custom Panel installs use `lc.install.command_wrapper`. It is also the standalone LC wrapper, does not require Panel at runtime, and the umbrella `latticra lc ...` route stays stable across wrapper names.
+
+```sh
+latticra lc status
+latticra lc install-config
+latticra-lc commands
+latticra-lc install-config
+latticra-lc session
+latticra-lc workspace
+latticra-lc namespace
+latticra-lc rootfs
+latticra-lc packages
+latticra-lc init
+latticra-lc services
+latticra-lc service-schema
+latticra-lc service-definitions
+latticra-lc service-plan
+latticra-lc service-runtime
+latticra-lc processes
+latticra-lc substrate
+latticra-lc host
+latticra-lc os
+```
+
+The Panel LC workspace includes LC install configuration for the local config path, share path, wrapper command, profile presets, command registry, the session envelope contract, workspace envelope contract, namespace envelope contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, processes contract, contract files, and embedded Panel bridge. External host command launch remains disabled.
+
+LC does not launch external host commands, create runtime sessions, mount workspaces, mount namespaces, create or open rootfs images, read package catalogs, download packages, run package managers, install packages, claim PID 1, read service definitions, write service definitions, validate service definitions, materialize service definition stubs, resolve service dependencies, activate services, hand off service runtimes, launch service executors, launch service processes, create process tables, spawn processes, send process signals, terminate processes, write service registries, enable services, start services, reload services, supervise services or processes, mutate host files, use the network, grant runtime enforcement authority, boot hardware, or claim to be a production operating system.
+
+## Nadia offline AI foundation
+
+Nadia is Latticra's planned offline AI companion for software development, systems engineering, and AI development work. The name honors Nobel Peace Prize laureate Nadia Murad and keeps human dignity, survivor-witness respect, community awareness, harm-aware development, and an absolute non-sexual-use boundary visible in the system direction. Documentation and code identify the solemn implementation identity as Nadia Witness Foundation while the human-facing interactive name remains Nadia.
+
+In the current installer lane, Nadia includes Stage-51 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract metadata, Stage-50 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release contract metadata, Stage-49 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition contract metadata, Stage-48 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract metadata, Stage-47 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract metadata, Stage-46 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract metadata, and the earlier Stage-0 through Stage-45 foundation contracts. No sexual user functionality, dialogue generation, prompt text receipt, prompt-evaluation invocation request creation, prompt-evaluation result release receipt review disposition recording, prompt evaluation, token generation, inference, runtime invocation, model-output recording, tool execution, source mutation, network authority, training, or distillation is installed. Each prompt-evaluation-result metadata lane remains contract-only and records future requirements without granting runtime authority. Stage-31 prompt-evaluation result recording and model-output recording remain blocked metadata only. Stage-32 prompt-evaluation result review recording and review decision recording remain blocked metadata only. Stage-33 prompt-evaluation result disposition recording and disposition decision recording remain blocked metadata only. Stage-36 prompt-evaluation result release receipt review recording remains blocked metadata only. Stage-37 prompt-evaluation result release receipt review disposition recording remains blocked metadata only. Stage-38 prompt-evaluation result release receipt review disposition release recording remains blocked metadata only. Stage-39 prompt-evaluation result release receipt review disposition release receipt recording remains blocked metadata only.
+
+No receipt signing, receipt publication, model-output recording, inference, prompt evaluation, tool execution, model installation, training, distillation, source mutation, or network authority are installed.
+
+Compatibility markers: `latticra-nadia prompt-evaluation-result`, prompt-evaluation result recording, model-output recording; `latticra-nadia prompt-evaluation-result-review`, prompt-evaluation result review recording, review decision recording; `latticra-nadia prompt-evaluation-result-disposition`, prompt-evaluation result disposition recording, disposition decision recording; `latticra-nadia prompt-evaluation-result-release-receipt-review`, prompt-evaluation result release receipt review recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition`, prompt-evaluation result release receipt review disposition recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release`, prompt-evaluation result release receipt review disposition release recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt`, prompt-evaluation result release receipt review disposition release receipt recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review`, prompt-evaluation result release receipt review disposition release receipt review metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition`, prompt-evaluation result release receipt review disposition release receipt review disposition metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release`, prompt-evaluation result release receipt review disposition release receipt review disposition release recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt recording; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release metadata only; `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt`, prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt recording.
+
+Stage-40 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review` as prompt-evaluation result release receipt review disposition release receipt review metadata only. Prompt-evaluation result release receipt review disposition release receipt review recording remains blocked metadata only.
+
+Stage-41 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition` as prompt-evaluation result release receipt review disposition release receipt review disposition metadata only. Prompt-evaluation result release receipt review disposition release receipt review disposition recording remains blocked metadata only.
+
+Stage-42 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release` as prompt-evaluation result release receipt review disposition release receipt review disposition release metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release recording remains blocked metadata only.
+
+Stage-43 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt recording remains blocked metadata only.
+
+Stage-44 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review recording remains blocked metadata only.
+
+Stage-45 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition recording remains blocked metadata only.
+
+Stage-46 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release recording remains blocked metadata only.
+
+Stage-47 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt recording remains blocked metadata only.
+
+Stage-48 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review recording remains blocked metadata only.
+
+Stage-49 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition recording remains blocked metadata only.
+
+Stage-50 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release recording remains blocked metadata only.
+
+Stage-51 adds `latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt` as prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt metadata only. The prompt-evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt recording remains blocked metadata only.
+
+After a guarded local install with Nadia enabled:
+
+```sh
+latticra-nadia commands
+latticra-nadia audit
+latticra-nadia context-pack
+latticra-nadia runtime-profile
+latticra-nadia prompt-plan
+latticra-nadia mode-validate
+latticra-nadia productivity-ledger
+latticra-nadia protective-safety
+latticra-nadia tool-preflight
+latticra-nadia prompt-contract
+latticra-nadia model-registry
+latticra-nadia inference-readiness
+latticra-nadia runtime-invocation
+latticra-nadia model-load
+latticra-nadia prompt-receipt
+latticra-nadia prompt-materialization
+latticra-nadia awareness-dialogue
+latticra-nadia prompt-evaluation-handoff
+latticra-nadia tokenization-boundary
+latticra-nadia tokenizer-specification
+latticra-nadia tokenizer-manifest
+latticra-nadia tokenizer-artifact-inventory
+latticra-nadia tokenizer-artifact-measurement
+latticra-nadia tokenizer-artifact-verification
+latticra-nadia tokenizer-artifact-binding
+latticra-nadia tokenizer-runtime-attachment
+latticra-nadia prompt-tokenization
+latticra-nadia prompt-token-sequence
+latticra-nadia context-window-assembly
+latticra-nadia prompt-evaluation-input
+latticra-nadia prompt-evaluation-runtime-handoff
+latticra-nadia prompt-evaluation-invocation
+latticra-nadia prompt-evaluation-result
+latticra-nadia prompt-evaluation-result-review
+latticra-nadia prompt-evaluation-result-disposition
+latticra-nadia prompt-evaluation-result-release
+latticra-nadia prompt-evaluation-result-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+latticra-nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+nadia prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt
+```
+
 ## Uninstall managed local install
 
 ```sh
+make -C installer reset-dry-run
+make -C installer reset-local
+make -C installer uninstall-dry-run
 make -C installer uninstall-local
+latticra reset --dry-run
+latticra reset
+latticra uninstall --dry-run
+latticra uninstall
 ```
+
+Reset and uninstall remove the same managed artifacts: command wrappers, the Panel desktop entry, known Panel icons, and the selected local prefix. Use reset when the intent is to reinstall from new Panel specifications; use uninstall when the intent is to remove the local install. Unmanaged files in `~/.local/bin` are preserved.
+
+## Clean full user-local uninstall
+
+Use this only when normal reset/uninstall cannot clean up an old or broken user-local install. The commands below are intentionally scoped to Latticra user-local paths.
+
+If LC was installed with a custom `lc.install.command_wrapper`, set `LC_WRAPPER` to that command name; the default is `latticra-lc`.
+
+```sh
+LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"
+
+rm -rf -- \
+  "$LATTICRA_PREFIX" \
+  "$HOME/.local/share/latticra-validation" \
+  "$HOME/.local/share/latticra-reset-receipts"
+
+rm -f -- \
+  "$HOME/.local/bin/latticra" \
+  "$HOME/.local/bin/$LC_WRAPPER" \
+  "$HOME/.local/bin/lat" \
+  "$HOME/.local/bin/latticra-seal" \
+  "$HOME/.local/bin/latticra-nadia" \
+  "$HOME/.local/bin/latticra-panel" \
+  "$HOME/.local/bin/latticra-installer" \
+  "$HOME/.local/share/applications/latticra-panel.desktop" \
+  "$HOME/.local/share/applications/latticra-installer.desktop" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-installer.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-seal.png"
+```
+
+If those exact paths are root-owned because an earlier command was run with `sudo`, repeat the same exact cleanup with `sudo`:
+
+```sh
+LATTICRA_PREFIX="${LATTICRA_PREFIX:-$HOME/.local/share/latticra}"
+LC_WRAPPER="${LC_WRAPPER:-latticra-lc}"
+
+sudo rm -rf -- \
+  "$LATTICRA_PREFIX" \
+  "$HOME/.local/share/latticra-validation" \
+  "$HOME/.local/share/latticra-reset-receipts"
+
+sudo rm -f -- \
+  "$HOME/.local/bin/latticra" \
+  "$HOME/.local/bin/$LC_WRAPPER" \
+  "$HOME/.local/bin/lat" \
+  "$HOME/.local/bin/latticra-seal" \
+  "$HOME/.local/bin/latticra-nadia" \
+  "$HOME/.local/bin/latticra-panel" \
+  "$HOME/.local/bin/latticra-installer" \
+  "$HOME/.local/share/applications/latticra-panel.desktop" \
+  "$HOME/.local/share/applications/latticra-installer.desktop" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-panel.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-installer.png" \
+  "$HOME/.local/share/icons/hicolor/256x256/apps/latticra-seal.png"
+```
+
+Do not run `sudo rm -rf` against broad paths such as `~/.local`, `/usr`, `/`, or unreviewed wildcards.
 
 ## Safety baseline
 

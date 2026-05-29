@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void lifecycle_copy(char *dst, size_t dst_len, const char *src) {
@@ -25,6 +26,7 @@ static void seed_result(latticra_kernel_lifecycle_result_t *result) {
     result->state_change_count = 0u;
     result->lifecycle_complete = 0;
     result->external_effect_performed = 0;
+    result->network_allowed = 0;
     result->evidence_level = 10u;
 }
 
@@ -32,7 +34,8 @@ latticra_status_t latticra_kernel_lifecycle_default_request(
     latticra_kernel_lifecycle_request_t *request) {
     if (request == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     memset(request, 0, sizeof(*request));
-    request->target_state = LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+    request->target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
     request->gate = LATTICRA_KERNEL_STATE_GATE_DENY;
     request->max_steps = LATTICRA_KERNEL_LIFECYCLE_STEP_MAX;
     return LATTICRA_STATUS_OK;
@@ -43,7 +46,86 @@ static int state_is_known(latticra_kernel_state_kind_t state) {
            state == LATTICRA_KERNEL_STATE_INITIALIZED ||
            state == LATTICRA_KERNEL_STATE_REGISTRY_READY ||
            state == LATTICRA_KERNEL_STATE_SCHEDULER_READY ||
-           state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+           state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY ||
+           state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY ||
+           state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY ||
+           state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY ||
+           state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY ||
+           state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY ||
+           state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY ||
+           state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY ||
+           state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY ||
+           state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY ||
+           state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY ||
+           state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY ||
+           state == LATTICRA_KERNEL_STATE_PREEMPTION_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY ||
+           state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY ||
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY ||
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY ||
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY ||
+           state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY ||
+           state ==
+               LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
 }
 
 static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_t state) {
@@ -57,6 +139,136 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
         case LATTICRA_KERNEL_STATE_SCHEDULER_READY:
             return LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
         case LATTICRA_KERNEL_STATE_MEMORY_MAP_READY:
+            return LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+        case LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY:
+            return LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+        case LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY:
+            return LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+        case LATTICRA_KERNEL_STATE_IPC_TABLE_READY:
+            return LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+        case LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY:
+            return LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+        case LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY:
+            return LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+        case LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY:
+            return LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+        case LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY:
+            return LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+        case LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY:
+            return LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+        case LATTICRA_KERNEL_STATE_RUN_QUEUE_READY:
+            return LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+        case LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY:
+            return LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+        case LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY:
+            return LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+        case LATTICRA_KERNEL_STATE_PREEMPTION_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY:
+            return LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+        case LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY:
+            return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY:
+            return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY:
+            return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY:
+            return LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_READY:
+            return
+                LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY;
+        case LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY:
         default:
             return state;
     }
@@ -65,13 +277,14 @@ static latticra_kernel_state_kind_t next_state_after(latticra_kernel_state_kind_
 static void finalize_result(latticra_kernel_lifecycle_result_t *result) {
     result->final_state = result->machine.current_state;
     result->external_effect_performed = result->machine.external_effect_performed;
+    result->network_allowed = result->machine.network_allowed;
 }
 
 latticra_status_t latticra_kernel_lifecycle_run(
     const latticra_kernel_lifecycle_request_t *request,
     latticra_kernel_lifecycle_result_t *result) {
-    latticra_kernel_state_machine_step_request_t step_request;
-    latticra_kernel_state_machine_step_result_t step_result;
+    latticra_kernel_state_machine_step_request_t *step_request = 0;
+    latticra_kernel_state_machine_step_result_t *step_result = 0;
     latticra_kernel_state_kind_t next_state;
     size_t max_steps;
     latticra_status_t status;
@@ -85,11 +298,22 @@ latticra_status_t latticra_kernel_lifecycle_run(
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
+    step_request = (latticra_kernel_state_machine_step_request_t *)calloc(1u, sizeof(*step_request));
+    step_result = (latticra_kernel_state_machine_step_result_t *)calloc(1u, sizeof(*step_result));
+    if (step_request == 0 || step_result == 0) {
+        free(step_result);
+        free(step_request);
+        result->status = LATTICRA_STATUS_ALLOCATION_FAILED;
+        lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status),
+            "step-storage-unavailable");
+        return result->status;
+    }
+
     status = latticra_kernel_state_machine_init(&result->machine);
     if (status != LATTICRA_STATUS_OK) {
         result->status = status;
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "machine-init-failed");
-        return status;
+        goto cleanup;
     }
 
     result->final_state = result->machine.current_state;
@@ -98,7 +322,7 @@ latticra_status_t latticra_kernel_lifecycle_run(
         lifecycle_copy(result->policy_status, sizeof(result->policy_status), "gate-denied");
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "not-started");
         finalize_result(result);
-        return result->status;
+        goto cleanup;
     }
 
     lifecycle_copy(result->policy_status, sizeof(result->policy_status), "gate-allowed");
@@ -106,7 +330,7 @@ latticra_status_t latticra_kernel_lifecycle_run(
     if (!state_is_known(request->target_state)) {
         lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "invalid-target");
         finalize_result(result);
-        return result->status;
+        goto cleanup;
     }
 
     max_steps = request->max_steps;
@@ -118,48 +342,48 @@ latticra_status_t latticra_kernel_lifecycle_run(
         if (result->machine.current_state > request->target_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "target-before-current");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
         next_state = next_state_after(result->machine.current_state);
         if (next_state == result->machine.current_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "no-forward-step");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
-        status = latticra_kernel_state_machine_default_step_request(&step_request);
+        status = latticra_kernel_state_machine_default_step_request(step_request);
         if (status != LATTICRA_STATUS_OK) {
             result->status = status;
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-request-failed");
             finalize_result(result);
-            return status;
+            goto cleanup;
         }
 
-        step_request.target_state = next_state;
-        step_request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+        step_request->target_state = next_state;
+        step_request->gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
 
-        status = latticra_kernel_state_machine_step(&result->machine, &step_request, &step_result);
+        status = latticra_kernel_state_machine_step(&result->machine, step_request, step_result);
         if (status != LATTICRA_STATUS_OK) {
             result->status = status;
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-failed");
             finalize_result(result);
-            return status;
+            goto cleanup;
         }
 
         result->step_count += 1u;
-        if (step_result.state_mutated) result->state_change_count += 1u;
+        if (step_result->state_mutated) result->state_change_count += 1u;
 
-        if (step_result.external_effect_performed) {
+        if (step_result->external_effect_performed) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "external-effect-blocked");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
 
-        if (!step_result.state_mutated && result->machine.current_state != request->target_state) {
+        if (!step_result->state_mutated && result->machine.current_state != request->target_state) {
             lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status), "step-did-not-advance");
             finalize_result(result);
-            return result->status;
+            goto cleanup;
         }
     }
 
@@ -167,6 +391,9 @@ latticra_status_t latticra_kernel_lifecycle_run(
     result->lifecycle_complete = result->final_state == request->target_state;
     lifecycle_copy(result->lifecycle_status, sizeof(result->lifecycle_status),
         result->lifecycle_complete ? "lifecycle-complete" : "step-limit-reached");
+cleanup:
+    free(step_result);
+    free(step_request);
     return result->status;
 }
 
@@ -211,6 +438,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
         "state_change_count=%lu\n"
         "lifecycle_complete=%d\n"
         "external_effect_performed=%d\n"
+        "network_allowed=%d\n"
+        "machine_network_allowed=%d\n"
         "machine_log_count=%lu\n"
         "evidence_level=%u\n",
         result->lifecycle_status,
@@ -220,6 +449,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
         (unsigned long)result->state_change_count,
         result->lifecycle_complete,
         result->external_effect_performed,
+        result->network_allowed,
+        result->machine.network_allowed,
         (unsigned long)result->machine.log_count,
         result->evidence_level);
     if (status != LATTICRA_STATUS_OK) return status;
@@ -230,7 +461,8 @@ latticra_status_t latticra_kernel_lifecycle_report(
             "log[%lu].to=%s\n"
             "log[%lu].status=%s\n"
             "log[%lu].state_change_performed=%d\n"
-            "log[%lu].external_effect_performed=%d\n",
+            "log[%lu].external_effect_performed=%d\n"
+            "log[%lu].network_allowed=%d\n",
             (unsigned long)i,
             latticra_kernel_state_label(result->machine.log[i].from_state),
             (unsigned long)i,
@@ -240,7 +472,9 @@ latticra_status_t latticra_kernel_lifecycle_report(
             (unsigned long)i,
             result->machine.log[i].state_change_performed,
             (unsigned long)i,
-            result->machine.log[i].external_effect_performed);
+            result->machine.log[i].external_effect_performed,
+            (unsigned long)i,
+            result->machine.log[i].network_allowed);
         if (status != LATTICRA_STATUS_OK) return status;
     }
 

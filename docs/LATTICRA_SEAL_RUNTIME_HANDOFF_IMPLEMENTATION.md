@@ -116,10 +116,19 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-runtime-handoff-contract.sh
 sh scripts/test-latticra-seal-runtime-handoff.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
+```
+
+Expected output:
+
+```text
+seal runtime handoff contract: ok
+seal runtime handoff invariants: ok
+seal runtime handoff status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a Seal status rollup contract.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this runtime handoff metadata implementation.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

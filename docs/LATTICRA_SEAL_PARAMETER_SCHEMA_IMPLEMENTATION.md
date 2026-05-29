@@ -128,6 +128,6 @@ sh scripts/test-latticra-seal-parameter-schema.sh
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a parameter schema report surface or status record.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not implement schema parsing, schema validation, runtime behavior, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, shell execution, capability enforcement, cryptographic verification, or authority grants.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

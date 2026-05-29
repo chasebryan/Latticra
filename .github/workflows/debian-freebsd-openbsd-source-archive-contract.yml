@@ -1,0 +1,22 @@
+name: Debian FreeBSD OpenBSD Source Archive Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  debian-freebsd-openbsd-source-archive-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Debian FreeBSD OpenBSD source archive contract guard
+        run: sh scripts/test-debian-freebsd-openbsd-source-archive-contract.sh

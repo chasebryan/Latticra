@@ -1,0 +1,25 @@
+name: Production Installer SBOM Evidence Template
+
+on:
+  push:
+    paths:
+      - 'docs/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md'
+      - 'docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_STATUS.md'
+      - 'scripts/production-installer-sbom-evidence-template.sh'
+      - 'scripts/test-production-installer-sbom-evidence-template-contract.sh'
+      - '.github/workflows/production-installer-sbom-evidence-template.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-installer-sbom-evidence-template:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run production installer SBOM evidence template guard
+        run: sh scripts/test-production-installer-sbom-evidence-template-contract.sh

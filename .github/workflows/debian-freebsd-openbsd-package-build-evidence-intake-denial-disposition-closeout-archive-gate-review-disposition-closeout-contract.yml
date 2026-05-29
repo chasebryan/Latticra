@@ -1,0 +1,22 @@
+name: Debian FreeBSD OpenBSD Package Evidence Archive Gate Review Disposition Closeout
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  archive-gate-review-disposition-closeout-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Debian FreeBSD OpenBSD package build evidence intake denial disposition closeout archive gate review disposition closeout contract guard
+        run: sh scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh

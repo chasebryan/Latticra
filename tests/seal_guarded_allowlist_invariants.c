@@ -117,11 +117,14 @@ static int known_tool_becomes_candidate_only(void) {
 static int guarded_allowlist_fails_closed(void) {
     latticra_seal_guarded_allowlist_result_t result;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_MAX];
     char oversized[LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX + 1u];
+    char unterminated[LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX];
     size_t i;
 
     for (i = 0u; i < LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX; ++i) {
         oversized[i] = 'x';
+        unterminated[i] = 'y';
     }
     oversized[LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX] = '\0';
 
@@ -139,6 +142,14 @@ static int guarded_allowlist_fails_closed(void) {
                 "oversized tool status");
     EXPECT_TRUE(result.error == LATTICRA_SEAL_GUARDED_ALLOWLIST_INVALID_TOOL_NAME,
                 "oversized tool error");
+    EXPECT_TRUE(strcmp(result.tool_name, "invalid-tool") == 0, "oversized sanitized name");
+    EXPECT_TRUE(result.requested_tool_name_present == 1u, "oversized tool present");
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_evaluate(unterminated, &result) == LATTICRA_STATUS_OK,
+                "unterminated tool status");
+    EXPECT_TRUE(result.error == LATTICRA_SEAL_GUARDED_ALLOWLIST_INVALID_TOOL_NAME,
+                "unterminated tool error");
+    EXPECT_TRUE(strcmp(result.tool_name, "invalid-tool") == 0, "unterminated sanitized name");
+    EXPECT_TRUE(result.requested_tool_name_present == 1u, "unterminated tool present");
     EXPECT_TRUE(latticra_seal_guarded_allowlist_evaluate("latticra.seal.inspect", 0) == LATTICRA_STATUS_NULL_ARGUMENT,
                 "null output");
     EXPECT_TRUE(latticra_seal_guarded_allowlist_is_report_only(0) == 0, "null helper");
@@ -149,6 +160,41 @@ static int guarded_allowlist_fails_closed(void) {
                 "null result report");
     EXPECT_TRUE(latticra_seal_guarded_allowlist_report(&result, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT,
                 "null buffer report");
+
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_evaluate("latticra.seal.report", &result) == LATTICRA_STATUS_OK,
+                "tamper source");
+    memset(result.guarded_allowlist_profile,
+           'z',
+           sizeof(result.guarded_allowlist_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_report(&result, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated result render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated result render cleared");
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_is_report_only(&result) == 0,
+                "unterminated helper rejected");
+
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_evaluate("latticra.seal.report", &result) == LATTICRA_STATUS_OK,
+                "authority tamper source");
+    result.allow_candidate_grants_authority = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_report(&result, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority result render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority result render cleared");
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_is_report_only(&result) == 0,
+                "authority helper rejected");
+
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_evaluate("latticra.seal.report", &result) == LATTICRA_STATUS_OK,
+                "entry count tamper source");
+    result.allowlist_entry_count = LATTICRA_SEAL_GUARDED_ALLOWLIST_ENTRY_MAX + 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_report(&result, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "entry count result render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "entry count result render cleared");
+    EXPECT_TRUE(latticra_seal_guarded_allowlist_is_report_only(&result) == 0,
+                "entry count helper rejected");
     return 0;
 }
 

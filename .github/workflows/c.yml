@@ -12,9 +12,12 @@ permissions:
 jobs:
   state-lattice:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Run public legacy association policy guard
         run: sh scripts/test-public-legacy-association-policy.sh
       - name: Run project strategy/status framework guard
@@ -29,6 +32,8 @@ jobs:
         run: sh scripts/test-constrained-cpp-authority-layer-implementation-plan.sh
       - name: Run constrained C++ authority layer tests
         run: sh scripts/test-cpp-authority-layer.sh
+      - name: Run constrained C++ authority layer build-policy tests
+        run: sh scripts/test-cpp-authority-layer-build-policy.sh
       - name: Run Lat language grammar contract guard
         run: sh scripts/test-lat-language-grammar-contract.sh
       - name: Run Lat language grammar implementation plan guard
@@ -37,6 +42,8 @@ jobs:
         run: sh scripts/test-lat-language-grammar.sh
       - name: Run Lat semantic validation tests
         run: sh scripts/test-lat-semantic-validation.sh
+      - name: Run Lat model normalization tests
+        run: sh scripts/test-lat-model-normalization.sh
       - name: Run state lattice tests
         run: sh scripts/test-state-lattice.sh
       - name: Run tri-plane transition tests

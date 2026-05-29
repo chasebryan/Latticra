@@ -56,6 +56,8 @@ latticra_status_t latticra_seal_crypto_verify_backend_from_policy(
     latticra_seal_crypto_verify_backend_t *out);
 int latticra_seal_crypto_verify_backend_is_metadata_only(
     const latticra_seal_crypto_verify_backend_t *backend);
+int latticra_seal_crypto_verify_backend_is_authority_neutral(
+    const latticra_seal_crypto_verify_backend_t *backend);
 latticra_status_t latticra_seal_crypto_verify_backend_report(
     const latticra_seal_crypto_verify_backend_t *backend,
     char *buffer,

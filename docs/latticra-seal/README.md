@@ -36,6 +36,7 @@ Latticra Seal currently serves as:
 | `REPORTS.md` | Report format and interpretation |
 | `BOUNDARIES.md` | Non-claims and authority limits |
 | `ROADMAP.md` | Future implementation path |
+| `PRODUCT.md` | Security-product spine, modes, product surfaces, and earned-capability path |
 
 ## Canonical boundary
 

@@ -1,0 +1,207 @@
+# Latticra Console Foundation Status
+
+Status: active Stage-0 foundation
+Date: 2026-05-28
+Scope: LC C report surface, standalone and Panel installability, local-prefix metadata, session contract, workspace contract, namespace contract, rootfs contract, packages contract, init contract, services contract, service schema contract, service definitions contract, service plan contract, service runtime contract, processes contract, host-adapter contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, and no-effect authority baseline.
+
+## Current Evidence
+
+```text
+latticra_console_component_present=1
+latticra_console_c_api_present=1
+latticra_console_report_surface_present=1
+latticra_console_panel_component_present=1
+latticra_console_install_marker_present=1
+latticra_console_wrapper_present=1
+latticra_console_configurable=1
+panel_installable=1
+standalone_installable=1
+standalone_requires_panel=0
+standalone_command_wrapper=latticra-lc
+standalone_contract_status=metadata-only-contract
+standalone_contract_present=1
+standalone_contract_command=lc standalone
+standalone_contract_profile=lc-standalone-console-v0
+standalone_installer_profile=lc_standalone
+standalone_install_profile=lc-standalone-install-v0
+standalone_installer_preset=installer/configs/lc-standalone.installer.toml
+standalone_local_installer_preset=installer/configs/lc-standalone-local.installer.toml
+standalone_local_install_mode=local-prefix-install
+session_contract_status=metadata-only-contract
+session_contract_present=1
+session_contract_command=lc session
+session_contract_profile=lc-session-v0
+runtime_session_created=0
+runtime_process_spawn_allowed=0
+interactive_shell_allowed=0
+workspace_contract_status=metadata-only-contract
+workspace_contract_present=1
+workspace_contract_command=lc workspace
+workspace_contract_profile=lc-workspace-v0
+workspace_mount_allowed=0
+workspace_file_write_allowed=0
+workspace_mutation_allowed=0
+namespace_contract_status=metadata-only-contract
+namespace_contract_present=1
+namespace_contract_command=lc namespace
+namespace_contract_profile=lc-namespace-v0
+namespace_mount_allowed=0
+rootfs_contract_status=metadata-only-contract
+rootfs_contract_present=1
+rootfs_contract_command=lc rootfs
+rootfs_contract_profile=lc-rootfs-v0
+rootfs_image_create_allowed=0
+rootfs_mount_allowed=0
+rootfs_package_install_allowed=0
+packages_contract_status=metadata-only-contract
+packages_contract_present=1
+packages_contract_command=lc packages
+packages_contract_profile=lc-packages-v0
+package_manifest_write_allowed=0
+package_catalog_read_allowed=0
+package_download_allowed=0
+package_manager_execution_allowed=0
+package_script_execution_allowed=0
+init_contract_status=metadata-only-contract
+init_contract_present=1
+init_contract_command=lc init
+init_contract_profile=lc-init-v0
+pid1_claim_allowed=0
+service_start_allowed=0
+process_supervision_allowed=0
+services_contract_status=metadata-only-contract
+services_contract_present=1
+services_contract_command=lc services
+services_contract_profile=lc-services-v0
+service_registry_write_allowed=0
+service_enable_allowed=0
+service_reload_allowed=0
+service_schema_contract_status=metadata-only-contract
+service_schema_contract_present=1
+service_schema_contract_command=lc service-schema
+service_schema_contract_profile=lc-service-schema-v0
+service_schema_file=definition-schema.toml
+service_definitions_contract_status=metadata-only-contract
+service_definitions_contract_present=1
+service_definitions_contract_command=lc service-definitions
+service_definitions_contract_profile=lc-service-definitions-v0
+service_definitions_file=definitions.toml
+service_definition_stub_count=0
+service_plan_contract_status=metadata-only-contract
+service_plan_contract_present=1
+service_plan_contract_command=lc service-plan
+service_plan_contract_profile=lc-service-plan-v0
+service_plan_file=plan.toml
+service_plan_created=0
+service_runtime_contract_status=metadata-only-contract
+service_runtime_contract_present=1
+service_runtime_contract_command=lc service-runtime
+service_runtime_contract_profile=lc-service-runtime-v0
+service_runtime_file=runtime.toml
+service_runtime_created=0
+service_runtime_handoff_allowed=0
+service_executor_allowed=0
+service_process_launch_allowed=0
+service_supervision_allowed=0
+processes_contract_status=metadata-only-contract
+processes_contract_present=1
+processes_contract_command=lc processes
+processes_contract_profile=lc-processes-v0
+process_table_present=0
+process_spawn_allowed=0
+process_signal_allowed=0
+process_supervision_allowed=0
+service_definition_validation_allowed=0
+host_path_projection_allowed=0
+namespace_mutation_allowed=0
+substrate_bridge_status=metadata-bound
+command_registry_status=seed-registry
+command_registry_source=c-static-table
+command_registry_no_effect=1
+command_registry_host_process_launch_allowed=0
+help_renderer_present=1
+manpage_renderer_present=1
+installed_help_reads_seed_registry=1
+runtime_boundary_bound=1
+seal_capability_labels_bound=1
+boundary_report_present=1
+future_host_command_requires_future_gate=1
+future_os_command_requires_future_gate=1
+seal_capability_grants_authority=0
+host_embedding_status=planned
+host_adapter_contract_status=metadata-only-contract
+host_adapter_contract_present=1
+host_adapter_contract_command=lc host-adapter
+host_adapter_contract_profile=lc-host-adapter-v0
+receipt_request_contract_status=metadata-only-contract
+receipt_request_contract_present=1
+receipt_request_contract_command=lc receipt-request
+receipt_request_contract_profile=lc-receipt-request-v0
+receipt_payload_schema_status=metadata-only-schema
+receipt_payload_schema_present=1
+receipt_payload_schema_command=lc receipt-payload
+receipt_payload_schema_profile=lc-receipt-payload-schema-v0
+receipt_payload_artifact_draft_status=metadata-only-draft
+receipt_payload_artifact_draft_present=1
+receipt_payload_artifact_draft_command=lc receipt-artifact
+receipt_payload_artifact_draft_profile=lc-receipt-payload-artifact-draft-v0
+receipt_payload_artifact_review_status=metadata-only-review-gate
+receipt_payload_artifact_review_present=1
+receipt_payload_artifact_review_command=lc receipt-artifact-review
+receipt_payload_artifact_review_profile=lc-receipt-payload-artifact-review-v0
+receipt_payload_artifact_review_receipt_status=metadata-only-receipt-contract
+receipt_payload_artifact_review_receipt_present=1
+receipt_payload_artifact_review_receipt_command=lc receipt-review-receipt
+receipt_payload_artifact_review_receipt_profile=lc-receipt-payload-artifact-review-receipt-v0
+receipt_payload_artifact_review_receipt_draft_status=metadata-only-review-receipt-draft
+receipt_payload_artifact_review_receipt_draft_present=1
+receipt_payload_artifact_review_receipt_draft_command=lc receipt-review-draft
+receipt_payload_artifact_review_receipt_draft_profile=lc-receipt-payload-artifact-review-receipt-draft-v0
+receipt_payload_materialization_plan_status=metadata-only-plan
+receipt_payload_materialization_plan_present=1
+receipt_payload_materialization_plan_command=lc receipt-materialization-plan
+receipt_payload_materialization_plan_profile=lc-receipt-payload-materialization-plan-v0
+draft_review_receipt_present=0
+materialization_preconditions_met=0
+materialization_allowed=0
+payload_artifact_present=0
+payload_write_allowed=0
+signature_request_binding_status=metadata-only-contract
+signature_request_binding_present=1
+signature_request_binding_command=lc signature-request
+signature_request_binding_profile=lc-signature-request-binding-v0
+signature_request_binding_allowed=0
+seal_signature_request_present=0
+receipt_write_allowed=0
+os_base_contract_status=metadata-only-contract
+os_base_contract_present=1
+os_base_contract_command=lc os-contract
+os_base_contract_profile=lc-os-base-v0
+vm_evidence_contract_status=metadata-only-contract
+vm_evidence_contract_present=1
+vm_evidence_contract_command=lc vm-evidence
+vm_evidence_contract_profile=lc-vm-evidence-v0
+os_base_status=planned-no-boot-authority
+```
+
+## Non-Claims
+
+```text
+shell_execution_authority=0
+external_host_process_launch=0
+host_mutation_authority=0
+network_authority=0
+runtime_enforcement_authority=0
+boot_authority=0
+production_os_claim=0
+```
+
+## Verification
+
+Run:
+
+```sh
+make latticra-console
+```
+
+The test compiles the LC C foundation, renders the LC report, checks key no-effect fields, and verifies Panel/install metadata references.

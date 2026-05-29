@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+manifest_schema = "latticra-panel-signed-updater-manifest-fixture-v0"
+manifest_fixture = true
+manifest_fixture_scope = "local-no-effect"
+manifest_fixture_effect = "none"
+manifest_fixture_trusted_for_apply = false
+
+update_id = "panel-local-checkout-fixture"
+update_channel = "lab"
+source_strategy = "current-source-checkout"
+apply_mode = "guarded-local-prefix-reinstall"
+target_component = "latticra-panel"
+target_version = "fixture-only"
+
+network_fetch_authority = false
+remote_update_repository_trust = false
+signed_update_delivery_ready = false
+trusted_signed_manifest_present = false
+manifest_signature_present = false
+manifest_signature_verified = false
+artifact_hash_present = false
+artifact_hash_verified = false
+artifact_signature_present = false
+artifact_signature_verified = false
+channel_policy_present = false
+compatibility_policy_present = false
+rollback_plan_present = false
+post_update_validation_present = false
+operator_confirmation_observed = false
+update_receipt_written = false
+staged_update_allowed = false
+signed_update_apply_allowed = false
+host_mutation_allowed = false
+production_update_ready = false
+production_installer_ready = false
+
+non_claims = [
+  "not-a-trusted-update-manifest",
+  "not-signed-update-evidence",
+  "not-artifact-verification-evidence",
+  "not-network-update-evidence",
+  "not-production-update-readiness",
+]

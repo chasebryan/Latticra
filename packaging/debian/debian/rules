@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	sh scripts/test-state-lattice.sh
+	sh scripts/test-system-bootstrap.sh
+	sh scripts/test-kernel.sh
+	sh scripts/test-kernel-lifecycle.sh
+	sh scripts/test-latticra-no-effect-cli-status-surface.sh
+	mkdir -p build
+	cc $(CFLAGS) $(CPPFLAGS) -std=c99 -Wall -Wextra -Werror -pedantic src/latticra_cli.c -o build/latticra $(LDFLAGS)
+
+override_dh_auto_test:
+	sh scripts/test-latticra-no-effect-cli-status-surface.sh

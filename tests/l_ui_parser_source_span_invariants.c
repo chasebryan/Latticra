@@ -52,6 +52,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -170,6 +171,7 @@ static int assert_span_for_source(
     EXPECT_TRUE(result.execution_allowed == 0, "span result execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "span result mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "span result server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "span result network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "span result recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "span result hardware flag");
 
@@ -316,6 +318,7 @@ static int span_metadata_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "span execution");
     EXPECT_TRUE(result.mutation_allowed == 0, "span mutation");
     EXPECT_TRUE(result.server_allowed == 0, "span server");
+    EXPECT_TRUE(result.network_allowed == 0, "span network");
     EXPECT_TRUE(result.recovery_allowed == 0, "span recovery");
     EXPECT_TRUE(result.hardware_allowed == 0, "span hardware");
     return 0;

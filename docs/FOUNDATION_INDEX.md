@@ -28,21 +28,213 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`SUPERVISOR_ARCHITECTURE.md`](SUPERVISOR_ARCHITECTURE.md) — Nucleus supervisor model and orchestration responsibilities.
 - [`EFFECT_GATES.md`](EFFECT_GATES.md) — effect categories, gating rules, and visibility requirements.
 - [`UI_TERMINAL_LANGUAGE.md`](UI_TERMINAL_LANGUAGE.md) — L-UI terminal/operator interface language direction.
+- [`LATTICRA_CONSOLE_FOUNDATION.md`](LATTICRA_CONSOLE_FOUNDATION.md) — Latticra Console Stage-0 foundation, standalone dry-run/local installer presets, Panel installability, profile presets, standalone contract, host-embedding contract, read-only host inventory contract, host-adapter contract, receipt contract, Seal receipt-request contract, receipt payload schema, receipt payload artifact draft, receipt payload artifact review gate, receipt payload artifact review receipt contract, receipt payload artifact review receipt draft contract, receipt payload materialization plan, signature-request binding contract, OS-base planning contract, VM evidence contract, command registry, Runtime Boundary binding, and future host/OS-base posture.
 - [`SERVER_INTERACTION_MODEL.md`](SERVER_INTERACTION_MODEL.md) — signed, optional, inspectable server interaction model.
+- [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) — Stage-0 foundation contract for Latticra Nadia Witness Foundation, the planned offline AI companion for Latticra software development, systems engineering, AI development, and community-awareness principles.
+- [`NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md`](NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1.md) — Stage-1 no-network local context-pack engine for Nadia.
+- [`NADIA_RUNTIME_PROFILE_STAGE_2.md`](NADIA_RUNTIME_PROFILE_STAGE_2.md) — Stage-2 offline runtime-profile boundary for Nadia before inference.
+- [`NADIA_DEVELOPER_WORKBENCH_STAGE_3.md`](NADIA_DEVELOPER_WORKBENCH_STAGE_3.md) — Stage-3 developer-workbench prompt-plan generation for Nadia before prompt evaluation.
+- [`NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md`](NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4.md) — Stage-4 systems-engineering mode validation for Nadia prompt plans before prompt evaluation.
+- [`NADIA_PRODUCTIVITY_LOOP_STAGE_5.md`](NADIA_PRODUCTIVITY_LOOP_STAGE_5.md) — Stage-5 operator-reviewed productivity ledger for Nadia local learning evidence before training or tool authority.
+- [`NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md`](NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6.md) — Stage-6 protective-safety boundary for Nadia non-sexual-use, anti-manipulation, and namesake-cause awareness restrictions.
+- [`NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md`](NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7.md) — Stage-7 report-only guarded tool-authority preflight for Nadia before any tool execution.
+- [`NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md`](NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8.md) — Stage-8 prompt-evaluation contract for Nadia before prompt materialization, prompt evaluation, inference, or tool execution.
+- [`NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md`](NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9.md) — Stage-9 local model-registry contract for Nadia before model selection, model installation, prompt evaluation, inference, or tool execution.
+- [`NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md`](NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10.md) — Stage-10 inference-readiness contract for Nadia before runtime invocation, model loading, prompt evaluation, inference, or tool execution.
+- [`NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md`](NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11.md) — Stage-11 runtime-invocation contract for Nadia before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
+- [`NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md`](NADIA_MODEL_LOAD_CONTRACT_STAGE_12.md) — Stage-12 model-load contract for Nadia before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md`](NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13.md) — Stage-13 prompt-receipt contract for Nadia before prompt source opening, prompt text receipt, prompt materialization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md`](NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14.md) — Stage-14 prompt-materialization contract for Nadia before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md`](NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15.md) — Stage-15 awareness-dialogue contract for Nadia Initiative Q&A scope before dialogue generation, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md`](NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16.md) — Stage-16 prompt-evaluation handoff contract for Nadia before prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md`](NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17.md) — Stage-17 tokenization-boundary contract for Nadia before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md`](NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18.md) — Stage-18 tokenizer-specification contract for Nadia before tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md`](NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19.md) — Stage-19 tokenizer-manifest contract for Nadia before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md`](NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20.md) — Stage-20 tokenizer-artifact-inventory contract for Nadia before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md`](NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21.md) — Stage-21 tokenizer-artifact-measurement contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md`](NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22.md) — Stage-22 tokenizer-artifact-verification contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md`](NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23.md) — Stage-23 tokenizer-artifact-binding contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md`](NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24.md) — Stage-24 tokenizer-runtime-attachment contract for Nadia before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md`](NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25.md) — Stage-25 prompt-tokenization contract for Nadia before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md`](NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26.md) — Stage-26 prompt-token-sequence contract for Nadia before prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md`](NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27.md) — Stage-27 context-window assembly contract for Nadia before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md`](NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28.md) — Stage-28 prompt-evaluation-input contract for Nadia before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md`](NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29.md) — Stage-29 prompt-evaluation runtime handoff contract for Nadia before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md`](NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30.md) — Stage-30 prompt-evaluation invocation contract for Nadia before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md`](NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31.md) — Stage-31 prompt-evaluation result contract for Nadia before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md`](NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32.md) — Stage-32 prompt-evaluation result review contract for Nadia before result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md`](NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33.md) — Stage-33 prompt-evaluation result disposition contract for Nadia before disposition records, release records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34.md) — Stage-34 prompt-evaluation result release contract for Nadia before release records, release decisions, release publication, release receipts, disposition records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35.md) — Stage-35 prompt-evaluation result release receipt contract for Nadia before receipt records, receipt signing, receipt publication, release records, release decisions, release publication, disposition records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36.md) — Stage-36 prompt-evaluation result release receipt review contract for Nadia before review records, review decisions, review findings, receipt records, receipt signing, receipt publication, release records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_37.md) — Stage-37 prompt-evaluation result release receipt review disposition contract for Nadia before disposition records, disposition decisions, disposition findings, review records, review decisions, review findings, receipt records, receipt signing, receipt publication, release records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_38.md) — Stage-38 prompt-evaluation result release receipt review disposition release contract for Nadia before disposition-release records, release decisions, release publication, release packaging, release receipts, disposition records, review records, receipt records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_39.md) — Stage-39 prompt-evaluation result release receipt review disposition release receipt contract for Nadia before release-receipt records, receipt signing, receipt publication, disposition-release records, release publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_40.md) — Stage-40 prompt-evaluation result release receipt review disposition release receipt review contract for Nadia before release-receipt-review records, review decisions, review findings, release-receipt records, receipt signing, receipt publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_41.md) — Stage-41 prompt-evaluation result release receipt review disposition release receipt review disposition contract for Nadia before release-receipt-review-disposition records, review decisions, review findings, receipt signing, receipt publication, receipt packaging, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_42.md) — Stage-42 prompt-evaluation result release receipt review disposition release receipt review disposition release contract for Nadia before disposition-release recording, release decisions, release publication, release packaging, release receipt creation, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_43.md) — Stage-43 prompt-evaluation result release receipt review disposition release receipt review disposition release receipt contract for Nadia before release-receipt records, receipt emission, receipt signing, receipt publication, release records, review records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_44.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review contract Stage-44 + guardrails before release-receipt-review records, review decisions, review findings, receipt signing, receipt publication, receipt packaging, disposition recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_45.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_45.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-45 + guardrails before release-receipt-review-disposition records, disposition decisions, disposition findings, receipt signing, receipt publication, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_46.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_46.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-46 + guardrails before disposition-release recording, release decisions, release publication, release packaging, release receipt creation, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_47.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_47.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract Stage-47 + guardrails before disposition-release-receipt recording, receipt emission, receipt signing, receipt publication, disposition-release recording, release decisions, release publication, release packaging, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_48.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_48.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review contract Stage-48 + guardrails before release-receipt-review records, review decisions, review findings, receipt signing, receipt publication, receipt packaging, disposition recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_49.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_CONTRACT_STAGE_49.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition contract Stage-49 + guardrails before release-receipt-review-disposition records, disposition decisions, disposition findings, receipt signing, receipt publication, receipt packaging, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_50.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_CONTRACT_STAGE_50.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release contract Stage-50 + guardrails before disposition-release recording, release decisions, release publication, release packaging, release receipt creation, disposition recording, review recording, receipt recording, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_51.md`](NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_REVIEW_DISPOSITION_RELEASE_RECEIPT_CONTRACT_STAGE_51.md) — Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt review disposition release receipt review disposition release receipt contract Stage-51 + guardrails before release-receipt records, receipt emission, receipt signing, receipt publication, receipt packaging, release records, review records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`SELF_UPDATE_MODEL.md`](SELF_UPDATE_MODEL.md) — staged signed update and rollback design.
 - [`HOST_ARCHITECTURE_TARGETS.md`](HOST_ARCHITECTURE_TARGETS.md) — x86_64 and ARM64 target policy.
 - [`ROADMAP.md`](ROADMAP.md) — design-first roadmap before implementation.
-- [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — Apache-2.0 project licensing, contributions, branding, and future notice rules.
+- [`LICENSE_POLICY.md`](LICENSE_POLICY.md) — hybrid project licensing, contributions, branding, and future notice rules.
+- [`DOCUMENTATION_LICENSE.md`](DOCUMENTATION_LICENSE.md) — CC-BY-4.0 documentation and handbook license decision.
 
 ## Project operations documents
 
+- [`README.md`](README.md) — reader-facing documentation hub for choosing the right documentation level before using the full foundation index.
+- [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md) — shared documentation glossary for public terms, claim posture, validation, platform posture, and reader-route terminology.
+- [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md) — reader journey map for user, operator, reviewer, contributor, packager, security, subsystem, public-site, and handbook routes.
+- [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) — documentation source-authority order for resolving conflicts between source records, status records, non-claims, mirrors, public HTML, review packets, and governance files.
+- [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) — documentation freshness and lifecycle policy for current, stale, superseded, archived, local-only, no-effect, report-only, planning, and blocked records.
+- [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) — documentation change-impact guide for deciding whether a docs change stays local or expands to source records, mirrors, validation paths, public HTML, status, or non-claims.
+- [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) — documentation status-record standard for status record shape, index entries, public mirrors, evidence, validation, non-claims, and boundaries.
+- [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) — documentation command-example standard for runnable snippets, prerequisites, effect boundaries, expected output, cleanup, and blocked adjacent claims.
+- [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) — documentation visual-asset standard for screenshots, diagrams, public images, alt text, visual freshness, source context, and visual non-claims.
+- [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) — documentation health rubric for findability, current status, claim safety, traceability, validation, reader routes, platform posture, security posture, estimate hygiene, and public/source consistency.
+- [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) — subsystem landing-page standard for current posture, evidence spine, validation, non-claims, stop signals, mirrors, and maintenance triggers.
+- [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) — static public-site mirror standard for keeping HTML pages aligned with source Markdown, status, estimates, validation, and non-claims.
+- [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) — maintenance guide for public entry points, estimate mirrors, status docs, platform docs, static HTML summaries, and documentation-only validation.
+- [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) — reusable documentation review packet for public wording, reader routes, mirrors, non-claims, validation, and rollback checks.
+- [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) — documentation style guide for canonical terms, status/date style, claim wording, headings, links, tables, and replacement phrasing.
+- [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) — traceability matrix mapping public surfaces to source records, validation, mirrors, and non-claim boundaries.
+- [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) — documentation validation playbook for hygiene, link, public-entry, estimate, platform, subsystem, and claim-promotion checks.
+- [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) — documentation drift-response playbook for mirror drift, stale evidence, non-claim drift, and claim demotion.
+- [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) — product-facing documentation cohesion guide for reader routes, public copy, surface responsibilities, and cross-link expectations.
+- [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md) — short user-facing install, run, update, reset/uninstall, and clean full user-local uninstall command sheet.
 - [`../STATUS.md`](../STATUS.md) — root status shortcut with completion estimates and next step.
 - [`../SECURITY.md`](../SECURITY.md) — vulnerability reporting, safe testing rules, and security non-claims.
+- [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md) — high-assurance security baseline for current NSA, CISA, FBI, and NIST source-tracked allocations.
+- [`MEMORY_SAFETY_ROADMAP.md`](MEMORY_SAFETY_ROADMAP.md) — memory-safety roadmap for current C/C++ component mitigation, memory-safe-language preference, and promotion blockers.
+- [`SUPPLY_CHAIN_SECURITY_BASELINE.md`](SUPPLY_CHAIN_SECURITY_BASELINE.md) — supply-chain security baseline for CI, dependency, SBOM, KEV/NVD, package, installer, release, and update-lane blockers.
+- [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) — zero-trust runtime authority baseline for per-request authorization, identity/resource visibility, policy decisions, denial reasons, audit records, and no implicit runtime trust.
+- [`CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md`](CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md) — cyber incident reporting and response baseline for CISA/FBI/IC3 path awareness, ransomware response planning, evidence preservation, communications routing, and no service claims.
+- [`VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md`](VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md) — vulnerability management release gate baseline for CISA KEV review, NVD/CVE review, disclosure handling, release blocking, and no product-security claims.
+- [`CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md`](CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md) — cryptographic assurance and key-management baseline for FIPS/CMVP claim gates, algorithm inventory, key lifecycle, randomness, post-quantum planning, and no production crypto claims.
+- [`LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md`](LATTICRA_SEAL_HYBRID_PROVIDER_SELF_TEST.md) — Latticra Seal provider-backed hybrid self-test for local NIST P-256 ECDH, ML-KEM-512/768/1024, transcript-bound AAD, tamper rejection, and the HKDF-SHA256/AES-256-GCM attached-record envelope without secret output, production claims, FIPS claims, or runtime authority.
+- [`LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md`](LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md) — authority-neutral PQC integration frame for Apple corecrypto source research, NIST ML-KEM/ML-DSA planning, candidate provider posture, and no production crypto claims.
+- [`LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md`](LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md) — clean-room no-effect PQC provider adapter for standards-first ML-KEM/ML-DSA work and liboqs comparison-provider boundaries without crypto authority.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_FOUNDATION.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_FOUNDATION.md) — dedicated Latticra Q-Seal subsystem foundation, local source tree, clean-room source boundary, and no-effect validation.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_READINESS.md) — aggregate Latticra Q-Seal readiness profile for design-frame integration, runtime-crypto blockers, required evidence counts, clean-room boundaries, and fail-closed production-claim gating.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PARAMETERS.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PARAMETERS.md) — Latticra Q-Seal ML-KEM FIPS 203 parameter records, disabled operation stubs, clean-room guardrails, and no production crypto claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_GATE.md) — Latticra Q-Seal ML-KEM fail-closed evidence gate for KAT, ACVP, errata, constant-time, side-channel, randomness, zeroization, clean-room, and production-claim blockers.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_FIPS_CONFORMANCE_MATRIX.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_FIPS_CONFORMANCE_MATRIX.md) — Latticra Q-Seal ML-KEM FIPS 203 conformance matrix for parameter sets, keygen, encapsulation, decapsulation, encoding, randomness, hash/XOF, failure semantics, ACVP/KAT consistency, errata, clean-room, and no-operation blockers before implementation trace acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SP800_227_USAGE_PROFILE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SP800_227_USAGE_PROFILE.md) — Latticra Q-Seal ML-KEM SP 800-227 usage profile for application/protocol binding, key confirmation, KDF boundary, domain separation, shared-secret lifecycle, failure handling, key separation, algorithm agility, and no-shared-secret-emission blockers before KEM usage acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_TRACEABILITY_MATRIX.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_TRACEABILITY_MATRIX.md) — Latticra Q-Seal ML-KEM implementation traceability matrix for clean-room source-unit to FIPS 203, SP 800-227, KAT, ACVP, constant-time, memory-safety, zeroization, randomness, negative-test, source-digest, code-owner, and review-disposition evidence mappings before implementation trace acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_LAYOUT_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_LAYOUT_GATE.md) — Latticra Q-Seal ML-KEM source layout gate for clean-room file-role taxonomy, public API boundaries, primitive boundaries, secret-state, randomness, zeroization, constant-time, KAT/ACVP, digest, review-owner, and no-runtime-crypto blockers before source-layout acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PRIMITIVE_SOURCE_ACCEPTANCE_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PRIMITIVE_SOURCE_ACCEPTANCE_GATE.md) — Latticra Q-Seal ML-KEM primitive source acceptance gate for clean-room source files, source-file digest rows, author attestation, per-file standards trace, per-file KAT/ACVP trace, per-file review approval, and no-runtime-crypto blockers before source acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FILE_DIGEST_PLAN.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FILE_DIGEST_PLAN.md) — Latticra Q-Seal ML-KEM implementation file digest plan for per-file SHA-256 digest-row schema, source/test/build digest blockers, trace/review columns, source-digest receipt bindings, replay verification blockers, and no-runtime-crypto authority before digest-row acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CLEAN_ROOM_AUTHOR_ATTESTATION_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CLEAN_ROOM_AUTHOR_ATTESTATION_GATE.md) — Latticra Q-Seal ML-KEM clean-room author attestation gate for per-file author provenance, prohibited-source confirmation, third-party-source exception review, digest-row bindings, review independence, and no-runtime-crypto authority before source-attestation acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_STANDARDS_TRACE_GATE.md) — Latticra Q-Seal ML-KEM per-file standards trace gate for FIPS 203 clause references, SP 800-227 usage references, parameter-set and operation-family trace columns, review disposition binding, and no-runtime-crypto authority before standards-trace acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_TEST_TRACE_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PER_FILE_TEST_TRACE_GATE.md) — Latticra Q-Seal ML-KEM per-file test trace gate for KAT, ACVP, vector-fixture, negative-test, expected-result, digest-row, standards-trace, and review-disposition bindings before test-trace acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_MANIFEST.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_MANIFEST.md) — Latticra Q-Seal ML-KEM KAT manifest for FIPS 203 and ACVP ML-KEM keyGen AFT, encapDecap AFT, decapsulation VAL, key-check VAL, parameter-set coverage, seed-material policy, malformed vectors, implicit rejection, and no-execution guardrails before known-answer vector execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RUNNER_CONTRACT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RUNNER_CONTRACT.md) — Latticra Q-Seal ML-KEM KAT runner contract for deterministic offline replay policy, fixture digest gates, result-row requirements, provider-differential rows, CI replay transcript blockers, and no-execution guardrails before known-answer vector replay.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_ACVP_REPLAY_TRANSCRIPT_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_ACVP_REPLAY_TRANSCRIPT_GATE.md) — Latticra Q-Seal ML-KEM KAT/ACVP replay transcript gate for deterministic transcript schemas, SHA-256 transcript digests, fixture and implementation digest references, replay lane coverage, CI replay binding, review disposition, and no-runtime-crypto blockers before transcript evidence acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_SCHEMA.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_SCHEMA.md) — Latticra Q-Seal ML-KEM KAT result schema for fixture-digest references, vector families, parameter sets, operation/test types, tgId/tcId mapping, expected and observed result fields, pass/fail records, implicit rejection, provider differentials, transcript digests, and no-result-recording guardrails before replay evidence can be accepted.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_ROW_FIXTURE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_KAT_RESULT_ROW_FIXTURE.md) — Latticra Q-Seal ML-KEM KAT result row fixture for positive, negative, malformed, implicit-rejection, and provider-differential row families, fixture-digest binding blockers, transcript digests, no-secret-logging policy, and no-result-row acceptance before reviewed replay evidence exists.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_INTAKE.md) — Latticra Q-Seal ML-KEM offline ACVP intake shape for keyGen and encapDecap vector blockers without network sessions, vector loading, submissions, operation execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_CAPABILITY_MATRIX.md) — Latticra Q-Seal ML-KEM ACVP capability matrix for keyGen, encapDecap, ML-KEM-512/768/1024, function coverage, response schemas, and fixture row-planning blockers without vector loading, submissions, operation execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_ROW_PLAN.md) — Latticra Q-Seal ML-KEM ACVP fixture row plan for keyGen AFT, encapDecap AFT, decapsulation VAL, key-check VAL, response fields, digest-ledger columns, and review blockers without vector loading, submissions, operation execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_DIGEST_ROW_TEMPLATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_FIXTURE_DIGEST_ROW_TEMPLATE.md) — Latticra Q-Seal ML-KEM ACVP fixture digest row template for row IDs, parameter sets, modes, test types, source URLs, SHA-256 digests, bundle sizes, storage paths, license review, schema crosscheck, reviewer identity, CI replay transcripts, and tamper-evidence blockers without row acceptance, vector loading, submissions, operation execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_PARSER_CONTRACT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_PARSER_CONTRACT.md) — Latticra Q-Seal ML-KEM ACVP parser contract for fail-closed JSON field policy, allowlists, malformed-input rejection, duplicate-key rejection, bounds policy, canonical mapping, and no-network/no-dynamic-code guardrails before vector import, response generation, operation execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_CONTRACT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_CONTRACT.md) — Latticra Q-Seal ML-KEM ACVP response contract for keyGen and encapDecap response fields, tcId/tgId mapping, canonical hex output, key-check booleans, deterministic ordering, and no-submission/no-operation guardrails before response generation or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_FIXTURE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_RESPONSE_FIXTURE.md) — Latticra Q-Seal ML-KEM ACVP response fixture for keyGen, encapsulation, decapsulation, key-check, and negative response-output families, parser-output acceptance blockers, vector-execution evidence blockers, CI replay binding, and no-response-output acceptance before reviewed evidence exists.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_SUBMISSION_PACKAGE_CONTRACT.md) — Latticra Q-Seal ML-KEM ACVP submission-package contract for offline package manifests, request and response bundle digests, ACVP session metadata, replay transcripts, client-boundary review, submission receipts, validation-server acceptance blockers, and no-network/no-operation guardrails before package acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ACVP_VERDICT_RECEIPT_GATE.md) — Latticra Q-Seal ML-KEM ACVP verdict receipt gate for validation-server verdict receipts, session and verdict row mapping, receipt digests, certificate identifiers, reviewer disposition, and no-validation-claim/no-runtime-crypto blockers before verdict evidence acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECURITY_POLICY_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECURITY_POLICY_GATE.md) — Latticra Q-Seal ML-KEM security-policy gate for FIPS 140-3, SP 800-140B Rev. 1, CMVP, module-boundary, ACVP verdict, source-digest, services/roles, self-test, entropy, operational-environment, guidance, and reviewer-disposition blockers before security-policy evidence acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MODULE_BOUNDARY_GATE.md) — Latticra Q-Seal ML-KEM module boundary gate for FIPS 140-3 security-policy, cryptographic-module boundary, service mapping, key lifecycle, self-test, entropy, zeroization, roles, interfaces, reviewer disposition, and no-operation/no-validation-claim blockers before module-boundary evidence acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VALIDATION_CLAIM_GATE.md) — Latticra Q-Seal ML-KEM validation claim gate for public validation, FIPS, ACVP, post-quantum migration, CMVP certificate, module-boundary, security-policy, release-artifact, public-docs, reviewer-disposition, and rollback evidence before any validation or production claim publication.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SCHEMA.md) — Latticra Q-Seal ML-KEM KAT/ACVP vector-schema contract for keyGen, encapDecap, AFT, VAL, key-check, response, and implicit-rejection fields without vector loading, response generation, execution, submissions, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_SOURCE.md) — Latticra Q-Seal ML-KEM vector-source intake for NIST ACVP or reviewed-equivalent source authority, SHA-256 digest policy, freshness, license, errata, offline storage, and import blockers without fetch, import, processing, submissions, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_LOCK.md) — Latticra Q-Seal ML-KEM vector fixture lock for offline KAT/ACVP bundle digest, license, storage, schema, parameter coverage, negative-case coverage, and import-review blockers without vector loading, execution, submissions, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_VECTOR_FIXTURE_DIGEST_LEDGER.md) — Latticra Q-Seal ML-KEM vector fixture digest ledger for source URL, SHA-256 digest, bundle size, license, storage, schema crosscheck, parameter coverage, operation-family coverage, negative-case coverage, import review, and ledger-review blockers without fixture loading, execution, submissions, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_NEGATIVE_TEST_EVIDENCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_NEGATIVE_TEST_EVIDENCE.md) — Latticra Q-Seal ML-KEM negative-test evidence gate for malformed input, length validation, canonical encoding, invalid ciphertexts, invalid keys, decapsulation failure, implicit rejection, parser rejection, fuzzing corpus, differential negative tests, and implementation-binding blockers without parser execution or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_MEMORY_SAFETY_EVIDENCE.md) — Latticra Q-Seal ML-KEM memory-safety evidence gate for bounded buffers, fixed-capacity APIs, overflow checks, bounds review, sanitizer evidence, static analysis, fuzzing, alias/lifetime review, secret-buffer isolation, zeroization binding, and implementation-binding blockers without memory-safety test execution or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_API_MISUSE_RESISTANCE.md) — Latticra Q-Seal ML-KEM API misuse-resistance gate for algorithm identifiers, parameter validation, buffer preflight, typed key material, error taxonomy, state machine, misuse-case tests, language bindings, documentation review, and implementation-binding blockers without public API execution or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_MANIFEST.md) — Latticra Q-Seal ML-KEM source digest manifest for SHA-256 clean-room source/test/build digest templates, source-integrity posture, third-party-source denial, reproducible snapshot, reviewed digest receipt, and CI digest-verification blockers without source acceptance or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_RECEIPT.md) — Latticra Q-Seal ML-KEM source digest receipt fixture for clean-room source, test, and build-script receipt rows, normalized paths, SHA-256 replay policy, tamper-evidence posture, review receipt blockers, and CI digest-verification blockers without receipt acceptance or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_VERIFICATION.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SOURCE_DIGEST_VERIFICATION.md) — Latticra Q-Seal ML-KEM source digest verification fixture for offline source, test, and build receipt replay, tamper fixtures, CI verification harness records, and reviewed verification-result blockers without digest replay or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_RECEIPT_REPLAY_RESULTS.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_RECEIPT_REPLAY_RESULTS.md) — Latticra Q-Seal ML-KEM receipt replay result fixture for source, test, build, and tamper replay result records, CI result binding, and review blockers without replay execution or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CODE_OWNER_REVIEW.md) — Latticra Q-Seal ML-KEM code-owner review gate for SSDF review posture, clean-room review policy, reviewer identity, CODEOWNERS, cryptography, security, standards traceability, side-channel, source-digest, finding closure, and approval blockers without reviewer approval or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEW_DISPOSITION_LEDGER.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEW_DISPOSITION_LEDGER.md) — Latticra Q-Seal ML-KEM review disposition ledger for code-owner, cryptography, security, standards, side-channel, source-digest, reviewer-identity, finding-closure, rejection-policy, and approval-receipt disposition blockers without finding closure or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEWER_IDENTITY_FIXTURE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEWER_IDENTITY_FIXTURE.md) — Latticra Q-Seal ML-KEM reviewer identity fixture for reviewer identity import, role mapping, independence attestation, PII-minimization posture, approval authority, and import review blockers without importing identities or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEWER_ROLE_MAPPING.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_REVIEWER_ROLE_MAPPING.md) — Latticra Q-Seal ML-KEM reviewer role-mapping fixture for cryptography, security, code-owner, standards, side-channel, and source-digest role records, reviewer separation, and approval-authority blockers without importing roles or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_IMPORT_PACKET_MANIFEST.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_IMPORT_PACKET_MANIFEST.md) — Latticra Q-Seal ML-KEM evidence import packet manifest for fixture digest, receipt replay, source digest, coverage, tamper, reviewer role, reviewer identity, disposition, and timestamp row blockers before evidence import review.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_IMPORT_REVIEW_GATE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_EVIDENCE_IMPORT_REVIEW_GATE.md) — Latticra Q-Seal ML-KEM evidence import review gate for vector fixture digest rows, receipt replay transcripts, source digest receipts, reviewer role-map records, coverage evidence, replay tamper evidence, and review acceptance blockers before evidence import acceptance.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CI_PROMOTION_EVIDENCE.md) — Latticra Q-Seal ML-KEM CI promotion evidence gate for SSDF secure-build posture, FIPS 203/SP 800-227 standards binding, local wrappers, readiness binding, KAT/ACVP, constant-time, memory-safety, side-channel, negative-test, provider differential, implementation-binding, workflow, release-claim, and artifact-receipt blockers without operation execution or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CONSTANT_TIME_REVIEW.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_CONSTANT_TIME_REVIEW.md) — Latticra Q-Seal ML-KEM constant-time review gate for secret-dependent control-flow, memory-access, loop-bound, implicit-rejection, optimizer, measurement, assembly, CI, and formal-signoff blockers without implementation promotion or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_RANDOMNESS_SOURCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_RANDOMNESS_SOURCE.md) — Latticra Q-Seal ML-KEM randomness-source contract for FIPS 203 seed-material policy and NIST SP 800-90A / SP 800-90B entropy, DRBG, reseed, health-test, failure-mode, platform-boundary, and implementation-binding blockers without random byte generation or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ZEROIZATION_EVIDENCE.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_ZEROIZATION_EVIDENCE.md) — Latticra Q-Seal ML-KEM zeroization evidence gate for FIPS 203 secret-material scope and FIPS 140-3 zeroization posture, wipe primitive selection, compiler strategy, failure paths, memory-scan tests, assembly review, and implementation-binding blockers without secret handling or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SIDE_CHANNEL_REVIEW.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SIDE_CHANNEL_REVIEW.md) — Latticra Q-Seal ML-KEM side-channel review gate for FIPS 203 scope and FIPS 140-3 non-invasive security posture, leakage model, power, timing, cache, fault, compiler-artifact, platform, negative-test, signoff, and implementation-binding blockers without leakage testing or operation execution.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_DIFFERENTIAL.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_DIFFERENTIAL.md) — Latticra Q-Seal ML-KEM comparison-only provider differential contract for future liboqs comparison without provider linking, provider runtime use, vector execution, or production claims.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_PROVIDER_SELF_TEST.md) — Latticra Q-Seal ML-KEM OpenSSL EVP provider self-test for local key generation, encapsulation, decapsulation, shared-secret equality, and zeroization without secret output, FIPS claims, production promotion, or runtime authority.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_BINDING_MANIFEST.md) — Latticra Q-Seal ML-KEM implementation-binding manifest for clean-room module-to-evidence bindings, FIPS 203/SP 800-227 anchors, KAT/ACVP, vector, negative-test, memory, API, constant-time, randomness, zeroization, side-channel, provider, secret-state, CI-promotion, digest, code-owner, and operation blockers before primitive code.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_IMPLEMENTATION_FRAME.md) — Latticra Q-Seal ML-KEM clean-room implementation frame for module planning, constant-time, zeroization, randomness, serialization, test-vector, and formal-review blockers before primitive code.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECRET_STATE_CONTRACT.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECRET_STATE_CONTRACT.md) — Latticra Q-Seal ML-KEM secret-state contract for constant-time behavior, zeroization, implicit rejection, randomness, compiler, sanitizer, and side-channel blockers before primitive code.
+- [`../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECRET_OPS.md`](../latticra-q-seal/docs/LATTICRA_Q_SEAL_ML_KEM_SECRET_OPS.md) — Latticra Q-Seal ML-KEM candidate secret-operation helpers for secure zero, constant-time equality, and constant-time selection without ML-KEM primitive promotion or runtime cryptography.
+- [`IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md`](IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md) — identity, credential, and access management baseline for privileged access, phishing-resistant MFA planning, account lifecycle, service identity, identity logging, and no hosted access claims.
+- [`SECURITY_LOGGING_MONITORING_BASELINE.md`](SECURITY_LOGGING_MONITORING_BASELINE.md) — security logging, monitoring, and detection baseline for event-source inventory, audit events, redaction, retention, triage, incident handoff, and no monitoring-service claims.
+- [`BACKUP_RECOVERY_RESILIENCE_BASELINE.md`](BACKUP_RECOVERY_RESILIENCE_BASELINE.md) — backup, recovery, and cyber resilience baseline for backup scope, restore testing, recovery prioritization, rollback planning, RTO/RPO, and no recovery-service claims.
+- [`SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md`](SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md) — secure configuration and change management baseline for configuration inventory, secure baselines, checklist evidence, approved changes, rollback planning, drift detection, and no hardening claims.
+- [`NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md`](NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md) — network exposure and remote access baseline for network inventory, internet exposure, ingress/egress policy, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.
+- [`DATA_CLASSIFICATION_PROTECTION_BASELINE.md`](DATA_CLASSIFICATION_PROTECTION_BASELINE.md) — data classification and protection baseline for data inventory, sensitive-data flows, PII review, minimization, retention, disposal, redaction, and no customer-data claims.
+- [`AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md`](AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md) — AI and agentic automation security baseline for AI inventory, model provenance, prompt/context boundaries, tool authority, human approval, monitoring, incident handoff, and no AI runtime claims.
+- [`PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md`](PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md) — platform boot and firmware integrity baseline for boot mode, Secure Boot, TPM/PCR, firmware update and recovery evidence, and no platform-integrity claims.
+- [`SECURITY_VALIDATION_ASSESSMENT_BASELINE.md`](SECURITY_VALIDATION_ASSESSMENT_BASELINE.md) — security validation and assessment baseline for assessment scope, ROE, authorization, evidence, findings ownership, remediation, retest, independent review, and no validation claims.
+- [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md) — defensive threat model contract for protected assets, trust boundaries, abuse cases, evidence expectations, and non-claims.
+- [`DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md`](DEFENSIVE_THREAT_MODEL_IMPLEMENTATION_PLAN.md) — documentation-and-guard implementation plan for defensive threat model validation.
+- [`DEFENSIVE_THREAT_MODEL_VALIDATION.md`](DEFENSIVE_THREAT_MODEL_VALIDATION.md) — defensive threat model validation ledger.
+- [`DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md`](DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md) — defensive threat model validation refinement and next-gap triage.
 - [`strategy/README.md`](strategy/README.md) — strategy index and dated strategy-record rules.
 - [`strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md`](strategy/2026-05-15-2249-cdt-national-security-open-system-strategy.md) — active national-security open-system strategy record.
 - [`strategy/2026-05-19-1845-cdt-strategy-estimate-review.md`](strategy/2026-05-19-1845-cdt-strategy-estimate-review.md) — latest strategy estimate review.
 - [`status/README.md`](status/README.md) — status index and update rules.
 - [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) — current progress, completion estimates, and next priorities.
+- [`status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md`](status/NADIA_OFFLINE_AI_STAGE_0_STATUS.md) — status record for Nadia offline AI Stage-0 foundation, Panel installability, Console interoperability, and awareness principles.
+- [`status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md`](status/NADIA_LOCAL_CONTEXT_ENGINE_STAGE_1_STATUS.md) — status record for Nadia Stage-1 local context-pack generation.
+- [`status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md`](status/NADIA_RUNTIME_PROFILE_STAGE_2_STATUS.md) — status record for Nadia Stage-2 runtime-profile metadata before inference.
+- [`status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md`](status/NADIA_DEVELOPER_WORKBENCH_STAGE_3_STATUS.md) — status record for Nadia Stage-3 prompt-plan generation before prompt evaluation.
+- [`status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md`](status/NADIA_SYSTEMS_ENGINEERING_MODE_STAGE_4_STATUS.md) — status record for Nadia Stage-4 systems-engineering mode validation before prompt evaluation.
+- [`status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md`](status/NADIA_PRODUCTIVITY_LOOP_STAGE_5_STATUS.md) — status record for Nadia Stage-5 productivity ledger before training or tool authority.
+- [`status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md`](status/NADIA_PROTECTIVE_SAFETY_BOUNDARY_STAGE_6_STATUS.md) — status record for Nadia Stage-6 protective-safety boundary before prompt evaluation, model runtime, or tool authority.
+- [`status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md`](status/NADIA_GUARDED_TOOL_AUTHORITY_STAGE_7_STATUS.md) — status record for Nadia Stage-7 guarded tool-authority preflight before any tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md`](status/NADIA_PROMPT_EVALUATION_CONTRACT_STAGE_8_STATUS.md) — status record for Nadia Stage-8 prompt-evaluation contract before prompt materialization, prompt evaluation, inference, or tool execution.
+- [`status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md`](status/NADIA_LOCAL_MODEL_REGISTRY_CONTRACT_STAGE_9_STATUS.md) — status record for Nadia Stage-9 local model-registry contract before model selection, model installation, prompt evaluation, inference, or tool execution.
+- [`status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md`](status/NADIA_INFERENCE_READINESS_CONTRACT_STAGE_10_STATUS.md) — status record for Nadia Stage-10 inference-readiness contract before runtime invocation, model loading, prompt evaluation, inference, or tool execution.
+- [`status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md`](status/NADIA_RUNTIME_INVOCATION_CONTRACT_STAGE_11_STATUS.md) — status record for Nadia Stage-11 runtime-invocation contract before runtime process spawning, model session creation, model loading, token generation, inference, or tool execution.
+- [`status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md`](status/NADIA_MODEL_LOAD_CONTRACT_STAGE_12_STATUS.md) — status record for Nadia Stage-12 model-load contract before model file opening, weight mapping, weight loading, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md`](status/NADIA_PROMPT_RECEIPT_CONTRACT_STAGE_13_STATUS.md) — status record for Nadia Stage-13 prompt-receipt contract before prompt source opening, prompt text receipt, prompt materialization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md`](status/NADIA_PROMPT_MATERIALIZATION_CONTRACT_STAGE_14_STATUS.md) — status record for Nadia Stage-14 prompt-materialization contract before prompt buffer allocation, prompt text materialization, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md`](status/NADIA_AWARENESS_DIALOGUE_CONTRACT_STAGE_15_STATUS.md) — status record for Nadia Stage-15 awareness-dialogue contract for Nadia Initiative Q&A scope before dialogue generation, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md`](status/NADIA_PROMPT_EVALUATION_HANDOFF_CONTRACT_STAGE_16_STATUS.md) — status record for Nadia Stage-16 prompt-evaluation handoff contract before prompt tokenization, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md`](status/NADIA_TOKENIZATION_BOUNDARY_CONTRACT_STAGE_17_STATUS.md) — status record for Nadia Stage-17 tokenization-boundary contract before tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md`](status/NADIA_TOKENIZER_SPECIFICATION_CONTRACT_STAGE_18_STATUS.md) — status record for Nadia Stage-18 tokenizer-specification contract before tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md`](status/NADIA_TOKENIZER_MANIFEST_CONTRACT_STAGE_19_STATUS.md) — status record for Nadia Stage-19 tokenizer-manifest contract before tokenizer manifest loading, tokenizer manifest parsing, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_INVENTORY_CONTRACT_STAGE_20_STATUS.md) — status record for Nadia Stage-20 tokenizer-artifact-inventory contract before tokenizer artifact path resolution, artifact scanning, artifact hashing, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_MEASUREMENT_CONTRACT_STAGE_21_STATUS.md) — status record for Nadia Stage-21 tokenizer-artifact-measurement contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest recording, artifact size recording, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_VERIFICATION_CONTRACT_STAGE_22_STATUS.md) — status record for Nadia Stage-22 tokenizer-artifact-verification contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact digest comparison, artifact size comparison, artifact verification, artifact binding, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md`](status/NADIA_TOKENIZER_ARTIFACT_BINDING_CONTRACT_STAGE_23_STATUS.md) — status record for Nadia Stage-23 tokenizer-artifact-binding contract before tokenizer artifact opening, artifact reading, artifact hashing, artifact verification, artifact binding, tokenizer runtime attachment, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md`](status/NADIA_TOKENIZER_RUNTIME_ATTACHMENT_CONTRACT_STAGE_24_STATUS.md) — status record for Nadia Stage-24 tokenizer-runtime-attachment contract before tokenizer artifact opening, artifact reading, artifact hashing, tokenizer artifact binding, tokenizer runtime attachment, runtime session creation, tokenizer manifest loading, tokenizer file access, tokenizer vocabulary loading, prompt tokenization, prompt evaluation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md`](status/NADIA_PROMPT_TOKENIZATION_CONTRACT_STAGE_25_STATUS.md) — status record for Nadia Stage-25 prompt-tokenization contract before prompt text reading, prompt token creation, prompt token sequence recording, tokenizer runtime attachment, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md`](status/NADIA_PROMPT_TOKEN_SEQUENCE_CONTRACT_STAGE_26_STATUS.md) — status record for Nadia Stage-26 prompt-token-sequence contract before prompt token ID recording, token order recording, token offset recording, context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md`](status/NADIA_CONTEXT_WINDOW_ASSEMBLY_CONTRACT_STAGE_27_STATUS.md) — status record for Nadia Stage-27 context-window assembly contract before context window assembly, prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INPUT_CONTRACT_STAGE_28_STATUS.md) — status record for Nadia Stage-28 prompt-evaluation-input contract before prompt evaluation input creation, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RUNTIME_HANDOFF_CONTRACT_STAGE_29_STATUS.md) — status record for Nadia Stage-29 prompt-evaluation runtime handoff contract before runtime handoff, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md`](status/NADIA_PROMPT_EVALUATION_INVOCATION_CONTRACT_STAGE_30_STATUS.md) — status record for Nadia Stage-30 prompt-evaluation invocation contract before invocation requests, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_CONTRACT_STAGE_31_STATUS.md) — status record for Nadia Stage-31 prompt-evaluation result contract before result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_REVIEW_CONTRACT_STAGE_32_STATUS.md) — status record for Nadia Stage-32 prompt-evaluation result review contract before result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_DISPOSITION_CONTRACT_STAGE_33_STATUS.md) — status record for Nadia Stage-33 prompt-evaluation result disposition contract before disposition records, release records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_CONTRACT_STAGE_34_STATUS.md) — status record for Nadia Stage-34 prompt-evaluation result release contract before release records, release decisions, release publication, release receipts, disposition records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_CONTRACT_STAGE_35_STATUS.md) — status record for Nadia Stage-35 prompt-evaluation result release receipt contract before receipt records, receipt signing, receipt publication, release records, release decisions, release publication, disposition records, result-review records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
+- [`status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md`](status/NADIA_PROMPT_EVALUATION_RESULT_RELEASE_RECEIPT_REVIEW_CONTRACT_STAGE_36_STATUS.md) — status record for Nadia Stage-36 prompt-evaluation result release receipt review contract before review records, review decisions, review findings, receipt records, receipt signing, receipt publication, release records, result records, model-output recording, runtime invocation, prompt evaluation, dialogue generation, token generation, inference, or tool execution.
 - [`status/ANNOUNCEMENTS.md`](status/ANNOUNCEMENTS.md) — public announcement log and milestone notes.
 - [`status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md`](status/AUTHORITY_STATUS_ANNOUNCEMENT_REVIEW.md) — no-new-announcement authority status review.
 - [`status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md`](status/CPP_AUTHORITY_EXPANSION_CONTRACT_REVIEW.md) — no-expansion-contract C++ authority review.
@@ -59,6 +251,11 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_STATUS.md) — status record for the Lat pipeline diagnostic integration slice.
 - [`status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md`](status/LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_AUDIT_STATUS.md) — status record for the Lat pipeline diagnostic main test audit slice.
 - [`status/RBDM_REPORT_INTEGRATION_STATUS.md`](status/RBDM_REPORT_INTEGRATION_STATUS.md) — status record for the runtime-boundary domain matrix report integration slice.
+- [`status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md`](status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md) — current kernel lifecycle evidence status for no-effect kernel table, process/syscall table, scheduler tick, run queue, context-switch, time-accounting, preemption, lifecycle report, subsystem summary, and rollback-plan guardrails.
+- [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) — Current estimate table source alignment for the live public estimate table and its README/status mirrors.
+- [`status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md`](status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_28.md) — Current estimate mathematical rebase for the live public estimate table.
+- [`status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md`](status/COMPLETION_ESTIMATE_REVIEW_README_STATUS_ALIGNMENT.md) — README/status alignment for the completion-estimate hold review after runtime-boundary abuse-case fixtures.
+- [`status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md`](status/COMPLETION_ESTIMATE_REVIEW_AFTER_RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES.md) — completion-estimate hold review after runtime-boundary abuse-case fixtures.
 - [`status/COMPLETION_PERCENTAGE_REVIEW.md`](status/COMPLETION_PERCENTAGE_REVIEW.md) — completion-percentage planning review.
 - [`status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md`](status/PUBLIC_ENTRY_POINT_CONSISTENCY_SCAN.md) — public entry-point consistency scan.
 - [`status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md`](status/PROJECT_NOTES_FOLLOWUP_STATUS_INDEX_CHECK.md) — project-notes follow-up status/index check.
@@ -83,11 +280,210 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md`](RUNTIME_BOUNDARY_IMPLEMENTATION_PLAN.md) — exact future runtime API, structs, enums, reports, buffers, tests, task usage, authority usage, and non-claims before runtime boundary code.
 - [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md) — first runtime boundary public API, source surface, smoke invariants, dedicated runner, and dedicated workflow record.
 - [`RUNTIME_BOUNDARY_REFINEMENT_PLAN.md`](RUNTIME_BOUNDARY_REFINEMENT_PLAN.md) — runtime-boundary refinement plan.
-- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary refinement implementation.
+- [`RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md) — runtime-boundary Lat pipeline first-clause, first-declaration, module/count, stage-summary, line-comment, Lat-specific LIR module-summary, Lat-specific LIR module label, Lat-specific LIR source-span, Lat-specific LIR node-kind, Lat-specific LIR first-node, Lat-specific LIR first-node topology, Lat-specific LIR first-node span, Lat-specific LIR first transition-node, Lat-specific LIR first transition-node topology, Lat-specific LIR first transition-node span, Lat-specific LIR first-edge, Lat-specific LIR first-edge endpoint, Lat-specific LIR first-edge endpoint payload, Lat-specific LIR first-edge endpoint topology, Lat-specific LIR first-edge span, Lat-specific LIR first transition-source edge, Lat-specific LIR first transition-source edge endpoint, Lat-specific LIR first transition-source edge endpoint payload, Lat-specific LIR first transition-source edge endpoint topology, Lat-specific LIR first transition-source edge endpoint span, Lat-specific LIR first transition-source edge span, Lat-specific LIR no-effect, and Lat-specific LIR edge-kind evidence refinement implementation.
 - [`RUNTIME_BOUNDARY_REPORT_REFINEMENT.md`](RUNTIME_BOUNDARY_REPORT_REFINEMENT.md) — runtime-boundary report refinement implementation.
 - [`RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md) — runtime-boundary policy matrix refinement implementation.
+- [`RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md`](RUNTIME_BOUNDARY_POLICY_EXPANSION_AFTER_THREAT_MODEL.md) — runtime-boundary policy expansion after defensive threat-model validation.
+- [`RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md`](RUNTIME_BOUNDARY_ABUSE_CASE_FIXTURES_AFTER_POLICY_EXPANSION.md) — deterministic runtime-boundary abuse-case fixtures after policy expansion.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REFINEMENT.md) — runtime-boundary domain matrix refinement record.
 - [`RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md`](RUNTIME_BOUNDARY_DOMAIN_MATRIX_REPORT_INTEGRATION.md) — runtime-boundary domain matrix report integration record.
+- [`KERNEL_LIFECYCLE_SEED.md`](KERNEL_LIFECYCLE_SEED.md) — no-effect kernel lifecycle seed.
+- [`KERNEL_SCHEDULER_TICK_SEED.md`](KERNEL_SCHEDULER_TICK_SEED.md) — no-effect scheduler tick metadata seed.
+- [`KERNEL_RUN_QUEUE_SEED.md`](KERNEL_RUN_QUEUE_SEED.md) — no-effect run queue metadata seed.
+- [`KERNEL_CONTEXT_SWITCH_SEED.md`](KERNEL_CONTEXT_SWITCH_SEED.md) — no-effect context switch metadata seed.
+- [`KERNEL_TIME_ACCOUNTING_SEED.md`](KERNEL_TIME_ACCOUNTING_SEED.md) — no-effect time-accounting metadata seed.
+- [`KERNEL_PREEMPTION_SEED.md`](KERNEL_PREEMPTION_SEED.md) — no-effect preemption metadata seed.
+- [`KERNEL_SCHEDULER_CREDIT_SEED.md`](KERNEL_SCHEDULER_CREDIT_SEED.md) — no-effect scheduler credit metadata seed.
+- [`KERNEL_SCHEDULER_SELECTION_SEED.md`](KERNEL_SCHEDULER_SELECTION_SEED.md) — no-effect scheduler selection metadata seed.
+- [`KERNEL_SCHEDULER_DISPATCH_SEED.md`](KERNEL_SCHEDULER_DISPATCH_SEED.md) — no-effect scheduler dispatch metadata seed.
+- [`KERNEL_SCHEDULER_HANDOFF_SEED.md`](KERNEL_SCHEDULER_HANDOFF_SEED.md) — no-effect scheduler handoff metadata seed.
+- [`KERNEL_SCHEDULER_ACTIVATION_SEED.md`](KERNEL_SCHEDULER_ACTIVATION_SEED.md) — no-effect scheduler activation metadata seed.
+- [`KERNEL_SCHEDULER_RUN_ENTRY_SEED.md`](KERNEL_SCHEDULER_RUN_ENTRY_SEED.md) — no-effect scheduler run-entry metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_ADMISSION_SEED.md`](KERNEL_RUNTIME_ENTRY_ADMISSION_SEED.md) — no-effect runtime entry admission metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_FRAME_SEED.md`](KERNEL_RUNTIME_ENTRY_FRAME_SEED.md) — no-effect runtime entry frame metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_REGISTER_VIEW_SEED.md) — no-effect runtime entry register-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_STACK_VIEW_SEED.md) — no-effect runtime entry stack-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_SEED.md) — no-effect runtime entry address-space-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_SEED.md) — no-effect runtime entry privilege-level-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_SEED.md) — no-effect runtime entry syscall-gate-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_SEED.md) — no-effect runtime entry syscall-dispatch-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_SEED.md) — no-effect runtime entry syscall-return-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_SEED.md) — no-effect runtime entry syscall-exit-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_SEED.md) — no-effect runtime entry user-mode-resume-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry post-resume-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry scheduler-return-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry process-return-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry idle-return-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry quiescent-return-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry persistence-boundary-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_BOUNDARY_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-boundary-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_PLAN_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-plan-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_DISPOSITION_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-disposition-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_OUTCOME_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-outcome-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_CLOSEOUT_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-closeout-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view metadata seed.
+- [`KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_SEED.md`](KERNEL_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_SEED.md) — no-effect runtime entry recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view metadata seed.
+- [`KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md`](KERNEL_LIFECYCLE_SUBSYSTEM_SUMMARY.md) — kernel lifecycle subsystem summary.
+- [`KERNEL_LIFECYCLE_ROLLBACK_PLAN.md`](KERNEL_LIFECYCLE_ROLLBACK_PLAN.md) — no-effect kernel lifecycle rollback plan.
+- [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md) — Latticra Seal evidence-boundary, capability-boundary, promotion-gate, and non-claim contract.
+- [`LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md`](LATTICRA_SEAL_REPORT_ENVELOPE_CONTRACT.md) — report envelope boundary after ready runtime handoff report metadata.
+- [`LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md`](LATTICRA_SEAL_REPORT_ENVELOPE_IMPLEMENTATION.md) — no-effect sealed report-envelope metadata implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_REPORT_ENVELOPE_STATUS.md`](status/SEAL_REPORT_ENVELOPE_STATUS.md) — status/public-entry checkpoint for crypto-bound sealed report-envelope metadata.
+- [`LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_CONTRACT.md) — metadata-only signature request boundary after sealed report-envelope metadata.
+- [`LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNATURE_REQUEST_IMPLEMENTATION.md) — no-effect signature request metadata implementation that carries crypto graduation evidence forward when present.
+- [`LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md`](LATTICRA_SEAL_SIGNING_AUTHORIZATION_CONTRACT.md) — metadata-only signing authorization boundary after signature request readiness.
+- [`LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNING_AUTHORIZATION_IMPLEMENTATION.md) — no-effect signing authorization metadata implementation with crypto graduation evidence carry-forward.
+- [`LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md`](LATTICRA_SEAL_SIGNER_HANDOFF_CONTRACT.md) — metadata-only signer handoff boundary after signing authorization readiness.
+- [`LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNER_HANDOFF_IMPLEMENTATION.md) — signer handoff metadata implementation with crypto graduation evidence carry-forward.
+- [`LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md`](LATTICRA_SEAL_SIGNER_INVOCATION_CONTRACT.md) — metadata-only signer invocation boundary after signer handoff readiness.
+- [`LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNER_INVOCATION_IMPLEMENTATION.md) — signer invocation metadata implementation with crypto graduation evidence carry-forward.
+- [`LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md`](LATTICRA_SEAL_SIGNING_OPERATION_CONTRACT.md) — metadata-only signing operation boundary after signer invocation readiness.
+- [`LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNING_OPERATION_IMPLEMENTATION.md) — signing operation metadata implementation with crypto graduation evidence carry-forward.
+- [`status/SEAL_SIGNING_OPERATION_STATUS.md`](status/SEAL_SIGNING_OPERATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing operation implementation with crypto graduation evidence carry-forward.
+- [`LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md`](LATTICRA_SEAL_KEY_HANDLING_CONTRACT.md) — metadata-only key-handling boundary after signing operation readiness.
+- [`LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md`](LATTICRA_SEAL_KEY_HANDLING_IMPLEMENTATION.md) — key-handling metadata implementation with crypto graduation evidence carry-forward.
+- [`status/SEAL_KEY_HANDLING_STATUS.md`](status/SEAL_KEY_HANDLING_STATUS.md) — status/public-entry checkpoint for metadata-only Seal key-handling implementation with crypto graduation evidence carry-forward.
+- [`LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md`](LATTICRA_SEAL_KEY_MATERIAL_CONTRACT.md) — metadata-only key-material boundary after key-handling readiness.
+- [`LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md`](LATTICRA_SEAL_KEY_MATERIAL_IMPLEMENTATION.md) — first no-effect key-material metadata implementation.
+- [`status/SEAL_KEY_MATERIAL_STATUS.md`](status/SEAL_KEY_MATERIAL_STATUS.md) — status/public-entry checkpoint for metadata-only Seal key-material implementation.
+- [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_CONTRACT.md) — metadata-only public-key parsing boundary after key-material status readiness.
+- [`LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md`](LATTICRA_SEAL_PUBLIC_KEY_PARSING_IMPLEMENTATION.md) — first no-effect public-key parsing metadata implementation.
+- [`status/SEAL_PUBLIC_KEY_PARSING_STATUS.md`](status/SEAL_PUBLIC_KEY_PARSING_STATUS.md) — status/public-entry checkpoint for metadata-only Seal public-key parsing implementation.
+- [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_CONTRACT.md) — future key parsing implementation contract after public-key parsing status readiness.
+- [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION_PLAN.md) — exact future bounded no-effect key parsing implementation plan.
+- [`LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md`](LATTICRA_SEAL_FUTURE_KEY_PARSING_IMPLEMENTATION.md) — first bounded key parsing metadata implementation for caller-provided public-key bytes.
+- [`status/SEAL_KEY_PARSING_STATUS.md`](status/SEAL_KEY_PARSING_STATUS.md) — status/public-entry checkpoint for bounded Seal key parsing metadata.
+- [`LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_POLICY_CONTRACT.md) — verification policy boundary after signature metadata.
+- [`LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_POLICY_IMPLEMENTATION.md) — first no-effect verification policy metadata implementation.
+- [`status/SEAL_VERIFICATION_POLICY_STATUS.md`](status/SEAL_VERIFICATION_POLICY_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification policy implementation.
+- [`LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md`](LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_CONTRACT.md) — crypto verify backend boundary after verification policy metadata.
+- [`LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md`](LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_IMPLEMENTATION.md) — first metadata-only crypto verify backend implementation with unsupported verification state.
+- [`status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md`](status/SEAL_CRYPTO_VERIFY_BACKEND_STATUS.md) — status/public-entry checkpoint for authority-neutral Seal crypto verify backend readiness.
+- [`LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md`](LATTICRA_SEAL_ED25519_VERIFY_ONLY_CONTRACT.md) — Ed25519 verify-only implementation contract after crypto verify backend metadata.
+- [`LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md`](LATTICRA_SEAL_ED25519_VERIFY_IMPLEMENTATION.md) — local provider-backed Ed25519 verify-only result implementation.
+- [`status/SEAL_ED25519_VERIFY_STATUS.md`](status/SEAL_ED25519_VERIFY_STATUS.md) — status/public-entry checkpoint for authority-neutral Seal Ed25519 verify-only results.
+- [`LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md`](LATTICRA_SEAL_CRYPTO_GRADUATION_GATE_IMPLEMENTATION.md) — authority-neutral crypto graduation gate over local Ed25519 verification, verified receipt promotion, and cryptographic assurance baseline expectations.
+- [`status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md`](status/SEAL_CRYPTO_GRADUATION_GATE_STATUS.md) — status checkpoint for the Seal crypto graduation gate.
+- [`LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md`](LATTICRA_SEAL_PQC_INTEGRATION_FRAME.md) — PQC integration frame for Apple corecrypto, NIST ML-KEM/ML-DSA, and liboqs provider planning while keeping cryptographic behavior and authority closed.
+- [`status/SEAL_PQC_INTEGRATION_FRAME_STATUS.md`](status/SEAL_PQC_INTEGRATION_FRAME_STATUS.md) — status checkpoint for the Seal PQC integration frame.
+- [`LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md`](LATTICRA_SEAL_PQC_PROVIDER_ADAPTER.md) — clean-room PQC provider adapter for standards-first ML-KEM/ML-DSA implementation planning and liboqs comparison-provider boundaries.
+- [`status/SEAL_PQC_PROVIDER_ADAPTER_STATUS.md`](status/SEAL_PQC_PROVIDER_ADAPTER_STATUS.md) — status checkpoint for the Seal PQC provider adapter.
+- [`LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_CONTRACT.md) — verified receipt promotion boundary after successful Ed25519 verify-only results.
+- [`LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_RECEIPT_PROMOTION_IMPLEMENTATION.md) — first authority-neutral verified receipt promotion metadata implementation.
+- [`status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md`](status/SEAL_VERIFIED_RECEIPT_PROMOTION_STATUS.md) — status/public-entry checkpoint for verified receipt promotion metadata.
+- [`LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_CONTRACT.md) — verified capability gate boundary after verified receipt promotion metadata.
+- [`LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_IMPLEMENTATION.md) — metadata-only verified capability gate implementation with a stricter crypto-graduation-gated entry point.
+- [`status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md`](status/SEAL_VERIFIED_CAPABILITY_GATE_STATUS.md) — status/public-entry checkpoint for verified capability gate metadata.
+- [`LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_CONTRACT.md`](LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_CONTRACT.md) — verified effect decision boundary after verified capability gate metadata.
+- [`LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFIED_EFFECT_DECISION_IMPLEMENTATION.md) — metadata-only verified effect decision implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md`](status/SEAL_VERIFIED_EFFECT_DECISION_STATUS.md) — status/public-entry checkpoint for crypto-bound verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md) — runtime handoff evaluation boundary after verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md) — metadata-only runtime handoff evaluation implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — status/public-entry checkpoint for crypto-bound runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md) — runtime handoff report boundary after runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md) — metadata-only runtime handoff report implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md) — status/public-entry checkpoint for crypto-bound runtime handoff report metadata.
+- [`LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_CONTRACT.md) — verification receipt boundary after verification policy metadata.
+- [`LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md`](LATTICRA_SEAL_VERIFICATION_RECEIPT_IMPLEMENTATION.md) — first no-effect verification receipt metadata implementation.
+- [`status/SEAL_VERIFICATION_RECEIPT_STATUS.md`](status/SEAL_VERIFICATION_RECEIPT_STATUS.md) — status/public-entry checkpoint for metadata-only Seal verification receipt implementation.
+- [`LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md`](LATTICRA_SEAL_CAPABILITY_GATE_CONTRACT.md) — capability gate boundary after verification receipt metadata.
+- [`LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md`](LATTICRA_SEAL_CAPABILITY_GATE_IMPLEMENTATION.md) — first no-effect denied capability gate metadata implementation.
+- [`status/SEAL_CAPABILITY_GATE_STATUS.md`](status/SEAL_CAPABILITY_GATE_STATUS.md) — status/public-entry checkpoint for metadata-only Seal capability gate implementation.
+- [`LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md`](LATTICRA_SEAL_EFFECT_DECISION_CONTRACT.md) — effect decision boundary after capability gate metadata.
+- [`LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md`](LATTICRA_SEAL_EFFECT_DECISION_IMPLEMENTATION.md) — first no-effect denied effect decision metadata implementation.
+- [`status/SEAL_EFFECT_DECISION_STATUS.md`](status/SEAL_EFFECT_DECISION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal effect decision implementation.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_CONTRACT.md) — runtime handoff boundary after effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_IMPLEMENTATION.md) — first no-effect inactive runtime handoff metadata implementation.
+- [`status/SEAL_RUNTIME_HANDOFF_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal runtime handoff implementation.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_CONTRACT.md) — runtime handoff evaluation boundary after verified effect decision metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_EVALUATION_IMPLEMENTATION.md) — metadata-only runtime handoff evaluation implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_EVALUATION_STATUS.md) — status checkpoint for crypto-bound Seal runtime handoff evaluation.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_CONTRACT.md) — runtime handoff report boundary after runtime handoff evaluation metadata.
+- [`LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_RUNTIME_HANDOFF_REPORT_IMPLEMENTATION.md) — metadata-only runtime handoff report implementation that carries crypto graduation evidence forward when present.
+- [`status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md`](status/SEAL_RUNTIME_HANDOFF_REPORT_STATUS.md) — Latticra Seal crypto-bound runtime handoff report status/public-entry alignment.
+- [`LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md`](LATTICRA_SEAL_STATUS_ROLLUP_CONTRACT.md) — status rollup boundary after runtime handoff metadata.
+- [`LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md`](LATTICRA_SEAL_STATUS_ROLLUP_IMPLEMENTATION.md) — first metadata-only status rollup implementation.
+- [`status/SEAL_STATUS_ROLLUP_STATUS.md`](status/SEAL_STATUS_ROLLUP_STATUS.md) — status/public-entry checkpoint for metadata-only Seal status rollup implementation.
+- [`LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md`](LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_CONTRACT.md) — report-only agentic automation security boundary after status rollup metadata.
+- [`LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md`](LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md) — MCP-style tool invocation alignment plan without MCP implementation.
+- [`LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_IMPLEMENTATION.md`](LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_IMPLEMENTATION.md) — first report-only agentic automation security metadata implementation.
+- [`status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md`](status/SEAL_AGENTIC_AUTOMATION_SECURITY_STATUS.md) — status checkpoint for report-only Seal agentic automation security metadata.
+- [`status/SEAL_AGENTIC_AUTOMATION_SECURITY_INDEX_ALIGNMENT.md`](status/SEAL_AGENTIC_AUTOMATION_SECURITY_INDEX_ALIGNMENT.md) — index alignment for report-only Seal agentic automation security metadata.
+- [`LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md`](LATTICRA_SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE.md) — deterministic local report surface for Seal agentic automation security metadata.
+- [`status/SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_STATUS.md`](status/SEAL_AGENTIC_AUTOMATION_SECURITY_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal agentic automation security report surface.
+- [`status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](status/SEAL_AGENTIC_AUTOMATION_SECURITY_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — public-entrypoint alignment for report-only Seal agentic automation security.
+- [`LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md`](LATTICRA_SEAL_PARAMETER_SCHEMA_CONTRACT.md) — report-only parameter schema boundary after agentic automation security.
+- [`LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md`](LATTICRA_SEAL_PARAMETER_SCHEMA_IMPLEMENTATION.md) — first report-only parameter schema metadata implementation.
+- [`LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md`](LATTICRA_SEAL_PARAMETER_SCHEMA_REPORT_SURFACE.md) — deterministic local report surface for Seal parameter schema metadata.
+- [`status/SEAL_PARAMETER_SCHEMA_STATUS.md`](status/SEAL_PARAMETER_SCHEMA_STATUS.md) — status/public-entry checkpoint for report-only Seal parameter schema metadata.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_CONTRACT.md) — report-only request freshness/replay boundary after parameter schema metadata.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_IMPLEMENTATION.md) — first report-only request freshness metadata implementation.
+- [`LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md`](LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_SURFACE.md) — deterministic local report surface for Seal request freshness metadata.
+- [`status/SEAL_REQUEST_FRESHNESS_STATUS.md`](status/SEAL_REQUEST_FRESHNESS_STATUS.md) — status/public-entry checkpoint for report-only Seal request freshness metadata.
+- [`LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md`](LATTICRA_SEAL_SIGNED_REQUEST_CONTRACT.md) — report-only signed request boundary after request freshness metadata.
+- [`LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNED_REQUEST_IMPLEMENTATION.md) — first report-only signed request metadata implementation.
+- [`status/SEAL_SIGNED_REQUEST_STATUS.md`](status/SEAL_SIGNED_REQUEST_STATUS.md) — status/public-entry checkpoint for report-only Seal signed request metadata.
+- [`LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md`](LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md) — report-only policy decision boundary after signed request metadata.
+- [`LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md`](LATTICRA_SEAL_POLICY_DECISION_IMPLEMENTATION.md) — first report-only default-deny policy decision metadata implementation.
+- [`LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md`](LATTICRA_SEAL_POLICY_DECISION_REPORT_SURFACE.md) — deterministic local report surface for Seal policy decision metadata.
+- [`status/SEAL_POLICY_DECISION_STATUS.md`](status/SEAL_POLICY_DECISION_STATUS.md) — status/public-entry checkpoint for report-only Seal policy decision metadata.
+- [`status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal policy decision report surface.
+- [`status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](status/SEAL_POLICY_DECISION_PUBLIC_ENTRYPOINT_ALIGNMENT.md) — public-entrypoint alignment for report-only Seal policy decision metadata.
+- [`LATTICRA_SEAL_CAPABILITY_METADATA_CONTRACT.md`](LATTICRA_SEAL_CAPABILITY_METADATA_CONTRACT.md) — planning contract for the no-effect Seal capability metadata surface.
+- [`LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION_PLAN.md) — exact no-effect capability metadata implementation plan.
+- [`LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION.md`](LATTICRA_SEAL_CAPABILITY_METADATA_IMPLEMENTATION.md) — deterministic local capability metadata implementation.
+- [`LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_SURFACE.md`](LATTICRA_SEAL_CAPABILITY_METADATA_REPORT_SURFACE.md) — deterministic local report surface for Seal capability metadata.
+- [`status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md`](status/SEAL_CAPABILITY_METADATA_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal capability metadata report surface.
+- [`latticra-seal/PRODUCT.md`](latticra-seal/PRODUCT.md) — product spine for earned Latticra Seal security-product capability.
+- [`status/SEAL_PRODUCT_SPINE_STATUS.md`](status/SEAL_PRODUCT_SPINE_STATUS.md) — status checkpoint for the Seal product spine.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_CONTRACT.md) — contract for a future bundled local Seal operator receipt report.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION_PLAN.md) — exact no-effect Seal operator receipt report implementation plan.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_IMPLEMENTATION.md) — no-effect Seal operator receipt report implementation.
+- [`LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md`](LATTICRA_SEAL_OPERATOR_RECEIPT_REPORT_SURFACE.md) — deterministic local report surface for the Seal operator receipt report.
+- [`status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`](status/SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md) — status checkpoint for the Seal operator receipt report surface.
+- [`LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md`](LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_CONTRACT.md) — contract for a future no-effect local Seal capability registry schema.
+- [`LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION_PLAN.md) — exact no-effect Seal local capability registry schema implementation plan.
+- [`LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md`](LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_IMPLEMENTATION.md) — no-effect Seal local capability registry schema implementation.
+- [`LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md`](LATTICRA_SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_SURFACE.md) — deterministic local report surface for the Seal local capability registry schema.
+- [`status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`](status/SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md) — status checkpoint for the Seal local capability registry schema report surface.
+- Latticra Seal local capability registry schema report surface/status checkpoint — `seal_local_capability_registry_schema_status_present=1`, predecessor `SEAL_OPERATOR_RECEIPT_REPORT_STATUS.md`.
+- [`LATTICRA_SEAL_PANEL_DASHBOARD_PLANNING_CHECKPOINT.md`](LATTICRA_SEAL_PANEL_DASHBOARD_PLANNING_CHECKPOINT.md) — planning checkpoint for a future Panel-visible Seal dashboard that remains no-effect and read-only.
+- [`status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`](status/SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md) — status checkpoint for the Seal Panel dashboard planning record.
+- Latticra Seal Panel dashboard planning checkpoint — `seal_panel_dashboard_planning_status_present=1`, predecessor `SEAL_LOCAL_CAPABILITY_REGISTRY_SCHEMA_STATUS.md`.
+- [`LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md`](LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT.md) — contract for a future no-effect Seal Panel dashboard view model.
+- [`status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`](status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md) — status checkpoint for the Seal Panel dashboard view-model contract.
+- Latticra Seal Panel dashboard view-model contract — `seal_panel_dashboard_view_model_contract_status_present=1`, predecessor `SEAL_PANEL_DASHBOARD_PLANNING_STATUS.md`.
+- [`LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md`](LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN.md) — implementation plan for future fixed-capacity no-effect Seal Panel dashboard view-model C rows, validation, fixture, and report output.
+- [`status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`](status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md) — status checkpoint for the Seal Panel dashboard view-model implementation plan.
+- Latticra Seal Panel dashboard view-model implementation plan — `seal_panel_dashboard_view_model_implementation_plan_status_present=1`, predecessor `SEAL_PANEL_DASHBOARD_VIEW_MODEL_CONTRACT_STATUS.md`.
+- [`LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`](LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md) — bounded no-effect Seal Panel dashboard view-model implementation.
+- Latticra Seal Panel dashboard view-model implementation — `seal_panel_dashboard_view_model_implementation_present=1`, predecessor `SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION_PLAN_STATUS.md`.
+- [`LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md`](LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_SURFACE.md) — deterministic local report-only Seal Panel dashboard view-model surface.
+- [`status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md`](status/SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md) — status checkpoint for the Seal Panel dashboard view-model surface.
+- Latticra Seal Panel dashboard view-model surface/status — `seal_panel_dashboard_view_model_status_present=1`, predecessor `LATTICRA_SEAL_PANEL_DASHBOARD_VIEW_MODEL_IMPLEMENTATION.md`.
+- [`LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT.md`](LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT.md) — contract for a future verification-only Seal signed receipt proof path.
+- [`status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`](status/SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md) — status checkpoint for the Seal signed receipt proof path contract.
+- Latticra Seal signed receipt proof path contract — `seal_signed_receipt_proof_path_contract_status_present=1`, predecessor `SEAL_PANEL_DASHBOARD_VIEW_MODEL_STATUS.md`.
+- [`LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md`](LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_IMPLEMENTATION.md) — bounded verification-only Seal signed receipt proof path implementation.
+- [`status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md`](status/SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md) — status checkpoint for the Seal signed receipt proof path implementation.
+- Latticra Seal signed receipt proof path implementation — `seal_signed_receipt_proof_path_status_present=1`, predecessor `SEAL_SIGNED_RECEIPT_PROOF_PATH_CONTRACT_STATUS.md`.
+- [`LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE.md`](LATTICRA_SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE.md) — deterministic local report surface for the verification-only Seal signed receipt proof path.
+- [`status/SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE_STATUS.md`](status/SEAL_SIGNED_RECEIPT_PROOF_PATH_SURFACE_STATUS.md) — status checkpoint for the Seal signed receipt proof path surface.
+- Latticra Seal signed receipt proof path surface/status — `seal_signed_receipt_proof_path_surface_status_present=1`, predecessor `SEAL_SIGNED_RECEIPT_PROOF_PATH_STATUS.md`.
+- [`status/SEAL_README_STATUS_ROW_ALIGNMENT.md`](status/SEAL_README_STATUS_ROW_ALIGNMENT.md) — README status row alignment with the current Latticra Seal public status checkpoint.
+- [`status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md`](status/SEAL_POLICY_DECISION_REPORT_SURFACE_STATUS.md) — status checkpoint for the Seal policy decision report surface.
+- [`status/SEAL_SIGNER_INVOCATION_STATUS.md`](status/SEAL_SIGNER_INVOCATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer invocation implementation with crypto graduation evidence carry-forward.
+- [`status/SEAL_SIGNER_HANDOFF_STATUS.md`](status/SEAL_SIGNER_HANDOFF_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signer handoff implementation with crypto graduation evidence carry-forward.
+- [`status/SEAL_SIGNING_AUTHORIZATION_STATUS.md`](status/SEAL_SIGNING_AUTHORIZATION_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signing authorization implementation with crypto graduation evidence carry-forward.
+- [`status/SEAL_SIGNATURE_REQUEST_STATUS.md`](status/SEAL_SIGNATURE_REQUEST_STATUS.md) — status/public-entry checkpoint for metadata-only Seal signature request implementation.
 - [`L_UI_STATIC_REPORT.md`](L_UI_STATIC_REPORT.md) — terminal-facing L-UI static report fixture for Nucleus/state rails.
 - [`L_UI_SOURCE_GRAMMAR.md`](L_UI_SOURCE_GRAMMAR.md) — L-UI source grammar draft and `.lui` fixture guardrails.
 - [`L_UI_PARSER_DESIGN.md`](L_UI_PARSER_DESIGN.md) — parser design contract, error categories, no-effect constraints, and implementation gate.
@@ -102,18 +498,21 @@ Latticra should refine its language model, supervisor model, effect gates, sourc
 - [`LIR_REPORT_REFINEMENT.md`](LIR_REPORT_REFINEMENT.md) — LIR report classification, graph shape, edge summary, no-effect-chain, and evidence fields.
 - [`LAT_LANGUAGE_GRAMMAR_CONTRACT.md`](LAT_LANGUAGE_GRAMMAR_CONTRACT.md) — first Lat / Latticra Language grammar contract for Lat-Core before parser implementation.
 - [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION_PLAN.md) — exact public API, parser result structs, AST structs, capacities, error labels, reports, fixture paths, string handling, source-span mapping, and tests before Lat parser code.
-- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, reports, fixture, and invariants.
+- [`LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md`](LAT_LANGUAGE_GRAMMAR_IMPLEMENTATION.md) — bounded no-effect Lat / Latticra Language grammar parser, AST metadata, line-comment metadata, unsupported block-comment rejection, first declaration/clause report metadata, fixture, and invariants.
 - [`LAT_SEMANTIC_VALIDATION_CONTRACT.md`](LAT_SEMANTIC_VALIDATION_CONTRACT.md) — Lat semantic validation contract.
 - [`LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md`](LAT_SEMANTIC_VALIDATION_IMPLEMENTATION_PLAN.md) — Lat semantic validation implementation plan.
 - [`LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md`](LAT_SEMANTIC_DIAGNOSTICS_REFINEMENT.md) — Lat semantic diagnostic classes, counters, first-diagnostic indices, and report fields.
+- [`LAT_MODEL_NORMALIZATION_IMPLEMENTATION.md`](LAT_MODEL_NORMALIZATION_IMPLEMENTATION.md) — Lat model normalization tables and first-declaration/first-clause report metadata.
 - [`LAT_TO_LIR_LOWERING_CONTRACT.md`](LAT_TO_LIR_LOWERING_CONTRACT.md) — Lat-to-LIR lowering contract.
 - [`LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION_PLAN.md) — Lat-to-LIR lowering implementation plan.
-- [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation.
+- [`LAT_TO_LIR_LOWERING_IMPLEMENTATION.md`](LAT_TO_LIR_LOWERING_IMPLEMENTATION.md) — Lat-to-LIR lowering implementation with first-declaration report metadata.
+- [`LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md`](LAT_TO_LIR_CLAUSE_METADATA_REFINEMENT.md) — Lat-to-LIR clause operator/value metadata refinement.
+- [`LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md`](LAT_TO_LIR_DIAGNOSTIC_REFINEMENT.md) — Lat-to-LIR diagnostic classification and first-declaration/first-clause metadata report surface.
 - [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md) — bounded no-effect Lat pipeline contract after parser, semantic validation, and Lat-to-LIR lowering.
 - [`LAT_PIPELINE_IMPLEMENTATION_PLAN.md`](LAT_PIPELINE_IMPLEMENTATION_PLAN.md) — exact Lat pipeline API, result struct, report, tests, workflow, compatibility expectations, and non-claims.
 - [`LAT_PIPELINE_IMPLEMENTATION.md`](LAT_PIPELINE_IMPLEMENTATION.md) — first bounded no-effect Lat pipeline implementation.
-- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary and report refinement.
-- [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API and report.
+- [`LAT_PIPELINE_REPORT_REFINEMENT.md`](LAT_PIPELINE_REPORT_REFINEMENT.md) — Lat pipeline stage-summary, parser line-comment metadata, first-declaration/first-clause metadata, and report refinement.
+- [`LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md`](LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md) — companion Lat pipeline diagnostic integration API, parser line-comment metadata, first-declaration/first-clause metadata, and report.
 - [`LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md`](LAT_PIPELINE_DIAGNOSTIC_MAIN_TEST_INTEGRATION_AUDIT.md) — main Lat pipeline runner audit for diagnostic integration coverage.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md`](LAT_SPECIFIC_LIR_REFINEMENT_CONTRACT.md) — explicit Lat declaration node and transition-source edge refinement contract.
 - [`LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md`](LAT_SPECIFIC_LIR_REFINEMENT_IMPLEMENTATION_PLAN.md) — exact Lat-specific LIR enum, label, lowering, test, workflow, and compatibility plan.
@@ -164,10 +563,124 @@ Project notes Nucleus announcement README status/index check + public status ali
 Runtime boundary contract + guardrails
 Runtime boundary implementation plan + guardrails
 Runtime boundary implementation + smoke invariants
+Runtime boundary Lat pipeline comment evidence integration + invariants
 Runtime boundary report refinement + invariants
 Runtime boundary policy matrix refinement + invariants
 Runtime boundary domain matrix refinement + invariants
 Runtime boundary domain matrix report integration + invariants
+Latticra Seal report envelope metadata + invariants
+Latticra Seal signature request contract + guardrails
+Latticra Seal signature request metadata + invariants
+Latticra Seal signature request predecessor status alignment + guardrails
+Latticra Seal signature request status/public-entry alignment + guardrails
+Latticra Seal signing authorization contract + guardrails
+Latticra Seal signing authorization metadata + invariants
+Latticra Seal signing authorization status/public-entry alignment + guardrails
+Latticra Seal signing authorization predecessor status alignment + guardrails
+Latticra Seal signer handoff contract + guardrails
+Latticra Seal signer handoff metadata + invariants
+Latticra Seal signer handoff status/public-entry alignment + guardrails
+Latticra Seal signer handoff predecessor status alignment + guardrails
+Latticra Seal signer invocation contract + guardrails
+Latticra Seal signer invocation metadata + invariants
+Latticra Seal signer invocation status/public-entry alignment + guardrails
+Latticra Seal signer invocation predecessor status alignment + guardrails
+Latticra Seal signing operation contract + guardrails
+Latticra Seal signing operation metadata + invariants
+Latticra Seal signing operation status/public-entry alignment + guardrails
+Latticra Seal signing operation predecessor status alignment + guardrails
+Latticra Seal key-handling predecessor status alignment + guardrails
+Latticra Seal key-material predecessor status alignment + guardrails
+Latticra Seal public-key parsing predecessor status alignment + guardrails
+Latticra Seal key parsing predecessor status alignment + guardrails
+Latticra Seal verification policy predecessor status alignment + guardrails
+Latticra Seal verification receipt predecessor status alignment + guardrails
+Latticra Seal capability gate predecessor status alignment + guardrails
+Latticra Seal README status row alignment + guardrails
+Latticra Seal effect decision status/public-entry alignment + guardrails
+Latticra Seal effect decision predecessor status alignment + guardrails
+Latticra Seal runtime handoff status/public-entry alignment + guardrails
+Latticra Seal runtime handoff predecessor status alignment + guardrails
+Latticra Seal status rollup status/public-entry alignment + guardrails
+Latticra Seal status rollup predecessor status alignment + guardrails
+Latticra Seal agentic automation security public-entrypoint alignment + guardrails
+Latticra Seal agentic automation security predecessor status alignment + guardrails
+Latticra Seal parameter schema status/public-entry alignment + guardrails
+Latticra Seal parameter schema predecessor status alignment + guardrails
+Latticra Seal request freshness status/public-entry alignment + guardrails
+Latticra Seal request freshness predecessor status alignment + guardrails
+Latticra Seal signed request status/public-entry alignment + guardrails
+Latticra Seal signed request predecessor status alignment + guardrails
+Latticra Seal policy decision status/public-entry alignment + guardrails
+Latticra Seal policy decision predecessor status alignment + guardrails
+Latticra Seal operator receipt report predecessor status alignment + guardrails
+Defensive threat model validation refinement + guardrails
+Runtime boundary policy expansion after threat-model validation + guardrails
+Runtime boundary abuse-case fixture expansion after policy expansion + guardrails
+Completion estimate review README/status alignment + guardrails
+Completion estimate review after runtime-boundary abuse-case fixtures + guardrails
+Latticra Seal capability gate status/public-entry alignment + guardrails
+Latticra Seal verification receipt status/public-entry alignment + guardrails
+Nadia offline AI Stage-0 foundation + guardrails
+Nadia local context engine Stage-1 + guardrails
+Nadia runtime profile Stage-2 + guardrails
+Nadia developer workbench Stage-3 + guardrails
+Nadia systems engineering mode Stage-4 + guardrails
+Nadia productivity loop Stage-5 + guardrails
+Nadia protective safety boundary Stage-6 + guardrails
+Nadia guarded tool authority Stage-7 + guardrails
+Nadia prompt evaluation contract Stage-8 + guardrails
+Nadia local model registry contract Stage-9 + guardrails
+Nadia inference readiness contract Stage-10 + guardrails
+Nadia runtime invocation contract Stage-11 + guardrails
+Nadia model load contract Stage-12 + guardrails
+Nadia prompt receipt contract Stage-13 + guardrails
+Nadia prompt materialization contract Stage-14 + guardrails
+Nadia awareness dialogue contract Stage-15 + guardrails
+Nadia prompt evaluation handoff contract Stage-16 + guardrails
+Nadia tokenization boundary contract Stage-17 + guardrails
+Nadia tokenizer specification contract Stage-18 + guardrails
+Nadia tokenizer manifest contract Stage-19 + guardrails
+Nadia tokenizer artifact inventory contract Stage-20 + guardrails
+Nadia tokenizer artifact measurement contract Stage-21 + guardrails
+Nadia tokenizer artifact verification contract Stage-22 + guardrails
+Nadia tokenizer artifact binding contract Stage-23 + guardrails
+Nadia tokenizer runtime attachment contract Stage-24 + guardrails
+Nadia prompt tokenization contract Stage-25 + guardrails
+Nadia prompt token sequence contract Stage-26 + guardrails
+Nadia context window assembly contract Stage-27 + guardrails
+
+Nadia prompt evaluation input contract Stage-28 + guardrails
+
+Nadia prompt evaluation runtime handoff contract Stage-29 + guardrails
+Nadia prompt evaluation invocation contract Stage-30 + guardrails
+Nadia prompt evaluation result contract Stage-31 + guardrails
+Nadia prompt evaluation result review contract Stage-32 + guardrails
+Nadia prompt evaluation result disposition contract Stage-33 + guardrails
+Nadia prompt evaluation result release contract Stage-34 + guardrails
+Nadia prompt evaluation result release receipt contract Stage-35 + guardrails
+Nadia prompt evaluation result release receipt review contract Stage-36 + guardrails
+Nadia prompt evaluation result release receipt review disposition contract Stage-37 + guardrails
+Nadia prompt evaluation result release receipt review disposition release contract Stage-38 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt contract Stage-39 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review contract Stage-40 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition contract Stage-41 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release contract Stage-42 + guardrails
+Nadia prompt evaluation result release receipt review disposition release receipt review disposition release receipt contract Stage-43 + guardrails
+Latticra Seal verification policy status/public-entry alignment + guardrails
+Latticra Seal crypto verify backend status/public-entry alignment + guardrails
+Latticra Seal Ed25519 verify-only status/public-entry alignment + guardrails
+Latticra Seal verified receipt promotion status/public-entry alignment + guardrails
+Latticra Seal verified capability gate status/public-entry alignment + guardrails
+Latticra Seal verified effect decision status/public-entry alignment + guardrails
+Latticra Seal runtime handoff evaluation status/public-entry alignment + guardrails
+Latticra Seal runtime handoff report status/public-entry alignment + guardrails
+Latticra Seal report envelope status/public-entry alignment + guardrails
+Latticra Seal key parsing status/public-entry alignment + guardrails
+Latticra Seal bounded no-effect key parsing metadata + invariants
+Latticra Seal future key parsing implementation plan + guardrails
+Latticra Seal future key parsing implementation contract + guardrails
+Latticra Seal public-key parsing status/public-entry alignment + guardrails
 L-UI static report fixture + rail invariants
 L-UI source grammar draft + fixture guardrails
 L-UI parser design contract + guardrails
@@ -177,8 +690,56 @@ L-UI semantic validation implementation + invariants
 LIR shape implementation + invariants
 LIR report refinement + invariants
 Lat language grammar implementation + invariants
+Lat grammar report metadata integration + invariants
+Lat grammar line-comment metadata refinement + invariants
+Lat grammar unsupported block-comment rejection refinement + invariants
 Lat semantic diagnostics refinement + invariants
+Lat model normalization implementation + invariants
+Lat model report declaration metadata integration + invariants
+Lat model report clause metadata integration + invariants
 Lat-to-LIR lowering implementation + invariants
+Lat-to-LIR declaration metadata refinement + invariants
+Lat-to-LIR clause metadata refinement + invariants
+Lat-to-LIR diagnostic declaration metadata integration + invariants
+Lat-to-LIR diagnostic clause metadata integration + invariants
+Lat pipeline diagnostic declaration metadata integration + invariants
+Lat pipeline diagnostic clause metadata integration + invariants
+Lat pipeline report declaration metadata integration + invariants
+Lat pipeline report clause metadata integration + invariants
+Lat pipeline comment metadata integration + invariants
+Lat pipeline diagnostic comment metadata integration + invariants
+Lat parse-failure comment evidence propagation + invariants
+Lat pipeline failure span evidence propagation + invariants
+Lat pipeline parse-error evidence propagation + invariants
+Lat pipeline semantic-error evidence propagation + invariants
+Lat pipeline downstream stage-error evidence propagation + invariants
+Lat pipeline stage-summary evidence propagation + invariants
+Lat pipeline module/count evidence propagation + invariants
+Lat pipeline first-declaration evidence propagation + invariants
+Lat pipeline first-clause evidence propagation + invariants
+Lat LIR edge-kind evidence propagation + invariants
+Lat LIR no-effect evidence propagation + invariants
+Lat LIR module-summary evidence propagation + invariants
+Lat LIR module label evidence propagation + invariants
+Lat LIR source-span evidence propagation + invariants
+Lat LIR node-kind evidence propagation + invariants
+Lat LIR first-node evidence propagation + invariants
+Lat LIR first-node topology evidence propagation + invariants
+Lat LIR first-node span evidence propagation + invariants
+Lat LIR first transition-node evidence propagation + invariants
+Lat LIR first transition-node topology evidence propagation + invariants
+Lat LIR first transition-node span evidence propagation + invariants
+Lat LIR first-edge evidence propagation + invariants
+Lat LIR first-edge endpoint evidence propagation + invariants
+Lat LIR first-edge endpoint payload evidence propagation + invariants
+Lat LIR first-edge endpoint topology evidence propagation + invariants
+Lat LIR first-edge span evidence propagation + invariants
+Lat LIR first transition-source edge evidence propagation + invariants
+Lat LIR first transition-source edge endpoint evidence propagation + invariants
+Lat LIR first transition-source edge endpoint payload evidence propagation + invariants
+Lat LIR first transition-source edge endpoint topology evidence propagation + invariants
+Lat LIR first transition-source edge endpoint span evidence propagation + invariants
+Lat LIR first transition-source edge span evidence propagation + invariants
 Lat pipeline implementation + invariants
 Lat pipeline report refinement + invariants
 Lat pipeline diagnostic integration refinement + invariants
@@ -191,7 +752,30 @@ L-UI rendering detailed report refinement + invariants
 The next status review target should be:
 
 ```text
-Completion estimate review only if capability posture changes
+Continue small guarded report/status alignment only when drift appears
 ```
 
-That target should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.
+Current runtime boundary policy expansion status:
+
+```text
+runtime_boundary_policy_expansion_after_threat_model_present=1
+runtime_boundary_abuse_case_fixture_expansion_present=1
+seal_readme_status_row_alignment_present=1
+completion_estimate_review_readme_status_alignment_present=1
+completion_estimate_after_runtime_boundary_abuse_case_fixtures_present=1
+current_estimate_table_source_alignment_present=1
+current_estimate_mathematical_rebase_present=1
+source_alignment_estimate_changed=0
+mathematical_rebase_estimate_changed=1
+estimate_adjustment_required=0
+request_family_policy_map_present=1
+effect_policy_map_present=1
+authority_prerequisite_map_present=1
+future_gate_policy_map_present=1
+abuse_case_runtime_policy_map_present=1
+evidence_gap_map_present=1
+runtime_execution_added=0
+runtime_authority_granted=0
+```
+
+Completion-estimate review should be skipped unless a future slice changes capability posture, implementation scope, or public readiness rather than only aligning documentation/status surfaces.

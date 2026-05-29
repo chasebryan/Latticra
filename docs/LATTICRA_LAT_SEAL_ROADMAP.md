@@ -111,6 +111,7 @@ Priority work:
 Lat grammar refinement
 Lat semantic diagnostics refinement
 Lat-to-LIR lowering refinement
+Lat-to-LIR clause metadata refinement
 Lat-specific LIR nodes and edges
 LIR report clarity
 operator-visible Lat pipeline reports

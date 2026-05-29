@@ -1,0 +1,22 @@
+name: Ubuntu Release Artifact Notice Requirements Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu-release-artifact-notice-requirements-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Ubuntu release artifact notice requirements contract guard
+        run: sh scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh

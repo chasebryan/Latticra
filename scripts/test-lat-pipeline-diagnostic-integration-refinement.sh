@@ -20,19 +20,34 @@ require_contains() {
 
 require_file docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md
 require_file include/latticra/lat_pipeline_diagnostics.h
+require_file include/latticra/lat_to_lir_diagnostics.h
 require_file src/lat_pipeline_diagnostics.c
 require_file src/lat_pipeline_diagnostics_eval.c
 require_file src/lat_pipeline_diagnostics_report.c
+require_file src/lat_to_lir_diagnostics.c
 require_file tests/lat_pipeline_diagnostic_integration_refinement.c
 require_file scripts/test-lat-pipeline.sh
 require_file .github/workflows/lat-pipeline-diagnostic-integration-refinement.yml
 
 require_contains 'LATTICRA_LAT_PIPELINE_DIAGNOSTIC_SEMANTIC' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'LATTICRA_LAT_PIPELINE_DIAGNOSTIC_MODEL' include/latticra/lat_pipeline_diagnostics.h
 require_contains 'latticra_lat_pipeline_diagnostics_evaluate' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'latticra_lat_pipeline_diagnostics_evaluate_with_lowering' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'latticra_lat_to_lir_diagnostic_class_t' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'lowering_first_clause_node_index' include/latticra/lat_pipeline_diagnostics.h
+require_contains 'lowering_first_clause_value' include/latticra/lat_pipeline_diagnostics.h
 require_contains 'latticra_lat_pipeline_diagnostic_class_label' src/lat_pipeline_diagnostics.c
 require_contains 'semantic_diagnostic_count' src/lat_pipeline_diagnostics_eval.c
+require_contains 'latticra_lat_to_lir_diagnostics_evaluate' src/lat_pipeline_diagnostics_eval.c
+require_contains 'LATTICRA_LAT_PIPELINE_MODEL_NOT_OK' src/lat_pipeline_diagnostics_eval.c
+require_contains 'first_clause_node_index' src/lat_pipeline_diagnostics_eval.c
+require_contains 'lowering_class' src/lat_pipeline_diagnostics_report.c
+require_contains 'lowering_first_clause_operator' src/lat_pipeline_diagnostics_report.c
 require_contains 'LAT PIPELINE DIAGNOSTIC REPORT' src/lat_pipeline_diagnostics_report.c
+require_contains 'lowering_first_clause_role=field' tests/lat_pipeline_diagnostic_integration_refinement.c
 require_contains 'lat_pipeline_diagnostic_integration_reports_semantic_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
+require_contains 'lat_pipeline_diagnostic_integration_reports_model_failure' tests/lat_pipeline_diagnostic_integration_refinement.c
+require_contains 'src/lat_to_lir_diagnostics.c' scripts/test-lat-pipeline.sh
 require_contains 'src/lat_pipeline_diagnostics_eval.c' scripts/test-lat-pipeline.sh
 
 printf 'lat_pipeline_diagnostic_integration_refinement: ok\n'

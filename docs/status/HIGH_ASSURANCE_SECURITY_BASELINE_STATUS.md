@@ -1,0 +1,115 @@
+# Latticra High-Assurance Security Baseline Status
+
+Status: status record for high-assurance security baseline
+Date: 2026-05-26
+
+## Scope
+
+This record tracks the high-assurance security baseline checkpoint created after current NSA, CISA, FBI, and NIST source review.
+
+It does not implement runtime execution, effect execution, host behavior, network behavior, cryptographic enforcement, signing authority, tool execution, shell execution, sandboxing, malware prevention, ransomware prevention, incident response, recovery behavior, certification, accreditation, compliance, production protection, or runtime authority.
+
+## Current fields
+
+```text
+high_assurance_security_baseline_present=1
+high_assurance_security_baseline_status_present=1
+source_refresh_date=2026-05-26
+official_source_inventory_present=1
+nsa_zero_trust_guideline_observed=1
+nsa_zero_trust_user_pillar_observed=1
+cisa_nsa_esf_iam_best_practices_observed=1
+nsa_cisa_memory_safe_languages_observed=1
+cisa_secure_by_design_observed=1
+cisa_fbi_product_security_bad_practices_observed=1
+nsa_cisa_top_misconfigurations_observed=1
+cisa_nsa_fbi_secure_by_default_observed=1
+cisa_cpg_observed=1
+cisa_fbi_nsa_event_logging_guidance_observed=1
+cisa_logging_made_easy_observed=1
+cisa_zero_trust_maturity_model_observed=1
+nsa_zero_trust_data_pillar_observed=1
+nsa_zero_trust_network_environment_pillar_observed=1
+nsa_network_infrastructure_security_guide_observed=1
+cisa_nsa_fbi_remote_access_software_guide_observed=1
+cisa_nsa_msisac_rmm_advisory_observed=1
+nist_sp_800_63_4_observed=1
+cisa_nsa_fbi_phishing_guidance_observed=1
+nist_nvd_observed=1
+fbi_cyber_threat_environment_observed=1
+stopransomware_joint_guide_observed=1
+fbi_ransomware_data_extortion_observed=1
+stopransomware_recovery_guidance_observed=1
+nist_csf_2_observed=1
+nist_sp_800_34_observed=1
+nist_sp_800_184_observed=1
+nist_sp_800_60_observed=1
+nist_sp_800_122_observed=1
+nist_privacy_framework_observed=1
+nist_sp_800_128_observed=1
+nist_sp_800_70_rev5_observed=1
+nist_sp_800_41_observed=1
+nist_sp_800_207a_observed=1
+nist_sp_800_92_observed=1
+nist_ssdf_observed=1
+nist_sp_800_53_observed=1
+nist_sp_800_160_observed=1
+nist_sp_800_207_observed=1
+fips_140_3_observed=1
+nist_sp_800_57_observed=1
+nist_sp_800_131a_observed=1
+nist_sp_800_90_observed=1
+nsa_cnsa_2_observed=1
+memory_safety_roadmap_required=1
+memory_safety_roadmap_present=1
+zero_trust_runtime_boundary_required=1
+ssdf_secure_development_required=1
+cpg_operational_baseline_required=1
+supply_chain_security_baseline_present=1
+cyber_incident_reporting_response_baseline_present=1
+vulnerability_management_release_gate_baseline_present=1
+cryptographic_assurance_key_management_baseline_present=1
+identity_credential_access_management_baseline_present=1
+security_logging_monitoring_baseline_present=1
+backup_recovery_resilience_baseline_present=1
+secure_configuration_change_management_baseline_present=1
+network_exposure_remote_access_baseline_present=1
+data_classification_protection_baseline_present=1
+ai_agentic_automation_security_baseline_present=1
+platform_boot_firmware_integrity_baseline_present=1
+security_validation_assessment_baseline_present=1
+kev_release_review_required=1
+fips_crypto_boundary_required_before_production_crypto=1
+phishing_resistant_mfa_required_before_remote_privileged_access=1
+security_event_logging_required_before_hosted_service=1
+backup_restore_recovery_evidence_required_before_hosted_service=1
+secure_configuration_change_control_required_before_hosted_service=1
+network_exposure_review_required_before_hosted_service=1
+data_classification_review_required_before_hosted_service=1
+ai_agentic_automation_security_required_before_model_or_tool_authority=1
+platform_integrity_review_required_before_bootable_os_claim=1
+security_validation_required_before_security_release_claim=1
+sbom_required_before_production_installer=1
+third_party_security_validation_required_before_security_release=1
+incident_response_plan_required_before_production_service=1
+recurring_source_review_required=1
+implementation_behavior_changed=0
+runtime_authority_granted=0
+security_boundary_claimed=0
+certification_claim_allowed=0
+compliance_claim_allowed=0
+external_endorsement_claimed=0
+production_protection_claim_allowed=0
+```
+
+## Validation
+
+```sh
+sh scripts/test-high-assurance-security-baseline.sh
+```
+
+Expected output:
+
+```text
+high_assurance_security_baseline: ok
+```

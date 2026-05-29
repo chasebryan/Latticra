@@ -70,9 +70,15 @@ The implementation fails closed:
 null effect decision output -> LATTICRA_STATUS_NULL_ARGUMENT
 null capability gate metadata input -> invalid-input
 invalid capability gate metadata -> invalid-gate
+unterminated capability gate metadata strings -> invalid-gate
+invalid capability gate boolean flags -> invalid-gate
+capability gate authority/effect flags set -> invalid-gate
 missing artifact digest -> missing-digest
 missing requested capability -> missing-requested-capability
 missing requested effect -> missing-requested-effect
+tampered effect decision strings fail closed before report
+tampered effect decision authority/effect flags fail closed before report
+tampered effect decision boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 
@@ -115,10 +121,21 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-effect-decision-contract.sh
 sh scripts/test-latticra-seal-effect-decision.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
+```
+
+Expected output:
+
+```text
+seal effect decision contract: ok
+seal effect decision invariants: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a runtime handoff contract.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this effect decision metadata implementation.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, signing, host behavior, network behavior, or object sealing unless separately implemented and guarded.

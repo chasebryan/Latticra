@@ -41,6 +41,7 @@ typedef struct {
     int executed;
     int mutation_allowed;
     int server_interaction_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_nucleus_preview_t;

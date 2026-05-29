@@ -51,10 +51,13 @@ static void result_default(latticra_lat_parse_result_t *result) {
     }
     result->declaration_count = 0u;
     result->clause_count = 0u;
+    result->comment_count = 0u;
+    span_default(&result->first_comment_span);
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -77,6 +80,7 @@ const char *latticra_lat_parse_error_label(latticra_lat_parse_error_t error) {
     case LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING: return "literal_nul_in_string";
     case LATTICRA_LAT_PARSE_CAPACITY_EXCEEDED: return "capacity_exceeded";
     case LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER: return "forbidden_behavior_marker";
+    case LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT: return "unsupported_block_comment";
     case LATTICRA_LAT_PARSE_INTERNAL_ERROR:
     default: return "internal_error";
     }
@@ -116,6 +120,8 @@ typedef struct {
     size_t offset;
     size_t line;
     size_t column;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
 } lat_cursor_t;
 
 static int cursor_at_end(const lat_cursor_t *cursor) {
@@ -163,6 +169,69 @@ static void span_finish(latticra_lat_source_span_t *span, const lat_cursor_t *cu
     span->end_column = cursor->column;
 }
 
+static void cursor_record_line_comment(lat_cursor_t *cursor, latticra_lat_source_span_t comment_span) {
+    if (cursor == 0) return;
+    if (cursor->comment_count == 0u) cursor->first_comment_span = comment_span;
+    cursor->comment_count += 1u;
+}
+
+static int find_unsupported_block_comment(
+    const char *source,
+    size_t source_len,
+    lat_cursor_t *block_cursor) {
+    lat_cursor_t cursor;
+    int in_string = 0;
+    int escaped = 0;
+    int in_line_comment = 0;
+
+    if (source == 0 || block_cursor == 0) return 0;
+    cursor.source = source;
+    cursor.source_len = source_len;
+    cursor.offset = 0u;
+    cursor.line = 1u;
+    cursor.column = 1u;
+    cursor.comment_count = 0u;
+    span_default(&cursor.first_comment_span);
+
+    while (!cursor_at_end(&cursor)) {
+        char ch = cursor_peek(&cursor);
+        char next = cursor_peek_next(&cursor);
+
+        if (in_line_comment) {
+            if (ch == '\n') in_line_comment = 0;
+            cursor_advance(&cursor);
+            continue;
+        }
+        if (in_string) {
+            if (escaped) {
+                escaped = 0;
+            } else if (ch == '\\') {
+                escaped = 1;
+            } else if (ch == '"') {
+                in_string = 0;
+            }
+            cursor_advance(&cursor);
+            continue;
+        }
+
+        if (ch == '/' && next == '/') {
+            latticra_lat_source_span_t comment_span = span_start(&cursor);
+            while (!cursor_at_end(&cursor) && cursor_peek(&cursor) != '\n') cursor_advance(&cursor);
+            span_finish(&comment_span, &cursor);
+            cursor_record_line_comment(&cursor, comment_span);
+            in_line_comment = 1;
+            continue;
+        }
+        if (ch == '/' && next == '*') {
+            *block_cursor = cursor;
+            return 1;
+        }
+        if (ch == '"') in_string = 1;
+        cursor_advance(&cursor);
+    }
+    return 0;
+}
+
 static int is_ident_start(char ch) {
     return isalpha((unsigned char)ch) || ch == '_';
 }
@@ -177,7 +246,10 @@ static void skip_ws_and_comments(lat_cursor_t *cursor) {
         again = 0;
         while (!cursor_at_end(cursor) && isspace((unsigned char)cursor_peek(cursor))) cursor_advance(cursor);
         if (!cursor_at_end(cursor) && cursor_peek(cursor) == '/' && cursor_peek_next(cursor) == '/') {
+            latticra_lat_source_span_t comment_span = span_start(cursor);
             while (!cursor_at_end(cursor) && cursor_peek(cursor) != '\n') cursor_advance(cursor);
+            span_finish(&comment_span, cursor);
+            cursor_record_line_comment(cursor, comment_span);
             again = 1;
         }
     }
@@ -514,6 +586,8 @@ static latticra_lat_parse_error_t set_error(latticra_lat_parse_result_t *result,
     result->error = error;
     if (cursor != 0) {
         result->span = span_start(cursor);
+        result->comment_count = cursor->comment_count;
+        result->first_comment_span = cursor->first_comment_span;
     }
     return error;
 }
@@ -523,6 +597,7 @@ latticra_status_t latticra_lat_parse_source(
     size_t source_len,
     latticra_lat_parse_result_t *result) {
     lat_cursor_t cursor;
+    lat_cursor_t block_cursor;
     latticra_lat_parse_error_t error;
     latticra_lat_source_span_t module_span;
 
@@ -540,17 +615,24 @@ latticra_status_t latticra_lat_parse_source(
         result->error = LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING;
         return LATTICRA_STATUS_OK;
     }
-    if (contains_forbidden_marker_outside_comment(source, source_len)) {
-        result->error = LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER;
-        return LATTICRA_STATUS_OK;
-    }
 
     cursor.source = source;
     cursor.source_len = source_len;
     cursor.offset = 0u;
     cursor.line = 1u;
     cursor.column = 1u;
+    cursor.comment_count = 0u;
+    span_default(&cursor.first_comment_span);
     module_span = span_start(&cursor);
+
+    if (find_unsupported_block_comment(source, source_len, &block_cursor)) {
+        set_error(result, LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, &block_cursor);
+        return LATTICRA_STATUS_OK;
+    }
+    if (contains_forbidden_marker_outside_comment(source, source_len)) {
+        result->error = LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER;
+        return LATTICRA_STATUS_OK;
+    }
 
     if (match_keyword(&cursor, "l")) {
         set_error(result, LATTICRA_LAT_PARSE_UNSUPPORTED_EXTENSION_CLAIM, &cursor);
@@ -579,6 +661,8 @@ latticra_status_t latticra_lat_parse_source(
             cursor_advance(&cursor);
             span_finish(&result->module.span, &cursor);
             result->span = result->module.span;
+            result->comment_count = cursor.comment_count;
+            result->first_comment_span = cursor.first_comment_span;
             result->error = LATTICRA_LAT_PARSE_OK;
             return LATTICRA_STATUS_OK;
         }
@@ -597,7 +681,49 @@ latticra_status_t latticra_lat_parse_report(
     char *buffer,
     size_t buffer_len) {
     int written;
+    size_t first_declaration_index;
+    latticra_lat_declaration_kind_t first_declaration_kind;
+    const char *first_declaration_name;
+    const char *first_declaration_source;
+    size_t first_declaration_first_clause_index;
+    size_t first_declaration_clause_count;
+    size_t first_clause_index;
+    const char *first_clause_keyword;
+    const char *first_clause_left;
+    const char *first_clause_operator;
+    const char *first_clause_right;
+    latticra_lat_effect_t first_clause_effect;
     if (result == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    first_declaration_index = (size_t)-1;
+    first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
+    first_declaration_name = "";
+    first_declaration_source = "";
+    first_declaration_first_clause_index = (size_t)-1;
+    first_declaration_clause_count = 0u;
+    first_clause_index = (size_t)-1;
+    first_clause_keyword = "";
+    first_clause_left = "";
+    first_clause_operator = "";
+    first_clause_right = "";
+    first_clause_effect = LATTICRA_LAT_EFFECT_UNKNOWN;
+    if (result->error == LATTICRA_LAT_PARSE_OK && result->declaration_count > 0u) {
+        const latticra_lat_ast_declaration_t *declaration = &result->declarations[0];
+        first_declaration_index = 0u;
+        first_declaration_kind = declaration->kind;
+        first_declaration_name = declaration->name;
+        first_declaration_source = declaration->source_name;
+        first_declaration_first_clause_index = declaration->first_clause_index;
+        first_declaration_clause_count = declaration->clause_count;
+    }
+    if (result->error == LATTICRA_LAT_PARSE_OK && result->clause_count > 0u) {
+        const latticra_lat_ast_clause_t *clause = &result->clauses[0];
+        first_clause_index = 0u;
+        first_clause_keyword = clause->keyword;
+        first_clause_left = clause->left;
+        first_clause_operator = clause->operator_text;
+        first_clause_right = clause->right;
+        first_clause_effect = clause->effect;
+    }
     written = snprintf(
         buffer,
         buffer_len,
@@ -612,10 +738,30 @@ latticra_status_t latticra_lat_parse_report(
         "assertion_count=%zu\n"
         "effect_count=%zu\n"
         "clause_count=%zu\n"
+        "comment_count=%zu\n"
+        "first_comment_start_offset=%zu\n"
+        "first_comment_end_offset=%zu\n"
+        "first_comment_start_line=%zu\n"
+        "first_comment_start_column=%zu\n"
+        "first_comment_end_line=%zu\n"
+        "first_comment_end_column=%zu\n"
+        "first_declaration_index=%zu\n"
+        "first_declaration_kind=%s\n"
+        "first_declaration_name=%s\n"
+        "first_declaration_source=%s\n"
+        "first_declaration_first_clause_index=%zu\n"
+        "first_declaration_clause_count=%zu\n"
+        "first_clause_index=%zu\n"
+        "first_clause_keyword=%s\n"
+        "first_clause_left=%s\n"
+        "first_clause_operator=%s\n"
+        "first_clause_right=%s\n"
+        "first_clause_effect=%s\n"
         "no_effect=%d\n"
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -634,10 +780,30 @@ latticra_status_t latticra_lat_parse_report(
         result->module.assertion_count,
         result->module.effect_count,
         result->clause_count,
+        result->comment_count,
+        result->first_comment_span.start_offset,
+        result->first_comment_span.end_offset,
+        result->first_comment_span.start_line,
+        result->first_comment_span.start_column,
+        result->first_comment_span.end_line,
+        result->first_comment_span.end_column,
+        first_declaration_index,
+        latticra_lat_declaration_kind_label(first_declaration_kind),
+        first_declaration_name,
+        first_declaration_source,
+        first_declaration_first_clause_index,
+        first_declaration_clause_count,
+        first_clause_index,
+        first_clause_keyword,
+        first_clause_left,
+        first_clause_operator,
+        first_clause_right,
+        latticra_lat_effect_label(first_clause_effect),
         result->no_effect,
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

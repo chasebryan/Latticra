@@ -1,7 +1,8 @@
 # Latticra Announcements
 
 Status: public announcement log
-Last updated: 2026-05-21 03:20 CDT
+Last updated: 2026-05-26 04:12 CDT
+Latest Fedora VM CLI payload validation milestone note: 2026-05-26 04:12 CDT
 Latest Fedora VM RPM validation milestone note: 2026-05-21 03:20 CDT
 Latest status announcement review note: 2026-05-19 19:25 CDT
 Latest authority foundation index alignment note: 2026-05-19 19:15 CDT
@@ -30,6 +31,44 @@ why it matters
 validation
 non-claims
 next step
+```
+
+## 2026-05-26 04:12 CDT — Disposable Fedora VM CLI payload validation milestone
+
+Status: evidence-backed CLI payload validation milestone recorded
+
+Latticra completed and recorded a successful disposable Fedora VM CLI payload validation path for the current no-effect local RPM payload.
+
+What changed:
+
+```text
+disposable_vm_cli_validation_completed=1
+host_install_ready_for_cli_payload=1
+validated_package=latticra-0.0.0-0.1.local.fc44.x86_64.rpm
+validated_payload=/usr/bin/latticra
+validated_payload=/usr/share/doc/latticra/README.md
+evidence_level=9
+```
+
+Why it matters:
+
+The Fedora validation path now has accepted disposable VM evidence for the compiled no-effect `latticra` CLI payload. The transcript records local RPM build, package installation, CLI `--status`, `--version`, `--report`, invalid-command validation, RPM removal, and post-removal absence verification.
+
+Validation:
+
+```text
+sh scripts/test-fedora-vm-cli-payload-validation-evidence-status.sh
+sh scripts/test-fedora-vm-cli-payload-readme-alignment.sh
+```
+
+Non-claims:
+
+This milestone does not claim production readiness, Fedora approval, Fedora distribution readiness, daily-driver safety, immutable Fedora readiness, security capability, update safety, recovery safety, sandboxing, malware prevention, ransomware prevention, bootable OS replacement behavior, kernel runtime readiness, or a production installer.
+
+Next step:
+
+```text
+Plan the next Fedora CLI payload validation lane without widening README or announcement claims beyond disposable Fedora VM evidence.
 ```
 
 ## 2026-05-21 03:20 CDT — Disposable Fedora VM local RPM validation milestone

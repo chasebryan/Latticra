@@ -20,9 +20,11 @@ Primary files:
 
 ```text
 include/latticra/lat_pipeline_diagnostics.h
+include/latticra/lat_to_lir_diagnostics.h
 src/lat_pipeline_diagnostics.c
 src/lat_pipeline_diagnostics_eval.c
 src/lat_pipeline_diagnostics_report.c
+src/lat_to_lir_diagnostics.c
 tests/lat_pipeline_diagnostic_integration_refinement.c
 docs/LAT_PIPELINE_DIAGNOSTIC_INTEGRATION_REFINEMENT.md
 scripts/test-lat-pipeline-diagnostic-integration-refinement.sh
@@ -40,8 +42,17 @@ semantic error capture
 semantic diagnostic count capture
 first diagnostic declaration index
 first diagnostic clause index
+optional Lat-to-LIR lowering diagnostic class capture
+lowering error capture
+model error capture
+LIR error capture
+lowering model counts
+lowering transition source index
 pipeline_failed flag
 semantic_failed flag
+lowering_failed flag
+model_failed flag
+lir_failed flag
 no_effect_issue flag
 evidence_level
 ```

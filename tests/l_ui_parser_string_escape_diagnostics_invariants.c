@@ -66,6 +66,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -159,6 +160,7 @@ static int expect_escape_diagnostic_for_source(
     EXPECT_TRUE(diagnostic.execution_allowed == 0, "diagnostic execution");
     EXPECT_TRUE(diagnostic.mutation_allowed == 0, "diagnostic mutation");
     EXPECT_TRUE(diagnostic.server_allowed == 0, "diagnostic server");
+    EXPECT_TRUE(diagnostic.network_allowed == 0, "diagnostic network");
     EXPECT_TRUE(diagnostic.recovery_allowed == 0, "diagnostic recovery");
     EXPECT_TRUE(diagnostic.hardware_allowed == 0, "diagnostic hardware");
     return 0;
@@ -241,6 +243,7 @@ static int string_escape_diagnostic_rejects_unterminated_escape_lui0021(void) {
     result.execution_allowed = 0;
     result.mutation_allowed = 0;
     result.server_allowed = 0;
+    result.network_allowed = 0;
     result.recovery_allowed = 0;
     result.hardware_allowed = 0;
 
@@ -275,6 +278,7 @@ static int string_escape_diagnostic_preserves_decoded_nul_lui0022(void) {
     result.execution_allowed = 0;
     result.mutation_allowed = 0;
     result.server_allowed = 0;
+    result.network_allowed = 0;
     result.recovery_allowed = 0;
     result.hardware_allowed = 0;
 
@@ -376,6 +380,7 @@ static int string_escape_diagnostic_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "hardware flag");
     return 0;

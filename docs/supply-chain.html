@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supply-Chain Security Baseline | Latticra</title>
+  <meta name="description" content="A public overview of Latticra supply-chain security gates, zero-trust runtime authority boundaries, signed updater blockers, SBOM requirements, and release non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Supply-Chain Security Baseline">
+  <meta property="og:description" content="Guarded CI, dependency, SBOM, release, updater, and runtime-authority gates without production security claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Supply-chain security baseline</p>
+        <p class="eyebrow">Release Authority and Update Gates</p>
+        <h1>Supply-chain security baseline</h1>
+        <p class="page-lede">
+          Latticra has guarded CI, dependency, package, artifact, SBOM, update, and runtime-authority rules. Those rules keep release authority closed; they are not production readiness, signed delivery, compliance certification, or external endorsement.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Supply-chain evidence blocks release authority until the release gate is complete.</h2>
+        </div>
+        <p>
+          The baseline records local controls for workflow permissions, pinned actions, checkout credentials, package-manager mutation, dependency review, artifact integrity, SBOM requirements, and update-lane safety. It deliberately preserves no publishing authority, no signing authority, no production installer claim, and no production update claim.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Supply-chain gate overview">
+        <article>
+          <span>01</span>
+          <h3>Workflow authority</h3>
+          <p>Actions must be pinned, repository permissions explicit and read-only by default, and unreviewed token or secret use blocked.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Dependency evidence</h3>
+          <p>New dependencies, bundled binaries, generated artifacts, and vendored material require purpose, ownership, license, and security review.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Artifact integrity</h3>
+          <p>Production artifacts require inventory, hashes, SBOM review, signing contracts, recovery behavior, and public non-claim review.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Update delivery</h3>
+          <p>The Panel signed-updater delivery gate stays closed until manifest, signature, hash, channel, rollback, validation, and receipt evidence exist.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline is present, but release authority is still zero.</h2>
+        <p>
+          These fields are meant to be read as a release blocker: the project has guard rules and source records, not a production supply-chain claim.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Supply-chain status snapshot">
+        <article>
+          <span>supply_chain_security_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>pinned_ci_actions_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>sbom_required_before_production_installer</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>kev_nvd_review_required_before_release</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>release_publishing_authority_granted</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_update_claim_allowed</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>runtime_authority_granted</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>external_endorsement_claimed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Release Gate</p>
+          <h2>Production release wording requires all required evidence.</h2>
+          <p>
+            A release artifact, production installer, production update lane, or internet-facing service needs inventory, SBOM, third-party review, vulnerability review, workflow authority review, signing boundary, recovery behavior, and non-claim review before the wording can change.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Supply-chain release gate table">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Supply-chain baseline, status record, guard script, CI rules, dependency review rules, and release non-claim language.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before release</span>
+            <p role="cell">SBOM, dependency inventory review, KEV/NVD review, integrity hashes, signing authority contract, rollback or recovery contract, vulnerability disclosure path, and production non-claim review.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Artifact publication, release signing, release secret access, workflow write-token authority, production installer claims, production update claims, and production security claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Authority Baselines</p>
+        <h2>Runtime and updater authority are separate gates, not side effects of packaging work.</h2>
+        <p>
+          Supply-chain review cannot silently grant runtime, update, network, signing, or host authority. Each authority surface needs its own contract, evidence, denial cases, and status alignment.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Baseline</span>
+          <h3>Supply-chain controls</h3>
+          <p>CI, dependency, package, artifact, SBOM, release, and update-lane requirements are guarded by local checks.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Signed updater delivery</h3>
+          <p>Network self-update and signed update apply remain blocked without signed manifests, artifact verification, rollback, validation, and receipts.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Runtime authority</h3>
+          <p>Tool execution, host I/O, network opens, MCP invocation, model execution, signing, recovery, boot, and hardware effects remain denied.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Production claims</h3>
+          <p>No SLSA level, NIST compliance, CISA CPG compliance, external endorsement, production protection, or production readiness is claimed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Check the guards that hold the line.</h2>
+        <p>
+          These commands validate the public boundary records without publishing, signing, fetching updates, granting secrets, or enabling runtime behavior.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Supply-chain baseline</h3>
+          <pre><code>sh scripts/test-supply-chain-security-baseline.sh
+sh scripts/test-quality-safety-guards.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Runtime authority gate</h3>
+          <pre><code>sh scripts/test-zero-trust-runtime-authority-baseline.sh
+sh scripts/test-runtime-boundary-policy-expansion-after-threat-model.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Updater delivery gate</h3>
+          <pre><code>sh scripts/test-latticra-panel-signed-updater-delivery-gate.sh
+sh scripts/latticra-panel-signed-updater-delivery-gate.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating a release or security claim.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="SUPPLY_CHAIN_SECURITY_BASELINE.md"><strong>Supply-chain baseline</strong><span>Repository, CI, dependency, package, installer, artifact, SBOM, release, and update-lane controls.</span></a>
+        <a href="status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"><strong>Supply-chain status</strong><span>Current status fields and expected guard output for the baseline.</span></a>
+        <a href="ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md"><strong>Zero-trust runtime authority baseline</strong><span>Per-request authority prerequisites, identity/resource visibility, audit records, and closed runtime gates.</span></a>
+        <a href="status/ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE_STATUS.md"><strong>Zero-trust runtime status</strong><span>Status fields for future runtime, tool, host I/O, network, MCP, update, recovery, boot, and hardware authority.</span></a>
+        <a href="updater-delivery.html"><strong>Signed-updater delivery gate</strong><span>Reader-facing guide to the closed signed-delivery gate, local-checkout updater lane, denial transcript, and no-effect fixtures.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"><strong>Panel signed-updater gate</strong><span>Closed gate for any future signed or network-delivered updater path.</span></a>
+        <a href="status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"><strong>Updater gate status</strong><span>Status checkpoint for missing manifest, signature, verification, rollback, validation, and receipt evidence.</span></a>
+        <a href="PRODUCTION_INSTALLER_READINESS_CONTRACT.md"><strong>Production installer contract</strong><span>Required gates before installer readiness, daily-driver readiness, or production install claims.</span></a>
+        <a href="installer.html"><strong>Installer readiness boundary</strong><span>CLI payload evidence, local artifact manifest fixture, and production installer non-claims.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and future control allocation.</span></a>
+        <a href="identity-access.html"><strong>Identity and access management</strong><span>Privileged access, service identity, account lifecycle, workflow identity, and hosted-access non-claims.</span></a>
+        <a href="security-logging.html"><strong>Security logging and monitoring</strong><span>Event-source inventory, audit events, redaction, retention, triage, telemetry blockers, and no monitoring claims.</span></a>
+        <a href="backup-recovery.html"><strong>Backup and recovery resilience</strong><span>Rollback or recovery contract context before release, updater, hosted-service, and recovery claims.</span></a>
+        <a href="configuration-change.html"><strong>Secure configuration and change management</strong><span>Configuration inventory, secure baselines, approved changes, rollback planning, drift detection, exceptions, and no hardening claims.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Network-client restrictions, remote access, RMM, DNS/TLS, and internet-facing service non-claims.</span></a>
+        <a href="data-protection.html"><strong>Data classification and protection</strong><span>Data inventory, sensitive-data flow mapping, log/report redaction, telemetry blockers, and customer-data non-claims.</span></a>
+        <a href="crypto-assurance.html"><strong>Cryptographic assurance and key management</strong><span>FIPS/CMVP claim gates, signing authority blockers, key lifecycle, randomness, and no production crypto claims.</span></a>
+        <a href="vulnerability-management.html"><strong>Vulnerability management gate</strong><span>KEV/NVD review, disclosure paths, exception records, release blocking, and product-security non-claims.</span></a>
+        <a href="incident-response.html"><strong>Incident response boundary</strong><span>Reporting routes, evidence preservation, response gates, and incident-response non-claims.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime denial, and security non-claims.</span></a>
+        <a href="packaging.html"><strong>Packaging readiness</strong><span>Platform package-shape records and distribution non-claims.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Panel install evidence, package guards, disposable VM gates, and dry-run contracts.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra supply-chain security baseline.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

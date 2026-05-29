@@ -1,0 +1,198 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+label='ubuntu ppa evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate follow-on contract'
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf '%s: missing file: %s\n' "$label" "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf '%s: missing required pattern in %s: %s\n' "$label" "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_no_ubuntu_artifacts() {
+  dir="$1"
+  if find "$dir" \( -name '*.deb' -o -name '*.dsc' -o -name '*.changes' -o -name '*.build' -o -name '*.buildinfo' \) -print | grep -q .; then
+    printf '%s: unexpected Ubuntu package artifact under %s\n' "$label" "$dir" >&2
+    exit 1
+  fi
+}
+
+contract='docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md'
+predecessor_closeout_contract='docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_FOLLOW_ON_CONTRACT.md'
+predecessor_disposition_contract='docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_FOLLOW_ON_CONTRACT.md'
+predecessor_review_contract='docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_FOLLOW_ON_CONTRACT.md'
+predecessor_archive_gate_contract='docs/UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md'
+matrix_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
+publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
+static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
+readiness='docs/UBUNTU_READINESS_PLAN.md'
+status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
+workflow='.github/workflows/ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.yml'
+script='scripts/test-ubuntu-ppa-evidence-closeout-gate-review-closeout-archive-gate.sh'
+
+for file in \
+  "$contract" \
+  "$predecessor_closeout_contract" \
+  "$predecessor_disposition_contract" \
+  "$predecessor_review_contract" \
+  "$predecessor_archive_gate_contract" \
+  "$matrix_contract" \
+  "$publication_gate" \
+  "$static_validation" \
+  "$readiness" \
+  "$status" \
+  "$workflow" \
+  "$script" \
+  README.md \
+  docs/README.md \
+  docs/status/README.md \
+  docs/QUICK_START_CHEATSHEET.md \
+  packaging/ubuntu/README.md
+do
+  require_file "$file"
+done
+
+require_contains 'Status: no-effect publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate contract' "$contract"
+require_contains 'documentation-only and static' "$contract"
+require_contains 'ubuntu_ppa_evidence_intake_denial_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_follow_on_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' "$contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_state=closed-no-effect' "$contract"
+
+for pattern in \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_decision=deny-archive-and-re-request' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_state=closed-out-upheld-no-effect' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_decision=closeout-upheld-closeout-archive-gate-review-disposition' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_present=1' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' \
+  'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_decision=dispose-upheld-closeout-archive-gate-review'
+do
+  require_contains "$pattern" "$contract"
+done
+
+for pattern in \
+  'publication_evidence_denial_archived=0' \
+  'publication_evidence_denial_archive_allowed=0' \
+  'publication_evidence_denial_archive_record_write_allowed=0' \
+  'publication_evidence_denial_archive_record_written=0' \
+  'publication_evidence_denial_re_request_allowed=0' \
+  'ubuntu_platform_publication_evidence_accepted=0' \
+  'ubuntu_publication_result_promoted=0' \
+  'ubuntu_publication_ready=0' \
+  'package_readiness_claimed=0' \
+  'production_installer_ready=0' \
+  'root_installer_ready=0' \
+  'ubuntu_publication_denial_archive_allowed=0' \
+  'ubuntu_publication_denial_archive_record_write_allowed=0' \
+  'ubuntu_publication_denial_archive_record_written=0' \
+  'ubuntu_publication_denial_re_request_allowed=0' \
+  'ubuntu_publication_transcript_intake_accepted=0' \
+  'ubuntu_ppa_creation_evidence_accepted=0' \
+  'ubuntu_launchpad_publication_evidence_accepted=0' \
+  'ubuntu_archive_submission_evidence_accepted=0' \
+  'debsign_run=0' \
+  'dput_run=0' \
+  'launchpad_upload_run=0' \
+  'ppa_created=0' \
+  'ppa_claimed=0' \
+  'ubuntu_archive_submission_claimed=0'
+do
+  require_contains "$pattern" "$contract"
+done
+
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_closed=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_closed_out=1' "$contract"
+require_contains 'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_identifier' "$contract"
+require_contains 'publication_evidence_denial_reference' "$contract"
+require_contains 'publication_evidence_intake_request_identifier' "$contract"
+require_contains 'ubuntu_target_series' "$contract"
+require_contains 'publication_promotion_blocker_matrix_reference' "$contract"
+require_contains 'deny-archive-and-re-request' "$contract"
+require_contains 'archive denied publication evidence' "$contract"
+require_contains 'write archive records' "$contract"
+require_contains 're-request publication evidence' "$contract"
+require_contains 'accept publication evidence' "$contract"
+require_contains "$predecessor_closeout_contract" "$contract"
+require_contains "$predecessor_disposition_contract" "$contract"
+require_contains "$predecessor_review_contract" "$contract"
+require_contains "$predecessor_archive_gate_contract" "$contract"
+require_contains "$matrix_contract" "$contract"
+require_contains "$publication_gate" "$contract"
+require_contains 'ubuntu_ppa_evidence_intake_denial_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_follow_on_contract: ok' "$contract"
+
+for file in \
+  "$predecessor_closeout_contract" \
+  "$predecessor_disposition_contract" \
+  "$matrix_contract" \
+  "$publication_gate" \
+  "$static_validation" \
+  "$readiness" \
+  "$status" \
+  packaging/ubuntu/README.md \
+  README.md
+do
+  require_contains "$contract" "$file"
+done
+
+require_contains 'UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md' docs/README.md
+require_contains 'UBUNTU_PPA_EVIDENCE_INTAKE_DENIAL_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_FOLLOW_ON_CONTRACT.md' docs/status/README.md
+require_contains "sh $script" docs/QUICK_START_CHEATSHEET.md
+require_contains "$script" "$readiness"
+require_contains "$workflow" "$readiness"
+require_contains "$script" packaging/ubuntu/README.md
+require_contains "$workflow" packaging/ubuntu/README.md
+require_contains "$script" "$status"
+require_contains "$workflow" "$status"
+require_contains "sh $script" README.md
+require_contains 'Ubuntu PPA Evidence Closeout Gate Review Closeout Archive Gate' "$workflow"
+require_contains 'Run Ubuntu PPA closeout gate review closeout archive gate guard' "$workflow"
+require_contains "sh $script" "$workflow"
+
+for file in "$status" packaging/ubuntu/README.md README.md "$static_validation" "$readiness"
+do
+  require_contains 'ubuntu_ppa_evidence_intake_denial_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_follow_on_contract_present=1' "$file"
+  require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' "$file"
+  require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_contract_present=1' "$file"
+  require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' "$file"
+  require_contains 'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1' "$file"
+  require_contains 'publication_evidence_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_state=closed-no-effect' "$file"
+  require_contains 'publication_evidence_denial_archive_allowed=0' "$file"
+  require_contains 'publication_evidence_denial_archive_record_write_allowed=0' "$file"
+  require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_present=1' "$file"
+  require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_closed=1' "$file"
+done
+
+require_contains 'Completed follow-on archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate' "$predecessor_closeout_contract"
+require_contains 'Recommended next slice' "$predecessor_closeout_contract"
+require_contains 'closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate can be relaxed or re-requested.' "$predecessor_closeout_contract"
+require_contains 'closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate' "$matrix_contract"
+require_contains 'That future lane should archive-gate the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout while preserving publication and readiness blockers.' "$matrix_contract"
+require_contains 'That future lane should review the archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate' "$matrix_contract"
+require_contains 'Publication evidence intake denial closeout archive gate review disposition closeout archive gate review disposition closeout archive gate review disposition closeout archive gate follow-on is recorded' "$publication_gate"
+
+require_no_ubuntu_artifacts packaging/ubuntu
+
+sh -n "$0"
+
+printf 'ubuntu_ppa_evidence_intake_denial_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_review_disposition_closeout_archive_gate_follow_on_contract: ok\n'

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Public Status</title>
+  <meta name="description" content="A public status dashboard for Latticra, including current posture, planning estimates, evidence lanes, and non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Public Status">
+  <meta property="og:description" content="Current public posture, estimates, evidence lanes, and non-claims for Latticra.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="FOUNDATION_INDEX.md">Foundation</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero status-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Public status</p>
+        <p class="eyebrow">Current Public Posture</p>
+        <h1>Status dashboard</h1>
+        <p class="page-lede">
+          Latticra is an early-stage, contract-first systems architecture repository. This dashboard summarizes the current public posture without replacing the detailed status records.
+        </p>
+      </div>
+    </section>
+
+    <section class="metrics-band" aria-label="Current planning estimates">
+      <div class="content-shell metrics-grid">
+        <article class="metric">
+          <span class="metric-value">44%</span>
+          <span class="metric-label">overall system planning estimate</span>
+        </article>
+        <article class="metric">
+          <span class="metric-value">94%</span>
+          <span class="metric-label">foundation documents planning estimate</span>
+        </article>
+        <article class="metric">
+          <span class="metric-value">91%</span>
+          <span class="metric-label">public documentation planning estimate</span>
+        </article>
+        <article class="metric metric-guarded">
+          <span class="metric-value">0</span>
+          <span class="metric-label">production runtime claims</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <nav class="content-shell status-shortcuts" aria-label="Status dashboard shortcuts">
+        <a href="#status-records">
+          <span>01</span>
+          <strong>Source Records</strong>
+        </a>
+        <a href="#status-posture">
+          <span>02</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#status-workstreams">
+          <span>03</span>
+          <strong>Workstreams</strong>
+        </a>
+        <a href="#status-validation">
+          <span>04</span>
+          <strong>Validation</strong>
+        </a>
+        <a href="#status-estimate-rule">
+          <span>05</span>
+          <strong>Estimate Rule</strong>
+        </a>
+      </nav>
+
+      <div id="status-records" class="content-shell status-summary status-anchor">
+        <div>
+          <p class="eyebrow">Status Record</p>
+          <h2>Last public status update: May 27, 2026 CDT.</h2>
+          <p>
+            The authoritative records are the root status file, the detailed current-status record, and the latest mathematical estimate rebase. This page is a navigation and summary surface for GitHub Pages readers.
+          </p>
+        </div>
+        <nav class="status-source-grid" aria-label="Status source records">
+          <a href="status/CURRENT_STATUS.md">
+            <span>Current</span>
+            <strong>Detailed status</strong>
+            <em>Authoritative posture, latest notes, and public status alignment.</em>
+          </a>
+          <a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">
+            <span>Root</span>
+            <strong>Root status</strong>
+            <em>Top-level project shortcut and public status summary.</em>
+          </a>
+          <a href="status/CURRENT_ESTIMATE_MATHEMATICAL_REBASE_2026_05_27.md">
+            <span>Estimate</span>
+            <strong>May 27 rebase</strong>
+            <em>Planning estimates and readiness boundaries, not product-readiness claims.</em>
+          </a>
+          <a href="map.html">
+            <span>Next</span>
+            <strong>Documentation map</strong>
+            <em>Continue from posture into contracts, evidence lanes, and validation records.</em>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <section id="status-posture" class="section-band section-band-muted status-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Posture</p>
+        <h2>What is present, guarded, and not claimed.</h2>
+        <p>
+          The project is deliberately conservative: evidence and no-effect reporting come before operational authority.
+        </p>
+      </div>
+      <div class="content-shell posture-grid">
+        <article class="posture-card posture-present">
+          <span class="status-pill status-present">present</span>
+          <h3>Foundation and records</h3>
+          <p>Public identity, foundation contracts, strategy notes, status records, security policy, and documentation entry points exist.</p>
+        </article>
+        <article class="posture-card posture-present">
+          <span class="status-pill status-present">present</span>
+          <h3>No-effect implementation slices</h3>
+          <p>C invariants, constrained C++ authority planning, Lat/LIR reporting, Nucleus records, Runtime Boundary reports, and Seal metadata surfaces are represented.</p>
+        </article>
+        <article class="posture-card posture-guarded">
+          <span class="status-pill status-guarded">guarded</span>
+          <h3>Host-facing workflows</h3>
+          <p>Ubuntu, Fedora, local package, Panel, Console, and macOS planning lanes remain narrow, local, and explicitly bounded by status records.</p>
+        </article>
+        <article class="posture-card posture-blocked">
+          <span class="status-pill status-blocked">not claimed</span>
+          <h3>Production authority</h3>
+          <p>No production runtime, hardened sandbox, Fedora approval, Ubuntu archive readiness, root authority, network authority, OS replacement, or production security certification is claimed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="status-workstreams" class="section-band status-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Workstreams</p>
+        <h2>Current public lanes at a glance.</h2>
+        <p>
+          These are summary lanes for orientation. Follow the linked records for the exact current posture.
+        </p>
+      </div>
+      <div class="content-shell status-lane-grid">
+        <article class="status-lane">
+          <h3>Lat / LIR / L-UI</h3>
+          <p>Parse, validate, lower, diagnose, and report. No language or LIR execution is claimed.</p>
+          <a href="language.html">Language overview</a>
+        </article>
+        <article class="status-lane">
+          <h3>Kernel / State Lattice</h3>
+          <p>Compiled C kernel identity, state machine, lifecycle summary, and subsystem reports keep external effects denied.</p>
+          <a href="kernel.html">Kernel overview</a>
+          <a href="status/KERNEL_LIFECYCLE_EVIDENCE_STATUS.md">Kernel lifecycle status</a>
+        </article>
+        <article class="status-lane">
+          <h3>Boot Preview / SeaBIOS-GRUB</h3>
+          <p>Compatibility is safe by absence: fixture manifests and preflight records exist, while QEMU execution, boot artifacts, and production OS claims remain blocked.</p>
+          <a href="boot.html">Boot preview boundary</a>
+          <a href="SEABIOS_GRUB_BOOT_PREVIEW_EVIDENCE_CONTRACT.md">Boot-preview evidence contract</a>
+        </article>
+        <article class="status-lane">
+          <h3>Nucleus / Runtime Boundary</h3>
+          <p>Task-boundary and runtime-boundary reports remain denied-by-default and report-only.</p>
+          <a href="runtime.html">Runtime overview</a>
+          <a href="RUNTIME_BOUNDARY_CONTRACT.md">Runtime boundary contract</a>
+        </article>
+        <article class="status-lane">
+          <h3>Latticra Seal</h3>
+          <p>Tool-boundary metadata, request freshness, signed request, policy decision, and dry-run surfaces remain no-effect.</p>
+          <a href="seal.html">Seal overview</a>
+        </article>
+        <article class="status-lane">
+          <h3>Panel / Console / Nadia</h3>
+          <p>Local workbench, profile, prompt-plan, and offline AI planning lanes remain explicitly non-runtime and non-authoritative.</p>
+          <a href="workbench.html">Workbench overview</a>
+          <a href="panel.html">Panel overview</a>
+          <a href="console.html">Console overview</a>
+          <a href="nadia.html">Nadia overview</a>
+        </article>
+        <article class="status-lane">
+          <h3>Ubuntu / Fedora / Packaging</h3>
+          <p>Validation lanes are local and evidence-oriented. They do not indicate Ubuntu archive readiness, Fedora approval, or distribution readiness.</p>
+          <a href="packaging.html">Packaging overview</a>
+          <a href="validation.html">Validation overview</a>
+          <a href="installer.html">Installer readiness</a>
+          <a href="updater-delivery.html">Updater delivery gate</a>
+          <a href="FEDORA_READINESS_PLAN.md">Fedora readiness</a>
+          <a href="UBUNTU_READINESS_PLAN.md">Ubuntu readiness</a>
+          <a href="OPENSUSE_READINESS_PLAN.md">openSUSE readiness</a>
+        </article>
+        <article class="status-lane">
+          <h3>Security Posture</h3>
+          <p>Safe testing and non-claims are explicit. The project is not a production containment or malware-prevention system.</p>
+          <a href="security.html">Security overview</a>
+          <a href="supply-chain.html">Supply-chain gates</a>
+          <a href="incident-response.html">Incident response boundary</a>
+          <a href="vulnerability-management.html">Vulnerability release gate</a>
+          <a href="crypto-assurance.html">Cryptographic assurance</a>
+          <a href="identity-access.html">Identity access baseline</a>
+          <a href="security-logging.html">Security logging baseline</a>
+          <a href="backup-recovery.html">Backup recovery baseline</a>
+          <a href="configuration-change.html">Configuration change baseline</a>
+          <a href="network-exposure.html">Network exposure baseline</a>
+          <a href="data-protection.html">Data protection baseline</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="status-validation" class="section-band section-band-muted status-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Validation</p>
+        <h2>Local checks preserve the no-effect posture.</h2>
+        <p>
+          These commands are orientation examples for local readers. The detailed status and scripts remain the authoritative references.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Read status</h3>
+          <pre><code>sed -n '1,220p' STATUS.md
+sed -n '1,260p' docs/status/CURRENT_STATUS.md</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Run broad guards</h3>
+          <pre><code>make quality
+make seal</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Confirm no-effect CLI posture</h3>
+          <pre><code>mkdir -p build
+cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
+./build/latticra --status</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="status-estimate-rule" class="section-band status-anchor">
+      <div class="content-shell claim-strip">
+        <div>
+          <p class="eyebrow">Estimate Rule</p>
+          <h2>Planning estimates are not product-readiness metrics.</h2>
+        </div>
+        <p>
+          The public estimates are planning aids. They are not release promises, operational capability claims, security guarantees, certification claims, or deployment-readiness statements.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra public status dashboard.</span>
+      <nav class="footer-links" aria-label="Status footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

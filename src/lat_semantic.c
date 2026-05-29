@@ -60,6 +60,7 @@ static void result_default(latticra_lat_semantic_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -288,6 +289,7 @@ static void copy_counts_from_parse(
     result->execution_allowed = parse_result->execution_allowed;
     result->mutation_allowed = parse_result->mutation_allowed;
     result->server_allowed = parse_result->server_allowed;
+    result->network_allowed = parse_result->network_allowed;
     result->recovery_allowed = parse_result->recovery_allowed;
     result->hardware_allowed = parse_result->hardware_allowed;
 }
@@ -351,6 +353,7 @@ static void validate_no_effect_flags(
         parse_result->execution_allowed != 0 ||
         parse_result->mutation_allowed != 0 ||
         parse_result->server_allowed != 0 ||
+        parse_result->network_allowed != 0 ||
         parse_result->recovery_allowed != 0 ||
         parse_result->hardware_allowed != 0) {
         (void)add_diagnostic(
@@ -646,6 +649,7 @@ latticra_status_t latticra_lat_semantic_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "first_diagnostic_error=%s\n"
@@ -682,6 +686,7 @@ latticra_status_t latticra_lat_semantic_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         first == 0 ? "ok" : latticra_lat_semantic_error_label(first->error),

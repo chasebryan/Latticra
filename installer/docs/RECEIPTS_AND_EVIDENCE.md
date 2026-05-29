@@ -17,6 +17,16 @@ The current receipt includes:
 - config measurement
 - generated install plan
 
+The reset/uninstall receipt includes:
+
+- UTC timestamp
+- operation label
+- operation mode
+- install prefix
+- command wrapper, desktop entry, icon, and prefix actions
+- removed, planned, preserved, and missing counts
+- authority baseline
+
 The measurement is SHA-256 when `sha256sum` or `shasum -a 256` is available. If neither exists, the script falls back to POSIX `cksum` and labels it clearly.
 
 Receipts are not a substitute for cryptographic release signing. They are a development evidence trail.

@@ -10,15 +10,82 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
-static int valid_tool_name(const char *tool_name) {
-    size_t len;
+static size_t bounded_string_len(const char *value, size_t max_len, int *terminated) {
+    size_t i;
 
-    if (tool_name == NULL) {
+    if (terminated != NULL) {
+        *terminated = 0;
+    }
+    if (value == NULL) {
+        return 0u;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            if (terminated != NULL) {
+                *terminated = 1;
+            }
+            return i;
+        }
+    }
+    return max_len;
+}
+
+static int text_field_valid(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len > 0u;
+}
+
+static int text_field_empty(const char *value, size_t max_len) {
+    int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+
+    return terminated == 1 && len == 0u;
+}
+
+static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
+    int terminated = 0;
+    size_t value_len;
+    size_t expected_len;
+
+    if (value == NULL || expected == NULL) {
         return 0;
     }
+    value_len = bounded_string_len(value, max_len, &terminated);
+    if (terminated != 1) {
+        return 0;
+    }
+    expected_len = strlen(expected);
+    return value_len == expected_len && memcmp(value, expected, value_len) == 0;
+}
 
-    len = strlen(tool_name);
-    return len > 0u && len < LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX;
+static int present_tool_name(const char *tool_name) {
+    return tool_name != NULL && tool_name[0] != '\0';
+}
+
+static int valid_tool_name(const char *tool_name) {
+    int terminated = 0;
+    size_t len;
+
+    len = bounded_string_len(tool_name,
+                             LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX,
+                             &terminated);
+    return terminated == 1 && len > 0u &&
+           len < LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX;
+}
+
+static int error_valid(latticra_seal_guarded_allowlist_error_t error) {
+    switch (error) {
+    case LATTICRA_SEAL_GUARDED_ALLOWLIST_OK:
+    case LATTICRA_SEAL_GUARDED_ALLOWLIST_INVALID_INPUT:
+    case LATTICRA_SEAL_GUARDED_ALLOWLIST_INVALID_TOOL_NAME:
+    case LATTICRA_SEAL_GUARDED_ALLOWLIST_INVALID_ALLOWLIST:
+    case LATTICRA_SEAL_GUARDED_ALLOWLIST_BUFFER_TOO_SMALL:
+        return 1;
+    default:
+        return 0;
+    }
 }
 
 const char *latticra_seal_guarded_allowlist_error_label(
@@ -76,7 +143,9 @@ static int fixture_contains(const latticra_seal_guarded_allowlist_t *allowlist,
     }
 
     for (i = 0u; i < allowlist->allowlist_entry_count; ++i) {
-        if (strcmp(allowlist->entries[i].tool_name, tool_name) == 0) {
+        if (bounded_string_is(allowlist->entries[i].tool_name,
+                              LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX,
+                              tool_name)) {
             return 1;
         }
     }
@@ -92,13 +161,17 @@ static void result_init(latticra_seal_guarded_allowlist_result_t *result,
     copy_literal(result->guarded_allowlist_profile,
                  sizeof(result->guarded_allowlist_profile),
                  "latticra-seal-guarded-allowlist/0.1");
-    copy_literal(result->tool_name, sizeof(result->tool_name), tool_name);
+    if (valid_tool_name(tool_name)) {
+        copy_literal(result->tool_name, sizeof(result->tool_name), tool_name);
+    } else if (present_tool_name(tool_name)) {
+        copy_literal(result->tool_name, sizeof(result->tool_name), "invalid-tool");
+    }
     copy_literal(result->allowlist_source,
                  sizeof(result->allowlist_source),
                  allowlist.allowlist_source);
     result->allowlist_entry_count = allowlist.allowlist_entry_count;
     result->allowlist_lookup_performed = 1u;
-    result->requested_tool_name_present = valid_tool_name(tool_name) ? 1u : 0u;
+    result->requested_tool_name_present = present_tool_name(tool_name) ? 1u : 0u;
     result->requested_tool_known = 0u;
     result->requested_tool_unknown = 1u;
     result->requested_tool_candidate = 0u;
@@ -209,6 +282,7 @@ int latticra_seal_guarded_allowlist_is_report_only(
     }
 
     return result->allowlist_lookup_performed == 1u &&
+           result->allowlist_entry_count <= LATTICRA_SEAL_GUARDED_ALLOWLIST_ENTRY_MAX &&
            result->allow_candidate_requires_policy_decision == 1u &&
            result->allow_candidate_requires_runtime_gate == 1u &&
            result->allow_candidate_requires_runtime_dry_run == 1u &&
@@ -223,7 +297,25 @@ int latticra_seal_guarded_allowlist_is_report_only(
            result->would_deny == 1u &&
            result->would_require_operator_review == 1u &&
            result->report_only == 1u &&
-           strcmp(result->mode, "report-only") == 0;
+           error_valid(result->error) &&
+           bounded_string_is(result->guarded_allowlist_profile,
+                             LATTICRA_SEAL_GUARDED_ALLOWLIST_PROFILE_MAX,
+                             "latticra-seal-guarded-allowlist/0.1") &&
+           ((result->requested_tool_name_present == 1u &&
+             text_field_valid(result->tool_name,
+                              LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX)) ||
+            (result->requested_tool_name_present == 0u &&
+             text_field_empty(result->tool_name,
+                              LATTICRA_SEAL_GUARDED_ALLOWLIST_TOOL_NAME_MAX))) &&
+           text_field_valid(result->allowlist_source,
+                            LATTICRA_SEAL_GUARDED_ALLOWLIST_SOURCE_MAX) &&
+           text_field_valid(result->blocked_reason,
+                            LATTICRA_SEAL_GUARDED_ALLOWLIST_REASON_MAX) &&
+           bounded_string_is(result->mode,
+                             LATTICRA_SEAL_GUARDED_ALLOWLIST_STATUS_MAX,
+                             "report-only") &&
+           text_field_valid(result->status,
+                            LATTICRA_SEAL_GUARDED_ALLOWLIST_STATUS_MAX);
 }
 
 latticra_status_t latticra_seal_guarded_allowlist_report(
@@ -233,6 +325,13 @@ latticra_status_t latticra_seal_guarded_allowlist_report(
     int written;
 
     if (result == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!latticra_seal_guarded_allowlist_is_report_only(result)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

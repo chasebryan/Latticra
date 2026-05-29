@@ -3,161 +3,755 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Latticra Documentation</title>
-  <meta name="description" content="Documentation entry point for Latticra, an early-stage evidence-bound systems architecture project.">
+  <title>Latticra | Evidence-Bound Systems Architecture</title>
+  <meta name="description" content="Latticra is an early-stage, evidence-bound systems architecture project for explicit boundaries, no-effect reports, and contract-first authority planning.">
   <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra">
+  <meta property="og:description" content="Contract-first systems architecture, bounded authority planning, and report-only evidence surfaces.">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="site-header">
-    <div>
-      <a class="brand" href="./">Latticra</a>
-      <p class="subtitle">Documentation entry point for contract-first systems architecture.</p>
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
     </div>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#overview">Overview</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#resources">Resources</a>
-      <a href="https://github.com/Bryforge/Latticra">Repository</a>
-    </nav>
   </header>
 
-  <main>
-    <section id="overview" class="intro">
-      <p class="kicker">Project status: early-stage, evidence-bound systems architecture repository.</p>
-      <h1>Latticra is a contract-first architecture for making system boundaries explicit before authority is granted.</h1>
-      <p>
-        Latticra is research and foundational engineering work for high-assurance infrastructure, Linux/Fedora integration,
-        Lat language development, bounded intermediate representation work, runtime-boundary modeling, and AI-era tool-boundary planning.
-      </p>
-      <p>
-        The project should be read as an engineering record: <span class="term term-contract">contracts</span>,
-        <span class="term term-boundary">boundaries</span>, <span class="term term-evidence">evidence</span>,
-        <span class="term term-report">reports</span>, and carefully limited claims. It is not presented as a deployed platform,
-        certified product, production runtime, security product, or operating-system replacement.
-      </p>
+  <main id="main">
+    <section id="overview" class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <p class="eyebrow">Early-stage evidence-bound systems architecture</p>
+        <h1 id="hero-title">Latticra</h1>
+        <p class="hero-lede">
+          A contract-first architecture for making requests, capabilities, policy boundaries, runtime posture, and evidence records explicit before authority is granted.
+        </p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button button-primary" href="#pathways">Choose your path</a>
+          <a class="button button-secondary" href="start.html">Start safely</a>
+        </div>
+        <dl class="hero-facts" aria-label="Current project snapshot">
+          <div>
+            <dt>Status</dt>
+            <dd>Early-stage foundation</dd>
+          </div>
+          <div>
+            <dt>Runtime posture</dt>
+            <dd>No-effect by default</dd>
+          </div>
+          <div>
+            <dt>Status record</dt>
+            <dd>May 27, 2026 CDT</dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
-    <section class="note" aria-label="Development principle">
-      <code>No contract without identity.</code>
-      <code>No authority without capability.</code>
-      <code>No effect without a boundary.</code>
-      <code>No promotion without evidence.</code>
-    </section>
-
-    <section id="architecture" class="section-block">
-      <h2>Architecture map</h2>
-      <p class="section-copy">
-        Latticra is organized as a small set of named layers. The current implementation posture is deliberately conservative:
-        declaration, metadata, classification, and reports come before runtime effects.
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Layer</th>
-            <th>Role</th>
-            <th>Current posture</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="term term-language">Lat</span></td>
-            <td>Contract and declaration language direction.</td>
-            <td>Parsing, validation, diagnostics, and metadata lowering.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-ir">LIR</span></td>
-            <td>Bounded intermediate representation and graph-shape metadata.</td>
-            <td>Metadata reporting, not execution.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-ui">L-UI</span></td>
-            <td>Operator-visible declaration and reporting surface.</td>
-            <td>Report direction and validation records.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-nucleus">Nucleus</span></td>
-            <td>Coordination, classification, task records, and task-boundary reports.</td>
-            <td>Report-only task boundary modeling.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-boundary">Runtime Boundary</span></td>
-            <td>Classification line before operational behavior.</td>
-            <td>Disabled-by-default boundary classification.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-seal">Latticra Seal</span></td>
-            <td>Trust-boundary, request-boundary, policy-boundary, and tool-boundary planning.</td>
-            <td>Report-only AI/tool boundary records.</td>
-          </tr>
-          <tr>
-            <td><span class="term term-fedora">Fedora/Linux</span></td>
-            <td>Current host-facing validation lane and integration target.</td>
-            <td>Narrow validation evidence, not distribution readiness.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="evidence" class="section-block">
-      <h2>Evidence posture</h2>
-      <p class="section-copy">
-        The repository distinguishes between what exists, what is being planned, and what is explicitly not claimed.
-        This distinction is central to the project’s credibility.
-      </p>
-      <div class="evidence-list">
-        <article>
-          <h3><span class="status yes">present</span> Foundation documents and public identity</h3>
-          <p>Status records, strategy records, security policy, and documentation entry points exist in the repository.</p>
+    <section class="metrics-band" aria-label="Current planning snapshot">
+      <div class="content-shell metrics-grid">
+        <article class="metric">
+          <span class="metric-value">44%</span>
+          <span class="metric-label">overall system planning estimate</span>
         </article>
-        <article>
-          <h3><span class="status yes">present</span> Deterministic validation and report surfaces</h3>
-          <p>Current work emphasizes shell guards, C invariant tests, metadata records, and operator-visible reports.</p>
+        <article class="metric">
+          <span class="metric-value">94%</span>
+          <span class="metric-label">foundation documents planning estimate</span>
         </article>
-        <article>
-          <h3><span class="status guarded">guarded</span> Fedora/Linux integration</h3>
-          <p>The supported statement is narrow: disposable Fedora VM local RPM validation for a documentation-only local RPM.</p>
+        <article class="metric">
+          <span class="metric-value">91%</span>
+          <span class="metric-label">public documentation planning estimate</span>
         </article>
-        <article>
-          <h3><span class="status no">not claimed</span> Production runtime or OS replacement</h3>
-          <p>Latticra does not currently claim active runtime enforcement, Fedora distribution readiness, certification, or operating-system replacement.</p>
+        <article class="metric metric-guarded">
+          <span class="metric-value">0</span>
+          <span class="metric-label">production runtime claims</span>
         </article>
       </div>
     </section>
 
-    <section id="seal" class="section-block">
-      <h2>Latticra Seal</h2>
-      <p class="section-copy">
-        Latticra Seal is the project’s tool-boundary planning structure for AI-era automation and MCP-style tool invocation analysis.
-        Its present value is clarity: it records what would be denied, why it would be denied, and what evidence supports that boundary decision.
-      </p>
-      <ul class="compact-list">
-        <li><span class="term term-seal">Unknown tool</span>, <span class="term term-seal">unsigned request</span>, <span class="term term-seal">stale request</span>, and <span class="term term-seal">replayed request</span> cases are treated as blocked cases.</li>
-        <li>The runtime dry-run lane remains <span class="term term-report">report-only</span> and <span class="term term-boundary">no-effect</span>.</li>
-        <li>Guarded allowlist records improve classification, but do not grant authority or execute tools.</li>
-      </ul>
+    <section id="pathways" class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Choose a Path</p>
+        <h2>Start with the question you have.</h2>
+        <p>
+          Latticra's public record set is dense by design. These routes keep the first click purposeful: current posture, safe local review, system shape, security boundaries, validation evidence, or the source map.
+        </p>
+      </div>
+      <div class="content-shell pathway-grid" aria-label="Latticra reader pathways">
+        <a class="pathway-card pathway-status" href="status.html">
+          <span>Status</span>
+          <strong>I need the current posture.</strong>
+          <em>Read the estimates, active lanes, latest posture notes, and public non-claims before trusting any other surface.</em>
+          <b>Open route</b>
+        </a>
+        <a class="pathway-card pathway-start" href="start.html">
+          <span>Start</span>
+          <strong>I am new to Latticra.</strong>
+          <em>Use the no-effect first-run path for status review, local checks, and safe expectations.</em>
+          <b>Open route</b>
+        </a>
+        <a class="pathway-card pathway-architecture" href="architecture.html">
+          <span>Architecture</span>
+          <strong>I want the system shape.</strong>
+          <em>Follow the layers, authority boundaries, evidence flow, and runtime posture without jumping into raw records.</em>
+          <b>Open route</b>
+        </a>
+        <a class="pathway-card pathway-security" href="security.html">
+          <span>Security</span>
+          <strong>I am checking safety claims.</strong>
+          <em>Review security policy, testing rules, default-deny language, and the claims Latticra does not make yet.</em>
+          <b>Open route</b>
+        </a>
+        <a class="pathway-card pathway-validation" href="validation.html">
+          <span>Validation</span>
+          <strong>I need local evidence.</strong>
+          <em>Inspect Panel install evidence, package guards, disposable VM gates, and no-effect dry-run contracts.</em>
+          <b>Open route</b>
+        </a>
+        <a class="pathway-card pathway-map" href="map.html">
+          <span>Map</span>
+          <strong>I need exact source records.</strong>
+          <em>Use the documentation map to move from public pages into contracts, status records, and validation sources.</em>
+          <b>Open route</b>
+        </a>
+      </div>
     </section>
 
-    <section id="resources" class="section-block">
-      <h2>Resources</h2>
-      <p class="section-copy">Start with the primary records below. They are the best sources for understanding the project’s current state and limits.</p>
-      <div class="resource-grid">
-        <a href="https://github.com/Bryforge/Latticra/blob/main/README.md"><strong>Root README</strong><span>General project overview and public entry point.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md"><strong>Status</strong><span>Current high-level project status.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/status/CURRENT_STATUS.md"><strong>Current Status</strong><span>Detailed current-state record.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/FOUNDATION_INDEX.md"><strong>Foundation Index</strong><span>Index of foundation documents and contracts.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/strategy/README.md"><strong>Strategy</strong><span>Planning and strategy entry point.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md"><strong>Security</strong><span>Security policy, safe testing, and non-claims.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/LATTICRA_SEAL_MCP_ALIGNMENT_PLAN.md"><strong>Seal MCP Alignment</strong><span>Tool-boundary planning direction.</span></a>
-        <a href="https://github.com/Bryforge/Latticra/blob/main/docs/C_CPP_FOUNDATION_DIRECTION.md"><strong>C/C++ Foundation</strong><span>Substrate and constrained authority direction.</span></a>
+    <section id="orientation" class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Orientation</p>
+        <h2>Built around claims that can be inspected.</h2>
+        <p>
+          Latticra treats architecture as an evidence trail. The repository separates contracts, metadata, reports, guard scripts, implementation slices, and non-claims so readers can see what exists now and what still requires proof.
+        </p>
+      </div>
+      <div class="content-shell orientation-grid">
+        <article class="panel panel-positive">
+          <h3>What Latticra is</h3>
+          <ul>
+            <li>An evidence-bound systems substrate for Linux-era and AI-era computing.</li>
+            <li>A public engineering record for explicit authority, request, capability, and runtime boundaries.</li>
+            <li>A collection of no-effect C, constrained C++, Rust installer, shell guard, and documentation lanes.</li>
+          </ul>
+        </article>
+        <article class="panel panel-caution">
+          <h3>What Latticra does not claim</h3>
+          <ul>
+            <li>No production runtime, hardened sandbox, certified security boundary, or operating-system replacement.</li>
+            <li>No unrestricted command execution, network authority, root installer, Fedora approval, or Ubuntu archive readiness.</li>
+            <li>No active AI-agent execution control or production cryptographic key authority.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="source-records" class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">First Source Records</p>
+        <h2>Jump from public summary copy to exact repository evidence.</h2>
+        <p>
+          If you need to verify homepage wording quickly, start with the current status record, the non-claims boundary, and the foundation or documentation authority records that govern the public mirrors.
+        </p>
+      </div>
+      <div class="content-shell source-starter-summary" aria-label="Source record reading guidance">
+        <div>
+          <span>Fastest Proof Path</span>
+          <strong>Status, then boundary, then index.</strong>
+          <em>Read the May 28, 2026 CDT current status record, confirm the blocked claims, then branch into the foundation and traceability records.</em>
+        </div>
+        <div>
+          <span>Public-Site Rule</span>
+          <strong>HTML pages do not replace source records.</strong>
+          <em>The public pages summarize posture, but the Markdown records remain the authority for claims, dates, validation, and exact scope.</em>
+        </div>
+        <div>
+          <span>Best Use</span>
+          <strong>Open one lane with its governing records.</strong>
+          <em>Use these links before trusting subsystem, security, packaging, runtime, or AI-adjacent wording beyond the public overview pages.</em>
+        </div>
+      </div>
+      <div class="content-shell source-starter-grid" aria-label="Homepage source record starter pack">
+        <a href="status/CURRENT_STATUS.md">
+          <span>Status Record</span>
+          <strong>Current Status</strong>
+          <em>Detailed public posture, current estimates, evidence notes, and the latest dated status context.</em>
+        </a>
+        <a href="NON_CLAIMS.md">
+          <span>Boundary</span>
+          <strong>Non-Claims</strong>
+          <em>Explicit limits on operating-system, installer, security, network, and production-readiness claims.</em>
+        </a>
+        <a href="PUBLIC_CLAIMS_LEDGER.md">
+          <span>Wording Guard</span>
+          <strong>Public Claims Ledger</strong>
+          <em>Allowed public wording, blocked wording, and the proof required before claim promotion.</em>
+        </a>
+        <a href="FOUNDATION_INDEX.md">
+          <span>Foundation</span>
+          <strong>Foundation Index</strong>
+          <em>Main index into contracts, strategy records, implementation documents, status records, and guards.</em>
+        </a>
+        <a href="DOCUMENTATION_READER_JOURNEY_MAP.md">
+          <span>Reader Route</span>
+          <strong>Documentation Reader Journey Map</strong>
+          <em>Audience-specific start points, success criteria, and stop signals for public-site readers and reviewers.</em>
+        </a>
+        <a href="DOCUMENTATION_TRACEABILITY_MATRIX.md">
+          <span>Traceability</span>
+          <strong>Documentation Traceability Matrix</strong>
+          <em>Crosswalk from public pages to source records, validation paths, and nearby non-claim boundaries.</em>
+        </a>
+      </div>
+    </section>
+
+    <section id="architecture" class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Architecture</p>
+        <h2>Named layers, conservative posture.</h2>
+        <p>
+          The current system emphasizes declaration, classification, metadata, and deterministic reports before operational behavior. Each lane has a role and a boundary.
+        </p>
+      </div>
+      <div class="content-shell lane-grid">
+        <article class="lane lane-language">
+          <span class="lane-label">Lat</span>
+          <h3>Contract language direction</h3>
+          <p>Parsing, validation, diagnostics, and metadata lowering for system declarations.</p>
+        </article>
+        <article class="lane lane-ir">
+          <span class="lane-label">LIR</span>
+          <h3>Bounded representation</h3>
+          <p>Graph-shape and metadata reporting without LIR execution.</p>
+        </article>
+        <article class="lane lane-ui">
+          <span class="lane-label">L-UI</span>
+          <h3>Operator-visible surface</h3>
+          <p>Declaration and report rendering foundations before terminal-control behavior.</p>
+        </article>
+        <article class="lane lane-nucleus">
+          <span class="lane-label">Nucleus</span>
+          <h3>Task-boundary records</h3>
+          <p>Coordination and task classification under report-only, denied-by-default posture.</p>
+        </article>
+        <article class="lane lane-boundary">
+          <span class="lane-label">Runtime Boundary</span>
+          <h3>Before operational behavior</h3>
+          <p>Disabled-by-default classification and report surfaces before runtime authority.</p>
+        </article>
+        <article class="lane lane-seal">
+          <span class="lane-label">Latticra Seal</span>
+          <h3>Trust and tool boundaries</h3>
+          <p>Request freshness, signed-request, policy-decision, capability-gate, and dry-run metadata.</p>
+        </article>
+        <article class="lane lane-panel">
+          <span class="lane-label">Panel</span>
+          <h3>Local workbench</h3>
+          <p>User-local installer and evidence review path with no root and no network authority by default.</p>
+        </article>
+        <article class="lane lane-fedora">
+          <span class="lane-label">Ubuntu/Fedora/Linux</span>
+          <h3>Validation lane</h3>
+          <p>Ubuntu build/local deb and Fedora disposable VM/local RPM evidence paths, not distribution readiness.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="evidence" class="section-band">
+      <div class="content-shell evidence-layout">
+        <div class="section-heading">
+          <p class="eyebrow">Evidence Path</p>
+          <h2>Promotion requires more than intent.</h2>
+          <p>
+            Latticra uses a staged evidence model: define the boundary, produce deterministic records, keep effects denied, then promote only when tests and status records support the claim.
+          </p>
+        </div>
+        <ol class="evidence-steps">
+          <li>
+            <span class="step-number">01</span>
+            <h3>Contract</h3>
+            <p>Name the capability, prerequisites, limits, and explicit non-claims.</p>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <h3>Metadata</h3>
+            <p>Represent the request, policy, capability, and report fields in bounded structures.</p>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <h3>Guard</h3>
+            <p>Run deterministic scripts and tests that preserve no-effect behavior.</p>
+          </li>
+          <li>
+            <span class="step-number">04</span>
+            <h3>Status</h3>
+            <p>Record the exact posture so public entry points do not overstate readiness.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="seal" class="section-band section-band-muted">
+      <div class="content-shell showcase">
+        <div class="showcase-copy">
+          <p class="eyebrow">Latticra Seal</p>
+          <h2>Report-only tool-boundary planning for AI-era automation.</h2>
+          <p>
+            Latticra Seal records what would be denied, why it would be denied, and which evidence supports the decision. Unknown tools, unsigned requests, stale requests, replayed requests, invalid schemas, and missing authority remain blocked cases.
+          </p>
+          <div class="status-row" aria-label="Seal posture summary">
+            <span class="status-pill status-present">report-only</span>
+            <span class="status-pill status-blocked">default-deny</span>
+            <span class="status-pill status-guarded">operator review</span>
+          </div>
+          <div class="hero-actions" aria-label="Seal actions">
+            <a class="button button-dark" href="seal.html">Open Seal overview</a>
+          </div>
+        </div>
+        <figure class="showcase-figure">
+          <img src="assets/latticra-seal-runtime-dry-run-native-demo.png" alt="Terminal output for a Latticra Seal runtime dry-run demo showing default-deny report-only metadata.">
+          <figcaption>Latticra Seal native runtime dry-run evidence snapshot.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="start" class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Start Locally</p>
+        <h2>Read the status first, then run no-effect checks.</h2>
+        <p>
+          The repository is designed to be inspected from the public records outward. The commands below mirror the current no-effect posture rather than promising operational authority.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Read the public posture</h3>
+          <pre><code>sed -n '1,220p' STATUS.md
+sed -n '1,260p' docs/status/CURRENT_STATUS.md</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Run broad safety guards</h3>
+          <pre><code>make quality
+make seal</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Inspect the no-effect CLI</h3>
+          <pre><code>mkdir -p build
+cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
+./build/latticra --status</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="resources" class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Resources</p>
+        <h2>The important records, grouped for fast entry.</h2>
+        <p>
+          These links are the best first paths through the repository: general orientation, current status, foundation contracts, subsystem documentation, and safety policy.
+        </p>
+      </div>
+      <div class="content-shell resource-summary" aria-label="Resource grouping summary">
+        <div>
+          <span>Primary Pages</span>
+          <strong>Start with the HTML route.</strong>
+          <em>Status, Start, Architecture, Security, Validation, and Map are the fastest reader paths.</em>
+        </div>
+        <div>
+          <span>Source Records</span>
+          <strong>Then inspect exact files.</strong>
+          <em>Markdown records remain the source for contracts, status, evidence, and public copy rules.</em>
+        </div>
+        <div>
+          <span>Safety Gates</span>
+          <strong>Promotion stays evidence-bound.</strong>
+          <em>Security, release, packaging, and runtime wording stays narrow until reproducible proof exists.</em>
+        </div>
+      </div>
+      <nav class="content-shell resource-directory" aria-label="Resource catalog shortcuts">
+        <a href="#resource-concepts">
+          <span>01</span>
+          <strong>Concepts</strong>
+        </a>
+        <a href="#resource-doc-rules">
+          <span>02</span>
+          <strong>Doc Rules</strong>
+        </a>
+        <a href="#resource-reader-routes">
+          <span>03</span>
+          <strong>Reader Routes</strong>
+        </a>
+        <a href="#resource-workbench-release">
+          <span>04</span>
+          <strong>Workbench</strong>
+        </a>
+        <a href="#resource-source-records">
+          <span>05</span>
+          <strong>Source Records</strong>
+        </a>
+        <a href="#resource-security-gates">
+          <span>06</span>
+          <strong>Security Gates</strong>
+        </a>
+      </nav>
+      <div class="content-shell resource-grid">
+        <div id="resource-concepts" class="resource-group-heading">
+          <span>01</span>
+          <div>
+            <h3>Concept overview</h3>
+            <p>Start here when you need the public explanation before opening source records.</p>
+          </div>
+        </div>
+        <a href="language.html">
+          <span>Language</span>
+          <strong>Lat, LIR, and L-UI</strong>
+          <em>The no-effect parse, validate, lower, and report lane for Latticra declarations.</em>
+        </a>
+        <a href="seal.html">
+          <span>Subsystem</span>
+          <strong>Latticra Seal</strong>
+          <em>Tool-boundary, policy-boundary, dry-run, blocked-case, and evidence records.</em>
+        </a>
+        <a href="evidence.html">
+          <span>Evidence</span>
+          <strong>Claims and Evidence</strong>
+          <em>The evidence ladder, promotion rules, non-claims, and source records.</em>
+        </a>
+        <div id="resource-doc-rules" class="resource-group-heading">
+          <span>02</span>
+          <div>
+            <h3>Documentation operating rules</h3>
+            <p>Use these records to check wording, freshness, traceability, status mirrors, and claim boundaries.</p>
+          </div>
+        </div>
+        <a href="PRODUCT_DOCUMENTATION_COHESION.md">
+          <span>Product Docs</span>
+          <strong>Product Documentation Cohesion</strong>
+          <em>Reader routes, product-surface responsibilities, safe copy rules, and cross-link expectations.</em>
+        </a>
+        <a href="DOCUMENTATION_GLOSSARY.md">
+          <span>Glossary</span>
+          <strong>Documentation Glossary</strong>
+          <em>Shared public terms for evidence, validation, posture, platforms, readers, and product readiness.</em>
+        </a>
+        <a href="DOCUMENTATION_READER_JOURNEY_MAP.md">
+          <span>Readers</span>
+          <strong>Documentation Reader Journey Map</strong>
+          <em>Audience-specific routes, success criteria, stop signals, and friction checks.</em>
+        </a>
+        <a href="DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md">
+          <span>Authority</span>
+          <strong>Documentation Source Authority Order</strong>
+          <em>Which source records, status records, non-claims, mirrors, and review packets win when docs disagree.</em>
+        </a>
+        <a href="DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md">
+          <span>Freshness</span>
+          <strong>Documentation Freshness Lifecycle Policy</strong>
+          <em>Lifecycle states, stale-review handling, supersession blocks, and date review rules.</em>
+        </a>
+        <a href="DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md">
+          <span>Impact</span>
+          <strong>Documentation Change Impact Radius Guide</strong>
+          <em>Review-radius rules for local edits, source records, mirrors, validation paths, status, and public pages.</em>
+        </a>
+        <a href="DOCUMENTATION_STATUS_RECORD_STANDARD.md">
+          <span>Status Docs</span>
+          <strong>Documentation Status Record Standard</strong>
+          <em>Status-record shape, index entries, public mirrors, evidence, validation, non-claims, and boundaries.</em>
+        </a>
+        <a href="DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md">
+          <span>Commands</span>
+          <strong>Documentation Command Example Standard</strong>
+          <em>Runnable snippet rules for prerequisites, effect boundaries, expected output, cleanup, and blocked claims.</em>
+        </a>
+        <a href="DOCUMENTATION_VISUAL_ASSET_STANDARD.md">
+          <span>Visuals</span>
+          <strong>Documentation Visual Asset Standard</strong>
+          <em>Screenshot, diagram, public image, alt-text, source context, freshness, and visual non-claim rules.</em>
+        </a>
+        <a href="DOCUMENTATION_HEALTH_SCORECARD.md">
+          <span>Health</span>
+          <strong>Documentation Health Scorecard</strong>
+          <em>Rubric for findability, claim safety, traceability, validation, reader routes, and public/source consistency.</em>
+        </a>
+        <a href="SUBSYSTEM_DOCUMENTATION_STANDARD.md">
+          <span>Subsystems</span>
+          <strong>Subsystem Documentation Standard</strong>
+          <em>Required posture, evidence spine, validation, non-claims, stop signals, and mirror rules for subsystem pages.</em>
+        </a>
+        <a href="PUBLIC_SITE_MIRROR_STANDARD.md">
+          <span>Public Site</span>
+          <strong>Public Site Mirror Standard</strong>
+          <em>Static HTML mirror rules for source Markdown alignment, links, estimates, validation, and non-claims.</em>
+        </a>
+        <a href="DOCUMENTATION_TRACEABILITY_MATRIX.md">
+          <span>Traceability</span>
+          <strong>Documentation Traceability Matrix</strong>
+          <em>Public surfaces mapped to source records, validation, mirrors, and non-claim boundaries.</em>
+        </a>
+        <a href="DOCUMENTATION_VALIDATION_PLAYBOOK.md">
+          <span>Validation</span>
+          <strong>Documentation Validation Playbook</strong>
+          <em>Validation levels, guard selection, link checks, and documentation failure handling.</em>
+        </a>
+        <a href="DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md">
+          <span>Drift</span>
+          <strong>Documentation Drift Response</strong>
+          <em>How to narrow, align, demote, and block unsupported public wording.</em>
+        </a>
+        <a href="DOCUMENTATION_STYLE_GUIDE.md">
+          <span>Style</span>
+          <strong>Documentation Style Guide</strong>
+          <em>Canonical project terms, status/date style, headings, links, and replacement wording.</em>
+        </a>
+        <a href="PUBLIC_CLAIMS_LEDGER.md">
+          <span>Claims</span>
+          <strong>Public Claims Ledger</strong>
+          <em>Allowed wording, blocked wording, and proof required before public claim promotion.</em>
+        </a>
+        <div id="resource-reader-routes" class="resource-group-heading">
+          <span>03</span>
+          <div>
+            <h3>Reader routes</h3>
+            <p>Guided HTML pages for onboarding, current posture, architecture, examples, and roadmap context.</p>
+          </div>
+        </div>
+        <a href="start.html">
+          <span>First Run</span>
+          <strong>Getting Started</strong>
+          <em>A no-effect reader path for status review, local checks, and safe expectations.</em>
+        </a>
+        <a href="architecture.html">
+          <span>Architecture</span>
+          <strong>System Architecture</strong>
+          <em>A guided view of layers, authority boundaries, evidence flow, and no-effect posture.</em>
+        </a>
+        <a href="kernel.html">
+          <span>Kernel</span>
+          <strong>Kernel and State Lattice</strong>
+          <em>Compiled C kernel identity, lifecycle reports, subsystem summaries, and denied external effects.</em>
+        </a>
+        <a href="boot.html">
+          <span>Boot</span>
+          <strong>Boot Preview Boundary</strong>
+          <em>SeaBIOS/GRUB compatibility, fixture-only boot-preview evidence, preflight, and blocked boot claims.</em>
+        </a>
+        <a href="runtime.html">
+          <span>Runtime</span>
+          <strong>Runtime Boundary</strong>
+          <em>Disabled-by-default runtime classification, Nucleus task reports, and policy matrix metadata.</em>
+        </a>
+        <a href="examples.html">
+          <span>Examples</span>
+          <strong>Local Checks</strong>
+          <em>Concrete no-effect examples for L-UI fixtures, parser reports, and language guards.</em>
+        </a>
+        <a href="status.html">
+          <span>Status Dashboard</span>
+          <strong>Public Status</strong>
+          <em>A scannable dashboard for current estimates, posture, workstreams, and non-claims.</em>
+        </a>
+        <a href="roadmap.html">
+          <span>Direction</span>
+          <strong>Roadmap</strong>
+          <em>Sequencing principles, planning estimates, active lanes, and guarded next steps.</em>
+        </a>
+        <div id="resource-workbench-release" class="resource-group-heading">
+          <span>04</span>
+          <div>
+            <h3>Workbench, validation, and release boundaries</h3>
+            <p>Local workflow, installer, packaging, and validation pages that stay dry-run or evidence-only until promotion gates pass.</p>
+          </div>
+        </div>
+        <a href="workbench.html">
+          <span>Workbench</span>
+          <strong>Console, Panel, and Nadia</strong>
+          <em>Guided local install, metadata-only console, and offline AI planning posture.</em>
+        </a>
+        <a href="panel.html">
+          <span>Panel</span>
+          <strong>Latticra Panel</strong>
+          <em>Guided GUI workbench, dry-run-first install flow, receipts, updater, and user-local evidence.</em>
+        </a>
+        <a href="console.html">
+          <span>Console</span>
+          <strong>Latticra Console</strong>
+          <em>Stage-0 LC identity, registry-backed commands, Panel profiles, host contracts, and receipt planning.</em>
+        </a>
+        <a href="nadia.html">
+          <span>Offline AI</span>
+          <strong>Nadia</strong>
+          <em>Stage-40 contract-only AI planning with no model runtime, inference, tools, or network authority.</em>
+        </a>
+        <a href="validation.html">
+          <span>Validation</span>
+          <strong>Local Install Evidence</strong>
+          <em>Panel install evidence, package guards, disposable VM gates, and no-effect dry-run contracts.</em>
+        </a>
+        <a href="installer.html">
+          <span>Installer</span>
+          <strong>Readiness Boundary</strong>
+          <em>Disposable VM CLI payload evidence, artifact manifest fixture, production gates, and blocked release claims.</em>
+        </a>
+        <a href="packaging.html">
+          <span>Packaging</span>
+          <strong>Platform Readiness</strong>
+          <em>Fedora, Ubuntu, openSUSE, Debian, BSD, and macOS package-shape lanes without release claims.</em>
+        </a>
+        <a href="map.html">
+          <span>Navigation</span>
+          <strong>Documentation Map</strong>
+          <em>A guided path through status, contracts, architecture, subsystems, and local validation records.</em>
+        </a>
+        <div id="resource-source-records" class="resource-group-heading">
+          <span>05</span>
+          <div>
+            <h3>Source records and books</h3>
+            <p>Repository records, status files, foundation indexes, and generated reference materials behind the public pages.</p>
+          </div>
+        </div>
+        <a href="https://github.com/Bryforge/Latticra/blob/main/README.md">
+          <span>Project Overview</span>
+          <strong>Root README</strong>
+          <em>Small public front door with quick routes, current work areas, and public non-claims.</em>
+        </a>
+        <a href="https://github.com/Bryforge/Latticra/blob/main/STATUS.md">
+          <span>Current State</span>
+          <strong>Status</strong>
+          <em>High-level project posture and completion estimate summary.</em>
+        </a>
+        <a href="status/CURRENT_STATUS.md">
+          <span>Detailed Status</span>
+          <strong>Current Status</strong>
+          <em>Detailed progress rollup, latest notes, and next-priority context.</em>
+        </a>
+        <a href="FOUNDATION_INDEX.md">
+          <span>Foundation</span>
+          <strong>Foundation Index</strong>
+          <em>Contracts, strategy records, implementation documents, and guard scripts.</em>
+        </a>
+        <a href="latticra-system-substrate/README.md">
+          <span>Handbook</span>
+          <strong>System Substrate</strong>
+          <em>Main project book and substrate documentation entry point.</em>
+        </a>
+        <a href="../build/presentation/latticra-academic/video/latticra-academic-presentation.mp4">
+          <span>Presentation</span>
+          <strong>Academic Presentation</strong>
+          <em>Colorado Technical University Latticra Substrate theorem presentation.</em>
+        </a>
+        <a href="latticra-reference-manual/README.md">
+          <span>Reference</span>
+          <strong>Reference Manual</strong>
+          <em>Generated v0.1.0 book package with PDF, editable Markdown, and source manifest.</em>
+        </a>
+        <div id="resource-security-gates" class="resource-group-heading">
+          <span>06</span>
+          <div>
+            <h3>Security and assurance gates</h3>
+            <p>Baseline pages for security policy, supply chain, cryptography, access, logging, recovery, change control, exposure, data, incidents, and vulnerability review.</p>
+          </div>
+        </div>
+        <a href="security.html">
+          <span>Safety</span>
+          <strong>Security Policy</strong>
+          <em>Safe testing rules, vulnerability reporting, and security non-claims.</em>
+        </a>
+        <a href="supply-chain.html">
+          <span>Supply Chain</span>
+          <strong>Release Authority Gates</strong>
+          <em>CI, dependency, SBOM, updater, runtime-authority, and release non-claims.</em>
+        </a>
+        <a href="updater-delivery.html">
+          <span>Updater</span>
+          <strong>Signed Delivery Gate</strong>
+          <em>Closed signed-updater gate, local-checkout policy, denial transcript, fixtures, and no network self-update authority.</em>
+        </a>
+        <a href="crypto-assurance.html">
+          <span>Cryptography</span>
+          <strong>Assurance and Key Management</strong>
+          <em>FIPS/CMVP claim gates, key lifecycle, randomness, Seal metadata, and no production crypto claims.</em>
+        </a>
+        <a href="identity-access.html">
+          <span>Identity</span>
+          <strong>Access Management Baseline</strong>
+          <em>Privileged access, phishing-resistant MFA planning, account lifecycle, service identity, and hosted-access non-claims.</em>
+        </a>
+        <a href="security-logging.html">
+          <span>Logging</span>
+          <strong>Monitoring and Detection Gate</strong>
+          <em>Event-source inventory, audit events, redaction, retention, triage, and no SIEM or detection-service claims.</em>
+        </a>
+        <a href="backup-recovery.html">
+          <span>Recovery</span>
+          <strong>Backup and Resilience Gate</strong>
+          <em>Backup scope, restore testing, RTO/RPO, rollback planning, and no recovery-service or failover claims.</em>
+        </a>
+        <a href="configuration-change.html">
+          <span>Configuration</span>
+          <strong>Change Management Gate</strong>
+          <em>Configuration inventory, secure baselines, approved changes, drift planning, and no hardening or enforcement claims.</em>
+        </a>
+        <a href="network-exposure.html">
+          <span>Network</span>
+          <strong>Exposure and Remote Access Gate</strong>
+          <em>Network inventory, internet exposure, ingress/egress policy, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</em>
+        </a>
+        <a href="data-protection.html">
+          <span>Data</span>
+          <strong>Classification and Protection Gate</strong>
+          <em>Data inventory, sensitive-data flows, PII review, minimization, retention, redaction, and no customer-data claims.</em>
+        </a>
+        <a href="incident-response.html">
+          <span>Incident Response</span>
+          <strong>Reporting Boundary</strong>
+          <em>Reporting routes, evidence preservation, response gates, and incident-response non-claims.</em>
+        </a>
+        <a href="vulnerability-management.html">
+          <span>Vulnerability Management</span>
+          <strong>Release Gate</strong>
+          <em>KEV/NVD review, disclosure paths, exception records, and product-security non-claims.</em>
+        </a>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <span>Latticra documentation site.</span>
-    <span>Built to keep claims small, inspectable, and evidence-bound.</span>
+  <footer id="site-footer" class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra documentation site.</span>
+      <nav class="footer-links" aria-label="Homepage footer navigation">
+        <a href="#overview">Top</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
   </footer>
 </body>
 </html>

@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra X Review Board</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f8fb;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: #ffffff;
+      --ink: #081727;
+      --muted: #5b6974;
+      --border: rgba(158, 177, 195, 0.42);
+      --blue: #1168df;
+      --cyan: #0aa6f6;
+      --teal: #0f766e;
+      --red: #9b3d35;
+      --shadow: 0 24px 80px rgba(34, 70, 105, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(244, 248, 251, 0.9), rgba(244, 248, 251, 0.96)),
+        url("../../assets/social/latticra-glass-background-v1.png") center / cover fixed;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: var(--blue);
+      text-underline-offset: 3px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--border);
+      background: rgba(244, 248, 251, 0.86);
+      backdrop-filter: blur(20px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(155, 61, 53, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--red);
+      font-size: 0.86rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    main {
+      padding: 56px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.84fr) minmax(360px, 1.16fr);
+      gap: 48px;
+      align-items: center;
+      min-height: 560px;
+    }
+
+    .hero > *,
+    .package,
+    .copy-block,
+    .alt-text {
+      min-width: 0;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0 0 20px;
+      font-size: clamp(3.6rem, 7vw, 7.25rem);
+      line-height: 0.96;
+      font-weight: 950;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.2rem, 2vw, 1.55rem);
+      overflow-wrap: anywhere;
+    }
+
+    .hero-panel {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel img {
+      border: 1px solid rgba(158, 177, 195, 0.38);
+      border-radius: 16px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .filter-button {
+      min-height: 40px;
+      padding: 9px 14px;
+      border: 1px solid rgba(17, 104, 223, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #17314b;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .filter-button[aria-pressed="true"] {
+      border-color: rgba(17, 104, 223, 0.6);
+      background: #0b64d8;
+      color: #fff;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 48px 0 24px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .section-head p {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+    }
+
+    .package {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: 0 18px 60px rgba(34, 70, 105, 0.11);
+    }
+
+    .package-media {
+      padding: 16px;
+    }
+
+    .package-media img {
+      border: 1px solid rgba(158, 177, 195, 0.44);
+      border-radius: 16px;
+    }
+
+    .package-body {
+      display: grid;
+      gap: 18px;
+      padding: 0 22px 22px;
+    }
+
+    .package-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 2px;
+    }
+
+    .package h3 {
+      margin: 0;
+      font-size: 1.45rem;
+      line-height: 1.12;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(155, 61, 53, 0.09);
+      color: var(--red);
+      font-size: 0.8rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .copy-block {
+      margin: 0;
+      padding: 16px;
+      border: 1px solid rgba(158, 177, 195, 0.32);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #17212c;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+
+    .alt-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .copy-button {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid rgba(17, 104, 223, 0.28);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #0d3f86;
+      cursor: pointer;
+      font-size: 0.87rem;
+      font-weight: 850;
+    }
+
+    .copy-button:hover {
+      border-color: rgba(17, 104, 223, 0.56);
+      background: #fff;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .matrix div {
+      min-height: 120px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .matrix strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .matrix span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .footer-note {
+      margin-top: 42px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 650;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .package-grid,
+      .matrix {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 0;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 24px, 1440px);
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      main {
+        padding-top: 34px;
+      }
+
+      .package-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 2.65rem;
+      }
+
+      .control-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-button {
+        width: 100%;
+        padding-inline: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <img src="../assets/latticra-official-emblem.png" alt="">
+        <span>Latticra X Review Board</span>
+      </div>
+      <span class="status">Internal review only</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <h1 id="title">Glass-base <wbr>visual series</h1>
+        <p>
+          A private review surface for the owner-rated 10/10 base direction. Cards, copy, alt text, and cadence gates are visible together; nothing here authorizes posting.
+        </p>
+        <div class="control-row" aria-label="Package filters">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-button" type="button" data-filter="public-research" aria-pressed="false">Public Research</button>
+          <button class="filter-button" type="button" data-filter="boundary" aria-pressed="false">Boundary</button>
+          <button class="filter-button" type="button" data-filter="evidence" aria-pressed="false">Evidence</button>
+          <button class="filter-button" type="button" data-filter="denial" aria-pressed="false">Denial</button>
+          <button class="filter-button" type="button" data-filter="crypto" aria-pressed="false">Crypto</button>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <img src="../../assets/social/review/latticra-glass-base-series-contact-sheet.png" alt="Contact sheet showing five Latticra glass-base cards approved as visual assets but not approved for public posting.">
+      </div>
+    </section>
+
+    <section aria-labelledby="packages-title">
+      <div class="section-head">
+        <h2 id="packages-title">Media approval packages</h2>
+        <p>Every package requires exact approval for copy, card, alt text, posting window, and the about-5-hour public-action cadence.</p>
+      </div>
+
+      <div class="package-grid">
+        <article class="package" data-topic="public-research">
+          <div class="package-media">
+            <img src="../../assets/social/latticra-public-research-standard-glass-base-card.png" alt="Latticra Public Research Standard glass-base card.">
+          </div>
+          <div class="package-body">
+            <div class="package-meta">
+              <h3>Public Research Standard</h3>
+              <span class="pill">visual approved; post not approved</span>
+            </div>
+            <pre class="copy-block" id="copy-public">A good public research habit:
+
+Say what exists.
+Say what is missing.
+Say what is not claimed.
+Show where the evidence lives.
+
+That is the standard @Latticra should hold itself to.</pre>
+            <p class="alt-text" id="alt-public">Latticra educational card on a luminous white and pale blue glass background. The card says "Public Research Standard" and summarizes a public habit of saying what exists, what is missing, and what is not claimed. The official blue Latticra emblem appears on the right.</p>
+            <div class="tools">
+              <button class="copy-button" type="button" data-copy="copy-public">Copy post</button>
+              <button class="copy-button" type="button" data-copy="alt-public">Copy alt text</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="package" data-topic="boundary">
+          <div class="package-media">
+            <img src="../../assets/social/latticra-boundary-literacy-glass-base-card.png" alt="Latticra Boundary Literacy glass-base card.">
+          </div>
+          <div class="package-body">
+            <div class="package-meta">
+              <h3>Boundary Literacy</h3>
+              <span class="pill">visual approved; post not approved</span>
+            </div>
+            <pre class="copy-block" id="copy-boundary">Boundary literacy:
+
+In Latticra, a denial path is not a failure to hide. It is a result to make visible.
+
+If a system says no, the operator should be able to understand why.</pre>
+            <p class="alt-text" id="alt-boundary">Latticra educational card on a luminous white and pale blue glass background. The card says "Boundary Literacy" and explains that authority should be visible before behavior becomes consequential. The official blue Latticra emblem appears on the right.</p>
+            <div class="tools">
+              <button class="copy-button" type="button" data-copy="copy-boundary">Copy post</button>
+              <button class="copy-button" type="button" data-copy="alt-boundary">Copy alt text</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="package" data-topic="evidence">
+          <div class="package-media">
+            <img src="../../assets/social/latticra-evidence-before-claims-glass-base-card.png" alt="Latticra Evidence Before Claims glass-base card.">
+          </div>
+          <div class="package-body">
+            <div class="package-meta">
+              <h3>Evidence Before Claims</h3>
+              <span class="pill">visual approved; post not approved</span>
+            </div>
+            <pre class="copy-block" id="copy-evidence">Evidence before claims:
+
+Latticra is intentionally early and evidence-bound. The work starts with contracts, reports, receipts, and tests before growing into stronger public claims.</pre>
+            <p class="alt-text" id="alt-evidence">Latticra educational card on a luminous white and pale blue glass background. The card says "Evidence Before Claims" and explains that public language should grow only as the review trail grows. The official blue Latticra emblem appears on the right.</p>
+            <div class="tools">
+              <button class="copy-button" type="button" data-copy="copy-evidence">Copy post</button>
+              <button class="copy-button" type="button" data-copy="alt-evidence">Copy alt text</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="package" data-topic="denial">
+          <div class="package-media">
+            <img src="../../assets/social/latticra-denial-is-legible-glass-base-card.png" alt="Latticra Denial Is Legible glass-base card.">
+          </div>
+          <div class="package-body">
+            <div class="package-meta">
+              <h3>Denial Is Legible</h3>
+              <span class="pill">visual approved; post not approved</span>
+            </div>
+            <pre class="copy-block" id="copy-denial">A denied action should still produce useful information:
+
+reason
+status
+boundary
+next safe step
+
+Denial is more trustworthy when people can inspect it.</pre>
+            <p class="alt-text" id="alt-denial">Latticra educational card on a luminous white and pale blue glass background. The card says "Denial Is Legible" and explains that a denied action should leave a reason people can inspect. The official blue Latticra emblem appears on the right.</p>
+            <div class="tools">
+              <button class="copy-button" type="button" data-copy="copy-denial">Copy post</button>
+              <button class="copy-button" type="button" data-copy="alt-denial">Copy alt text</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="package" data-topic="crypto">
+          <div class="package-media">
+            <img src="../../assets/social/latticra-cryptography-without-hype-glass-base-card.png" alt="Latticra Cryptography Without Hype glass-base card.">
+          </div>
+          <div class="package-body">
+            <div class="package-meta">
+              <h3>Cryptography Without Hype</h3>
+              <span class="pill">visual approved; post not approved</span>
+            </div>
+            <pre class="copy-block" id="copy-crypto">Cryptography without hype:
+
+Quantum-resistant planning should not begin with promises. It should begin with inspectable components, test evidence, limits, and careful language.
+
+That is the Q-Seal posture.</pre>
+            <p class="alt-text" id="alt-crypto">Latticra educational card on a luminous white and pale blue glass background. The card says "Cryptography Without Hype" and recommends planning with limits, tests, and careful language before promises. The official blue Latticra emblem appears on the right.</p>
+            <div class="tools">
+              <button class="copy-button" type="button" data-copy="copy-crypto">Copy post</button>
+              <button class="copy-button" type="button" data-copy="alt-crypto">Copy alt text</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="gate-title">
+      <div class="section-head">
+        <h2 id="gate-title">Approval gate</h2>
+        <p>Prepared content is not approval. A card can move only when the exact card, exact post, exact alt text, and exact window are approved.</p>
+      </div>
+      <div class="matrix">
+        <div>
+          <strong>Cadence</strong>
+          <span>Keep outbound public actions about 5 hours apart. Skip missed windows instead of compressing.</span>
+        </div>
+        <div>
+          <strong>Media status</strong>
+          <span>All five cards are approved visual assets; public posting still requires exact post, alt text, and window approval.</span>
+        </div>
+        <div>
+          <strong>Default</strong>
+          <span>The visual set is approved; the live queue remains gated until an exact post package clears owner review.</span>
+        </div>
+        <div>
+          <strong>Logging</strong>
+          <span>After any approved post, record URL, timestamp, cadence status, and 24-hour metrics.</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Source matrix: <a href="2026-05-28-0430-cdt-x-media-ready-approval-matrix.md">2026-05-28-0430-cdt-x-media-ready-approval-matrix.md</a>.
+      This board is local review support only.
+    </p>
+  </main>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+    const packages = Array.from(document.querySelectorAll("[data-topic]"));
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        packages.forEach((item) => {
+          item.hidden = filter !== "all" && item.dataset.topic !== filter;
+        });
+      });
+    });
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const target = document.getElementById(button.dataset.copy);
+        if (!target) return;
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(target.innerText);
+        } else {
+          const field = document.createElement("textarea");
+          field.value = target.innerText;
+          field.setAttribute("readonly", "");
+          field.style.position = "fixed";
+          field.style.opacity = "0";
+          document.body.appendChild(field);
+          field.select();
+          document.execCommand("copy");
+          field.remove();
+        }
+        const label = button.innerText;
+        button.innerText = "Copied";
+        window.setTimeout(() => {
+          button.innerText = label;
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>

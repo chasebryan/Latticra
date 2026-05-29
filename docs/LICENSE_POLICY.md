@@ -1,39 +1,44 @@
 # Latticra License Policy
 
-Status: active license transition policy
-Scope: current Apache-2.0 repository license, open ecosystem transition, SPDX usage, branding, contributions, and future artifacts.
+Status: active hybrid license policy
+Scope: hybrid software licensing, documentation licensing, SPDX usage, branding, contributions, and future artifacts.
 
 ## Purpose
 
 Latticra is intended to remain open, auditable, transparent, and community-improvable.
 
-This policy explains the current repository license state and the intended transition toward a reciprocal open ecosystem licensing model.
+This policy explains the current hybrid repository license state and the transition-aware rules for future work.
 
 See also:
 
 ```text
 docs/OPEN_ECOSYSTEM_POLICY.md
+docs/DOCUMENTATION_LICENSE.md
 CONTRIBUTING.md
 TRADEMARK_POLICY.md
+LICENSES/README.md
 ```
 
-## Current repository license
+## Current repository posture
 
-The current canonical repository license file is:
+The root repository license overview is:
 
 ```text
 LICENSE
 ```
 
-That file currently contains:
+Latticra uses this hybrid posture:
 
 ```text
-Apache-2.0
+core/runtime/security substrate: AGPL-3.0-or-later
+SDKs/examples/packaging helpers/integration helpers: Apache-2.0
+documentation/handbooks/policy notes: CC-BY-4.0
+names/logos/identity: TRADEMARK_POLICY.md
 ```
 
-Unless a file explicitly says otherwise, existing files remain under their current license state.
+Existing repository code remains Apache-2.0 unless a file-level SPDX identifier, path-level notice, or reviewed migration explicitly marks it otherwise.
 
-## Transition direction
+## Core software direction
 
 The intended software licensing direction for new software work is:
 
@@ -41,7 +46,34 @@ The intended software licensing direction for new software work is:
 AGPL-3.0-or-later
 ```
 
-This direction is meant to preserve open, auditable, transparent access to Latticra-derived software while the project grows into system, kernel, language, tool, and operator-facing components.
+This direction applies to core runtime, security-substrate, tool-boundary, runtime-gating, verification, and evidence-bound computing components.
+
+It is meant to preserve open, auditable, transparent access to Latticra-derived core software while the project grows into system, kernel, language, tool, and operator-facing components.
+
+## Adoption-facing software direction
+
+The intended license for SDKs, examples, packaging helpers, installer glue, integration helpers, and other adoption-facing software is:
+
+```text
+Apache-2.0
+```
+
+This keeps integration surfaces commercially friendly and packaging friendly while preserving an express patent grant.
+
+## Documentation direction
+
+The documentation and handbook license decision is:
+
+```text
+CC-BY-4.0
+```
+
+See:
+
+```text
+docs/DOCUMENTATION_LICENSE.md
+LICENSES/CC-BY-4.0.txt
+```
 
 ## No silent relicensing
 
@@ -63,13 +95,33 @@ review before release
 
 New software source files should declare their license with an SPDX identifier.
 
-The preferred identifier for new software source files is:
+The preferred identifier for new core software source files is:
 
 ```text
 SPDX-License-Identifier: AGPL-3.0-or-later
 ```
 
-Documented exceptions are allowed only when the exception is intentional and reviewed.
+The preferred identifier for new adoption-facing helper source files is:
+
+```text
+SPDX-License-Identifier: Apache-2.0
+```
+
+Documented exceptions are allowed when the exception is intentional and reviewed.
+
+## New documentation file rule
+
+New documentation files may declare:
+
+```text
+SPDX-License-Identifier: CC-BY-4.0
+```
+
+Existing documentation is covered by the path-level decision in:
+
+```text
+docs/DOCUMENTATION_LICENSE.md
+```
 
 ## Contributions
 
@@ -127,8 +179,7 @@ Recommended follow-up work:
 
 ```text
 add SPDX headers to new software files
-add a license guard for source paths
-review docs license direction
+maintain hybrid license posture guard
 review path-by-path migration from Apache-2.0
 add release license checklist
 add NOTICE if needed

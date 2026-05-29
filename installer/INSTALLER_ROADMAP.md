@@ -12,6 +12,7 @@ It currently installs:
 - LIR contract workspace
 - Latticra Seal report-only configuration
 - receipts and measurements
+- reset receipts for managed local uninstall
 - `latticra`, `lat`, and `latticra-seal` command wrappers
 - optional graphical installer binary when Cargo is available
 
@@ -25,13 +26,15 @@ The installer does not currently claim:
 - SELinux mutation authority
 - package-manager integration
 - bootloader integration
+- firmware/SeaBIOS/GRUB mutation authority
 - network authority
 
 ## Next stages
 
 1. Add signed release artifact ingestion.
 2. Add stronger manifest validation.
-3. Add uninstall receipts.
-4. Add Fedora package integration plan.
-5. Add VM validation mode.
-6. Add system-level installer only after explicit design review.
+3. Add Fedora package integration plan.
+4. Use the boot-preview preflight report to classify local QEMU/GRUB readiness before any VM validation mode runs.
+5. Use the boot-preview evidence manifest, boot artifact manifest template, boot artifact manifest validation, boot-preview evidence capture template, boot-preview evidence validation, and QEMU argv template to record future artifact paths, serial logs, checksums, QEMU argv records, and recovery evidence only after the compatibility guard is satisfied.
+6. Add failed-install recovery receipts.
+7. Add system-level installer only after explicit design review.

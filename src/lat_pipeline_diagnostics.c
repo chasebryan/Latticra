@@ -9,6 +9,7 @@ const char *latticra_lat_pipeline_diagnostic_class_label(
     case LATTICRA_LAT_PIPELINE_DIAGNOSTIC_LOWERING: return "lowering";
     case LATTICRA_LAT_PIPELINE_DIAGNOSTIC_LIR: return "lir";
     case LATTICRA_LAT_PIPELINE_DIAGNOSTIC_EFFECT_CHECK: return "effect-check";
+    case LATTICRA_LAT_PIPELINE_DIAGNOSTIC_MODEL: return "model";
     case LATTICRA_LAT_PIPELINE_DIAGNOSTIC_INTERNAL:
     default: return "internal";
     }

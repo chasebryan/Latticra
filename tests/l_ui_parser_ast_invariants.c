@@ -60,6 +60,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -76,7 +77,7 @@ static int valid_fixture_builds_ast_summary(void) {
     EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_OK, "valid AST parse error");
     EXPECT_STR_EQ(ast.card.name, "NucleusPreview", "AST card name");
     EXPECT_TRUE(ast.rail_count == 9u, "AST rail count");
-    EXPECT_TRUE(ast.field_count == 23u, "AST field count");
+    EXPECT_TRUE(ast.field_count == 24u, "AST field count");
     EXPECT_TRUE(ast.text_count == 2u, "AST text count");
     return 0;
 }
@@ -93,7 +94,7 @@ static int ast_counts_match_fixture(void) {
     latticra_l_ui_ast_result_t ast;
     EXPECT_TRUE(parse_valid(&ast), "AST count parse should succeed");
     EXPECT_TRUE(ast.card.rail_count == 9u, "card rail count");
-    EXPECT_TRUE(ast.card.field_count == 23u, "card field count");
+    EXPECT_TRUE(ast.card.field_count == 24u, "card field count");
     EXPECT_TRUE(ast.card.text_count == 2u, "card text count");
     EXPECT_TRUE(ast.rail_count == ast.card.rail_count, "top rail count matches card");
     EXPECT_TRUE(ast.field_count == ast.card.field_count, "top field count matches card");
@@ -134,14 +135,14 @@ static int ast_contains_required_fields(void) {
     static const char *expected_names[] = {
         "origin", "route", "axis", "path", "breadcrumb", "trace", "health", "risk", "lock",
         "dark_phase", "safe_portal", "rollback", "host", "external", "requested", "request",
-        "policy", "reason", "executed", "mutation", "server", "recovery", "hardware"
+        "policy", "reason", "executed", "mutation", "server", "network", "recovery", "hardware"
     };
     static const char *expected_bindings[] = {
         "state.origin", "state.route", "state.axis", "state.path", "state.breadcrumb", "state.trace",
         "state.health", "state.risk", "state.lock", "state.dark_phase", "state.safe_portal",
         "state.rollback", "state.host_effect", "state.external_effect", "preview.requested_effect",
         "preview.request", "preview.policy", "preview.reason", "preview.executed",
-        "preview.mutation_allowed", "preview.server_interaction_allowed", "preview.recovery_allowed",
+        "preview.mutation_allowed", "preview.server_interaction_allowed", "preview.network_allowed", "preview.recovery_allowed",
         "preview.hardware_allowed"
     };
     latticra_l_ui_ast_result_t ast;
@@ -201,6 +202,7 @@ static int ast_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "AST execution flag");
     EXPECT_TRUE(ast.mutation_allowed == 0, "AST mutation flag");
     EXPECT_TRUE(ast.server_allowed == 0, "AST server flag");
+    EXPECT_TRUE(ast.network_allowed == 0, "AST network flag");
     EXPECT_TRUE(ast.recovery_allowed == 0, "AST recovery flag");
     EXPECT_TRUE(ast.hardware_allowed == 0, "AST hardware flag");
     return 0;
@@ -214,11 +216,12 @@ static int ast_report_contains_required_fields(void) {
     EXPECT_TRUE(strstr(report, "L-UI AST SUMMARY") != 0, "AST report title");
     EXPECT_TRUE(strstr(report, "card=NucleusPreview") != 0, "AST report card");
     EXPECT_TRUE(strstr(report, "rail_count=9") != 0, "AST report rail count");
-    EXPECT_TRUE(strstr(report, "field_count=23") != 0, "AST report field count");
+    EXPECT_TRUE(strstr(report, "field_count=24") != 0, "AST report field count");
     EXPECT_TRUE(strstr(report, "text_count=2") != 0, "AST report text count");
     EXPECT_TRUE(strstr(report, "effect=none") != 0, "AST report effect");
     EXPECT_TRUE(strstr(report, "boundary=preview_only") != 0, "AST report boundary");
     EXPECT_TRUE(strstr(report, "no_effect=1") != 0, "AST report no effect");
+    EXPECT_TRUE(strstr(report, "network_allowed=0") != 0, "AST report network flag");
     return 0;
 }
 
@@ -262,6 +265,8 @@ static int ast_labels_are_stable(void) {
     EXPECT_STR_EQ(ast.rails[1].name, "state", "rail label stable");
     EXPECT_STR_EQ(ast.fields[20].name, "server", "field label stable");
     EXPECT_STR_EQ(ast.fields[20].binding, "preview.server_interaction_allowed", "binding label stable");
+    EXPECT_STR_EQ(ast.fields[21].name, "network", "network field label stable");
+    EXPECT_STR_EQ(ast.fields[21].binding, "preview.network_allowed", "network binding label stable");
     return 0;
 }
 

@@ -9,14 +9,17 @@ This lane advances the Fedora local RPM validation stack from tool availability 
 
 The current goal is conservative: prove that `rpmlint` can inspect the local draft spec file in a Fedora environment and produce a reportable result.
 
-This lane does not require a clean rpmlint result yet because the spec remains a local-only draft and still carries intentionally unresolved package metadata.
+This lane does not require a clean rpmlint result yet because the spec remains a local-only draft and still has source-archive and package-readiness metadata to review.
 
 ## Files
 
 ```text
 docs/FEDORA_RPMLINT_STATIC_SPEC_LANE.md
+docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
 scripts/test-fedora-rpmlint-static-spec-lane.sh
+scripts/test-fedora-rpmlint-findings-classification.sh
 .github/workflows/fedora-rpmlint-static-spec-lane.yml
+.github/workflows/fedora-rpmlint-findings-classification.yml
 packaging/fedora/latticra.spec
 ```
 
@@ -41,7 +44,7 @@ The current local-only spec may still report findings related to draft metadata,
 ```text
 local-only release marker
 placeholder version
-LicenseRef-Latticra-TBD
+AGPL-3.0-or-later AND CC-BY-4.0 package license expression
 missing source archive for a real package build
 limited installed file set
 ```
@@ -62,15 +65,26 @@ It does not submit Latticra to Fedora.
 
 It does not claim Fedora package approval, Fedora endorsement, Fedora spin/remix status, product readiness, operating-system readiness, runtime authority, kernel authority, or security-hardening completion.
 
-## Next slice
+## Completed Follow-On Lane
 
-Recommended next slice:
+Completed follow-on findings classification:
 
 ```text
 Add rpmlint findings classification report
+docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md
+scripts/test-fedora-rpmlint-findings-classification.sh
+.github/workflows/fedora-rpmlint-findings-classification.yml
 ```
 
-That future lane may classify expected draft findings separately from unexpected spec findings while keeping the package local-only.
+The classification record separates expected local-only draft findings from unexpected blockers while keeping Fedora package readiness blocked.
+
+## Next slice
+
+Recommended next Fedora packaging evidence lane:
+
+```text
+Add a Fedora source archive reproducibility contract before mock build, package review, or production-readiness evidence can be accepted.
+```
 
 ## Validation
 

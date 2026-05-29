@@ -74,6 +74,7 @@ static const char SOURCE_AFTER_TOP_TEXT[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -310,6 +311,7 @@ static int decoded_nul_preserves_no_effect_flags(void) {
     EXPECT_TRUE(ast.execution_allowed == 0, "execution preserved");
     EXPECT_TRUE(ast.mutation_allowed == 0, "mutation preserved");
     EXPECT_TRUE(ast.server_allowed == 0, "server preserved");
+    EXPECT_TRUE(ast.network_allowed == 0, "network preserved");
     EXPECT_TRUE(ast.recovery_allowed == 0, "recovery preserved");
     EXPECT_TRUE(ast.hardware_allowed == 0, "hardware preserved");
     (void)source_len;

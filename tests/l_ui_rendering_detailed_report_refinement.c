@@ -60,6 +60,7 @@ static const char VALID_SOURCE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -76,6 +77,7 @@ static void authority_ok(latticra_l_ui_render_authority_summary_t *authority) {
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -123,6 +125,7 @@ static int detailed_mode_sets_explicit_metadata(void) {
     EXPECT_TRUE(render.section_count == LATTICRA_L_UI_RENDER_DETAILED_SECTION_COUNT, "render section count");
     EXPECT_TRUE(render.no_effect == 1, "no-effect preserved");
     EXPECT_TRUE(render.execution_allowed == 0, "execution remains denied");
+    EXPECT_TRUE(render.network_allowed == 0, "network remains denied");
     return 0;
 }
 
@@ -143,6 +146,9 @@ static int detailed_report_emits_explicit_metadata(void) {
     EXPECT_TRUE(strstr(report, "section_sequence=HEADER,CARD,AUTHORITY,RAILS,FIELDS,TEXT,BINDINGS,LIR,SOURCE_SPANS,NO_EFFECT_FLAGS\n") != 0, "section sequence emitted");
     EXPECT_TRUE(strstr(report, "no_effect_chain=preserved\n") != 0, "no-effect chain emitted");
     EXPECT_TRUE(strstr(report, "evidence_level=metadata\n") != 0, "evidence level emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network flag emitted");
+    EXPECT_TRUE(strstr(report, "authority_network_allowed=0\n") != 0, "authority network flag emitted");
+    EXPECT_TRUE(strstr(report, "authority.network_allowed=0\n") != 0, "detailed authority network flag emitted");
     EXPECT_TRUE(strstr(report, "SECTION NO_EFFECT_FLAGS\n") != 0, "no-effect section emitted");
     return 0;
 }

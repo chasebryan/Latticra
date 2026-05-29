@@ -135,6 +135,7 @@ static int lat_specific_lir_preserves_counts_and_no_effect_flags(void) {
     EXPECT_TRUE(module.execution_allowed == 0, "module execution flag");
     EXPECT_TRUE(module.mutation_allowed == 0, "module mutation flag");
     EXPECT_TRUE(module.server_allowed == 0, "module server flag");
+    EXPECT_TRUE(module.network_allowed == 0, "module network flag");
     EXPECT_TRUE(module.recovery_allowed == 0, "module recovery flag");
     EXPECT_TRUE(module.hardware_allowed == 0, "module hardware flag");
     return 0;

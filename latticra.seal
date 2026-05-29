@@ -34,12 +34,13 @@ exclude = [
   "dist/",
   "node_modules/",
   "__pycache__/",
-  ".venv/",
+  ".venv*/",
   "reports/*.txt",
   "reports/*.json",
   "latticra.seal.lock",
   "*.log",
   "*.tmp",
+  ".DS_Store",
 ]
 
 [policy]
@@ -67,18 +68,20 @@ patterns = [
 ]
 
 [policy.deny_contents]
-patterns = [
-  "BEGIN PRIVATE KEY",
-  "BEGIN RSA PRIVATE KEY",
-  "BEGIN OPENSSH PRIVATE KEY",
-  "OPENAI_API_KEY=",
-  "GITHUB_TOKEN=",
-  "AWS_SECRET_ACCESS_KEY=",
+pattern_parts = [
+  ["BEGIN ", "PRIVATE", " KEY"],
+  ["BEGIN ", "RSA PRIVATE", " KEY"],
+  ["BEGIN ", "OPENSSH PRIVATE", " KEY"],
+  ["OPENAI", "_API_KEY="],
+  ["GITHUB", "_TOKEN="],
+  ["AWS", "_SECRET_ACCESS_KEY="],
 ]
 
 [report]
-default_output = "reports/latticra-seal-report.txt"
-hash_list_output = "reports/latticra-seal-file-hashes.txt"
+default_output = "reports/latticra-seal-cli-report.txt"
+hash_list_output = "reports/latticra-seal-cli-hashes.txt"
+legacy_smoke_output = "reports/latticra-seal-report.txt"
+legacy_smoke_hash_list_output = "reports/latticra-seal-file-hashes.txt"
 include_file_list = true
 include_policy_results = true
 include_digest_summary = true

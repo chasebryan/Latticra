@@ -1,0 +1,25 @@
+name: Production Installer Release Artifact Staging Directory
+
+on:
+  push:
+    paths:
+      - 'artifacts/release/README.md'
+      - 'docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md'
+      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_STATUS.md'
+      - 'scripts/test-production-installer-release-artifact-staging-directory-contract.sh'
+      - '.github/workflows/production-installer-release-artifact-staging-directory.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-installer-release-artifact-staging-directory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run production installer release artifact staging directory contract
+        run: sh scripts/test-production-installer-release-artifact-staging-directory-contract.sh

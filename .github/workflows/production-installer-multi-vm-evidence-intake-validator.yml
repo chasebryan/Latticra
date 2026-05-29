@@ -1,0 +1,25 @@
+name: Production Installer Multi-VM Evidence Intake Validator
+
+on:
+  push:
+    paths:
+      - 'docs/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md'
+      - 'docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+      - 'scripts/production-installer-multi-vm-evidence-intake.sh'
+      - 'scripts/test-production-installer-multi-vm-evidence-intake-validator-contract.sh'
+      - '.github/workflows/production-installer-multi-vm-evidence-intake-validator.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-installer-multi-vm-evidence-intake-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run production installer multi-VM evidence intake validator guard
+        run: sh scripts/test-production-installer-multi-vm-evidence-intake-validator-contract.sh

@@ -152,6 +152,10 @@ null output fails closed
 null tool name fails closed
 empty tool name fails closed
 oversized tool name fails closed
+unterminated input strings fail closed before copy
+unterminated result strings fail closed before render
+tampered authority/effect flags fail closed before render
+tampered allowlist entry counts fail closed before render
 ```
 
 ## Boundary

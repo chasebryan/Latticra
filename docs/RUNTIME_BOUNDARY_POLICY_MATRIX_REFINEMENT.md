@@ -119,6 +119,7 @@ operator confirmation non-override behavior
 small-buffer behavior
 runtime-boundary report-refinement fields
 Lat pipeline evidence fields
+Lat pipeline line-comment evidence fields
 Lat-specific LIR evidence fields
 ```
 

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Examples and Local Checks</title>
+  <meta name="description" content="Concrete no-effect examples for Latticra language, L-UI, and report-only validation paths.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Examples and Local Checks">
+  <meta property="og:description" content="Run small no-effect checks and inspect expected report posture.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero examples-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Examples</p>
+        <p class="eyebrow">Concrete No-Effect Path</p>
+        <h1>Examples and local checks</h1>
+        <p class="page-lede">
+          A compact route from a checked-in L-UI fixture to parser reports, language pipeline checks, and the exact posture a reader should expect.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell examples-intro">
+        <div>
+          <p class="eyebrow">Tutorial Route</p>
+          <h2>Start with one fixture, then widen carefully.</h2>
+        </div>
+        <p>
+          The current examples are local validation aids. They are useful because they show what the repository can prove now: parsing, metadata, reports, and denied authority.
+        </p>
+      </div>
+
+      <div class="content-shell example-path">
+        <article class="example-card">
+          <span>01</span>
+          <h3>Open the source</h3>
+          <p>Read the accepted L-UI fixture for the Nucleus preview card.</p>
+          <a href="https://github.com/Bryforge/Latticra/blob/main/examples/l-ui/nucleus-preview-card.lui">View fixture</a>
+        </article>
+        <article class="example-card">
+          <span>02</span>
+          <h3>Parse in memory</h3>
+          <p>The parser accepts caller-provided source bytes and returns a bounded summary.</p>
+          <a href="L_UI_PARSER.md">Parser contract</a>
+        </article>
+        <article class="example-card">
+          <span>03</span>
+          <h3>Inspect report fields</h3>
+          <p>Confirm card name, rail count, field count, effect, boundary, and no-effect flags.</p>
+          <a href="#expected">Expected posture</a>
+        </article>
+        <article class="example-card">
+          <span>04</span>
+          <h3>Run the language guards</h3>
+          <p>Use the Lat and L-UI scripts as regression checks, not as execution paths.</p>
+          <a href="#commands">Command set</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell fixture-layout">
+        <div class="section-heading">
+          <p class="eyebrow">Fixture</p>
+          <h2>NucleusPreview card.</h2>
+          <p>
+            The accepted L-UI fixture declares an operator-visible preview card with effect none and boundary preview_only.
+          </p>
+        </div>
+        <pre class="fixture-source"><code>lui 0.1
+
+card NucleusPreview {
+  purpose "operator-visible Nucleus preview report"
+  effect none
+  boundary preview_only
+
+  rail effects {
+    field host bind state.host_effect
+    field external bind state.external_effect
+    field requested bind preview.requested_effect
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <section id="expected" class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Expected Report</p>
+        <h2>The successful example remains non-authoritative.</h2>
+        <p>
+          These are the headline values a reader should see represented by the parser contract for the accepted fixture.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>card_name</span>
+          <strong>NucleusPreview</strong>
+        </article>
+        <article>
+          <span>rail_count</span>
+          <strong>9</strong>
+        </article>
+        <article>
+          <span>field_count</span>
+          <strong>23</strong>
+        </article>
+        <article>
+          <span>effect</span>
+          <strong>none</strong>
+        </article>
+        <article>
+          <span>boundary</span>
+          <strong>preview_only</strong>
+        </article>
+        <article>
+          <span>no_effect</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>execution_allowed</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>mutation_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section id="commands" class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Commands</p>
+        <h2>Run examples as local checks.</h2>
+        <p>
+          These commands stay within the current evidence posture: local scripts, deterministic reports, and no production authority.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>L-UI fixture path</h3>
+          <pre><code>sed -n '1,120p' examples/l-ui/nucleus-preview-card.lui
+sh scripts/test-l-ui-parser.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Source spans and rendering</h3>
+          <pre><code>sh scripts/test-l-ui-parser-source-span.sh
+sh scripts/test-l-ui-rendering.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Lat pipeline checks</h3>
+          <pre><code>sh scripts/test-lat-pipeline.sh
+sh scripts/test-lat-to-lir-lowering.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell example-split">
+        <div class="section-heading">
+          <p class="eyebrow">Interpretation Rule</p>
+          <h2>A passing example is evidence, not authority.</h2>
+          <p>
+            Treat each command as proof of a narrow invariant. A green script does not imply runtime execution, host mutation, network access, recovery authority, hardware behavior, or security certification.
+          </p>
+        </div>
+        <div class="example-table" role="table" aria-label="Example interpretation boundaries">
+          <div role="row">
+            <span role="cell">Supported</span>
+            <p role="cell">Fixture parsing, deterministic summaries, no-effect flags, source-span metadata, and local regression checks.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Not supported</span>
+            <p role="cell">Rendering as a live UI, command execution, Nucleus task movement, network behavior, or host mutation.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Read next</span>
+            <p role="cell">Use the language overview and evidence page to connect examples back to contracts and claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Trace the example back to the contract set.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="language.html"><strong>Language overview</strong><span>Lat, LIR, and L-UI roles in one page.</span></a>
+        <a href="seal.html"><strong>Seal overview</strong><span>Report-only trust and dry-run boundaries.</span></a>
+        <a href="L_UI_PARSER.md"><strong>L-UI parser</strong><span>Accepted fixture, result fields, and error labels.</span></a>
+        <a href="L_UI_RENDERING_CONTRACT.md"><strong>L-UI rendering</strong><span>Rendering boundary and non-claims.</span></a>
+        <a href="LAT_PIPELINE_CONTRACT.md"><strong>Lat pipeline</strong><span>Parse, validate, lower, and report contract.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra examples and local checks.</span>
+      <span><a href="language.html">Open language overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

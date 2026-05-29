@@ -1,0 +1,25 @@
+name: Fedora rpmlint Findings Classification
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md'
+      - 'docs/status/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION_STATUS.md'
+      - 'docs/FEDORA_RPMLINT_STATIC_SPEC_LANE.md'
+      - 'scripts/test-fedora-rpmlint-findings-classification.sh'
+      - '.github/workflows/fedora-rpmlint-findings-classification.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpmlint-findings-classification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora rpmlint findings classification guard
+        run: sh scripts/test-fedora-rpmlint-findings-classification.sh

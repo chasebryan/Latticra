@@ -1,0 +1,234 @@
+# macOS Reset/Uninstall Live-Runner Acceptance-Gate Contract
+
+Status: no-effect macOS reset/uninstall live-runner acceptance-gate contract
+Date: 2026-05-26 CDT
+Scope: contract for deciding whether the live runner may dispatch after a denied-dispatch review.
+
+## Purpose
+
+This contract evaluates the macOS reset/uninstall live-runner acceptance gate. It records that the denied-dispatch review is present, then keeps the gate closed because passed preflight, complete evidence, explicit effect authorization, operator intent, and implementation evidence are not all present.
+
+It is contract-only. It does not authorize effects, dispatch a runner, delete files, remove directories, write receipts, write absence reports, mutate host state, open the network, or claim reset/uninstall implementation.
+
+## Command
+
+```sh
+sh scripts/macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
+```
+
+The command writes only a deterministic report to stdout.
+
+## Current Decision
+
+```text
+macos_reset_uninstall_live_runner_acceptance_gate_contract_present=1
+live_runner_acceptance_gate_contract_state=closed-no-effect
+live_runner_acceptance_gate_contract_decision=dispatch-blocked-missing-passed-preflight-evidence-and-authorization
+live_runner_acceptance_gate_required=1
+live_runner_acceptance_gate_present=1
+live_runner_acceptance_gate_evaluated=1
+live_runner_acceptance_gate_open=0
+live_runner_acceptance_gate_closed=1
+live_runner_acceptance_gate_acceptance_granted=0
+live_runner_acceptance_gate_dispatch_allowed=0
+live_runner_acceptance_gate_stdout_only=1
+live_runner_acceptance_gate_file_write_enabled=0
+live_runner_acceptance_gate_dispatch_enabled=0
+live_runner_acceptance_gate_dispatch_performed=0
+live_runner_acceptance_gate_runner_handoff_enabled=0
+live_runner_acceptance_gate_deletion_enabled=0
+live_runner_acceptance_gate_receipt_write_enabled=0
+live_runner_acceptance_gate_absence_report_write_enabled=0
+live_runner_acceptance_gate_effect=none
+live_runner_acceptance_gate_effect_authorized=0
+live_runner_acceptance_gate_denial_reason=missing-passed-preflight-complete-evidence-effect-authorization-operator-intent-and-implementation
+live_runner_acceptance_gate_source_contract=macos-reset-uninstall-live-runner-denied-dispatch-review-contract
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+```
+
+## Reviewed Gate Inputs
+
+```text
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+live_runner_denied_dispatch_review_contract_state=reviewed-no-effect
+live_runner_denied_dispatch_review_contract_decision=denial-review-retains-zero-dispatch
+live_runner_denied_dispatch_review_completed=1
+live_runner_denied_dispatch_review_dispatch_denied=1
+live_runner_denied_dispatch_review_dispatch_enabled=0
+live_runner_denied_dispatch_review_dispatch_performed=0
+live_runner_denied_dispatch_review_deletion_enabled=0
+live_runner_denied_dispatch_review_effect_authorized=0
+live_runner_denied_dispatch_review_acceptance_gate_opened=0
+macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
+live_runner_denied_dispatch_transcript_contract_state=recorded-no-effect
+live_runner_denied_dispatch_transcript_contract_decision=dispatch-denied-no-effects-recorded
+live_runner_denied_dispatch_transcript_dispatch_denied=1
+live_runner_denied_dispatch_transcript_dispatch_enabled=0
+live_runner_denied_dispatch_transcript_file_write_enabled=0
+```
+
+## Predecessor Inputs
+
+```text
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_contract_decision=denied-interface-path-only
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
+live_runner_noop_prototype_no_effects_performed=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_contract_decision=denied-current-preflight-not-passed
+live_runner_interface_preflight_passed=0
+live_runner_interface_denial_path_active=1
+live_runner_interface_invocation_enabled=0
+live_runner_interface_handoff_enabled=0
+live_runner_interface_deletion_enabled=0
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_denial_reason=missing-complete-evidence-bundle-and-effect-authorization
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_complete=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+```
+
+## Target Scope
+
+```text
+app_support_prefix_target=$HOME/Library/Application Support/Latticra
+app_bundle_target=$HOME/Applications/Latticra Panel.app
+cli_wrapper_target=$HOME/.local/bin/latticra-panel
+reset_receipts_dir_target=$HOME/Library/Application Support/Latticra Reset Receipts
+reset_receipt_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/reset-uninstall-receipt.json
+absence_report_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/absence-report.txt
+```
+
+## Requirements
+
+```text
+live_runner_acceptance_gate_schema_version=macos-reset-uninstall-live-runner-acceptance-gate/1
+live_runner_acceptance_gate_required_input_count=7
+live_runner_acceptance_gate_observed_input_count=7
+live_runner_acceptance_gate_requires_denied_dispatch_review=1
+live_runner_acceptance_gate_requires_passed_preflight=1
+live_runner_acceptance_gate_requires_complete_evidence_bundle=1
+live_runner_acceptance_gate_requires_effect_authorization=1
+live_runner_acceptance_gate_requires_operator_intent=1
+live_runner_acceptance_gate_requires_implementation=1
+live_runner_acceptance_gate_requires_no_dispatch_until_open=1
+live_runner_acceptance_gate_requires_no_deletion_until_open=1
+live_runner_acceptance_gate_requires_no_receipt_write_until_open=1
+live_runner_acceptance_gate_requires_no_absence_report_write_until_open=1
+live_runner_acceptance_gate_requires_no_network=1
+live_runner_acceptance_gate_requires_no_root=1
+live_runner_acceptance_gate_result_denied_dispatch_review=met
+live_runner_acceptance_gate_result_passed_preflight=blocked
+live_runner_acceptance_gate_result_complete_evidence_bundle=blocked
+live_runner_acceptance_gate_result_effect_authorization=blocked
+live_runner_acceptance_gate_result_operator_intent=blocked
+live_runner_acceptance_gate_result_implementation=blocked
+live_runner_acceptance_gate_result_no_dispatch_until_open=met
+live_runner_acceptance_gate_result_no_deletion_until_open=met
+live_runner_acceptance_gate_result_no_receipt_write_until_open=met
+live_runner_acceptance_gate_result_no_absence_report_write_until_open=met
+live_runner_acceptance_gate_result_no_network=met
+live_runner_acceptance_gate_result_no_root=met
+```
+
+## Gate Entries
+
+```text
+live_runner_acceptance_gate_entry_1=denied_dispatch_review_present
+live_runner_acceptance_gate_entry_2=preflight_not_passed
+live_runner_acceptance_gate_entry_3=evidence_bundle_incomplete
+live_runner_acceptance_gate_entry_4=effect_authorization_closed
+live_runner_acceptance_gate_entry_5=operator_intent_absent
+live_runner_acceptance_gate_entry_6=implementation_absent
+live_runner_acceptance_gate_entry_7=dispatch_blocked
+live_runner_acceptance_gate_entry_1_status=met
+live_runner_acceptance_gate_entry_2_status=blocked
+live_runner_acceptance_gate_entry_3_status=blocked
+live_runner_acceptance_gate_entry_4_status=blocked
+live_runner_acceptance_gate_entry_5_status=blocked
+live_runner_acceptance_gate_entry_6_status=blocked
+live_runner_acceptance_gate_entry_7_status=met
+```
+
+## Phases
+
+```text
+live_runner_acceptance_gate_phase_1=load_denied_dispatch_review
+live_runner_acceptance_gate_phase_2=evaluate_required_acceptance_inputs
+live_runner_acceptance_gate_phase_3=keep_runner_dispatch_closed
+live_runner_acceptance_gate_phase_4=handoff_to_acceptance_denial_transcript
+live_runner_acceptance_gate_phase_1_status=contract-only
+live_runner_acceptance_gate_phase_2_status=blocking
+live_runner_acceptance_gate_phase_3_status=blocked-no-effect
+live_runner_acceptance_gate_phase_4_status=future-transcript-only
+```
+
+## Authority Boundary
+
+```text
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Validation
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-runner-acceptance-gate-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_runner_acceptance_gate_contract: ok
+```
+
+## Non-Claims
+
+This contract is not macOS reset evidence, macOS uninstall evidence, live reset execution, live uninstall execution, runner dispatch evidence, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Endpoint Security evidence, System Extension evidence, privileged helper evidence, production readiness, Apple platform approval, or runtime authority.
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-gate contract that keeps the live runner closed until passed preflight, evidence, authorization, operator intent, and implementation are all present.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```

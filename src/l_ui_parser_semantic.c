@@ -27,7 +27,7 @@ static const char *expected_rail_name(size_t index) {
 }
 
 static size_t expected_rail_field_count(size_t index) {
-    static const size_t counts[] = { 0u, 4u, 2u, 4u, 2u, 3u, 3u, 5u, 0u };
+    static const size_t counts[] = { 0u, 4u, 2u, 4u, 2u, 3u, 3u, 6u, 0u };
     if (index >= sizeof(counts) / sizeof(counts[0])) return 0u;
     return counts[index];
 }
@@ -39,7 +39,7 @@ static size_t expected_rail_text_count(size_t index) {
 }
 
 static size_t expected_rail_first_field_index(size_t index) {
-    static const size_t indices[] = { 0u, 0u, 4u, 6u, 10u, 12u, 15u, 18u, 23u };
+    static const size_t indices[] = { 0u, 0u, 4u, 6u, 10u, 12u, 15u, 18u, 24u };
     if (index >= sizeof(indices) / sizeof(indices[0])) return 0u;
     return indices[index];
 }
@@ -54,7 +54,7 @@ static const char *expected_field_name(size_t index) {
     static const char *names[] = {
         "origin", "route", "axis", "path", "breadcrumb", "trace", "health", "risk", "lock",
         "dark_phase", "safe_portal", "rollback", "host", "external", "requested", "request",
-        "policy", "reason", "executed", "mutation", "server", "recovery", "hardware"
+        "policy", "reason", "executed", "mutation", "server", "network", "recovery", "hardware"
     };
     if (index >= sizeof(names) / sizeof(names[0])) return "";
     return names[index];
@@ -66,7 +66,8 @@ static const char *expected_binding(size_t index) {
         "state.health", "state.risk", "state.lock", "state.dark_phase", "state.safe_portal",
         "state.rollback", "state.host_effect", "state.external_effect", "preview.requested_effect",
         "preview.request", "preview.policy", "preview.reason", "preview.executed", "preview.mutation_allowed",
-        "preview.server_interaction_allowed", "preview.recovery_allowed", "preview.hardware_allowed"
+        "preview.server_interaction_allowed", "preview.network_allowed", "preview.recovery_allowed",
+        "preview.hardware_allowed"
     };
     if (index >= sizeof(bindings) / sizeof(bindings[0])) return "";
     return bindings[index];
@@ -115,6 +116,7 @@ static void semantic_default(latticra_l_ui_semantic_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -131,6 +133,7 @@ static void copy_ast_summary(
     result->execution_allowed = ast->execution_allowed;
     result->mutation_allowed = ast->mutation_allowed;
     result->server_allowed = ast->server_allowed;
+    result->network_allowed = ast->network_allowed;
     result->recovery_allowed = ast->recovery_allowed;
     result->hardware_allowed = ast->hardware_allowed;
 }
@@ -214,14 +217,15 @@ latticra_status_t latticra_l_ui_validate_semantics(
     if (strcmp(ast->card.name, "NucleusPreview") != 0 ||
         strcmp(ast->card.effect, "none") != 0 ||
         strcmp(ast->card.boundary, "preview_only") != 0 ||
-        ast->rail_count != 9u || ast->field_count != 23u || ast->text_count != 2u ||
+        ast->rail_count != 9u || ast->field_count != 24u || ast->text_count != 2u ||
         ast->card.rail_count != ast->rail_count || ast->card.field_count != ast->field_count ||
         ast->card.text_count != ast->text_count) {
         return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, 0u, 0u, 0u, &ast->card.span);
     }
 
     if (ast->no_effect != 1 || ast->execution_allowed != 0 || ast->mutation_allowed != 0 ||
-        ast->server_allowed != 0 || ast->recovery_allowed != 0 || ast->hardware_allowed != 0) {
+        ast->server_allowed != 0 || ast->network_allowed != 0 ||
+        ast->recovery_allowed != 0 || ast->hardware_allowed != 0) {
         return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_CARD_COUNT_MISMATCH, 0u, 0u, 0u, &ast->card.span);
     }
 
@@ -245,7 +249,7 @@ latticra_status_t latticra_l_ui_validate_semantics(
         }
     }
 
-    for (index = 0u; index < 23u; index++) {
+    for (index = 0u; index < 24u; index++) {
         const latticra_l_ui_ast_field_t *field = &ast->fields[index];
         if (field->name[0] == '\0' || strcmp(field->name, expected_field_name(index)) != 0) {
             return set_semantic_error(ast, result, LATTICRA_L_UI_SEMANTIC_FIELD_RAIL_MISMATCH, 0u, index, 0u, &field->span);
@@ -298,6 +302,7 @@ latticra_status_t latticra_l_ui_semantic_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -323,6 +328,7 @@ latticra_status_t latticra_l_ui_semantic_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

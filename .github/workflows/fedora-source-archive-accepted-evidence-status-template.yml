@@ -1,0 +1,25 @@
+name: Fedora Source Archive Accepted Evidence Status Template
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_TEMPLATE.md'
+      - 'docs/status/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_STATUS_TEMPLATE_STATUS.md'
+      - 'scripts/fedora-source-archive-accepted-evidence-status-template.sh'
+      - 'scripts/test-fedora-source-archive-accepted-evidence-status-template.sh'
+      - '.github/workflows/fedora-source-archive-accepted-evidence-status-template.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-source-archive-accepted-evidence-status-template:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora source archive accepted evidence status template guard
+        run: sh scripts/test-fedora-source-archive-accepted-evidence-status-template.sh

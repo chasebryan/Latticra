@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latticra Console | Metadata-Only Operator Base</title>
+  <meta name="description" content="A public overview of Latticra Console, the Stage-0 metadata-only operator base with Panel profiles, registry-backed commands, host contracts, receipt planning, and no runtime authority.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Console">
+  <meta property="og:description" content="Stage-0 LC identity, command registry, Panel profile presets, host-boundary contracts, receipt planning, and OS-base non-claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero console-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Latticra Console</p>
+        <p class="eyebrow">Stage-0 Operator Base</p>
+        <h1>Latticra Console</h1>
+        <p class="page-lede">
+          LC is the planned main operator base for Latticra. Today it is a configurable, standalone and Panel-installable, metadata-only report surface with registry-backed commands and no shell, host, network, runtime-enforcement, boot, or production OS authority.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell console-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Registry first. Authority later.</h2>
+        </div>
+        <p>
+          The Stage-0 console makes LC visible without turning it into a host controller. It reports identity, command metadata, Panel profile presets, substrate bridge posture, host-embedding contracts, receipt planning, Seal signature-request bindings, OS-base planning, and VM evidence contracts while preserving a no-effect authority floor.
+        </p>
+      </div>
+
+      <div class="content-shell console-flow" aria-label="Latticra Console foundation flow">
+        <article>
+          <span>01</span>
+          <h3>Identity</h3>
+          <p>LC records a stable component key, short name, default wrapper, Panel bridge, and report-only profile.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Command registry</h3>
+          <p>The C static table is the source for help, discovery, command categories, effects, and capability labels.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Panel profiles</h3>
+          <p>Hosted, standalone, Panel-embedded, host-planning, OS-base-planning, and custom presets remain configuration metadata.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Host contracts</h3>
+          <p>Embedding, inventory, and adapter contracts are present before any host integration behavior exists.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Receipt and OS plan</h3>
+          <p>Receipt, payload, signature-request, OS-base, and VM evidence contracts stay future-gated and no-write.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Stage-0 Snapshot</p>
+        <h2>The console exists as evidence, not as authority.</h2>
+        <p>
+          These fields summarize the posture from the LC status record dated May 26, 2026.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>component_present</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>c_api_present</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>report_surface</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>panel_installable</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>command_no_effect</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>host_process_launch</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>network_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>production_os_claim</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Profile Presets</p>
+        <h2>Configuration is explicit and bounded.</h2>
+        <p>
+          Panel carries LC presets as installer metadata. Selecting a profile changes recorded configuration, not the authority floor.
+        </p>
+      </div>
+      <div class="content-shell console-profile-grid">
+        <article>
+          <span>hosted_reference</span>
+          <h3>Hosted reference</h3>
+          <p>Reference metadata without embedded-host claims.</p>
+        </article>
+        <article>
+          <span>standalone</span>
+          <h3>Standalone LC</h3>
+          <p>Dry-run and guarded local install presets with <code>lc-standalone-install-v0</code>, a standalone contract, and no Panel runtime requirement.</p>
+        </article>
+        <article>
+          <span>panel_embedded</span>
+          <h3>Panel embedded</h3>
+          <p>The default Panel-installed operator surface.</p>
+        </article>
+        <article>
+          <span>host_embedded_planning</span>
+          <h3>Host planning</h3>
+          <p>Future host-embedding plan with zero host mutation authority.</p>
+        </article>
+        <article>
+          <span>os_base_planning</span>
+          <h3>OS-base planning</h3>
+          <p>Future OS-like direction with zero boot, kernel, or runtime enforcement authority.</p>
+        </article>
+        <article>
+          <span>custom</span>
+          <h3>Custom metadata</h3>
+          <p>Manual configuration fields under the same no-effect authority floor.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell console-split">
+        <div class="section-heading">
+          <p class="eyebrow">Authority Boundary</p>
+          <h2>The host boundary is written down before integration exists.</h2>
+          <p>
+            LC's host, receipt, and OS records are deliberately contract-shaped. They name the prerequisites for later promotion while keeping current execution, mutation, inventory, signing, and boot fields denied.
+          </p>
+        </div>
+        <div class="console-table" role="table" aria-label="Latticra Console current authority boundary">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">C API, report surface, help renderer, manpage renderer, seed command registry, Panel install marker, wrapper metadata, and local profile files.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Contract-only</span>
+            <p role="cell">Host embedding, read-only host inventory, host adapter, receipt request, payload schema, payload artifact review, signature-request binding, OS-base, and VM evidence.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Shell execution, external host process launch, host file read/write, host mutation, network use, runtime enforcement, boot authority, receipt writes, payload writes, and OS replacement claims.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Command Surface</p>
+        <h2>Inspect LC without activating host behavior.</h2>
+        <p>
+          The command registry includes status, profile, host-contract, receipt, substrate, OS, and VM evidence commands. Stage-0 command entries remain no-effect and future-gated where appropriate.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Compile and verify</h3>
+          <pre><code>make latticra-console
+sh scripts/test-latticra-console-foundation.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Inspect registry</h3>
+          <pre><code>latticra-lc status
+latticra-lc commands
+latticra-lc profiles</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Read contracts</h3>
+          <pre><code>latticra lc host-contract
+latticra lc receipt-request
+latticra lc os-contract
+latticra lc vm-evidence</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Trace console claims back to exact evidence.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="LATTICRA_CONSOLE_FOUNDATION.md"><strong>LC foundation</strong><span>Identity, Panel installability, command registry, host contracts, receipts, and OS-base planning.</span></a>
+        <a href="status/LATTICRA_CONSOLE_FOUNDATION_STATUS.md"><strong>LC status</strong><span>Stage-0 evidence fields, no-effect flags, contract presence, and non-claims.</span></a>
+        <a href="panel.html"><strong>Panel overview</strong><span>Guided GUI workbench, Panel-installable LC, receipts, updater, and user-local evidence.</span></a>
+        <a href="workbench.html"><strong>Workbench overview</strong><span>How Panel, LC, and Nadia fit together as local operator surfaces.</span></a>
+        <a href="runtime.html"><strong>Runtime boundary</strong><span>Default-deny runtime posture and policy matrix metadata LC binds to.</span></a>
+        <a href="seal.html"><strong>Latticra Seal</strong><span>Capability labels, signature-request planning, receipts, and trust-boundary context.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Panel install evidence, package guards, disposable VM gates, and dry-run contracts.</span></a>
+        <a href="architecture.html"><strong>System architecture</strong><span>Where LC sits among language, runtime, trust, and host boundaries.</span></a>
+        <a href="map.html"><strong>Documentation map</strong><span>Grouped entry points into the complete public record set.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra Console overview.</span>
+      <span><a href="workbench.html">Open workbench</a></span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -24,6 +24,12 @@ latticra_theorem_engine
 # Local build outputs
 /build/
 /build-separate/
+
+__pycache__/
+*.py[cod]
+.DS_Store
+/assets/piper-voices/
+>>>>>>> origin/main
 latticra_nuclear_recursion_engine
 latticra-nuclear-recursion-engine.mp4
 # Nuclear recursion visual engine outputs

@@ -1,9 +1,16 @@
+import argparse
 from pathlib import Path
 import re
 
 STAMP = "2026-05-24 CDT"
-EST = Path("/tmp/latticra-estimates.md").read_text(encoding="utf-8")
-REVIEW = Path("/tmp/latticra-review.md").read_text(encoding="utf-8")
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--estimates", required=True)
+parser.add_argument("--review", required=True)
+args = parser.parse_args()
+
+EST = Path(args.estimates).read_text(encoding="utf-8")
+REVIEW = Path(args.review).read_text(encoding="utf-8")
 
 def write(path, text):
     Path(path).write_text(text, encoding="utf-8")

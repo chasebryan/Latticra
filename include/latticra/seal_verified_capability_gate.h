@@ -1,7 +1,7 @@
 #ifndef LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_H
 #define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_H
 
-#include "latticra/seal_verified_receipt_promotion.h"
+#include "latticra/seal_crypto_graduation_gate.h"
 
 #include <stddef.h>
 
@@ -14,7 +14,7 @@ extern "C" {
 #define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_ALGORITHM_MAX 32u
 #define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_STATE_MAX 64u
 #define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DIGEST_MAX 65u
-#define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_REPORT_MAX 4096u
+#define LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_REPORT_MAX 8192u
 
 typedef enum {
     LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_OK = 0,
@@ -26,7 +26,8 @@ typedef enum {
     LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_MISSING_REQUESTED_EFFECT = 6,
     LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_UNKNOWN_CAPABILITY = 7,
     LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_UNKNOWN_EFFECT = 8,
-    LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_RUNTIME_AUTHORITY = 9
+    LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_RUNTIME_AUTHORITY = 9,
+    LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_DENIED_CRYPTO_GRADUATION_GATE = 10
 } latticra_seal_verified_capability_gate_error_t;
 
 typedef struct {
@@ -38,9 +39,18 @@ typedef struct {
     char public_key_identity_label[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_LABEL_MAX];
     char receipt_state[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_STATE_MAX];
     char verification_state[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_STATE_MAX];
+    char crypto_graduation_profile[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_PROFILE_MAX];
+    char assurance_baseline_profile[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_PROFILE_MAX];
+    char crypto_graduation_gate_state[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_STATE_MAX];
     char requested_capability[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_LABEL_MAX];
     char requested_effect[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_LABEL_MAX];
     char requested_scope[LATTICRA_SEAL_VERIFIED_CAPABILITY_GATE_LABEL_MAX];
+    unsigned crypto_graduation_gate_present;
+    unsigned crypto_graduation_gate_passed;
+    unsigned standard_expectations_met;
+    unsigned local_verify_graduated;
+    unsigned receipt_promotion_graduated;
+    unsigned authority_promotion_allowed;
     unsigned verified;
     unsigned authority_usable;
     unsigned receipt_capability_gate_allowed;
@@ -58,6 +68,13 @@ typedef struct {
 const char *latticra_seal_verified_capability_gate_error_label(
     latticra_seal_verified_capability_gate_error_t error);
 latticra_status_t latticra_seal_verified_capability_gate_from_receipt(
+    const latticra_seal_verified_receipt_promotion_t *receipt,
+    const char *requested_capability,
+    const char *requested_effect,
+    const char *requested_scope,
+    latticra_seal_verified_capability_gate_t *out);
+latticra_status_t latticra_seal_verified_capability_gate_from_crypto_graduation_gate(
+    const latticra_seal_crypto_graduation_gate_t *crypto_gate,
     const latticra_seal_verified_receipt_promotion_t *receipt,
     const char *requested_capability,
     const char *requested_effect,

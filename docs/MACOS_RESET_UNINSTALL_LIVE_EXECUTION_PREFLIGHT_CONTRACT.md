@@ -1,0 +1,243 @@
+# macOS Reset/Uninstall Live-Execution Preflight Contract
+
+Status: no-effect macOS reset/uninstall live-execution preflight contract
+Date: 2026-05-26 CDT
+Scope: contract for proving future live macOS reset/uninstall execution remains blocked until every evidence and authorization gate is satisfied.
+
+## Purpose
+
+This contract defines the preflight boundary immediately before any future live reset/uninstall executor. It consumes the live-implementation plan, evidence-bundle contract, effect-authorization contract, implementation gate, operator intent, planner, classifier, receipt schema, and absence-report contract.
+
+It is contract-only. It does not authorize effects, delete files, remove directories, write receipts, write absence reports, mutate host state, open the network, or claim reset/uninstall implementation.
+
+## Command
+
+```sh
+sh scripts/macos-reset-uninstall-live-execution-preflight-contract.sh
+```
+
+The command writes only a deterministic report to stdout.
+
+## Current Decision
+
+The current live-execution preflight posture is:
+
+```text
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_contract_decision=blocked-missing-complete-evidence-bundle-and-effect-authorization
+live_execution_preflight_required=1
+live_execution_preflight_present=1
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_evidence_present=0
+live_execution_preflight_record_write_enabled=0
+live_execution_preflight_denial_recorded=1
+live_execution_preflight_denial_reason=missing-complete-evidence-bundle-and-effect-authorization
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+absence_report_write_enabled=0
+```
+
+## Required Inputs
+
+The preflight remains blocked by the current no-effect evidence chain:
+
+```text
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_implementation_plan_execution_enabled=0
+live_implementation_plan_deletion_enabled=0
+live_implementation_plan_preflight_present=1
+live_implementation_plan_preflight_passed=0
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+reset_uninstall_evidence_bundle_complete=0
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_valid=0
+reset_uninstall_evidence_bundle_evidence_present=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+```
+
+## Target Scope
+
+The preflight remains limited to user-local managed macOS targets and receipt locations:
+
+```text
+app_support_prefix_target=$HOME/Library/Application Support/Latticra
+app_bundle_target=$HOME/Applications/Latticra Panel.app
+cli_wrapper_target=$HOME/.local/bin/latticra-panel
+reset_receipts_dir_target=$HOME/Library/Application Support/Latticra Reset Receipts
+reset_receipt_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/reset-uninstall-receipt.json
+absence_report_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/absence-report.txt
+```
+
+## Preflight Requirements
+
+The future preflight requires:
+
+```text
+live_execution_preflight_schema_version=macos-reset-uninstall-live-execution-preflight/1
+live_execution_preflight_required_component_count=9
+live_execution_preflight_passed_component_count=0
+live_execution_preflight_requires_live_implementation_plan=1
+live_execution_preflight_requires_complete_evidence_bundle=1
+live_execution_preflight_requires_effect_authorization=1
+live_execution_preflight_requires_implementation_gate_open=1
+live_execution_preflight_requires_operator_intent_evidence=1
+live_execution_preflight_requires_dry_run_planner_transcript=1
+live_execution_preflight_requires_live_target_classifier_report=1
+live_execution_preflight_requires_receipt_schema=1
+live_execution_preflight_requires_absence_report_contract=1
+live_execution_preflight_requires_no_unmanaged_targets=1
+live_execution_preflight_requires_no_unsafe_paths=1
+live_execution_preflight_requires_no_network=1
+live_execution_preflight_requires_no_root=1
+live_execution_preflight_condition_live_implementation_plan=required
+live_execution_preflight_condition_complete_evidence_bundle=required
+live_execution_preflight_condition_effect_authorization=required
+live_execution_preflight_condition_implementation_gate_open=required
+live_execution_preflight_condition_operator_intent_evidence_present=required
+live_execution_preflight_condition_no_unmanaged_targets=required
+live_execution_preflight_condition_no_network=required
+live_execution_preflight_condition_no_root=required
+```
+
+The current result state remains closed:
+
+```text
+live_execution_preflight_result_live_implementation_plan=planned-no-effect
+live_execution_preflight_result_complete_evidence_bundle=not_met
+live_execution_preflight_result_effect_authorization=not_met
+live_execution_preflight_result_implementation_gate_open=not_met
+live_execution_preflight_result_operator_intent_evidence=not_met
+live_execution_preflight_result_dry_run_planner_transcript=contract-only
+live_execution_preflight_result_live_target_classifier_report=contract-only
+live_execution_preflight_result_receipt_schema=contract-only
+live_execution_preflight_result_absence_report_contract=contract-only
+live_execution_preflight_result_no_unmanaged_targets=not_evaluated_contract_only
+live_execution_preflight_result_no_network=met
+live_execution_preflight_result_no_root=met
+```
+
+## Phases
+
+The future preflight phases are mapped but closed:
+
+```text
+live_execution_preflight_phase_1=load_live_implementation_plan
+live_execution_preflight_phase_2=load_complete_evidence_bundle
+live_execution_preflight_phase_3=verify_effect_authorization
+live_execution_preflight_phase_4=verify_operator_intent
+live_execution_preflight_phase_5=verify_managed_targets_only
+live_execution_preflight_phase_6=verify_receipt_and_absence_paths
+live_execution_preflight_phase_7=compute_live_execution_decision
+live_execution_preflight_phase_8=handoff_to_live_executor
+live_execution_preflight_phase_1_status=contract-only
+live_execution_preflight_phase_2_status=blocked-evidence-bundle-incomplete
+live_execution_preflight_phase_3_status=blocked-effect-authorization-closed
+live_execution_preflight_phase_4_status=blocked-operator-intent-missing
+live_execution_preflight_phase_5_status=contract-only
+live_execution_preflight_phase_6_status=contract-only
+live_execution_preflight_phase_7_status=blocked-no-effect
+live_execution_preflight_phase_8_status=disabled
+```
+
+## Authority Boundary
+
+This contract preserves:
+
+```text
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_marker_required=1
+unmanaged_target_preservation_required=1
+receipt_outside_removed_prefix_required=1
+absence_report_required=1
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Validation
+
+This contract is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-execution-preflight-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_execution_preflight_contract: ok
+```
+
+## Non-Claims
+
+This contract is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, live approval evidence, operator approval evidence, effect approval evidence, complete evidence-bundle evidence, live execution evidence, live reset execution, live uninstall execution, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-execution preflight contract that proves the live implementation plan still cannot delete until all evidence gates are satisfied.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```
+
+Follow-on no-op prototype lane:
+
+```text
+Add a macOS reset/uninstall live-runner no-op prototype contract that exercises the denied interface path without deleting files.
+```

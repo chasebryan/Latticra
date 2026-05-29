@@ -1,0 +1,26 @@
+name: openSUSE rpmlint Static Spec Lane
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  opensuse-rpmlint-static-spec-lane:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: registry.opensuse.org/opensuse/tumbleweed:latest
+    steps:
+      - name: Prepare checkout tools
+        run: zypper --non-interactive install git tar gzip
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run openSUSE rpmlint static spec lane guard
+        run: sh scripts/test-opensuse-rpmlint-static-spec-lane.sh

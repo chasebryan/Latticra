@@ -1,0 +1,148 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  macos-reset-uninstall-live-runner-noop-prototype-contract.sh
+
+Emits the no-effect macOS reset/uninstall live-runner no-op prototype contract.
+It exercises only the denied live-runner interface path and performs no
+deletion, receipt writes, absence-report writes, network access, root action, or
+host mutation.
+USAGE
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "unknown argument: $1" >&2
+      usage >&2
+      exit 64
+      ;;
+  esac
+done
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+UNAME_S=$(uname -s 2>/dev/null || printf 'unknown')
+UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
+
+cat <<REPORT
+MACOS RESET UNINSTALL LIVE RUNNER NOOP PROTOTYPE CONTRACT
+
+reset_uninstall_live_runner_noop_prototype_contract_status=ok
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
+repo_root=$ROOT
+host_kernel_name=$UNAME_S
+host_arch=$UNAME_M
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_contract_decision=denied-interface-path-only
+live_runner_noop_prototype_required=1
+live_runner_noop_prototype_present=1
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_runner_enabled=0
+live_runner_noop_prototype_runner_effect_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
+live_runner_noop_prototype_receipt_write_enabled=0
+live_runner_noop_prototype_absence_report_write_enabled=0
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_accept_path_exercised=0
+live_runner_noop_prototype_effect=none
+live_runner_noop_prototype_effect_authorized=0
+live_runner_noop_prototype_preflight_passed=0
+live_runner_noop_prototype_interface_present=1
+live_runner_noop_prototype_interface_denial_path_active=1
+live_runner_noop_prototype_no_effects_performed=1
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+absence_report_write_enabled=0
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_contract_decision=denied-current-preflight-not-passed
+live_runner_interface_accepts_passed_preflight_only=1
+live_runner_interface_preflight_passed=0
+live_runner_interface_denial_path_active=1
+live_runner_interface_invocation_enabled=0
+live_runner_interface_handoff_enabled=0
+live_runner_interface_deletion_enabled=0
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_denial_reason=missing-complete-evidence-bundle-and-effect-authorization
+macos_reset_uninstall_evidence_bundle_contract_present=1
+reset_uninstall_evidence_bundle_complete=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_reset_uninstall_intent_evidence_present=0
+live_runner_noop_prototype_schema_version=macos-reset-uninstall-live-runner-noop-prototype/1
+live_runner_noop_prototype_requires_runner_interface=1
+live_runner_noop_prototype_requires_failed_preflight=1
+live_runner_noop_prototype_requires_denial_path=1
+live_runner_noop_prototype_requires_denied_interface_path=1
+live_runner_noop_prototype_requires_no_dispatch=1
+live_runner_noop_prototype_requires_no_deletion=1
+live_runner_noop_prototype_requires_no_receipt_write=1
+live_runner_noop_prototype_requires_no_absence_report_write=1
+live_runner_noop_prototype_requires_no_network=1
+live_runner_noop_prototype_requires_no_root=1
+live_runner_noop_prototype_result_runner_interface=met
+live_runner_noop_prototype_result_failed_preflight=met
+live_runner_noop_prototype_result_denial_path=met
+live_runner_noop_prototype_result_denied_interface_path=met
+live_runner_noop_prototype_result_no_dispatch=met
+live_runner_noop_prototype_result_no_deletion=met
+live_runner_noop_prototype_result_no_receipt_write=met
+live_runner_noop_prototype_result_no_absence_report_write=met
+live_runner_noop_prototype_result_no_network=met
+live_runner_noop_prototype_result_no_root=met
+live_runner_noop_prototype_phase_1=load_runner_interface
+live_runner_noop_prototype_phase_2=exercise_denied_interface_path
+live_runner_noop_prototype_phase_3=confirm_no_effect_dispatch
+live_runner_noop_prototype_phase_4=handoff_to_denied_dispatch_transcript
+live_runner_noop_prototype_phase_5=return_noop_denial
+live_runner_noop_prototype_phase_1_status=contract-only
+live_runner_noop_prototype_phase_2_status=noop-denial-only
+live_runner_noop_prototype_phase_3_status=met
+live_runner_noop_prototype_phase_4_status=blocked-no-effect
+live_runner_noop_prototype_phase_5_status=stdout-only
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-contract
+REPORT

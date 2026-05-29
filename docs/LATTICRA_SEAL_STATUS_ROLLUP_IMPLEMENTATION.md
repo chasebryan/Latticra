@@ -119,10 +119,13 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-status-rollup-contract.sh
 sh scripts/test-latticra-seal-status-rollup.sh
+sh scripts/test-latticra-seal-status-rollup-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
+sh scripts/test-latticra-seal-agentic-automation-security-status.sh
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is Seal documentation and index alignment.
+The next valid Latticra Seal slice is policy decision status/public-entry alignment.
 
-That future slice must not change runtime behavior, host behavior, network behavior, capability enforcement, or authority posture.
+That future slice must preserve the no-effect posture and must not implement real policy evaluation, policy enforcement, runtime execution, effect execution, capability enforcement, cryptographic verification, signature verification, freshness validation, replay detection, authority grants, host behavior, network behavior, MCP behavior, AI agent execution, model execution, tool execution, or shell execution.

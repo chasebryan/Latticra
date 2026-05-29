@@ -1,6 +1,7 @@
 #ifndef LATTICRA_LAT_PIPELINE_H
 #define LATTICRA_LAT_PIPELINE_H
 
+#include "latticra/lat_model.h"
 #include "latticra/lat_to_lir.h"
 
 #ifdef __cplusplus
@@ -17,7 +18,8 @@ typedef enum {
     LATTICRA_LAT_PIPELINE_SEMANTIC_NOT_VALID = 4,
     LATTICRA_LAT_PIPELINE_LOWERING_NOT_OK = 5,
     LATTICRA_LAT_PIPELINE_NO_EFFECT_VIOLATION = 6,
-    LATTICRA_LAT_PIPELINE_INTERNAL_ERROR = 7
+    LATTICRA_LAT_PIPELINE_INTERNAL_ERROR = 7,
+    LATTICRA_LAT_PIPELINE_MODEL_NOT_OK = 8
 } latticra_lat_pipeline_error_t;
 
 typedef enum {
@@ -28,7 +30,8 @@ typedef enum {
     LATTICRA_LAT_PIPELINE_STAGE_LIR = 4,
     LATTICRA_LAT_PIPELINE_STAGE_EFFECT_CHECK = 5,
     LATTICRA_LAT_PIPELINE_STAGE_REPORT = 6,
-    LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN = 7
+    LATTICRA_LAT_PIPELINE_STAGE_UNKNOWN = 7,
+    LATTICRA_LAT_PIPELINE_STAGE_MODEL = 8
 } latticra_lat_pipeline_stage_t;
 
 typedef struct {
@@ -36,6 +39,7 @@ typedef struct {
     latticra_lat_pipeline_error_t error;
     latticra_lat_parse_error_t parse_error;
     latticra_lat_semantic_error_t semantic_error;
+    latticra_lat_model_error_t model_error;
     latticra_lat_to_lir_error_t lowering_error;
     latticra_lir_error_t lir_error;
     latticra_lat_source_span_t span;
@@ -43,12 +47,32 @@ typedef struct {
     size_t source_len;
     size_t declaration_count;
     size_t clause_count;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
+    size_t model_declaration_count;
+    size_t model_clause_count;
+    size_t first_declaration_node_index;
+    latticra_lat_declaration_kind_t first_declaration_kind;
+    char first_declaration_name[LATTICRA_LAT_NAME_MAX];
+    char first_declaration_source[LATTICRA_LAT_NAME_MAX];
+    size_t first_declaration_parse_index;
+    size_t first_declaration_first_clause_index;
+    size_t first_declaration_clause_count;
+    size_t first_declaration_source_index;
+    size_t first_transition_source_index;
+    size_t first_clause_node_index;
+    latticra_lat_model_clause_role_t first_clause_role;
+    latticra_lat_effect_t first_clause_effect;
+    char first_clause_name[LATTICRA_LAT_NAME_MAX];
+    char first_clause_operator[LATTICRA_LAT_NAME_MAX];
+    char first_clause_value[LATTICRA_LAT_VALUE_MAX];
     size_t node_count;
     size_t edge_count;
     latticra_lat_pipeline_stage_t last_completed_stage;
     latticra_lat_pipeline_stage_t failed_stage;
     int parse_ok;
     int semantic_ok;
+    int model_ok;
     int lowering_ok;
     int lir_ok;
     int no_effect_chain_ok;
@@ -58,6 +82,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_lat_pipeline_result_t;
@@ -70,6 +95,16 @@ latticra_status_t latticra_lat_pipeline_run_source(
     size_t source_len,
     latticra_lat_parse_result_t *parse_result,
     latticra_lat_semantic_result_t *semantic_result,
+    latticra_lir_module_t *module,
+    latticra_lat_to_lir_result_t *lowering_result,
+    latticra_lat_pipeline_result_t *pipeline_result);
+
+latticra_status_t latticra_lat_pipeline_run_source_with_model(
+    const char *source,
+    size_t source_len,
+    latticra_lat_parse_result_t *parse_result,
+    latticra_lat_semantic_result_t *semantic_result,
+    latticra_lat_model_t *model_result,
     latticra_lir_module_t *module,
     latticra_lat_to_lir_result_t *lowering_result,
     latticra_lat_pipeline_result_t *pipeline_result);

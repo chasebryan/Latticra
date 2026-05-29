@@ -9,8 +9,19 @@ REPORT_DIR="reports"
 REPORT="$REPORT_DIR/latticra-seal-report.txt"
 HASH_LIST="$REPORT_DIR/latticra-seal-file-hashes.txt"
 
-mkdir -p "$REPORT_DIR"
+if [[ -L "$REPORT_DIR" ]]; then
+  printf 'refusing symlink report directory: %s\n' "$REPORT_DIR" >&2
+  exit 2
+fi
+
+if [[ -e "$REPORT_DIR" && ! -d "$REPORT_DIR" ]]; then
+  printf 'refusing non-directory report path: %s\n' "$REPORT_DIR" >&2
+  exit 2
+fi
+
+mkdir -p -m 700 "$REPORT_DIR"
 : > "$REPORT"
+chmod 600 "$REPORT"
 
 fail=0
 warn=0
@@ -84,11 +95,17 @@ section "Secret filename scan"
 secret_filename_hits="$(
   find . \
     -path './.git' -prune -o \
-    -path './target' -prune -o \
-    -path './build' -prune -o \
-    -path './dist' -prune -o \
-    -path './node_modules' -prune -o \
-    -path './.venv' -prune -o \
+    -path './reports' -prune -o \
+    -name target -type d -prune -o \
+    -name build -type d -prune -o \
+    -name dist -type d -prune -o \
+    -name node_modules -type d -prune -o \
+    -name .venv -type d -prune -o \
+    -name '.venv-*' -type d -prune -o \
+    -name venv -type d -prune -o \
+    -name __pycache__ -type d -prune -o \
+    -name .pytest_cache -type d -prune -o \
+    -name .mypy_cache -type d -prune -o \
     -type f \( \
       -name '.env' -o \
       -name 'id_rsa' -o \
@@ -107,6 +124,16 @@ fi
 
 section "Secret content marker scan"
 
+secret_content_pattern="$(
+  printf '%s|%s|%s|%s|%s|%s' \
+    "$(printf '%s%s%s' 'BEGIN ' 'PRIVATE' ' KEY')" \
+    "$(printf '%s%s%s' 'BEGIN ' 'RSA PRIVATE' ' KEY')" \
+    "$(printf '%s%s%s' 'BEGIN ' 'OPENSSH PRIVATE' ' KEY')" \
+    "$(printf '%s%s' 'OPENAI' '_API_KEY=')" \
+    "$(printf '%s%s' 'GITHUB' '_TOKEN=')" \
+    "$(printf '%s%s' 'AWS' '_SECRET_ACCESS_KEY=')"
+)"
+
 secret_content_hits="$(
   grep -RIlE \
     --exclude-dir=.git \
@@ -115,9 +142,15 @@ secret_content_hits="$(
     --exclude-dir=dist \
     --exclude-dir=node_modules \
     --exclude-dir=.venv \
+    --exclude-dir='.venv-*' \
+    --exclude-dir=venv \
+    --exclude-dir=__pycache__ \
+    --exclude-dir=.pytest_cache \
+    --exclude-dir=.mypy_cache \
+    --exclude-dir=reports \
     --exclude='latticra.seal' \
     --exclude='latticra-seal-smoke.sh' \
-    'BEGIN PRIVATE KEY|BEGIN RSA PRIVATE KEY|BEGIN OPENSSH PRIVATE KEY|OPENAI_API_KEY=|GITHUB_TOKEN=|AWS_SECRET_ACCESS_KEY=' \
+    "$secret_content_pattern" \
     . 2>/dev/null || true
 )"
 
@@ -136,12 +169,17 @@ if command -v sha256sum >/dev/null 2>&1; then
 
   find . \
     -path './.git' -prune -o \
-    -path './target' -prune -o \
-    -path './build' -prune -o \
-    -path './dist' -prune -o \
-    -path './node_modules' -prune -o \
-    -path './.venv' -prune -o \
-    -path './reports' -prune -o \
+    -name target -type d -prune -o \
+    -name build -type d -prune -o \
+    -name dist -type d -prune -o \
+    -name node_modules -type d -prune -o \
+    -name .venv -type d -prune -o \
+    -name '.venv-*' -type d -prune -o \
+    -name venv -type d -prune -o \
+    -name __pycache__ -type d -prune -o \
+    -name .pytest_cache -type d -prune -o \
+    -name .mypy_cache -type d -prune -o \
+    -name reports -type d -prune -o \
     -type f -print0 \
     | sort -z \
     | xargs -0 -r sha256sum > "$HASH_LIST"

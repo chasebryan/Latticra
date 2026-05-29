@@ -59,26 +59,28 @@ static int backend_copies_policy_metadata(void) {
     EXPECT_TRUE(strcmp(backend.signature_algorithm, "Ed25519-development") == 0, "signature algorithm");
     EXPECT_TRUE(strcmp(backend.public_key_identity_label, "latticra-dev-public-key") == 0, "public key identity");
     EXPECT_TRUE(strcmp(backend.trust_source, "local-fixture") == 0, "trust source");
-    EXPECT_TRUE(strcmp(backend.crypto_verify_state, "unsupported") == 0, "crypto verify state");
-    EXPECT_TRUE(backend.cryptographic_verification_supported == 0u, "verification support flag");
+    EXPECT_TRUE(strcmp(backend.crypto_verify_state, "ready-local-ed25519") == 0, "crypto verify state");
+    EXPECT_TRUE(backend.cryptographic_verification_supported == 1u, "verification support flag");
     EXPECT_TRUE(backend.cryptographic_verification_performed == 0u, "verification performed flag");
     EXPECT_TRUE(backend.verified == 0u, "verified flag");
     EXPECT_TRUE(backend.invalid == 0u, "invalid flag");
     EXPECT_TRUE(backend.authority_usable == 0u, "authority flag");
     EXPECT_TRUE(backend.capability_gate_allowed == 0u, "capability gate flag");
     EXPECT_TRUE(backend.runtime_authority_granted == 0u, "runtime flag");
-    EXPECT_TRUE(latticra_seal_crypto_verify_backend_is_metadata_only(&backend) == 1, "metadata helper");
+    EXPECT_TRUE(latticra_seal_crypto_verify_backend_is_metadata_only(&backend) == 0, "metadata helper");
+    EXPECT_TRUE(latticra_seal_crypto_verify_backend_is_authority_neutral(&backend) == 1, "authority neutral helper");
     EXPECT_TRUE(
         latticra_seal_crypto_verify_backend_report(&backend, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK,
         "render status");
     EXPECT_TRUE(strstr(rendered, "LATTICRA SEAL CRYPTO VERIFY BACKEND") != 0, "render header");
-    EXPECT_TRUE(strstr(rendered, "crypto_verify_state=unsupported") != 0, "render crypto verify state");
-    EXPECT_TRUE(strstr(rendered, "cryptographic_verification_supported=0") != 0, "render verification support");
+    EXPECT_TRUE(strstr(rendered, "crypto_verify_state=ready-local-ed25519") != 0, "render crypto verify state");
+    EXPECT_TRUE(strstr(rendered, "cryptographic_verification_supported=1") != 0, "render verification support");
     EXPECT_TRUE(strstr(rendered, "cryptographic_verification_performed=0") != 0, "render verification performed");
     EXPECT_TRUE(strstr(rendered, "verified=0") != 0, "render verified flag");
     EXPECT_TRUE(strstr(rendered, "authority_usable=0") != 0, "render authority flag");
     EXPECT_TRUE(strstr(rendered, "capability_gate_allowed=0") != 0, "render capability gate flag");
     EXPECT_TRUE(strstr(rendered, "runtime_authority_granted=0") != 0, "render runtime flag");
+    EXPECT_TRUE(strstr(rendered, "status=crypto-verify-backend-ready") != 0, "render ready status");
     return 0;
 }
 
@@ -110,6 +112,7 @@ static int backend_fails_closed(void) {
     EXPECT_TRUE(backend.error == LATTICRA_SEAL_CRYPTO_VERIFY_BACKEND_UNSUPPORTED_ALGORITHM, "unsupported algorithm error");
     EXPECT_TRUE(latticra_seal_crypto_verify_backend_from_policy(&policy, 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_crypto_verify_backend_is_metadata_only(0) == 0, "null helper");
+    EXPECT_TRUE(latticra_seal_crypto_verify_backend_is_authority_neutral(0) == 0, "null authority helper");
     EXPECT_TRUE(latticra_seal_crypto_verify_backend_report(&backend, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_crypto_verify_backend_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null backend");

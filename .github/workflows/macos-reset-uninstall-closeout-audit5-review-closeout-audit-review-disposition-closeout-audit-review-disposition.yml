@@ -1,0 +1,22 @@
+name: macOS Reset/Uninstall Closeout Audit Review Disposition
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  closeout-audit5-review-closeout-audit-review-disposition-closeout-audit-review-disposition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Validate no-effect audit review disposition
+        run: |
+          lane=macos-reset-uninstall-live-runner-closeout-audit5-review
+          lane=$lane-closeout-audit-review-disposition-closeout-audit-review-disposition
+          make "$lane"

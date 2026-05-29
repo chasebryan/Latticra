@@ -1,3 +1,6 @@
+#if defined(__APPLE__) && !defined(_DARWIN_C_SOURCE)
+#define _DARWIN_C_SOURCE
+#endif
 #define _POSIX_C_SOURCE 200809L
 #ifdef __APPLE__
 #define _DARWIN_C_SOURCE 1
@@ -33,13 +36,27 @@ static void join_path(char *buffer, size_t buffer_len, const char *dir, const ch
     assert((size_t)written < buffer_len);
 }
 
+static const char *private_tmp_root(void)
+{
+    const char *root = getenv("TMPDIR");
+    return (root != NULL && root[0] != '\0') ? root : "/tmp";
+}
+
 static void setup_fake_path(char *dir_template, size_t dir_template_len)
 {
     char command_path[512];
+    const char *tmp_root = private_tmp_root();
+    const char *separator = tmp_root[strlen(tmp_root) - 1u] == '/' ? "" : "/";
+    int written;
     char *dir;
 
-    assert(dir_template_len > strlen("/tmp/latticra-fedora-live-XXXXXX"));
-    strcpy(dir_template, "/tmp/latticra-fedora-live-XXXXXX");
+    written = snprintf(dir_template,
+                       dir_template_len,
+                       "%s%slatticra-fedora-live.XXXXXX",
+                       tmp_root,
+                       separator);
+    assert(written > 0);
+    assert((size_t)written < dir_template_len);
     dir = mkdtemp(dir_template);
     assert(dir != NULL);
 
@@ -55,9 +72,28 @@ static void setup_fake_path(char *dir_template, size_t dir_template_len)
     assert(setenv("PATH", dir, 1) == 0);
 }
 
+static void cleanup_fake_path(const char *dir)
+{
+    char command_path[512];
+
+    join_path(command_path, sizeof(command_path), dir, "rpm");
+    (void)remove(command_path);
+    join_path(command_path, sizeof(command_path), dir, "dnf");
+    (void)remove(command_path);
+    join_path(command_path, sizeof(command_path), dir, "rpmbuild");
+    (void)remove(command_path);
+    join_path(command_path, sizeof(command_path), dir, "rpmlint");
+    (void)remove(command_path);
+    join_path(command_path, sizeof(command_path), dir, "os-release");
+    (void)remove(command_path);
+    join_path(command_path, sizeof(command_path), dir, "latticra.rpm");
+    (void)remove(command_path);
+    (void)rmdir(dir);
+}
+
 static void live_adapter_captures_fixture_and_forwards_to_classifier(void)
 {
-    char tmp_dir[64];
+    char tmp_dir[1024];
     char os_release_path[512];
     char rpm_path[512];
     char report[LATTICRA_FEDORA_LIVE_ADAPTER_REPORT_MAX];
@@ -121,11 +157,12 @@ static void live_adapter_captures_fixture_and_forwards_to_classifier(void)
     assert(strstr(report, "install_command_allowed=0") != NULL);
     assert(strstr(report, "host_mutation_performed=0") != NULL);
     assert(strstr(report, "host_install_performed=0") != NULL);
+    cleanup_fake_path(tmp_dir);
 }
 
 static void unreadable_os_release_becomes_partial_and_blocked(void)
 {
-    char tmp_dir[64];
+    char tmp_dir[1024];
     char missing_path[512];
     char rpm_path[512];
     latticra_fedora_live_snapshot_adapter_result_t result;
@@ -155,11 +192,12 @@ static void unreadable_os_release_becomes_partial_and_blocked(void)
     assert(result.capture.preflight.denial == LATTICRA_FEDORA_PREFLIGHT_DENIAL_NON_FEDORA_HOST);
     assert(result.host_mutation_performed == 0);
     assert(result.host_install_performed == 0);
+    cleanup_fake_path(tmp_dir);
 }
 
 static void missing_local_rpm_is_forwarded_as_blocked(void)
 {
-    char tmp_dir[64];
+    char tmp_dir[1024];
     char os_release_path[512];
     char missing_rpm_path[512];
     latticra_fedora_live_snapshot_adapter_result_t result;
@@ -186,6 +224,7 @@ static void missing_local_rpm_is_forwarded_as_blocked(void)
     assert(result.capture.preflight.denial == LATTICRA_FEDORA_PREFLIGHT_DENIAL_LOCAL_RPM_MISSING);
     assert(result.host_mutation_performed == 0);
     assert(result.host_install_performed == 0);
+    cleanup_fake_path(tmp_dir);
 }
 
 static void null_arguments_and_small_report_are_rejected(void)

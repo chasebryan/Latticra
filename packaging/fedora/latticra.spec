@@ -8,7 +8,7 @@ Version:        0.0.0
 Release:        0.1.local%{?dist}
 Summary:        Contract-first systems architecture and language project
 
-License:        LicenseRef-Latticra-TBD
+License:        AGPL-3.0-or-later AND CC-BY-4.0
 URL:            https://github.com/Bryforge/Latticra
 Source0:        %{name}-%{version}.tar.gz
 

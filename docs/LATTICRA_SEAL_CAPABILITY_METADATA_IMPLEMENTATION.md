@@ -173,6 +173,9 @@ profile is stable
 status remains capability-metadata
 report_only remains one
 mode remains report-only
+unterminated input strings fail closed before copy
+unterminated result strings fail closed before render
+tampered authority or effect flags fail closed before render
 small report buffers fail closed
 null output fails closed
 empty capability name fails closed as missing capability

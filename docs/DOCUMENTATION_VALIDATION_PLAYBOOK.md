@@ -1,0 +1,152 @@
+# Documentation Validation Playbook
+
+Status: active documentation validation playbook
+Last updated: 2026-05-27 CDT
+Scope: documentation-only validation commands, command-example checks, visual-asset checks, link checks, public-entry checks, status-record checks, impact-radius checks, freshness and lifecycle checks, estimate checks, subsystem guards, platform guards, and failure handling.
+
+## Purpose
+
+This playbook explains which validation checks to run for documentation-only changes.
+
+Use it with [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md), [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md), [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md), [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), and [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md).
+
+Validation should prove only the documentation claim being made. It should not be used to imply production readiness, security guarantees, installer authority, package approval, runtime authority, or product readiness.
+
+## Validation Levels
+
+| Level | Use when | Minimum checks |
+| --- | --- | --- |
+| Hygiene | Any documentation file changes. | `git diff --check`, trailing-whitespace check. |
+| Local links | New or changed Markdown links. | Local Markdown link sanity check over touched files. |
+| Command examples | Runnable command snippets, validation command lists, install/update/reset/uninstall commands, platform prerequisites, or public HTML command examples change. | Apply [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), local link or href checks, public-entry guard when public examples change, and exact command guard when the example names validation. |
+| Visual assets | Screenshots, diagrams, public images, Markdown images, generated visuals, presentation visuals, social/review cards, or `docs/assets/` files change. | Apply [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md), check image paths, alt text, public/source consistency, and public-entry guard when public visuals change. |
+| Status records | Status record, status-index entry, current-status mirror, estimate source, or public-entry alignment status note changes. | Apply [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), local link check, public-entry guard when public mirrors change, estimate guard when values change, and exact source guard when named. |
+| Impact radius | A change might affect mirrors, source records, public HTML, status, non-claims, validation paths, or reader routes. | Apply [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) and run the checks for the selected radius. |
+| Public entry | README, docs hub, map, public site pages, status index, project notes, or strategy docs change. | `sh scripts/test-project-strategy-status-framework.sh` plus [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md) review when static HTML changes. |
+| Freshness and lifecycle | Status labels, `Last updated` dates, stale records, superseded records, archive boundaries, or lifecycle state change. | Local link check plus [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) review and a review packet outcome when public wording changes. |
+| Estimate mirror | Completion estimates or public estimate tables change. | `sh scripts/test-current-estimate-table-source-alignment.sh`. |
+| Seal docs | Seal README, Seal status, Seal public wording, or Seal source records change. | `sh scripts/test-latticra-seal-docs.sh` plus exact Seal guard. |
+| Platform docs | Fedora, Ubuntu, openSUSE, Debian, FreeBSD, OpenBSD, macOS, installer, or package posture changes. | Platform workflow guard plus exact platform guard. |
+| Subsystem docs | Runtime, Nucleus, Lat, LIR, L-UI, Nadia, boot preview, security, installer, package, or subsystem landing-page changes. | Exact guard named by the source or status record plus [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md) review when the landing page changes. |
+| Claim promotion | Public wording becomes stronger. | Stop unless contract, implementation, validation, status, non-claim update, traceability, and public-entry alignment all exist. |
+
+## Minimum Documentation-Only Check
+
+Run this for most documentation-only changes:
+
+```sh
+git diff --check
+sh scripts/test-project-strategy-status-framework.sh
+```
+
+Add a local link check for changed Markdown files when links are added or moved.
+
+Add an HTML `href` existence check when static public pages change.
+
+## Local Link Check
+
+Use a local Markdown link sanity check on the files you touched:
+
+```sh
+perl -MFile::Basename=dirname -e 'my $bad=0; for my $file (@ARGV) { open my $fh, q{<}, $file or die qq{$file: $!\n}; my $base = dirname($file); while (my $line = <$fh>) { while ($line =~ /\[[^\]]+\]\(([^)]+)\)/g) { my $target = $1; next if $target =~ /^(https?:|mailto:|#)/; $target =~ s/#.*\z//; next if $target eq q{}; my $path = $target =~ m{^/} ? $target : qq{$base/$target}; unless (-e $path) { print qq{$file:$.: missing $target\n}; $bad=1; } } } } exit $bad' FILES...
+```
+
+This check is intentionally local. It does not prove that a public claim is true; it only catches broken repository links.
+
+## Estimate And Status Checks
+
+Run the estimate source-alignment guard when a change touches:
+
+- public estimate tables;
+- overall completion percentage;
+- status dashboard estimate text;
+- roadmap estimate text;
+- `README.md`, `STATUS.md`, or `docs/status/CURRENT_STATUS.md` estimate mirrors.
+
+```sh
+sh scripts/test-current-estimate-table-source-alignment.sh
+```
+
+If this guard fails because source records and mirrors disagree, do not hand-edit the guard to force a pass. Fix the documented source or mirror drift, or keep the public claim unchanged.
+
+## Platform Checks
+
+Add platform guards when platform or package docs change:
+
+```sh
+sh scripts/test-fedora-developer-workflow.sh
+sh scripts/test-ubuntu-developer-workflow.sh
+sh scripts/test-opensuse-developer-workflow.sh
+```
+
+Also run the exact guard named by the platform source record when the change is narrower than the general workflow.
+
+Examples:
+
+```text
+Fedora RPM static validation -> run the Fedora static validation guard.
+Ubuntu notice/license wording -> run the Ubuntu notice or license guard.
+openSUSE rpmlint/osc wording -> run the openSUSE rpmlint or osc guard.
+macOS reset/uninstall wording -> run the matching macOS reset/uninstall guard.
+```
+
+## Seal Checks
+
+Run the Seal docs guard when any Seal public wording, Seal status row, Seal README, Seal public-entrypoint alignment, or Seal source record changes:
+
+```sh
+sh scripts/test-latticra-seal-docs.sh
+```
+
+Also run the exact Seal guard named by the changed status or implementation record when applicable.
+
+## Security Checks
+
+Security documentation changes should always preserve security non-claims.
+
+For security wording changes, validate:
+
+1. [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) does not block the wording.
+2. [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) permits the terminology.
+3. [`DOCUMENTATION_TRACEABILITY_MATRIX.md`](DOCUMENTATION_TRACEABILITY_MATRIX.md) identifies the source and non-claim boundary.
+4. The exact security, threat-model, supply-chain, memory-safety, or runtime-authority guard named by the source record passes.
+
+## Failure Handling
+
+When a documentation validation fails:
+
+1. Read the failing message before editing.
+2. Identify whether the failure is link drift, mirror drift, status drift, freshness drift, lifecycle drift, guard expectation drift, or claim drift.
+3. Fix the documentation source or mirror that is wrong.
+4. Do not weaken non-claims to make a public summary sound better.
+5. Do not edit guard scripts for documentation-only convenience.
+6. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) when source records, public pages, mirrors, estimates, non-claims, or validation expectations disagree.
+7. If the stronger wording lacks evidence, demote the wording and record the blocked claim in the review packet.
+
+## Review Packet Fields
+
+When using [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), put the selected commands in `validation_commands`.
+
+Use `blocked_missing_validation` when a claim would require a guard or evidence record that does not exist yet.
+
+Use `blocked_public_entry_drift` when public pages and source records disagree.
+
+Use `accepted_navigation_only` only when links or route ordering changed without changing claims.
+
+Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to record watch or failing dimensions before choosing validation for broad route, public HTML, platform, security, estimate, or subsystem landing-page changes.
+
+Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) to record date, lifecycle, stale-review, supersession, or archive boundaries before treating an older record as current public authority.
+
+Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) when deciding whether validation should stay at hygiene/link level or expand to public-entry, estimate, platform, security, Seal, subsystem, or exact source guards.
+
+Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when validating status record shape, status-index discoverability, current-status mirrors, public-entry alignment, non-claims, and boundary language.
+
+Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when validating that command examples state working directory, effect boundary, expected output, cleanup, and blocked adjacent claims.
+
+Use [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) when validating image paths, alt text, source context, visual freshness, captions, and visual non-claims.
+
+## Boundary
+
+This playbook validates documentation hygiene, traceability, and public-entry consistency.
+
+It does not validate production runtime behavior, installer safety, package publication, platform approval, security guarantees, host protection, network protection, cryptographic authority, or AI-agent execution control.

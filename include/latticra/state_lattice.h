@@ -31,7 +31,8 @@ typedef enum {
 typedef enum {
     LATTICRA_STATUS_OK = 0,
     LATTICRA_STATUS_NULL_ARGUMENT = 1,
-    LATTICRA_STATUS_BUFFER_TOO_SMALL = 2
+    LATTICRA_STATUS_BUFFER_TOO_SMALL = 2,
+    LATTICRA_STATUS_ALLOCATION_FAILED = 3
 } latticra_status_t;
 
 typedef struct {

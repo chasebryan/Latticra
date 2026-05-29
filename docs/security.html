@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security and Boundaries | Latticra</title>
+  <meta name="description" content="A public guide to Latticra safe testing, defensive threat-model posture, runtime boundary, effect gates, and security non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Security and Boundaries">
+  <meta property="og:description" content="Safe testing, report-only security posture, effect gates, runtime denial, and explicit non-claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Security</p>
+        <p class="eyebrow">Safe Testing and Non-Claims</p>
+        <h1>Security and boundaries</h1>
+        <p class="page-lede">
+          Latticra treats security-facing work as evidence-bound: no claim without evidence, no execution before a contract, no mutation before visibility, and no hidden effects.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <nav class="content-shell security-shortcuts" aria-label="Security section shortcuts">
+        <a href="#security-current-posture">
+          <span>01</span>
+          <strong>Posture</strong>
+        </a>
+        <a href="#security-report-areas">
+          <span>02</span>
+          <strong>Report Areas</strong>
+        </a>
+        <a href="#security-effect-gates">
+          <span>03</span>
+          <strong>Effect Gates</strong>
+        </a>
+        <a href="#security-runtime-boundary">
+          <span>04</span>
+          <strong>Runtime</strong>
+        </a>
+        <a href="#security-non-claims">
+          <span>05</span>
+          <strong>Non-Claims</strong>
+        </a>
+        <a href="#security-source-records">
+          <span>06</span>
+          <strong>Sources</strong>
+        </a>
+      </nav>
+
+      <div id="security-current-posture" class="content-shell security-intro security-anchor">
+        <div>
+          <p class="eyebrow">Current Posture</p>
+          <h2>Defensive model, not production protection.</h2>
+        </div>
+        <p>
+          Current security work is mostly parser validation, deterministic diagnostics, source spans, denied requests, metadata reports, effect classification, and public non-claims. Latticra does not currently provide a hardened sandbox, malware prevention, ransomware prevention, kernel isolation, production runtime, or security certification.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid">
+        <article>
+          <span>01</span>
+          <h3>Test only what you own</h3>
+          <p>Use local fixtures, local files, and systems where you have explicit permission.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Report privately</h3>
+          <p>Do not publish exploit details, secrets, payloads, or reproduction steps in public issues.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Prefer minimal fixtures</h3>
+          <p>Parser and source-handling reports should use small deterministic cases.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Keep effects visible</h3>
+          <p>Unknown, ambiguous, or unclassified effects should remain denied.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="security-report-areas" class="section-band section-band-muted security-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Security-Relevant Areas</p>
+        <h2>What reports are most useful right now.</h2>
+        <p>
+          The current project is early, but security reports are useful when they find a concrete mismatch between code, tests, contracts, and public claims.
+        </p>
+      </div>
+      <div class="content-shell security-scope-grid">
+        <article>
+          <h3>Parser safety</h3>
+          <p>Malformed source, oversized input, unchecked buffers, string escapes, literal NUL handling, and source-span confusion.</p>
+        </article>
+        <article>
+          <h3>Diagnostics and reports</h3>
+          <p>Cases where rejected behavior becomes unclear, ambiguous, hidden, or reported as accepted.</p>
+        </article>
+        <article>
+          <h3>Boundary bypass</h3>
+          <p>Unknown requests, unknown effects, future-gated actions, or operator confirmation being treated as permission.</p>
+        </article>
+        <article>
+          <h3>Claim overreach</h3>
+          <p>Documentation, status, examples, or UI language that overstates security maturity or production readiness.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="security-effect-gates" class="section-band security-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Effect Gates</p>
+        <h2>Classify before handling.</h2>
+        <p>
+          Latticra's effect model is conservative: no hidden mutation, no hidden network behavior, and no implied runtime authority.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-open">
+          <span>Allowed for now</span>
+          <h3>none</h3>
+          <p>Fixtures, validation, reports, classification, and preview metadata.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Limited</span>
+          <h3>read</h3>
+          <p>Approved local inspection only after a source contract and visible report path.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Blocked</span>
+          <h3>mutation</h3>
+          <p>Local or host mutation needs explicit gates, policy, reports, and rollback/failure behavior.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Blocked</span>
+          <h3>network / hardware / boot</h3>
+          <p>External, hardware, boot, recovery, and server behavior remain denied until future evidence gates exist.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="security-runtime-boundary" class="section-band section-band-muted security-anchor">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Runtime Boundary</p>
+          <h2>The current runtime posture is disabled-by-default.</h2>
+          <p>
+            The runtime boundary is the line between validated metadata/report/classification surfaces and future behavior that could execute, mutate, contact networks, affect recovery, touch hardware, or claim authority.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Latticra runtime security boundary">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">Parsing, validation, classification, previews, deterministic reports, no-effect task records, and report-only dry runs.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Command execution, Lat/LIR execution, file I/O, network I/O, server behavior, recovery, rollback, hardware, boot, and sandbox claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Operator confirmation</span>
+            <p role="cell">May be metadata in future work, but it must not override runtime policy in the current boundary.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security-non-claims" class="section-band security-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Non-Claims</p>
+        <h2>Do not describe previews as protection.</h2>
+        <p>
+          These are intentionally blocked as public claims until contracts, implementation, tests, status records, and reproducible evidence support them.
+        </p>
+      </div>
+      <div class="content-shell security-nonclaim-grid">
+        <article>
+          <h3>No hardened sandbox</h3>
+          <p>Current metadata and validation surfaces are not process isolation or sandbox escape resistance.</p>
+        </article>
+        <article>
+          <h3>No malware or ransomware prevention</h3>
+          <p>Denied reports are not host protection, malware containment, or ransomware resistance.</p>
+        </article>
+        <article>
+          <h3>No production cryptography claim</h3>
+          <p>Seal and key records are evidence surfaces, not production cryptographic enforcement.</p>
+        </article>
+        <article>
+          <h3>No OS completeness</h3>
+          <p>Latticra is not a kernel, bootable image, daily-driver platform, or production systems platform.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="security-source-records" class="section-band section-band-muted security-anchor">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records when discussing security posture.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="https://github.com/Bryforge/Latticra/blob/main/SECURITY.md"><strong>Security policy</strong><span>Reporting path, safe testing rules, and current security scope.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>NSA, CISA, FBI, and NIST source-tracked allocation for future security work.</span></a>
+        <a href="MEMORY_SAFETY_ROADMAP.md"><strong>Memory-safety roadmap</strong><span>Component inventory, C/C++ mitigation posture, and promotion blockers.</span></a>
+        <a href="supply-chain.html"><strong>Supply-chain gates</strong><span>Reader-facing baseline for CI, dependency, SBOM, update, runtime-authority, and release blockers.</span></a>
+        <a href="crypto-assurance.html"><strong>Cryptographic assurance and key management</strong><span>Reader-facing guide to FIPS/CMVP claim gates, key lifecycle, randomness, and no production crypto claims.</span></a>
+        <a href="NON_CLAIMS.md"><strong>Non-claims</strong><span>Unsupported security, OS, hardware, and production-readiness claims.</span></a>
+        <a href="runtime.html"><strong>Runtime boundary</strong><span>Default-deny runtime classification and no-effect Nucleus reports.</span></a>
+        <a href="nadia.html"><strong>Nadia boundaries</strong><span>Offline AI safety posture, tool denial, and runtime non-claims.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Install evidence, package guards, and disposable VM gates.</span></a>
+        <a href="DEFENSIVE_THREAT_MODEL_CONTRACT.md"><strong>Threat model</strong><span>Defensive vocabulary, assets, abuse cases, and evidence expectations.</span></a>
+        <a href="incident-response.html"><strong>Incident response boundary</strong><span>Reader-facing guide to reporting routes, evidence preservation, response gates, and incident-response non-claims.</span></a>
+        <a href="CYBER_INCIDENT_REPORTING_RESPONSE_BASELINE.md"><strong>Cyber incident reporting and response baseline</strong><span>Exact source record for reporting routes, response gates, and closed response authority.</span></a>
+        <a href="vulnerability-management.html"><strong>Vulnerability management release gate</strong><span>Reader-facing guide to KEV/NVD review, exception records, release blocking, and product-security non-claims.</span></a>
+        <a href="VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md"><strong>Vulnerability management release gate baseline</strong><span>KEV/NVD review, disclosure handling, release blocking, and no product-security claims.</span></a>
+        <a href="CRYPTOGRAPHIC_ASSURANCE_KEY_MANAGEMENT_BASELINE.md"><strong>Cryptographic assurance and key management baseline</strong><span>FIPS/CMVP claim gates, key lifecycle, randomness, and no production crypto claims.</span></a>
+        <a href="identity-access.html"><strong>Identity, credential, and access management</strong><span>Reader-facing guide to privileged access, phishing-resistant MFA planning, account lifecycle, service identity, and no hosted access claims.</span></a>
+        <a href="IDENTITY_CREDENTIAL_ACCESS_MANAGEMENT_BASELINE.md"><strong>Identity, credential, and access management baseline</strong><span>Privileged access, phishing-resistant MFA planning, account lifecycle, service identity, and no hosted access claims.</span></a>
+        <a href="security-logging.html"><strong>Security logging, monitoring, and detection</strong><span>Reader-facing guide to event-source inventory, audit events, redaction, retention, triage, and no monitoring-service claims.</span></a>
+        <a href="SECURITY_LOGGING_MONITORING_BASELINE.md"><strong>Security logging, monitoring, and detection baseline</strong><span>Event-source inventory, audit events, redaction, retention, triage, and no monitoring-service claims.</span></a>
+        <a href="backup-recovery.html"><strong>Backup, recovery, and cyber resilience</strong><span>Reader-facing guide to backup scope, restore testing, recovery prioritization, rollback planning, RTO/RPO, and no recovery-service claims.</span></a>
+        <a href="BACKUP_RECOVERY_RESILIENCE_BASELINE.md"><strong>Backup, recovery, and cyber resilience baseline</strong><span>Backup scope, restore testing, recovery prioritization, rollback planning, and no recovery-service claims.</span></a>
+        <a href="configuration-change.html"><strong>Secure configuration and change management</strong><span>Reader-facing guide to configuration inventory, secure baselines, approved changes, rollback planning, drift detection, exceptions, and no hardening claims.</span></a>
+        <a href="SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md"><strong>Secure configuration and change management baseline</strong><span>Configuration inventory, secure baselines, approved changes, rollback planning, drift detection, and no hardening claims.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Reader-facing guide to network inventory, internet exposure, ingress/egress policy, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</span></a>
+        <a href="NETWORK_EXPOSURE_REMOTE_ACCESS_BASELINE.md"><strong>Network exposure and remote access baseline</strong><span>Network inventory, internet exposure, ingress/egress policy, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</span></a>
+        <a href="data-protection.html"><strong>Data classification and protection</strong><span>Reader-facing guide to data inventory, sensitive-data flows, PII review, minimization, retention, disposal, redaction, and no customer-data claims.</span></a>
+        <a href="DATA_CLASSIFICATION_PROTECTION_BASELINE.md"><strong>Data classification and protection baseline</strong><span>Data inventory, sensitive-data flows, PII review, minimization, retention, disposal, redaction, and no customer-data claims.</span></a>
+        <a href="AI_AGENTIC_AUTOMATION_SECURITY_BASELINE.md"><strong>AI and agentic automation security baseline</strong><span>AI inventory, model provenance, prompt/context boundaries, tool authority, human approval, monitoring, and no AI runtime claims.</span></a>
+        <a href="PLATFORM_BOOT_FIRMWARE_INTEGRITY_BASELINE.md"><strong>Platform boot and firmware integrity baseline</strong><span>Boot mode, Secure Boot, TPM/PCR, firmware update and recovery evidence, and no platform-integrity claims.</span></a>
+        <a href="SECURITY_VALIDATION_ASSESSMENT_BASELINE.md"><strong>Security validation and assessment baseline</strong><span>Assessment scope, ROE, authorization, evidence, remediation, retest, independent review, and no validation claims.</span></a>
+        <a href="SUPPLY_CHAIN_SECURITY_BASELINE.md"><strong>Supply-chain baseline record</strong><span>Workflow authority, local guard scripts, and source archive fixture controls.</span></a>
+        <a href="ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md"><strong>Zero-trust runtime authority baseline</strong><span>Per-request authority prerequisites, identity/resource visibility, and no implicit trust.</span></a>
+        <a href="updater-delivery.html"><strong>Signed-updater delivery gate</strong><span>Reader-facing guide to the closed update-delivery gate, no-effect fixtures, and blocked network self-update authority.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"><strong>Signed-updater gate</strong><span>Closed future update-delivery gate before manifests, signatures, verification, rollback, validation, and receipts exist.</span></a>
+        <a href="RUNTIME_BOUNDARY_CONTRACT.md"><strong>Runtime boundary</strong><span>Disabled-by-default runtime posture and future-gate rules.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra security and boundaries.</span>
+      <nav class="footer-links" aria-label="Security footer navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

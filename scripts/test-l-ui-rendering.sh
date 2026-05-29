@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-l-ui-rendering.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/l_ui_parser.c \
@@ -12,6 +15,6 @@ cc $CFLAGS \
   src/lir.c \
   src/l_ui_renderer.c \
   tests/l_ui_rendering_invariants.c \
-  -o /tmp/latticra-l-ui-rendering-invariants
+  -o "$tmpdir/latticra-l-ui-rendering-invariants"
 
-/tmp/latticra-l-ui-rendering-invariants
+"$tmpdir/latticra-l-ui-rendering-invariants"

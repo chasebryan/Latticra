@@ -1,0 +1,18 @@
+name: latticra-seal-signed-receipt-proof-path-status
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  signed-receipt-proof-path-status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - run: sh scripts/test-latticra-seal-signed-receipt-proof-path-status.sh

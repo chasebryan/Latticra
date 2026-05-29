@@ -223,6 +223,28 @@ static int find_unterminated_string_span(
     return 0;
 }
 
+static int find_literal_nul_span(
+    const char *source,
+    size_t source_len,
+    latticra_l_ui_source_span_t *span) {
+    size_t index;
+
+    if (source == 0) {
+        span_default(span);
+        return 0;
+    }
+
+    for (index = 0u; index < source_len; index++) {
+        if (source[index] == '\0') {
+            span_for_range(source, source_len, index, index + 1u, span);
+            return 1;
+        }
+    }
+
+    span_default(span);
+    return 0;
+}
+
 static int is_upper_hex_digit(unsigned char byte) {
     return (byte >= (unsigned char)'0' && byte <= (unsigned char)'9') ||
            (byte >= (unsigned char)'A' && byte <= (unsigned char)'F');
@@ -385,6 +407,7 @@ static void set_safe_defaults(latticra_l_ui_parse_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -507,8 +530,8 @@ static latticra_l_ui_parse_error_t validate_required_bindings_span(
         "field external bind state.external_effect", "field requested bind preview.requested_effect",
         "field request bind preview.request", "field policy bind preview.policy", "field reason bind preview.reason",
         "field executed bind preview.executed", "field mutation bind preview.mutation_allowed",
-        "field server bind preview.server_interaction_allowed", "field recovery bind preview.recovery_allowed",
-        "field hardware bind preview.hardware_allowed"
+        "field server bind preview.server_interaction_allowed", "field network bind preview.network_allowed",
+        "field recovery bind preview.recovery_allowed", "field hardware bind preview.hardware_allowed"
     };
     size_t index;
     for (index = 0u; index < sizeof(bindings) / sizeof(bindings[0]); index++) {
@@ -567,6 +590,7 @@ latticra_status_t latticra_l_ui_parse_source(
 
     if (source_len == 0u) return set_error(result, LATTICRA_L_UI_PARSE_EMPTY_SOURCE);
     if (source_len > LATTICRA_L_UI_SOURCE_MAX) return set_error(result, LATTICRA_L_UI_PARSE_SOURCE_TOO_LARGE);
+    if (find_literal_nul_span(source, source_len, &span)) return set_error_with_span(result, LATTICRA_L_UI_PARSE_LITERAL_NUL_IN_STRING, &span);
     if (find_unterminated_string_span(source, source_len, &span)) return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNTERMINATED_STRING, &span);
     if (find_unbalanced_brace_span(source, source_len, &span)) return set_error_with_span(result, LATTICRA_L_UI_PARSE_UNBALANCED_BRACE, &span);
 
@@ -610,7 +634,7 @@ latticra_status_t latticra_l_ui_parse_source(
     copy_literal(result->effect, sizeof(result->effect), "none");
     copy_literal(result->boundary, sizeof(result->boundary), "preview_only");
     result->rail_count = 9u;
-    result->field_count = 23u;
+    result->field_count = 24u;
     result->error = LATTICRA_L_UI_PARSE_OK;
     result->line = 1u;
     result->column = 1u;
@@ -642,6 +666,7 @@ latticra_status_t latticra_l_ui_parse_result_report(
         "execution_allowed=%d\n"
         "mutation_allowed=%d\n"
         "server_allowed=%d\n"
+        "network_allowed=%d\n"
         "recovery_allowed=%d\n"
         "hardware_allowed=%d\n"
         "span_start_offset=%zu\n"
@@ -663,6 +688,7 @@ latticra_status_t latticra_l_ui_parse_result_report(
         result->execution_allowed,
         result->mutation_allowed,
         result->server_allowed,
+        result->network_allowed,
         result->recovery_allowed,
         result->hardware_allowed,
         result->span.start_offset,

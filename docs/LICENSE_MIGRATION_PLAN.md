@@ -5,7 +5,7 @@ Scope: path-by-path transition planning after the open ecosystem policy.
 
 ## Purpose
 
-This plan defines how Latticra should move from a repository-wide Apache-2.0 default toward the open ecosystem direction without silently relicensing files.
+This plan defines how Latticra should move from a repository-wide Apache-2.0 default toward the hybrid open ecosystem direction without silently relicensing files.
 
 The goal is to keep Latticra open, auditable, transparent, and community-improvable while preserving a clear legal trail for each migration step.
 
@@ -14,14 +14,16 @@ The goal is to keep Latticra open, auditable, transparent, and community-improva
 Current canonical root license text:
 
 ```text
-LICENSE: Apache-2.0
+LICENSE: hybrid license overview
 ```
 
 Current policy direction:
 
 ```text
-new software work: AGPL-3.0-or-later
-existing files: current license until intentionally migrated
+core software work: AGPL-3.0-or-later
+adoption-facing helpers: Apache-2.0
+documentation and handbooks: CC-BY-4.0
+existing code files: current license until intentionally migrated or otherwise marked
 branding: separate trademark and identity policy
 ```
 
@@ -30,6 +32,7 @@ Related records:
 ```text
 docs/OPEN_ECOSYSTEM_POLICY.md
 docs/LICENSE_POLICY.md
+docs/DOCUMENTATION_LICENSE.md
 CONTRIBUTING.md
 TRADEMARK_POLICY.md
 LICENSES/README.md
@@ -71,6 +74,7 @@ Purpose:
 ```text
 declare open ecosystem direction
 preserve existing license state
+record documentation license decision
 add contribution and identity policy
 add governance guard
 ```
@@ -84,7 +88,9 @@ Scope:
 ```text
 docs/LICENSE_MIGRATION_PLAN.md
 scripts/test-license-migration-plan.sh
+scripts/test-hybrid-license-posture.sh
 .github/workflows/license-migration-plan.yml
+.github/workflows/hybrid-license-posture.yml
 ```
 
 Purpose:
@@ -92,6 +98,7 @@ Purpose:
 ```text
 record migration phases
 require new-source SPDX direction to stay discoverable
+guard hybrid AGPL/Apache/CC-BY/trademark boundaries
 define first migration candidate paths
 avoid accidental whole-repository relicensing
 ```
@@ -152,7 +159,6 @@ runtime-boundary support
 scripts
 examples
 fixtures
-documentation
 assets
 ```
 
@@ -160,17 +166,21 @@ Do not assume all non-core paths should use the same license immediately.
 
 ## Documentation license decision
 
-Documentation license remains undecided in this plan.
+Documentation license is decided in this plan.
 
-Candidates for later review:
+The documentation and handbook license is:
 
 ```text
-AGPL-3.0-or-later with project software
-CC BY-SA 4.0 for standalone docs
-Apache-2.0 for legacy docs until migrated
+CC-BY-4.0
 ```
 
-A documentation license decision should be made in a separate PR.
+The path-level documentation license record is:
+
+```text
+docs/DOCUMENTATION_LICENSE.md
+```
+
+CC-BY-SA-4.0 may be used for future standalone handbook material only when a file or path-level notice explicitly marks that choice.
 
 ## Release checklist impact
 

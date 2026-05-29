@@ -52,6 +52,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -117,7 +118,7 @@ static int detailed_report_contains_all_fields(void) {
         "name=trace\n", "name=health\n", "name=risk\n", "name=lock\n", "name=dark_phase\n",
         "name=safe_portal\n", "name=rollback\n", "name=host\n", "name=external\n", "name=requested\n",
         "name=request\n", "name=policy\n", "name=reason\n", "name=executed\n", "name=mutation\n",
-        "name=server\n", "name=recovery\n", "name=hardware\n"
+        "name=server\n", "name=network\n", "name=recovery\n", "name=hardware\n"
     };
     latticra_l_ui_ast_result_t ast;
     char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
@@ -127,6 +128,7 @@ static int detailed_report_contains_all_fields(void) {
         EXPECT_TRUE(strstr(report, fields[index]) != 0, "required field exists");
     }
     EXPECT_TRUE(strstr(report, "binding=preview.server_interaction_allowed\n") != 0, "server binding exists");
+    EXPECT_TRUE(strstr(report, "binding=preview.network_allowed\n") != 0, "network binding exists");
     return 0;
 }
 
@@ -162,7 +164,7 @@ static int detailed_report_preserves_field_order(void) {
     EXPECT_TRUE(build_report(&ast, report, sizeof(report)) == 0, "field order report builds");
     EXPECT_TRUE(index_of(report, "[field 0]\nkind=field\nname=origin\n", &origin) == 0, "origin field index");
     EXPECT_TRUE(index_of(report, "[field 20]\nkind=field\nname=server\n", &server) == 0, "server field index");
-    EXPECT_TRUE(index_of(report, "[field 22]\nkind=field\nname=hardware\n", &hardware) == 0, "hardware field index");
+    EXPECT_TRUE(index_of(report, "[field 23]\nkind=field\nname=hardware\n", &hardware) == 0, "hardware field index");
     EXPECT_TRUE(origin < server && server < hardware, "field order preserved");
     return 0;
 }
@@ -241,6 +243,7 @@ static int detailed_report_preserves_no_effect_flags(void) {
     EXPECT_TRUE(strstr(report, "execution_allowed=0\n") != 0, "execution flag in report");
     EXPECT_TRUE(strstr(report, "mutation_allowed=0\n") != 0, "mutation flag in report");
     EXPECT_TRUE(strstr(report, "server_allowed=0\n") != 0, "server flag in report");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0, "network flag in report");
     EXPECT_TRUE(strstr(report, "recovery_allowed=0\n") != 0, "recovery flag in report");
     EXPECT_TRUE(strstr(report, "hardware_allowed=0\n") != 0, "hardware flag in report");
     return 0;
@@ -279,7 +282,7 @@ static int detailed_report_omits_unused_capacity_slots(void) {
     char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
     EXPECT_TRUE(build_report(&ast, report, sizeof(report)) == 0, "capacity report builds");
     EXPECT_TRUE(strstr(report, "[rail 9]") == 0, "unused rail omitted");
-    EXPECT_TRUE(strstr(report, "[field 23]") == 0, "unused field omitted");
+    EXPECT_TRUE(strstr(report, "[field 24]") == 0, "unused field omitted");
     EXPECT_TRUE(strstr(report, "[text 2]") == 0, "unused text omitted");
     return 0;
 }

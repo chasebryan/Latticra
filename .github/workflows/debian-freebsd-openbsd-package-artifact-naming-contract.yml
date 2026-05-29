@@ -1,0 +1,22 @@
+name: Debian FreeBSD OpenBSD Package Artifact Naming Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  debian-freebsd-openbsd-package-artifact-naming-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Debian FreeBSD OpenBSD package artifact naming contract guard
+        run: sh scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh

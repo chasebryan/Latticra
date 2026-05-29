@@ -40,6 +40,8 @@ static int default_request_denies_state_change(void) {
         "default does not change state");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "no external effect");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "default network denied");
     EXPECT_TRUE(result.denied == 1,
         "denied flag set");
     return 0;
@@ -71,10 +73,1454 @@ static int allowed_transition_changes_state(void) {
         "state change performed");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "external effect remains absent");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "allowed transition network denied");
     EXPECT_TRUE(result.denied == 0,
         "not denied");
     EXPECT_TRUE(strcmp(result.memory_map.map_status, "memory-map-seed-ready") == 0,
         "memory map ready");
+    return 0;
+}
+
+static int allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_transitions_are_metadata_only(void) {
+    latticra_kernel_state_request_t request;
+    latticra_kernel_state_result_t result;
+
+    EXPECT_TRUE(latticra_kernel_state_default_request(&request) == LATTICRA_STATUS_OK,
+        "request initialized for process state");
+    request.current_state = LATTICRA_KERNEL_STATE_MEMORY_MAP_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "process-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY,
+        "next process-table-ready");
+    EXPECT_TRUE(strcmp(result.process_table.table_status, "process-table-seed-ready") == 0,
+        "process table ready");
+    EXPECT_TRUE(result.process_table.process_spawn_allowed == 0,
+        "process spawn denied");
+    EXPECT_TRUE(result.process_table.context_switch_allowed == 0,
+        "context switch denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "process transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "process transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "syscall-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY,
+        "next syscall-table-ready");
+    EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
+        "syscall table ready");
+    EXPECT_TRUE(strcmp(result.process_table.table_status, "process-table-seed-ready") == 0,
+        "syscall transition keeps process table ready");
+    EXPECT_TRUE(result.syscall_table.syscall_dispatch_allowed == 0,
+        "syscall dispatch denied");
+    EXPECT_TRUE(result.syscall_table.file_io_allowed == 0,
+        "syscall file I/O denied");
+    EXPECT_TRUE(result.syscall_table.network_allowed == 0,
+        "syscall network denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "syscall transition aggregate network denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "syscall transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "syscall transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "ipc-table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_IPC_TABLE_READY,
+        "next ipc-table-ready");
+    EXPECT_TRUE(strcmp(result.ipc_table.table_status, "ipc-table-seed-ready") == 0,
+        "ipc table ready");
+    EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
+        "ipc transition keeps syscall table ready");
+    EXPECT_TRUE(strcmp(result.process_table.table_status, "process-table-seed-ready") == 0,
+        "ipc transition keeps process table ready");
+    EXPECT_TRUE(result.ipc_table.ipc_send_allowed == 0,
+        "ipc send denied");
+    EXPECT_TRUE(result.ipc_table.ipc_receive_allowed == 0,
+        "ipc receive denied");
+    EXPECT_TRUE(result.ipc_table.queue_mutation_allowed == 0,
+        "ipc queue mutation denied");
+    EXPECT_TRUE(result.ipc_table.endpoint_bind_allowed == 0,
+        "ipc endpoint bind denied");
+    EXPECT_TRUE(result.ipc_table.network_allowed == 0,
+        "ipc network denied");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "ipc transition aggregate network denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "ipc transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "ipc transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "vfs namespace transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY,
+        "next vfs-namespace-ready");
+    EXPECT_TRUE(strcmp(result.vfs_namespace.namespace_status, "vfs-namespace-seed-ready") == 0,
+        "vfs namespace ready");
+    EXPECT_TRUE(strcmp(result.ipc_table.table_status, "ipc-table-seed-ready") == 0,
+        "vfs transition keeps ipc table ready");
+    EXPECT_TRUE(strcmp(result.syscall_table.table_status, "syscall-table-seed-ready") == 0,
+        "vfs transition keeps syscall table ready");
+    EXPECT_TRUE(result.vfs_namespace.filesystem_lookup_allowed == 0,
+        "filesystem lookup denied");
+    EXPECT_TRUE(result.vfs_namespace.filesystem_read_allowed == 0,
+        "filesystem read denied");
+    EXPECT_TRUE(result.vfs_namespace.filesystem_write_allowed == 0,
+        "filesystem write denied");
+    EXPECT_TRUE(result.vfs_namespace.namespace_mutation_allowed == 0,
+        "namespace mutation denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "vfs transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "vfs transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "device registry transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY,
+        "next device-registry-ready");
+    EXPECT_TRUE(strcmp(result.device_registry.registry_status, "device-registry-seed-ready") == 0,
+        "device registry ready");
+    EXPECT_TRUE(strcmp(result.vfs_namespace.namespace_status, "vfs-namespace-seed-ready") == 0,
+        "device transition keeps vfs namespace ready");
+    EXPECT_TRUE(result.device_registry.device_open_allowed == 0,
+        "device open denied");
+    EXPECT_TRUE(result.device_registry.device_read_allowed == 0,
+        "device read denied");
+    EXPECT_TRUE(result.device_registry.device_write_allowed == 0,
+        "device write denied");
+    EXPECT_TRUE(result.device_registry.driver_bind_allowed == 0,
+        "driver bind denied");
+    EXPECT_TRUE(result.device_registry.hardware_effect_allowed == 0,
+        "hardware effect denied");
+    EXPECT_TRUE(result.device_registry.host_effect_allowed == 0,
+        "host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "device transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "device transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "driver catalog transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY,
+        "next driver-catalog-ready");
+    EXPECT_TRUE(strcmp(result.driver_catalog.catalog_status, "driver-catalog-seed-ready") == 0,
+        "driver catalog ready");
+    EXPECT_TRUE(strcmp(result.device_registry.registry_status, "device-registry-seed-ready") == 0,
+        "driver transition keeps device registry ready");
+    EXPECT_TRUE(strcmp(result.vfs_namespace.namespace_status, "vfs-namespace-seed-ready") == 0,
+        "driver transition keeps vfs namespace ready");
+    EXPECT_TRUE(result.driver_catalog.driver_probe_allowed == 0,
+        "driver probe denied");
+    EXPECT_TRUE(result.driver_catalog.driver_load_allowed == 0,
+        "driver load denied");
+    EXPECT_TRUE(result.driver_catalog.driver_bind_allowed == 0,
+        "driver bind denied");
+    EXPECT_TRUE(result.driver_catalog.interrupt_allowed == 0,
+        "interrupt denied");
+    EXPECT_TRUE(result.driver_catalog.dma_allowed == 0,
+        "dma denied");
+    EXPECT_TRUE(result.driver_catalog.hardware_effect_allowed == 0,
+        "driver hardware effect denied");
+    EXPECT_TRUE(result.driver_catalog.host_effect_allowed == 0,
+        "driver host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "driver transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "driver transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "interrupt table transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY,
+        "next interrupt-table-ready");
+    EXPECT_TRUE(strcmp(result.interrupt_table.table_status, "interrupt-table-seed-ready") == 0,
+        "interrupt table ready");
+    EXPECT_TRUE(strcmp(result.driver_catalog.catalog_status, "driver-catalog-seed-ready") == 0,
+        "interrupt transition keeps driver catalog ready");
+    EXPECT_TRUE(strcmp(result.device_registry.registry_status, "device-registry-seed-ready") == 0,
+        "interrupt transition keeps device registry ready");
+    EXPECT_TRUE(result.interrupt_table.interrupt_mask_allowed == 0,
+        "interrupt mask denied");
+    EXPECT_TRUE(result.interrupt_table.interrupt_unmask_allowed == 0,
+        "interrupt unmask denied");
+    EXPECT_TRUE(result.interrupt_table.interrupt_dispatch_allowed == 0,
+        "interrupt dispatch denied");
+    EXPECT_TRUE(result.interrupt_table.interrupt_ack_allowed == 0,
+        "interrupt ack denied");
+    EXPECT_TRUE(result.interrupt_table.dma_allowed == 0,
+        "interrupt dma denied");
+    EXPECT_TRUE(result.interrupt_table.hardware_effect_allowed == 0,
+        "interrupt hardware effect denied");
+    EXPECT_TRUE(result.interrupt_table.host_effect_allowed == 0,
+        "interrupt host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "interrupt transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "interrupt transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "timer source transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY,
+        "next timer-source-ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "timer source ready");
+    EXPECT_TRUE(strcmp(result.interrupt_table.table_status, "interrupt-table-seed-ready") == 0,
+        "timer transition keeps interrupt table ready");
+    EXPECT_TRUE(strcmp(result.driver_catalog.catalog_status, "driver-catalog-seed-ready") == 0,
+        "timer transition keeps driver catalog ready");
+    EXPECT_TRUE(result.timer_source.timer_count == 4u,
+        "timer source count");
+    EXPECT_TRUE(result.timer_source.timer_tick_allowed == 0,
+        "timer tick denied");
+    EXPECT_TRUE(result.timer_source.timer_arm_allowed == 0,
+        "timer arm denied");
+    EXPECT_TRUE(result.timer_source.timer_disarm_allowed == 0,
+        "timer disarm denied");
+    EXPECT_TRUE(result.timer_source.scheduler_tick_allowed == 0,
+        "timer scheduler tick denied");
+    EXPECT_TRUE(result.timer_source.preemption_allowed == 0,
+        "timer preemption denied");
+    EXPECT_TRUE(result.timer_source.time_read_allowed == 0,
+        "timer time read denied");
+    EXPECT_TRUE(result.timer_source.hardware_effect_allowed == 0,
+        "timer hardware effect denied");
+    EXPECT_TRUE(result.timer_source.host_effect_allowed == 0,
+        "timer host effect denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "timer transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "timer transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler tick transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY,
+        "next scheduler-tick-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status, "scheduler-tick-seed-ready") == 0,
+        "scheduler tick ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "scheduler tick transition keeps timer source ready");
+    EXPECT_TRUE(strcmp(result.interrupt_table.table_status, "interrupt-table-seed-ready") == 0,
+        "scheduler tick transition keeps interrupt table ready");
+    EXPECT_TRUE(result.scheduler_tick.tick_count == 4u,
+        "scheduler tick count");
+    EXPECT_TRUE(result.scheduler_tick.timer_tick_allowed == 0,
+        "scheduler tick timer tick denied");
+    EXPECT_TRUE(result.scheduler_tick.scheduler_tick_allowed == 0,
+        "scheduler tick denied");
+    EXPECT_TRUE(result.scheduler_tick.run_queue_mutation_allowed == 0,
+        "scheduler tick run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_tick.context_switch_allowed == 0,
+        "scheduler tick context switch denied");
+    EXPECT_TRUE(result.scheduler_tick.preemption_allowed == 0,
+        "scheduler tick preemption denied");
+    EXPECT_TRUE(result.scheduler_tick.time_accounting_allowed == 0,
+        "scheduler tick time accounting denied");
+    EXPECT_TRUE(result.scheduler_tick.time_read_allowed == 0,
+        "scheduler tick time read denied");
+    EXPECT_TRUE(result.scheduler_tick.process_wake_allowed == 0,
+        "scheduler tick process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler tick transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler tick transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "run queue transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUN_QUEUE_READY,
+        "next run-queue-ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "run queue ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status, "scheduler-tick-seed-ready") == 0,
+        "run queue transition keeps scheduler tick ready");
+    EXPECT_TRUE(strcmp(result.timer_source.timer_status, "timer-source-seed-ready") == 0,
+        "run queue transition keeps timer source ready");
+    EXPECT_TRUE(result.run_queue.queue_count == 4u,
+        "run queue count");
+    EXPECT_TRUE(result.run_queue.run_queue_mutation_allowed == 0,
+        "run queue mutation denied");
+    EXPECT_TRUE(result.run_queue.enqueue_allowed == 0,
+        "run queue enqueue denied");
+    EXPECT_TRUE(result.run_queue.dequeue_allowed == 0,
+        "run queue dequeue denied");
+    EXPECT_TRUE(result.run_queue.dispatch_allowed == 0,
+        "run queue dispatch denied");
+    EXPECT_TRUE(result.run_queue.context_switch_allowed == 0,
+        "run queue context switch denied");
+    EXPECT_TRUE(result.run_queue.preemption_allowed == 0,
+        "run queue preemption denied");
+    EXPECT_TRUE(result.run_queue.time_accounting_allowed == 0,
+        "run queue time accounting denied");
+    EXPECT_TRUE(result.run_queue.process_wake_allowed == 0,
+        "run queue process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "run queue transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "run queue transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "context switch transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY,
+        "next context-switch-ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "context switch ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "context switch transition keeps run queue ready");
+    EXPECT_TRUE(strcmp(result.scheduler_tick.tick_status, "scheduler-tick-seed-ready") == 0,
+        "context switch transition keeps scheduler tick ready");
+    EXPECT_TRUE(result.context_switch.switch_count == 4u,
+        "context switch count");
+    EXPECT_TRUE(result.context_switch.context_switch_allowed == 0,
+        "context switch denied");
+    EXPECT_TRUE(result.context_switch.register_save_allowed == 0,
+        "context switch register save denied");
+    EXPECT_TRUE(result.context_switch.register_restore_allowed == 0,
+        "context switch register restore denied");
+    EXPECT_TRUE(result.context_switch.stack_switch_allowed == 0,
+        "context switch stack denied");
+    EXPECT_TRUE(result.context_switch.address_space_switch_allowed == 0,
+        "context switch address space denied");
+    EXPECT_TRUE(result.context_switch.dispatch_allowed == 0,
+        "context switch dispatch denied");
+    EXPECT_TRUE(result.context_switch.run_queue_mutation_allowed == 0,
+        "context switch run queue mutation denied");
+    EXPECT_TRUE(result.context_switch.preemption_allowed == 0,
+        "context switch preemption denied");
+    EXPECT_TRUE(result.context_switch.time_accounting_allowed == 0,
+        "context switch time accounting denied");
+    EXPECT_TRUE(result.context_switch.process_wake_allowed == 0,
+        "context switch process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "context switch transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "context switch transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "time accounting transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY,
+        "next time-accounting-ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "time accounting ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "time accounting transition keeps context switch ready");
+    EXPECT_TRUE(strcmp(result.run_queue.queue_status, "run-queue-seed-ready") == 0,
+        "time accounting transition keeps run queue ready");
+    EXPECT_TRUE(result.time_accounting.account_count == 4u,
+        "time accounting count");
+    EXPECT_TRUE(result.time_accounting.time_accounting_allowed == 0,
+        "time accounting denied");
+    EXPECT_TRUE(result.time_accounting.time_read_allowed == 0,
+        "time read denied");
+    EXPECT_TRUE(result.time_accounting.cpu_usage_write_allowed == 0,
+        "cpu usage write denied");
+    EXPECT_TRUE(result.time_accounting.quota_update_allowed == 0,
+        "quota update denied");
+    EXPECT_TRUE(result.time_accounting.scheduler_credit_update_allowed == 0,
+        "scheduler credit update denied");
+    EXPECT_TRUE(result.time_accounting.context_switch_allowed == 0,
+        "time accounting context switch denied");
+    EXPECT_TRUE(result.time_accounting.run_queue_mutation_allowed == 0,
+        "time accounting run queue mutation denied");
+    EXPECT_TRUE(result.time_accounting.preemption_allowed == 0,
+        "time accounting preemption denied");
+    EXPECT_TRUE(result.time_accounting.process_wake_allowed == 0,
+        "time accounting process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "time accounting transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "time accounting transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "preemption transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_PREEMPTION_READY,
+        "next preemption-ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "preemption ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "preemption transition keeps time accounting ready");
+    EXPECT_TRUE(strcmp(result.context_switch.switch_status,
+            "context-switch-seed-ready") == 0,
+        "preemption transition keeps context switch ready");
+    EXPECT_TRUE(result.preemption.decision_count == 4u,
+        "preemption decision count");
+    EXPECT_TRUE(result.preemption.preemption_allowed == 0,
+        "preemption denied");
+    EXPECT_TRUE(result.preemption.dispatch_allowed == 0,
+        "preemption dispatch denied");
+    EXPECT_TRUE(result.preemption.run_queue_mutation_allowed == 0,
+        "preemption run queue mutation denied");
+    EXPECT_TRUE(result.preemption.context_switch_allowed == 0,
+        "preemption context switch denied");
+    EXPECT_TRUE(result.preemption.time_read_allowed == 0,
+        "preemption time read denied");
+    EXPECT_TRUE(result.preemption.time_accounting_allowed == 0,
+        "preemption time accounting denied");
+    EXPECT_TRUE(result.preemption.process_wake_allowed == 0,
+        "preemption process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "preemption transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "preemption transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler credit transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY,
+        "next scheduler-credit-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler credit ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "scheduler credit transition keeps preemption ready");
+    EXPECT_TRUE(strcmp(result.time_accounting.accounting_status,
+            "time-accounting-seed-ready") == 0,
+        "scheduler credit transition keeps time accounting ready");
+    EXPECT_TRUE(result.scheduler_credit.credit_count == 4u,
+        "scheduler credit count");
+    EXPECT_TRUE(result.scheduler_credit.scheduler_credit_update_allowed == 0,
+        "scheduler credit update denied");
+    EXPECT_TRUE(result.scheduler_credit.quota_update_allowed == 0,
+        "scheduler credit quota update denied");
+    EXPECT_TRUE(result.scheduler_credit.cpu_usage_write_allowed == 0,
+        "scheduler credit cpu usage write denied");
+    EXPECT_TRUE(result.scheduler_credit.preemption_allowed == 0,
+        "scheduler credit preemption denied");
+    EXPECT_TRUE(result.scheduler_credit.context_switch_allowed == 0,
+        "scheduler credit context switch denied");
+    EXPECT_TRUE(result.scheduler_credit.dispatch_allowed == 0,
+        "scheduler credit dispatch denied");
+    EXPECT_TRUE(result.scheduler_credit.run_queue_mutation_allowed == 0,
+        "scheduler credit run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_credit.process_wake_allowed == 0,
+        "scheduler credit process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler credit transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler credit transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler selection transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY,
+        "next scheduler-selection-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler selection ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler selection transition keeps scheduler credit ready");
+    EXPECT_TRUE(strcmp(result.preemption.preemption_status,
+            "preemption-seed-ready") == 0,
+        "scheduler selection transition keeps preemption ready");
+    EXPECT_TRUE(result.scheduler_selection.selection_count == 4u,
+        "scheduler selection count");
+    EXPECT_TRUE(result.scheduler_selection.scheduler_selection_allowed == 0,
+        "scheduler selection denied");
+    EXPECT_TRUE(result.scheduler_selection.dispatch_allowed == 0,
+        "scheduler selection dispatch denied");
+    EXPECT_TRUE(result.scheduler_selection.run_queue_mutation_allowed == 0,
+        "scheduler selection run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_selection.context_switch_allowed == 0,
+        "scheduler selection context switch denied");
+    EXPECT_TRUE(result.scheduler_selection.scheduler_credit_update_allowed == 0,
+        "scheduler selection credit update denied");
+    EXPECT_TRUE(result.scheduler_selection.process_wake_allowed == 0,
+        "scheduler selection process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler selection transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler selection transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler dispatch transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY,
+        "next scheduler-dispatch-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler dispatch ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler dispatch transition keeps scheduler selection ready");
+    EXPECT_TRUE(strcmp(result.scheduler_credit.credit_status,
+            "scheduler-credit-seed-ready") == 0,
+        "scheduler dispatch transition keeps scheduler credit ready");
+    EXPECT_TRUE(result.scheduler_dispatch.dispatch_count == 4u,
+        "scheduler dispatch count");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_dispatch_allowed == 0,
+        "scheduler dispatch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_selection_allowed == 0,
+        "scheduler dispatch selection denied");
+    EXPECT_TRUE(result.scheduler_dispatch.dispatch_allowed == 0,
+        "scheduler dispatch dispatch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.run_queue_mutation_allowed == 0,
+        "scheduler dispatch run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_dispatch.context_switch_allowed == 0,
+        "scheduler dispatch context switch denied");
+    EXPECT_TRUE(result.scheduler_dispatch.scheduler_credit_update_allowed == 0,
+        "scheduler dispatch credit update denied");
+    EXPECT_TRUE(result.scheduler_dispatch.process_wake_allowed == 0,
+        "scheduler dispatch process wake denied");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler dispatch transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler dispatch transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler handoff transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY,
+        "next scheduler-handoff-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler handoff ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler handoff transition keeps scheduler dispatch ready");
+    EXPECT_TRUE(strcmp(result.scheduler_selection.selection_status,
+            "scheduler-selection-seed-ready") == 0,
+        "scheduler handoff transition keeps scheduler selection ready");
+    EXPECT_TRUE(result.scheduler_handoff.handoff_count == 4u,
+        "scheduler handoff count");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_handoff_allowed == 0,
+        "scheduler handoff denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_dispatch_allowed == 0,
+        "scheduler handoff dispatch denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_selection_allowed == 0,
+        "scheduler handoff selection denied");
+    EXPECT_TRUE(result.scheduler_handoff.dispatch_allowed == 0,
+        "scheduler handoff dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_handoff.run_queue_mutation_allowed == 0,
+        "scheduler handoff run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_handoff.context_switch_allowed == 0,
+        "scheduler handoff context switch denied");
+    EXPECT_TRUE(result.scheduler_handoff.scheduler_credit_update_allowed == 0,
+        "scheduler handoff credit update denied");
+    EXPECT_TRUE(result.scheduler_handoff.process_wake_allowed == 0,
+        "scheduler handoff process wake denied");
+    EXPECT_TRUE(result.scheduler_handoff.no_effect == 1,
+        "scheduler handoff no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler handoff transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler handoff transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler activation transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY,
+        "next scheduler-activation-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "scheduler activation ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler activation transition keeps scheduler handoff ready");
+    EXPECT_TRUE(strcmp(result.scheduler_dispatch.dispatch_status,
+            "scheduler-dispatch-seed-ready") == 0,
+        "scheduler activation transition keeps scheduler dispatch ready");
+    EXPECT_TRUE(result.scheduler_activation.activation_count == 4u,
+        "scheduler activation count");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_activation_allowed == 0,
+        "scheduler activation denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_handoff_allowed == 0,
+        "scheduler activation handoff denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_dispatch_allowed == 0,
+        "scheduler activation dispatch denied");
+    EXPECT_TRUE(result.scheduler_activation.scheduler_selection_allowed == 0,
+        "scheduler activation selection denied");
+    EXPECT_TRUE(result.scheduler_activation.dispatch_allowed == 0,
+        "scheduler activation dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_activation.run_queue_mutation_allowed == 0,
+        "scheduler activation run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_activation.context_switch_allowed == 0,
+        "scheduler activation context switch denied");
+    EXPECT_TRUE(result.scheduler_activation.runtime_entry_allowed == 0,
+        "scheduler activation runtime entry denied");
+    EXPECT_TRUE(result.scheduler_activation.no_effect == 1,
+        "scheduler activation no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler activation transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler activation transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler run entry transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY,
+        "next scheduler-run-entry-ready");
+    EXPECT_TRUE(strcmp(result.scheduler_run_entry.run_entry_status,
+            "scheduler-run-entry-seed-ready") == 0,
+        "scheduler run entry ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "scheduler run entry transition keeps scheduler activation ready");
+    EXPECT_TRUE(strcmp(result.scheduler_handoff.handoff_status,
+            "scheduler-handoff-seed-ready") == 0,
+        "scheduler run entry transition keeps scheduler handoff ready");
+    EXPECT_TRUE(result.scheduler_run_entry.run_entry_count == 4u,
+        "scheduler run entry count");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_run_entry_allowed == 0,
+        "scheduler run entry denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_activation_allowed == 0,
+        "scheduler run entry activation denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_handoff_allowed == 0,
+        "scheduler run entry handoff denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_dispatch_allowed == 0,
+        "scheduler run entry dispatch denied");
+    EXPECT_TRUE(result.scheduler_run_entry.scheduler_selection_allowed == 0,
+        "scheduler run entry selection denied");
+    EXPECT_TRUE(result.scheduler_run_entry.dispatch_allowed == 0,
+        "scheduler run entry dispatch authority denied");
+    EXPECT_TRUE(result.scheduler_run_entry.run_queue_mutation_allowed == 0,
+        "scheduler run entry run queue mutation denied");
+    EXPECT_TRUE(result.scheduler_run_entry.context_switch_allowed == 0,
+        "scheduler run entry context switch denied");
+    EXPECT_TRUE(result.scheduler_run_entry.runtime_entry_allowed == 0,
+        "scheduler run entry runtime entry denied");
+    EXPECT_TRUE(result.scheduler_run_entry.no_effect == 1,
+        "scheduler run entry no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "scheduler run entry transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "scheduler run entry transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry admission transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY,
+        "next runtime-entry-admission-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry admission ready");
+    EXPECT_TRUE(strcmp(result.scheduler_run_entry.run_entry_status,
+            "scheduler-run-entry-seed-ready") == 0,
+        "runtime entry admission keeps scheduler run-entry ready");
+    EXPECT_TRUE(strcmp(result.scheduler_activation.activation_status,
+            "scheduler-activation-seed-ready") == 0,
+        "runtime entry admission keeps scheduler activation ready");
+    EXPECT_TRUE(result.runtime_entry_admission.admission_count == 4u,
+        "runtime entry admission count");
+    EXPECT_TRUE(result.runtime_entry_admission.runtime_entry_admission_allowed == 0,
+        "runtime entry admission denied");
+    EXPECT_TRUE(result.runtime_entry_admission.runtime_entry_allowed == 0,
+        "runtime entry denied");
+    EXPECT_TRUE(result.runtime_entry_admission.scheduler_run_entry_allowed == 0,
+        "runtime entry admission run-entry denied");
+    EXPECT_TRUE(result.runtime_entry_admission.dispatch_allowed == 0,
+        "runtime entry admission dispatch denied");
+    EXPECT_TRUE(result.runtime_entry_admission.run_queue_mutation_allowed == 0,
+        "runtime entry admission run queue mutation denied");
+    EXPECT_TRUE(result.runtime_entry_admission.context_switch_allowed == 0,
+        "runtime entry admission context switch denied");
+    EXPECT_TRUE(result.runtime_entry_admission.no_effect == 1,
+        "runtime entry admission no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry admission transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry admission transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry frame transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY,
+        "next runtime-entry-frame-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_frame.frame_status,
+            "runtime-entry-frame-seed-ready") == 0,
+        "runtime entry frame ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry frame keeps runtime admission ready");
+    EXPECT_TRUE(strcmp(result.scheduler_run_entry.run_entry_status,
+            "scheduler-run-entry-seed-ready") == 0,
+        "runtime entry frame keeps scheduler run-entry ready");
+    EXPECT_TRUE(result.runtime_entry_frame.frame_count == 4u,
+        "runtime entry frame count");
+    EXPECT_TRUE(result.runtime_entry_frame.runtime_entry_frame_allowed == 0,
+        "runtime entry frame denied");
+    EXPECT_TRUE(result.runtime_entry_frame.runtime_entry_admission_allowed == 0,
+        "runtime entry frame admission denied");
+    EXPECT_TRUE(result.runtime_entry_frame.runtime_entry_allowed == 0,
+        "runtime entry denied at frame");
+    EXPECT_TRUE(result.runtime_entry_frame.scheduler_run_entry_allowed == 0,
+        "runtime entry frame run-entry denied");
+    EXPECT_TRUE(result.runtime_entry_frame.dispatch_allowed == 0,
+        "runtime entry frame dispatch denied");
+    EXPECT_TRUE(result.runtime_entry_frame.run_queue_mutation_allowed == 0,
+        "runtime entry frame run queue mutation denied");
+    EXPECT_TRUE(result.runtime_entry_frame.context_switch_allowed == 0,
+        "runtime entry frame context switch denied");
+    EXPECT_TRUE(result.runtime_entry_frame.stack_switch_allowed == 0,
+        "runtime entry frame stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_frame.no_effect == 1,
+        "runtime entry frame no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry frame transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry frame transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry register view transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY,
+        "next runtime-entry-register-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry register view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_frame.frame_status,
+            "runtime-entry-frame-seed-ready") == 0,
+        "runtime entry register view keeps frame ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry register view keeps admission ready");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_view_count == 4u,
+        "runtime entry register view count");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_register_view_allowed == 0,
+        "runtime entry register view denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_frame_allowed == 0,
+        "runtime entry register view frame denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.runtime_entry_allowed == 0,
+        "runtime entry denied at register view");
+    EXPECT_TRUE(result.runtime_entry_register_view.context_switch_allowed == 0,
+        "runtime entry register view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_save_allowed == 0,
+        "runtime entry register view register save denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.register_restore_allowed == 0,
+        "runtime entry register view register restore denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.stack_switch_allowed == 0,
+        "runtime entry register view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.address_space_switch_allowed == 0,
+        "runtime entry register view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_register_view.no_effect == 1,
+        "runtime entry register view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry register view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry register view transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry stack view transition evaluates");
+    EXPECT_TRUE(result.next_state == LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY,
+        "next runtime-entry-stack-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_stack_view.stack_view_status,
+            "runtime-entry-stack-view-seed-ready") == 0,
+        "runtime entry stack view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry stack view keeps register view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_frame.frame_status,
+            "runtime-entry-frame-seed-ready") == 0,
+        "runtime entry stack view keeps frame ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_admission.admission_status,
+            "runtime-entry-admission-seed-ready") == 0,
+        "runtime entry stack view keeps admission ready");
+    EXPECT_TRUE(result.runtime_entry_stack_view.stack_view_count == 4u,
+        "runtime entry stack view count");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_stack_view_allowed == 0,
+        "runtime entry stack view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_register_view_allowed == 0,
+        "runtime entry stack view register view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_frame_allowed == 0,
+        "runtime entry stack view frame denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.runtime_entry_allowed == 0,
+        "runtime entry denied at stack view");
+    EXPECT_TRUE(result.runtime_entry_stack_view.context_switch_allowed == 0,
+        "runtime entry stack view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.register_save_allowed == 0,
+        "runtime entry stack view register save denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.register_restore_allowed == 0,
+        "runtime entry stack view register restore denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.stack_switch_allowed == 0,
+        "runtime entry stack view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.address_space_switch_allowed == 0,
+        "runtime entry stack view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view.no_effect == 1,
+        "runtime entry stack view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry stack view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry stack view transition not denied");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY,
+        "next runtime-entry-address-space-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_address_space_view.
+            address_space_view_status,
+            "runtime-entry-address-space-view-seed-ready") == 0,
+        "runtime entry address space view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_stack_view.stack_view_status,
+            "runtime-entry-stack-view-seed-ready") == 0,
+        "runtime entry address space view keeps stack view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_register_view.register_view_status,
+            "runtime-entry-register-view-seed-ready") == 0,
+        "runtime entry address space view keeps register view ready");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            address_space_view_count == 4u,
+        "runtime entry address space view count");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_address_space_view_allowed == 0,
+        "runtime entry address space view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_stack_view_allowed == 0,
+        "runtime entry address space view stack view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_register_view_allowed == 0,
+        "runtime entry address space view register view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            runtime_entry_allowed == 0,
+        "runtime entry denied at address space view");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            context_switch_allowed == 0,
+        "runtime entry address space view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            stack_switch_allowed == 0,
+        "runtime entry address space view stack switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            address_space_switch_allowed == 0,
+        "runtime entry address space view address space switch denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.
+            page_table_write_allowed == 0,
+        "runtime entry address space view page table write denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.tlb_flush_allowed == 0,
+        "runtime entry address space view tlb flush denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.mmu_update_allowed == 0,
+        "runtime entry address space view mmu update denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view.no_effect == 1,
+        "runtime entry address space view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry address space view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry address space view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry privilege level view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY,
+        "next runtime-entry-privilege-level-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_privilege_level_view.
+            privilege_level_view_status,
+            "runtime-entry-privilege-level-view-seed-ready") == 0,
+        "runtime entry privilege level view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_address_space_view.
+            address_space_view_status,
+            "runtime-entry-address-space-view-seed-ready") == 0,
+        "runtime entry privilege level view keeps address space ready");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            privilege_level_view_count == 4u,
+        "runtime entry privilege level view count");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            runtime_entry_privilege_level_view_allowed == 0,
+        "runtime entry privilege level view denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            runtime_entry_address_space_view_allowed == 0,
+        "runtime entry privilege level view address space denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            privilege_transition_allowed == 0,
+        "runtime entry privilege transition denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            syscall_gate_allowed == 0,
+        "runtime entry syscall gate denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.
+            interrupt_return_allowed == 0,
+        "runtime entry interrupt return denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view.no_effect == 1,
+        "runtime entry privilege level view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry privilege level view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry privilege level view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall gate view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY,
+        "next runtime-entry-syscall-gate-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_gate_view.
+            syscall_gate_view_status,
+            "runtime-entry-syscall-gate-view-seed-ready") == 0,
+        "runtime entry syscall gate view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_privilege_level_view.
+            privilege_level_view_status,
+            "runtime-entry-privilege-level-view-seed-ready") == 0,
+        "runtime entry syscall gate view keeps privilege level ready");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_gate_view_count == 4u,
+        "runtime entry syscall gate view count");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            runtime_entry_syscall_gate_view_allowed == 0,
+        "runtime entry syscall gate view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            runtime_entry_privilege_level_view_allowed == 0,
+        "runtime entry syscall gate view privilege level denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_gate_allowed == 0,
+        "runtime entry syscall gate denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_dispatch_allowed == 0,
+        "runtime entry syscall dispatch denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_instruction_allowed == 0,
+        "runtime entry syscall instruction denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_handler_allowed == 0,
+        "runtime entry syscall handler denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.
+            syscall_return_allowed == 0,
+        "runtime entry syscall return denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view.no_effect == 1,
+        "runtime entry syscall gate view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry syscall gate view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry syscall gate view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall dispatch view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY,
+        "next runtime-entry-syscall-dispatch-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_dispatch_view.
+            syscall_dispatch_view_status,
+            "runtime-entry-syscall-dispatch-view-seed-ready") == 0,
+        "runtime entry syscall dispatch view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_gate_view.
+            syscall_gate_view_status,
+            "runtime-entry-syscall-gate-view-seed-ready") == 0,
+        "runtime entry syscall dispatch view keeps syscall gate ready");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            syscall_dispatch_view_count == 4u,
+        "runtime entry syscall dispatch view count");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            runtime_entry_syscall_dispatch_view_allowed == 0,
+        "runtime entry syscall dispatch view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            runtime_entry_syscall_gate_view_allowed == 0,
+        "runtime entry syscall dispatch view gate denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            syscall_dispatch_allowed == 0,
+        "runtime entry syscall dispatch denied at dispatch view");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            syscall_argument_copy_allowed == 0,
+        "runtime entry syscall argument copy denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            syscall_handler_allowed == 0,
+        "runtime entry syscall handler denied at dispatch view");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.
+            syscall_return_allowed == 0,
+        "runtime entry syscall return denied at dispatch view");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view.no_effect == 1,
+        "runtime entry syscall dispatch view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry syscall dispatch view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry syscall dispatch view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall return view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY,
+        "next runtime-entry-syscall-return-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_return_view.
+            syscall_return_view_status,
+            "runtime-entry-syscall-return-view-seed-ready") == 0,
+        "runtime entry syscall return view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_dispatch_view.
+            syscall_dispatch_view_status,
+            "runtime-entry-syscall-dispatch-view-seed-ready") == 0,
+        "runtime entry syscall return view keeps dispatch ready");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            syscall_return_view_count == 4u,
+        "runtime entry syscall return view count");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            runtime_entry_syscall_return_view_allowed == 0,
+        "runtime entry syscall return view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            runtime_entry_syscall_dispatch_view_allowed == 0,
+        "runtime entry syscall return view dispatch denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            syscall_return_allowed == 0,
+        "runtime entry syscall return denied at return view");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            syscall_result_copy_allowed == 0,
+        "runtime entry syscall result copy denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.
+            interrupt_return_allowed == 0,
+        "runtime entry interrupt return denied at return view");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view.no_effect == 1,
+        "runtime entry syscall return view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry syscall return view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry syscall return view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall exit view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY,
+        "next runtime-entry-syscall-exit-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_exit_view.
+            syscall_exit_view_status,
+            "runtime-entry-syscall-exit-view-seed-ready") == 0,
+        "runtime entry syscall exit view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_return_view.
+            syscall_return_view_status,
+            "runtime-entry-syscall-return-view-seed-ready") == 0,
+        "runtime entry syscall exit view keeps return ready");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            syscall_exit_view_count == 4u,
+        "runtime entry syscall exit view count");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            runtime_entry_syscall_exit_view_allowed == 0,
+        "runtime entry syscall exit view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            runtime_entry_syscall_return_view_allowed == 0,
+        "runtime entry syscall exit view return denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            syscall_exit_allowed == 0,
+        "runtime entry syscall exit denied at exit view");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            syscall_exit_commit_allowed == 0,
+        "runtime entry syscall exit commit denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.
+            process_wake_allowed == 0,
+        "runtime entry syscall exit view process wake denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view.no_effect == 1,
+        "runtime entry syscall exit view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry syscall exit view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry syscall exit view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry user mode resume view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY,
+        "next runtime-entry-user-mode-resume-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_user_mode_resume_view.
+            user_mode_resume_view_status,
+            "runtime-entry-user-mode-resume-view-seed-ready") == 0,
+        "runtime entry user mode resume view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_syscall_exit_view.
+            syscall_exit_view_status,
+            "runtime-entry-syscall-exit-view-seed-ready") == 0,
+        "runtime entry user mode resume view keeps exit ready");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            user_mode_resume_view_count == 4u,
+        "runtime entry user mode resume view count");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            runtime_entry_user_mode_resume_view_allowed == 0,
+        "runtime entry user mode resume view denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            runtime_entry_syscall_exit_view_allowed == 0,
+        "runtime entry user mode resume view exit denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            user_mode_resume_allowed == 0,
+        "runtime entry user mode resume denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            user_instruction_resume_allowed == 0,
+        "runtime entry user instruction resume denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.
+            resume_frame_commit_allowed == 0,
+        "runtime entry resume frame commit denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view.no_effect == 1,
+        "runtime entry user mode resume view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry user mode resume view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry user mode resume view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry post resume observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY,
+        "next runtime-entry-post-resume-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_post_resume_observation_view.
+            post_resume_observation_view_status,
+            "runtime-entry-post-resume-observation-view-seed-ready") == 0,
+        "runtime entry post resume observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_user_mode_resume_view.
+            user_mode_resume_view_status,
+            "runtime-entry-user-mode-resume-view-seed-ready") == 0,
+        "runtime entry post resume observation view keeps resume ready");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            post_resume_observation_view_count == 4u,
+        "runtime entry post resume observation view count");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            runtime_entry_post_resume_observation_view_allowed == 0,
+        "runtime entry post resume observation view denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            runtime_entry_user_mode_resume_view_allowed == 0,
+        "runtime entry post resume observation view resume denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            post_resume_observation_allowed == 0,
+        "runtime entry post resume observation denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            instruction_pointer_read_allowed == 0,
+        "runtime entry instruction pointer read denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.
+            scheduler_execution_allowed == 0,
+        "runtime entry scheduler execution denied at observation view");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view.no_effect ==
+            1,
+        "runtime entry post resume observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry post resume observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry post resume observation view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry scheduler return observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY,
+        "next runtime-entry-scheduler-return-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_scheduler_return_observation_view.
+            scheduler_return_observation_view_status,
+            "runtime-entry-scheduler-return-observation-view-seed-ready") ==
+            0,
+        "runtime entry scheduler return observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_post_resume_observation_view.
+            post_resume_observation_view_status,
+            "runtime-entry-post-resume-observation-view-seed-ready") == 0,
+        "runtime entry scheduler return observation view keeps post resume ready");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            scheduler_return_observation_view_count == 4u,
+        "runtime entry scheduler return observation view count");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            runtime_entry_scheduler_return_observation_view_allowed == 0,
+        "runtime entry scheduler return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            runtime_entry_post_resume_observation_view_allowed == 0,
+        "runtime entry scheduler return observation view post resume denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            scheduler_return_observation_allowed == 0,
+        "runtime entry scheduler return observation denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            scheduler_return_allowed == 0,
+        "runtime entry scheduler return denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            context_switch_allowed == 0,
+        "runtime entry scheduler return observation view context switch denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.
+            run_queue_mutation_allowed == 0,
+        "runtime entry scheduler return observation view run queue denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view.no_effect ==
+            1,
+        "runtime entry scheduler return observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry scheduler return observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry scheduler return observation view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry process return observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY,
+        "next runtime-entry-process-return-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_process_return_observation_view.
+            process_return_observation_view_status,
+            "runtime-entry-process-return-observation-view-seed-ready") == 0,
+        "runtime entry process return observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_scheduler_return_observation_view.
+            scheduler_return_observation_view_status,
+            "runtime-entry-scheduler-return-observation-view-seed-ready") ==
+            0,
+        "runtime entry process return observation view keeps scheduler return ready");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            process_return_observation_view_count == 4u,
+        "runtime entry process return observation view count");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            runtime_entry_process_return_observation_view_allowed == 0,
+        "runtime entry process return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            runtime_entry_scheduler_return_observation_view_allowed == 0,
+        "runtime entry process return observation view scheduler return denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            process_return_observation_allowed == 0,
+        "runtime entry process return observation denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            process_return_allowed == 0,
+        "runtime entry process return denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            process_state_read_allowed == 0,
+        "runtime entry process state read denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.
+            process_wake_allowed == 0,
+        "runtime entry process wake denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view.no_effect ==
+            1,
+        "runtime entry process return observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry process return observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry process return observation view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry idle return observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY,
+        "next runtime-entry-idle-return-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_idle_return_observation_view.
+            idle_return_observation_view_status,
+            "runtime-entry-idle-return-observation-view-seed-ready") == 0,
+        "runtime entry idle return observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_process_return_observation_view.
+            process_return_observation_view_status,
+            "runtime-entry-process-return-observation-view-seed-ready") == 0,
+        "runtime entry idle return observation view keeps process return ready");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            idle_return_observation_view_count == 4u,
+        "runtime entry idle return observation view count");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            runtime_entry_idle_return_observation_view_allowed == 0,
+        "runtime entry idle return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            runtime_entry_process_return_observation_view_allowed == 0,
+        "runtime entry idle return observation view process return denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            process_return_observation_allowed == 0,
+        "runtime entry idle return observation view process return observation denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            idle_return_observation_allowed == 0,
+        "runtime entry idle return observation denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            idle_return_allowed == 0,
+        "runtime entry idle return denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.
+            idle_state_read_allowed == 0,
+        "runtime entry idle state read denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view.no_effect == 1,
+        "runtime entry idle return observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry idle return observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry idle return observation view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry quiescent return observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY,
+        "next runtime-entry-quiescent-return-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_return_observation_view_status,
+            "runtime-entry-quiescent-return-observation-view-seed-ready") == 0,
+        "runtime entry quiescent return observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_idle_return_observation_view.
+            idle_return_observation_view_status,
+            "runtime-entry-idle-return-observation-view-seed-ready") == 0,
+        "runtime entry quiescent return observation view keeps idle return ready");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_return_observation_view_count == 4u,
+        "runtime entry quiescent return observation view count");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            runtime_entry_quiescent_return_observation_view_allowed == 0,
+        "runtime entry quiescent return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_return_observation_allowed == 0,
+        "runtime entry quiescent return observation denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_return_allowed == 0,
+        "runtime entry quiescent return denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_state_read_allowed == 0,
+        "runtime entry quiescent state read denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            persistence_allowed == 0,
+        "runtime entry quiescent persistence denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.
+            recovery_authority_allowed == 0,
+        "runtime entry quiescent recovery authority denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view.no_effect == 1,
+        "runtime entry quiescent return observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry quiescent return observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry quiescent return observation view transition not denied");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry persistence boundary observation view transition evaluates");
+    EXPECT_TRUE(result.next_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY,
+        "next runtime-entry-persistence-boundary-observation-view-ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_boundary_observation_view_status,
+            "runtime-entry-persistence-boundary-observation-view-seed-ready") == 0,
+        "runtime entry persistence boundary observation view ready");
+    EXPECT_TRUE(strcmp(result.runtime_entry_quiescent_return_observation_view.
+            quiescent_return_observation_view_status,
+            "runtime-entry-quiescent-return-observation-view-seed-ready") == 0,
+        "runtime entry persistence boundary observation keeps quiescent return ready");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_boundary_observation_view_count == 4u,
+        "runtime entry persistence boundary observation view count");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            runtime_entry_persistence_boundary_observation_view_allowed == 0,
+        "runtime entry persistence boundary observation view denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_boundary_observation_allowed == 0,
+        "runtime entry persistence boundary observation denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_boundary_allowed == 0,
+        "runtime entry persistence boundary denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_commit_allowed == 0,
+        "runtime entry persistence commit denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            persistence_allowed == 0,
+        "runtime entry persistence denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            recovery_authority_allowed == 0,
+        "runtime entry recovery authority denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view.
+            no_effect == 1,
+        "runtime entry persistence boundary observation view no-effect");
+    EXPECT_TRUE(result.external_effect_performed == 0,
+        "runtime entry persistence boundary observation view transition no external effect");
+    EXPECT_TRUE(result.denied == 0,
+        "runtime entry persistence boundary observation view transition not denied");
     return 0;
 }
 
@@ -160,10 +1606,760 @@ static int report_records_state_change(void) {
         "state change emitted");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "external effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "network flag emitted");
+    EXPECT_TRUE(strstr(report, "syscall_network_allowed=0\n") != 0,
+        "syscall network flag emitted");
+    EXPECT_TRUE(strstr(report, "ipc_network_allowed=0\n") != 0,
+        "ipc network flag emitted");
     EXPECT_TRUE(strstr(report, "denied=0\n") != 0,
         "denied emitted");
     EXPECT_TRUE(strstr(report, "memory_map_status=memory-map-seed-ready\n") != 0,
         "memory map emitted");
+    return 0;
+}
+
+static int report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_readiness(void) {
+    latticra_kernel_state_request_t request;
+    latticra_kernel_state_result_t result;
+    char report[LATTICRA_KERNEL_STATE_REPORT_MAX];
+
+    EXPECT_TRUE(latticra_kernel_state_default_request(&request) == LATTICRA_STATUS_OK,
+        "request initialized for syscall report");
+    request.current_state = LATTICRA_KERNEL_STATE_PROCESS_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.gate = LATTICRA_KERNEL_STATE_GATE_ALLOW;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "syscall transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "syscall report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=process-table-ready\n") != 0,
+        "process previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=syscall-table-ready\n") != 0,
+        "syscall next emitted");
+    EXPECT_TRUE(strstr(report, "process_table_status=process-table-seed-ready\n") != 0,
+        "process table emitted");
+    EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
+        "syscall table emitted");
+    EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
+        "syscall report external effect emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "syscall report aggregate network emitted");
+    EXPECT_TRUE(strstr(report, "syscall_network_allowed=0\n") != 0,
+        "syscall report network emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SYSCALL_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "ipc transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "ipc report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=syscall-table-ready\n") != 0,
+        "syscall previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=ipc-table-ready\n") != 0,
+        "ipc next emitted");
+    EXPECT_TRUE(strstr(report, "process_table_status=process-table-seed-ready\n") != 0,
+        "ipc process table emitted");
+    EXPECT_TRUE(strstr(report, "syscall_table_status=syscall-table-seed-ready\n") != 0,
+        "ipc syscall table emitted");
+    EXPECT_TRUE(strstr(report, "ipc_table_status=ipc-table-seed-ready\n") != 0,
+        "ipc table emitted");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "ipc report aggregate network emitted");
+    EXPECT_TRUE(strstr(report, "ipc_network_allowed=0\n") != 0,
+        "ipc report network emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_IPC_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "vfs transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "vfs report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=ipc-table-ready\n") != 0,
+        "ipc previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=vfs-namespace-ready\n") != 0,
+        "vfs next emitted");
+    EXPECT_TRUE(strstr(report, "ipc_table_status=ipc-table-seed-ready\n") != 0,
+        "vfs ipc table emitted");
+    EXPECT_TRUE(strstr(report, "vfs_namespace_status=vfs-namespace-seed-ready\n") != 0,
+        "vfs namespace emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_VFS_NAMESPACE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "device transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "device report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=vfs-namespace-ready\n") != 0,
+        "vfs previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=device-registry-ready\n") != 0,
+        "device next emitted");
+    EXPECT_TRUE(strstr(report, "vfs_namespace_status=vfs-namespace-seed-ready\n") != 0,
+        "device report vfs namespace emitted");
+    EXPECT_TRUE(strstr(report, "device_registry_status=device-registry-seed-ready\n") != 0,
+        "device registry emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DEVICE_REGISTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "driver transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "driver report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=device-registry-ready\n") != 0,
+        "device previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=driver-catalog-ready\n") != 0,
+        "driver next emitted");
+    EXPECT_TRUE(strstr(report, "device_registry_status=device-registry-seed-ready\n") != 0,
+        "driver report device registry emitted");
+    EXPECT_TRUE(strstr(report, "driver_catalog_status=driver-catalog-seed-ready\n") != 0,
+        "driver catalog emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_DRIVER_CATALOG_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "interrupt transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "interrupt report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=driver-catalog-ready\n") != 0,
+        "driver previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=interrupt-table-ready\n") != 0,
+        "interrupt next emitted");
+    EXPECT_TRUE(strstr(report, "driver_catalog_status=driver-catalog-seed-ready\n") != 0,
+        "interrupt report driver catalog emitted");
+    EXPECT_TRUE(strstr(report, "interrupt_table_status=interrupt-table-seed-ready\n") != 0,
+        "interrupt table emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_INTERRUPT_TABLE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "timer transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "timer report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=interrupt-table-ready\n") != 0,
+        "interrupt previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=timer-source-ready\n") != 0,
+        "timer next emitted");
+    EXPECT_TRUE(strstr(report, "interrupt_table_status=interrupt-table-seed-ready\n") != 0,
+        "timer report interrupt table emitted");
+    EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
+        "timer source emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIMER_SOURCE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler tick transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler tick report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=timer-source-ready\n") != 0,
+        "timer previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-tick-ready\n") != 0,
+        "scheduler tick next emitted");
+    EXPECT_TRUE(strstr(report, "timer_source_status=timer-source-seed-ready\n") != 0,
+        "scheduler tick report timer source emitted");
+    EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
+        "scheduler tick emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_TICK_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "run queue transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "run queue report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-tick-ready\n") != 0,
+        "scheduler tick previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=run-queue-ready\n") != 0,
+        "run queue next emitted");
+    EXPECT_TRUE(strstr(report, "scheduler_tick_status=scheduler-tick-seed-ready\n") != 0,
+        "run queue report scheduler tick emitted");
+    EXPECT_TRUE(strstr(report, "run_queue_status=run-queue-seed-ready\n") != 0,
+        "run queue emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUN_QUEUE_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "context switch transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "context switch report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=run-queue-ready\n") != 0,
+        "run queue previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=context-switch-ready\n") != 0,
+        "context switch next emitted");
+    EXPECT_TRUE(strstr(report, "run_queue_status=run-queue-seed-ready\n") != 0,
+        "context switch report run queue emitted");
+    EXPECT_TRUE(strstr(report,
+            "context_switch_status=context-switch-seed-ready\n") != 0,
+        "context switch emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_CONTEXT_SWITCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "time accounting transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "time accounting report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=context-switch-ready\n") != 0,
+        "context switch previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=time-accounting-ready\n") != 0,
+        "time accounting next emitted");
+    EXPECT_TRUE(strstr(report,
+            "context_switch_status=context-switch-seed-ready\n") != 0,
+        "time accounting report context switch emitted");
+    EXPECT_TRUE(strstr(report,
+            "time_accounting_status=time-accounting-seed-ready\n") != 0,
+        "time accounting emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_TIME_ACCOUNTING_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "preemption transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "preemption report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=time-accounting-ready\n") != 0,
+        "time accounting previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=preemption-ready\n") != 0,
+        "preemption next emitted");
+    EXPECT_TRUE(strstr(report,
+            "time_accounting_status=time-accounting-seed-ready\n") != 0,
+        "preemption report time accounting emitted");
+    EXPECT_TRUE(strstr(report,
+            "preemption_status=preemption-seed-ready\n") != 0,
+        "preemption emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_PREEMPTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler credit transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler credit report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=preemption-ready\n") != 0,
+        "preemption previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-credit-ready\n") != 0,
+        "scheduler credit next emitted");
+    EXPECT_TRUE(strstr(report,
+            "preemption_status=preemption-seed-ready\n") != 0,
+        "scheduler credit report preemption emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_credit_status=scheduler-credit-seed-ready\n") != 0,
+        "scheduler credit emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_CREDIT_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler selection transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler selection report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-credit-ready\n") != 0,
+        "scheduler credit previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-selection-ready\n") != 0,
+        "scheduler selection next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_credit_status=scheduler-credit-seed-ready\n") != 0,
+        "scheduler selection report credit emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_selection_status=scheduler-selection-seed-ready\n") != 0,
+        "scheduler selection emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_SELECTION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler dispatch transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler dispatch report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-selection-ready\n") != 0,
+        "scheduler selection previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-dispatch-ready\n") != 0,
+        "scheduler dispatch next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_selection_status=scheduler-selection-seed-ready\n") != 0,
+        "scheduler dispatch report selection emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_dispatch_status=scheduler-dispatch-seed-ready\n") != 0,
+        "scheduler dispatch emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_DISPATCH_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler handoff transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler handoff report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-dispatch-ready\n") != 0,
+        "scheduler dispatch previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-handoff-ready\n") != 0,
+        "scheduler handoff next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_dispatch_status=scheduler-dispatch-seed-ready\n") != 0,
+        "scheduler handoff report dispatch emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_handoff_status=scheduler-handoff-seed-ready\n") != 0,
+        "scheduler handoff emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_HANDOFF_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler activation transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler activation report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-handoff-ready\n") != 0,
+        "scheduler handoff previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-activation-ready\n") != 0,
+        "scheduler activation next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_handoff_status=scheduler-handoff-seed-ready\n") != 0,
+        "scheduler activation report handoff emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_activation_status=scheduler-activation-seed-ready\n") != 0,
+        "scheduler activation emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_ACTIVATION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "scheduler run entry transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "scheduler run entry report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-activation-ready\n") != 0,
+        "scheduler activation previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=scheduler-run-entry-ready\n") != 0,
+        "scheduler run entry next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_activation_status=scheduler-activation-seed-ready\n") != 0,
+        "scheduler run entry report activation emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_run_entry_status=scheduler-run-entry-seed-ready\n") != 0,
+        "scheduler run entry emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_SCHEDULER_RUN_ENTRY_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry admission transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry admission report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=scheduler-run-entry-ready\n") != 0,
+        "scheduler run-entry previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-admission-ready\n") != 0,
+        "runtime entry admission next emitted");
+    EXPECT_TRUE(strstr(report,
+            "scheduler_run_entry_status=scheduler-run-entry-seed-ready\n") != 0,
+        "runtime entry admission report run-entry emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_admission_status=runtime-entry-admission-seed-ready\n") != 0,
+        "runtime entry admission emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADMISSION_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry frame transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry frame report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-admission-ready\n") != 0,
+        "runtime entry admission previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-frame-ready\n") != 0,
+        "runtime entry frame next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_admission_status=runtime-entry-admission-seed-ready\n") != 0,
+        "runtime entry frame report admission emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_frame_status=runtime-entry-frame-seed-ready\n") != 0,
+        "runtime entry frame emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_FRAME_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry register view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry register view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-frame-ready\n") != 0,
+        "runtime entry frame previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-register-view-ready\n") != 0,
+        "runtime entry register view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_frame_status=runtime-entry-frame-seed-ready\n") != 0,
+        "runtime entry register view report frame emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_register_view_status=runtime-entry-register-view-seed-ready\n") != 0,
+        "runtime entry register view emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_REGISTER_VIEW_READY;
+    request.target_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) == LATTICRA_STATUS_OK,
+        "runtime entry stack view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK,
+        "runtime entry stack view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-register-view-ready\n") != 0,
+        "runtime entry register view previous emitted");
+    EXPECT_TRUE(strstr(report, "next_state=runtime-entry-stack-view-ready\n") != 0,
+        "runtime entry stack view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_register_view_status=runtime-entry-register-view-seed-ready\n") != 0,
+        "runtime entry stack view report register view emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_stack_view_status=runtime-entry-stack-view-seed-ready\n") != 0,
+        "runtime entry stack view emitted");
+
+    request.current_state = LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_STACK_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry address space view report writes");
+
+    EXPECT_TRUE(strstr(report, "previous_state=runtime-entry-stack-view-ready\n") != 0,
+        "runtime entry stack view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-address-space-view-ready\n") != 0,
+        "runtime entry address space view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_stack_view_status=runtime-entry-stack-view-seed-ready\n") != 0,
+        "runtime entry address space view report stack view emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_address_space_view_status=runtime-entry-address-space-view-seed-ready\n") != 0,
+        "runtime entry address space view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_ADDRESS_SPACE_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry privilege level view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry privilege level view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-address-space-view-ready\n") != 0,
+        "runtime entry address space view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-privilege-level-view-ready\n") != 0,
+        "runtime entry privilege level view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_address_space_view_status=runtime-entry-address-space-view-seed-ready\n") != 0,
+        "runtime entry privilege level view report address space emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_privilege_level_view_status=runtime-entry-privilege-level-view-seed-ready\n") != 0,
+        "runtime entry privilege level view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PRIVILEGE_LEVEL_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall gate view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall gate view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-privilege-level-view-ready\n") != 0,
+        "runtime entry privilege level view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-syscall-gate-view-ready\n") != 0,
+        "runtime entry syscall gate view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_privilege_level_view_status=runtime-entry-privilege-level-view-seed-ready\n") != 0,
+        "runtime entry syscall gate view report privilege level emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_gate_view_status=runtime-entry-syscall-gate-view-seed-ready\n") != 0,
+        "runtime entry syscall gate view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_GATE_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall dispatch view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall dispatch view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-syscall-gate-view-ready\n") != 0,
+        "runtime entry syscall gate view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-syscall-dispatch-view-ready\n") != 0,
+        "runtime entry syscall dispatch view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_gate_view_status=runtime-entry-syscall-gate-view-seed-ready\n") != 0,
+        "runtime entry syscall dispatch view report syscall gate emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_dispatch_view_status=runtime-entry-syscall-dispatch-view-seed-ready\n") != 0,
+        "runtime entry syscall dispatch view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_DISPATCH_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall return view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall return view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-syscall-dispatch-view-ready\n") != 0,
+        "runtime entry syscall dispatch view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-syscall-return-view-ready\n") != 0,
+        "runtime entry syscall return view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_dispatch_view_status=runtime-entry-syscall-dispatch-view-seed-ready\n") != 0,
+        "runtime entry syscall return view report dispatch emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_return_view_status=runtime-entry-syscall-return-view-seed-ready\n") != 0,
+        "runtime entry syscall return view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_RETURN_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall exit view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry syscall exit view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-syscall-return-view-ready\n") != 0,
+        "runtime entry syscall return view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-syscall-exit-view-ready\n") != 0,
+        "runtime entry syscall exit view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_return_view_status=runtime-entry-syscall-return-view-seed-ready\n") != 0,
+        "runtime entry syscall exit view report return emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_exit_view_status=runtime-entry-syscall-exit-view-seed-ready\n") != 0,
+        "runtime entry syscall exit view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SYSCALL_EXIT_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry user mode resume view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry user mode resume view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-syscall-exit-view-ready\n") != 0,
+        "runtime entry syscall exit view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-user-mode-resume-view-ready\n") != 0,
+        "runtime entry user mode resume view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_exit_view_status=runtime-entry-syscall-exit-view-seed-ready\n") != 0,
+        "runtime entry user mode resume view report exit emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_user_mode_resume_view_status=runtime-entry-user-mode-resume-view-seed-ready\n") != 0,
+        "runtime entry user mode resume view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_USER_MODE_RESUME_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry post resume observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry post resume observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-user-mode-resume-view-ready\n") != 0,
+        "runtime entry user mode resume view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-post-resume-observation-view-ready\n") != 0,
+        "runtime entry post resume observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_user_mode_resume_view_status=runtime-entry-user-mode-resume-view-seed-ready\n") != 0,
+        "runtime entry post resume observation view report resume emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_post_resume_observation_view_status=runtime-entry-post-resume-observation-view-seed-ready\n") != 0,
+        "runtime entry post resume observation view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_POST_RESUME_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry scheduler return observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry scheduler return observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-post-resume-observation-view-ready\n") != 0,
+        "runtime entry scheduler return observation view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-scheduler-return-observation-view-ready\n") != 0,
+        "runtime entry scheduler return observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_post_resume_observation_view_status=runtime-entry-post-resume-observation-view-seed-ready\n") != 0,
+        "runtime entry scheduler return observation view report post resume emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_scheduler_return_observation_view_status=runtime-entry-scheduler-return-observation-view-seed-ready\n") != 0,
+        "runtime entry scheduler return observation view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_SCHEDULER_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry process return observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry process return observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-scheduler-return-observation-view-ready\n") != 0,
+        "runtime entry process return observation view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-process-return-observation-view-ready\n") != 0,
+        "runtime entry process return observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_scheduler_return_observation_view_status=runtime-entry-scheduler-return-observation-view-seed-ready\n") != 0,
+        "runtime entry process return observation view report scheduler emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_process_return_observation_view_status=runtime-entry-process-return-observation-view-seed-ready\n") != 0,
+        "runtime entry process return observation view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PROCESS_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry idle return observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry idle return observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-process-return-observation-view-ready\n") != 0,
+        "runtime entry idle return observation view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-idle-return-observation-view-ready\n") != 0,
+        "runtime entry idle return observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_process_return_observation_view_status=runtime-entry-process-return-observation-view-seed-ready\n") != 0,
+        "runtime entry idle return observation view report process emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_idle_return_observation_view_status=runtime-entry-idle-return-observation-view-seed-ready\n") != 0,
+        "runtime entry idle return observation view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_IDLE_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry quiescent return observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry quiescent return observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-idle-return-observation-view-ready\n") != 0,
+        "runtime entry quiescent return observation view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-quiescent-return-observation-view-ready\n") != 0,
+        "runtime entry quiescent return observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_idle_return_observation_view_status=runtime-entry-idle-return-observation-view-seed-ready\n") != 0,
+        "runtime entry quiescent return observation view report idle emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_quiescent_return_observation_view_status=runtime-entry-quiescent-return-observation-view-seed-ready\n") != 0,
+        "runtime entry quiescent return observation view emitted");
+
+    request.current_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_QUIESCENT_RETURN_OBSERVATION_VIEW_READY;
+    request.target_state =
+        LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_PERSISTENCE_BOUNDARY_OBSERVATION_VIEW_READY;
+
+    EXPECT_TRUE(latticra_kernel_state_transition(&request, &result) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry persistence boundary observation view transition for report");
+    EXPECT_TRUE(latticra_kernel_state_report(&result, report, sizeof(report)) ==
+            LATTICRA_STATUS_OK,
+        "runtime entry persistence boundary observation view report writes");
+
+    EXPECT_TRUE(strstr(report,
+            "previous_state=runtime-entry-quiescent-return-observation-view-ready\n") != 0,
+        "runtime entry persistence boundary observation view previous emitted");
+    EXPECT_TRUE(strstr(report,
+            "next_state=runtime-entry-persistence-boundary-observation-view-ready\n") != 0,
+        "runtime entry persistence boundary observation view next emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_quiescent_return_observation_view_status=runtime-entry-quiescent-return-observation-view-seed-ready\n") != 0,
+        "runtime entry persistence boundary observation view report quiescent emitted");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_persistence_boundary_observation_view_status=runtime-entry-persistence-boundary-observation-view-seed-ready\n") != 0,
+        "runtime entry persistence boundary observation view emitted");
     return 0;
 }
 
@@ -189,9 +2385,11 @@ static int null_guards_are_safe(void) {
 int main(void) {
     if (default_request_denies_state_change() != 0) return 1;
     if (allowed_transition_changes_state() != 0) return 1;
+    if (allowed_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_transitions_are_metadata_only() != 0) return 1;
     if (denied_transition_does_not_change_state() != 0) return 1;
     if (allowed_noop_is_stable() != 0) return 1;
     if (report_records_state_change() != 0) return 1;
+    if (report_records_process_syscall_ipc_vfs_device_driver_interrupt_timer_tick_queue_and_context_readiness() != 0) return 1;
     if (null_guards_are_safe() != 0) return 1;
 
     puts("kernel_state: ok");

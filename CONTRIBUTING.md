@@ -21,11 +21,30 @@ community-improvable
 
 Contributions are accepted under the license declared by the files being modified.
 
-New software source files should follow the current project license direction documented in:
+New core software source files should use:
+
+```text
+SPDX-License-Identifier: AGPL-3.0-or-later
+```
+
+New SDK, example, packaging-helper, installer-glue, and integration-helper source files should use:
+
+```text
+SPDX-License-Identifier: Apache-2.0
+```
+
+New documentation files may use:
+
+```text
+SPDX-License-Identifier: CC-BY-4.0
+```
+
+These expectations are documented in:
 
 ```text
 docs/OPEN_ECOSYSTEM_POLICY.md
 docs/LICENSE_POLICY.md
+docs/DOCUMENTATION_LICENSE.md
 ```
 
 New software source files should include an SPDX license identifier unless a documented exception exists.
@@ -54,6 +73,37 @@ clear about effect boundaries
 clear about non-claims
 compatible with public project direction
 ```
+
+Before changing safety guards, CI workflows, shell checks, or quality gates, run:
+
+```sh
+make quality-safety-guards
+```
+
+Before changing distro packaging metadata, package-readiness docs, or local package handoff lanes, run:
+
+```sh
+make quality-packaging-static
+```
+
+Before submitting broader code or installer changes, run:
+
+```sh
+make quality
+```
+
+## Documentation changes
+
+Documentation changes should preserve reader-facing cohesion and current non-claims.
+
+Before changing public status, estimates, platform readiness, installer authority, security wording, subsystem status, or top-level navigation, read:
+
+```text
+docs/README.md
+docs/DOCUMENTATION_MAINTENANCE.md
+```
+
+For documentation-only changes, run the narrowest relevant guards from `docs/DOCUMENTATION_MAINTENANCE.md` and avoid changing source behavior, installer authority, package authority, runtime authority, workflow permissions, or security posture.
 
 ## Security-sensitive changes
 

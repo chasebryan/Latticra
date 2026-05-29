@@ -34,6 +34,49 @@ initialized
 registry-ready
 scheduler-ready
 memory-map-ready
+process-table-ready
+syscall-table-ready
+ipc-table-ready
+vfs-namespace-ready
+device-registry-ready
+driver-catalog-ready
+interrupt-table-ready
+timer-source-ready
+scheduler-tick-ready
+run-queue-ready
+context-switch-ready
+time-accounting-ready
+preemption-ready
+scheduler-credit-ready
+scheduler-selection-ready
+scheduler-dispatch-ready
+scheduler-handoff-ready
+scheduler-activation-ready
+scheduler-run-entry-ready
+runtime-entry-admission-ready
+runtime-entry-frame-ready
+runtime-entry-register-view-ready
+runtime-entry-stack-view-ready
+runtime-entry-address-space-view-ready
+runtime-entry-privilege-level-view-ready
+runtime-entry-syscall-gate-view-ready
+runtime-entry-syscall-dispatch-view-ready
+runtime-entry-syscall-return-view-ready
+runtime-entry-syscall-exit-view-ready
+runtime-entry-user-mode-resume-view-ready
+runtime-entry-post-resume-observation-view-ready
+runtime-entry-scheduler-return-observation-view-ready
+runtime-entry-process-return-observation-view-ready
+runtime-entry-idle-return-observation-view-ready
+runtime-entry-quiescent-return-observation-view-ready
+runtime-entry-persistence-boundary-observation-view-ready
+runtime-entry-recovery-boundary-observation-view-ready
+runtime-entry-recovery-plan-observation-view-ready
+runtime-entry-recovery-disposition-observation-view-ready
+runtime-entry-recovery-outcome-observation-view-ready
+runtime-entry-recovery-closeout-observation-view-ready
+runtime-entry-recovery-audit-observation-view-ready
+runtime-entry-recovery-audit-review-observation-view-ready
 ```
 
 ## Controlled effect boundary
@@ -100,4 +143,4 @@ operating-system replacement
 
 ## Next possible lane
 
-A later slice may connect the state machine to a kernel operator command or add rollback for in-memory state transitions before any external effects are introduced.
+A later slice may connect the state machine to a kernel operator command or add rollback classification for in-memory state transitions before any external effects are introduced.

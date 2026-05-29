@@ -1,0 +1,25 @@
+name: Production Installer Transcript Evidence Intake Validator
+
+on:
+  push:
+    paths:
+      - 'docs/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md'
+      - 'docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+      - 'scripts/production-installer-transcript-evidence-intake.sh'
+      - 'scripts/test-production-installer-transcript-evidence-intake-validator-contract.sh'
+      - '.github/workflows/production-installer-transcript-evidence-intake-validator.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-installer-transcript-evidence-intake-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run production installer transcript evidence intake validator guard
+        run: sh scripts/test-production-installer-transcript-evidence-intake-validator-contract.sh

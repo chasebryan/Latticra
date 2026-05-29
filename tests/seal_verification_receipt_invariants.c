@@ -87,12 +87,25 @@ static int receipt_fails_closed(void) {
     latticra_seal_verification_policy_t policy = fixture_policy();
     latticra_seal_verification_receipt_t receipt;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_VERIFICATION_RECEIPT_REPORT_MAX];
 
     EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(0, &receipt) == LATTICRA_STATUS_OK, "null policy status");
     EXPECT_TRUE(receipt.error == LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_INPUT, "null policy error");
     policy.error = LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "bad policy status");
     EXPECT_TRUE(receipt.error == LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY, "bad policy error");
+    policy = fixture_policy();
+    memset(policy.verification_policy_profile, 'z', sizeof(policy.verification_policy_profile));
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "unterminated policy status");
+    EXPECT_TRUE(receipt.error == LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY, "unterminated policy error");
+    policy = fixture_policy();
+    policy.network_lookup_allowed = 2u;
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "invalid policy flag status");
+    EXPECT_TRUE(receipt.error == LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY, "invalid policy flag error");
+    policy = fixture_policy();
+    policy.runtime_authority_granted = 1u;
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "authority policy status");
+    EXPECT_TRUE(receipt.error == LATTICRA_SEAL_VERIFICATION_RECEIPT_INVALID_POLICY, "authority policy error");
     policy = fixture_policy();
     policy.artifact_digest_hex[0] = '\0';
     EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "missing digest status");
@@ -111,6 +124,39 @@ static int receipt_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_verification_receipt_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null receipt");
     EXPECT_TRUE(latticra_seal_verification_receipt_report(&receipt, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    policy = fixture_policy();
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "tamper receipt source");
+    memset(receipt.receipt_profile, 'z', sizeof(receipt.receipt_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_receipt_report(&receipt, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated verification receipt render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated verification receipt render cleared");
+    EXPECT_TRUE(latticra_seal_verification_receipt_is_unverified_metadata(&receipt) == 0,
+                "unterminated verification receipt helper rejected");
+
+    policy = fixture_policy();
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "authority verification receipt source");
+    receipt.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_receipt_report(&receipt, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority verification receipt render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority verification receipt render cleared");
+    EXPECT_TRUE(latticra_seal_verification_receipt_is_unverified_metadata(&receipt) == 0,
+                "authority verification receipt helper rejected");
+
+    policy = fixture_policy();
+    EXPECT_TRUE(latticra_seal_verification_receipt_from_policy(&policy, &receipt) == LATTICRA_STATUS_OK, "flag verification receipt source");
+    receipt.verified = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_receipt_report(&receipt, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "flag verification receipt render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "flag verification receipt render cleared");
+    EXPECT_TRUE(latticra_seal_verification_receipt_is_unverified_metadata(&receipt) == 0,
+                "flag verification receipt helper rejected");
     return 0;
 }
 

@@ -1,0 +1,25 @@
+name: macos-reset-uninstall-closeout-audit-review-disposition-review
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  review-disposition-closeout-audit-review-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Validate no-effect review contract
+        run: |
+          script='scripts/test-macos-reset-uninstall-live-runner-acceptance-denial'
+          script="${script}-disposition-closeout-audit-review-disposition"
+          script="${script}-closeout-audit-review-disposition"
+          script="${script}-closeout-audit-review-disposition"
+          script="${script}-closeout-audit-review-disposition-closeout-audit-review-contract.sh"
+          sh "$script"

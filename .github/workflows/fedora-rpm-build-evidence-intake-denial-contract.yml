@@ -1,0 +1,24 @@
+name: Fedora RPM Build Evidence Intake Denial Contract
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
+      - 'docs/status/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_CONTRACT_STATUS.md'
+      - 'scripts/test-fedora-rpm-build-evidence-intake-denial-contract.sh'
+      - '.github/workflows/fedora-rpm-build-evidence-intake-denial-contract.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-rpm-build-evidence-intake-denial-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora RPM build evidence intake denial contract guard
+        run: sh scripts/test-fedora-rpm-build-evidence-intake-denial-contract.sh

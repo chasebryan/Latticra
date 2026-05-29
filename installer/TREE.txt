@@ -5,6 +5,8 @@ installer/
   TREE.txt
   configs/
     default.installer.toml
+    lc-standalone.installer.toml
+    lc-standalone-local.installer.toml
     local-prefix-example.installer.toml
   docs/
     INSTALL_BUTTON_EXECUTION_MODEL.md
@@ -17,6 +19,7 @@ installer/
     latticra-installer-apply.sh
     latticra-installer-dry-run.sh
     latticra-installer-uninstall.sh
+    latticra-installer-verify-lc-standalone.sh
     latticra-installer-verify.sh
   latticra-installer/
     Cargo.toml

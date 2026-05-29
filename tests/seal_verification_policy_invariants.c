@@ -102,12 +102,26 @@ static int policy_fails_closed(void) {
     latticra_seal_signature_t signature = fixture_signature();
     latticra_seal_verification_policy_t policy;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_VERIFICATION_POLICY_REPORT_MAX];
+    char unterminated_public_key[LATTICRA_SEAL_VERIFICATION_POLICY_LABEL_MAX];
+    char unterminated_trust_source[LATTICRA_SEAL_VERIFICATION_POLICY_STATE_MAX];
+
+    memset(unterminated_public_key, 'p', sizeof(unterminated_public_key));
+    memset(unterminated_trust_source, 't', sizeof(unterminated_trust_source));
 
     EXPECT_TRUE(latticra_seal_verification_policy_from_signature(0, "key", "local", &policy) == LATTICRA_STATUS_OK, "null signature status");
     EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_INPUT, "null signature error");
     signature.error = LATTICRA_SEAL_SIGNATURE_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "bad signature status");
     EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_SIGNATURE, "bad signature error");
+    signature = fixture_signature();
+    memset(signature.signature_profile, 'z', sizeof(signature.signature_profile));
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "unterminated signature status");
+    EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_SIGNATURE, "unterminated signature error");
+    signature = fixture_signature();
+    signature.signature_supported = 2u;
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "invalid signature flag status");
+    EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_INVALID_SIGNATURE, "invalid signature flag error");
     signature = fixture_signature();
     signature.artifact_digest_hex[0] = '\0';
     EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "missing digest status");
@@ -123,12 +137,49 @@ static int policy_fails_closed(void) {
     signature = fixture_signature();
     EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, 0, "local", &policy) == LATTICRA_STATUS_OK, "missing public key status");
     EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_MISSING_PUBLIC_KEY_IDENTITY, "missing public key error");
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, unterminated_public_key, "local", &policy) == LATTICRA_STATUS_OK, "unterminated public key identity status");
+    EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_MISSING_PUBLIC_KEY_IDENTITY, "unterminated public key identity error");
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", unterminated_trust_source, &policy) == LATTICRA_STATUS_OK, "unterminated trust source status");
+    EXPECT_TRUE(policy.error == LATTICRA_SEAL_VERIFICATION_POLICY_OK, "unterminated trust source ok");
+    EXPECT_TRUE(strcmp(policy.trust_source, "invalid-trust-source") == 0, "unterminated trust source sanitized");
+    EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, rendered, sizeof(rendered)) == LATTICRA_STATUS_OK, "unterminated trust source render");
+    EXPECT_TRUE(strstr(rendered, "trust_source=invalid-trust-source") != 0, "unterminated trust source rendered sanitized");
     EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_verification_policy_is_metadata_only(0) == 0, "null helper");
     EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_verification_policy_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null policy");
     EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "tamper policy source");
+    memset(policy.verification_policy_profile, 'z', sizeof(policy.verification_policy_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated verification policy render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated verification policy render cleared");
+    EXPECT_TRUE(latticra_seal_verification_policy_is_metadata_only(&policy) == 0,
+                "unterminated verification policy helper rejected");
+
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "authority verification policy source");
+    policy.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority verification policy render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority verification policy render cleared");
+    EXPECT_TRUE(latticra_seal_verification_policy_is_metadata_only(&policy) == 0,
+                "authority verification policy helper rejected");
+
+    EXPECT_TRUE(latticra_seal_verification_policy_from_signature(&signature, "key", "local", &policy) == LATTICRA_STATUS_OK, "flag verification policy source");
+    policy.network_lookup_allowed = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_verification_policy_report(&policy, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "flag verification policy render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "flag verification policy render cleared");
+    EXPECT_TRUE(latticra_seal_verification_policy_is_metadata_only(&policy) == 0,
+                "flag verification policy helper rejected");
     return 0;
 }
 

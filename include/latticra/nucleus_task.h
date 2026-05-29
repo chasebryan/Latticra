@@ -142,6 +142,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_nucleus_task_authority_summary_t;
@@ -177,6 +178,17 @@ typedef struct {
     latticra_nucleus_task_authorization_state_t authorization_state;
     int prerequisites_satisfied;
     int no_effect_chain_ok;
+    int effect_authority_granted;
+    int task_execution_performed;
+    int runtime_entered;
+    int command_execution_allowed;
+    int lat_execution_allowed;
+    int lir_execution_allowed;
+    int file_io_allowed;
+    int state_mutation_allowed;
+    int self_update_allowed;
+    int boot_allowed;
+    int operator_confirmation_overrides_policy;
     char report_alignment[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
     char no_effect_policy[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
     char representation_gate[LATTICRA_NUCLEUS_TASK_LABEL_MAX];
@@ -189,6 +201,7 @@ typedef struct {
     int executed;
     int mutation_allowed;
     int server_interaction_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
     unsigned int evidence_level;
@@ -202,6 +215,7 @@ typedef struct {
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_nucleus_task_result_t;

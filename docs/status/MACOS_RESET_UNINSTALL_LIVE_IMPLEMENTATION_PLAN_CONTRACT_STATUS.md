@@ -1,0 +1,184 @@
+# macOS Reset/Uninstall Live-Implementation Plan Contract Status
+
+Status: no-effect reset/uninstall live-implementation plan contract status
+Date: 2026-05-25 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall live-implementation plan contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall live-implementation plan contract.
+
+The contract maps the future effect-authorized reset/uninstall phases while keeping the evidence bundle incomplete, effect authorization closed, deletion disabled, receipt writing disabled, absence-report writing disabled, host mutation disabled, and runtime authority absent.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_deletion_enabled=0
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_file_write_enabled=0
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
+macos_reset_uninstall_live_implementation_plan_contract_guard_present=1
+live_implementation_plan_contract_state=defined-no-effect
+live_implementation_plan_contract_decision=blocked-deletion-disabled-and-evidence-incomplete
+live_implementation_plan_required=1
+live_implementation_plan_complete=0
+live_implementation_plan_execution_enabled=0
+live_implementation_plan_deletion_enabled=0
+live_implementation_plan_receipt_write_enabled=0
+live_implementation_plan_absence_write_enabled=0
+live_implementation_plan_preflight_required=1
+live_implementation_plan_preflight_present=1
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+macos_reset_uninstall_evidence_bundle_contract_present=1
+evidence_bundle_contract_state=defined-no-effect
+reset_uninstall_evidence_bundle_required=1
+reset_uninstall_evidence_bundle_complete=0
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_valid=0
+reset_uninstall_evidence_bundle_evidence_present=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+macos_reset_uninstall_live_target_classifier_present=1
+macos_reset_uninstall_receipt_schema_contract_present=1
+macos_reset_uninstall_absence_report_contract_present=1
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+live_implementation_plan_schema_version=macos-reset-uninstall-live-implementation-plan/1
+live_implementation_plan_required_component_count=8
+live_implementation_plan_complete_component_count=0
+live_implementation_requires_evidence_bundle_complete=1
+live_implementation_requires_effect_authorization=1
+live_implementation_requires_implementation_gate_open=1
+live_implementation_requires_operator_intent_evidence=1
+live_implementation_requires_no_unmanaged_targets=1
+live_implementation_requires_receipt_schema=1
+live_implementation_requires_absence_report=1
+live_implementation_requires_live_execution_preflight=1
+live_implementation_requires_no_network=1
+live_implementation_requires_no_root=1
+live_implementation_condition_evidence_bundle_complete=required
+live_implementation_condition_effect_authorized=required
+live_implementation_condition_implementation_gate_open=required
+live_implementation_condition_operator_intent_evidence_present=required
+live_implementation_condition_no_unmanaged_targets=required
+live_implementation_condition_live_execution_preflight_present=required
+live_implementation_condition_no_network=required
+live_implementation_condition_no_root=required
+live_implementation_result_evidence_bundle_complete=not_met
+live_implementation_result_effect_authorized=not_met
+live_implementation_result_implementation_gate_open=not_met
+live_implementation_result_operator_intent_evidence=not_met
+live_implementation_result_no_unmanaged_targets=not_evaluated_contract_only
+live_implementation_result_live_execution_preflight=blocked-no-effect
+live_implementation_result_no_network=met
+live_implementation_result_no_root=met
+live_implementation_phase_1_status=contract-only
+live_implementation_phase_2_status=blocked-effect-authorization-closed
+live_implementation_phase_3_status=contract-only
+live_implementation_phase_4_status=blocked-evidence-incomplete
+live_implementation_phase_5_status=disabled
+live_implementation_phase_6_status=disabled
+live_implementation_phase_7_status=disabled
+live_implementation_phase_8_status=disabled
+live_implementation_phase_9_status=disabled
+live_implementation_phase_10_status=disabled
+live_implementation_phase_11_status=disabled
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Public Meaning
+
+The careful public meaning is:
+
+```text
+Latticra has a no-effect macOS reset/uninstall live-implementation plan contract that maps future effect-authorized phases while deletion remains disabled.
+```
+
+That does not mean Latticra has complete evidence-bundle evidence, effect approval evidence, live approval evidence, a macOS reset implementation, uninstall implementation, installer, commit-capable app bundle writer, verified app bundle, signed build, notarized build, launchd integration, Keychain integration, Endpoint Security integration, System Extension integration, privileged helper, or production security capability.
+
+## Guard Validation
+
+This status record is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-implementation-plan-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_implementation_plan_contract: ok
+```
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, complete evidence-bundle evidence, live execution evidence, receipt evidence, absence verification evidence, operator approval evidence, effect approval evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.

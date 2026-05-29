@@ -1,7 +1,7 @@
 # Latticra Panel UI Design Checkpoint
 
 Status: design checkpoint
-Date: 2026-05-24 CDT
+Date: 2026-05-27 CDT
 
 This checkpoint records the current Latticra Panel workbench layout as the baseline design state.
 
@@ -33,10 +33,18 @@ components tab
 seal tab
 authority tab
 delivery tab
+updater tab
 evidence tab
 procedure tab
 fluid install button
 right evidence panel
+focused running monitor
+bounded recent engine output
+non-wrapping engine log scroll
+running console quick-command restraint
+v1.0.0 readability pass
+bounded readable status chips
+first-screen purpose and next-action copy
 window size
 minimum window size
 maximized launch

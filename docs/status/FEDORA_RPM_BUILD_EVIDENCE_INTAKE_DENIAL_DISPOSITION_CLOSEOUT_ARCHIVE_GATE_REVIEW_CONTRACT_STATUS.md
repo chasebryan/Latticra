@@ -1,0 +1,123 @@
+# Fedora RPM Build-Evidence Intake Denial Disposition Closeout Archive Gate Review Contract Status
+
+Status: rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review/status alignment
+Date: 2026-05-28
+Scope: status record for the no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review contract.
+
+## Summary
+
+Latticra now has a no-effect Fedora RPM build-evidence intake denial disposition closeout archive gate review contract.
+
+The archive gate review upholds the closed Fedora build-evidence intake denial archive gate while archive-record writes and re-request authority remain closed.
+
+It does not run `rpmbuild`, `mock`, `rpmlint`, `dnf`, `fedpkg`, `koji`, `bodhi`, or `copr-cli`.
+
+It does not request build evidence, re-request denied evidence, archive denied evidence, write archive records, accept build evidence, create RPM artifacts, inspect RPM artifacts, install packages, remove packages, create Bugzilla tickets, publish packages, submit to Fedora, promote validation results, or mutate a host.
+
+## Current classification
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+fedora_rpm_build_evidence_intake_denial_disposition_contract_present=1
+fedora_rpm_build_evidence_intake_denial_review_contract_present=1
+fedora_rpm_build_evidence_intake_denial_contract_present=1
+fedora_package_validation_promotion_blocker_matrix_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1
+rpm_build_evidence_intake_denial_disposition_closeout_contract_present=1
+rpm_build_evidence_intake_denial_disposition_contract_present=1
+build_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect
+build_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect
+build_evidence_intake_denial_disposition_state=closed-upheld-no-effect
+build_evidence_intake_denial_review_state=reviewed-upheld-no-effect
+build_evidence_intake_denial_state=denied-no-effect
+validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_package_validation_promotion_blocker_matrix_state=blocked-no-effect
+fedora_mock_build_gate_state=closed-no-effect
+denial_archive_gate_review_present=1
+denial_archive_gate_review_state=reviewed-upheld-no-effect
+denial_archive_gate_review_decision=uphold-closed-archive-gate
+denial_archive_gate_present=1
+denial_archive_gate_state=closed-no-effect
+denial_archive_gate_decision=deny-archive-and-re-request
+denial_disposition_closeout_present=1
+denial_disposition_closeout_decision=closeout-upheld-denial
+denial_disposition_present=1
+denial_disposition_decision=close-upheld-denial
+denial_review_present=1
+denial_review_decision=uphold-denial
+denial_closed=1
+denial_archived=0
+denial_archive_allowed=0
+denial_archive_record_write_allowed=0
+denial_archive_record_written=0
+denial_re_request_allowed=0
+fedora_denial_archive_allowed=0
+fedora_denial_archive_record_write_allowed=0
+fedora_denial_archive_record_written=0
+fedora_denial_re_request_allowed=0
+fedora_build_evidence_intake_allowed=0
+fedora_build_evidence_intake_denied=1
+fedora_platform_build_evidence_accepted=0
+build_transcript_intake_accepted=0
+rpm_build_transcript_intake_accepted=0
+fedora_build_transcript_intake_accepted=0
+rpm_build_lane_opened=0
+fedora_single_platform_build_lane_opened=0
+source_archive_accepted_for_build=0
+accepted_rpmlint_transcript_present=0
+environment_transcript_present=0
+explicit_operator_build_authorization=0
+source_rpm_artifact_created=0
+binary_rpm_artifact_created=0
+rpm_artifact_created=0
+rpm_artifact_sha256_recorded=0
+rpm_payload_accepted=0
+rpm_install_remove_transcript_present=0
+fedora_package_review_non_claim_present=1
+fedora_package_validation_result_promoted=0
+rpm_validation_result_promoted=0
+package_validation_result_promoted=0
+package_readiness_claimed=0
+production_installer_ready=0
+root_installer_ready=0
+host_mutation_performed=0
+```
+
+## Guard validation
+
+This status alignment is guarded by:
+
+```sh
+sh scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh
+```
+
+Expected output:
+
+```text
+fedora_rpm_build_evidence_intake_denial_disposition_closeout_archive_gate_review_contract: ok
+```
+
+## Completed follow-on lane
+
+```text
+docs/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+docs/status/FEDORA_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT_STATUS.md
+scripts/test-fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh
+.github/workflows/fedora-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.yml
+```
+
+That follow-on disposition records the reviewed archive gate as disposed while keeping archive-record writes and re-request authority closed.
+
+## Next recommended lane
+
+```text
+Add a Fedora RPM build-evidence intake denial disposition closeout archive gate review disposition closeout archive gate review contract before any reviewed archive gate disposition closeout archive gate can be relaxed or re-requested.
+```
+
+## Non-claims
+
+This status record is not Fedora build evidence, not `mock` evidence, not `rpmlint` evidence, not RPM artifact evidence, not Fedora package review evidence, not Bugzilla evidence, not reviewer approval, not dist-git evidence, not Koji evidence, not Bodhi evidence, not Rawhide evidence, not official package evidence, not Fedora approval, not Fedora distribution readiness, not production installer readiness, not host mutation, and not production readiness.

@@ -12,7 +12,10 @@ permissions:
 jobs:
   fedora-vm-rpm-evidence-status:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
       - name: Check Fedora VM RPM evidence status
         run: sh scripts/test-fedora-disposable-vm-local-rpm-validation-evidence-status.sh

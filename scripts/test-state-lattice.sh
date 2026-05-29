@@ -4,6 +4,7 @@ set -eu
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
 tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/latticra-state-lattice.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
 bin="$tmpdir/latticra-state-lattice-invariants"
 
 cc $CFLAGS \

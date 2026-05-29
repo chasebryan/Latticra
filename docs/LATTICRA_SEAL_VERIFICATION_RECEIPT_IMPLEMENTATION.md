@@ -72,9 +72,15 @@ The implementation fails closed:
 null verification receipt output -> LATTICRA_STATUS_NULL_ARGUMENT
 null verification policy metadata input -> invalid-input
 invalid verification policy metadata -> invalid-policy
+unterminated verification policy metadata strings -> invalid-policy
+invalid verification policy boolean flags -> invalid-policy
+verification policy authority/effect flags set -> invalid-policy
 missing artifact digest -> missing-digest
 missing signer identity -> missing-signer
 missing public-key identity -> missing-public-key-identity
+tampered verification receipt strings fail closed before report
+tampered verification receipt authority/effect flags fail closed before report
+tampered verification receipt boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 
@@ -119,10 +125,25 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-verification-receipt-contract.sh
 sh scripts/test-latticra-seal-verification-receipt.sh
+sh scripts/test-latticra-seal-verification-receipt-status.sh
+sh scripts/test-latticra-seal-capability-gate-status.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
+```
+
+Expected output:
+
+```text
+seal verification receipt contract: ok
+seal verification receipt invariants: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a capability gate contract.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this verification receipt metadata implementation.
+That future slice must not add runtime execution, effect execution, capability enforcement, runtime authority, cryptographic verification, verified receipt authority, host behavior, network behavior, or object sealing unless separately implemented and guarded.

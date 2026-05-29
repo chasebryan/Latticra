@@ -1,13 +1,17 @@
 # Latticra Lat Language Grammar Implementation
 
-Status: initial implementation contract
-Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, report surface, fixture, and invariants.
+Status: implementation with line-comment metadata and unsupported block-comment rejection
+Scope: bounded no-effect Lat / Latticra Language grammar parser, parse result model, AST metadata, line-comment metadata, unsupported block-comment rejection, report surface, fixture, and invariants.
 
 ## Purpose
 
 This implementation adds the first bounded parser for the Lat / Latticra Language grammar.
 
 The parser accepts the first Lat-Core declaration grammar shape and records module, declaration, clause, effect, source-span, and no-effect metadata.
+
+The parser also records deterministic line-comment metadata for audit visibility. Line comments are skipped by the grammar, may contain otherwise forbidden behavior marker words, and do not change no-effect flags or clause/operator behavior.
+
+Block comments are rejected with a deterministic `unsupported_block_comment` parse error outside strings and line comments. `/*` and `*/` text inside string literals remains ordinary string content.
 
 This implementation does not execute Lat, compile Lat, interpret Lat, lower Lat to LIR, render L-UI, call Nucleus task behavior, read files, write files, open network connections, mutate state, or touch hardware.
 
@@ -128,6 +132,7 @@ invalid_hex_escape
 literal_nul_in_string
 capacity_exceeded
 forbidden_behavior_marker
+unsupported_block_comment
 internal_error
 ```
 
@@ -191,6 +196,25 @@ transition_count
 assertion_count
 effect_count
 clause_count
+comment_count
+first_comment_start_offset
+first_comment_end_offset
+first_comment_start_line
+first_comment_start_column
+first_comment_end_line
+first_comment_end_column
+first_declaration_index
+first_declaration_kind
+first_declaration_name
+first_declaration_source
+first_declaration_first_clause_index
+first_declaration_clause_count
+first_clause_index
+first_clause_keyword
+first_clause_left
+first_clause_operator
+first_clause_right
+first_clause_effect
 no_effect
 execution_allowed
 mutation_allowed
@@ -204,6 +228,8 @@ span_start_column
 span_end_line
 span_end_column
 ```
+
+The first declaration and first clause fields are copied from the parsed AST only when parsing succeeds. They are report metadata only; clause operators are not evaluated.
 
 Small output buffers return:
 

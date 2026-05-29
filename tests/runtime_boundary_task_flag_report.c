@@ -32,6 +32,7 @@ int main(void) {
     CHECK_TEXT(report, "task_executed=0");
     CHECK_TEXT(report, "task_mutation_allowed=0");
     CHECK_TEXT(report, "task_server_interaction_allowed=0");
+    CHECK_TEXT(report, "task_network_allowed=0");
     CHECK_TEXT(report, "task_recovery_allowed=0");
     CHECK_TEXT(report, "task_hardware_allowed=0");
 

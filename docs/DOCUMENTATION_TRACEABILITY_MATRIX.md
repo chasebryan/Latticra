@@ -1,0 +1,106 @@
+# Documentation Traceability Matrix
+
+Status: active documentation traceability matrix
+Last updated: 2026-05-27 CDT
+Scope: public entry points, command examples, visual assets, source records, status records, mirrors, validation guards, non-claims, product surfaces, installer docs, package docs, security docs, subsystem maps, and change-impact radius.
+
+## Purpose
+
+This matrix maps reader-facing documentation surfaces back to their source records and validation checks.
+
+Use it to answer:
+
+1. where a public statement should be sourced;
+2. which mirrors may need updates;
+3. which validation commands are relevant;
+4. which non-claims must remain visible;
+5. where to look when a public page and a source record disagree.
+
+This document does not promote claims. It makes documentation traceability visible.
+
+## Traceability Rule
+
+Every public-facing claim should have a path to:
+
+```text
+public surface -> source record -> validation or review record -> non-claim boundary
+```
+
+If that path is missing, keep the claim narrow or remove it until a source record exists.
+
+## Matrix
+
+| Topic | Public surfaces | Source records | Validation or review | Non-claim boundary |
+| --- | --- | --- | --- | --- |
+| Reader journeys | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) | Local link check and public-entry guard | Audience routes must not imply capability promotion. |
+| Documentation health | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html), review packets | [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md), [`DOCUMENTATION_READER_JOURNEY_MAP.md`](DOCUMENTATION_READER_JOURNEY_MAP.md), [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md) | Local link check, public-entry guard, and selected review packet validation | Health scoring must not become capability evidence. |
+| Documentation source authority | Public summaries, source records, status records, review packets, public HTML, and governance files | [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) | Local link check and selected drift-response validation | The narrowest current source record wins until conflicts are resolved. |
+| Documentation freshness and lifecycle | Public summaries, status records, source records, stale records, superseded records, archives, review packets, and public HTML | [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md), [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md), current source record | Local link check, review packet outcome, and selected drift-response validation | Stale, superseded, archived, planning, draft, local-only, no-effect, or report-only records must not drive public claims beyond current authority. |
+| Documentation change impact radius | Touched files, source records, status mirrors, public summaries, public HTML, validation paths, non-claims, and review packets | [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md), changed source record, [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Radius-specific checks from the impact guide and validation playbook | Review radius must expand when reader understanding could change and stay contained when meaning does not change. |
+| Documentation status records | Status records, status index, current status, root status shortcut, public status pages, estimate records, and public-entry alignment notes | [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md), [`status/README.md`](status/README.md), [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md) | Local link check, public-entry guard, estimate guard when estimates change, exact source guard when named | Status records must separate current posture, evidence, validation, mirrors, non-claims, next work, and boundary. |
+| Documentation command examples | Quick start, public HTML snippets, validation commands, installer commands, package commands, platform prerequisites, reset/uninstall commands, and update commands | [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md), [`QUICK_START_CHEATSHEET.md`](QUICK_START_CHEATSHEET.md), changed source record | Local link or href check, public-entry guard, exact guard named by the command example when applicable | Runnable snippets must not imply broader authority, approval, readiness, safety, or support than the source record proves. |
+| Documentation visual assets | Screenshots, diagrams, public HTML images, Markdown images, generated visuals, presentation visuals, social/review cards, and assets under `docs/assets/` | [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md), source Markdown or status record, changed asset path | Image path check, alt-text review, public/source consistency check, public-entry guard when public visuals change | Visuals must not imply product maturity, security posture, approval, authority, or readiness beyond source records. |
+| Project identity | [`../README.md`](../README.md), [`index.html`](index.html), [`map.html`](map.html) | [`REAL_SYSTEM_CONTRACT.md`](REAL_SYSTEM_CONTRACT.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`README.md`](README.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md), `git diff --check` | [`NON_CLAIMS.md`](NON_CLAIMS.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) |
+| Current status and estimates | [`../README.md`](../README.md), [`../STATUS.md`](../STATUS.md), [`status.html`](status.html), [`roadmap.html`](roadmap.html) | [`status/CURRENT_STATUS.md`](status/CURRENT_STATUS.md), [`status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md`](status/CURRENT_ESTIMATE_TABLE_SOURCE_ALIGNMENT.md) | `sh scripts/test-current-estimate-table-source-alignment.sh` | Estimates are planning posture, not release promises. |
+| Documentation navigation | [`README.md`](README.md), [`map.html`](map.html), [`index.html`](index.html) | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), [`DOCUMENTATION_MAINTENANCE.md`](DOCUMENTATION_MAINTENANCE.md) | Local link check, `git diff --check` | Navigation must not imply capability promotion. |
+| Public site mirrors | Static HTML pages under `docs/` | [`PUBLIC_SITE_MIRROR_STANDARD.md`](PUBLIC_SITE_MIRROR_STANDARD.md), source Markdown record, status or validation record | HTML href check, local link check for touched Markdown, public-entry guard | Public HTML must not be stronger than source Markdown. |
+| Subsystem landing pages | [`README.md`](README.md), [`map.html`](map.html), subsystem README files, subsystem public HTML pages | [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md), [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), subsystem contract, subsystem status record | Local link check, public-entry guard, exact subsystem guard | Subsystem progress must not imply product readiness or authority expansion. |
+| Product-facing wording | [`../README.md`](../README.md), [`index.html`](index.html), [`start.html`](start.html), [`validation.html`](validation.html) | [`PRODUCT_DOCUMENTATION_COHESION.md`](PRODUCT_DOCUMENTATION_COHESION.md), [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md) | [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) | Product copy must stay evidence-bound and non-production. |
+| Public claim language | All public Markdown and HTML summaries | [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md), [`EVIDENCE_LADDER.md`](EVIDENCE_LADDER.md), [`NON_CLAIMS.md`](NON_CLAIMS.md) | Claim review packet outcome when wording changes | Unsupported adjacent claims stay blocked. |
+| Shared public terminology | Public Markdown, public HTML, package docs, installer docs, status records, and subsystem landing pages | [`DOCUMENTATION_GLOSSARY.md`](DOCUMENTATION_GLOSSARY.md), [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md), [`NAMING_SYSTEM.md`](NAMING_SYSTEM.md), [`LANGUAGE_NAMING_POLICY.md`](LANGUAGE_NAMING_POLICY.md) | Local link check and public-entry guard | Shared terms must not imply stronger capability than source records. |
+| Security posture | [`../SECURITY.md`](../SECURITY.md), [`security.html`](security.html), [`../README.md`](../README.md) | [`DEFENSIVE_THREAT_MODEL_CONTRACT.md`](DEFENSIVE_THREAT_MODEL_CONTRACT.md), [`HIGH_ASSURANCE_SECURITY_BASELINE.md`](HIGH_ASSURANCE_SECURITY_BASELINE.md), [`ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md`](ZERO_TRUST_RUNTIME_AUTHORITY_BASELINE.md) | Security-specific guard named by the changed source record | No malware prevention, ransomware prevention, hardened sandbox, certification, or production protection claim. |
+| Installer and Panel posture | [`../installer/README.md`](../installer/README.md), [`../installer/docs/README.md`](../installer/docs/README.md), [`start.html`](start.html), [`validation.html`](validation.html) | [`PRODUCTION_INSTALLER_READINESS_CONTRACT.md`](PRODUCTION_INSTALLER_READINESS_CONTRACT.md), installer docs and status records | Installer or Panel guard named by the changed record | No root installer, daily-driver installer, production installer, or unattended host mutation claim. |
+| Fedora lane | [`FEDORA_READINESS_PLAN.md`](FEDORA_READINESS_PLAN.md), [`FEDORA_DEVELOPER_WORKFLOW.md`](FEDORA_DEVELOPER_WORKFLOW.md), [`../packaging/fedora/README.md`](../packaging/fedora/README.md), [`validation.html`](validation.html) | Fedora package, workflow, and status records | `sh scripts/test-fedora-developer-workflow.sh` plus exact Fedora guard | Local-only unless Fedora approval evidence exists. |
+| Ubuntu lane | [`UBUNTU_READINESS_PLAN.md`](UBUNTU_READINESS_PLAN.md), [`UBUNTU_DEVELOPER_WORKFLOW.md`](UBUNTU_DEVELOPER_WORKFLOW.md), [`../packaging/ubuntu/README.md`](../packaging/ubuntu/README.md), [`validation.html`](validation.html) | Ubuntu package, workflow, notice, license, and status records | `sh scripts/test-ubuntu-developer-workflow.sh` plus exact Ubuntu guard | Local-only unless Ubuntu archive or PPA evidence exists. |
+| Debian, FreeBSD, and OpenBSD lanes | [`../packaging/debian/README.md`](../packaging/debian/README.md), [`../packaging/freebsd/README.md`](../packaging/freebsd/README.md), [`../packaging/openbsd/README.md`](../packaging/openbsd/README.md), [`validation.html`](validation.html) | Platform package draft and package-input/build-gate records | Exact platform guard named by the changed record | Local-only unless archive, ports-tree, or official publication evidence exists. |
+| openSUSE lane | [`OPENSUSE_READINESS_PLAN.md`](OPENSUSE_READINESS_PLAN.md), [`OPENSUSE_DEVELOPER_WORKFLOW.md`](OPENSUSE_DEVELOPER_WORKFLOW.md), [`../packaging/opensuse/README.md`](../packaging/opensuse/README.md), [`validation.html`](validation.html) | openSUSE package, workflow, rpmlint, osc, and status records | `sh scripts/test-opensuse-developer-workflow.sh` plus exact openSUSE guard | Local-only unless Open Build Service or official package evidence exists. |
+| Runtime Boundary and Nucleus | [`runtime.html`](runtime.html), [`../README.md`](../README.md), subsystem records | [`RUNTIME_BOUNDARY_CONTRACT.md`](RUNTIME_BOUNDARY_CONTRACT.md), [`RUNTIME_BOUNDARY_IMPLEMENTATION.md`](RUNTIME_BOUNDARY_IMPLEMENTATION.md), [`NUCLEUS_TASK_EXECUTION_CONTRACT.md`](NUCLEUS_TASK_EXECUTION_CONTRACT.md), [`NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md`](NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md) | Runtime or Nucleus guard named by the changed source record | No runtime authority, effect-performing execution, process isolation, or sandbox claim. |
+| Latticra Seal | [`seal.html`](seal.html), [`latticra-seal/README.md`](latticra-seal/README.md), [`latticra-seal/STATUS.md`](latticra-seal/STATUS.md), [`../README.md`](../README.md) | [`LATTICRA_SEAL_CONTRACT.md`](LATTICRA_SEAL_CONTRACT.md), [`LATTICRA_SEAL_CORE_EVIDENCE_REPORT.md`](LATTICRA_SEAL_CORE_EVIDENCE_REPORT.md), Seal status records | `sh scripts/test-latticra-seal-docs.sh` plus exact Seal guard | No production enforcement, AI-agent control, host protection, network blocking, or cryptographic authority claim. |
+| Lat, LIR, and L-UI | [`language.html`](language.html), [`examples.html`](examples.html), [`../README.md`](../README.md) | [`LANGUAGE_STRATEGY.md`](LANGUAGE_STRATEGY.md), [`LAT_PIPELINE_CONTRACT.md`](LAT_PIPELINE_CONTRACT.md), [`LIR_SHAPE_CONTRACT.md`](LIR_SHAPE_CONTRACT.md), [`L_UI_PARSER.md`](L_UI_PARSER.md) | Language or parser guard named by the changed source record | No production language runtime, LIR execution, or terminal-control renderer claim. |
+| Nadia offline AI | [`nadia.html`](nadia.html), [`../README.md`](../README.md), Nadia status records | [`NADIA_OFFLINE_AI_FOUNDATION.md`](NADIA_OFFLINE_AI_FOUNDATION.md) and staged Nadia contracts | Exact Nadia guard named by the changed source record | No model loading, inference, token generation, dialogue generation, prompt evaluation, or tool execution claim. |
+| Boot and OS-base preview | [`boot.html`](boot.html), [`../README.md`](../README.md), installer records | SeaBIOS/GRUB boot-preview contracts, templates, preflight, and validation records | Exact SeaBIOS/GRUB guard named by the changed source record | No bootable OS image, OS replacement, GRUB installer, firmware mutation, or hardware boot success claim. |
+| Handbook and long-form docs | [`latticra-system-substrate/README.md`](latticra-system-substrate/README.md), generated handbook artifacts | [`FOUNDATION_INDEX.md`](FOUNDATION_INDEX.md), project notes, status records, subsystem contracts | Documentation change review packet and local link check | Handbook summaries must not outrun current status. |
+
+## Drift Indicators
+
+Treat these as documentation drift:
+
+- a public page names a capability without a source record;
+- a status record and public page use different posture words;
+- a public HTML page is stronger than the source Markdown record;
+- a platform README omits local-only or no-effect boundaries;
+- a security page uses "secure", "safe", "hardened", "protection", or "prevention" without a supporting source record;
+- an estimate appears in public HTML but not in the current estimate source records;
+- a stale, superseded, archived, planning, draft, local-only, no-effect, or report-only record is used as current public authority without a lifecycle boundary;
+- a change that affects reader understanding is reviewed only locally, or a local-only edit is expanded mechanically without a source, mirror, or claim reason;
+- a status record omits current posture, evidence, validation, mirrors, non-claims, next valid work, or boundary;
+- a command example omits working directory, effect boundary, expected output, cleanup route, or blocked adjacent claim when those are relevant;
+- a visual asset lacks source context, alt text or accessible equivalent, freshness boundary, or non-claim boundary when it implies product posture;
+- a subsystem landing page omits the evidence spine, guard, status record, non-claims, or stop signals required by [`SUBSYSTEM_DOCUMENTATION_STANDARD.md`](SUBSYSTEM_DOCUMENTATION_STANDARD.md);
+- a quick-start path omits reset, cleanup, or non-claim context for a runnable local path.
+
+## Review Flow
+
+When drift is found:
+
+1. Identify the topic row in this matrix.
+2. Read the source records before editing public wording.
+3. Use [`DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md`](DOCUMENTATION_SOURCE_AUTHORITY_ORDER.md) when records disagree.
+4. Use [`DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md`](DOCUMENTATION_FRESHNESS_LIFECYCLE_POLICY.md) when stale, superseded, archived, planning, draft, local-only, no-effect, report-only, or blocked records are involved.
+5. Use [`DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md`](DOCUMENTATION_CHANGE_IMPACT_RADIUS_GUIDE.md) to decide whether the review stays local or expands to source records, mirrors, validation paths, public HTML, status, or non-claims.
+6. Use [`DOCUMENTATION_STATUS_RECORD_STANDARD.md`](DOCUMENTATION_STATUS_RECORD_STANDARD.md) when status records, status-index entries, status mirrors, estimate records, or public-entry alignment notes change.
+7. Use [`DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md`](DOCUMENTATION_COMMAND_EXAMPLE_STANDARD.md) when runnable commands, validation command lists, install/update/reset/uninstall snippets, platform prerequisites, or public HTML command examples change.
+8. Use [`DOCUMENTATION_VISUAL_ASSET_STANDARD.md`](DOCUMENTATION_VISUAL_ASSET_STANDARD.md) when screenshots, diagrams, public images, generated visuals, presentation visuals, social/review cards, or `docs/assets/` files change.
+9. Check [`PUBLIC_CLAIMS_LEDGER.md`](PUBLIC_CLAIMS_LEDGER.md) and [`DOCUMENTATION_STYLE_GUIDE.md`](DOCUMENTATION_STYLE_GUIDE.md).
+10. Use [`DOCUMENTATION_HEALTH_SCORECARD.md`](DOCUMENTATION_HEALTH_SCORECARD.md) to mark watch or failing dimensions before editing broad public surfaces.
+11. Use [`DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md`](DOCUMENTATION_DRIFT_RESPONSE_PLAYBOOK.md) to choose a narrowing, alignment, or demotion path.
+12. Use [`DOCUMENTATION_VALIDATION_PLAYBOOK.md`](DOCUMENTATION_VALIDATION_PLAYBOOK.md) to choose the narrowest relevant validation commands.
+13. Use [`DOCUMENTATION_CHANGE_REVIEW_PACKET.md`](DOCUMENTATION_CHANGE_REVIEW_PACKET.md) when wording, mirrors, estimates, status, platform posture, or non-claims change.
+14. Run the selected validation commands.
+15. Update only the public surfaces whose reader-facing claim actually changed.
+
+## Boundary
+
+This matrix is documentation traceability only.
+
+It does not change implementation behavior, installer authority, package authority, runtime authority, workflow permissions, security posture, public estimates, or product readiness.

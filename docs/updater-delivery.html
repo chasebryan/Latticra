@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signed-Updater Delivery Gate | Latticra</title>
+  <meta name="description" content="A public overview of Latticra Panel signed-updater delivery gates, local-checkout updater boundaries, manifest fixtures, denial transcripts, and production update non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Signed-Updater Delivery Gate">
+  <meta property="og:description" content="Closed signed-updater delivery gate, local-checkout updater policy, no-effect fixtures, and blocked network self-update authority.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Signed-updater delivery gate</p>
+        <p class="eyebrow">Local Checkout, Closed Delivery, No Apply Authority</p>
+        <h1>Signed-updater delivery gate</h1>
+        <p class="page-lede">
+          Latticra Panel has a local-checkout updater lane and a closed signed-delivery gate. The records describe missing manifest, signature, artifact, rollback, validation, receipt, and operator-confirmation evidence; they do not enable network self-update or signed update apply.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Local checkout reinstall is not secure update delivery.</h2>
+        </div>
+        <p>
+          The implemented updater surface stays Panel-owned, local, and guarded: it uses the current reviewed checkout and local-prefix reinstall posture. The signed-updater gate stays closed until a future design has signed manifests, verified artifacts, channel policy, compatibility policy, rollback evidence, post-update validation, operator confirmation, and receipts.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Signed-updater delivery gate overview">
+        <article>
+          <span>01</span>
+          <h3>Local checkout only</h3>
+          <p>The current updater source strategy is the current source checkout with guarded local-prefix reinstall, not a remote update service.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Signed manifest missing</h3>
+          <p>Signed manifest, manifest signature verification, artifact hash verification, and artifact signature verification are required and currently absent.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Rollback and receipts missing</h3>
+          <p>Rollback plan, rollback evidence, post-update validation, operator confirmation, and update receipt writing are required before promotion.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>State remains blocked</h3>
+          <p>Manifest and state fixtures are no-effect review inputs. They do not execute transitions, stage material, activate updates, or apply signatures.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The gate records requirements while keeping update authority closed.</h2>
+        <p>
+          These fields describe a denial boundary. They are not evidence of secure update delivery, trusted repository access, artifact verification, or production update readiness.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Signed-updater delivery status snapshot">
+        <article>
+          <span>signed_updater_delivery_gate_present</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>signed_updater_delivery_gate_state</span>
+          <strong>closed</strong>
+        </article>
+        <article>
+          <span>updater_current_apply_mode</span>
+          <strong>guarded-local-prefix-reinstall</strong>
+        </article>
+        <article>
+          <span>signed_manifest_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>signed_manifest_present</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>artifact_signature_verified</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>network_fetch_authority</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>signed_update_apply_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Delivery Gate</p>
+          <h2>Signed or network-delivered updates need every required control.</h2>
+          <p>
+            The gate prevents update wording from drifting from a local evidence lane into a production delivery claim. A future signed update path must prove trust, compatibility, rollback, validation, operator review, and receipt behavior before staging or apply can open.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Signed updater delivery gate table">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Panel-owned updater, local-checkout source strategy, guarded local-prefix reinstall mode, closed delivery gate, denial transcript, manifest fixture, manifest fixture validation, state fixture, status records, and guard scripts.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before delivery</span>
+            <p role="cell">Signed manifest, manifest signature verification, artifact hash verification, artifact signature verification, channel policy, compatibility policy, rollback plan, rollback evidence, post-update validation, operator confirmation, and update receipt writing.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Remote update repository trust, network fetch authority, staged update materialization, signed update apply, update activation, host mutation, root authority, system mutation, kernel mutation, systemd mutation, SELinux mutation, boot mutation, production update readiness, and production installer readiness.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">No-Effect Fixtures</p>
+        <h2>The supporting records explain the closed gate without opening it.</h2>
+        <p>
+          The signed-updater lane now has reviewable shapes for denial, manifest, validation, and state. Each remains stdout-only or fixture-only, with authority fields locked to zero.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Transcript</span>
+          <h3>Denial record</h3>
+          <p>The denial transcript records why signed update delivery is refused and performs no transcript file writes.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Fixture</span>
+          <h3>Manifest shape</h3>
+          <p>The local manifest fixture gives the gate a reviewable update-shaped record without trusting it for apply.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Validation</span>
+          <h3>Shape checks only</h3>
+          <p>Manifest validation checks schema and closed-authority fields, not a real signed update or artifact chain.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Blocked</span>
+          <h3>State execution</h3>
+          <p>The state fixture names future states while keeping current state blocked and transition execution disabled.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate the update boundary without fetching or applying updates.</h2>
+        <p>
+          These commands are deterministic local checks. They do not fetch from a network, trust a repository, verify production artifacts, stage updates, activate updates, mutate the host, or write update receipts.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Delivery gate</h3>
+          <pre><code>sh scripts/test-latticra-panel-signed-updater-delivery-gate.sh
+sh scripts/latticra-panel-signed-updater-delivery-gate.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Denial and manifest</h3>
+          <pre><code>sh scripts/test-latticra-panel-signed-updater-denial-transcript.sh
+sh scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>State and Panel context</h3>
+          <pre><code>sh scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh
+sh scripts/test-latticra-panel-updater.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating update-delivery wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="SELF_UPDATE_MODEL.md"><strong>Self-update model</strong><span>Panel-owned local-checkout updater policy, current channels, closed signed-delivery gate, and non-claims.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"><strong>Signed-updater delivery gate</strong><span>Closed future update-delivery gate for signed manifests, artifact verification, rollback, validation, and receipts.</span></a>
+        <a href="status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"><strong>Delivery gate status</strong><span>Status fields for the current local-checkout updater and closed signed-delivery boundary.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT.md"><strong>Denial transcript</strong><span>Stdout-only denial decision with network fetch, staging, apply, and mutation disabled.</span></a>
+        <a href="status/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md"><strong>Denial status</strong><span>Status checkpoint for the no-effect signed-updater denial transcript.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md"><strong>Manifest fixture contract</strong><span>Local no-effect signed-updater manifest fixture and trust boundary.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION.md"><strong>Manifest fixture validation</strong><span>Shape and closed-authority validation for the local fixture.</span></a>
+        <a href="LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md"><strong>State fixture contract</strong><span>Blocked state fixture with transition execution, staging, activation, rollback, and receipts disabled.</span></a>
+        <a href="status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md"><strong>State fixture status</strong><span>Status checkpoint for local state naming without transition execution.</span></a>
+        <a href="backup-recovery.html"><strong>Backup and recovery resilience</strong><span>Rollback planning, restore testing, recovery authorization, and no production update recovery claims.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Network fetch blockers, internet-facing service boundaries, DNS/TLS non-claims, and no remote update authority.</span></a>
+        <a href="supply-chain.html"><strong>Supply-chain gates</strong><span>Release authority, SBOM, signing, update delivery, runtime authority, and production security blockers.</span></a>
+        <a href="panel.html"><strong>Panel overview</strong><span>Guided GUI workbench, dry-run-first install flow, receipts, updater, and user-local evidence.</span></a>
+        <a href="installer.html"><strong>Installer readiness</strong><span>Production installer gates, local artifact manifest fixture, and release non-claims.</span></a>
+        <a href="validation.html"><strong>Local validation</strong><span>Panel install evidence, package guards, disposable VM gates, and dry-run contracts.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra signed-updater delivery gate.</span>
+      <span><a href="supply-chain.html">Open supply-chain gates</a></span>
+    </div>
+  </footer>
+</body>
+</html>

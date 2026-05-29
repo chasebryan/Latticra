@@ -1,0 +1,168 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+fail() {
+  printf 'macos reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract: %s\n' "$1" >&2
+  exit 1
+}
+
+require_file() {
+  file="$1"
+  [ -f "$file" ] || fail "missing file: $file"
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  grep -Fq -- "$pattern" "$file" ||
+    fail "missing required pattern in $file: $pattern"
+}
+
+require_not_contains() {
+  pattern="$1"
+  file="$2"
+  if grep -Fq -- "$pattern" "$file"; then
+    fail "forbidden pattern in $file: $pattern"
+  fi
+}
+
+require_output_contains() {
+  output="$1"
+  pattern="$2"
+  printf '%s\n' "$output" | grep -Fq -- "$pattern" ||
+    fail "missing required output pattern: $pattern"
+}
+
+doc='docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md'
+status='docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md'
+script='scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh'
+workflow='.github/workflows/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.yml'
+index='docs/status/README.md'
+readme='README.md'
+readme_status='docs/status/MACOS_README_INSTALLER_USAGE_STATUS.md'
+transfer_plan='docs/MACOS_INTEGRATION_TRANSFERABILITY_PLAN.md'
+transfer_status='docs/status/MACOS_INTEGRATION_TRANSFERABILITY_STATUS.md'
+review_script='scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh'
+review_doc='docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT.md'
+review_status='docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_CONTRACT_STATUS.md'
+makefile='Makefile'
+
+current_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition without opening dispatch or deletion.'
+previous_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition review contract that reviews the no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition without opening dispatch or deletion.'
+next_phrase='Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout audit contract that audits the no-effect closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout without opening dispatch or deletion.'
+
+for file in "$doc" "$status" "$script" "$workflow" "$index" "$readme" "$readme_status" "$transfer_plan" "$transfer_status" "$review_script" "$review_doc" "$review_status" "$makefile"; do
+  require_file "$file"
+done
+
+require_contains 'Status: no-effect macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract' "$doc"
+require_contains 'sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh' "$doc"
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_state=closed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_decision=no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-keeps-dispatch-closed' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_completed=1' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_stdout_only=1' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_file_write_enabled=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_record_write_enabled=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_review_present=1' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_disposition_present=1' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_acceptance_gate_open=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_performed=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_effect_authorized=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_opened=0' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_result=no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closed-dispatch-preserved' "$doc"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_phase_4=handoff_to_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit' "$doc"
+require_contains 'reset_uninstall_live_run_allowed=0' "$doc"
+require_contains 'reset_uninstall_deletion_enabled=0' "$doc"
+require_contains "$previous_phrase" "$doc"
+require_contains "$next_phrase" "$doc"
+
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_guard_present=1' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_state=closed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_acceptance_gate_open=0' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_performed=0' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0' "$status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_opened=0' "$status"
+require_contains 'runtime_authority_granted=0' "$status"
+require_contains 'production_installer_ready=0' "$status"
+
+require_contains 'MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md' "$index"
+require_contains 'macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout contract status' "$index"
+
+require_contains 'sh scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh' "$readme"
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1' "$readme"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_state=closed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition' "$readme"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_stdout_only=1' "$readme"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_file_write_enabled=0' "$readme"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0' "$readme"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0' "$readme"
+require_contains 'docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' "$readme"
+
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_command_documented=1' "$readme_status"
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1' "$readme_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0' "$readme_status"
+
+require_contains 'stage_4_macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract=present' "$transfer_plan"
+require_contains 'docs/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT.md' "$transfer_plan"
+require_contains 'scripts/macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh' "$transfer_plan"
+require_contains 'docs/status/MACOS_RESET_UNINSTALL_LIVE_RUNNER_ACCEPTANCE_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_CLOSEOUT_CONTRACT_STATUS.md' "$transfer_plan"
+require_contains 'Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout lane now present' "$transfer_plan"
+require_contains "$current_phrase" "$transfer_plan"
+require_contains "$next_phrase" "$transfer_plan"
+
+require_contains 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1' "$transfer_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_state=closed-no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition' "$transfer_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_stdout_only=1' "$transfer_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_file_write_enabled=0' "$transfer_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0' "$transfer_status"
+require_contains 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0' "$transfer_status"
+require_contains 'Current live-runner acceptance-denial disposition closeout audit review disposition closeout audit review disposition closeout audit review disposition closeout lane' "$transfer_status"
+require_contains "$current_phrase" "$transfer_status"
+require_contains "$next_phrase" "$transfer_status"
+
+require_contains 'MACOS RESET UNINSTALL LIVE RUNNER ACCEPTANCE DENIAL DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT CONTRACT' "$script"
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-contract' "$script"
+require_not_contains 'rm ' "$script"
+require_not_contains 'rmdir ' "$script"
+require_not_contains 'sudo ' "$script"
+require_not_contains 'curl ' "$script"
+require_not_contains 'wget ' "$script"
+
+require_contains 'run: sh scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh' "$workflow"
+require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
+require_contains 'persist-credentials: false' "$workflow"
+
+output="$(sh "$script")"
+require_output_contains "$output" 'MACOS RESET UNINSTALL LIVE RUNNER ACCEPTANCE DENIAL DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT AUDIT REVIEW DISPOSITION CLOSEOUT CONTRACT'
+require_output_contains "$output" 'reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_status=ok'
+require_output_contains "$output" 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_present=1'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract_decision=no-effect-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-keeps-dispatch-closed'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_stdout_only=1'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_file_write_enabled=0'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_enabled=0'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_dispatch_performed=0'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_deletion_enabled=0'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_opened=0'
+require_output_contains "$output" 'live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_phase_4=handoff_to_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit'
+require_output_contains "$output" 'reset_uninstall_live_run_allowed=0'
+require_output_contains "$output" 'reset_uninstall_deletion_enabled=0'
+require_output_contains "$output" 'file_delete_performed=0'
+require_output_contains "$output" 'directory_delete_performed=0'
+require_output_contains "$output" 'host_mutation_performed=0'
+require_output_contains "$output" 'network_performed=0'
+require_output_contains "$output" 'runtime_authority_granted=0'
+require_output_contains "$output" 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-contract'
+
+require_contains 'next_lane=macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract' "$review_script"
+require_contains "$current_phrase" "$review_doc"
+require_contains "$current_phrase" "$review_status"
+require_contains 'macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout:' "$makefile"
+require_contains 'sh ./scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-contract.sh' "$makefile"
+
+sh scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-review-contract.sh
+
+printf 'macos_reset_uninstall_live_runner_acceptance_denial_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_audit_review_disposition_closeout_contract: ok\n'

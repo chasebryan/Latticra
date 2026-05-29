@@ -1,0 +1,111 @@
+# macOS Reset/Uninstall Live-Runner Denied-Dispatch Review Contract Status
+
+Status: no-effect reset/uninstall live-runner denied-dispatch review contract status
+Date: 2026-05-26 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall live-runner denied-dispatch review contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall live-runner denied-dispatch review contract. It reviews the denied-dispatch transcript and keeps dispatch, deletion, receipts, absence reports, host mutation, network access, root authority, and runtime authority disabled.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract_present=1
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract_guard_present=1
+live_runner_denied_dispatch_review_contract_state=reviewed-no-effect
+live_runner_denied_dispatch_review_contract_decision=denial-review-retains-zero-dispatch
+live_runner_denied_dispatch_review_required=1
+live_runner_denied_dispatch_review_present=1
+live_runner_denied_dispatch_review_completed=1
+live_runner_denied_dispatch_review_stdout_only=1
+live_runner_denied_dispatch_review_file_write_enabled=0
+live_runner_denied_dispatch_review_dispatch_denial_present=1
+live_runner_denied_dispatch_review_denial_reason_present=1
+live_runner_denied_dispatch_review_dispatch_reviewed=1
+live_runner_denied_dispatch_review_dispatch_enabled=0
+live_runner_denied_dispatch_review_dispatch_denied=1
+live_runner_denied_dispatch_review_dispatch_performed=0
+live_runner_denied_dispatch_review_deletion_enabled=0
+live_runner_denied_dispatch_review_effect=none
+live_runner_denied_dispatch_review_effect_authorized=0
+live_runner_denied_dispatch_review_acceptance_gate_opened=0
+live_runner_denied_dispatch_review_source_contract=macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract
+macos_reset_uninstall_live_runner_denied_dispatch_transcript_contract_present=1
+live_runner_denied_dispatch_review_transcript_state=recorded-no-effect
+live_runner_denied_dispatch_review_transcript_decision=dispatch-denied-no-effects-recorded
+live_runner_denied_dispatch_review_transcript_dispatch_denied=1
+live_runner_denied_dispatch_review_transcript_dispatch_enabled=0
+live_runner_denied_dispatch_review_transcript_file_write_enabled=0
+live_runner_denied_dispatch_review_transcript_denial_reason=failed-preflight-and-denied-interface
+live_runner_denied_dispatch_review_schema_version=macos-reset-uninstall-live-runner-denied-dispatch-review/1
+live_runner_denied_dispatch_review_required_input_count=7
+live_runner_denied_dispatch_review_observed_input_count=7
+live_runner_denied_dispatch_review_requires_denied_dispatch_transcript=1
+live_runner_denied_dispatch_review_requires_dispatch_denied=1
+live_runner_denied_dispatch_review_requires_denial_reason=1
+live_runner_denied_dispatch_review_requires_review_only=1
+live_runner_denied_dispatch_review_requires_stdout_only=1
+live_runner_denied_dispatch_review_requires_no_dispatch=1
+live_runner_denied_dispatch_review_requires_no_deletion=1
+live_runner_denied_dispatch_review_requires_no_receipt_write=1
+live_runner_denied_dispatch_review_requires_no_absence_report_write=1
+live_runner_denied_dispatch_review_requires_no_network=1
+live_runner_denied_dispatch_review_requires_no_root=1
+live_runner_denied_dispatch_review_result_denied_dispatch_transcript=met
+live_runner_denied_dispatch_review_result_dispatch_denied=met
+live_runner_denied_dispatch_review_result_denial_reason=met
+live_runner_denied_dispatch_review_result_review_only=met
+live_runner_denied_dispatch_review_result_stdout_only=met
+live_runner_denied_dispatch_review_result_no_dispatch=met
+live_runner_denied_dispatch_review_result_no_deletion=met
+live_runner_denied_dispatch_review_result_no_receipt_write=met
+live_runner_denied_dispatch_review_result_no_absence_report_write=met
+live_runner_denied_dispatch_review_result_no_network=met
+live_runner_denied_dispatch_review_result_no_root=met
+live_runner_denied_dispatch_review_phase_1_status=contract-only
+live_runner_denied_dispatch_review_phase_2_status=review-only
+live_runner_denied_dispatch_review_phase_3_status=blocked-no-effect
+live_runner_denied_dispatch_review_phase_4_status=future-gate-only
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+absence_report_write_enabled=0
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+file_delete_performed=0
+directory_delete_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Guard Validation
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-review-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_runner_denied_dispatch_review_contract: ok
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, live reset execution, live uninstall execution, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, production readiness, Apple platform approval, or runtime authority.

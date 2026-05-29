@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runtime Boundary and Nucleus | Latticra</title>
+  <meta name="description" content="A public overview of Latticra Runtime Boundary and Nucleus report-only task classification, default-deny policy, effect gates, and runtime non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Runtime Boundary">
+  <meta property="og:description" content="Disabled-by-default runtime boundary, no-effect Nucleus task reports, policy matrix metadata, and blocked operational authority.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero runtime-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Runtime boundary</p>
+        <p class="eyebrow">Disabled-by-Default Runtime Surface</p>
+        <h1>Runtime Boundary and Nucleus</h1>
+        <p class="page-lede">
+          The Runtime Boundary is the line between validated metadata and future operational behavior. Nucleus task records and runtime reports remain no-effect, report-only, and denied-by-default.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell runtime-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Classify first. Execute nothing.</h2>
+        </div>
+        <p>
+          Current runtime work adds request labels, effect labels, policy decisions, denial reasons, authority prerequisites, Nucleus task metadata, Lat/LIR evidence propagation, and deterministic reports. It does not execute commands, run Lat or LIR, mutate files, contact networks, control hardware, recover systems, or provide a sandbox.
+        </p>
+      </div>
+
+      <div class="content-shell runtime-flow" aria-label="Runtime boundary flow">
+        <article>
+          <span>01</span>
+          <h3>Declaration</h3>
+          <p>Lat, LIR, L-UI, and source metadata provide reportable facts before runtime decisions.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Authority check</h3>
+          <p>Constrained authority metadata must be present, no-effect, and successful before any no-effect allow result.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Nucleus task record</h3>
+          <p>Task classification records request kind, effect kind, prerequisites, policy, denial reason, and no-execution flags.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Runtime boundary</h3>
+          <p>Runtime records copy evidence, classify modes, report gates, and keep operational requests future-gated.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>Deterministic report</h3>
+          <p>Reports expose policy, reason, mode, allowed effect, authority labels, task flags, and source spans.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Runtime Snapshot</p>
+        <h2>The current boundary is a report surface, not a runtime.</h2>
+        <p>
+          These fields summarize the posture readers should keep in mind when interpreting runtime or Nucleus records.
+        </p>
+      </div>
+      <div class="content-shell report-grid">
+        <article>
+          <span>runtime_behavior</span>
+          <strong>disabled</strong>
+        </article>
+        <article>
+          <span>default_policy</span>
+          <strong>deny</strong>
+        </article>
+        <article>
+          <span>report_only_allowed</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>classification_only</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>command_execution</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>file_io</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>network_io</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>operator_override</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Policy Matrix</p>
+        <h2>Every request falls into an auditable cell.</h2>
+        <p>
+          The policy matrix reports why a request is report-only, validation-only, classification-only, future-gated, blocked, prerequisite-denied, invalid, or unsupported.
+        </p>
+      </div>
+      <div class="content-shell runtime-matrix-grid">
+        <article class="matrix-allow">
+          <span>no-effect-report</span>
+          <h3>Report requests</h3>
+          <p>Render, task, and evidence reports may be classified only when mode and prerequisites match.</p>
+        </article>
+        <article class="matrix-allow">
+          <span>no-effect-validation</span>
+          <h3>Validation requests</h3>
+          <p>Lat, LIR, Lat pipeline, and authority checks can be validation-only with no-effect metadata.</p>
+        </article>
+        <article class="matrix-allow">
+          <span>no-effect-classification</span>
+          <h3>Classification requests</h3>
+          <p>Classification surfaces can report decisions while preserving execution and mutation flags at zero.</p>
+        </article>
+        <article class="matrix-guarded">
+          <span>future-gated-operation</span>
+          <h3>Operational requests</h3>
+          <p>Runtime execute, command execute, file write, network, recovery, hardware, and boot requests stay gated.</p>
+        </article>
+        <article class="matrix-blocked">
+          <span>blocked-effect</span>
+          <h3>Blocked effects</h3>
+          <p>Mutation, network, hardware, boot, recovery, external, and unknown effects remain denied.</p>
+        </article>
+        <article class="matrix-blocked">
+          <span>prerequisite-denied</span>
+          <h3>Missing evidence</h3>
+          <p>Failed authority, failed render metadata, failed Lat metadata, failed LIR metadata, or missing task data denies the request.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell runtime-split">
+        <div class="section-heading">
+          <p class="eyebrow">Nucleus Boundary</p>
+          <h2>Nucleus coordinates reports, not work.</h2>
+          <p>
+            Nucleus task records make future task execution auditable by naming request, effect, policy, denial, authority status, gate state, operator metadata, and no-execution flags.
+          </p>
+        </div>
+        <div class="runtime-table" role="table" aria-label="Nucleus and runtime current boundary">
+          <div role="row">
+            <span role="cell">Allowed now</span>
+            <p role="cell">State reports, transition previews, render reports, Lat validation, LIR validation, authority checks, and runtime reports when no-effect prerequisites are satisfied.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Future-gated</span>
+            <p role="cell">Runtime execution, command execution, server interaction, self-update, recovery, rollback, hardware, boot, Lat execution, and LIR execution.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Blocked now</span>
+            <p role="cell">Unknown requests, unknown effects, failed prerequisites, non-no-effect authority flags, and operator-confirmation attempts to override policy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Run the boundary checks as no-effect evidence.</h2>
+        <p>
+          These guards compile and inspect deterministic C report surfaces. They do not activate runtime behavior.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Runtime boundary</h3>
+          <pre><code>sh scripts/test-runtime-boundary.sh
+sh scripts/test-runtime-boundary-refinement-implementation.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Policy matrix</h3>
+          <pre><code>sh scripts/test-runtime-boundary-policy-matrix-refinement.sh
+sh scripts/test-runtime-boundary-domain-matrix-refinement.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Nucleus reports</h3>
+          <pre><code>sh scripts/test-nucleus-preview.sh
+sh scripts/test-nucleus-task-execution.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Trace runtime claims back to exact evidence.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="RUNTIME_BOUNDARY_CONTRACT.md"><strong>Runtime boundary contract</strong><span>Disabled-by-default runtime posture, request kinds, effects, policies, and non-claims.</span></a>
+        <a href="RUNTIME_BOUNDARY_IMPLEMENTATION.md"><strong>Runtime implementation</strong><span>C API, deterministic labels, reports, authority prerequisites, and no-effect tests.</span></a>
+        <a href="RUNTIME_BOUNDARY_REFINEMENT_IMPLEMENTATION.md"><strong>Runtime refinement</strong><span>Lat pipeline and Lat-specific LIR evidence propagation at the runtime boundary.</span></a>
+        <a href="RUNTIME_BOUNDARY_POLICY_MATRIX_REFINEMENT.md"><strong>Policy matrix</strong><span>Decision cell labels and matrix booleans for request auditing.</span></a>
+        <a href="NUCLEUS_PREVIEW.md"><strong>Nucleus preview</strong><span>Preview-only request/effect classification with no execution.</span></a>
+        <a href="NUCLEUS_TASK_EXECUTION_IMPLEMENTATION.md"><strong>Nucleus task reports</strong><span>Task classification and deterministic reports without task execution.</span></a>
+        <a href="kernel.html"><strong>Kernel evidence</strong><span>State lattice, kernel lifecycle, subsystem summary, and no-external-effect posture.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Runtime network authority denial, service-listener blockers, network-client blockers, and remote-access non-claims.</span></a>
+        <a href="security.html"><strong>Security boundaries</strong><span>Safe testing, effect gates, and security non-claims.</span></a>
+        <a href="architecture.html"><strong>System architecture</strong><span>How runtime boundary fits between language, authority, Nucleus, and Seal.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra Runtime Boundary overview.</span>
+      <span><a href="architecture.html">Open architecture</a></span>
+    </div>
+  </footer>
+</body>
+</html>

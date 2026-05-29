@@ -52,6 +52,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -145,6 +146,7 @@ static int assert_error_at(
     EXPECT_TRUE(result.execution_allowed == 0, "location result execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "location result mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "location result server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "location result network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "location result recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "location result hardware flag");
 
@@ -294,6 +296,7 @@ static int error_locations_preserve_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "error execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "error mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "error server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "error network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "error recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "error hardware flag");
     return 0;

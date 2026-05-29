@@ -13,6 +13,7 @@ It checks the current local spec skeleton without building packages, producing a
 
 ```text
 docs/FEDORA_LOCAL_RPM_STATIC_VALIDATION.md
+packaging/fedora/README.md
 scripts/test-fedora-local-rpm-static-validation.sh
 .github/workflows/fedora-local-rpm-static-validation.yml
 ```
@@ -25,6 +26,7 @@ The static validation lane verifies:
 spec skeleton guard passes
 validation plan guard passes
 local-only draft marker exists
+local packaging README records non-claims
 placeholder license remains explicit
 local release marker remains explicit
 required RPM sections exist

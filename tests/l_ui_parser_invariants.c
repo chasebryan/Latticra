@@ -71,6 +71,7 @@ static const char VALID_FIXTURE[] =
     "    field executed bind preview.executed\n"
     "    field mutation bind preview.mutation_allowed\n"
     "    field server bind preview.server_interaction_allowed\n"
+    "    field network bind preview.network_allowed\n"
     "    field recovery bind preview.recovery_allowed\n"
     "    field hardware bind preview.hardware_allowed\n"
     "  }\n"
@@ -91,7 +92,7 @@ static int valid_fixture_parses_successfully(void) {
     EXPECT_TRUE(result.error == LATTICRA_L_UI_PARSE_OK, "valid fixture should return ok error");
     EXPECT_STR_EQ(result.card_name, "NucleusPreview", "card name");
     EXPECT_TRUE(result.rail_count == 9u, "rail count");
-    EXPECT_TRUE(result.field_count == 23u, "field count");
+    EXPECT_TRUE(result.field_count == 24u, "field count");
     EXPECT_STR_EQ(result.effect, "none", "effect");
     EXPECT_STR_EQ(result.boundary, "preview_only", "boundary");
 
@@ -249,6 +250,7 @@ static int valid_parse_returns_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "valid parse execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "valid parse mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "valid parse server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "valid parse network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "valid parse recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "valid parse hardware flag");
     return 0;
@@ -261,6 +263,7 @@ static int error_results_preserve_no_execution_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "error result execution flag");
     EXPECT_TRUE(result.mutation_allowed == 0, "error result mutation flag");
     EXPECT_TRUE(result.server_allowed == 0, "error result server flag");
+    EXPECT_TRUE(result.network_allowed == 0, "error result network flag");
     EXPECT_TRUE(result.recovery_allowed == 0, "error result recovery flag");
     EXPECT_TRUE(result.hardware_allowed == 0, "error result hardware flag");
     return 0;

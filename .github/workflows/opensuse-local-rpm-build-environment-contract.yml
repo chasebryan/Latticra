@@ -1,0 +1,22 @@
+name: openSUSE Local RPM Build Environment Contract
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  opensuse-local-rpm-build-environment-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run openSUSE local RPM build environment contract guard
+        run: sh scripts/test-opensuse-local-rpm-build-environment-contract.sh

@@ -70,10 +70,17 @@ The implementation fails closed:
 null verification policy output -> LATTICRA_STATUS_NULL_ARGUMENT
 null signature metadata input -> invalid-input
 invalid signature metadata -> invalid-signature
+unterminated signature metadata strings -> invalid-signature
+invalid signature boolean flags -> invalid-signature
 missing artifact digest -> missing-digest
 missing signer identity -> missing-signer
 missing public-key identity label -> missing-public-key-identity
+unterminated public-key identity label -> missing-public-key-identity without copying caller bytes
+unterminated trust source -> invalid-trust-source without copying caller bytes
 unsupported algorithm label -> unsupported-algorithm
+tampered verification policy strings fail closed before report
+tampered verification policy authority/effect flags fail closed before report
+tampered verification policy boolean/error state fails closed before report
 small report buffer -> LATTICRA_STATUS_BUFFER_TOO_SMALL
 ```
 
@@ -118,10 +125,27 @@ Run:
 ```sh
 sh scripts/test-latticra-seal-verification-policy-contract.sh
 sh scripts/test-latticra-seal-verification-policy.sh
+sh scripts/test-latticra-seal-verification-policy-status.sh
+sh scripts/test-latticra-seal-verification-receipt-status.sh
+sh scripts/test-latticra-seal-capability-gate-status.sh
+sh scripts/test-latticra-seal-effect-decision-status.sh
+sh scripts/test-latticra-seal-runtime-handoff-status.sh
+```
+
+Expected output:
+
+```text
+seal verification policy contract: ok
+seal verification policy invariants: ok
+seal verification policy status: ok
+seal verification receipt status: ok
+seal capability gate status: ok
+seal effect decision status: ok
+seal runtime handoff status: ok
 ```
 
 ## Next valid slice
 
-The next valid Latticra Seal slice is a verification receipt contract.
+The next valid Latticra Seal slice is status rollup status/public-entry alignment.
 
-That future slice must be contract-first and must not be added directly to this verification policy metadata implementation.
+That future slice must not add runtime execution, effect execution, capability enforcement, cryptographic verification, verified receipt authority, signing, key material loading, private-key handling, host behavior, network behavior, or runtime authority unless separately implemented and guarded.

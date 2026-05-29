@@ -1,0 +1,24 @@
+name: Fedora Package Review Non Claim Contract
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_PACKAGE_REVIEW_NON_CLAIM_CONTRACT.md'
+      - 'docs/status/FEDORA_PACKAGE_REVIEW_NON_CLAIM_CONTRACT_STATUS.md'
+      - 'scripts/test-fedora-package-review-non-claim-contract.sh'
+      - '.github/workflows/fedora-package-review-non-claim-contract.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-package-review-non-claim-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora package review non-claim contract guard
+        run: sh scripts/test-fedora-package-review-non-claim-contract.sh

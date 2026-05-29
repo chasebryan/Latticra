@@ -11,14 +11,21 @@
         } \
     } while (0)
 
+static void copy_text(char *dest, size_t dest_len, const char *src) {
+    if (dest_len == 0u) {
+        return;
+    }
+    (void)snprintf(dest, dest_len, "%s", src);
+}
+
 static latticra_runtime_boundary_authority_summary_t ok_authority(void) {
     latticra_runtime_boundary_authority_summary_t authority;
     memset(&authority, 0, sizeof(authority));
     authority.status = LATTICRA_STATUS_OK;
-    strcpy(authority.status_label, "ok");
-    strcpy(authority.validator_label, "runtime-report-refinement");
-    strcpy(authority.requested_effect_label, "none");
-    strcpy(authority.denial_reason, "ok");
+    copy_text(authority.status_label, sizeof(authority.status_label), "ok");
+    copy_text(authority.validator_label, sizeof(authority.validator_label), "runtime-report-refinement");
+    copy_text(authority.requested_effect_label, sizeof(authority.requested_effect_label), "none");
+    copy_text(authority.denial_reason, sizeof(authority.denial_reason), "ok");
     authority.no_effect = 1;
     return authority;
 }
@@ -28,7 +35,7 @@ static latticra_lat_pipeline_result_t ok_pipeline(void) {
     memset(&pipeline, 0, sizeof(pipeline));
     pipeline.status = LATTICRA_STATUS_OK;
     pipeline.error = LATTICRA_LAT_PIPELINE_OK;
-    strcpy(pipeline.module_name, "RuntimeReportRefinementModule");
+    copy_text(pipeline.module_name, sizeof(pipeline.module_name), "RuntimeReportRefinementModule");
     pipeline.source_len = 128u;
     pipeline.node_count = 8u;
     pipeline.edge_count = 7u;
@@ -45,7 +52,7 @@ static int runtime_boundary_report_refinement_classifies_declarative_pipeline(vo
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-declarative");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-declarative");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -75,7 +82,7 @@ static int runtime_boundary_report_refinement_marks_future_gate_boundary_seeking
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-exec");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-exec");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_EXECUTE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -102,7 +109,7 @@ static int runtime_boundary_report_refinement_maps_effect_domains(void) {
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-file");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-file");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_FILE_WRITE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_LOCAL_MUTATION;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE;
@@ -115,7 +122,7 @@ static int runtime_boundary_report_refinement_maps_effect_domains(void) {
     EXPECT_TRUE(result.record.authorization_state == LATTICRA_RUNTIME_BOUNDARY_AUTH_RESERVED_FOR_FUTURE, "file write reserved for future");
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-network");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-network");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_NETWORK_OPEN;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NETWORK;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE;
@@ -136,7 +143,7 @@ static int runtime_boundary_report_refinement_marks_invalid_unknown_request(void
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-invalid");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-invalid");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_UNKNOWN;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_UNKNOWN;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REPORT_ONLY;
@@ -160,7 +167,7 @@ static int runtime_boundary_report_refinement_marks_denied_prerequisite(void) {
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "report-refinement-denied");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "report-refinement-denied");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;

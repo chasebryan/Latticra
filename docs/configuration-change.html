@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Configuration and Change Management | Latticra</title>
+  <meta name="description" content="A public overview of Latticra secure configuration and change-management gates for configuration inventory, baselines, checklists, approved changes, rollback planning, drift detection, exceptions, and hardening non-claims.">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta property="og:title" content="Latticra Secure Configuration and Change Management">
+  <meta property="og:description" content="Configuration inventory, baseline records, checklists, change evidence, rollback plans, drift planning, exception ownership, and no hardening or enforcement claims.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Latticra home">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>Latticra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="./">Home</a>
+        <a href="start.html">Start</a>
+        <a href="status.html">Status</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="kernel.html">Kernel</a>
+        <a href="boot.html">Boot</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="workbench.html">Workbench</a>
+        <a href="panel.html">Panel</a>
+        <a href="console.html">Console</a>
+        <a href="nadia.html">Nadia</a>
+        <a href="language.html">Language</a>
+        <a href="examples.html">Examples</a>
+        <a href="seal.html">Seal</a>
+        <a href="security.html">Security</a>
+        <a href="validation.html">Validation</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="map.html">Map</a>
+        <a href="https://github.com/Bryforge/Latticra">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero security-hero">
+      <div class="content-shell">
+        <p class="breadcrumb"><a href="./">Home</a> / Secure configuration and change management</p>
+        <p class="eyebrow">Baselines, Checklists, Drift Planning, and Non-Claims</p>
+        <h1>Secure configuration and change management</h1>
+        <p class="page-lede">
+          Latticra records configuration inventory, secure baseline, checklist, approved-change, rollback, drift-detection, and exception requirements before hosted services, production installers, production runtime, infrastructure automation, or hardening claims can promote. It does not mutate host configuration, enforce settings, scan systems, detect drift, approve changes, execute rollback, or claim compliance.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-intro">
+        <div>
+          <p class="eyebrow">Current Rule</p>
+          <h2>Configuration records are not hardening.</h2>
+        </div>
+        <p>
+          The baseline names the evidence a future configuration-capable lane would need: configuration item inventory, baseline settings, secure-default review, checklist evidence, change owner, risk review, test evidence, rollback plan, drift-detection plan, secret review, logging, exception owner, exception expiration, and operator-visible non-claims.
+        </p>
+      </div>
+
+      <div class="content-shell security-rule-grid" aria-label="Secure configuration change management overview">
+        <article>
+          <span>01</span>
+          <h3>Inventory and baseline</h3>
+          <p>Configuration items, owners, baseline settings, and source-tracked configuration records must exist before configuration claims expand.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Secure defaults and checklists</h3>
+          <p>Secure-default review, checklist evidence, default-credential absence, and insecure-default absence are required promotion fields.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Change control and rollback</h3>
+          <p>Approved changes need an owner, request record, risk review, test evidence, rollback plan, and visible non-claim boundary.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Drift, secrets, and exceptions</h3>
+          <p>Drift planning, configuration secret review, event logging, exception owner, and exception expiration must be recorded.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Current Snapshot</p>
+        <h2>The baseline blocks configuration claims until evidence exists.</h2>
+        <p>
+          These fields describe required records and closed behavior. They are not proof of hardening, scanning, enforcement, drift detection, infrastructure automation, host mutation, or production configuration authority.
+        </p>
+      </div>
+      <div class="content-shell report-grid" aria-label="Secure configuration change management status snapshot">
+        <article>
+          <span>secure_configuration_change_management_baseline</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>configuration_item_inventory_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>secure_baseline_configuration_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>configuration_checklist_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>configuration_rollback_plan_required</span>
+          <strong>1</strong>
+        </article>
+        <article>
+          <span>configuration_enforcement_added</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>host_configuration_changed</span>
+          <strong>0</strong>
+        </article>
+        <article>
+          <span>configuration_hardening_claim_allowed</span>
+          <strong>0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell security-split">
+        <div class="section-heading">
+          <p class="eyebrow">Promotion Gate</p>
+          <h2>No hardening wording can promote without change evidence.</h2>
+          <p>
+            Configuration language touches installer, runtime, hosted-service, infrastructure, and compliance expectations. The current record keeps that language precise: baseline evidence can be discussed, but production configuration behavior remains closed.
+          </p>
+        </div>
+        <div class="security-table" role="table" aria-label="Secure configuration change management promotion gate">
+          <div role="row">
+            <span role="cell">Present now</span>
+            <p role="cell">Baseline record, status record, guard script, high-assurance allocation, supply-chain context, logging context, vulnerability-management context, installer config authority allowlist guard, installer UI artifact guard, and metadata-only configuration posture.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Required before promotion</span>
+            <p role="cell">Configuration item inventory, owner record, baseline configuration, checklist evidence, secure-default review, default-credential absence, insecure-default absence, change request, change owner, risk review, test evidence, rollback plan, drift-detection plan, secret review, configuration log event, exception owner, exception expiration, and operator-visible non-claims.</p>
+          </div>
+          <div role="row">
+            <span role="cell">Denied now</span>
+            <p role="cell">Host configuration changes, production configuration claims, secure-default claims, hardening claims, scanning claims, enforcement, drift-detection claims, hosted-service configuration claims, infrastructure-as-code claims, compliance claims, and rollback execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Latticra Boundary</p>
+        <h2>Configuration records remain no-effect metadata.</h2>
+        <p>
+          Latticra can record configuration requirements, authority allowlists, and UI artifact boundaries. It does not grant configuration authority, mutate hosts, enforce settings, scan configuration, detect drift, or run a change-approval workflow.
+        </p>
+      </div>
+      <div class="content-shell security-effect-grid">
+        <article class="effect-guarded">
+          <span>Metadata</span>
+          <h3>Configuration baseline</h3>
+          <p>Baseline settings and checklists are planning records, not host-hardening actions.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Guarded</span>
+          <h3>Installer authority</h3>
+          <p>The installer config authority allowlist is guarded before any future authority expansion.</p>
+        </article>
+        <article class="effect-guarded">
+          <span>Guarded</span>
+          <h3>UI artifact authority</h3>
+          <p>Installer UI artifact authority remains source-bound and checked against fixture expectations.</p>
+        </article>
+        <article class="effect-blocked">
+          <span>Closed</span>
+          <h3>Configuration runtime</h3>
+          <p>No host mutation, infrastructure mutation, enforcement, scanning, drift detection, rollback execution, or configuration authority is added.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Local Commands</p>
+        <h2>Validate configuration records without changing systems.</h2>
+        <p>
+          These checks validate source records, status alignment, and installer authority boundaries. They do not apply host settings, scan configuration, approve changes, detect drift, or execute rollback.
+        </p>
+      </div>
+      <div class="content-shell command-grid">
+        <article class="command-panel">
+          <h3>Configuration baseline</h3>
+          <pre><code>sh scripts/test-secure-configuration-change-management-baseline.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Installer authority guards</h3>
+          <pre><code>sh scripts/test-installer-config-authority-allowlist.sh
+sh scripts/test-installer-ui-artifact-authority.sh</code></pre>
+        </article>
+        <article class="command-panel">
+          <h3>Security context</h3>
+          <pre><code>sh scripts/test-high-assurance-security-baseline.sh
+sh scripts/test-security-logging-monitoring-baseline.sh</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band section-band-muted">
+      <div class="content-shell section-heading">
+        <p class="eyebrow">Source Records</p>
+        <h2>Use exact records before repeating configuration wording.</h2>
+      </div>
+      <div class="content-shell reader-grid">
+        <a href="SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE.md"><strong>Secure configuration and change management baseline</strong><span>Configuration inventory, secure baselines, checklists, approved changes, rollback planning, drift detection, exceptions, and no hardening claims.</span></a>
+        <a href="status/SECURE_CONFIGURATION_CHANGE_MANAGEMENT_BASELINE_STATUS.md"><strong>Configuration baseline status</strong><span>Status fields and expected guard output for the secure configuration and change-management baseline.</span></a>
+        <a href="HIGH_ASSURANCE_SECURITY_BASELINE.md"><strong>High-assurance baseline</strong><span>Source-tracked security posture and secure configuration control allocation.</span></a>
+        <a href="SUPPLY_CHAIN_SECURITY_BASELINE.md"><strong>Supply-chain baseline</strong><span>Installer config authority allowlist, release blockers, update gates, and non-claim context.</span></a>
+        <a href="SECURITY_LOGGING_MONITORING_BASELINE.md"><strong>Security logging baseline</strong><span>Configuration change logging, event-source inventory, redaction, retention, and monitoring non-claims.</span></a>
+        <a href="VULNERABILITY_MANAGEMENT_RELEASE_GATE_BASELINE.md"><strong>Vulnerability management baseline</strong><span>Release blocking, KEV/NVD review, exception records, and product-security non-claims.</span></a>
+        <a href="security/C_CPP_SECURITY_PROFILE.md"><strong>C/C++ security profile</strong><span>Default credential, token, private key, and secure coding expectations.</span></a>
+        <a href="security.html"><strong>Security overview</strong><span>Safe testing, effect gates, runtime boundary, and security non-claims.</span></a>
+        <a href="supply-chain.html"><strong>Supply-chain gates</strong><span>Reader-facing release authority, SBOM, updater, runtime-authority, and production security blockers.</span></a>
+        <a href="network-exposure.html"><strong>Network exposure and remote access</strong><span>Network inventory, ingress/egress policy, remote access, RMM, DNS/TLS lifecycle, and no network-service claims.</span></a>
+        <a href="data-protection.html"><strong>Data classification and protection</strong><span>Configuration secret review, data classification, redaction, retention, and customer-data non-claims.</span></a>
+        <a href="security-logging.html"><strong>Security logging and monitoring</strong><span>Configuration-change logging context, audit events, redaction, retention, and no detection-service claims.</span></a>
+        <a href="vulnerability-management.html"><strong>Vulnerability management gate</strong><span>KEV/NVD review, exception records, release blockers, and product-security non-claims.</span></a>
+        <a href="installer.html"><strong>Installer readiness</strong><span>Installer configuration authority boundaries, local artifact manifest fixture, and production installer non-claims.</span></a>
+        <a href="evidence.html"><strong>Evidence model</strong><span>Promotion levels, public claim boundaries, and exact source records.</span></a>
+        <a href="status/README.md"><strong>Status index</strong><span>Detailed status records and current public status navigation.</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content-shell footer-inner">
+      <span>Latticra secure configuration and change management.</span>
+      <span><a href="security.html">Open security overview</a></span>
+    </div>
+  </footer>
+</body>
+</html>

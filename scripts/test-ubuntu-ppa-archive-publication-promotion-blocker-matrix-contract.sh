@@ -1,0 +1,387 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'ubuntu ppa/archive publication promotion blocker matrix contract: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'ubuntu ppa/archive publication promotion blocker matrix contract: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_no_ubuntu_artifacts() {
+  dir="$1"
+  if find "$dir" \( -name '*.deb' -o -name '*.dsc' -o -name '*.changes' -o -name '*.build' -o -name '*.buildinfo' \) -print | grep -q .; then
+    printf 'ubuntu ppa/archive publication promotion blocker matrix contract: unexpected Ubuntu package artifact under %s\n' "$dir" >&2
+    exit 1
+  fi
+}
+
+contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
+intake_denial_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md'
+intake_denial_review_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
+intake_denial_disposition_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md'
+intake_denial_disposition_closeout_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md'
+intake_denial_disposition_closeout_archive_gate_contract='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md'
+publication_non_claim_contract='docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md'
+publication_gate='docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md'
+launchpad_build_contract='docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md'
+upload_signing_contract='docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md'
+source_package_contract='docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md'
+static_validation='docs/UBUNTU_LOCAL_DEB_STATIC_VALIDATION.md'
+readiness='docs/UBUNTU_READINESS_PLAN.md'
+status='docs/status/UBUNTU_ECOSYSTEM_INTEGRATION_STATUS.md'
+workflow='.github/workflows/ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.yml'
+intake_denial_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml'
+intake_denial_review_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml'
+intake_denial_disposition_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.yml'
+intake_denial_disposition_closeout_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.yml'
+intake_denial_disposition_closeout_archive_gate_workflow='.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.yml'
+
+require_file "$contract"
+require_file "$intake_denial_contract"
+require_file "$intake_denial_review_contract"
+require_file "$intake_denial_disposition_contract"
+require_file "$intake_denial_disposition_closeout_contract"
+require_file "$intake_denial_disposition_closeout_archive_gate_contract"
+require_file "$publication_non_claim_contract"
+require_file "$publication_gate"
+require_file "$launchpad_build_contract"
+require_file "$upload_signing_contract"
+require_file "$source_package_contract"
+require_file "$static_validation"
+require_file "$readiness"
+require_file "$status"
+require_file "$workflow"
+require_file "$intake_denial_workflow"
+require_file "$intake_denial_review_workflow"
+require_file "$intake_denial_disposition_workflow"
+require_file "$intake_denial_disposition_closeout_workflow"
+require_file "$intake_denial_disposition_closeout_archive_gate_workflow"
+require_file README.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file packaging/ubuntu/README.md
+
+require_contains 'Status: no-effect publication promotion blocker matrix contract' "$contract"
+require_contains 'documentation-only and static' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' "$contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_contract_present=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' "$contract"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' "$contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' "$contract"
+require_contains 'publication_evidence_denial_archive_gate_present=1' "$contract"
+require_contains 'publication_evidence_denial_archive_gate_state=closed-no-effect' "$contract"
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' "$contract"
+require_contains 'publication_evidence_denial_disposition_closeout_present=1' "$contract"
+require_contains 'publication_evidence_denial_disposition_closeout_decision=closeout-upheld-denial' "$contract"
+require_contains 'publication_evidence_denial_disposition_present=1' "$contract"
+require_contains 'publication_evidence_denial_disposition_decision=close-upheld-denial' "$contract"
+require_contains 'publication_evidence_denial_closed=1' "$contract"
+require_contains 'publication_evidence_denial_archived=0' "$contract"
+require_contains 'publication_evidence_denial_archive_allowed=0' "$contract"
+require_contains 'publication_evidence_denial_archive_record_write_allowed=0' "$contract"
+require_contains 'publication_evidence_denial_archive_record_written=0' "$contract"
+require_contains 'publication_evidence_denial_review_present=1' "$contract"
+require_contains 'publication_evidence_denial_review_decision=uphold-denial' "$contract"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_allowed=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_requested=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_closed_out=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_present=1' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_closed=1' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_gate_state=closed-no-effect' "$contract"
+require_contains 'ubuntu_publication_non_claim_review_contract_state=specified-no-effect' "$contract"
+require_contains 'local_deb_build_transcript_accepted=0' "$contract"
+require_contains 'ubuntu_install_remove_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_source_package_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_upload_signing_authority_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_launchpad_build_result_evidence_unblocked=0' "$contract"
+require_contains 'ubuntu_publication_non_claim_review_unblocked=0' "$contract"
+require_contains 'source_package_uploaded=0' "$contract"
+require_contains 'upload_exit_status_recorded=0' "$contract"
+require_contains 'launchpad_build_result_reviewed=0' "$contract"
+require_contains 'publication_non_claim_review_present=1' "$contract"
+require_contains 'publication_non_claims_reviewed=0' "$contract"
+require_contains 'ubuntu_publication_gate_unblocked=0' "$contract"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' "$contract"
+require_contains 'publication_result_promoted=0' "$contract"
+require_contains 'ubuntu_publication_ready=0' "$contract"
+require_contains 'package_readiness_claimed=0' "$contract"
+
+require_contains 'notice_license_column_state=blocked' "$contract"
+require_contains 'lintian_static_metadata_column_state=blocked' "$contract"
+require_contains 'local_build_column_state=blocked' "$contract"
+require_contains 'install_remove_column_state=blocked' "$contract"
+require_contains 'source_package_column_state=blocked' "$contract"
+require_contains 'upload_signing_column_state=blocked' "$contract"
+require_contains 'launchpad_build_result_column_state=blocked' "$contract"
+require_contains 'publication_non_claim_column_state=specified' "$contract"
+require_contains 'promotion_column_state=blocked' "$contract"
+require_contains 'package_notice_promotion_gate_unblocked=1' "$contract"
+require_contains 'package_license_promotion_gate_unblocked=1' "$contract"
+require_contains 'ubuntu_lintian_static_metadata_unblocked=1' "$contract"
+require_contains 'publication_claims_reviewed=1' "$contract"
+require_contains 'publication_result_promoted=1' "$contract"
+
+require_contains 'ubuntu_publication_promotion_blocked=1' "$contract"
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' "$contract"
+require_contains 'publication_transcript_intake_accepted=0' "$contract"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$contract"
+require_contains 'ppa_creation_evidence_accepted=0' "$contract"
+require_contains 'launchpad_publication_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_archive_submission_evidence_accepted=0' "$contract"
+require_contains 'ubuntu_publication_result_promoted=0' "$contract"
+require_contains 'dpkg_buildpackage_run=0' "$contract"
+require_contains 'debuild_run=0' "$contract"
+require_contains 'lintian_run=0' "$contract"
+require_contains 'debsign_run=0' "$contract"
+require_contains 'dput_run=0' "$contract"
+require_contains 'launchpad_upload_run=0' "$contract"
+require_contains 'ppa_created=0' "$contract"
+require_contains 'ppa_claimed=0' "$contract"
+require_contains 'ubuntu_archive_submission_claimed=0' "$contract"
+require_contains 'ubuntu_archive_ready=0' "$contract"
+require_contains 'ubuntu_publication_denial_archive_record_write_allowed=0' "$contract"
+require_contains 'ubuntu_publication_denial_archive_record_written=0' "$contract"
+
+require_contains 'platform_under_review' "$contract"
+require_contains 'ubuntu_target_series' "$contract"
+require_contains 'source_package_contract_reference' "$contract"
+require_contains 'upload_signing_authority_reference' "$contract"
+require_contains 'launchpad_build_result_reference' "$contract"
+require_contains 'publication_non_claim_review_reference' "$contract"
+require_contains 'promotion_reviewer' "$contract"
+require_contains 'promotion_decision' "$contract"
+require_contains 'promotion_scope' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-contract.yml' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.yml' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.yml' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.yml' "$contract"
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' "$contract"
+require_contains 'scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' "$contract"
+require_contains '.github/workflows/ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.yml' "$contract"
+require_contains 'Add an Ubuntu publication evidence intake denial disposition closeout archive gate review disposition closeout archive gate contract' "$contract"
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract: ok' "$contract"
+
+require_contains "$contract" "$intake_denial_contract"
+require_contains "$contract" "$intake_denial_review_contract"
+require_contains "$contract" "$intake_denial_disposition_contract"
+require_contains "$contract" "$intake_denial_disposition_closeout_contract"
+require_contains "$contract" "$intake_denial_disposition_closeout_archive_gate_contract"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$intake_denial_contract"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$intake_denial_contract"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$intake_denial_contract"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$intake_denial_review_contract"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$intake_denial_review_contract"
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' "$intake_denial_disposition_contract"
+require_contains 'publication_evidence_denial_closed=1' "$intake_denial_disposition_contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' "$intake_denial_disposition_closeout_contract"
+require_contains 'publication_evidence_denial_disposition_closeout_decision=closeout-upheld-denial' "$intake_denial_disposition_closeout_contract"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' "$intake_denial_disposition_closeout_archive_gate_contract"
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' "$intake_denial_disposition_closeout_archive_gate_contract"
+require_contains "$contract" "$publication_non_claim_contract"
+require_contains "$contract" "$publication_gate"
+require_contains "$contract" "$static_validation"
+require_contains "$contract" "$readiness"
+require_contains "$contract" "$status"
+require_contains "$contract" packaging/ubuntu/README.md
+require_contains "$contract" README.md
+require_contains "$intake_denial_contract" "$publication_gate"
+require_contains "$intake_denial_contract" "$static_validation"
+require_contains "$intake_denial_contract" "$readiness"
+require_contains "$intake_denial_contract" "$status"
+require_contains "$intake_denial_contract" packaging/ubuntu/README.md
+require_contains "$intake_denial_contract" README.md
+require_contains "$intake_denial_review_contract" "$publication_gate"
+require_contains "$intake_denial_review_contract" "$static_validation"
+require_contains "$intake_denial_review_contract" "$readiness"
+require_contains "$intake_denial_review_contract" "$status"
+require_contains "$intake_denial_review_contract" packaging/ubuntu/README.md
+require_contains "$intake_denial_review_contract" README.md
+require_contains "$intake_denial_disposition_contract" "$publication_gate"
+require_contains "$intake_denial_disposition_contract" "$static_validation"
+require_contains "$intake_denial_disposition_contract" "$readiness"
+require_contains "$intake_denial_disposition_contract" "$status"
+require_contains "$intake_denial_disposition_contract" packaging/ubuntu/README.md
+require_contains "$intake_denial_disposition_contract" README.md
+require_contains "$intake_denial_disposition_closeout_contract" "$publication_gate"
+require_contains "$intake_denial_disposition_closeout_contract" "$static_validation"
+require_contains "$intake_denial_disposition_closeout_contract" "$readiness"
+require_contains "$intake_denial_disposition_closeout_contract" "$status"
+require_contains "$intake_denial_disposition_closeout_contract" packaging/ubuntu/README.md
+require_contains "$intake_denial_disposition_closeout_contract" README.md
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" "$publication_gate"
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" "$static_validation"
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" "$readiness"
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" "$status"
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" packaging/ubuntu/README.md
+require_contains "$intake_denial_disposition_closeout_archive_gate_contract" README.md
+
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' "$status"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' "$status"
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_contract_present=1' "$status"
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' "$status"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' "$status"
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' "$status"
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' "$status"
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' "$status"
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' "$status"
+require_contains 'publication_evidence_denial_closed=1' "$status"
+require_contains 'publication_evidence_denial_archive_gate_present=1' "$status"
+require_contains 'publication_evidence_denial_archive_gate_state=closed-no-effect' "$status"
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' "$status"
+require_contains 'publication_evidence_denial_archived=0' "$status"
+require_contains 'publication_evidence_denial_archive_allowed=0' "$status"
+require_contains 'publication_evidence_denial_archive_record_write_allowed=0' "$status"
+require_contains 'publication_evidence_denial_archive_record_written=0' "$status"
+require_contains 'publication_evidence_denial_re_request_allowed=0' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denied=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_closed_out=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_present=1' "$status"
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_closed=1' "$status"
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' "$status"
+require_contains 'ubuntu_publication_promotion_blocked=1' "$status"
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' "$status"
+require_contains 'ubuntu_publication_result_promoted=0' "$status"
+require_contains 'ubuntu_publication_denial_archive_record_write_allowed=0' "$status"
+require_contains 'ubuntu_publication_denial_archive_record_written=0' "$status"
+
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_closed=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_gate_present=1' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_gate_state=closed-no-effect' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archived=0' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_allowed=0' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_record_write_allowed=0' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_archive_record_written=0' packaging/ubuntu/README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_closed_out=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_present=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_closed=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_promotion_blocked=1' packaging/ubuntu/README.md
+require_contains 'ubuntu_platform_publication_evidence_accepted=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_result_promoted=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_denial_archive_record_write_allowed=0' packaging/ubuntu/README.md
+require_contains 'ubuntu_publication_denial_archive_record_written=0' packaging/ubuntu/README.md
+
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' README.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' README.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_contract_present=1' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_contract_present=1' README.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' README.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' README.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' README.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' README.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' README.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' README.md
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' README.md
+require_contains 'publication_evidence_denial_closed=1' README.md
+require_contains 'publication_evidence_denial_archive_gate_present=1' README.md
+require_contains 'publication_evidence_denial_archive_gate_state=closed-no-effect' README.md
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' README.md
+require_contains 'publication_evidence_denial_archived=0' README.md
+require_contains 'publication_evidence_denial_archive_allowed=0' README.md
+require_contains 'publication_evidence_denial_archive_record_write_allowed=0' README.md
+require_contains 'publication_evidence_denial_archive_record_written=0' README.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' README.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' README.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_unblocked=0' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' README.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'Ubuntu PPA Archive Publication Promotion Blocker Matrix Contract' "$workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-promotion-blocker-matrix-contract.sh' "$workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Contract' "$intake_denial_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' "$intake_denial_workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Review Contract' "$intake_denial_review_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' "$intake_denial_review_workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Disposition Contract' "$intake_denial_disposition_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.sh' "$intake_denial_disposition_workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Disposition Closeout Contract' "$intake_denial_disposition_closeout_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.sh' "$intake_denial_disposition_closeout_workflow"
+require_contains 'Ubuntu PPA Archive Publication Evidence Intake Denial Disposition Closeout Archive Gate Contract' "$intake_denial_disposition_closeout_archive_gate_workflow"
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' "$intake_denial_disposition_closeout_archive_gate_workflow"
+
+require_no_ubuntu_artifacts packaging/ubuntu
+
+printf 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract: ok\n'

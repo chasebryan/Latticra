@@ -6,8 +6,74 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/SELF_UPDATE_MODEL.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_STATUS.md"
+      - "fixtures/latticra-panel/signed-updater-manifest.fixture.toml"
+      - "fixtures/latticra-panel/signed-updater-state.fixture.toml"
+      - "scripts/test-latticra-panel-lc-install-config.sh"
+      - "scripts/test-latticra-panel-local-install-lc-install-config.sh"
+      - "scripts/test-latticra-panel-updater.sh"
+      - "scripts/test-latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/test-latticra-panel-signed-updater-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh"
+      - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/latticra-panel-signed-updater-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-manifest-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-manifest-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
   push:
@@ -17,8 +83,74 @@ on:
       - "installer/**"
       - ".github/workflows/latticra-panel-installer.yml"
       - "README.md"
+      - "docs/SELF_UPDATE_MODEL.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION.md"
+      - "docs/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_EVIDENCE_STATUS.md"
       - "docs/status/LATTICRA_PANEL_LOCAL_INSTALL_PUBLIC_ENTRYPOINT_ALIGNMENT.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DELIVERY_GATE_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_MANIFEST_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_CONTRACT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_FIXTURE_VALIDATION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_TRANSCRIPT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_STATUS.md"
+      - "docs/status/LATTICRA_PANEL_SIGNED_UPDATER_STATE_TRANSITION_DENIAL_DISPOSITION_CLOSEOUT_AUDIT_REVIEW_DISPOSITION_REVIEW_STATUS.md"
+      - "fixtures/latticra-panel/signed-updater-manifest.fixture.toml"
+      - "fixtures/latticra-panel/signed-updater-state.fixture.toml"
+      - "scripts/test-latticra-panel-lc-install-config.sh"
+      - "scripts/test-latticra-panel-local-install-lc-install-config.sh"
+      - "scripts/test-latticra-panel-updater.sh"
+      - "scripts/test-latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/test-latticra-panel-signed-updater-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh"
+      - "scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh"
+      - "scripts/latticra-panel-signed-updater-delivery-gate.sh"
+      - "scripts/latticra-panel-signed-updater-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-manifest-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-manifest-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-contract.sh"
+      - "scripts/latticra-panel-signed-updater-state-fixture-validation.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-transcript.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh"
+      - "scripts/latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh"
       - "scripts/test-latticra-panel-local-install-*.sh"
       - "scripts/check_latticra_panel_ui_design.py"
 
@@ -29,10 +161,13 @@ jobs:
   installer:
     name: Installer dry-run and Rust check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
 
       - name: Install Linux GUI build dependencies
         run: |
@@ -51,16 +186,70 @@ jobs:
             libwayland-dev
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8
 
       - name: Check Rust formatting
         run: cargo fmt --manifest-path installer/latticra-installer/Cargo.toml -- --check
 
       - name: Check Rust installer crate
-        run: cargo check --manifest-path installer/latticra-installer/Cargo.toml
+        run: cargo check --locked --manifest-path installer/latticra-installer/Cargo.toml
 
       - name: Validate Panel UI design checkpoint
         run: python3 scripts/check_latticra_panel_ui_design.py
+
+      - name: Validate Latticra Panel LC install configuration
+        run: sh scripts/test-latticra-panel-lc-install-config.sh
+
+      - name: Validate standalone LC local install verifier
+        run: sh scripts/test-latticra-panel-local-install-lc-install-config.sh
+
+      - name: Validate Latticra Panel updater surface
+        run: sh scripts/test-latticra-panel-updater.sh
+
+      - name: Validate Latticra Panel signed updater delivery gate
+        run: sh scripts/test-latticra-panel-signed-updater-delivery-gate.sh
+
+      - name: Validate Latticra Panel signed updater denial transcript
+        run: sh scripts/test-latticra-panel-signed-updater-denial-transcript.sh
+
+      - name: Validate Latticra Panel signed updater manifest fixture contract
+        run: sh scripts/test-latticra-panel-signed-updater-manifest-fixture-contract.sh
+
+      - name: Validate Latticra Panel signed updater manifest fixture validation
+        run: sh scripts/test-latticra-panel-signed-updater-manifest-fixture-validation.sh
+
+      - name: Validate Latticra Panel signed updater state fixture contract
+        run: sh scripts/test-latticra-panel-signed-updater-state-fixture-contract.sh
+
+      - name: Validate Latticra Panel signed updater state fixture validation
+        run: sh scripts/test-latticra-panel-signed-updater-state-fixture-validation.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial transcript
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-transcript.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial review
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-review.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition review
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition closeout
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition closeout audit
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition closeout audit review
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition closeout audit review disposition
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition.sh
+
+      - name: Validate Latticra Panel signed updater state transition denial disposition closeout audit review disposition review
+        run: sh scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh
 
       - name: Validate installer shell scripts
         run: |

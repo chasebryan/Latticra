@@ -1,0 +1,99 @@
+# macOS Reset/Uninstall Live-Runner No-Op Prototype Contract Status
+
+Status: no-effect reset/uninstall live-runner no-op prototype contract status
+Date: 2026-05-26 CDT
+Scope: status checkpoint after adding the macOS reset/uninstall live-runner no-op prototype contract.
+
+## Summary
+
+Latticra now has a no-effect macOS reset/uninstall live-runner no-op prototype contract. It exercises only the denied interface path and leaves dispatch, deletion, receipts, absence reports, host mutation, network access, root authority, and runtime authority disabled.
+
+## Status Fields
+
+```text
+macos_reset_uninstall_live_runner_noop_prototype_contract_present=1
+macos_reset_uninstall_live_runner_noop_prototype_contract_guard_present=1
+live_runner_noop_prototype_contract_state=executed-no-effect
+live_runner_noop_prototype_contract_decision=denied-interface-path-only
+live_runner_noop_prototype_invocation_simulated=1
+live_runner_noop_prototype_stdout_only=1
+live_runner_noop_prototype_current_interface_decision=deny
+live_runner_noop_prototype_preflight_passed=0
+live_runner_noop_prototype_denial_path_exercised=1
+live_runner_noop_prototype_accept_path_exercised=0
+live_runner_noop_prototype_dispatch_enabled=0
+live_runner_noop_prototype_runner_enabled=0
+live_runner_noop_prototype_deletion_enabled=0
+live_runner_noop_prototype_receipt_write_enabled=0
+live_runner_noop_prototype_absence_report_write_enabled=0
+live_runner_noop_prototype_effect=none
+live_runner_noop_prototype_effect_authorized=0
+live_runner_noop_prototype_interface_present=1
+live_runner_noop_prototype_interface_denial_path_active=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_contract_decision=denied-current-preflight-not-passed
+live_runner_interface_preflight_passed=0
+live_runner_interface_denial_path_active=1
+live_runner_interface_invocation_enabled=0
+live_runner_interface_deletion_enabled=0
+live_runner_noop_prototype_schema_version=macos-reset-uninstall-live-runner-noop-prototype/1
+live_runner_noop_prototype_required_input_count=6
+live_runner_noop_prototype_observed_input_count=6
+live_runner_noop_prototype_requires_runner_interface=1
+live_runner_noop_prototype_requires_denied_interface=1
+live_runner_noop_prototype_requires_denied_interface_path=1
+live_runner_noop_prototype_requires_denial_transcript=1
+live_runner_noop_prototype_requires_no_dispatch=1
+live_runner_noop_prototype_requires_no_deletion=1
+live_runner_noop_prototype_requires_no_network=1
+live_runner_noop_prototype_requires_no_root=1
+live_runner_noop_prototype_result_runner_interface=met
+live_runner_noop_prototype_result_denied_interface=met
+live_runner_noop_prototype_result_denied_interface_path=met
+live_runner_noop_prototype_result_denial_path=met
+live_runner_noop_prototype_result_no_dispatch=met
+live_runner_noop_prototype_result_no_deletion=met
+live_runner_noop_prototype_result_no_network=met
+live_runner_noop_prototype_result_no_root=met
+live_runner_noop_prototype_phase_1_status=contract-only
+live_runner_noop_prototype_phase_2_status=simulated-no-effect
+live_runner_noop_prototype_phase_3_status=denied-no-effect
+live_runner_noop_prototype_phase_4_status=blocked-no-effect
+live_runner_noop_prototype_phase_5_status=stdout-only
+reset_uninstall_implementation_present=0
+macos_reset_uninstall_implemented=0
+live_reset_uninstall_runner_present=0
+live_reset_uninstall_runner_enabled=0
+file_delete_performed=0
+directory_delete_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Guard Validation
+
+```sh
+sh scripts/test-macos-reset-uninstall-live-runner-noop-prototype-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_live_runner_noop_prototype_contract: ok
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```
+
+## Non-Claims
+
+This status record is not macOS reset evidence, macOS uninstall evidence, live reset execution, live uninstall execution, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, production readiness, Apple platform approval, or runtime authority.

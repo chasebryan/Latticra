@@ -1,0 +1,25 @@
+name: Fedora VM CLI Payload Repeatability Publication Receipt Validator
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_VALIDATOR.md'
+      - 'docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_VALIDATOR_STATUS.md'
+      - 'scripts/fedora-vm-cli-payload-repeatability-publication-receipt.sh'
+      - 'scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-validator.sh'
+      - '.github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-validator.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-vm-cli-payload-repeatability-publication-receipt-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora VM CLI payload repeatability publication receipt validator guard
+        run: sh scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-validator.sh

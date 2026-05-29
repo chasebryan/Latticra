@@ -1,7 +1,7 @@
 # Latticra Runtime Boundary Refinement Implementation
 
-Status: initial runtime boundary refinement implementation
-Scope: no-effect runtime-boundary evidence reporting for Lat pipeline and Lat-specific LIR metadata.
+Status: runtime boundary refinement implementation with Lat pipeline clause, declaration, module/count, stage-summary, parse-error, semantic-error, downstream-stage-error, span, comment, Lat LIR module-summary, Lat LIR module label, Lat LIR source-span, Lat LIR node-kind, Lat LIR first-node, Lat LIR first-node topology, Lat LIR first-node span, Lat LIR first transition-node, Lat LIR first transition-node topology, Lat LIR first transition-node span, Lat LIR first-edge, Lat LIR first-edge endpoint, Lat LIR first-edge endpoint payload, Lat LIR first-edge endpoint topology, Lat LIR first-edge span, Lat LIR first transition-source edge, Lat LIR first transition-source edge endpoint, Lat LIR first transition-source edge endpoint payload, Lat LIR first transition-source edge endpoint topology, Lat LIR first transition-source edge endpoint span, Lat LIR first transition-source edge span, Lat LIR no-effect, and Lat LIR edge-kind evidence
+Scope: no-effect runtime-boundary evidence reporting for Lat pipeline metadata, Lat pipeline first-clause metadata, Lat pipeline first-declaration metadata, Lat pipeline module/count metadata, Lat pipeline stage-summary metadata, Lat pipeline parse-error metadata, Lat pipeline semantic-error metadata, Lat pipeline downstream stage-error metadata, Lat pipeline span metadata, Lat pipeline line-comment metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR module label metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind metadata, Lat-specific LIR first-node metadata, Lat-specific LIR first-node topology metadata, Lat-specific LIR first-node span metadata, Lat-specific LIR first transition-node metadata, Lat-specific LIR first transition-node topology metadata, Lat-specific LIR first transition-node span metadata, Lat-specific LIR first-edge metadata, Lat-specific LIR first-edge endpoint metadata, Lat-specific LIR first-edge endpoint payload metadata, Lat-specific LIR first-edge endpoint topology metadata, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge metadata, Lat-specific LIR first transition-source edge endpoint metadata, Lat-specific LIR first transition-source edge endpoint payload metadata, Lat-specific LIR first transition-source edge endpoint topology metadata, Lat-specific LIR first transition-source edge endpoint span metadata, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect metadata, and Lat-specific LIR edge-kind metadata.
 
 ## Purpose
 
@@ -47,13 +47,192 @@ The runtime boundary record now carries no-effect evidence fields for:
 ```text
 lat_pipeline_status
 lat_pipeline_error
+lat_pipeline_parse_error
+lat_pipeline_span_start_offset
+lat_pipeline_span_end_offset
+lat_pipeline_span_start_line
+lat_pipeline_span_start_column
+lat_pipeline_span_end_line
+lat_pipeline_span_end_column
+lat_pipeline_semantic_error
+lat_pipeline_model_error
+lat_pipeline_lowering_error
+lat_pipeline_lir_error
+lat_pipeline_last_completed_stage
+lat_pipeline_failed_stage
+lat_pipeline_parse_ok
+lat_pipeline_semantic_ok
+lat_pipeline_model_ok
+lat_pipeline_lowering_ok
+lat_pipeline_lir_ok
+lat_pipeline_no_effect_chain_ok
+lat_pipeline_evidence_level
 lat_pipeline_semantic_valid
+lat_pipeline_module_name
 lat_pipeline_source_len
+lat_pipeline_declaration_count
+lat_pipeline_clause_count
+lat_pipeline_model_declaration_count
+lat_pipeline_model_clause_count
+lat_pipeline_first_declaration_node_index
+lat_pipeline_first_declaration_kind
+lat_pipeline_first_declaration_name
+lat_pipeline_first_declaration_source
+lat_pipeline_first_declaration_parse_index
+lat_pipeline_first_declaration_first_clause_index
+lat_pipeline_first_declaration_clause_count
+lat_pipeline_first_declaration_source_index
+lat_pipeline_first_transition_source_index
+lat_pipeline_first_clause_node_index
+lat_pipeline_first_clause_role
+lat_pipeline_first_clause_effect
+lat_pipeline_first_clause_name
+lat_pipeline_first_clause_operator
+lat_pipeline_first_clause_value
 lat_pipeline_node_count
 lat_pipeline_edge_count
+lat_pipeline_comment_count
+lat_pipeline_first_comment_start_offset
+lat_pipeline_first_comment_end_offset
+lat_pipeline_first_comment_start_line
+lat_pipeline_first_comment_start_column
+lat_pipeline_first_comment_end_line
+lat_pipeline_first_comment_end_column
 lat_lir_source_kind
+lat_lir_module_name
+lat_lir_card_name
+lat_lir_effect
+lat_lir_boundary
+lat_lir_report_classification
+lat_lir_shape_kind
+lat_lir_span_start_offset
+lat_lir_span_end_offset
+lat_lir_span_start_line
+lat_lir_span_start_column
+lat_lir_span_end_line
+lat_lir_span_end_column
 lat_lir_module_node_count
+lat_lir_module_edge_count
+lat_lir_binding_count
+lat_lir_text_count
+lat_lir_lat_state_node_count
+lat_lir_lat_policy_node_count
+lat_lir_lat_transition_node_count
+lat_lir_lat_assertion_node_count
+lat_lir_lat_requirement_node_count
+lat_lir_lat_effect_declaration_node_count
+lat_lir_has_first_lat_node
+lat_lir_first_lat_node_index
+lat_lir_first_lat_node_kind
+lat_lir_first_lat_node_name
+lat_lir_first_lat_node_value
+lat_lir_first_lat_node_operator
+lat_lir_first_lat_node_binding
+lat_lir_first_lat_node_parent_index
+lat_lir_first_lat_node_first_child_index
+lat_lir_first_lat_node_child_count
+lat_lir_first_lat_node_span_start_offset
+lat_lir_first_lat_node_span_end_offset
+lat_lir_first_lat_node_span_start_line
+lat_lir_first_lat_node_span_start_column
+lat_lir_first_lat_node_span_end_line
+lat_lir_first_lat_node_span_end_column
+lat_lir_has_first_transition_node
+lat_lir_first_transition_node_index
+lat_lir_first_transition_node_kind
+lat_lir_first_transition_node_name
+lat_lir_first_transition_node_value
+lat_lir_first_transition_node_operator
+lat_lir_first_transition_node_binding
+lat_lir_first_transition_node_parent_index
+lat_lir_first_transition_node_first_child_index
+lat_lir_first_transition_node_child_count
+lat_lir_first_transition_node_span_start_offset
+lat_lir_first_transition_node_span_end_offset
+lat_lir_first_transition_node_span_start_line
+lat_lir_first_transition_node_span_start_column
+lat_lir_first_transition_node_span_end_line
+lat_lir_first_transition_node_span_end_column
+lat_lir_no_effect_chain_ok
+lat_lir_evidence_level
+lat_lir_no_effect
+lat_lir_execution_allowed
+lat_lir_mutation_allowed
+lat_lir_server_allowed
+lat_lir_network_allowed
+lat_lir_recovery_allowed
+lat_lir_hardware_allowed
+lat_lir_contains_edge_count
+lat_lir_binds_edge_count
+lat_lir_annotates_edge_count
+lat_lir_orders_before_edge_count
 lat_lir_transition_edge_count
+lat_lir_has_first_edge
+lat_lir_first_edge_index
+lat_lir_first_edge_from_index
+lat_lir_first_edge_to_index
+lat_lir_first_edge_kind
+lat_lir_first_edge_from_node_kind
+lat_lir_first_edge_from_node_name
+lat_lir_first_edge_from_node_value
+lat_lir_first_edge_from_node_operator
+lat_lir_first_edge_from_node_binding
+lat_lir_first_edge_from_node_parent_index
+lat_lir_first_edge_from_node_first_child_index
+lat_lir_first_edge_from_node_child_count
+lat_lir_first_edge_to_node_kind
+lat_lir_first_edge_to_node_name
+lat_lir_first_edge_to_node_value
+lat_lir_first_edge_to_node_operator
+lat_lir_first_edge_to_node_binding
+lat_lir_first_edge_to_node_parent_index
+lat_lir_first_edge_to_node_first_child_index
+lat_lir_first_edge_to_node_child_count
+lat_lir_first_edge_span_start_offset
+lat_lir_first_edge_span_end_offset
+lat_lir_first_edge_span_start_line
+lat_lir_first_edge_span_start_column
+lat_lir_first_edge_span_end_line
+lat_lir_first_edge_span_end_column
+lat_lir_has_first_transition_source_edge
+lat_lir_first_transition_source_edge_index
+lat_lir_first_transition_source_edge_from_index
+lat_lir_first_transition_source_edge_to_index
+lat_lir_first_transition_source_edge_kind
+lat_lir_first_transition_source_edge_from_node_kind
+lat_lir_first_transition_source_edge_from_node_name
+lat_lir_first_transition_source_edge_from_node_value
+lat_lir_first_transition_source_edge_from_node_operator
+lat_lir_first_transition_source_edge_from_node_binding
+lat_lir_first_transition_source_edge_from_node_parent_index
+lat_lir_first_transition_source_edge_from_node_first_child_index
+lat_lir_first_transition_source_edge_from_node_child_count
+lat_lir_first_transition_source_edge_from_node_span_start_offset
+lat_lir_first_transition_source_edge_from_node_span_end_offset
+lat_lir_first_transition_source_edge_from_node_span_start_line
+lat_lir_first_transition_source_edge_from_node_span_start_column
+lat_lir_first_transition_source_edge_from_node_span_end_line
+lat_lir_first_transition_source_edge_from_node_span_end_column
+lat_lir_first_transition_source_edge_to_node_kind
+lat_lir_first_transition_source_edge_to_node_name
+lat_lir_first_transition_source_edge_to_node_value
+lat_lir_first_transition_source_edge_to_node_operator
+lat_lir_first_transition_source_edge_to_node_binding
+lat_lir_first_transition_source_edge_to_node_parent_index
+lat_lir_first_transition_source_edge_to_node_first_child_index
+lat_lir_first_transition_source_edge_to_node_child_count
+lat_lir_first_transition_source_edge_to_node_span_start_offset
+lat_lir_first_transition_source_edge_to_node_span_end_offset
+lat_lir_first_transition_source_edge_to_node_span_start_line
+lat_lir_first_transition_source_edge_to_node_span_start_column
+lat_lir_first_transition_source_edge_to_node_span_end_line
+lat_lir_first_transition_source_edge_to_node_span_end_column
+lat_lir_first_transition_source_edge_span_start_offset
+lat_lir_first_transition_source_edge_span_end_offset
+lat_lir_first_transition_source_edge_span_start_line
+lat_lir_first_transition_source_edge_span_start_column
+lat_lir_first_transition_source_edge_span_end_line
+lat_lir_first_transition_source_edge_span_end_column
 lat_lir_has_lat_state_nodes
 lat_lir_has_lat_transition_nodes
 lat_lir_has_transition_source_edges
@@ -85,9 +264,9 @@ Lat execution and LIR execution remain future-gated.
 
 ## Report surface
 
-`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline and Lat-specific LIR evidence.
+`latticra_runtime_boundary_report` now includes deterministic report fields for Lat pipeline evidence, Lat pipeline first-clause evidence, Lat pipeline first-declaration evidence, Lat pipeline module/count evidence, Lat pipeline stage-summary evidence, Lat pipeline parse-error evidence, Lat pipeline semantic-error evidence, Lat pipeline downstream stage-error evidence, Lat pipeline span evidence, Lat pipeline line-comment evidence, Lat-specific LIR module-summary evidence, Lat-specific LIR module label evidence, Lat-specific LIR source-span evidence, Lat-specific LIR node-kind evidence, Lat-specific LIR first-node evidence, Lat-specific LIR first-node topology evidence, Lat-specific LIR first-node span evidence, Lat-specific LIR first transition-node evidence, Lat-specific LIR first transition-node topology evidence, Lat-specific LIR first transition-node span evidence, Lat-specific LIR first-edge evidence, Lat-specific LIR first-edge endpoint evidence, Lat-specific LIR first-edge endpoint payload evidence, Lat-specific LIR first-edge endpoint topology evidence, Lat-specific LIR first-edge span evidence, Lat-specific LIR first transition-source edge evidence, Lat-specific LIR first transition-source edge endpoint evidence, Lat-specific LIR first transition-source edge endpoint payload evidence, Lat-specific LIR first transition-source edge endpoint topology evidence, Lat-specific LIR first transition-source edge endpoint span evidence, Lat-specific LIR first transition-source edge span evidence, Lat-specific LIR no-effect evidence, and Lat-specific LIR edge-kind evidence.
 
-The runtime boundary report capacity is increased to preserve bounded output with the expanded report surface.
+`LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX` is increased to 16384 bytes to preserve bounded output with the expanded report surface.
 
 ## Validation
 
@@ -102,9 +281,13 @@ The focused evidence tests verify:
 ```text
 runtime_boundary_allows_valid_lat_pipeline_metadata
 runtime_boundary_denies_failed_lat_pipeline_metadata
+runtime_boundary_denies_parse_failed_lat_pipeline_metadata
+runtime_boundary_denies_model_failed_lat_pipeline_metadata
 runtime_boundary_reports_lat_pipeline_evidence
 runtime_boundary_keeps_lat_lir_execution_future_gated
 ```
+
+The Lat pipeline evidence invariants also verify that parser error metadata, semantic error metadata, downstream model/lowering/LIR error metadata, first-clause metadata, first-declaration metadata, module/count metadata, stage-summary metadata, parser diagnostic/module span metadata, line-comment count, first-comment span metadata, Lat-specific LIR module-summary metadata, Lat-specific LIR module label metadata, Lat-specific LIR source-span metadata, Lat-specific LIR node-kind counts, Lat-specific LIR first-node identity, Lat-specific LIR first-node topology metadata, Lat-specific LIR first-node span metadata, Lat-specific LIR first transition-node identity, Lat-specific LIR first transition-node topology metadata, Lat-specific LIR first transition-node span metadata, Lat-specific LIR first-edge identity, Lat-specific LIR first-edge endpoint metadata, Lat-specific LIR first-edge endpoint payload metadata, Lat-specific LIR first-edge endpoint topology metadata, Lat-specific LIR first-edge span metadata, Lat-specific LIR first transition-source edge identity, Lat-specific LIR first transition-source edge endpoint metadata, Lat-specific LIR first transition-source edge endpoint payload metadata, Lat-specific LIR first transition-source edge endpoint topology metadata, Lat-specific LIR first transition-source edge endpoint span metadata, Lat-specific LIR first transition-source edge span metadata, Lat-specific LIR no-effect flags, and Lat-specific LIR edge-kind counts are copied into runtime-boundary records and reports, including denied records for failed Lat pipeline metadata.
 
 ## Compatibility
 
@@ -124,6 +307,39 @@ unknown request denial
 unknown effect denial
 operator confirmation non-override behavior
 small-buffer behavior
+Lat pipeline parse-error evidence reporting
+Lat pipeline semantic-error evidence reporting
+Lat pipeline downstream stage-error evidence reporting
+Lat pipeline first-clause evidence reporting
+Lat pipeline first-declaration evidence reporting
+Lat pipeline module/count evidence reporting
+Lat pipeline stage-summary evidence reporting
+Lat pipeline diagnostic/module span evidence reporting
+Lat pipeline line-comment evidence reporting
+Lat LIR module-summary evidence reporting
+Lat LIR module label evidence reporting
+Lat LIR source-span evidence reporting
+Lat LIR node-kind evidence reporting
+Lat LIR first-node evidence reporting
+Lat LIR first-node topology evidence reporting
+Lat LIR first-node span evidence reporting
+Lat LIR first transition-node evidence reporting
+Lat LIR first transition-node topology evidence reporting
+Lat LIR first transition-node span evidence reporting
+Lat LIR first-edge evidence reporting
+Lat LIR first-edge endpoint evidence reporting
+Lat LIR first-edge endpoint payload evidence reporting
+Lat LIR first-edge endpoint topology evidence reporting
+Lat LIR first-edge span evidence reporting
+Lat LIR first transition-source edge evidence reporting
+Lat LIR first transition-source edge endpoint evidence reporting
+Lat LIR first transition-source edge endpoint payload evidence reporting
+Lat LIR first transition-source edge endpoint topology evidence reporting
+Lat LIR first transition-source edge endpoint span evidence reporting
+Lat LIR first transition-source edge span evidence reporting
+Lat LIR no-effect evidence reporting
+Lat LIR edge-kind evidence reporting
+denied Lat pipeline comment evidence recording
 ```
 
 ## Boundary

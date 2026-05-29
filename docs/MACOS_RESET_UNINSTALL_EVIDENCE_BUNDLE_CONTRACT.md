@@ -1,0 +1,252 @@
+# macOS Reset/Uninstall Evidence-Bundle Contract
+
+Status: no-effect macOS reset/uninstall evidence-bundle contract
+Date: 2026-05-25 CDT
+Scope: contract for grouping required macOS reset/uninstall implementation-gate, operator-intent, planner, classifier, receipt, and absence evidence before any live execution.
+
+## Purpose
+
+This contract defines the future reset/uninstall evidence bundle for macOS. It keeps live managed-target removal and receipt writing disabled until the implementation gate, operator intent, dry-run planner, live-target classifier, reset/uninstall receipt, and absence-report evidence are all present.
+
+It is contract-only. It does not authorize effects, delete files, remove directories, write receipts, write absence reports, mutate host state, open the network, or claim reset/uninstall implementation.
+
+## Command
+
+```sh
+sh scripts/macos-reset-uninstall-evidence-bundle-contract.sh
+```
+
+The command writes only a deterministic report to stdout.
+
+## Current Decision
+
+The current evidence-bundle posture is:
+
+```text
+macos_reset_uninstall_evidence_bundle_contract_present=1
+macos_reset_uninstall_live_implementation_plan_contract_present=1
+macos_reset_uninstall_live_execution_preflight_contract_present=1
+macos_reset_uninstall_live_denial_transcript_contract_present=1
+macos_reset_uninstall_live_runner_interface_contract_present=1
+live_execution_preflight_contract_state=closed-no-effect
+live_execution_preflight_passed=0
+live_execution_preflight_blocking=1
+live_execution_preflight_deletion_enabled=0
+live_denial_transcript_contract_state=recorded-no-effect
+live_denial_transcript_recorded=1
+live_denial_transcript_stdout_only=1
+live_denial_transcript_file_write_enabled=0
+live_runner_interface_contract_state=defined-no-effect
+live_runner_interface_current_preflight_passed=0
+live_runner_interface_current_decision=deny
+live_runner_interface_dispatch_enabled=0
+live_runner_interface_runner_handoff_enabled=0
+live_implementation_plan_contract_state=defined-no-effect
+live_implementation_plan_execution_enabled=0
+live_implementation_plan_deletion_enabled=0
+live_implementation_plan_preflight_present=1
+live_reset_uninstall_implementation_present=0
+evidence_bundle_contract_state=defined-no-effect
+evidence_bundle_contract_decision=blocked-incomplete-reset-uninstall-evidence-bundle
+evidence_bundle_contract_required=1
+reset_uninstall_evidence_bundle_required=1
+reset_uninstall_evidence_bundle_complete=0
+evidence_bundle_complete=0
+reset_uninstall_evidence_bundle_valid=0
+evidence_bundle_valid=0
+reset_uninstall_evidence_bundle_evidence_present=0
+reset_uninstall_evidence_bundle_write_enabled=0
+reset_uninstall_live_run_allowed=0
+reset_uninstall_deletion_enabled=0
+managed_target_removal_allowed=0
+managed_target_deletion_enabled=0
+reset_uninstall_receipt_write_enabled=0
+```
+
+## Required Bundle Inputs
+
+The future bundle must join the currently separate reset/uninstall contracts:
+
+```text
+macos_reset_uninstall_implementation_gate_contract_present=1
+implementation_gate_contract_state=closed-no-effect
+implementation_gate_open=0
+implementation_gate_decision=blocked-missing-reset-uninstall-evidence
+macos_reset_uninstall_operator_intent_contract_present=1
+operator_intent_contract_state=defined-no-effect
+operator_reset_uninstall_intent_evidence_required=1
+operator_reset_uninstall_intent_evidence_present=0
+operator_explicit_reset_uninstall_intent_observed=0
+operator_intent_evidence_written=0
+macos_reset_uninstall_effect_authorization_contract_present=1
+effect_authorization_contract_state=closed-no-effect
+effect_authorization_open=0
+reset_uninstall_effect_authorized=0
+macos_reset_uninstall_dry_run_planner_present=1
+reset_uninstall_dry_run_planner_transcript_present=1
+reset_uninstall_dry_run_evidence_present=0
+macos_reset_uninstall_live_target_classifier_present=1
+live_target_classifier_evidence_present=0
+macos_reset_uninstall_receipt_schema_contract_present=1
+reset_uninstall_receipt_evidence_present=0
+reset_receipt_evidence_present=0
+receipt_schema_evidence_present=0
+macos_reset_uninstall_absence_report_contract_present=1
+absence_report_evidence_present=0
+macos_reset_uninstall_dry_run_contract_present=1
+macos_verification_transcript_contract_present=1
+macos_commit_gate_contract_present=1
+macos_reset_uninstall_implemented=0
+reset_uninstall_implementation_present=0
+```
+
+## Target Scope
+
+Future bundle evidence must stay bound to user-local managed macOS targets and receipt locations:
+
+```text
+app_support_prefix_target=$HOME/Library/Application Support/Latticra
+app_bundle_target=$HOME/Applications/Latticra Panel.app
+cli_wrapper_target=$HOME/.local/bin/latticra-panel
+reset_receipts_dir_target=$HOME/Library/Application Support/Latticra Reset Receipts
+reset_receipt_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/reset-uninstall-receipt.json
+absence_report_path_future=$HOME/Library/Application Support/Latticra Reset Receipts/absence-report.txt
+```
+
+## Bundle Requirements
+
+The future bundle requires:
+
+```text
+evidence_bundle_schema_version=macos-reset-uninstall-evidence-bundle/1
+evidence_bundle_required_component_count=6
+evidence_bundle_contract_component_count=6
+evidence_bundle_complete_component_count=0
+evidence_bundle_requires_implementation_gate_open=1
+evidence_bundle_requires_operator_intent_evidence=1
+evidence_bundle_requires_dry_run_planner_transcript=1
+evidence_bundle_requires_live_target_classifier_report=1
+evidence_bundle_requires_reset_uninstall_receipt_evidence=1
+evidence_bundle_requires_absence_report_evidence=1
+evidence_bundle_requires_effect_authorization_closed_until_complete=1
+evidence_bundle_requires_receipt_outside_removed_prefix=1
+evidence_bundle_requires_no_unmanaged_targets=1
+evidence_bundle_requires_no_unsafe_paths=1
+evidence_bundle_requires_no_network=1
+evidence_bundle_requires_no_root=1
+evidence_bundle_condition_implementation_gate_open=required
+evidence_bundle_condition_operator_intent_evidence_present=required
+evidence_bundle_condition_dry_run_planner_transcript_present=required
+evidence_bundle_condition_live_target_classifier_report_present=required
+evidence_bundle_condition_reset_uninstall_receipt_evidence_present=required
+evidence_bundle_condition_absence_report_evidence_present=required
+evidence_bundle_condition_no_unmanaged_targets=required
+evidence_bundle_condition_no_network=required
+evidence_bundle_condition_no_root=required
+```
+
+The current result state remains incomplete:
+
+```text
+evidence_bundle_result_implementation_gate_open=not_met
+evidence_bundle_result_operator_intent_evidence=not_met
+evidence_bundle_result_dry_run_planner_transcript=contract-only
+evidence_bundle_result_live_target_classifier_report=contract-only
+evidence_bundle_result_reset_uninstall_receipt_evidence=not_met
+evidence_bundle_result_absence_report_evidence=not_met
+evidence_bundle_result_effect_authorization=closed
+evidence_bundle_result_no_unmanaged_targets=not_evaluated_contract_only
+evidence_bundle_result_no_network=met
+evidence_bundle_result_no_root=met
+```
+
+## Phases
+
+The future evidence-bundle phases are:
+
+```text
+evidence_bundle_phase_1=collect_implementation_gate_decision
+evidence_bundle_phase_2=collect_operator_intent_evidence
+evidence_bundle_phase_3=collect_planner_and_classifier_evidence
+evidence_bundle_phase_4=collect_receipt_and_absence_evidence
+evidence_bundle_phase_5=validate_complete_bundle
+evidence_bundle_phase_6=handoff_to_effect_authorization
+evidence_bundle_phase_1_status=contract-only
+evidence_bundle_phase_2_status=blocked-missing-operator-intent
+evidence_bundle_phase_3_status=contract-only
+evidence_bundle_phase_4_status=blocked-missing-live-receipt-and-absence-evidence
+evidence_bundle_phase_5_status=disabled
+evidence_bundle_phase_6_status=disabled
+```
+
+## Authority Boundary
+
+This contract preserves:
+
+```text
+managed_marker_required=1
+unmanaged_target_preservation_required=1
+receipt_outside_removed_prefix_required=1
+absence_report_required=1
+managed_wrapper_removal_performed=0
+managed_app_bundle_removal_performed=0
+managed_application_support_removal_performed=0
+reset_receipt_write_performed=0
+absence_report_run_performed=0
+absence_report_written=0
+file_delete_performed=0
+directory_delete_performed=0
+application_support_write_performed=0
+receipt_write_performed=0
+app_bundle_write_performed=0
+cli_wrapper_write_performed=0
+shell_profile_mutation_performed=0
+host_mutation_performed=0
+network_performed=0
+root_authority=0
+launchagent_authority=0
+keychain_authority=0
+tcc_bypass_authority=0
+endpoint_security_authority=0
+system_extension_authority=0
+network_extension_authority=0
+privileged_helper_authority=0
+runtime_authority_granted=0
+production_installer_ready=0
+```
+
+## Validation
+
+This contract is guarded by:
+
+```sh
+sh scripts/test-macos-reset-uninstall-evidence-bundle-contract.sh
+```
+
+Expected output:
+
+```text
+macos_reset_uninstall_evidence_bundle_contract: ok
+```
+
+## Non-Claims
+
+This contract is not macOS reset evidence, macOS uninstall evidence, macOS install evidence, macOS app bundle evidence, live approval evidence, operator approval evidence, effect approval evidence, complete evidence-bundle evidence, receipt evidence, absence verification evidence, signed app evidence, notarization evidence, launchd evidence, Keychain evidence, Secure Enclave evidence, sandbox evidence, TCC approval evidence, Endpoint Security evidence, System Extension evidence, Network Extension evidence, privileged helper evidence, malware prevention, ransomware prevention, production readiness, Apple platform approval, or runtime authority.
+
+## Previous Recommended Lane
+
+```text
+Add a macOS reset/uninstall evidence-bundle contract that groups implementation-gate, operator-intent, receipt, absence, planner, and classifier evidence before any live execution.
+```
+
+## Next Recommended Lane
+
+```text
+Add a macOS reset/uninstall live-runner acceptance-denial disposition closeout audit review disposition closeout contract that closes the reviewed no-effect closeout audit review disposition without opening dispatch or deletion.
+```
+
+Current completed lane:
+
+```text
+Add a macOS reset/uninstall live-implementation plan contract that maps future effect-authorized execution phases while deletion remains disabled.
+```

@@ -13,7 +13,8 @@
         } \
     } while (0)
 
-static int default_request_targets_memory_map_ready(void) {
+static int default_request_targets_runtime_entry_recovery_audit_review_disposition_review_observation_view_ready(
+    void) {
     latticra_kernel_lifecycle_subsystem_summary_request_t request;
 
     EXPECT_TRUE(latticra_kernel_lifecycle_subsystem_summary_default_request(&request) ==
@@ -21,8 +22,9 @@ static int default_request_targets_memory_map_ready(void) {
         "default summary request status");
     EXPECT_TRUE(request.lifecycle_request.gate == LATTICRA_KERNEL_STATE_GATE_ALLOW,
         "summary default lifecycle gate allow");
-    EXPECT_TRUE(request.lifecycle_request.target_state == LATTICRA_KERNEL_STATE_MEMORY_MAP_READY,
-        "summary default target memory-map-ready");
+    EXPECT_TRUE(request.lifecycle_request.target_state ==
+            LATTICRA_KERNEL_STATE_RUNTIME_ENTRY_RECOVERY_AUDIT_REVIEW_DISPOSITION_REVIEW_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_OBSERVATION_VIEW_READY,
+        "summary default target runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready");
     EXPECT_TRUE(request.lifecycle_request.max_steps == LATTICRA_KERNEL_LIFECYCLE_STEP_MAX,
         "summary default max steps");
     EXPECT_TRUE(strcmp(request.registry_request.kernel_request.kernel_id, "latticra-kernel-seed") == 0,
@@ -43,28 +45,284 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.summary_status, "summary-ready") == 0,
         "summary ready");
-    EXPECT_TRUE(strcmp(result.final_state, "memory-map-ready") == 0,
-        "summary final state memory-map-ready");
+    EXPECT_TRUE(strcmp(result.final_state,
+            "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready") == 0,
+        "summary final state runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready");
     EXPECT_TRUE(result.lifecycle_complete == 1,
         "summary lifecycle complete");
-    EXPECT_TRUE(result.lifecycle_step_count == 4u,
-        "summary four lifecycle steps");
-    EXPECT_TRUE(result.lifecycle_state_change_count == 4u,
-        "summary four lifecycle state changes");
+    EXPECT_TRUE(result.lifecycle_step_count == 55u,
+        "summary fifty five lifecycle steps");
+    EXPECT_TRUE(result.lifecycle_state_change_count == 55u,
+        "summary fifty five lifecycle state changes");
     EXPECT_TRUE(result.lifecycle_state_mutated == 1,
         "summary lifecycle state mutated internally");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "summary no external effect");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "summary network denied");
+    EXPECT_TRUE(result.lifecycle.network_allowed == 0,
+        "summary lifecycle network denied");
+    EXPECT_TRUE(result.lifecycle.machine.network_allowed == 0,
+        "summary machine network denied");
     EXPECT_TRUE(result.registry_no_effect == 1,
         "summary registry no effect");
+    EXPECT_TRUE(strcmp(result.nucleus_coupling_status,
+            "nucleus-kernel-coupling-ready") == 0,
+        "summary nucleus coupling ready status");
+    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-ready") == 0,
+        "summary os readiness metadata ready");
+    EXPECT_TRUE(result.nucleus_coupling_ready == 1,
+        "summary nucleus coupling ready");
+    EXPECT_TRUE(result.nucleus_no_effect_chain_ok == 1,
+        "summary nucleus no-effect chain");
+    EXPECT_TRUE(result.nucleus_boot_allowed == 0,
+        "summary nucleus boot denied");
+    EXPECT_TRUE(result.nucleus_runtime_entry_allowed == 0,
+        "summary nucleus runtime entry denied");
+    EXPECT_TRUE(result.nucleus_scheduler_run_entry_allowed == 0,
+        "summary nucleus scheduler run entry denied");
+    EXPECT_TRUE(result.nucleus_context_switch_allowed == 0,
+        "summary nucleus context switch denied");
+    EXPECT_TRUE(result.nucleus_register_save_allowed == 0,
+        "summary nucleus register save denied");
+    EXPECT_TRUE(result.nucleus_register_restore_allowed == 0,
+        "summary nucleus register restore denied");
+    EXPECT_TRUE(result.nucleus_host_effect_allowed == 0,
+        "summary nucleus host effect denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate review observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate review disposition observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate review disposition closeout observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_review_observation_view_allowed == 0,
+        "summary runtime entry recovery audit review observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_audit_observation_view_allowed == 0,
+        "summary runtime entry recovery audit observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_closeout_observation_view_allowed == 0,
+        "summary runtime entry recovery closeout observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_outcome_observation_view_allowed == 0,
+        "summary runtime entry recovery outcome observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_disposition_observation_view_allowed == 0,
+        "summary runtime entry recovery disposition observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_plan_observation_view_allowed == 0,
+        "summary runtime entry recovery plan observation view denied");
+    EXPECT_TRUE(result.runtime_entry_recovery_boundary_observation_view_allowed == 0,
+        "summary runtime entry recovery boundary observation view denied");
+    EXPECT_TRUE(result.runtime_entry_persistence_boundary_observation_view_allowed == 0,
+        "summary runtime entry persistence boundary observation view denied");
+    EXPECT_TRUE(result.runtime_entry_quiescent_return_observation_view_allowed == 0,
+        "summary runtime entry quiescent return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_idle_return_observation_view_allowed == 0,
+        "summary runtime entry idle return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_process_return_observation_view_allowed == 0,
+        "summary runtime entry process return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_scheduler_return_observation_view_allowed == 0,
+        "summary runtime entry scheduler return observation view denied");
+    EXPECT_TRUE(result.runtime_entry_post_resume_observation_view_allowed == 0,
+        "summary runtime entry post resume observation view denied");
+    EXPECT_TRUE(result.runtime_entry_user_mode_resume_view_allowed == 0,
+        "summary runtime entry user mode resume view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_exit_view_allowed == 0,
+        "summary runtime entry syscall exit view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_return_view_allowed == 0,
+        "summary runtime entry syscall return view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_dispatch_view_allowed == 0,
+        "summary runtime entry syscall dispatch view denied");
+    EXPECT_TRUE(result.runtime_entry_syscall_gate_view_allowed == 0,
+        "summary runtime entry syscall gate view denied");
+    EXPECT_TRUE(result.runtime_entry_privilege_level_view_allowed == 0,
+        "summary runtime entry privilege level view denied");
+    EXPECT_TRUE(result.runtime_entry_address_space_view_allowed == 0,
+        "summary runtime entry address space view denied");
+    EXPECT_TRUE(result.runtime_entry_stack_view_allowed == 0,
+        "summary runtime entry stack view denied");
+    EXPECT_TRUE(result.runtime_entry_register_view_allowed == 0,
+        "summary runtime entry register view denied");
+    EXPECT_TRUE(result.runtime_entry_frame_allowed == 0,
+        "summary runtime entry frame denied");
+    EXPECT_TRUE(result.runtime_entry_admission_allowed == 0,
+        "summary runtime entry admission denied");
     EXPECT_TRUE(result.runtime_entry_allowed == 0,
         "summary runtime entry denied");
+    EXPECT_TRUE(result.recovery_boundary_observation_allowed == 0,
+        "summary recovery boundary observation denied");
+    EXPECT_TRUE(result.recovery_boundary_allowed == 0,
+        "summary recovery boundary denied");
+    EXPECT_TRUE(result.recovery_plan_allowed == 0,
+        "summary recovery plan denied");
+    EXPECT_TRUE(result.recovery_plan_observation_allowed == 0,
+        "summary recovery plan observation denied");
+    EXPECT_TRUE(result.recovery_disposition_allowed == 0,
+        "summary recovery disposition denied");
+    EXPECT_TRUE(result.recovery_disposition_observation_allowed == 0,
+        "summary recovery disposition observation denied");
+    EXPECT_TRUE(result.recovery_outcome_allowed == 0,
+        "summary recovery outcome denied");
+    EXPECT_TRUE(result.recovery_outcome_observation_allowed == 0,
+        "summary recovery outcome observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_allowed == 0,
+        "summary recovery audit review disposition denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_observation_allowed == 0,
+        "summary recovery audit review disposition observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_allowed == 0,
+        "summary recovery audit review disposition review denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_observation_allowed == 0,
+        "summary recovery audit review disposition review observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_allowed == 0,
+        "summary recovery audit review disposition review closeout denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition closeout denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition closeout observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition closeout archive gate denied");
+    EXPECT_TRUE(result.recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_allowed == 0,
+        "summary recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation denied");
+    EXPECT_TRUE(result.recovery_audit_review_allowed == 0,
+        "summary recovery audit review denied");
+    EXPECT_TRUE(result.recovery_audit_review_observation_allowed == 0,
+        "summary recovery audit review observation denied");
+    EXPECT_TRUE(result.recovery_audit_allowed == 0,
+        "summary recovery audit denied");
+    EXPECT_TRUE(result.recovery_audit_observation_allowed == 0,
+        "summary recovery audit observation denied");
+    EXPECT_TRUE(result.recovery_closeout_allowed == 0,
+        "summary recovery closeout denied");
+    EXPECT_TRUE(result.recovery_closeout_observation_allowed == 0,
+        "summary recovery closeout observation denied");
+    EXPECT_TRUE(result.persistence_boundary_observation_allowed == 0,
+        "summary persistence boundary observation denied");
+    EXPECT_TRUE(result.persistence_boundary_allowed == 0,
+        "summary persistence boundary denied");
+    EXPECT_TRUE(result.persistence_commit_allowed == 0,
+        "summary persistence commit denied");
     EXPECT_TRUE(result.scheduler_execution_allowed == 0,
         "summary scheduler execution denied");
+    EXPECT_TRUE(result.scheduler_selection_allowed == 0,
+        "summary scheduler selection denied");
+    EXPECT_TRUE(result.scheduler_dispatch_allowed == 0,
+        "summary scheduler dispatch denied");
+    EXPECT_TRUE(result.scheduler_handoff_allowed == 0,
+        "summary scheduler handoff denied");
+    EXPECT_TRUE(result.scheduler_activation_allowed == 0,
+        "summary scheduler activation denied");
+    EXPECT_TRUE(result.scheduler_run_entry_allowed == 0,
+        "summary scheduler run entry denied");
     EXPECT_TRUE(result.memory_allocation_allowed == 0,
         "summary memory allocation denied");
+    EXPECT_TRUE(result.process_spawn_allowed == 0,
+        "summary process spawn denied");
+    EXPECT_TRUE(result.syscall_dispatch_allowed == 0,
+        "summary syscall dispatch denied");
+    EXPECT_TRUE(result.ipc_send_allowed == 0,
+        "summary ipc send denied");
+    EXPECT_TRUE(result.ipc_receive_allowed == 0,
+        "summary ipc receive denied");
+    EXPECT_TRUE(result.ipc_queue_mutation_allowed == 0,
+        "summary ipc queue mutation denied");
+    EXPECT_TRUE(result.filesystem_lookup_allowed == 0,
+        "summary filesystem lookup denied");
+    EXPECT_TRUE(result.filesystem_read_allowed == 0,
+        "summary filesystem read denied");
+    EXPECT_TRUE(result.filesystem_write_allowed == 0,
+        "summary filesystem write denied");
+    EXPECT_TRUE(result.namespace_mutation_allowed == 0,
+        "summary namespace mutation denied");
+    EXPECT_TRUE(result.device_open_allowed == 0,
+        "summary device open denied");
+    EXPECT_TRUE(result.device_read_allowed == 0,
+        "summary device read denied");
+    EXPECT_TRUE(result.device_write_allowed == 0,
+        "summary device write denied");
+    EXPECT_TRUE(result.driver_probe_allowed == 0,
+        "summary driver probe denied");
+    EXPECT_TRUE(result.driver_load_allowed == 0,
+        "summary driver load denied");
+    EXPECT_TRUE(result.driver_bind_allowed == 0,
+        "summary driver bind denied");
+    EXPECT_TRUE(result.interrupt_allowed == 0,
+        "summary interrupt denied");
+    EXPECT_TRUE(result.interrupt_mask_allowed == 0,
+        "summary interrupt mask denied");
+    EXPECT_TRUE(result.interrupt_unmask_allowed == 0,
+        "summary interrupt unmask denied");
+    EXPECT_TRUE(result.interrupt_dispatch_allowed == 0,
+        "summary interrupt dispatch denied");
+    EXPECT_TRUE(result.interrupt_ack_allowed == 0,
+        "summary interrupt ack denied");
+    EXPECT_TRUE(result.timer_tick_allowed == 0,
+        "summary timer tick denied");
+    EXPECT_TRUE(result.timer_arm_allowed == 0,
+        "summary timer arm denied");
+    EXPECT_TRUE(result.timer_disarm_allowed == 0,
+        "summary timer disarm denied");
+    EXPECT_TRUE(result.scheduler_tick_allowed == 0,
+        "summary scheduler tick denied");
+    EXPECT_TRUE(result.run_queue_mutation_allowed == 0,
+        "summary run queue mutation denied");
+    EXPECT_TRUE(result.enqueue_allowed == 0,
+        "summary enqueue denied");
+    EXPECT_TRUE(result.dequeue_allowed == 0,
+        "summary dequeue denied");
+    EXPECT_TRUE(result.dispatch_allowed == 0,
+        "summary dispatch denied");
+    EXPECT_TRUE(result.context_switch_allowed == 0,
+        "summary context switch denied");
+    EXPECT_TRUE(result.register_save_allowed == 0,
+        "summary register save denied");
+    EXPECT_TRUE(result.register_restore_allowed == 0,
+        "summary register restore denied");
+    EXPECT_TRUE(result.stack_switch_allowed == 0,
+        "summary stack switch denied");
+    EXPECT_TRUE(result.address_space_switch_allowed == 0,
+        "summary address space switch denied");
+    EXPECT_TRUE(result.preemption_allowed == 0,
+        "summary preemption denied");
+    EXPECT_TRUE(result.time_accounting_allowed == 0,
+        "summary time accounting denied");
+    EXPECT_TRUE(result.time_read_allowed == 0,
+        "summary time read denied");
+    EXPECT_TRUE(result.cpu_usage_write_allowed == 0,
+        "summary cpu usage write denied");
+    EXPECT_TRUE(result.quota_update_allowed == 0,
+        "summary quota update denied");
+    EXPECT_TRUE(result.scheduler_credit_update_allowed == 0,
+        "summary scheduler credit update denied");
+    EXPECT_TRUE(result.process_wake_allowed == 0,
+        "summary process wake denied");
+    EXPECT_TRUE(result.dma_allowed == 0,
+        "summary dma denied");
+    EXPECT_TRUE(result.hardware_effect_allowed == 0,
+        "summary hardware effect denied");
     EXPECT_TRUE(result.no_external_effect_chain == 1,
         "summary no external effect chain");
+    EXPECT_TRUE(result.evidence_level == 58u,
+        "summary evidence level follows nucleus coupling evidence level");
     EXPECT_TRUE(result.entry_count == LATTICRA_KERNEL_SUBSYSTEM_COUNT,
         "summary entry count");
 
@@ -79,8 +337,9 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[1].name, "runtime") == 0,
         "summary runtime entry name");
-    EXPECT_TRUE(strcmp(result.entries[1].lifecycle_relation, "runtime-not-entered") == 0,
-        "summary runtime relation");
+    EXPECT_TRUE(strcmp(result.entries[1].lifecycle_relation,
+            "runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready") == 0,
+        "summary runtime recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation view relation");
     EXPECT_TRUE(strcmp(result.entries[1].authority_status, "runtime-entry-denied") == 0,
         "summary runtime authority denied");
     EXPECT_TRUE(result.entries[1].lifecycle_ready == 0,
@@ -88,8 +347,8 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[2].name, "scheduler") == 0,
         "summary scheduler entry name");
-    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "scheduler-ready-metadata") == 0,
-        "summary scheduler metadata ready");
+    EXPECT_TRUE(strcmp(result.entries[2].lifecycle_relation, "scheduler-run-entry-ready") == 0,
+        "summary scheduler run entry ready");
     EXPECT_TRUE(strcmp(result.entries[2].authority_status, "scheduler-execution-denied") == 0,
         "summary scheduler authority denied");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 1,
@@ -106,12 +365,32 @@ static int summary_reaches_ready_without_authority(void) {
 
     EXPECT_TRUE(strcmp(result.entries[4].authority_status, "process-execution-denied") == 0,
         "summary process authority denied");
+    EXPECT_TRUE(strcmp(result.entries[4].lifecycle_relation, "ipc-table-ready") == 0,
+        "summary ipc table ready");
+    EXPECT_TRUE(result.entries[4].lifecycle_ready == 1,
+        "summary process lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[5].authority_status, "filesystem-denied") == 0,
         "summary filesystem authority denied");
+    EXPECT_TRUE(strcmp(result.entries[5].lifecycle_relation, "vfs-namespace-ready") == 0,
+        "summary vfs namespace ready");
+    EXPECT_TRUE(result.entries[5].lifecycle_ready == 1,
+        "summary filesystem lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[6].authority_status, "network-denied") == 0,
         "summary network authority denied");
+    EXPECT_TRUE(strcmp(result.entries[6].lifecycle_relation, "network-syscall-metadata-ready") == 0,
+        "summary network syscall metadata ready");
+    EXPECT_TRUE(result.entries[6].lifecycle_ready == 1,
+        "summary network lifecycle ready");
+    EXPECT_TRUE(result.entries[6].network_allowed == 0,
+        "summary network entry network denied");
+    EXPECT_TRUE(result.registry.entries[6].network_allowed == 0,
+        "summary registry network entry denied");
     EXPECT_TRUE(strcmp(result.entries[7].authority_status, "device-denied") == 0,
         "summary device authority denied");
+    EXPECT_TRUE(strcmp(result.entries[7].lifecycle_relation, "interrupt-table-ready") == 0,
+        "summary interrupt table ready");
+    EXPECT_TRUE(result.entries[7].lifecycle_ready == 1,
+        "summary device lifecycle ready");
     EXPECT_TRUE(strcmp(result.entries[8].authority_status, "not-production-boundary") == 0,
         "summary security authority boundary");
     return 0;
@@ -137,16 +416,29 @@ static int summary_respects_lifecycle_step_limit(void) {
         "limited summary lifecycle incomplete");
     EXPECT_TRUE(result.lifecycle_step_count == 2u,
         "limited summary two steps");
+    EXPECT_TRUE(strcmp(result.nucleus_coupling_status,
+            "nucleus-kernel-coupling-blocked") == 0,
+        "limited summary nucleus coupling blocked status");
+    EXPECT_TRUE(strcmp(result.os_readiness_status, "os-metadata-blocked") == 0,
+        "limited summary os metadata blocked");
+    EXPECT_TRUE(result.nucleus_coupling_ready == 0,
+        "limited summary nucleus coupling blocked");
+    EXPECT_TRUE(result.nucleus_no_effect_chain_ok == 0,
+        "limited summary nucleus chain blocked");
     EXPECT_TRUE(result.entries[0].lifecycle_ready == 1,
         "limited summary boot ready");
     EXPECT_TRUE(result.entries[2].lifecycle_ready == 0,
         "limited summary scheduler not ready");
     EXPECT_TRUE(result.entries[3].lifecycle_ready == 0,
         "limited summary memory not ready");
+    EXPECT_TRUE(result.entries[4].lifecycle_ready == 0,
+        "limited summary process not ready");
     EXPECT_TRUE(result.external_effect_performed == 0,
         "limited summary no external effect");
-    EXPECT_TRUE(result.no_external_effect_chain == 1,
-        "limited summary no external effect chain");
+    EXPECT_TRUE(result.no_external_effect_chain == 0,
+        "limited summary incomplete effect chain");
+    EXPECT_TRUE(result.network_allowed == 0,
+        "limited summary network denied");
     return 0;
 }
 
@@ -169,32 +461,346 @@ static int summary_report_is_deterministic(void) {
         "summary report title");
     EXPECT_TRUE(strstr(report, "summary_status=summary-ready\n") != 0,
         "summary report status");
-    EXPECT_TRUE(strstr(report, "final_state=memory-map-ready\n") != 0,
+    EXPECT_TRUE(strstr(report,
+            "final_state=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready\n") != 0,
         "summary report final state");
     EXPECT_TRUE(strstr(report, "lifecycle_complete=1\n") != 0,
         "summary report lifecycle complete");
-    EXPECT_TRUE(strstr(report, "lifecycle_step_count=4\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_step_count=55\n") != 0,
         "summary report step count");
-    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=4\n") != 0,
+    EXPECT_TRUE(strstr(report, "lifecycle_state_change_count=55\n") != 0,
         "summary report state changes");
     EXPECT_TRUE(strstr(report, "external_effect_performed=0\n") != 0,
         "summary report external effect");
+    EXPECT_TRUE(strstr(report, "network_allowed=0\n") != 0,
+        "summary report network denied");
+    EXPECT_TRUE(strstr(report, "lifecycle_network_allowed=0\n") != 0,
+        "summary report lifecycle network denied");
+    EXPECT_TRUE(strstr(report, "machine_network_allowed=0\n") != 0,
+        "summary report machine network denied");
+    EXPECT_TRUE(strstr(report, "registry_no_effect=1\n") != 0,
+        "summary report registry no effect");
+    EXPECT_TRUE(strstr(report,
+            "nucleus_coupling_status=nucleus-kernel-coupling-ready\n") != 0,
+        "summary report nucleus coupling ready");
+    EXPECT_TRUE(strstr(report, "os_readiness_status=os-metadata-ready\n") != 0,
+        "summary report os readiness metadata ready");
+    EXPECT_TRUE(strstr(report, "nucleus_coupling_ready=1\n") != 0,
+        "summary report nucleus coupling ready flag");
+    EXPECT_TRUE(strstr(report, "nucleus_no_effect_chain_ok=1\n") != 0,
+        "summary report nucleus no-effect chain");
+    EXPECT_TRUE(strstr(report, "nucleus_boot_allowed=0\n") != 0,
+        "summary report nucleus boot denied");
+    EXPECT_TRUE(strstr(report, "nucleus_runtime_entry_allowed=0\n") != 0,
+        "summary report nucleus runtime entry denied");
+    EXPECT_TRUE(strstr(report, "nucleus_scheduler_run_entry_allowed=0\n") != 0,
+        "summary report nucleus scheduler run entry denied");
+    EXPECT_TRUE(strstr(report, "nucleus_context_switch_allowed=0\n") != 0,
+        "summary report nucleus context switch denied");
+    EXPECT_TRUE(strstr(report, "nucleus_register_save_allowed=0\n") != 0,
+        "summary report nucleus register save denied");
+    EXPECT_TRUE(strstr(report, "nucleus_register_restore_allowed=0\n") != 0,
+        "summary report nucleus register restore denied");
+    EXPECT_TRUE(strstr(report, "nucleus_host_effect_allowed=0\n") != 0,
+        "summary report nucleus host effect denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate review observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate review disposition observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate review disposition closeout observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_review_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit review observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_audit_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery audit observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_closeout_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery closeout observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_outcome_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery outcome observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_disposition_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery disposition observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_plan_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery plan observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_recovery_boundary_observation_view_allowed=0\n") != 0,
+        "summary report runtime recovery boundary observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_persistence_boundary_observation_view_allowed=0\n") != 0,
+        "summary report runtime persistence boundary observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_quiescent_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime quiescent return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_idle_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime idle return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_process_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime process return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_scheduler_return_observation_view_allowed=0\n") != 0,
+        "summary report runtime scheduler return observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_post_resume_observation_view_allowed=0\n") != 0,
+        "summary report runtime post resume observation view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_user_mode_resume_view_allowed=0\n") != 0,
+        "summary report runtime user mode resume view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_exit_view_allowed=0\n") != 0,
+        "summary report runtime syscall exit view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_return_view_allowed=0\n") != 0,
+        "summary report runtime syscall return view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_dispatch_view_allowed=0\n") != 0,
+        "summary report runtime syscall dispatch view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_syscall_gate_view_allowed=0\n") != 0,
+        "summary report runtime syscall gate view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_privilege_level_view_allowed=0\n") != 0,
+        "summary report runtime privilege level view denied");
+    EXPECT_TRUE(strstr(report,
+            "runtime_entry_address_space_view_allowed=0\n") != 0,
+        "summary report runtime address space view denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_stack_view_allowed=0\n") != 0,
+        "summary report runtime stack view denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_register_view_allowed=0\n") != 0,
+        "summary report runtime register view denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_frame_allowed=0\n") != 0,
+        "summary report runtime frame denied");
+    EXPECT_TRUE(strstr(report, "runtime_entry_admission_allowed=0\n") != 0,
+        "summary report runtime admission denied");
     EXPECT_TRUE(strstr(report, "runtime_entry_allowed=0\n") != 0,
         "summary report runtime denied");
+    EXPECT_TRUE(strstr(report, "recovery_boundary_observation_allowed=0\n") != 0,
+        "summary report recovery boundary observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_boundary_allowed=0\n") != 0,
+        "summary report recovery boundary denied");
+    EXPECT_TRUE(strstr(report, "recovery_plan_allowed=0\n") != 0,
+        "summary report recovery plan denied");
+    EXPECT_TRUE(strstr(report, "recovery_plan_observation_allowed=0\n") != 0,
+        "summary report recovery plan observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_disposition_allowed=0\n") != 0,
+        "summary report recovery disposition denied");
+    EXPECT_TRUE(strstr(report, "recovery_disposition_observation_allowed=0\n") != 0,
+        "summary report recovery disposition observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_outcome_allowed=0\n") != 0,
+        "summary report recovery outcome denied");
+    EXPECT_TRUE(strstr(report, "recovery_outcome_observation_allowed=0\n") != 0,
+        "summary report recovery outcome observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_disposition_allowed=0\n") != 0,
+        "summary report recovery audit review disposition denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition closeout denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition closeout observation denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition closeout archive gate denied");
+    EXPECT_TRUE(strstr(report,
+            "recovery_audit_review_disposition_review_closeout_archive_gate_review_disposition_closeout_archive_gate_observation_allowed=0\n") != 0,
+        "summary report recovery audit review disposition review closeout archive gate review disposition closeout archive gate observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_allowed=0\n") != 0,
+        "summary report recovery audit review denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_review_observation_allowed=0\n") != 0,
+        "summary report recovery audit review observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_closeout_allowed=0\n") != 0,
+        "summary report recovery closeout denied");
+    EXPECT_TRUE(strstr(report, "recovery_closeout_observation_allowed=0\n") != 0,
+        "summary report recovery closeout observation denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_allowed=0\n") != 0,
+        "summary report recovery audit denied");
+    EXPECT_TRUE(strstr(report, "recovery_audit_observation_allowed=0\n") != 0,
+        "summary report recovery audit observation denied");
+    EXPECT_TRUE(strstr(report, "persistence_boundary_observation_allowed=0\n") != 0,
+        "summary report persistence boundary observation denied");
+    EXPECT_TRUE(strstr(report, "persistence_boundary_allowed=0\n") != 0,
+        "summary report persistence boundary denied");
+    EXPECT_TRUE(strstr(report, "persistence_commit_allowed=0\n") != 0,
+        "summary report persistence commit denied");
     EXPECT_TRUE(strstr(report, "scheduler_execution_allowed=0\n") != 0,
         "summary report scheduler denied");
+    EXPECT_TRUE(strstr(report, "scheduler_selection_allowed=0\n") != 0,
+        "summary report scheduler selection denied");
+    EXPECT_TRUE(strstr(report, "scheduler_dispatch_allowed=0\n") != 0,
+        "summary report scheduler dispatch denied");
+    EXPECT_TRUE(strstr(report, "scheduler_handoff_allowed=0\n") != 0,
+        "summary report scheduler handoff denied");
+    EXPECT_TRUE(strstr(report, "scheduler_activation_allowed=0\n") != 0,
+        "summary report scheduler activation denied");
+    EXPECT_TRUE(strstr(report, "scheduler_run_entry_allowed=0\n") != 0,
+        "summary report scheduler run entry denied");
     EXPECT_TRUE(strstr(report, "memory_allocation_allowed=0\n") != 0,
         "summary report memory allocation denied");
+    EXPECT_TRUE(strstr(report, "process_spawn_allowed=0\n") != 0,
+        "summary report process spawn denied");
+    EXPECT_TRUE(strstr(report, "syscall_dispatch_allowed=0\n") != 0,
+        "summary report syscall dispatch denied");
+    EXPECT_TRUE(strstr(report, "ipc_send_allowed=0\n") != 0,
+        "summary report ipc send denied");
+    EXPECT_TRUE(strstr(report, "ipc_receive_allowed=0\n") != 0,
+        "summary report ipc receive denied");
+    EXPECT_TRUE(strstr(report, "ipc_queue_mutation_allowed=0\n") != 0,
+        "summary report ipc queue mutation denied");
+    EXPECT_TRUE(strstr(report, "filesystem_lookup_allowed=0\n") != 0,
+        "summary report filesystem lookup denied");
+    EXPECT_TRUE(strstr(report, "filesystem_read_allowed=0\n") != 0,
+        "summary report filesystem read denied");
+    EXPECT_TRUE(strstr(report, "filesystem_write_allowed=0\n") != 0,
+        "summary report filesystem write denied");
+    EXPECT_TRUE(strstr(report, "namespace_mutation_allowed=0\n") != 0,
+        "summary report namespace mutation denied");
+    EXPECT_TRUE(strstr(report, "device_open_allowed=0\n") != 0,
+        "summary report device open denied");
+    EXPECT_TRUE(strstr(report, "device_read_allowed=0\n") != 0,
+        "summary report device read denied");
+    EXPECT_TRUE(strstr(report, "device_write_allowed=0\n") != 0,
+        "summary report device write denied");
+    EXPECT_TRUE(strstr(report, "driver_probe_allowed=0\n") != 0,
+        "summary report driver probe denied");
+    EXPECT_TRUE(strstr(report, "driver_load_allowed=0\n") != 0,
+        "summary report driver load denied");
+    EXPECT_TRUE(strstr(report, "driver_bind_allowed=0\n") != 0,
+        "summary report driver bind denied");
+    EXPECT_TRUE(strstr(report, "interrupt_allowed=0\n") != 0,
+        "summary report interrupt denied");
+    EXPECT_TRUE(strstr(report, "interrupt_mask_allowed=0\n") != 0,
+        "summary report interrupt mask denied");
+    EXPECT_TRUE(strstr(report, "interrupt_unmask_allowed=0\n") != 0,
+        "summary report interrupt unmask denied");
+    EXPECT_TRUE(strstr(report, "interrupt_dispatch_allowed=0\n") != 0,
+        "summary report interrupt dispatch denied");
+    EXPECT_TRUE(strstr(report, "interrupt_ack_allowed=0\n") != 0,
+        "summary report interrupt ack denied");
+    EXPECT_TRUE(strstr(report, "timer_tick_allowed=0\n") != 0,
+        "summary report timer tick denied");
+    EXPECT_TRUE(strstr(report, "timer_arm_allowed=0\n") != 0,
+        "summary report timer arm denied");
+    EXPECT_TRUE(strstr(report, "timer_disarm_allowed=0\n") != 0,
+        "summary report timer disarm denied");
+    EXPECT_TRUE(strstr(report, "scheduler_tick_allowed=0\n") != 0,
+        "summary report scheduler tick denied");
+    EXPECT_TRUE(strstr(report, "run_queue_mutation_allowed=0\n") != 0,
+        "summary report run queue mutation denied");
+    EXPECT_TRUE(strstr(report, "enqueue_allowed=0\n") != 0,
+        "summary report enqueue denied");
+    EXPECT_TRUE(strstr(report, "dequeue_allowed=0\n") != 0,
+        "summary report dequeue denied");
+    EXPECT_TRUE(strstr(report, "dispatch_allowed=0\n") != 0,
+        "summary report dispatch denied");
+    EXPECT_TRUE(strstr(report, "context_switch_allowed=0\n") != 0,
+        "summary report context switch denied");
+    EXPECT_TRUE(strstr(report, "register_save_allowed=0\n") != 0,
+        "summary report register save denied");
+    EXPECT_TRUE(strstr(report, "register_restore_allowed=0\n") != 0,
+        "summary report register restore denied");
+    EXPECT_TRUE(strstr(report, "stack_switch_allowed=0\n") != 0,
+        "summary report stack switch denied");
+    EXPECT_TRUE(strstr(report, "address_space_switch_allowed=0\n") != 0,
+        "summary report address space switch denied");
+    EXPECT_TRUE(strstr(report, "preemption_allowed=0\n") != 0,
+        "summary report preemption denied");
+    EXPECT_TRUE(strstr(report, "time_accounting_allowed=0\n") != 0,
+        "summary report time accounting denied");
+    EXPECT_TRUE(strstr(report, "time_read_allowed=0\n") != 0,
+        "summary report time read denied");
+    EXPECT_TRUE(strstr(report, "cpu_usage_write_allowed=0\n") != 0,
+        "summary report cpu usage write denied");
+    EXPECT_TRUE(strstr(report, "quota_update_allowed=0\n") != 0,
+        "summary report quota update denied");
+    EXPECT_TRUE(strstr(report, "scheduler_credit_update_allowed=0\n") != 0,
+        "summary report scheduler credit denied");
+    EXPECT_TRUE(strstr(report, "process_wake_allowed=0\n") != 0,
+        "summary report process wake denied");
+    EXPECT_TRUE(strstr(report, "dma_allowed=0\n") != 0,
+        "summary report dma denied");
+    EXPECT_TRUE(strstr(report, "hardware_effect_allowed=0\n") != 0,
+        "summary report hardware effect denied");
     EXPECT_TRUE(strstr(report, "no_external_effect_chain=1\n") != 0,
         "summary report no external effect chain");
+    EXPECT_TRUE(strstr(report, "evidence_level=58\n") != 0,
+        "summary report evidence level");
     EXPECT_TRUE(strstr(report, "entry_count=9\n") != 0,
         "summary report entry count");
     EXPECT_TRUE(strstr(report, "subsystem[1].authority_status=runtime-entry-denied\n") != 0,
         "summary report runtime authority");
-    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-ready-metadata\n") != 0,
+    EXPECT_TRUE(strstr(report,
+            "subsystem[1].lifecycle_relation=runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-ready\n") != 0,
+        "summary report runtime relation");
+    EXPECT_TRUE(strstr(report, "subsystem[2].lifecycle_relation=scheduler-run-entry-ready\n") != 0,
         "summary report scheduler relation");
     EXPECT_TRUE(strstr(report, "subsystem[3].lifecycle_relation=memory-map-ready\n") != 0,
         "summary report memory relation");
+    EXPECT_TRUE(strstr(report, "subsystem[4].lifecycle_relation=ipc-table-ready\n") != 0,
+        "summary report process relation");
+    EXPECT_TRUE(strstr(report, "subsystem[5].lifecycle_relation=vfs-namespace-ready\n") != 0,
+        "summary report filesystem relation");
+    EXPECT_TRUE(strstr(report, "subsystem[6].lifecycle_relation=network-syscall-metadata-ready\n") != 0,
+        "summary report network relation");
+    EXPECT_TRUE(strstr(report, "subsystem[6].network_allowed=0\n") != 0,
+        "summary report network entry network denied");
+    EXPECT_TRUE(strstr(report, "subsystem[7].lifecycle_relation=interrupt-table-ready\n") != 0,
+        "summary report device relation");
     return 0;
 }
 
@@ -228,7 +834,10 @@ static int null_guards_are_safe(void) {
 }
 
 int main(void) {
-    if (default_request_targets_memory_map_ready() != 0) return 1;
+    if (default_request_targets_runtime_entry_recovery_audit_review_disposition_review_observation_view_ready()
+            != 0) {
+        return 1;
+    }
     if (summary_reaches_ready_without_authority() != 0) return 1;
     if (summary_respects_lifecycle_step_limit() != 0) return 1;
     if (summary_report_is_deterministic() != 0) return 1;

@@ -48,6 +48,17 @@ static int lat_grammar_accepts_minimal_module(void) {
     EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "minimal report builds");
     EXPECT_TRUE(strstr(report, "LAT GRAMMAR REPORT\n") != 0, "minimal report header");
     EXPECT_TRUE(strstr(report, "error=ok\n") != 0, "minimal report OK");
+    EXPECT_TRUE(strstr(report, "first_declaration_index=0\n") != 0, "minimal first declaration index report");
+    EXPECT_TRUE(strstr(report, "first_declaration_kind=state\n") != 0, "minimal first declaration kind report");
+    EXPECT_TRUE(strstr(report, "first_declaration_name=RootCell\n") != 0, "minimal first declaration name report");
+    EXPECT_TRUE(strstr(report, "first_declaration_first_clause_index=0\n") != 0, "minimal first declaration first clause report");
+    EXPECT_TRUE(strstr(report, "first_declaration_clause_count=6\n") != 0, "minimal first declaration clause count report");
+    EXPECT_TRUE(strstr(report, "first_clause_index=0\n") != 0, "minimal first clause index report");
+    EXPECT_TRUE(strstr(report, "first_clause_keyword=field\n") != 0, "minimal first clause keyword report");
+    EXPECT_TRUE(strstr(report, "first_clause_left=origin\n") != 0, "minimal first clause left report");
+    EXPECT_TRUE(strstr(report, "first_clause_operator==\n") != 0, "minimal first clause operator report");
+    EXPECT_TRUE(strstr(report, "first_clause_right=0/0\n") != 0, "minimal first clause right report");
+    EXPECT_TRUE(strstr(report, "first_clause_effect=unknown\n") != 0, "minimal first clause effect report");
     return 0;
 }
 
@@ -137,6 +148,83 @@ static int lat_grammar_accepts_effect_declaration(void) {
     return 0;
 }
 
+static int lat_grammar_accepts_line_comments(void) {
+    static const char source[] =
+        "// exec spawn socket are inert in comments\n"
+        "lat module CommentModule { // module opener\n"
+        "  // state declaration lead-in\n"
+        "  state RootCell {\n"
+        "    origin = \"0/0\" // first field comment\n"
+        "    route = \"//not-comment\"\n"
+        "    // before declaration close\n"
+        "  }\n"
+        "  // before module close\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+    char report[LATTICRA_LAT_REPORT_MAX];
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "commented source parses");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_OK, "commented source OK");
+    EXPECT_STR_EQ(result.module.module_name, "CommentModule", "commented module name");
+    EXPECT_TRUE(result.declaration_count == 1u, "commented declaration count");
+    EXPECT_TRUE(result.clause_count == 2u, "commented clause count");
+    EXPECT_TRUE(result.comment_count == 6u, "comment count");
+    EXPECT_TRUE(result.first_comment_span.start_line == 1u, "first comment start line");
+    EXPECT_TRUE(result.first_comment_span.start_column == 1u, "first comment start column");
+    EXPECT_TRUE(result.first_comment_span.end_column > result.first_comment_span.start_column, "first comment width");
+    EXPECT_STR_EQ(result.clauses[1].right, "//not-comment", "string slash slash preserved");
+    EXPECT_TRUE(result.no_effect == 1, "comments preserve no-effect");
+    EXPECT_TRUE(result.execution_allowed == 0, "comments do not allow execution");
+
+    EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "comment report builds");
+    EXPECT_TRUE(strstr(report, "comment_count=6\n") != 0, "comment count report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_line=1\n") != 0, "comment start line report");
+    EXPECT_TRUE(strstr(report, "first_comment_start_column=1\n") != 0, "comment start column report");
+    EXPECT_TRUE(strstr(report, "first_clause_right=0/0\n") != 0, "first clause remains stable");
+    return 0;
+}
+
+static int lat_grammar_rejects_block_comments(void) {
+    static const char source[] =
+        "// line comment before unsupported block\n"
+        "lat module BadBlock {\n"
+        "  /* block comments are not accepted in Lat-Core */\n"
+        "  state RootCell {\n"
+        "    origin = \"0/0\"\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+    char report[LATTICRA_LAT_REPORT_MAX];
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "block comment source parses to error");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT, "block comment rejected");
+    EXPECT_TRUE(result.comment_count == 1u, "line comment before block counted");
+    EXPECT_TRUE(result.span.start_line == 3u, "block comment error line");
+    EXPECT_TRUE(result.execution_allowed == 0, "block comments do not allow execution");
+    EXPECT_TRUE(result.no_effect == 1, "block comments preserve no-effect");
+
+    EXPECT_TRUE(latticra_lat_parse_report(&result, report, sizeof(report)) == LATTICRA_STATUS_OK, "block comment report builds");
+    EXPECT_TRUE(strstr(report, "error=unsupported_block_comment\n") != 0, "block comment error report");
+    EXPECT_TRUE(strstr(report, "comment_count=1\n") != 0, "block comment line comment count report");
+    return 0;
+}
+
+static int lat_grammar_preserves_block_comment_markers_in_strings(void) {
+    static const char source[] =
+        "lat module StringBlockMarker {\n"
+        "  state RootCell {\n"
+        "    route = \"/*not-comment*/\"\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t result;
+
+    EXPECT_TRUE(parse_source(source, strlen(source), &result) == 0, "string block marker source parses");
+    EXPECT_TRUE(result.error == LATTICRA_LAT_PARSE_OK, "string block marker OK");
+    EXPECT_STR_EQ(result.clauses[0].right, "/*not-comment*/", "block marker string preserved");
+    EXPECT_TRUE(result.comment_count == 0u, "string block marker not counted as comment");
+    return 0;
+}
+
 static int lat_grammar_rejects_plain_l_extension_claim(void) {
     static const char source[] = "l module RootModule { }\n";
     latticra_lat_parse_result_t result;
@@ -195,6 +283,7 @@ static int lat_grammar_preserves_no_effect_flags(void) {
     EXPECT_TRUE(result.execution_allowed == 0, "execution denied");
     EXPECT_TRUE(result.mutation_allowed == 0, "mutation denied");
     EXPECT_TRUE(result.server_allowed == 0, "server denied");
+    EXPECT_TRUE(result.network_allowed == 0, "network denied");
     EXPECT_TRUE(result.recovery_allowed == 0, "recovery denied");
     EXPECT_TRUE(result.hardware_allowed == 0, "hardware denied");
     return 0;
@@ -208,6 +297,7 @@ static int lat_grammar_report_is_deterministic(void) {
     EXPECT_TRUE(latticra_lat_parse_report(&result, one, sizeof(one)) == LATTICRA_STATUS_OK, "first report builds");
     EXPECT_TRUE(latticra_lat_parse_report(&result, two, sizeof(two)) == LATTICRA_STATUS_OK, "second report builds");
     EXPECT_STR_EQ(one, two, "report deterministic");
+    EXPECT_TRUE(strstr(one, "network_allowed=0\n") != 0, "report network denied");
     return 0;
 }
 
@@ -229,6 +319,7 @@ static int lat_grammar_error_labels_are_stable(void) {
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_MISSING_MODULE), "missing_module", "module label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_INVALID_STRING_ESCAPE), "invalid_string_escape", "escape label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING), "literal_nul_in_string", "nul label");
+    EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT), "unsupported_block_comment", "block comment label");
     EXPECT_STR_EQ(latticra_lat_parse_error_label(LATTICRA_LAT_PARSE_INTERNAL_ERROR), "internal_error", "internal label");
     return 0;
 }
@@ -283,6 +374,9 @@ int main(void) {
     if (lat_grammar_accepts_transition_declaration() != 0) return 1;
     if (lat_grammar_accepts_assertion_declaration() != 0) return 1;
     if (lat_grammar_accepts_effect_declaration() != 0) return 1;
+    if (lat_grammar_accepts_line_comments() != 0) return 1;
+    if (lat_grammar_rejects_block_comments() != 0) return 1;
+    if (lat_grammar_preserves_block_comment_markers_in_strings() != 0) return 1;
     if (lat_grammar_rejects_plain_l_extension_claim() != 0) return 1;
     if (lat_grammar_rejects_unknown_keyword() != 0) return 1;
     if (lat_grammar_rejects_unterminated_string() != 0) return 1;

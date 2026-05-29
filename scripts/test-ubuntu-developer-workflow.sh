@@ -1,0 +1,220 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+require_file() {
+  file="$1"
+  if [ ! -f "$file" ]; then
+    printf 'ubuntu developer workflow: missing file: %s\n' "$file" >&2
+    exit 1
+  fi
+}
+
+require_contains() {
+  pattern="$1"
+  file="$2"
+  if ! grep -Fq -- "$pattern" "$file"; then
+    printf 'ubuntu developer workflow: missing required pattern in %s: %s\n' "$file" "$pattern" >&2
+    exit 1
+  fi
+}
+
+require_file docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_file docs/UBUNTU_READINESS_PLAN.md
+require_file docs/UBUNTU_LINTIAN_AVAILABILITY.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md
+require_file docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md
+require_file docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md
+require_file docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md
+require_file docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md
+require_file docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md
+require_file docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md
+require_file docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md
+require_file docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md
+require_file docs/QUICK_START_CHEATSHEET.md
+require_file README.md
+require_file installer/README.md
+require_file packaging/ubuntu/README.md
+require_file scripts/test-ubuntu-build-lane.sh
+require_file .github/workflows/ubuntu-build-lane.yml
+require_file .github/workflows/ubuntu-developer-workflow.yml
+
+require_contains 'Status: developer workflow record' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'local Ubuntu Linux commands for productive Latticra development' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'sudo apt-get update' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'sudo apt-get install -y git build-essential make gcc pkg-config' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'sudo apt-get install -y rustc cargo make gcc pkg-config' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'sh scripts/test-ubuntu-build-lane.sh' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'ubuntu_build_lane: ok' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'make -C installer dry-run' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+require_contains 'ubuntu_developer_workflow: ok' docs/UBUNTU_DEVELOPER_WORKFLOW.md
+
+require_contains 'Status: planning and compatibility record' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_build_lane_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_draft_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_lintian_availability_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_inventory_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_inventory_report_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_doc_payload_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_doc_payload_license_review_status=resolved-cc-by-4.0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_third_party_material_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_third_party_material_review_status=blocked-pending-third-party-material-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_generated_artifact_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_generated_artifact_notice_review_status=blocked-pending-generated-artifact-notice-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_notice_file_decision_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_notice_file_decision_status=blocked-pending-notice-file-decision' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_debian_copyright_notice_mapping_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_debian_copyright_notice_mapping_status=blocked-pending-debian-copyright-notice-mapping' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_trademark_notice_boundary_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_trademark_notice_boundary_status=blocked-pending-trademark-notice-boundary' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_release_artifact_notice_requirements_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_release_artifact_notice_requirements_status=blocked-pending-release-artifact-notice-requirements' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_promotion_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_promotion_gate_status=blocked-pending-package-notice-prerequisites' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_license_promotion_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_license_promotion_gate_status=blocked-pending-package-notice-prerequisites' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_lintian_static_metadata_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_lintian_static_metadata_status=blocked-pending-package-license-promotion' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_build_transcript_acceptance_gate_status=blocked-pending-lintian-static-metadata-and-build-transcript' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_install_remove_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_install_remove_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_source_package_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_source_package_evidence_status=blocked-pending-accepted-build-transcript' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_upload_signing_authority_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_upload_signing_authority_evidence_status=blocked-pending-source-package-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_launchpad_build_result_evidence_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_launchpad_build_result_evidence_status=blocked-pending-upload-signing-authority-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_non_claim_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_non_claim_review_status=blocked-pending-launchpad-build-result-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_promotion_blocker_matrix_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_promotion_blocker_matrix_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_promotion_blocker_matrix_state=blocked-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_state=denied-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_review_state=reviewed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_disposition_state=closed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_state=closed-out-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_disposition_state=disposed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_review_state=reviewed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_intake_denial_disposition_closeout_archive_gate_state=closed-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_state=closed-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_decision=deny-archive-and-re-request' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_state=reviewed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_decision=uphold-closed-archive-gate' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_disposition_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_disposition_state=disposed-upheld-no-effect' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_gate_review_disposition_decision=dispose-upheld-closed-archive-gate-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_closed=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archived=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_allowed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_record_write_allowed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_archive_record_written=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'publication_evidence_denial_re_request_allowed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denied=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_upheld=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_closed=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_closed_out=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_closed=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_reviewed=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposition_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_evidence_intake_denial_archive_gate_review_disposed=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_denial_archive_record_write_allowed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_publication_denial_archive_record_written=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_gate_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_ppa_archive_publication_gate_status=blocked-pending-install-remove-evidence' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_notice_review_status=blocked-pending-notice-review' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_license_review_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_package_license_review_status=resolved-license-expression-recorded' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_local_deb_build_transcript_contract_present=1' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ppa_claimed=0' docs/UBUNTU_READINESS_PLAN.md
+require_contains 'ubuntu_archive_ready=0' docs/UBUNTU_READINESS_PLAN.md
+
+require_contains '### Ubuntu prerequisites' README.md
+require_contains '## Ubuntu and local deb work' README.md
+require_contains 'docs/UBUNTU_DEVELOPER_WORKFLOW.md' README.md
+require_contains 'packaging/ubuntu/README.md' README.md
+require_contains 'sh scripts/test-ubuntu-build-lane.sh' README.md
+require_contains 'docs/UBUNTU_LINTIAN_AVAILABILITY.md' README.md
+require_contains 'docs/UBUNTU_PACKAGE_NOTICE_INVENTORY.md' README.md
+require_contains 'docs/UBUNTU_DOC_PAYLOAD_LICENSE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_THIRD_PARTY_MATERIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_GENERATED_ARTIFACT_NOTICE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_NOTICE_FILE_DECISION_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_DEBIAN_COPYRIGHT_NOTICE_MAPPING_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_TRADEMARK_NOTICE_BOUNDARY_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_RELEASE_ARTIFACT_NOTICE_REQUIREMENTS_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PACKAGE_NOTICE_PROMOTION_GATE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PACKAGE_LICENSE_PROMOTION_GATE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LINTIAN_STATIC_METADATA_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PACKAGE_NOTICE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PACKAGE_LICENSE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LOCAL_DEB_BUILD_TRANSCRIPT_ACCEPTANCE_GATE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LOCAL_DEB_INSTALL_REMOVE_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_SOURCE_PACKAGE_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_UPLOAD_SIGNING_AUTHORITY_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_LAUNCHPAD_BUILD_RESULT_EVIDENCE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PUBLICATION_NON_CLAIM_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md' README.md
+require_contains 'docs/UBUNTU_PPA_ARCHIVE_PUBLICATION_GATE_CONTRACT.md' README.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-contract.sh' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sh scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-contract.sh' docs/QUICK_START_CHEATSHEET.md
+
+require_contains 'Ubuntu prerequisites:' docs/QUICK_START_CHEATSHEET.md
+require_contains 'sudo apt-get install -y rustc cargo make gcc pkg-config' docs/QUICK_START_CHEATSHEET.md
+require_contains 'Ubuntu:' installer/README.md
+
+require_contains 'Status: local-only packaging draft' packaging/ubuntu/README.md
+
+printf 'ubuntu_developer_workflow: ok\n'

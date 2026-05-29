@@ -1,0 +1,22 @@
+name: Nadia Prompt Evaluation Input Contract Stage 28
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  nadia-prompt-evaluation-input-contract-stage-28:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Validate Nadia prompt evaluation input contract Stage 28
+        run: sh scripts/test-nadia-prompt-evaluation-input-contract-stage-28.sh

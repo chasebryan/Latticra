@@ -1,0 +1,42 @@
+# Latticra Seal Ed25519 Provider Self-Test Status
+
+Status: current provider-backed Ed25519 sign/verify self-test status
+Date: 2026-05-28
+
+```text
+ed25519_provider_self_test_present=1
+provider=OpenSSL-EVP
+signature_algorithm=Ed25519
+standards_source=NIST-FIPS-186-5,RFC-8032,OpenSSL-EVP-Ed25519
+operation_scope=local-provider-self-test-no-runtime-authority
+provider_linked=1
+provider_runtime_used=1
+ed25519_key_generation_performed=1
+ed25519_public_key_export_performed=1
+ed25519_public_key_only_verification_performed=1
+ed25519_signature_generation_performed=1
+ed25519_signature_verification_performed=1
+ed25519_signature_valid=1
+ed25519_tampered_message_rejected=1
+ed25519_tampered_signature_rejected=1
+ed25519_public_key_bytes=32
+ed25519_signature_bytes=64
+one_shot_sign_api_used=1
+one_shot_verify_api_used=1
+message_prehashed_before_signing=0
+ed25519_private_key_exported=0
+ed25519_private_key_output_emitted=0
+ed25519_public_key_output_emitted=0
+ed25519_signature_output_emitted=0
+public_key_buffer_zeroized=1
+signature_buffer_zeroized=1
+production_crypto_claim_allowed=0
+fips_claim_allowed=0
+signing_authority_granted=0
+key_storage_allowed=0
+network_lookup_allowed=0
+runtime_authority_granted=0
+operation_state=ed25519-provider-self-test-passed
+blocked_reason=authority-remains-denied
+status=ed25519-provider-self-test-passed
+```

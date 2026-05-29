@@ -31,7 +31,8 @@ typedef enum {
     LATTICRA_LAT_PARSE_LITERAL_NUL_IN_STRING = 13,
     LATTICRA_LAT_PARSE_CAPACITY_EXCEEDED = 14,
     LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER = 15,
-    LATTICRA_LAT_PARSE_INTERNAL_ERROR = 16
+    LATTICRA_LAT_PARSE_INTERNAL_ERROR = 16,
+    LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT = 17
 } latticra_lat_parse_error_t;
 
 typedef enum {
@@ -103,10 +104,13 @@ typedef struct {
     latticra_lat_ast_clause_t clauses[LATTICRA_LAT_CLAUSE_MAX];
     size_t declaration_count;
     size_t clause_count;
+    size_t comment_count;
+    latticra_lat_source_span_t first_comment_span;
     int no_effect;
     int execution_allowed;
     int mutation_allowed;
     int server_allowed;
+    int network_allowed;
     int recovery_allowed;
     int hardware_allowed;
 } latticra_lat_parse_result_t;

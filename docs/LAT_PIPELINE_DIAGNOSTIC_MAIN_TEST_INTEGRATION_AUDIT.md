@@ -10,6 +10,7 @@ Audit expectations:
 scripts/test-lat-pipeline.sh links src/lat_pipeline_diagnostics.c
 scripts/test-lat-pipeline.sh links src/lat_pipeline_diagnostics_eval.c
 scripts/test-lat-pipeline.sh links src/lat_pipeline_diagnostics_report.c
+scripts/test-lat-pipeline.sh links src/lat_to_lir_diagnostics.c
 scripts/test-lat-pipeline.sh compiles tests/lat_pipeline_diagnostic_integration_refinement.c
 .github/workflows/lat-pipeline.yml runs scripts/test-lat-pipeline.sh
 ```

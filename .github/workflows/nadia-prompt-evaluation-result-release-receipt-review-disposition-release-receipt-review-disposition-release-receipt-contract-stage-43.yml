@@ -1,0 +1,26 @@
+name: Nadia Stage 43 Review Disposition Release Receipt Contract
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+      - 'installer/**'
+      - 'scripts/**'
+      - 'Makefile'
+      - '.github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-43.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  nadia-stage-43-review-disposition-release-receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Validate Nadia Stage 43
+        run: sh scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-43.sh

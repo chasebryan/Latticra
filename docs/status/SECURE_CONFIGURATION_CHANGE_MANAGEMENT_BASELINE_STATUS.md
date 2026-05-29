@@ -1,0 +1,65 @@
+# Latticra Secure Configuration and Change Management Baseline Status
+
+Status: status record for secure configuration and change management baseline
+Date: 2026-05-26
+
+## Scope
+
+This record tracks the secure configuration and change-management baseline for secure configuration baselines, configuration item inventory, configuration checklists, secure defaults, approved change records, rollback evidence, drift detection, exception ownership, and configuration non-claims.
+
+It does not implement host configuration, infrastructure configuration, configuration scanning, configuration enforcement, drift detection, change approval workflow, rollback execution, compliance, or runtime authority.
+
+## Current fields
+
+```text
+secure_configuration_change_management_baseline_present=1
+secure_configuration_change_management_status_present=1
+secure_configuration_change_management_guard_present=1
+nist_sp_800_128_configuration_management_tracked=1
+nist_sp_800_70_rev5_checklist_tracked=1
+nist_sp_800_53_configuration_management_tracked=1
+cisa_cpg_secure_configuration_tracked=1
+cisa_fbi_product_security_bad_practices_config_tracked=1
+nsa_cisa_top_misconfigurations_tracked=1
+cisa_nsa_fbi_secure_by_default_tracked=1
+configuration_item_inventory_required=1
+secure_baseline_configuration_required=1
+configuration_checklist_required=1
+approved_change_record_required=1
+configuration_change_owner_required=1
+configuration_change_risk_review_required=1
+configuration_change_test_evidence_required=1
+configuration_rollback_plan_required=1
+configuration_drift_detection_required=1
+default_credential_forbidden=1
+insecure_default_configuration_forbidden=1
+configuration_secret_review_required=1
+configuration_exception_owner_required=1
+configuration_exception_expiration_required=1
+implementation_behavior_changed=0
+configuration_enforcement_added=0
+configuration_scanner_added=0
+host_configuration_changed=0
+infrastructure_configuration_changed=0
+change_approval_workflow_added=0
+drift_detection_added=0
+rollback_execution_added=0
+production_configuration_claim_allowed=0
+hosted_service_configuration_claim_allowed=0
+configuration_hardening_claim_allowed=0
+secure_default_claim_allowed=0
+compliance_claim_allowed=0
+external_endorsement_claimed=0
+```
+
+## Validation
+
+```sh
+sh scripts/test-secure-configuration-change-management-baseline.sh
+```
+
+Expected output:
+
+```text
+secure_configuration_change_management_baseline: ok
+```

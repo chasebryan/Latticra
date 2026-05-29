@@ -16,12 +16,17 @@ static latticra_seal_capability_gate_t fixture_gate(void) {
     memset(&gate, 0, sizeof(gate));
     (void)snprintf(gate.gate_profile, sizeof(gate.gate_profile), "%s", "latticra-seal-capability-gate/0.1");
     (void)snprintf(gate.receipt_profile, sizeof(gate.receipt_profile), "%s", "latticra-seal-verification-receipt/0.1");
+    (void)snprintf(gate.verification_policy_profile, sizeof(gate.verification_policy_profile), "%s", "latticra-seal-verification-policy/0.1");
     (void)snprintf(gate.artifact_digest_algorithm, sizeof(gate.artifact_digest_algorithm), "%s", "SHA-256");
     (void)snprintf(
         gate.artifact_digest_hex,
         sizeof(gate.artifact_digest_hex),
         "%s",
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
+    (void)snprintf(gate.signer_identity_label, sizeof(gate.signer_identity_label), "%s", "latticra-dev-signer");
+    (void)snprintf(gate.public_key_identity_label, sizeof(gate.public_key_identity_label), "%s", "latticra-dev-public-key");
+    (void)snprintf(gate.receipt_state, sizeof(gate.receipt_state), "%s", "unverified-metadata");
+    (void)snprintf(gate.verification_state, sizeof(gate.verification_state), "%s", "unsupported");
     (void)snprintf(gate.requested_capability, sizeof(gate.requested_capability), "%s", "seal.inspect");
     (void)snprintf(gate.requested_effect, sizeof(gate.requested_effect), "%s", "read-metadata");
     (void)snprintf(gate.requested_scope, sizeof(gate.requested_scope), "%s", "local-artifact");
@@ -78,12 +83,25 @@ static int decision_fails_closed(void) {
     latticra_seal_capability_gate_t gate = fixture_gate();
     latticra_seal_effect_decision_t decision;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_EFFECT_DECISION_REPORT_MAX];
 
     EXPECT_TRUE(latticra_seal_effect_decision_from_gate(0, &decision) == LATTICRA_STATUS_OK, "null gate status");
     EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_INVALID_INPUT, "null gate error");
     gate.error = LATTICRA_SEAL_CAPABILITY_GATE_INVALID_INPUT;
     EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "bad gate status");
     EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_INVALID_GATE, "bad gate error");
+    gate = fixture_gate();
+    memset(gate.gate_profile, 'z', sizeof(gate.gate_profile));
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "unterminated gate status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_INVALID_GATE, "unterminated gate error");
+    gate = fixture_gate();
+    gate.gate_allowed = 2u;
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "invalid gate flag status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_INVALID_GATE, "invalid gate flag error");
+    gate = fixture_gate();
+    gate.runtime_authority_granted = 1u;
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "authority gate status");
+    EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_INVALID_GATE, "authority gate error");
     gate = fixture_gate();
     gate.artifact_digest_hex[0] = '\0';
     EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "missing digest status");
@@ -98,10 +116,45 @@ static int decision_fails_closed(void) {
     EXPECT_TRUE(decision.error == LATTICRA_SEAL_EFFECT_DECISION_MISSING_REQUESTED_EFFECT, "missing effect error");
     EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, 0) == LATTICRA_STATUS_NULL_ARGUMENT, "null output");
     EXPECT_TRUE(latticra_seal_effect_decision_is_denied_metadata(0) == 0, "null helper");
+    gate = fixture_gate();
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "small buffer decision source");
     EXPECT_TRUE(latticra_seal_effect_decision_report(&decision, tiny, sizeof(tiny)) == LATTICRA_STATUS_BUFFER_TOO_SMALL, "small buffer");
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_effect_decision_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null decision");
     EXPECT_TRUE(latticra_seal_effect_decision_report(&decision, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    gate = fixture_gate();
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "tamper decision source");
+    memset(decision.decision_profile, 'z', sizeof(decision.decision_profile));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_effect_decision_report(&decision, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "unterminated effect decision render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated effect decision render cleared");
+    EXPECT_TRUE(latticra_seal_effect_decision_is_denied_metadata(&decision) == 0,
+                "unterminated effect decision helper rejected");
+
+    gate = fixture_gate();
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "authority effect decision source");
+    decision.runtime_authority_granted = 1u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_effect_decision_report(&decision, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "authority effect decision render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "authority effect decision render cleared");
+    EXPECT_TRUE(latticra_seal_effect_decision_is_denied_metadata(&decision) == 0,
+                "authority effect decision helper rejected");
+
+    gate = fixture_gate();
+    EXPECT_TRUE(latticra_seal_effect_decision_from_gate(&gate, &decision) == LATTICRA_STATUS_OK, "flag effect decision source");
+    decision.effect_allowed = 2u;
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_effect_decision_report(&decision, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_NULL_ARGUMENT,
+                "flag effect decision render rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "flag effect decision render cleared");
+    EXPECT_TRUE(latticra_seal_effect_decision_is_denied_metadata(&decision) == 0,
+                "flag effect decision helper rejected");
     return 0;
 }
 

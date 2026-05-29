@@ -19,14 +19,21 @@
         } \
     } while (0)
 
+static void copy_text(char *dest, size_t dest_len, const char *src) {
+    if (dest_len == 0u) {
+        return;
+    }
+    (void)snprintf(dest, dest_len, "%s", src);
+}
+
 static latticra_runtime_boundary_authority_summary_t ok_authority(void) {
     latticra_runtime_boundary_authority_summary_t authority;
     memset(&authority, 0, sizeof(authority));
     authority.status = LATTICRA_STATUS_OK;
-    strcpy(authority.status_label, "ok");
-    strcpy(authority.validator_label, "runtime-policy-matrix-refinement");
-    strcpy(authority.requested_effect_label, "none");
-    strcpy(authority.denial_reason, "ok");
+    copy_text(authority.status_label, sizeof(authority.status_label), "ok");
+    copy_text(authority.validator_label, sizeof(authority.validator_label), "runtime-policy-matrix-refinement");
+    copy_text(authority.requested_effect_label, sizeof(authority.requested_effect_label), "none");
+    copy_text(authority.denial_reason, sizeof(authority.denial_reason), "ok");
     authority.no_effect = 1;
     return authority;
 }
@@ -61,7 +68,7 @@ static int runtime_boundary_policy_matrix_reports_validation_cell(void) {
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "policy-matrix-validation");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "policy-matrix-validation");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_PIPELINE_VALIDATE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -93,7 +100,7 @@ static int runtime_boundary_policy_matrix_reports_future_gate_cell(void) {
     char report[LATTICRA_RUNTIME_BOUNDARY_REPORT_MAX];
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "policy-matrix-future");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "policy-matrix-future");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_LAT_EXECUTE;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_REQUIRES_FUTURE_GATE;
@@ -120,7 +127,7 @@ static int runtime_boundary_policy_matrix_reports_blocked_effect_cell(void) {
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "policy-matrix-blocked-effect");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "policy-matrix-blocked-effect");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NETWORK;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;
@@ -140,7 +147,7 @@ static int runtime_boundary_policy_matrix_reports_prerequisite_denial_cell(void)
     latticra_runtime_boundary_result_t result;
 
     memset(&request, 0, sizeof(request));
-    strcpy(request.runtime_id, "policy-matrix-prereq");
+    copy_text(request.runtime_id, sizeof(request.runtime_id), "policy-matrix-prereq");
     request.request_kind = LATTICRA_RUNTIME_BOUNDARY_VALIDATE_ONLY;
     request.requested_effect = LATTICRA_RUNTIME_BOUNDARY_EFFECT_NONE;
     request.mode = LATTICRA_RUNTIME_BOUNDARY_MODE_VALIDATION_ONLY;

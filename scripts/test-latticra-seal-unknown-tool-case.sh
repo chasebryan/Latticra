@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-latticra-seal-unknown-tool-case.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/seal_runtime_gate.c \
@@ -13,6 +16,6 @@ cc $CFLAGS \
   src/seal_agentic_automation_security.c \
   src/seal_status_rollup.c \
   tests/seal_unknown_tool_case.c \
-  -o /tmp/latticra-seal-unknown-tool-case
+  -o "$tmpdir/latticra-seal-unknown-tool-case"
 
-/tmp/latticra-seal-unknown-tool-case
+"$tmpdir/latticra-seal-unknown-tool-case"

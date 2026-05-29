@@ -1,0 +1,25 @@
+name: Fedora Source Archive Transcript Review Validator
+
+on:
+  push:
+    paths:
+      - 'docs/FEDORA_SOURCE_ARCHIVE_TRANSCRIPT_REVIEW_VALIDATOR.md'
+      - 'docs/status/FEDORA_SOURCE_ARCHIVE_TRANSCRIPT_REVIEW_VALIDATOR_STATUS.md'
+      - 'scripts/fedora-source-archive-transcript-review.sh'
+      - 'scripts/test-fedora-source-archive-transcript-review-validator.sh'
+      - '.github/workflows/fedora-source-archive-transcript-review-validator.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fedora-source-archive-transcript-review-validator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Fedora source archive transcript review validator guard
+        run: sh scripts/test-fedora-source-archive-transcript-review-validator.sh

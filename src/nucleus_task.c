@@ -25,6 +25,7 @@ static void default_authority(latticra_nucleus_task_authority_summary_t *authori
     authority->execution_allowed = 0;
     authority->mutation_allowed = 0;
     authority->server_allowed = 0;
+    authority->network_allowed = 0;
     authority->recovery_allowed = 0;
     authority->hardware_allowed = 0;
 }
@@ -45,6 +46,17 @@ static void default_record(latticra_nucleus_task_record_t *record) {
     record->authorization_state = LATTICRA_NUCLEUS_TASK_AUTH_DENIED;
     record->prerequisites_satisfied = 0;
     record->no_effect_chain_ok = 1;
+    record->effect_authority_granted = 0;
+    record->task_execution_performed = 0;
+    record->runtime_entered = 0;
+    record->command_execution_allowed = 0;
+    record->lat_execution_allowed = 0;
+    record->lir_execution_allowed = 0;
+    record->file_io_allowed = 0;
+    record->state_mutation_allowed = 0;
+    record->self_update_allowed = 0;
+    record->boot_allowed = 0;
+    record->operator_confirmation_overrides_policy = 0;
     record->report_alignment[0] = '\0';
     record->no_effect_policy[0] = '\0';
     record->representation_gate[0] = '\0';
@@ -57,6 +69,7 @@ static void default_record(latticra_nucleus_task_record_t *record) {
     record->executed = 0;
     record->mutation_allowed = 0;
     record->server_interaction_allowed = 0;
+    record->network_allowed = 0;
     record->recovery_allowed = 0;
     record->hardware_allowed = 0;
     record->evidence_level = 0u;
@@ -71,6 +84,7 @@ static void default_result(latticra_nucleus_task_result_t *result) {
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
 }
@@ -100,10 +114,27 @@ static int no_effect_flags_ok(int no_effect,
                               int execution_allowed,
                               int mutation_allowed,
                               int server_allowed,
+                              int network_allowed,
                               int recovery_allowed,
                               int hardware_allowed) {
     return no_effect == 1 && execution_allowed == 0 && mutation_allowed == 0 &&
-           server_allowed == 0 && recovery_allowed == 0 && hardware_allowed == 0;
+           server_allowed == 0 && network_allowed == 0 &&
+           recovery_allowed == 0 && hardware_allowed == 0;
+}
+
+static int runtime_denial_floor_ok(const latticra_nucleus_task_record_t *record) {
+    if (record == 0) return 0;
+    return record->effect_authority_granted == 0 &&
+           record->task_execution_performed == 0 &&
+           record->runtime_entered == 0 &&
+           record->command_execution_allowed == 0 &&
+           record->lat_execution_allowed == 0 &&
+           record->lir_execution_allowed == 0 &&
+           record->file_io_allowed == 0 &&
+           record->state_mutation_allowed == 0 &&
+           record->self_update_allowed == 0 &&
+           record->boot_allowed == 0 &&
+           record->operator_confirmation_overrides_policy == 0;
 }
 
 static int authority_ok(const latticra_nucleus_task_authority_summary_t *authority) {
@@ -113,6 +144,7 @@ static int authority_ok(const latticra_nucleus_task_authority_summary_t *authori
                               authority->execution_allowed,
                               authority->mutation_allowed,
                               authority->server_allowed,
+                              authority->network_allowed,
                               authority->recovery_allowed,
                               authority->hardware_allowed);
 }
@@ -309,13 +341,16 @@ static int result_no_effect_chain_ok(const latticra_nucleus_task_result_t *resul
                               result->execution_allowed,
                               result->mutation_allowed,
                               result->server_allowed,
+                              result->network_allowed,
                               result->recovery_allowed,
                               result->hardware_allowed) &&
            result->record.executed == 0 &&
            result->record.mutation_allowed == 0 &&
            result->record.server_interaction_allowed == 0 &&
+           result->record.network_allowed == 0 &&
            result->record.recovery_allowed == 0 &&
-           result->record.hardware_allowed == 0;
+           result->record.hardware_allowed == 0 &&
+           runtime_denial_floor_ok(&result->record);
 }
 
 static void apply_no_effect_report_alignment(latticra_nucleus_task_result_t *result) {
@@ -392,6 +427,7 @@ static void copy_authority(latticra_nucleus_task_authority_summary_t *destinatio
     destination->execution_allowed = source->execution_allowed;
     destination->mutation_allowed = source->mutation_allowed;
     destination->server_allowed = source->server_allowed;
+    destination->network_allowed = source->network_allowed;
     destination->recovery_allowed = source->recovery_allowed;
     destination->hardware_allowed = source->hardware_allowed;
 }
@@ -416,8 +452,20 @@ static void fill_record_defaults(const latticra_nucleus_task_request_t *request,
     result->record.executed = 0;
     result->record.mutation_allowed = 0;
     result->record.server_interaction_allowed = 0;
+    result->record.network_allowed = 0;
     result->record.recovery_allowed = 0;
     result->record.hardware_allowed = 0;
+    result->record.effect_authority_granted = 0;
+    result->record.task_execution_performed = 0;
+    result->record.runtime_entered = 0;
+    result->record.command_execution_allowed = 0;
+    result->record.lat_execution_allowed = 0;
+    result->record.lir_execution_allowed = 0;
+    result->record.file_io_allowed = 0;
+    result->record.state_mutation_allowed = 0;
+    result->record.self_update_allowed = 0;
+    result->record.boot_allowed = 0;
+    result->record.operator_confirmation_overrides_policy = 0;
     result->record.evidence_level = 1u;
 }
 
@@ -434,12 +482,25 @@ static void set_denial(latticra_nucleus_task_result_t *result,
     result->record.executed = 0;
     result->record.mutation_allowed = 0;
     result->record.server_interaction_allowed = 0;
+    result->record.network_allowed = 0;
     result->record.recovery_allowed = 0;
     result->record.hardware_allowed = 0;
+    result->record.effect_authority_granted = 0;
+    result->record.task_execution_performed = 0;
+    result->record.runtime_entered = 0;
+    result->record.command_execution_allowed = 0;
+    result->record.lat_execution_allowed = 0;
+    result->record.lir_execution_allowed = 0;
+    result->record.file_io_allowed = 0;
+    result->record.state_mutation_allowed = 0;
+    result->record.self_update_allowed = 0;
+    result->record.boot_allowed = 0;
+    result->record.operator_confirmation_overrides_policy = 0;
     result->no_effect = 1;
     result->execution_allowed = 0;
     result->mutation_allowed = 0;
     result->server_allowed = 0;
+    result->network_allowed = 0;
     result->recovery_allowed = 0;
     result->hardware_allowed = 0;
     finalize_task_report_refinement(result);
@@ -457,8 +518,20 @@ static void set_allowed(latticra_nucleus_task_result_t *result,
     result->record.executed = 0;
     result->record.mutation_allowed = 0;
     result->record.server_interaction_allowed = 0;
+    result->record.network_allowed = 0;
     result->record.recovery_allowed = 0;
     result->record.hardware_allowed = 0;
+    result->record.effect_authority_granted = 0;
+    result->record.task_execution_performed = 0;
+    result->record.runtime_entered = 0;
+    result->record.command_execution_allowed = 0;
+    result->record.lat_execution_allowed = 0;
+    result->record.lir_execution_allowed = 0;
+    result->record.file_io_allowed = 0;
+    result->record.state_mutation_allowed = 0;
+    result->record.self_update_allowed = 0;
+    result->record.boot_allowed = 0;
+    result->record.operator_confirmation_overrides_policy = 0;
     finalize_task_report_refinement(result);
 }
 
@@ -476,6 +549,7 @@ static int preview_allows(const latticra_nucleus_preview_t *preview,
            preview->executed == 0 &&
            preview->mutation_allowed == 0 &&
            preview->server_interaction_allowed == 0 &&
+           preview->network_allowed == 0 &&
            preview->recovery_allowed == 0 &&
            preview->hardware_allowed == 0;
 }
@@ -668,6 +742,18 @@ latticra_status_t latticra_nucleus_task_report(const latticra_nucleus_task_resul
         !appendf(buffer, buffer_len, &used, "execution_status=%s\n", record->execution_status) ||
         !appendf(buffer, buffer_len, &used, "effect_status=%s\n", record->effect_status) ||
         !appendf(buffer, buffer_len, &used, "runtime_status=%s\n", record->runtime_status) ||
+        !appendf(buffer, buffer_len, &used, "effect_authority_granted=%d\n", record->effect_authority_granted) ||
+        !appendf(buffer, buffer_len, &used, "task_execution_performed=%d\n", record->task_execution_performed) ||
+        !appendf(buffer, buffer_len, &used, "runtime_entered=%d\n", record->runtime_entered) ||
+        !appendf(buffer, buffer_len, &used, "command_execution_allowed=%d\n", record->command_execution_allowed) ||
+        !appendf(buffer, buffer_len, &used, "lat_execution_allowed=%d\n", record->lat_execution_allowed) ||
+        !appendf(buffer, buffer_len, &used, "lir_execution_allowed=%d\n", record->lir_execution_allowed) ||
+        !appendf(buffer, buffer_len, &used, "file_io_allowed=%d\n", record->file_io_allowed) ||
+        !appendf(buffer, buffer_len, &used, "state_mutation_allowed=%d\n", record->state_mutation_allowed) ||
+        !appendf(buffer, buffer_len, &used, "self_update_allowed=%d\n", record->self_update_allowed) ||
+        !appendf(buffer, buffer_len, &used, "boot_allowed=%d\n", record->boot_allowed) ||
+        !appendf(buffer, buffer_len, &used, "operator_confirmation_overrides_policy=%d\n",
+            record->operator_confirmation_overrides_policy) ||
         !appendf(buffer, buffer_len, &used, "authority_status=%s\n", record->authority.status_label) ||
         !appendf(buffer, buffer_len, &used, "authority_validator=%s\n", record->authority.validator_label) ||
         !appendf(buffer, buffer_len, &used, "authority_reason=%s\n", record->authority.denial_reason) ||
@@ -676,6 +762,7 @@ latticra_status_t latticra_nucleus_task_report(const latticra_nucleus_task_resul
         !appendf(buffer, buffer_len, &used, "executed=%d\n", record->executed) ||
         !appendf(buffer, buffer_len, &used, "mutation_allowed=%d\n", record->mutation_allowed) ||
         !appendf(buffer, buffer_len, &used, "server_interaction_allowed=%d\n", record->server_interaction_allowed) ||
+        !appendf(buffer, buffer_len, &used, "network_allowed=%d\n", record->network_allowed) ||
         !appendf(buffer, buffer_len, &used, "recovery_allowed=%d\n", record->recovery_allowed) ||
         !appendf(buffer, buffer_len, &used, "hardware_allowed=%d\n", record->hardware_allowed) ||
         !appendf(buffer, buffer_len, &used, "rollback_state=%s\n", latticra_nucleus_task_rollback_state_label(record->rollback_state)) ||

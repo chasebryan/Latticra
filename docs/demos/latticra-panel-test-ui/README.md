@@ -1,0 +1,178 @@
+# Latticra Panel Test UI Lane
+
+Status: isolated test development area
+
+This lane is for production-quality Latticra Panel UI/GUI iteration without changing the guarded Rust Panel implementation in `installer/latticra-installer/src/ui.rs` or any future edge GUI implementation.
+
+The header brand mark now uses a high-resolution transparent lattice emblem, replacing the temporary `L` badge with a navy/cyan mark and restrained frosted treatment inspired by the provided Latticra banner reference. The same emblem is declared as the lane favicon, touch icon, and preloaded browser identity asset; it reserves intrinsic image dimensions, falls back to a crisp local letter mark if the PNG fails, and reports asset and metadata load state in the no-effect receipt.
+
+The dashboard Visual Identity panel now reports shared artwork load state, header emblem/browser identity state, and zero production/main/edge authority as first-screen evidence. Its title, summary, right-context row, and no-effect receipt entry all come from the same local-only state model.
+
+The header primary action rail now uses iconized, stable-width controls with explicit local-only intent metadata for save receipt, reset state, generate plan, and dry-install. The action rail is mirrored into the right context inspector and receipt so QA can verify priority, icon coverage, and zero host-write/main/edge authority before any guarded Panel migration.
+
+The dashboard posture strip now exposes state-bearing cards for plan flow, user-local prefix guard, root authority, and production claim. Each card carries a data status, badge, stronger scan styling, right-inspector summary, and no-effect receipt binding so critical posture is inspectable without relying on color alone.
+
+The posture strip also uses a responsive minimum-width guard and normal word wrapping so readiness cards reflow instead of splitting status text into unreadable fragments, with the guard recorded in the right context summary and receipt posture model.
+
+The dashboard Components card now reports component health instead of only listing selected items: selected count, omitted optional count, core coverage, dashboard state, right-inspector context, and receipt rows all come from the same local component toggle model while production/main/edge authority stays zero.
+
+The workspace toolbar now includes a compact route strip that keeps active tab, profile, evidence detail, and the local-only boundary visible beside the main title. The same route state is mirrored into the right context inspector and no-effect receipt so QA can confirm orientation after deep links, profile changes, and evidence-detail adjustments.
+
+The Evidence detail slider now reports a visible Compact/Balanced/Full evidence label, updates its accessible value text, marks the workspace surface with the active detail density, and writes the same zero-authority detail level into the no-effect receipt and route strip.
+
+The Profile selector now exposes a visible scope summary for each profile, applies a route-chip state for specialized profiles, mirrors the selected profile scope into the right context inspector, and writes the same zero-authority profile contract into the no-effect receipt.
+
+The left readiness rail now exposes a state-bearing local readiness band, bound score, mode/write rows, closed promotion gate, right-inspector summary, and receipt-bound zero-authority promotion state. The rail uses the brighter layered white and cyan/navy treatment from the provided Latticra banner direction while keeping `can_promote=false` and production/main/edge authority at zero.
+
+The dashboard Production Gates card now behaves as a decision surface instead of static status copy: verified and pending gate counts, `can_promote=false`, zero-authority boundary text, per-gate state rows, right-inspector context, and the no-effect receipt all share the same state model.
+
+The dashboard Authority card now uses a state-bearing local authority model: dry-run, user-local writes, system mutation, and network fetch rows carry allowed/guarded/armed/blocked state, production-zero boundary fields, right-inspector context, and no-effect receipt binding while staying scoped to the isolated test lane.
+
+The Run Monitor now reports state, prefix guard, progress, latest log line, and runtime/production/main/edge authority boundary through the dashboard surface, right context inspector, and no-effect receipt. Running, completed, blocked, and ready states are represented without claiming live installer execution.
+
+The Next Action workflow is now state-bearing: profile, plan review, dry-install, and guarded-local steps update from the same local state as the run monitor, prefix guard, and selected components, then mirror their current/complete/blocked state into the right context inspector and no-effect receipt.
+
+The `Review` tab tracks UI-lane checks, pending egui migration review, and blocked production-release claims separately from the installer readiness ledger. Its state filter supports local persistence and `review=` deep links for QA snapshots. Non-visual status and hidden control descriptions are part of the lane so screen-reader behavior can be tested before any migration.
+
+The Review evidence matrix separates verified local UI proof from pending guarded Rust Panel migration, pending installer-engine binding, and blocked production-release artifacts. The same local-only matrix is included in the no-effect receipt preview so QA can audit production blockers without implying release evidence.
+
+The Review visual baseline ledger makes desktop, mobile, receipt, focus, guarded-Panel compare, and release signoff screenshot gates selectable, keyboard navigable, replayable with `visual=` links, and receipt-bound without claiming production visual signoff.
+
+The Review release acceptance audit combines local UI proof, receipt/handoff replay, accessibility, guarded Panel migration, installer-engine binding, production evidence, and release authority into selectable `acceptance=` gates. It keeps `can_promote=false` and production claims closed while making the remaining acceptance gap explicit.
+
+The Review accessibility audit makes keyboard paths, focus behavior, ARIA/live-region coverage, and pending screen-reader or real-installer accessibility work visible before migration. Its selectable `a11y=` evidence queue exposes the selected assistive proof gap, supports keyboard and command-palette review, joins QA handoff replay, and stays receipt-bound without claiming production accessibility certification.
+
+The Review installer engine binding matrix maps simulated plan, prefix, run monitor, receipt, error, and production execution surfaces to their future live installer event sources with `engine=` deep links, keyboard selection, and receipt-bound zero-authority status. Its selected-binding contract inspector exposes source surface, receipt mapping, live event gap, and authority boundary for the active row without mutating main or edge GUI code. The installer event adapter ledger maps plan, preflight, start, progress, error, and execution phases to UI state contracts so the live engine binding gap is visible and receipt-bound before runtime integration.
+
+The Review migration drilldown makes prototype-to-guarded-Panel migration candidates selectable, keyboard navigable, replayable with `migration=` links, and receipt-bound without mutating the guarded Rust Panel. Its selected migration parity inspector exposes prototype evidence, guarded Panel compare gap, receipt data contract, and authority boundary before any surface is ported.
+
+The Review QA runbook turns desktop, mobile, keyboard, receipt replay, migration, and production-denial checks into selectable, keyboard navigable, `scenario=` deep-linked, receipt-bound local-only scenarios.
+
+The Readiness promotion gate records the test-lane decision before any migration or release claim: local UI evidence can be verified, but promotion remains blocked until guarded Panel migration review, installer-engine binding, artifact integrity, SBOM, lifecycle transcripts, upgrade and rollback, and multi-VM evidence exist. The no-effect receipt includes the same `can_promote=false` summary with zero production claim authority.
+
+Promotion gate rows are selectable, keyboard navigable, persisted locally, replayed with `gate=` deep links, and exposed in the no-effect receipt as selected remediation detail.
+
+The Readiness production blocker drilldown turns missing artifact, signature, SBOM, lifecycle, upgrade, rollback, and VM evidence into selectable `blockerItem=` remediation rows with owners, next actions, receipt binding, QA handoff replay, and retained roving focus after pointer or keyboard selection while keeping release authority at zero. Its selected blocker proof checklist exposes missing evidence, proof owner, release acceptance gap, and authority boundary for the active blocker.
+
+The Readiness comparison ledger separates local UI proof from guarded Panel migration, installer-engine binding, release artifacts, lifecycle validation, and recovery matrix requirements. Rows are selectable, keyboard navigable, replayable with `compare=` links, mobile deep links scroll the selected row into view, included in QA handoff validation, and receipt-bound with production claim authority held at zero. Its selected comparison proof checklist exposes local proof scope, production requirement, release acceptance, and authority boundary for the active comparison row.
+
+The selected comparison alignment inspector flags drift between the active comparison row and the current trace, intake packet, promotion gate, acceptance gate, and blocker selections. Its local-only align action updates only test-lane review context, records the no-effect event, and exposes a `Comparison context aligned` no-op state when no drift remains.
+
+The Readiness release evidence intake queue separates local UI proof packets from guarded Panel migration packets, installer runtime packets, artifact/signature packets, lifecycle transcripts, and recovery validation packets. Rows are selectable, keyboard navigable, replayable with `intake=` links, mobile deep links scroll the selected packet into view, included in QA handoff validation, and receipt-bound with intake and production authority held at zero. Its selected intake proof contract exposes packet scope, intake decision, required proof, and zero-authority boundary before any packet can support promotion.
+
+The Readiness traceability matrix connects blocker groups, intake packets, promotion gates, and acceptance gates into selectable `trace=` paths. Rows are selectable, keyboard navigable, replayable with mobile deep-link scroll, included in QA handoff validation, and receipt-bound with production, host-write, runtime, main GUI, and edge GUI authority held at zero.
+
+The selected trace alignment inspector flags drift between the active trace and the current packet, promotion gate, acceptance gate, and blocker selections. Its local-only alignment rows are receipt-bound so QA can distinguish a deliberate review focus from a fully aligned release path.
+
+The trace alignment action can align the local review context to the selected trace path without creating production evidence or changing main or edge GUI code. It updates only test-lane packet, gate, acceptance, and blocker selections, then records the local action in the no-effect event trail.
+
+When a trace path is already aligned, the action changes to a `Context aligned` no-op state with an `aria-disabled` hint instead of recording duplicate events. The receipt carries the same alignment action state and label for QA replay.
+
+Selectable audit ledgers now share retained post-render roving focus across saved receipts, promotion gates, readiness comparison, release evidence intake, readiness traceability, migration review, QA runbook, installer-engine binding, visual baselines, release acceptance, accessibility evidence, and production blockers so pointer selection can continue directly into arrow-key review.
+
+The workspace mode radio group uses roving tabindex and arrow-key navigation in the test lane.
+
+Component toggles include described checkbox controls, visible keyboard focus, selected-count feedback, and no-effect receipt binding.
+
+The Console tab exposes allowlist state visibly and non-visually, returns focus to the command field after blocked commands, marks invalid command input, and records console status in the no-effect receipt preview.
+
+The Console command palette searches allowlisted commands, workspace tabs, and selected QA/release audit surfaces with roving focus, local-only jump activation, receipt-bound selection state, and zero shell, host-write, main GUI, or edge GUI authority.
+
+The Delivery receipt schema map includes field provenance, live/guarded/blocked status, summary counts, safe text rendering, and receipt-bound schema provenance so QA can inspect where each no-effect field comes from.
+
+The Delivery plan preview now reports state from the same local model used for receipts: component count, prefix guard, plan mode, authority boundary, right-context summary, and no-effect receipt rows update together before any installer or guarded Panel migration work is claimed.
+
+The Delivery receipt checklist is stateful, persisted locally, guarded by mode and prefix prerequisites, announced through assistive status, and bound into the no-effect receipt preview as recorded, pending, or blocked evidence.
+
+The Updater signed-delivery gate now renders manifest, artifact hash, rollback, confirmation, preview, apply, and authority state from one local-only gate model. Preview events can be recorded, but signed apply remains closed with zero production, network, main GUI, and edge GUI authority in the context inspector and no-effect receipt.
+
+The Evidence Queue filter now reports visible rows, guarded evidence rows, active filter text, zero-authority boundary, right-context summary, and receipt rows from one local queue model.
+
+The Event Trail card now reports retained event count, blocked event count, latest local event, safe DOM-rendered rows, zero-authority boundary, right-context summary, and receipt rows from one local event ledger model.
+
+The Receipt Preview now has a trust strip above the JSON payload with schema, event count, checklist progress, local-only scope, zero-authority boundary, right-context summary, and receipt-bound summary rows before QA relies on the full preview.
+
+The Evidence tab saves local no-effect receipt snapshots, keeps a selectable snapshot list, and compares saved event, checklist, schema, mode, and prefix state against the current preview.
+
+The Saved Receipts panel now exposes a trust strip for retained count, selected snapshot, diff state, export validation, zero-authority boundary, right-context summary, and receipt-bound trust rows from one local snapshot model.
+
+Selected saved receipts expose a local JSON export preview and download link that embeds a `NOT PRODUCTION EVIDENCE` watermark plus zero host-write, main GUI, and edge GUI authority fields.
+
+Export and QA handoff links now stay out of the keyboard path and reject pointer activation while their local validation gates are blocked, so disabled review artifacts cannot be opened accidentally.
+
+Saved receipt maintenance retains the latest 8 local no-effect snapshots, lets QA relabel the selected snapshot, and deletes only local test-lane state without mutating installer evidence or production GUI code.
+
+Saved receipt diff detail compares stable saved and current receipt fields row by row, marks changed values, and embeds the same local-only comparison in the export preview.
+
+Saved review context drift compares the selected saved receipt against the current comparison, trace, intake, promotion, acceptance, blocker, handoff scope, and zero-authority boundary so QA can spot replay drift before trusting a handoff artifact.
+
+The receipt diff filter supports all, changed, and same field views with local persistence, `diff=` QA deep links, and keyboard navigation.
+
+The export preview includes a validation ledger for local-only schema, non-production watermark, zero authority fields, selected snapshot embedding, and diff filter binding before download.
+
+The local export artifact also carries a deterministic test-lane integrity digest over the validated payload scope so QA can compare the preview and downloaded JSON without claiming production evidence.
+
+The QA handoff surface turns the selected saved receipt into a local review URL plus manifest that preserves mode, prefix, filters, selected snapshot, and export digest while keeping production evidence and host-write authority at zero.
+
+The QA handoff scope checklist shows whether the generated handoff carries selected comparison, comparison alignment state, readiness trace, trace alignment state, production blocker focus, and local authority boundary into the manifest.
+
+QA handoff validation shows reviewer-facing gates for route parameters, mode and prefix replay, filter replay, selected snapshot alignment, digest alignment, export validation status, saved review context drift, and zero-authority local boundaries.
+
+The QA handoff URL now carries `snapshot=` and `digest=` replay parameters. Reloading that link restores the selected saved receipt when the snapshot still exists in local test-lane state, while missing snapshots remain local-only and do not create production evidence.
+
+The Replay Request strip separates incoming handoff state from the freshly generated link, showing requested snapshot, requested digest, local restore status, and whether the current no-effect digest matched or was refreshed.
+
+Missing replay requests are explicit: the strip shows whether the requested snapshot is present in local test-lane state before any restored or refreshed digest is trusted.
+
+The global QA replay strip summarizes active URL-requested state across tabs, mode, filters, selected gates, blocker items, snapshots, and digests, then binds that applied/ignored count into the no-effect receipt with production, main GUI, and edge GUI authority held at zero.
+
+The QA replay strip now uses a bounded wrapped chip layout: the first visible chips remain readable in the first viewport, additional requested parameters collapse into a local summary chip, and the full replay row set remains in the no-effect receipt.
+
+The right context inspector now mirrors brand emblem load state, selected promotion gate, production blocker, release acceptance, readiness comparison, comparison alignment, readiness trace, trace alignment, QA replay, and saved receipt context so reviewers retain orientation while moving across tabs, with the same local-only summary embedded in the receipt.
+
+The right context inspector also has a width guard for long replay and receipt summaries so local context can wrap inside the inspector without creating page-level horizontal overflow.
+
+The right Live Evidence card now renders from receipt-bound evidence rows instead of static mini-log copy. Its visible row count, guarded boundary rows, latest local event, zero-authority boundary, context inspector summary, and no-effect receipt section all share the same local-only state model.
+
+The operator focus dock keeps the selected tab, readiness comparison, comparison alignment state, production blocker, release acceptance gate, readiness trace, trace alignment state, command palette target, saved receipt, and zero-authority boundary visible near the workspace top. On mobile it compresses into a denser snap-scrolling review strip so selected trace rows remain readable. Its buttons jump only within the isolated test lane and the same context is embedded in the no-effect receipt.
+
+Files:
+
+```text
+docs/demos/latticra-panel-test-ui/index.html
+docs/demos/latticra-panel-test-ui/styles.css
+docs/demos/latticra-panel-test-ui/app.js
+scripts/check-latticra-panel-test-ui.sh
+docs/status/LATTICRA_PANEL_TEST_UI_LANE_STATUS.md
+```
+
+Run locally:
+
+```text
+open docs/demos/latticra-panel-test-ui/index.html
+```
+
+Validate:
+
+```text
+sh scripts/check-latticra-panel-test-ui.sh
+python3 scripts/check_latticra_panel_ui_design.py
+```
+
+Boundary:
+
+```text
+test_ui_lane=1
+main_rust_panel_mutation_required=0
+edge_gui_mutation_required=0
+host_write_authority=0
+network_authority=0
+runtime_enforcement_authority=0
+production_installer_claim=0
+```
+
+Status record:
+
+```text
+docs/status/LATTICRA_PANEL_TEST_UI_LANE_STATUS.md
+```

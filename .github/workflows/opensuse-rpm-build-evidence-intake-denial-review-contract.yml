@@ -1,0 +1,29 @@
+name: openSUSE RPM Build Evidence Intake Denial Review Contract
+
+on:
+  push:
+    paths:
+      - 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
+      - 'scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh'
+      - '.github/workflows/opensuse-rpm-build-evidence-intake-denial-review-contract.yml'
+  pull_request:
+    paths:
+      - 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_REVIEW_CONTRACT.md'
+      - 'scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh'
+      - '.github/workflows/opensuse-rpm-build-evidence-intake-denial-review-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  opensuse-rpm-build-evidence-intake-denial-review-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Run openSUSE RPM build evidence intake denial review contract guard
+        run: sh scripts/test-opensuse-rpm-build-evidence-intake-denial-review-contract.sh

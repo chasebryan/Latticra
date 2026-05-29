@@ -3,6 +3,9 @@ set -eu
 
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic}"
 
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/test-lir-shape.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
+
 cc $CFLAGS \
   -Iinclude \
   src/l_ui_parser.c \
@@ -11,9 +14,9 @@ cc $CFLAGS \
   src/l_ui_parser_semantic.c \
   src/lir.c \
   tests/lir_shape_invariants.c \
-  -o /tmp/latticra-lir-shape-invariants
+  -o "$tmpdir/latticra-lir-shape-invariants"
 
-/tmp/latticra-lir-shape-invariants
+"$tmpdir/latticra-lir-shape-invariants"
 
 cc $CFLAGS \
   -Iinclude \
@@ -23,6 +26,6 @@ cc $CFLAGS \
   src/l_ui_parser_semantic.c \
   src/lir.c \
   tests/lir_report_refinement.c \
-  -o /tmp/latticra-lir-report-refinement
+  -o "$tmpdir/latticra-lir-report-refinement"
 
-/tmp/latticra-lir-report-refinement
+"$tmpdir/latticra-lir-report-refinement"
