@@ -28,6 +28,7 @@ Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-1 bounded range falsifier note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-2 hierarchical substrate pre-registration note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -777,6 +778,8 @@ The identity-replay Model-1 dynamic substrate runner now defines a finite local 
 
 The identity-replay Model-1 bounded range falsifier now proves a scoped negative conclusion: the first finite bounded-cell Model-1 substrate class cannot span the measured mass-ratio vector, because its generous electron-normalized replay-cost ratio bound is `1088` while the guarded target table reaches `337691.49623497269417`; it records `model1_bounded_substrate_class_falsified=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay Model-2 hierarchical substrate pre-registration now locks a four-scale multiplicative replay law before target loading and then separately verifies dynamic-range capacity after the receipt exists. It records `hierarchical_max_ratio_bound_before_target_load=342102016`, `target_ratio_within_model2_hierarchical_capacity=1`, `model2_not_falsified_by_range_bound=1`, `mass_ratio_predictions_emitted=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
 ```
@@ -841,10 +844,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-1 bounded range falsifier.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance Model-2 hierarchical substrate pre-registration.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-2 prediction-only hierarchical replay runner.
 ```
 
 Follow-on proof lanes:

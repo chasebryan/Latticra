@@ -34,6 +34,8 @@ The Model-1 dynamic replay substrate runner now makes the next proof step comput
 
 The Model-1 bounded range falsifier records the first hard conclusion from that runner: the finite bounded-cell substrate class cannot span the measured particle mass-ratio vector, so the next credible candidate must introduce hierarchical or multiscale impedance before any stronger Higgs-causal-closure language can be considered.
 
+The Model-2 hierarchical substrate pre-registration now supplies that necessary hierarchical range-capacity gate. It locks a four-scale multiplicative replay law before target loading, then confirms after receipt generation that the hierarchical range bound spans the target vector while keeping mass prediction, mass recovery, and Higgs-checkmate claims closed.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

@@ -26,6 +26,7 @@ Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-1 bounded range falsifier note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-2 hierarchical substrate pre-registration note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -722,6 +723,12 @@ The next proof-lane candidate should move to a pre-registered hierarchical subst
 
 ```text
 Identity-replay impedance Model-2 hierarchical substrate pre-registration.
+```
+
+The next proof-lane runner should emit hierarchical predictions before target loading:
+
+```text
+Identity-replay impedance Model-2 prediction-only hierarchical replay runner.
 ```
 
 Follow-on proof lanes remain:

@@ -144,6 +144,12 @@ Identity-replay impedance Model-2 hierarchical substrate pre-registration.
 
 The next model should be pre-registered before target comparison and must show how large mass-ratio dynamic range can arise without measured-mass insertion.
 
+The guarded handoff is:
+
+```text
+Model-2 Hierarchical Substrate Pre-Registration.
+```
+
 ## Non-Claims
 
 This bounded-range falsifier is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not final checkmate against Higgs, not external oracle evidence, not independent reproduction, not a Standard Model precision-shadow pass, not a new experimental prediction, not scientific claim promotion, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.
