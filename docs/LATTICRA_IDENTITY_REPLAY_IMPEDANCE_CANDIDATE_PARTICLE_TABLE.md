@@ -180,6 +180,8 @@ The Model-2 Prediction Runner now applies that boundary to a hierarchical replay
 
 The Model-2 Prediction Failure Analysis now records the failure shape and gates Model-3 behind target-blind topological amplification rather than target-ratio fitting.
 
+The Model-3 Topological Amplification Pre-Registration now passes a dynamic-range capacity gate after the pre-registration receipt exists, while leaving target-ratio recovery unevaluated.
+
 ## Public Statement
 
 The strongest legitimate public statement for this table is:

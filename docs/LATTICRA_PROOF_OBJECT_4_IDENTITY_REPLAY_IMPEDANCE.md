@@ -253,6 +253,8 @@ The current Model-2 Prediction Runner result is a negative proof-lane result: th
 
 The current Model-2 Prediction Failure Analysis and Model-3 Worthiness Gate make the next requirement explicit: Model-3 must add target-blind topological replay amplification before any new prediction runner or stronger Higgs-causal-closure language.
 
+The current Model-3 Topological Amplification Pre-Registration satisfies the dynamic-range admission gate and authorizes a prediction-only runner, but it still does not claim mass recovery, Higgs checkmate, or simulation proof.
+
 ## Validation
 
 This proof object is guarded by:

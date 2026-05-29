@@ -40,6 +40,8 @@ The Model-2 prediction runner now closes the next stricter test: it emits hierar
 
 The Model-2 prediction failure analysis and Model-3 Worthiness Gate now turn that failure into a stricter admission rule. Model-3 is only worth pre-registering if it introduces target-blind topological replay amplification that fixes the dynamic-range deficit, identity-ordering failure, lepton-family inversion, and heavy-sector compression before any new target comparison.
 
+The Model-3 topological amplification pre-registration now locks that branch/coalescence amplification law before target loading and then verifies dynamic-range capacity afterward. It authorizes a prediction-only runner, but it still keeps mass recovery, Higgs checkmate, and simulation proof closed.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
