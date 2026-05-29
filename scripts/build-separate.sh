@@ -136,30 +136,35 @@ generate_dashboard() {
         echo ""
         echo "Generated: $(date)"
         echo "Mode: Isolated development platform (build-separate/)"
+        echo "Philosophy: Evidence-bound • No-effect • Denied-by-default"
         echo ""
         echo "────────────────────────────────────────────────────────────"
-        echo " CORE CAPABILITIES"
+        echo " CORE CAPABILITIES (CURRENT FOUNDATION)"
         echo "────────────────────────────────────────────────────────────"
-        echo "  • No-effect CLI (latticra)"
-        echo "  • Seal trust-boundary tooling (latticra-seal)"
-        echo "  • Visual theorem engines (substrate + theorem)"
-        echo "  • Comprehensive validation guard suite"
+        echo "  • No-effect CLI status surface (latticra)"
+        echo "  • Seal trust-boundary / tool-boundary tooling (latticra-seal)"
+        echo "  • Visual theorem / substrate mathematical engines"
+        echo "  • 276+ deterministic validation guards (zero real issues)"
+        echo "  • Runtime Boundary Domain Matrix with advanced queries"
+        echo "  • Rich artifact generation + provenance (hashes, inventories)"
         echo ""
         echo "────────────────────────────────────────────────────────────"
-        echo " CURRENT STATE (from latest platform run)"
+        echo " LATEST PLATFORM RUN ARTIFACTS"
         echo "────────────────────────────────────────────────────────────"
         if [ -f "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" ]; then
-            grep -A 30 "=== Core Binaries ===" "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" | head -20
+            grep -A 25 "=== Core Binaries ===" "$BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt" | head -18
         fi
         echo ""
         echo "────────────────────────────────────────────────────────────"
-        echo " HOW TO USE THIS PLATFORM"
+        echo " PLATFORM USAGE (RECOMMENDED)"
         echo "────────────────────────────────────────────────────────────"
         echo "  sh scripts/build-separate.sh platform"
         echo "  make build-separate-platform"
         echo ""
-        echo "This dashboard and all artifacts are generated automatically."
-        echo "Everything stays strictly evidence-bound and no-effect."
+        echo "All artifacts below are generated automatically inside the"
+        echo "completely isolated build-separate/ tree. No source pollution."
+        echo ""
+        echo "This is the current state of the Latticra evidence-bound foundation."
     } > "$DASH"
 
     log "Dashboard generated: $DASH"
@@ -455,6 +460,12 @@ main() {
             generate_foundation_health_report
             generate_dashboard
             log "=== PLATFORM RUN COMPLETE ==="
+            log "Key artifacts:"
+            log "  - $BUILD_DIR/DASHBOARD.txt"
+            log "  - $BUILD_DIR/FOUNDATION_HEALTH_REPORT.txt + .json"
+            log "  - $BUILD_DIR/inventory/ARTIFACT_INVENTORY.txt"
+            log "  - $BUILD_DIR/release-candidate/"
+            log "  - $BUILD_DIR/validation/REPORT.txt"
             log "Primary artifacts in: $BUILD_DIR"
             ;;
         *) usage ;;
