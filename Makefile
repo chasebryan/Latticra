@@ -12,7 +12,21 @@ seal-policy-denials:
 
 seal-cli:
 	mkdir -p build
-	gcc -Wall -Wextra -O2 -std=c11 -o build/latticra-seal seal/latticra-seal.c -lcrypto
+	@OPENSSL_CFLAGS=""; \
+	OPENSSL_LIBS="-lcrypto"; \
+	if [ "$$(uname -s)" = "Darwin" ]; then \
+		if [ -d /opt/homebrew/opt/openssl/include ]; then \
+			OPENSSL_CFLAGS="-I/opt/homebrew/opt/openssl/include"; \
+			OPENSSL_LIBS="-L/opt/homebrew/opt/openssl/lib -lcrypto"; \
+		elif [ -d /usr/local/opt/openssl/include ]; then \
+			OPENSSL_CFLAGS="-I/usr/local/opt/openssl/include"; \
+			OPENSSL_LIBS="-L/usr/local/opt/openssl/lib -lcrypto"; \
+		elif [ -d /opt/homebrew/include ]; then \
+			OPENSSL_CFLAGS="-I/opt/homebrew/include"; \
+			OPENSSL_LIBS="-L/opt/homebrew/lib -lcrypto"; \
+		fi; \
+	fi; \
+	gcc -Wall -Wextra -O2 -std=c11 $$OPENSSL_CFLAGS -o build/latticra-seal seal/latticra-seal.c $$OPENSSL_LIBS
 
 seal-run: seal-cli
 	./build/latticra-seal
@@ -52,3 +66,33 @@ seal-demo: seal-cli
 .PHONY: seal-docs
 seal-docs:
 	sh scripts/test-latticra-seal-docs.sh
+
+# --- Separate clean build structure (out-of-tree, isolated from installer/target/) ---
+.PHONY: build-separate build-separate-cli build-separate-seal build-separate-tests build-separate-clean
+
+build-separate:
+	sh scripts/build-separate.sh all
+
+build-separate-cli:
+	sh scripts/build-separate.sh cli
+
+build-separate-seal:
+	sh scripts/build-separate.sh seal
+
+build-separate-tests:
+	sh scripts/build-separate.sh tests
+
+build-separate-clean:
+	sh scripts/build-separate.sh clean
+
+.PHONY: build-separate-smoke
+build-separate-smoke:
+	sh scripts/build-separate.sh smoke
+
+.PHONY: build-separate-validate
+build-separate-validate:
+	sh scripts/build-separate.sh validate
+
+.PHONY: build-separate-full-validate
+build-separate-full-validate:
+	sh scripts/build-separate.sh full-validate

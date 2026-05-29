@@ -31,7 +31,7 @@ non-claims
 - [`FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md`](FEDORA_LIVE_READONLY_SNAPSHOT_ADAPTER_STATUS.md) — status record for the live read-only Fedora snapshot adapter implementation.
 - [`FEDORA_RPM_GATE_CLASSIFIER_STATUS.md`](FEDORA_RPM_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora RPM gate classifier implementation.
 - [`FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md`](FEDORA_INSTALLROOT_RPM_LIFECYCLE_STATUS.md) — status record for the controlled Fedora installroot RPM lifecycle lane.
-- [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — status record for the manual Fedora host release-candidate checklist.
+- [`FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md`](FEDORA_MANUAL_HOST_RC_CHECKLIST_STATUS.md) — Current Fedora manual host RC checklist checkpoint; status record for the manual Fedora host release-candidate checklist.
 - [`FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md`](FEDORA_MANUAL_HOST_RC_DECISION_CLASSIFIER_STATUS.md) — status record for the no-effect Fedora manual host RC decision classifier.
 - [`FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md`](FEDORA_DISPOSABLE_VM_EFFECT_GATE_CLASSIFIER_STATUS.md) — status record for the Fedora disposable VM effect gate classifier.
 - [`FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md`](FEDORA_DISPOSABLE_VM_LOCAL_RPM_VALIDATION_STATUS.md) — status record for the gated disposable Fedora VM local RPM validation lane.

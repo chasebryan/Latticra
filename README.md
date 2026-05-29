@@ -241,12 +241,18 @@ sed -n '1,220p' STATUS.md
 sed -n '1,260p' docs/status/CURRENT_STATUS.md
 ```
 
-Build and run the current no-effect CLI status surface:
+Build and run the current no-effect CLI status surface (or use the dedicated separate build structure for clean isolation from installer/ artifacts):
 
 ```sh
+# Simple in-tree
 mkdir -p build
 cc -std=c99 -Wall -Wextra -pedantic src/latticra_cli.c -o build/latticra
 ./build/latticra --status
+
+# Recommended: clean separate build tree (handles macOS OpenSSL, produces latticra + latticra-seal)
+make build-separate
+./build-separate/latticra --status
+make build-separate-validate   # runs key guards + captures evidence under build-separate/evidence/
 ```
 
 Expected posture from the CLI is no-effect:
@@ -598,8 +604,19 @@ seal_policy_decision_metadata_present=1
 seal_runtime_gate_metadata_present=1
 seal_runtime_dry_run_metadata_present=1
 seal_runtime_dry_run_report_surface_present=1
+operator_visible_runtime_dry_run_report=1
+runtime_dry_run_status_index_alignment_present=1
+blocked_reason=default-deny-dry-run
 seal_guarded_allowlist_metadata_present=1
 seal_guarded_allowlist_report_surface_present=1
+operator_visible_guarded_allowlist_report=1
+guarded_allowlist_status_index_alignment_present=1
+known_fixture_tool_candidate_visible=1
+allow_candidate_grants_authority=0
+allow_candidate_executes_tool=0
+allow_candidate_reads_host=0
+allow_candidate_writes_host=0
+allow_candidate_uses_network=0
 runtime_gate_report_only=1
 policy_decision_state=report-only
 runtime_gate_state=report-only
@@ -630,6 +647,8 @@ A careful public claim is:
 
 ```text
 Latticra Seal has report-only runtime dry-run and guarded allowlist candidate-denial paths for AI-era tool-boundary planning.
+Latticra Seal now has a report-only runtime gate path with core negative-test evidence for AI-era tool-boundary planning.
+report-only runtime dry-run path with operator-visible denial reporting
 ```
 
 That claim is intentionally limited. It does not mean Latticra Seal currently implements production runtime enforcement, policy enforcement, cryptographic key authority, MCP protocol behavior, MCP server behavior, MCP client behavior, AI-agent execution control, host behavior, network behavior, object sealing, key storage, or revocation lookup.
@@ -644,9 +663,23 @@ Relevant Seal records:
 - [`docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md`](docs/LATTICRA_SEAL_POLICY_DECISION_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_ENFORCEMENT_GATE_CONTRACT.md)
 - [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_IMPLEMENTATION.md)
+- [`docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE.md)
 - [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_CONTRACT.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_CONTRACT.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION_PLAN.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION_PLAN.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_IMPLEMENTATION.md)
+- [`docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE.md`](docs/LATTICRA_SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE.md)
 - [`docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md`](docs/status/SEAL_CORE_BLOCKED_CASES_STATUS.md)
 - [`docs/status/SEAL_CORE_EVIDENCE_STATUS.md`](docs/status/SEAL_CORE_EVIDENCE_STATUS.md)
+- [`docs/status/SEAL_CORE_EVIDENCE_PUBLIC_STATUS_UPDATE.md`](docs/status/SEAL_CORE_EVIDENCE_PUBLIC_STATUS_UPDATE.md)
+- [`docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md`](docs/status/SEAL_CORE_EVIDENCE_INDEX_ALIGNMENT.md)
+- [`docs/status/SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_CORE_EVIDENCE_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_RUNTIME_DRY_RUN_REPORT_SURFACE_STATUS.md)
+- [`docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_RUNTIME_DRY_RUN_STATUS_INDEX_ALIGNMENT.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_PUBLIC_ENTRYPOINT_ALIGNMENT.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md`](docs/status/SEAL_GUARDED_ALLOWLIST_REPORT_SURFACE_STATUS.md)
+- [`docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md`](docs/status/SEAL_GUARDED_ALLOWLIST_STATUS_INDEX_ALIGNMENT.md)
 
 ---
 

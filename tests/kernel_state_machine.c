@@ -205,8 +205,8 @@ static int machine_report_is_deterministic(void) {
 
 static int null_guards_are_safe(void) {
     latticra_kernel_state_machine_t machine;
-    latticra_kernel_state_machine_step_request_t request;
-    latticra_kernel_state_machine_step_result_t result;
+    latticra_kernel_state_machine_step_request_t request = {0};
+    latticra_kernel_state_machine_step_result_t result = {0};
     char report[LATTICRA_KERNEL_STATE_MACHINE_REPORT_MAX];
 
     EXPECT_TRUE(latticra_kernel_state_machine_init(0) == LATTICRA_STATUS_NULL_ARGUMENT,
