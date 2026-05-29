@@ -96,3 +96,10 @@ build-separate-validate:
 .PHONY: build-separate-full-validate
 build-separate-full-validate:
 	sh scripts/build-separate.sh full-validate
+
+.PHONY: build-separate-visual build-separate-release-candidate
+build-separate-visual:
+	sh scripts/build-separate.sh visual
+
+build-separate-release-candidate:
+	sh scripts/build-separate.sh prepare-release-candidate
