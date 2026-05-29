@@ -20,6 +20,8 @@ The candidate-particle target table now gives that theorem a measured target sur
 
 The L0 mass-ratio runner now makes the target surface executable: it computes toy `Z_L` ratios, emits a receipt hash, compares against the target table, and records non-survival instead of overstating proof. That turns the Higgs counterplay lane into a falsifiable runner path rather than a purely rhetorical argument.
 
+The L1 constrained substrate search adds target-guided search with receipts, overfit signaling, and leave-one-out review. It strengthens the proof pipeline by showing exactly why the current candidate cannot be promoted: target-table and holdout survival remain closed.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

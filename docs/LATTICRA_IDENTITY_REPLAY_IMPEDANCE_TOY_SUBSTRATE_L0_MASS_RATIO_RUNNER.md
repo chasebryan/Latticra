@@ -155,6 +155,14 @@ latticra_identity_replay_impedance_toy_substrate_l0_mass_ratio_runner: ok
 Identity-replay impedance L1 constrained substrate search.
 ```
 
+The guarded executable handoff is:
+
+```text
+L1 Constrained Substrate Search.
+```
+
+L1 performs target-guided search over a small candidate family, reports overfit risk, and blocks promotion unless target-table and leave-one-out checks survive.
+
 ## Non-Claims
 
 This runner is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

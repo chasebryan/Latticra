@@ -191,6 +191,14 @@ Toy Substrate L0 Mass-Ratio Runner.
 
 The L0 runner must compute toy `Z_L` ratios, emit a receipt hash, compare against this target table, and preserve `mass_ratio_recovery_claimed=0` unless the target vector is recovered without measured-mass insertion.
 
+The next guarded search artifact is:
+
+```text
+L1 Constrained Substrate Search.
+```
+
+L1 may use this table for scoring only if it records `target_guided_search_performed=1`, `targets_used_for_candidate_scoring=1`, and `candidate_promoted=0` unless independent validation survives.
+
 ## Non-Claims
 
 This table is not a Latticra mass computation, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

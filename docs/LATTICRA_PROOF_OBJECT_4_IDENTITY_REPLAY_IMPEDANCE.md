@@ -281,6 +281,14 @@ Toy Substrate L0 Mass-Ratio Runner.
 
 That runner computes toy `Z_L` values, generates a receipt hash, compares against the target table, and records `candidate_survives_target_table=0` rather than promoting unearned mass-recovery language.
 
+The next constrained search artifact is:
+
+```text
+L1 Constrained Substrate Search.
+```
+
+That search makes target-guided fitting explicit, records overfit risk, performs leave-one-out review, and keeps `higgs_checkmate_claimed=0` until a pre-registered substrate law survives independent validation.
+
 ## Non-Claims
 
 This proof object is not a claim that the Higgs boson was not observed, not a denial of CERN/ATLAS/CMS data, not a completed replacement for the Standard Model, not empirical proof that our universe is simulated, not proof that our measured universe has been fitted by a Latticra candidate, not physics measurement, not experimental evidence, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.
