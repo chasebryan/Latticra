@@ -322,7 +322,6 @@ build_core_tests() {
     # They frequently break after merges because they don't pull in all required .c files.
     # The real value of the platform is the binaries + reports + Q-Seal artifacts.
 }
-}
 
 # Build the visual theorem engines (mathematical art / substrate demonstrations)
 build_visual_engines() {
