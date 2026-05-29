@@ -20,6 +20,10 @@ require_contains() {
 
 doc='docs/LATTICRA_HIGGS_CHALLENGE_ONE_PAGE.md'
 status='docs/status/LATTICRA_HIGGS_CHALLENGE_ONE_PAGE_STATUS.md'
+refined_doc='docs/LATTICRA_IDENTITY_REPLAY_MODEL3_REFINED_PREREGISTRATION.md'
+refined_status='docs/status/LATTICRA_IDENTITY_REPLAY_MODEL3_REFINED_PREREGISTRATION_STATUS.md'
+refined_guard='scripts/test-latticra-identity-replay-model3-refined-preregistration.sh'
+refined_workflow='.github/workflows/latticra-identity-replay-model3-refined-preregistration.yml'
 verifier='scripts/verify-latticra-higgs-chain.sh'
 status_index='docs/status/README.md'
 docs_hub='docs/README.md'
@@ -32,7 +36,7 @@ makefile='Makefile'
 quality_guard='scripts/test-quality-safety-guards.sh'
 workflow='.github/workflows/latticra-higgs-chain-verifier.yml'
 
-for file in "$doc" "$status" "$verifier" "$status_index" "$docs_hub" "$root_readme" "$root_status" "$current_status" "$current_direction" "$upcoming_work" "$makefile" "$quality_guard" "$workflow"
+for file in "$doc" "$status" "$refined_doc" "$refined_status" "$refined_guard" "$refined_workflow" "$verifier" "$status_index" "$docs_hub" "$root_readme" "$root_status" "$current_status" "$current_direction" "$upcoming_work" "$makefile" "$quality_guard" "$workflow"
 do
   require_file "$file"
 done
@@ -52,6 +56,19 @@ do
   require_contains 'higgs_checkmate_claimed=0' "$file"
   require_contains 'simulation_proven=0' "$file"
   require_contains 'scientific_claim_promoted=0' "$file"
+done
+
+for file in "$refined_doc" "$refined_status"
+do
+  require_contains 'latticra_identity_replay_model3_refined_preregistration_present=1' "$file"
+  require_contains 'refined_model3_law_id=model3-refined-sector-resolved-topological-charge' "$file"
+  require_contains 'refined_model3_prediction_runner_authorized=0' "$file"
+  require_contains 'target_ratios_used_in_law=0' "$file"
+  require_contains 'particle_name_to_sector_mapping_used=0' "$file"
+  require_contains 'single_global_amplifier_used=0' "$file"
+  require_contains 'mass_ratio_recovery_claimed=0' "$file"
+  require_contains 'higgs_checkmate_claimed=0' "$file"
+  require_contains 'simulation_proven=0' "$file"
 done
 
 for pattern in \
@@ -81,7 +98,8 @@ for pattern in \
   'scripts/test-latticra-identity-replay-model2-prediction-failure-analysis.sh' \
   'scripts/test-latticra-identity-replay-model3-topological-amplification-preregistration.sh' \
   'scripts/test-latticra-identity-replay-model3-prediction-runner.sh' \
-  'scripts/test-latticra-identity-replay-model3-rejection-analysis.sh'
+  'scripts/test-latticra-identity-replay-model3-rejection-analysis.sh' \
+  'scripts/test-latticra-identity-replay-model3-refined-preregistration.sh'
 do
   require_contains "$pattern" "$verifier"
 done
@@ -91,6 +109,7 @@ trap 'rm -rf "$tmp_dir"' EXIT INT HUP TERM
 sh "$verifier" > "$tmp_dir/verifier.out"
 require_contains 'latticra_higgs_chain_verifier: ok' "$tmp_dir/verifier.out"
 require_contains 'verify_higgs_chain:model3_rejection_analysis: ok' "$tmp_dir/verifier.out"
+require_contains 'verify_higgs_chain:model3_refined_preregistration: ok' "$tmp_dir/verifier.out"
 
 require_contains 'LATTICRA_HIGGS_CHALLENGE_ONE_PAGE_STATUS.md' "$status_index"
 require_contains 'Higgs Challenge One Page' "$docs_hub"
@@ -106,7 +125,10 @@ require_contains 'sh ./scripts/test-latticra-higgs-chain-verifier.sh' "$makefile
 require_contains 'verify-higgs-chain:' "$quality_guard"
 require_contains 'latticra-higgs-chain-verifier:' "$quality_guard"
 require_contains 'Run Latticra Higgs chain verifier guard' "$workflow"
+require_contains 'Run Latticra identity-replay Model-3 refined preregistration guard' "$refined_workflow"
 require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$workflow"
 require_contains 'persist-credentials: false' "$workflow"
+require_contains 'uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' "$refined_workflow"
+require_contains 'persist-credentials: false' "$refined_workflow"
 
 printf 'latticra_higgs_chain_verifier_guard: ok\n'
