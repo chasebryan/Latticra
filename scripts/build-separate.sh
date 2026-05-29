@@ -37,6 +37,16 @@ LOG_FILE="$BUILD_DIR/build.log"
 # Current platform checkpoint version (evidence-bound development milestone)
 LATTICRA_PLATFORM_CHECKPOINT="v0.3.0edge"
 
+# Build profile for this run.
+# "report-only" = current safe foundation mode (default for now)
+# "effect-enabled" = produces binaries capable of real gated effects (Phase 1+)
+BUILD_PROFILE="${BUILD_PROFILE:-report-only}"
+
+if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
+    log "WARNING: Building in EFFECT-ENABLED mode. Real system effects may be possible."
+    log "         This is experimental. Use with extreme caution."
+fi
+
 mkdir -p "$BIN_DIR" "$OBJ_DIR"
 
 log() {
@@ -66,6 +76,7 @@ generate_foundation_health_report() {
     {
         echo "LATTICRA FOUNDATION HEALTH REPORT"
         echo "Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT"
+        echo "Build Profile: $BUILD_PROFILE"
         echo "Generated: $(date)"
         echo "Build tree: $BUILD_DIR (completely isolated)"
         echo ""
@@ -145,6 +156,7 @@ generate_dashboard() {
         echo ""
         echo "Generated: $(date)"
         echo "Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT"
+        echo "Build Profile: $BUILD_PROFILE"
         echo "Mode: Isolated development platform (build-separate/)"
         echo "Philosophy: Evidence-bound • No-effect • Denied-by-default"
         echo ""
@@ -158,6 +170,7 @@ generate_dashboard() {
         echo "  • Runtime Boundary Domain Matrix with advanced queries"
         echo "  • Rich artifact generation + provenance (hashes, inventories)"
         echo "  • Q-Seal (Post-Quantum) posture as core next-gen priority (ML-DSA/ML-KEM planned)"
+        echo "  • Effect Substrate Layer: early scaffolding (moving beyond report-only)"
         echo ""
         echo "────────────────────────────────────────────────────────────"
         echo " LATEST PLATFORM RUN ARTIFACTS"
@@ -193,6 +206,7 @@ generate_q_seal_report() {
     cat > "$QSEAL_DIR/Q-SEAL_POSTURE_REPORT.txt" <<QSEAL
 LATTICRA Q-SEAL (POST-QUANTUM) POSTURE REPORT
 Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT
+Build Profile: $BUILD_PROFILE
 Generated: $(date)
 Source: Isolated build-separate/ platform run
 
@@ -285,7 +299,7 @@ build_cli() {
 }
 
 build_seal() {
-    log "Building Latticra Seal CLI (may require OpenSSL dev files) ..."
+    log "Building Latticra Seal CLI (may require OpenSSL dev files) [profile=$BUILD_PROFILE] ..."
     detect_openssl
 
     # Match the current main Makefile seal-cli target as closely as possible
@@ -307,6 +321,21 @@ build_seal() {
         log "  - Ensure detect_openssl() is finding the right paths"
         log "  - Try: make seal-cli   (uses the main Makefile which is usually more up-to-date)"
     fi
+}
+
+# Future: Build an effect-capable variant of core tools.
+# For now this is mostly a placeholder that can be expanded in Phase 1.
+build_effect_enabled_tools() {
+    if [ "$BUILD_PROFILE" != "effect-enabled" ]; then
+        log "Skipping effect-enabled tool build (current profile is report-only)."
+        return 0
+    fi
+
+    log "Building EFFECT-ENABLED tools (experimental)..."
+    # TODO: In future this will link against the real effect_dispatcher
+    # and produce binaries that can actually perform gated mutations.
+    build_seal
+    log "Effect-enabled tool build placeholder complete."
 }
 
 build_core_tests() {
@@ -560,6 +589,7 @@ main() {
             log "Heavy test compilation is skipped here (use the dedicated scripts/test-*.sh instead)."
             build_cli
             build_seal || true
+            build_effect_enabled_tools
             build_core_tests
             build_visual_engines
 

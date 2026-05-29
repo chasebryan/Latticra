@@ -2028,6 +2028,16 @@ build-separate-platform:
 build-separate-demo:
 	sh ./scripts/build-separate.sh demo
 
+# Effect-enabled builds (experimental - Phase 1+)
+# Usage: make build-separate-platform-effect BUILD_PROFILE=effect-enabled
+.PHONY: build-separate-platform-effect
+build-separate-platform-effect:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh platform
+
+.PHONY: build-separate-effect-tools
+build-separate-effect-tools:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh build_effect_enabled_tools 2>/dev/null || true
+
 build-separate-full-validate:
 	sh ./scripts/build-separate.sh full-validate
 
