@@ -64,7 +64,7 @@ The [computational math and physics evaluation](docs/LATTICRA_COMPUTATIONAL_MATH
 
 The [Speculum premise](docs/LATTICRA_SPECULUM_PREMISE.md) now names the clarifying mirror beside the simulacrum so simulation-bound reality language remains a bounded research premise, not a public reality claim.
 
-The proof-object lane now includes [Proof Object 1](docs/LATTICRA_PROOF_OBJECT_1_EMERGENT_PARTICLE_MASS.md), [Proof Object 2](docs/LATTICRA_PROOF_OBJECT_2_HIGGS_COUNTERPLAY.md), [Proof Object 3](docs/LATTICRA_PROOF_OBJECT_3_HIGGS_CAUSAL_CLOSURE_NO_GO.md), [Proof Object 4](docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md), and the [Candidate Particle Table](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md). The original Latticra claim is identity-replay impedance: mass as the replay-stable cost for a projected localized identity to remain itself under substrate update, with Higgs treated as effective physics that a deeper substrate ledger must reproduce.
+The proof-object lane now includes [Proof Object 1](docs/LATTICRA_PROOF_OBJECT_1_EMERGENT_PARTICLE_MASS.md), [Proof Object 2](docs/LATTICRA_PROOF_OBJECT_2_HIGGS_COUNTERPLAY.md), [Proof Object 3](docs/LATTICRA_PROOF_OBJECT_3_HIGGS_CAUSAL_CLOSURE_NO_GO.md), [Proof Object 4](docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md), the [Candidate Particle Table](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md), and the [L0 Mass-Ratio Runner](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_TOY_SUBSTRATE_L0_MASS_RATIO_RUNNER.md). The original Latticra claim is identity-replay impedance: mass as the replay-stable cost for a projected localized identity to remain itself under substrate update, with Higgs treated as effective physics that a deeper substrate ledger must reproduce.
 
 For `v0.4.0edge`, the README integration posture is:
 
@@ -300,6 +300,7 @@ The latest estimate hold review is [`docs/status/COMPLETION_ESTIMATE_REVIEW_AFTE
 | Follow the math-first physics coupling lane | [Computational Math and Physics Evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) |
 | Read the original mass-origin theorem | [Proof Object 4](docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md) |
 | Review the mass-ratio target table | [Candidate Particle Table](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md) |
+| Run the toy substrate falsifier | [L0 Mass-Ratio Runner](docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_TOY_SUBSTRATE_L0_MASS_RATIO_RUNNER.md) |
 | Review Higgs counterplay | [Proof Object 2](docs/LATTICRA_PROOF_OBJECT_2_HIGGS_COUNTERPLAY.md) and [Proof Object 3](docs/LATTICRA_PROOF_OBJECT_3_HIGGS_CAUSAL_CLOSURE_NO_GO.md) |
 | Clarify the simulation premise | [Speculum Premise](docs/LATTICRA_SPECULUM_PREMISE.md) |
 | Review the main evidence and architecture index | [Foundation Index](docs/FOUNDATION_INDEX.md) |

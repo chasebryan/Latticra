@@ -183,6 +183,14 @@ latticra_identity_replay_impedance_candidate_particle_table: ok
 Identity-replay impedance toy substrate L0 mass-ratio runner.
 ```
 
+The guarded executable handoff is:
+
+```text
+Toy Substrate L0 Mass-Ratio Runner.
+```
+
+The L0 runner must compute toy `Z_L` ratios, emit a receipt hash, compare against this target table, and preserve `mass_ratio_recovery_claimed=0` unless the target vector is recovered without measured-mass insertion.
+
 ## Non-Claims
 
 This table is not a Latticra mass computation, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

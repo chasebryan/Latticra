@@ -18,6 +18,8 @@ Proof Object 1, Proof Object 2, Proof Object 3, and Proof Object 4 now define th
 
 The candidate-particle target table now gives that theorem a measured target surface: electron, muon, tau, W, Z, Higgs, and top mass ratios that a later identity-replay impedance runner must derive from replay receipts and counterfactual repair costs without inserting measured masses into the substrate.
 
+The L0 mass-ratio runner now makes the target surface executable: it computes toy `Z_L` ratios, emits a receipt hash, compares against the target table, and records non-survival instead of overstating proof. That turns the Higgs counterplay lane into a falsifiable runner path rather than a purely rhetorical argument.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

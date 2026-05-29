@@ -20,6 +20,7 @@ Latest Latticra proof object 2 Higgs counterplay note: 2026-05-29 CDT
 Latest Latticra proof object 3 Higgs causal closure no-go note: 2026-05-29 CDT
 Latest Latticra proof object 4 identity-replay impedance note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance candidate particle table note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L0 mass-ratio runner note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3037,6 +3038,8 @@ Proof Object 4 now records the original Latticra mass-origin formalism: identity
 
 The identity-replay impedance candidate particle table now records measured PDG 2025 update mass-ratio targets for electron, muon, tau, W, Z, Higgs, and top candidate identity classes while keeping `ledger_computation_performed=0`, `mass_ratio_recovery_claimed=0`, `standard_model_replacement_claimed=0`, and `simulation_proven=0`.
 
+The identity-replay impedance toy substrate L0 mass-ratio runner now executes a deterministic falsifier harness, computes toy `Z_L` ratios, emits a receipt hash, compares against the target table, and records `candidate_survives_target_table=0` while preserving `mass_ratio_recovery_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3049,10 +3052,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance candidate particle table.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance toy substrate L0 mass-ratio runner.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance L1 constrained substrate search.
 ```
 
 Follow-on proof lanes:
