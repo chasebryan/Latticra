@@ -77,6 +77,8 @@ The careful public meaning is:
 Model-3 was useful because it failed specifically: global topological amplification improved range but did not recover sector placement or identity ordering. The next candidate must be pre-registered as a target-blind sector-resolved topological charge law with family monotonicity.
 ```
 
+The follow-on [Refined Model-3 Pre-Registration](../LATTICRA_IDENTITY_REPLAY_MODEL3_REFINED_PREREGISTRATION.md) is the refined Model-3 sector-resolved topological charge pre-registration that records that law shape without target loading, refined predictions, mass recovery, or Higgs checkmate.
+
 ## Guard Validation
 
 This status record is guarded by:

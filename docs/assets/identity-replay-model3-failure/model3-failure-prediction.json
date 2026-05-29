@@ -1,0 +1,6755 @@
+{
+  "Z_L_estimates": {
+    "I_H": "22400",
+    "I_W": "47309184",
+    "I_Z": "35190",
+    "I_e": "77220",
+    "I_gluon": "0",
+    "I_mu": "1551312",
+    "I_photon": "0",
+    "I_tau": "1043280",
+    "I_top": "1381746600"
+  },
+  "active_scale_product_cost_emitted": 1,
+  "candidate_promoted": 0,
+  "candidate_substrate_id": "identity-replay-model3-topological-amplification-substrate",
+  "candidate_substrate_version": 1,
+  "control_Z_L_estimates": {
+    "gluon": "0",
+    "photon": "0"
+  },
+  "counterfactual_repair_search_performed": 1,
+  "epsilon_identity_tolerance": 0,
+  "gluon_zero_rest_mass_control_present": 1,
+  "gluon_zero_rest_mass_control_survives": 1,
+  "higgs_checkmate_claimed": 0,
+  "higgs_denied": 0,
+  "higgs_only_causal_closure_challenged": 1,
+  "identity_patterns_generated_from_substrate": 1,
+  "kappa_trace_emitted": 1,
+  "latticra_identity_replay_model3_prediction_runner_present": 1,
+  "mass_ratio_predictions": {
+    "Higgs boson": "0.29008029008029008029008029008029008029008029008029008029008029008029008029008029",
+    "W boson": "612.65454545454545454545454545454545454545454545454545454545454545454545454545455",
+    "Z boson": "0.45571095571095571095571095571095571095571095571095571095571095571095571095571096",
+    "electron": "1",
+    "muon": "20.08951048951048951048951048951048951048951048951048951048951048951048951048951",
+    "tau": "13.51048951048951048951048951048951048951048951048951048951048951048951048951049",
+    "top quark": "17893.636363636363636363636363636363636363636363636363636363636363636363636363636"
+  },
+  "mass_ratio_predictions_emitted": 1,
+  "mass_ratio_recovery_claimed": 0,
+  "measured_masses_used_in_kappa": 0,
+  "measured_masses_used_in_law": 0,
+  "model3_pre_registration_receipt_hash": "sha256:c0955d5ba59a43ab381d0b33e54c9fd78dd7e803d91523e5d5119d183611a278",
+  "model3_pre_registration_reference": "docs/LATTICRA_IDENTITY_REPLAY_MODEL3_TOPOLOGICAL_AMPLIFICATION_PREREGISTRATION.md",
+  "model3_prediction_receipt_hash": "sha256:00c4c1df1d4ba2f79f475d1d5e7a7cedb5fb61b459b401c21ba129aafb415e3a",
+  "model3_prediction_receipt_hash_generated": 1,
+  "model3_topological_amplification_present": 1,
+  "negative_controls_present": 1,
+  "non_claims": [
+    "not_a_standard_model_replacement",
+    "not_a_higgs_denial",
+    "not_simulation_proof",
+    "not_mass_ratio_recovery",
+    "not_final_checkmate",
+    "not_target_table_evaluation"
+  ],
+  "parameter_count": 6,
+  "parameter_count_less_than_target_count": 0,
+  "particle_features_hand_declared": 0,
+  "photon_zero_rest_mass_control_present": 1,
+  "photon_zero_rest_mass_control_survives": 1,
+  "physics_bound_by_simulative_concepts_claimed": 0,
+  "prediction_dynamic_range": "61685.116071428571428571428571428571428571428571428571428571428571428571428571427",
+  "prediction_law_id": "model3-target-blind-topological-replay-amplification",
+  "prediction_mode": "predict_only",
+  "prediction_receipt_emitted_before_target_load": 1,
+  "prediction_runner_id": "latticra-identity-replay-model3-prediction-runner",
+  "prediction_runner_version": 1,
+  "proof_object_reference": "docs/LATTICRA_PROOF_OBJECT_4_IDENTITY_REPLAY_IMPEDANCE.md",
+  "reality_simulation_claimed": 0,
+  "replay_horizon_N": 16,
+  "replay_results": [
+    {
+      "Z_L": "77220",
+      "active_scale_means": [
+        "22",
+        "15",
+        "13",
+        "6"
+      ],
+      "base_model2_Z_L": "25740",
+      "identity": "I_e",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "22",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "22"
+          },
+          "kappa_mean": "22",
+          "kappa_trace": [
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 22,
+              "raw_distance_to_expected_identity": 22,
+              "repair_operation_count": 13,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "15",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "15"
+          },
+          "kappa_mean": "15",
+          "kappa_trace": [
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "13",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "13"
+          },
+          "kappa_mean": "13",
+          "kappa_trace": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            -1,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "6",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "6"
+          },
+          "kappa_mean": "6",
+          "kappa_trace": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "electron",
+      "topological_multiplier": "3",
+      "topological_trace": {
+        "branch_turns": 3,
+        "coalescence_turns": 8,
+        "instability_exponent": 1,
+        "inversion_turns": 3,
+        "topological_multiplier": "3",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "1551312",
+      "active_scale_means": [
+        "14",
+        "27",
+        "19",
+        "24"
+      ],
+      "base_model2_Z_L": "172368",
+      "identity": "I_mu",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            0,
+            2,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "14",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "14"
+          },
+          "kappa_mean": "14",
+          "kappa_trace": [
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            -1,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "27",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "27"
+          },
+          "kappa_mean": "27",
+          "kappa_trace": [
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27,
+            27
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 27,
+              "raw_distance_to_expected_identity": 27,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            0,
+            0,
+            2,
+            2,
+            2
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            2,
+            0,
+            0,
+            2,
+            2,
+            2,
+            -1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "19",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "19"
+          },
+          "kappa_mean": "19",
+          "kappa_trace": [
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19,
+            19
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 19,
+              "raw_distance_to_expected_identity": 19,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            -1,
+            2,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            -1,
+            2,
+            -1,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "24",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "24"
+          },
+          "kappa_mean": "24",
+          "kappa_trace": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "muon",
+      "topological_multiplier": "9",
+      "topological_trace": {
+        "branch_turns": 4,
+        "coalescence_turns": 9,
+        "instability_exponent": 2,
+        "inversion_turns": 2,
+        "topological_multiplier": "9",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "1043280",
+      "active_scale_means": [
+        "23",
+        "21",
+        "10",
+        "8"
+      ],
+      "base_model2_Z_L": "38640",
+      "identity": "I_tau",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "kappa_confidence_window": {
+            "lower": "23",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "23"
+          },
+          "kappa_mean": "23",
+          "kappa_trace": [
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 12,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            2
+          ],
+          "kappa_confidence_window": {
+            "lower": "21",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "21"
+          },
+          "kappa_mean": "21",
+          "kappa_trace": [
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 21,
+              "raw_distance_to_expected_identity": 21,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "10",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "10"
+          },
+          "kappa_mean": "10",
+          "kappa_trace": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            -1
+          ],
+          "kappa_confidence_window": {
+            "lower": "8",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "8"
+          },
+          "kappa_mean": "8",
+          "kappa_trace": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 8,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "tau",
+      "topological_multiplier": "27",
+      "topological_trace": {
+        "branch_turns": 8,
+        "coalescence_turns": 11,
+        "instability_exponent": 3,
+        "inversion_turns": 10,
+        "topological_multiplier": "27",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "47309184",
+      "active_scale_means": [
+        "13",
+        "13",
+        "16",
+        "24"
+      ],
+      "base_model2_Z_L": "64896",
+      "identity": "I_W",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "13",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "13"
+          },
+          "kappa_mean": "13",
+          "kappa_trace": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            -1,
+            0,
+            -1,
+            0
+          ],
+          "generated_pattern": [
+            2,
+            -1,
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "13",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "13"
+          },
+          "kappa_mean": "13",
+          "kappa_trace": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            -1,
+            2,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            -1,
+            2,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2
+          ],
+          "kappa_confidence_window": {
+            "lower": "16",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "16"
+          },
+          "kappa_mean": "16",
+          "kappa_trace": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 16,
+              "raw_distance_to_expected_identity": 16,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            -1,
+            -1
+          ],
+          "kappa_confidence_window": {
+            "lower": "24",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "24"
+          },
+          "kappa_mean": "24",
+          "kappa_trace": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 24,
+              "raw_distance_to_expected_identity": 24,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "W boson",
+      "topological_multiplier": "729",
+      "topological_trace": {
+        "branch_turns": 3,
+        "coalescence_turns": 0,
+        "instability_exponent": 6,
+        "inversion_turns": 3,
+        "topological_multiplier": "729",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "35190",
+      "active_scale_means": [
+        "6",
+        "23",
+        "5",
+        "17"
+      ],
+      "base_model2_Z_L": "11730",
+      "identity": "I_Z",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "6",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "6"
+          },
+          "kappa_mean": "6",
+          "kappa_trace": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 6,
+              "raw_distance_to_expected_identity": 6,
+              "repair_operation_count": 5,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2
+          ],
+          "generated_pattern": [
+            2,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2
+          ],
+          "kappa_confidence_window": {
+            "lower": "23",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "23"
+          },
+          "kappa_mean": "23",
+          "kappa_trace": [
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 23,
+              "raw_distance_to_expected_identity": 23,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "5",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "5"
+          },
+          "kappa_mean": "5",
+          "kappa_trace": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 5,
+              "raw_distance_to_expected_identity": 5,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "17",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "17"
+          },
+          "kappa_mean": "17",
+          "kappa_trace": [
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17,
+            17
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 17,
+              "raw_distance_to_expected_identity": 17,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "Z boson",
+      "topological_multiplier": "3",
+      "topological_trace": {
+        "branch_turns": 3,
+        "coalescence_turns": 8,
+        "instability_exponent": 1,
+        "inversion_turns": 3,
+        "topological_multiplier": "3",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "22400",
+      "active_scale_means": [
+        "10",
+        "14",
+        "8",
+        "20"
+      ],
+      "base_model2_Z_L": "22400",
+      "identity": "I_H",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "10",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "10"
+          },
+          "kappa_mean": "10",
+          "kappa_trace": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "14",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "14"
+          },
+          "kappa_mean": "14",
+          "kappa_trace": [
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 14,
+              "raw_distance_to_expected_identity": 14,
+              "repair_operation_count": 9,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            2,
+            2,
+            -1,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            2,
+            2,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            -1,
+            0,
+            0,
+            -1
+          ],
+          "kappa_confidence_window": {
+            "lower": "8",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "8"
+          },
+          "kappa_mean": "8",
+          "kappa_trace": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 8,
+              "raw_distance_to_expected_identity": 8,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            2,
+            0,
+            2,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "20",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "20"
+          },
+          "kappa_mean": "20",
+          "kappa_trace": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 20,
+              "raw_distance_to_expected_identity": 20,
+              "repair_operation_count": 14,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "Higgs boson",
+      "topological_multiplier": "1",
+      "topological_trace": {
+        "branch_turns": 6,
+        "coalescence_turns": 6,
+        "instability_exponent": 0,
+        "inversion_turns": 1,
+        "topological_multiplier": "1",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "1381746600",
+      "active_scale_means": [
+        "10",
+        "4",
+        "13",
+        "15"
+      ],
+      "base_model2_Z_L": "7800",
+      "identity": "I_top",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "kappa_confidence_window": {
+            "lower": "10",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "10"
+          },
+          "kappa_mean": "10",
+          "kappa_trace": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 10,
+              "raw_distance_to_expected_identity": 10,
+              "repair_operation_count": 7,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "4",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "4"
+          },
+          "kappa_mean": "4",
+          "kappa_trace": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 4,
+              "raw_distance_to_expected_identity": 4,
+              "repair_operation_count": 4,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "13",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "13"
+          },
+          "kappa_mean": "13",
+          "kappa_trace": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 13,
+              "raw_distance_to_expected_identity": 13,
+              "repair_operation_count": 10,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            -1,
+            -1,
+            0,
+            0,
+            -1,
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            0,
+            -1,
+            0
+          ],
+          "generated_pattern": [
+            2,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            -1,
+            2,
+            0,
+            -1,
+            0,
+            -1,
+            -1,
+            0,
+            0,
+            -1
+          ],
+          "kappa_confidence_window": {
+            "lower": "15",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "15"
+          },
+          "kappa_mean": "15",
+          "kappa_trace": [
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 15,
+              "raw_distance_to_expected_identity": 15,
+              "repair_operation_count": 11,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_amplified_massive",
+      "target": "top quark",
+      "topological_multiplier": "177147",
+      "topological_trace": {
+        "branch_turns": 3,
+        "coalescence_turns": 5,
+        "instability_exponent": 11,
+        "inversion_turns": 3,
+        "topological_multiplier": "177147",
+        "trace_rule": "sha256(identity) branch/coalescence/inversion turns modulo depth"
+      },
+      "zero_rest_mass_control": 0
+    },
+    {
+      "Z_L": "0",
+      "active_scale_means": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "base_model2_Z_L": "0",
+      "identity": "I_photon",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "generated_pattern": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_control_zero_state",
+      "target": "photon",
+      "topological_multiplier": "0",
+      "topological_trace": {
+        "branch_turns": 0,
+        "coalescence_turns": 0,
+        "instability_exponent": 0,
+        "inversion_turns": 0,
+        "topological_multiplier": "0",
+        "trace_rule": "zero-rest-mass controls do not activate topology branches"
+      },
+      "zero_rest_mass_control": 1
+    },
+    {
+      "Z_L": "0",
+      "active_scale_means": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "base_model2_Z_L": "0",
+      "identity": "I_gluon",
+      "scale_results": [
+        {
+          "expected_identity_quotient": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "generated_pattern": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "local_identity",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "generated_pattern": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "family_replay",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "generated_pattern": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "electroweak_projection",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        },
+        {
+          "expected_identity_quotient": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "generated_pattern": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "kappa_confidence_window": {
+            "lower": "0",
+            "method": "deterministic first-half/second-half mean window",
+            "upper": "0"
+          },
+          "kappa_mean": "0",
+          "kappa_trace": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "heavy_sector_closure",
+          "trace": [
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 1
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 2
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 3
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 4
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 5
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 6
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 7
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 8
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 9
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 10
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 11
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 12
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 13
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 14
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 15
+            },
+            {
+              "kappa_n": 0,
+              "raw_distance_to_expected_identity": 0,
+              "repair_operation_count": 0,
+              "replay_stable_after_repair": 1,
+              "step": 16
+            }
+          ]
+        }
+      ],
+      "seed_kind": "topological_control_uniform_state",
+      "target": "gluon",
+      "topological_multiplier": "0",
+      "topological_trace": {
+        "branch_turns": 0,
+        "coalescence_turns": 0,
+        "instability_exponent": 0,
+        "inversion_turns": 0,
+        "topological_multiplier": "0",
+        "trace_rule": "zero-rest-mass controls do not activate topology branches"
+      },
+      "zero_rest_mass_control": 1
+    }
+  ],
+  "scientific_claim_promoted": 0,
+  "simulation_proven": 0,
+  "standard_model_replacement_claimed": 0,
+  "target_comparison_performed": 0,
+  "target_count_loaded": 0,
+  "target_ratios_used_in_law": 0,
+  "target_table_loaded": 0,
+  "target_table_reference": "docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md",
+  "topological_amplification_trace_emitted": 1,
+  "topological_branching_factor": 3,
+  "topological_replay_depth": 12
+}

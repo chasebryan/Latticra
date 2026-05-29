@@ -28,5 +28,7 @@ run_guard model2_failure_analysis scripts/test-latticra-identity-replay-model2-p
 run_guard model3_preregistration scripts/test-latticra-identity-replay-model3-topological-amplification-preregistration.sh
 run_guard model3_prediction scripts/test-latticra-identity-replay-model3-prediction-runner.sh
 run_guard model3_rejection_analysis scripts/test-latticra-identity-replay-model3-rejection-analysis.sh
+run_guard model3_failure_visual_suite scripts/test-latticra-identity-replay-model3-failure-visual-suite.sh
+run_guard refined_model3_preregistration scripts/test-latticra-identity-replay-model3-refined-preregistration.sh
 
 printf 'latticra_higgs_chain_verifier: ok\n'

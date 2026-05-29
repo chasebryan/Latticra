@@ -10,6 +10,8 @@ The first Model-3 prediction runner gave a useful negative result. It improved d
 
 This artifact explains why it failed and what a refined Model-3 law must add before a new prediction runner is allowed.
 
+The [Model-3 Failure Visual Suite](LATTICRA_IDENTITY_REPLAY_MODEL3_FAILURE_VISUAL_SUITE.md) renders this rejection as static SVG ratio, ordering, and sector-placement charts from the same receipted prediction/evaluation/analysis path.
+
 The failure is not evidence against the Higgs mechanism and not evidence that Latticra has proved mass recovery. It is a stricter engineering constraint:
 
 ```text
@@ -144,6 +146,10 @@ The current conclusion is:
 ```text
 Model-3 is useful but not sufficient: it must be refined into a target-blind sector-resolved topological charge law with family monotonicity before another prediction run.
 ```
+
+## Refined Model-3 Pre-Registration
+
+The immediate follow-on lane is now guarded as [Refined Model-3 Pre-Registration](LATTICRA_IDENTITY_REPLAY_MODEL3_REFINED_PREREGISTRATION.md). It records the refined Model-3 sector-resolved topological charge pre-registration before target loading while keeping refined prediction and mass recovery closed.
 
 ## Invocation
 

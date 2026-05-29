@@ -35,6 +35,8 @@ Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 rejection analysis note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-3 failure visual suite note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-3 refined pre-registration note: 2026-05-29 CDT
 Latest Latticra Higgs challenge one-page verifier note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
@@ -799,7 +801,11 @@ The identity-replay Model-3 prediction runner now emits topological amplificatio
 
 The identity-replay Model-3 rejection analysis now records why the first topological amplification law failed: the dynamic range is still short by `5.4744404767584652275663280083338001338306169886721631882430541171586743908036395`, the predicted identity order is wrong, Higgs and Z fall below electron-scale impedance, and a single global amplifier is insufficient. It records `required_refined_model3_property=target_blind_sector_resolved_topological_charge_with_family_monotonicity`, `refined_model3_preregistration_authorized=1`, `refined_model3_prediction_runner_authorized=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
-The Higgs challenge one-page verifier now gives outsiders a concise public entrypoint plus `make verify-higgs-chain`, a single command that runs the guarded Proof Object 2/3/4 through Model-3 rejection-analysis chain. It records `single_command_reproduction_present=1`, `current_best_failure=Model-3 rejection analysis`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
+The identity-replay Model-3 failure visual suite now renders static SVG charts from the receipted Model-3 prediction, evaluation, and rejection-analysis path. It records `ordering_mismatch_visualized=1`, `sector_placement_failure_visualized=1`, `model3_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
+The identity-replay refined Model-3 pre-registration now locks the sector-resolved topological charge law shape before refined target loading or prediction. It records `target_table_loaded=0`, `target_comparison_performed=0`, `mass_ratio_predictions_emitted=0`, `refined_model3_capacity_gate_required_before_prediction=1`, `refined_model3_prediction_runner_authorized=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
+The Higgs challenge one-page verifier now gives outsiders a concise public entrypoint plus `make verify-higgs-chain`, a single command that runs the guarded Proof Object 2/3/4 through Model-3 rejection analysis and refined pre-registration. It records `single_command_reproduction_present=1`, `current_best_failure=Model-3 rejection analysis`, `refined_model3_preregistration_present=1`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
 
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
@@ -901,10 +907,22 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-3 rejection analysis and amplification-law refinement.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-3 failure visual suite.
+```
+
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance refined Model-3 sector-resolved topological charge pre-registration.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance refined Model-3 target-blind capacity gate.
 ```
 
 Follow-on proof lanes:

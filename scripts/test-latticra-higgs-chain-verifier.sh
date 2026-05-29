@@ -46,6 +46,8 @@ do
   require_contains 'current_best_failure=Model-3 rejection analysis' "$file"
   require_contains 'model3_prediction_law_rejected=1' "$file"
   require_contains 'required_refined_model3_property=target_blind_sector_resolved_topological_charge_with_family_monotonicity' "$file"
+  require_contains 'refined_model3_preregistration_present=1' "$file"
+  require_contains 'refined_model3_prediction_runner_authorized=0' "$file"
   require_contains 'mass_ratio_recovery_claimed=0' "$file"
   require_contains 'standard_model_replacement_claimed=0' "$file"
   require_contains 'higgs_denied=0' "$file"
@@ -81,7 +83,9 @@ for pattern in \
   'scripts/test-latticra-identity-replay-model2-prediction-failure-analysis.sh' \
   'scripts/test-latticra-identity-replay-model3-topological-amplification-preregistration.sh' \
   'scripts/test-latticra-identity-replay-model3-prediction-runner.sh' \
-  'scripts/test-latticra-identity-replay-model3-rejection-analysis.sh'
+  'scripts/test-latticra-identity-replay-model3-rejection-analysis.sh' \
+  'scripts/test-latticra-identity-replay-model3-refined-preregistration.sh' \
+  'scripts/test-latticra-identity-replay-model3-failure-visual-suite.sh'
 do
   require_contains "$pattern" "$verifier"
 done
@@ -91,6 +95,8 @@ trap 'rm -rf "$tmp_dir"' EXIT INT HUP TERM
 sh "$verifier" > "$tmp_dir/verifier.out"
 require_contains 'latticra_higgs_chain_verifier: ok' "$tmp_dir/verifier.out"
 require_contains 'verify_higgs_chain:model3_rejection_analysis: ok' "$tmp_dir/verifier.out"
+require_contains 'verify_higgs_chain:refined_model3_preregistration: ok' "$tmp_dir/verifier.out"
+require_contains 'verify_higgs_chain:model3_failure_visual_suite: ok' "$tmp_dir/verifier.out"
 
 require_contains 'LATTICRA_HIGGS_CHALLENGE_ONE_PAGE_STATUS.md' "$status_index"
 require_contains 'Higgs Challenge One Page' "$docs_hub"

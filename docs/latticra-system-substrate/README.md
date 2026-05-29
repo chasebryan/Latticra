@@ -46,6 +46,10 @@ The Model-3 prediction runner now executes that authorized prediction split. It 
 
 The Model-3 rejection analysis now makes the failure useful: range improved, but Higgs and Z landed below electron-scale impedance and the lepton family order stayed inverted. The next proof step is not another broad claim; it is a refined target-blind sector-resolved topological charge pre-registration.
 
+The Model-3 failure visual suite now renders that rejection as static SVG ratio, ordering, and sector-placement charts from the receipted Model-3 path. The visuals make the failure inspectable without claiming mass recovery, Higgs checkmate, or simulation proof.
+
+The refined Model-3 sector-resolved topological charge pre-registration now records the target-blind law shape before any refined target load or prediction. It keeps refined prediction, mass recovery, Higgs checkmate, and simulation proof closed while requiring the next artifact to pass a capacity gate before it can emit predictions.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

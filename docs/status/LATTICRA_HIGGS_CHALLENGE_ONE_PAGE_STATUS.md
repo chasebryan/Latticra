@@ -41,9 +41,13 @@ model2_failure_analysis_guard_run=1
 model3_preregistration_guard_run=1
 model3_prediction_guard_run=1
 model3_rejection_analysis_guard_run=1
+refined_model3_preregistration_guard_run=1
+model3_failure_visual_suite_guard_run=1
 current_best_failure=Model-3 rejection analysis
 model3_prediction_law_rejected=1
 required_refined_model3_property=target_blind_sector_resolved_topological_charge_with_family_monotonicity
+refined_model3_preregistration_present=1
+refined_model3_prediction_runner_authorized=0
 candidate_failures_recorded=1
 mass_ratio_recovery_claimed=0
 standard_model_replacement_claimed=0
@@ -61,7 +65,7 @@ scientific_claim_promoted=0
 The careful public meaning is:
 
 ```text
-Latticra now has a five-minute public entrypoint and a single-command reproduction path for the Higgs causal-closure challenge. The current result is still a guarded failure, not a Higgs defeat.
+Latticra now has a five-minute public entrypoint and a single-command reproduction path for the Higgs causal-closure challenge. The current result is still a guarded failure plus a pre-registered refined law shape, not a Higgs defeat.
 ```
 
 ## Guard Validation
@@ -81,7 +85,7 @@ latticra_higgs_chain_verifier_guard: ok
 ## Next Recommended Lane
 
 ```text
-Identity-replay impedance refined Model-3 sector-resolved topological charge pre-registration.
+Identity-replay impedance refined Model-3 target-blind capacity gate.
 ```
 
 ## Non-Claims

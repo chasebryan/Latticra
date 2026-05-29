@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+<rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#f7f8fb" stroke="none" opacity="1.000" />
+<text x="64.0" y="58.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="30" font-weight="700" text-anchor="start" fill="#17202a">Model-3 Failure: Predicted vs Target Mass Ratios</text>
+<text x="64.0" y="92.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#53606f">Log10 electron-normalized ratio. Prediction receipt is emitted before target load.</text>
+<rect x="120.0" y="130.0" width="1040.0" height="430.0" rx="6.0" fill="#ffffff" stroke="#d8dee8" opacity="1.000" />
+<line x1="120" y1="560.0" x2="1160" y2="560.0" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="566.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^-1</text>
+<line x1="120" y1="498.6" x2="1160" y2="498.6" stroke="#748295" stroke-width="1" />
+<text x="104.0" y="504.6" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^0</text>
+<line x1="120" y1="437.1" x2="1160" y2="437.1" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="443.1" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^1</text>
+<line x1="120" y1="375.7" x2="1160" y2="375.7" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="381.7" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^2</text>
+<line x1="120" y1="314.3" x2="1160" y2="314.3" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="320.3" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^3</text>
+<line x1="120" y1="252.9" x2="1160" y2="252.9" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="258.9" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^4</text>
+<line x1="120" y1="191.4" x2="1160" y2="191.4" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="197.4" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^5</text>
+<line x1="120" y1="130.0" x2="1160" y2="130.0" stroke="#d9e0ea" stroke-width="1" />
+<text x="104.0" y="136.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="end" fill="#53606f">10^6</text>
+<line x1="194.3" y1="498.6" x2="194.3" y2="498.6" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="194.3" cy="498.6" r="10" fill="#1f7a8c" />
+<circle cx="194.3" cy="498.6" r="10" fill="#d94f45" />
+<text x="194.3" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">electron</text>
+<line x1="342.9" y1="356.3" x2="342.9" y2="418.5" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="342.9" cy="356.3" r="10" fill="#1f7a8c" />
+<circle cx="342.9" cy="418.5" r="10" fill="#d94f45" />
+<text x="342.9" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">muon</text>
+<line x1="491.4" y1="281.0" x2="491.4" y2="429.1" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="491.4" cy="281.0" r="10" fill="#1f7a8c" />
+<circle cx="491.4" cy="429.1" r="10" fill="#d94f45" />
+<text x="491.4" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">tau</text>
+<line x1="640.0" y1="179.3" x2="640.0" y2="327.4" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="640.0" cy="179.3" r="10" fill="#1f7a8c" />
+<circle cx="640.0" cy="327.4" r="10" fill="#d94f45" />
+<text x="640.0" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">W</text>
+<line x1="788.6" y1="176.0" x2="788.6" y2="519.5" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="788.6" cy="176.0" r="10" fill="#1f7a8c" />
+<circle cx="788.6" cy="519.5" r="10" fill="#d94f45" />
+<text x="788.6" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">Z</text>
+<line x1="937.1" y1="167.5" x2="937.1" y2="531.6" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="937.1" cy="167.5" r="10" fill="#1f7a8c" />
+<circle cx="937.1" cy="531.6" r="10" fill="#d94f45" />
+<text x="937.1" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">Higgs</text>
+<line x1="1085.7" y1="159.0" x2="1085.7" y2="237.3" stroke="#aeb8c7" stroke-width="2" />
+<circle cx="1085.7" cy="159.0" r="10" fill="#1f7a8c" />
+<circle cx="1085.7" cy="237.3" r="10" fill="#d94f45" />
+<text x="1085.7" y="602.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#17202a">top</text>
+<rect x="780.0" y="48.0" width="18.0" height="18.0" rx="3.0" fill="#1f7a8c" stroke="none" opacity="1.000" />
+<text x="806.0" y="63.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="600" text-anchor="start" fill="#17202a">target</text>
+<rect x="880.0" y="48.0" width="18.0" height="18.0" rx="3.0" fill="#d94f45" stroke="none" opacity="1.000" />
+<text x="906.0" y="63.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="600" text-anchor="start" fill="#17202a">Model-3 prediction</text>
+<text x="64.0" y="636.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="20" font-weight="700" text-anchor="start" fill="#17202a">Current result: dynamic range improved, but six identities fail the guarded target table.</text>
+<text x="64.0" y="668.0" font-family="Avenir, Inter, Arial, sans-serif" font-size="16" font-weight="500" text-anchor="start" fill="#53606f">Non-claim: this is not Higgs denial, not mass recovery, and not simulation proof.</text>
+</svg>

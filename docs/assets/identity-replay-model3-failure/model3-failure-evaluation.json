@@ -1,0 +1,198 @@
+{
+  "Z_L_estimates": {
+    "I_H": "22400",
+    "I_W": "47309184",
+    "I_Z": "35190",
+    "I_e": "77220",
+    "I_gluon": "0",
+    "I_mu": "1551312",
+    "I_photon": "0",
+    "I_tau": "1043280",
+    "I_top": "1381746600"
+  },
+  "candidate_promoted": 0,
+  "candidate_survives_target_table": 0,
+  "counterfactual_repair_search_performed": 1,
+  "cross_ratio_targets": {
+    "Higgs_over_Z_target": "1.37298767381673027153",
+    "W_over_Z_target": "0.88135719612229679344",
+    "tau_over_muon_target": "16.81769184497825257592",
+    "top_over_Higgs_target": "1.37827476038338658147"
+  },
+  "epsilon_relative": "0.05",
+  "error_vector_against_target_table": [
+    {
+      "absolute_error": "0",
+      "identity": "I_e",
+      "predicted_ratio_to_electron": "1",
+      "relative_error": "0",
+      "survives_epsilon": 1,
+      "target": "electron",
+      "target_ratio_to_electron": "1"
+    },
+    {
+      "absolute_error": "186.67877249815514071951048951048951048951048951048951048951048951048951048951049",
+      "identity": "I_mu",
+      "predicted_ratio_to_electron": "20.08951048951048951048951048951048951048951048951048951048951048951048951048951",
+      "relative_error": "0.90284046373442637158489718394797065323484099342545919361130566691670683476032738",
+      "survives_epsilon": 0,
+      "target": "muon",
+      "target_ratio_to_electron": "206.76828298766563023"
+    },
+    {
+      "absolute_error": "3463.8547770913303171204895104895104895104895104895104895104895104895104895104895",
+      "identity": "I_tau",
+      "predicted_ratio_to_electron": "13.51048951048951048951048951048951048951048951048951048951048951048951048951049",
+      "relative_error": "0.99611473386467325451978297392513181179519309044263065897709532959630542284087588",
+      "survives_epsilon": 0,
+      "target": "tau",
+      "target_ratio_to_electron": "3477.36526660181982761"
+    },
+    {
+      "absolute_error": "156665.94651625018016545454545454545454545454545454545454545454545454545454545455",
+      "identity": "I_W",
+      "predicted_ratio_to_electron": "612.65454545454545454545454545454545454545454545454545454545454545454545454545455",
+      "relative_error": "0.996104654153083519557333380675965539851013054785905161509239515808485892671631",
+      "survives_epsilon": 0,
+      "target": "W boson",
+      "target_ratio_to_electron": "157278.60106170472562"
+    },
+    {
+      "absolute_error": "178450.00881543910844428904428904428904428904428904428904428904428904428904428904",
+      "identity": "I_Z",
+      "predicted_ratio_to_electron": "0.45571095571095571095571095571095571095571095571095571095571095571095571095571096",
+      "relative_error": "0.99999744628876747165337766115009897482355830772551068728938256658486400668221897",
+      "survives_epsilon": 0,
+      "target": "Z boson",
+      "target_ratio_to_electron": "178450.4645263948194"
+    },
+    {
+      "absolute_error": "245009.99810131968622991970991970991970991970991970991970991970991970991970991971",
+      "identity": "I_H",
+      "predicted_ratio_to_electron": "0.29008029008029008029008029008029008029008029008029008029008029008029008029008029",
+      "relative_error": "0.9999988160485331731338121253030956925207953592862621518376490650913470378557487",
+      "survives_epsilon": 0,
+      "target": "Higgs boson",
+      "target_ratio_to_electron": "245010.28818160976652"
+    },
+    {
+      "absolute_error": "319797.85987133633053363636363636363636363636363636363636363636363636363636363636",
+      "identity": "I_top",
+      "predicted_ratio_to_electron": "17893.636363636363636363636363636363636363636363636363636363636363636363636363636",
+      "relative_error": "0.94701188344054242002767550354981091182712488232241354836869994972944358858052332",
+      "survives_epsilon": 0,
+      "target": "top quark",
+      "target_ratio_to_electron": "337691.49623497269417"
+    }
+  ],
+  "evaluation_id": "latticra-identity-replay-model3-prediction-evaluation",
+  "evaluation_version": 1,
+  "failure_record_if_any_target_breaks": [
+    "I_mu",
+    "I_tau",
+    "I_W",
+    "I_Z",
+    "I_H",
+    "I_top"
+  ],
+  "gluon_zero_rest_mass_control_survives": 1,
+  "higgs_checkmate_claimed": 0,
+  "higgs_denied": 0,
+  "higgs_only_causal_closure_challenged": 1,
+  "identity_patterns_generated_from_substrate": 1,
+  "kappa_trace_emitted": 1,
+  "latticra_identity_replay_model3_prediction_evaluation_present": 1,
+  "mass_ratio_predictions": {
+    "Higgs boson": "0.29008029008029008029008029008029008029008029008029008029008029008029008029008029",
+    "W boson": "612.65454545454545454545454545454545454545454545454545454545454545454545454545455",
+    "Z boson": "0.45571095571095571095571095571095571095571095571095571095571095571095571095571096",
+    "electron": "1",
+    "muon": "20.08951048951048951048951048951048951048951048951048951048951048951048951048951",
+    "tau": "13.51048951048951048951048951048951048951048951048951048951048951048951048951049",
+    "top quark": "17893.636363636363636363636363636363636363636363636363636363636363636363636363636"
+  },
+  "mass_ratio_predictions_emitted": 1,
+  "mass_ratio_recovery_claimed": 0,
+  "measured_masses_used_in_kappa": 0,
+  "measured_masses_used_in_law": 0,
+  "model3_evaluation_receipt_hash": "sha256:2f37bd49c8f66154df1ef19a08ab4bc8e5b41ccbeff54ffea01476a34d2430ab",
+  "model3_evaluation_receipt_hash_generated": 1,
+  "model3_pre_registration_receipt_hash": "sha256:c0955d5ba59a43ab381d0b33e54c9fd78dd7e803d91523e5d5119d183611a278",
+  "model3_prediction_conclusion": "rejected_by_target_table",
+  "model3_prediction_law_rejected": 1,
+  "model3_prediction_receipt_hash": "sha256:00c4c1df1d4ba2f79f475d1d5e7a7cedb5fb61b459b401c21ba129aafb415e3a",
+  "model3_prediction_receipt_hash_recomputed": "sha256:00c4c1df1d4ba2f79f475d1d5e7a7cedb5fb61b459b401c21ba129aafb415e3a",
+  "model3_prediction_receipt_hash_valid": 1,
+  "model3_topological_amplification_present": 1,
+  "negative_controls_present": 1,
+  "non_claims": [
+    "not_a_standard_model_replacement",
+    "not_a_higgs_denial",
+    "not_simulation_proof",
+    "not_mass_ratio_recovery",
+    "not_final_checkmate",
+    "not_scientific_claim_promotion"
+  ],
+  "parameter_count": 6,
+  "parameter_count_less_than_target_count": 1,
+  "particle_features_hand_declared": 0,
+  "photon_zero_rest_mass_control_survives": 1,
+  "physics_bound_by_simulative_concepts_claimed": 0,
+  "prediction_dynamic_range": "61685.116071428571428571428571428571428571428571428571428571428571428571428571427",
+  "prediction_dynamic_range_meets_target_range": 0,
+  "prediction_input_target_comparison_performed": 0,
+  "prediction_input_target_table_loaded": 0,
+  "prediction_law_id": "model3-target-blind-topological-replay-amplification",
+  "prediction_receipt_emitted_before_target_load": 1,
+  "prediction_receipt_reference": "docs/assets/identity-replay-model3-failure/model3-failure-prediction.json",
+  "reality_simulation_claimed": 0,
+  "scientific_claim_promoted": 0,
+  "simulation_proven": 0,
+  "standard_model_replacement_claimed": 0,
+  "target_comparison_performed": 1,
+  "target_count": 7,
+  "target_dynamic_range": "337691.49623497269417",
+  "target_load_after_prediction_receipt": 1,
+  "target_ratios": {
+    "Higgs boson": {
+      "identity": "I_H",
+      "mass_mev": "125200",
+      "ratio_to_electron": "245010.28818160976652"
+    },
+    "W boson": {
+      "identity": "I_W",
+      "mass_mev": "80369.2",
+      "ratio_to_electron": "157278.60106170472562"
+    },
+    "Z boson": {
+      "identity": "I_Z",
+      "mass_mev": "91188.0",
+      "ratio_to_electron": "178450.46452639481940"
+    },
+    "electron": {
+      "identity": "I_e",
+      "mass_mev": "0.51099895000",
+      "ratio_to_electron": "1"
+    },
+    "muon": {
+      "identity": "I_mu",
+      "mass_mev": "105.6583755",
+      "ratio_to_electron": "206.76828298766563023"
+    },
+    "tau": {
+      "identity": "I_tau",
+      "mass_mev": "1776.93",
+      "ratio_to_electron": "3477.36526660181982761"
+    },
+    "top quark": {
+      "identity": "I_top",
+      "mass_mev": "172560",
+      "ratio_to_electron": "337691.49623497269417"
+    }
+  },
+  "target_ratios_used_in_law": 0,
+  "target_table_loaded": 1,
+  "target_table_reference": "/Users/chasebryan/Documents/Latticra/docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md",
+  "topological_amplification_improved_range_but_failed_targets": 1,
+  "topological_amplification_trace_emitted": 1
+}
