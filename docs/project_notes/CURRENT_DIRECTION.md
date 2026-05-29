@@ -23,6 +23,7 @@ Latest Latticra identity-replay impedance L1 constrained substrate search note: 
 Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -655,7 +656,7 @@ The computational math and physics evaluation now places math review before phys
 
 The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
 
-The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, the L1 constrained search, the L2 pre-registration gate, the L3 external blinded-holdout intake, and the L4 blinded-holdout execution gate. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
+The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, the L1 constrained search, the L2 pre-registration gate, the L3 external blinded-holdout intake, the L4 blinded-holdout execution gate, and the L5 oracle evidence-review gate. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
 
 ```text
 Identity-replay impedance candidate particle table.
@@ -695,6 +696,12 @@ The next proof-lane review should move from closed execution to external evidenc
 
 ```text
 Identity-replay impedance L5 blinded-holdout oracle evidence review.
+```
+
+The next proof-lane review should move from evidence review to independent reproduction:
+
+```text
+Identity-replay impedance L6 independent holdout reproduction gate.
 ```
 
 Follow-on proof lanes remain:

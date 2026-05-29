@@ -1375,6 +1375,8 @@ require_contains "latticra-identity-replay-impedance-l3-external-blinded-holdout
 require_contains "sh ./scripts/test-latticra-identity-replay-impedance-l3-external-blinded-holdout-intake.sh" "Makefile"
 require_contains "latticra-identity-replay-impedance-l4-blinded-holdout-execution-gate:" "Makefile"
 require_contains "sh ./scripts/test-latticra-identity-replay-impedance-l4-blinded-holdout-execution-gate.sh" "Makefile"
+require_contains "latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review:" "Makefile"
+require_contains "sh ./scripts/test-latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-noop-prototype:" "Makefile"

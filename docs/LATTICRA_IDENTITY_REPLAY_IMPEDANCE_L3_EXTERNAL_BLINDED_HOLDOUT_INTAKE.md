@@ -133,6 +133,14 @@ L4 Blinded-Holdout Execution Gate.
 
 L4 must keep the no-oracle state closed while defining the prediction rule, tolerance, and review boundary for any future receipt-bound holdout execution.
 
+The guarded evidence-review handoff is:
+
+```text
+L5 Blinded-Holdout Oracle Evidence Review.
+```
+
+L5 must separate execution success from evidence legitimacy and reject synthetic/local fixtures as external evidence.
+
 ## Non-Claims
 
 This intake is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not final checkmate against Higgs, not blinded holdout success, not holdout execution, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

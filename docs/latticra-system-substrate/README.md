@@ -28,6 +28,8 @@ The L3 external blinded-holdout intake validator now binds future oracle data to
 
 The L4 blinded-holdout execution gate now defines the L2 prediction execution rule and acceptance boundary while keeping execution, survival, and proof promotion closed in the no-oracle state. It strengthens the Higgs counterplay lane by making the next claim depend on a receipt-bound holdout run instead of persuasive language.
 
+The L5 blinded-holdout oracle evidence-review gate now separates execution from evidence legitimacy. It requires source reference, cutoff date, reviewer attestation, and non-synthetic provenance before any future holdout packet can move toward independent reproduction.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
