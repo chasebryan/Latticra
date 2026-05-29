@@ -343,20 +343,28 @@ See the generated `DASHBOARD.txt` and `FOUNDATION_HEALTH_REPORT.txt` after runni
 
 ### macOS notes for `make build-separate-platform`
 
-If you see OpenSSL or undefined symbol errors (e.g. hybrid envelope functions):
+The platform command is designed to be as smooth as possible on macOS.
 
-1. Install OpenSSL via Homebrew:
-   ```sh
-   brew install openssl@3
-   ```
+**Recommended smooth path:**
 
-2. The platform script has improved auto-detection, but the most reliable path is still:
-   ```sh
-   make seal-cli
-   ./build/latticra-seal version
-   ```
+```sh
+make seal-cli                    # most reliable way to get a working Seal binary
+make build-separate-platform     # now skips the fragile partial test compilations
+```
 
-3. For the full platform experience, `make build-separate-platform` should now work better. If individual test builds fail, that's usually harmless — the real validation lives in the individual `scripts/test-*.sh` commands.
+The representative test builds that used to produce scary linker errors have been removed from the main platform flow (they were always best-effort and frequently broke after merges). 
+
+For complete test results, use the individual scripts directly:
+```sh
+sh scripts/test-lat-pipeline.sh
+sh scripts/test-runtime-boundary.sh
+# etc.
+```
+
+If you still hit OpenSSL problems, make sure you have:
+```sh
+brew install openssl@3
+```
 
 ---
 
