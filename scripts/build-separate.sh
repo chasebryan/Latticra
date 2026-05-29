@@ -42,16 +42,16 @@ LATTICRA_PLATFORM_CHECKPOINT="v0.3.0edge"
 # "effect-enabled" = produces binaries capable of real gated effects (Phase 1+)
 BUILD_PROFILE="${BUILD_PROFILE:-report-only}"
 
+plog() {
+    printf '[build-separate] %s\n' "$*" | tee -a "$LOG_FILE"
+}
+
 if [ "$BUILD_PROFILE" = "effect-enabled" ]; then
     plog "WARNING: Building in EFFECT-ENABLED mode. Real system effects may be possible."
     plog "         This is experimental. Use with extreme caution."
 fi
 
 mkdir -p "$BIN_DIR" "$OBJ_DIR"
-
-plog() {
-    printf '[build-separate] %s\n' "$*" | tee -a "$LOG_FILE"
-}
 
 # Helper to compile a single .c into an object with basic caching
 compile_object() {
@@ -577,8 +577,8 @@ main() {
         visual) build_visual_engines ;;
         demo)
             # Focused, impressive demo for macOS / presentations
-            plog "=== LATTICRA DEMO MODE (macOS-friendly) ==="
-            plog "Building core deliverables + effect runner + key reports..."
+            echo "=== LATTICRA DEMO MODE (macOS-friendly) ==="
+            echo "Building core deliverables + effect runner + key reports..."
             build_cli
             build_seal || true
             build_effect_enabled_tools   # will build the effect runner if profile allows
