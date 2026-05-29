@@ -165,6 +165,9 @@ generate_dashboard() {
         echo "completely isolated build-separate/ tree. No source pollution."
         echo ""
         echo "This is the current state of the Latticra evidence-bound foundation."
+        echo ""
+        echo "Next-gen direction: Contract-first, evidence-producing substrate for"
+        echo "safe AI-era and Linux-era automation boundaries."
     } > "$DASH"
 
     log "Dashboard generated: $DASH"
