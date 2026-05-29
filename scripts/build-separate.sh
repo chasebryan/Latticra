@@ -334,32 +334,34 @@ build_effect_enabled_tools() {
 
     log "Building EFFECT-ENABLED tools (experimental - Phase 1)..."
 
-    # Build the core Seal/CLI with effect support
-    build_seal
+    # Ensure directories exist
+    mkdir -p "$BIN_DIR" "$OBJ_DIR"
 
-    # Compile the new effect layer
+    # Ensure OpenSSL flags are set
+    detect_openssl
+
+    # Compile the new effect layer objects
     gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         -c src/substrate/effect/effect_dispatcher.c \
-        -o "$OBJ_DIR/effect_dispatcher.o" 2>&1 | tee -a "$LOG_FILE"
+        -o "$OBJ_DIR/effect_dispatcher.o" 2>&1 | tee -a "$LOG_FILE" || true
 
     gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         -c src/substrate/effect/effect_command.c \
-        -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE"
+        -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE" || true
 
-    # Build a small standalone effect runner for experimentation
     gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         -c src/substrate/effect/effect_runner_main.c \
-        -o "$OBJ_DIR/effect_runner_main.o" 2>&1 | tee -a "$LOG_FILE"
+        -o "$OBJ_DIR/effect_runner_main.o" 2>&1 | tee -a "$LOG_FILE" || true
 
+    # Link the standalone effect runner
     if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         "$OBJ_DIR/effect_dispatcher.o" \
         "$OBJ_DIR/effect_command.o" \
         "$OBJ_DIR/effect_runner_main.o" \
-        -o "$BIN_DIR/latticra-effect-runner" 2>&1 | tee -a "$LOG_FILE"; then
+        -o "$BIN_DIR/latticra-effect-runner" $OPENSSL_LIBS 2>&1 | tee -a "$LOG_FILE"; then
         log "  Built experimental effect runner: $BIN_DIR/latticra-effect-runner"
-        log "    (Very limited allowlist: echo, true, false, date, uname)"
     else
-        log "  WARNING: Failed to link experimental effect runner"
+        log "  WARNING: Failed to link experimental effect runner (check OpenSSL paths)"
     fi
 
     log "Effect-enabled tool build complete."

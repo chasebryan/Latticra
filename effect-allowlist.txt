@@ -1,0 +1,7 @@
+echo
+date
+uname
+ls
+pwd
+whoami
+cat
