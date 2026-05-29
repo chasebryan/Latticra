@@ -223,6 +223,18 @@ build_core_tests() {
         log "  lat_pipeline_invariants: build note logged (full validation still via scripts/)"
     fi
 
+    # Exercise the advanced Runtime Boundary Domain Matrix (new query functions)
+    if cc -std=c99 -Wall -Wextra -Werror -pedantic \
+         -Iinclude \
+         src/runtime_boundary.c src/runtime_boundary_domain_matrix.c \
+         src/runtime_boundary_domain_matrix_eval.c \
+         src/runtime_boundary_domain_matrix_report.c \
+         src/state_lattice.c \
+         tests/runtime_boundary_domain_matrix_refinement.c \
+         -o "$BUILD_DIR/tests/rbdm_refinement" 2>&1 >> "$LOG_FILE"; then
+        log "  rbdm_refinement (with new query APIs): ok (in separate tree)"
+    fi
+
     log "Representative test binary (if successful) and full validation evidence live under the separate build tree."
 }
 
