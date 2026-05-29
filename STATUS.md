@@ -1,7 +1,9 @@
 # Latticra Status
 
+**Platform Checkpoint: v0.3.0edge**
+
 Status: public status shortcut
-Last updated: 2026-05-24 CDT
+Last updated: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest Seal core evidence status surface note: 2026-05-22 02:24 CDT
 Latest Seal core evidence index alignment note: 2026-05-22 02:37 CDT
@@ -111,6 +113,7 @@ Latticra is the contract.
 ## Current milestone ledger
 
 ```text
+Platform Checkpoint v0.3.0edge (Development Platform + Q-Seal emphasis)
 Seal core evidence status surface
 Seal core evidence index alignment
 Seal core evidence public entrypoint alignment

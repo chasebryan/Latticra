@@ -4,6 +4,11 @@
 # directory. This provides a separate build structure from any existing
 # installer/target/ artifacts or in-tree builds.
 #
+# Platform Checkpoint: v0.3.0edge
+# This marks the maturation of the isolated Development Platform, Q-Seal
+# (post-quantum) visibility surfaces, RBDM query advancements, and
+# production-grade validation hygiene.
+#
 # This is the recommended way to work on Latticra in a clean, reproducible
 # environment that does not interfere with the Rust-based Latticra Panel.
 #
@@ -28,6 +33,9 @@ BUILD_DIR="$ROOT_DIR/build-separate"
 BIN_DIR="$BUILD_DIR/bin"
 OBJ_DIR="$BUILD_DIR/obj"
 LOG_FILE="$BUILD_DIR/build.log"
+
+# Current platform checkpoint version (evidence-bound development milestone)
+LATTICRA_PLATFORM_CHECKPOINT="v0.3.0edge"
 
 mkdir -p "$BIN_DIR" "$OBJ_DIR"
 
@@ -57,6 +65,7 @@ generate_foundation_health_report() {
     # Human readable report
     {
         echo "LATTICRA FOUNDATION HEALTH REPORT"
+        echo "Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT"
         echo "Generated: $(date)"
         echo "Build tree: $BUILD_DIR (completely isolated)"
         echo ""
@@ -135,6 +144,7 @@ generate_dashboard() {
         echo "╚════════════════════════════════════════════════════════════╝"
         echo ""
         echo "Generated: $(date)"
+        echo "Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT"
         echo "Mode: Isolated development platform (build-separate/)"
         echo "Philosophy: Evidence-bound • No-effect • Denied-by-default"
         echo ""
@@ -182,6 +192,7 @@ generate_q_seal_report() {
 
     cat > "$QSEAL_DIR/Q-SEAL_POSTURE_REPORT.txt" <<QSEAL
 LATTICRA Q-SEAL (POST-QUANTUM) POSTURE REPORT
+Platform Checkpoint: $LATTICRA_PLATFORM_CHECKPOINT
 Generated: $(date)
 Source: Isolated build-separate/ platform run
 

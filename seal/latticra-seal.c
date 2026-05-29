@@ -23,7 +23,7 @@
 #define PATH_MAX 4096
 #endif
 
-#define LATTICRA_SEAL_VERSION "v0.3-dev"
+#define LATTICRA_SEAL_VERSION "v0.3.0edge"
 #define MANIFEST_PATH "latticra.seal"
 #define REPORT_DIR "reports"
 #define REPORT_FILE "latticra-seal-cli-report.txt"
@@ -3280,7 +3280,7 @@ static int command_manifest(void) {
     if (!print_manifest_value(manifest, "project", "id", "Project ID", "latticra")) {
         ok = false;
     }
-    if (!print_manifest_value(manifest, "project", "version", "Project Version", "0.1.0")) {
+    if (!print_manifest_value(manifest, "project", "version", "Project Version", "v0.3.0edge")) {
         ok = false;
     }
     if (!print_manifest_value(

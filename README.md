@@ -2,6 +2,7 @@
 
 **Status:** early-stage, evidence-bound systems architecture repository  
 **README review snapshot:** 2026-05-29 CDT  
+**Platform Checkpoint:** v0.3.0edge  
 **Default branch:** `main`
 
 > “The simulacrum is never what hides the truth.” — Jean Baudrillard
@@ -10,6 +11,10 @@
 **Editable handbook:** [The Latticra System Substrate DOCX](docs/latticra-system-substrate/the-latticra-system-substrate.docx)  
 **System Substrate docs:** [docs/latticra-system-substrate/](docs/latticra-system-substrate/)  
 **Seal subsystem docs:** [docs/latticra-seal/](docs/latticra-seal/)
+
+**Current Platform Checkpoint: v0.3.0edge**
+
+This checkpoint marks the maturation of the isolated Latticra Development Platform (`build-separate/`), first-class Q-Seal (post-quantum) planning surfaces, advanced Runtime Boundary Domain Matrix queries, and production-grade validation hygiene.
 
 Latticra is an evidence-bound systems substrate for Linux-era and AI-era computing. Its purpose is to make system actions, automation, tool execution, and agentic workflows safer through deny-by-default authority, contract-first validation, cryptographic-verification planning, no-effect reporting, runtime gating, and auditable evidence.
 
@@ -78,7 +83,7 @@ The authoritative status files are [`STATUS.md`](STATUS.md) and [`docs/status/CU
 
 | Area | Current posture |
 | --- | --- |
-| Overall system | Early-stage, evidence-bound foundation |
+| Overall system | Early-stage, evidence-bound foundation (Platform Checkpoint v0.3.0edge) |
 | Current public estimate | Roughly 36% overall system planning estimate |
 | Foundation documents and contracts | Mature relative to implementation; around 90% planning estimate |
 | Public documentation posture | Strong but still evolving; around 84% planning estimate |
