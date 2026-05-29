@@ -147,6 +147,7 @@ generate_dashboard() {
         echo "  • 276+ deterministic validation guards (zero real issues)"
         echo "  • Runtime Boundary Domain Matrix with advanced queries"
         echo "  • Rich artifact generation + provenance (hashes, inventories)"
+        echo "  • Q-Seal (Post-Quantum) posture as core next-gen priority (ML-DSA/ML-KEM planned)"
         echo ""
         echo "────────────────────────────────────────────────────────────"
         echo " LATEST PLATFORM RUN ARTIFACTS"
@@ -171,6 +172,64 @@ generate_dashboard() {
     } > "$DASH"
 
     log "Dashboard generated: $DASH"
+}
+
+# Dedicated Q-Seal (post-quantum) posture report - elevated importance per direction
+generate_q_seal_report() {
+    log "Generating Latticra Q-Seal (Post-Quantum) Posture Report..."
+    QSEAL_DIR="$BUILD_DIR/q-seal"
+    mkdir -p "$QSEAL_DIR"
+
+    cat > "$QSEAL_DIR/Q-SEAL_POSTURE_REPORT.txt" <<QSEAL
+LATTICRA Q-SEAL (POST-QUANTUM) POSTURE REPORT
+Generated: $(date)
+Source: Isolated build-separate/ platform run
+
+IMPORTANCE: Q-Seal is a core next-gen differentiator for Latticra Seal.
+It represents the planned transition to post-quantum cryptography
+for AI-era and high-assurance tool-boundary operations.
+
+CURRENT STATE (report-only, no-effect, planning surface):
+- q_seal_post_quantum_profile_planned=1
+- post_quantum_signature_support_planned=1   (target: ML-DSA)
+- post_quantum_key_establishment_planned=1   (target: ML-KEM)
+
+Planned algorithms (from contracts, not implemented):
+- ML-DSA for post-quantum signatures
+- ML-KEM for post-quantum key establishment
+- SLH-DSA as conservative fallback
+
+Non-claims (strictly enforced):
+- No post-quantum implementation exists today.
+- No post-quantum claims are made.
+- No keys, signatures, or verification using PQ algorithms.
+- All Q-Seal surfaces are metadata/report/evidence only.
+
+Integration in this platform run:
+- Seal status rollup surfaces Q-Seal fields.
+- Full validation suite confirms no-effect posture.
+- Artifacts include provenance for future PQ profile planning.
+
+This report is auto-generated to emphasize and track Q-Seal readiness
+as a first-class priority in the Latticra evidence-bound foundation.
+QSEAL
+
+    # Also emit a machine version
+    cat > "$QSEAL_DIR/q-seal-posture.json" <<JSON
+{
+  "generated": "$(date -Iseconds 2>/dev/null || date)",
+  "q_seal_importance": "core next-gen differentiator",
+  "q_seal_post_quantum_profile_planned": 1,
+  "post_quantum_signature_support_planned": 1,
+  "post_quantum_key_establishment_planned": 1,
+  "targets": ["ML-DSA", "ML-KEM", "SLH-DSA"],
+  "implementation_status": "report-only planning surface",
+  "effect_authority": "denied",
+  "source": "build-separate platform"
+}
+JSON
+
+    log "Q-Seal report generated in $QSEAL_DIR/"
 }
 
 detect_openssl() {
@@ -419,8 +478,9 @@ clean() {
 }
 
 usage() {
-    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|platform]"
+    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|q-seal|platform]"
     echo "  platform   - The main command. Runs the complete modern Latticra development flow."
+    echo "  q-seal     - Generate dedicated Q-Seal (post-quantum) posture report."
     echo "  dashboard  - Generate a human-friendly project dashboard."
     exit 1
 }
@@ -451,6 +511,7 @@ main() {
             ;;
         health-report) generate_foundation_health_report ;;
         dashboard) generate_dashboard ;;
+        q-seal) generate_q_seal_report ;;
         platform)
             # The new recommended "do everything important" flow
             log "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
@@ -462,6 +523,7 @@ main() {
             prepare_release_candidate
             generate_foundation_health_report
             generate_dashboard
+            generate_q_seal_report
             log "=== PLATFORM RUN COMPLETE ==="
             log "Key artifacts:"
             log "  - $BUILD_DIR/DASHBOARD.txt"

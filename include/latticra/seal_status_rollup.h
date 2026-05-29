@@ -44,6 +44,11 @@ typedef struct {
     char rollup_state[LATTICRA_SEAL_STATUS_ROLLUP_STATE_MAX];
     latticra_seal_status_rollup_error_t error;
     char status[LATTICRA_SEAL_STATUS_ROLLUP_STATE_MAX];
+
+    /* Q-Seal / Post-Quantum posture (report-only planning surface) */
+    unsigned q_seal_post_quantum_profile_planned;
+    unsigned post_quantum_signature_support_planned;      /* ML-DSA etc. */
+    unsigned post_quantum_key_establishment_planned;      /* ML-KEM etc. */
 } latticra_seal_status_rollup_t;
 
 const char *latticra_seal_status_rollup_error_label(
