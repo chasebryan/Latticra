@@ -88,6 +88,8 @@ The careful public meaning is:
 Model-3 topological amplification improved range but failed the target table. Latticra has not defeated Higgs; it rejected another candidate law under stricter replay rules.
 ```
 
+The follow-on Model-3 Rejection Analysis now records why the failure matters: global amplification is insufficient, and any refined law must derive sector-resolved topological charge and family monotonicity before target loading.
+
 ## Guard Validation
 
 This status record is guarded by:

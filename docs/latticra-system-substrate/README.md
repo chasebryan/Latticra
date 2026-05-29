@@ -44,6 +44,8 @@ The Model-3 topological amplification pre-registration now locks that branch/coa
 
 The Model-3 prediction runner now executes that authorized prediction split. It emits topological amplification predictions before target loading and then rejects the first deterministic Model-3 law against the guarded table, keeping the next step focused on rejection analysis and amplification-law refinement.
 
+The Model-3 rejection analysis now makes the failure useful: range improved, but Higgs and Z landed below electron-scale impedance and the lepton family order stayed inverted. The next proof step is not another broad claim; it is a refined target-blind sector-resolved topological charge pre-registration.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

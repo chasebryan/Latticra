@@ -1391,6 +1391,8 @@ require_contains "latticra-identity-replay-model3-topological-amplification-prer
 require_contains "sh ./scripts/test-latticra-identity-replay-model3-topological-amplification-preregistration.sh" "Makefile"
 require_contains "latticra-identity-replay-model3-prediction-runner:" "Makefile"
 require_contains "sh ./scripts/test-latticra-identity-replay-model3-prediction-runner.sh" "Makefile"
+require_contains "latticra-identity-replay-model3-rejection-analysis:" "Makefile"
+require_contains "sh ./scripts/test-latticra-identity-replay-model3-rejection-analysis.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-noop-prototype:" "Makefile"

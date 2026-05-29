@@ -257,6 +257,8 @@ The current Model-3 Topological Amplification Pre-Registration satisfies the dyn
 
 The Model-3 Prediction Runner executes that authorized target-blind topological amplification law as a prediction-only receipt before target loading, then evaluates the receipt against the guarded table afterward. The first deterministic Model-3 prediction law is rejected: it improves dynamic range over Model-2 but still records `prediction_dynamic_range_meets_target_range=0`, `candidate_survives_target_table=0`, `model3_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
 
+The Model-3 Rejection Analysis records the structural failure behind that rejection. The first Model-3 law places Higgs and Z below electron-scale impedance and inverts the lepton family order, so the next credible law must be target-blind, sector-resolved, and family-monotone before any new prediction receipt.
+
 ## Validation
 
 This proof object is guarded by:

@@ -123,6 +123,8 @@ The first Model-3 topological amplification prediction law is rejected by the ta
 
 It improved the Model-2 dynamic range but did not recover the particle mass-ratio vector.
 
+The follow-on Model-3 Rejection Analysis now records the failure as structural: Higgs and Z fall below electron-scale replay impedance, the lepton family ordering is inverted, and a single global topological amplifier is insufficient.
+
 ## Invocation
 
 Emit the prediction receipt before target loading:
@@ -159,6 +161,12 @@ latticra_identity_replay_model3_prediction_runner: ok
 
 ```text
 Identity-replay impedance Model-3 rejection analysis and amplification-law refinement.
+```
+
+Completed follow-on:
+
+```text
+Model-3 Rejection Analysis
 ```
 
 ## Non-Claims
