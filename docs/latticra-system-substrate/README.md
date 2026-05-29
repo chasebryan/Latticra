@@ -24,6 +24,8 @@ The L1 constrained substrate search adds target-guided search with receipts, ove
 
 The L2 pre-registration gate now locks a candidate law receipt and an external blinded-holdout protocol before any future holdout can be opened. It strengthens the Higgs counterplay lane by making proof promotion depend on independent evidence rather than already-known target values.
 
+The L3 external blinded-holdout intake validator now binds future oracle data to the L2 receipt and keeps holdout execution closed while no oracle is present. It strengthens the proof lane by making the external evidence boundary machine-checkable before any hidden target is evaluated.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

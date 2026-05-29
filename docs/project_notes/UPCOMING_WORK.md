@@ -21,6 +21,7 @@ Latest Latticra identity-replay impedance candidate particle table note: 2026-05
 Latest Latticra identity-replay impedance L0 mass-ratio runner note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L1 constrained substrate search note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -1469,10 +1470,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance L2 pre-registered substrate law with blinded holdout.
 ```
 
-Computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance L3 external blinded-holdout intake.
+```
+
+Computational-proof follow-up:
+
+```text
+Identity-replay impedance L4 blinded-holdout execution gate.
 ```
 
 Follow-on proof lanes:
@@ -1488,7 +1495,7 @@ Latticra substrate impedance mass-ratio derivation.
 
 1. Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 2. Guarded Model-1 effect demonstration evidence boundary.
-3. Identity-replay impedance L3 external blinded-holdout intake.
+3. Identity-replay impedance L4 blinded-holdout execution gate.
 4. Authority status announcement only if public messaging changes.
 5. C++ authority expansion contract only if new authority behavior is proposed.
 6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.
