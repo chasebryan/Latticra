@@ -341,6 +341,23 @@ All outputs stay inside `build-separate/` — no pollution of source or the Rust
 
 See the generated `DASHBOARD.txt` and `FOUNDATION_HEALTH_REPORT.txt` after running the platform for the current state.
 
+### macOS notes for `make build-separate-platform`
+
+If you see OpenSSL or undefined symbol errors (e.g. hybrid envelope functions):
+
+1. Install OpenSSL via Homebrew:
+   ```sh
+   brew install openssl@3
+   ```
+
+2. The platform script has improved auto-detection, but the most reliable path is still:
+   ```sh
+   make seal-cli
+   ./build/latticra-seal version
+   ```
+
+3. For the full platform experience, `make build-separate-platform` should now work better. If individual test builds fail, that's usually harmless — the real validation lives in the individual `scripts/test-*.sh` commands.
+
 ---
 
 ## Latticra Panel

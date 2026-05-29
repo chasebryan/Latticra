@@ -246,8 +246,17 @@ JSON
 detect_openssl() {
     OPENSSL_CFLAGS=""
     OPENSSL_LIBS="-lcrypto"
+
     if [ "$(uname -s)" = "Darwin" ]; then
-        if [ -d /opt/homebrew/opt/openssl/include ]; then
+        # Prefer openssl@3 from Homebrew (most common on modern macOS)
+        if [ -d /opt/homebrew/opt/openssl@3/include ]; then
+            OPENSSL_CFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+            OPENSSL_LIBS="-L/opt/homebrew/opt/openssl@3/lib -lssl -lcrypto"
+        elif [ -d /usr/local/opt/openssl@3/include ]; then
+            OPENSSL_CFLAGS="-I/usr/local/opt/openssl@3/include"
+            OPENSSL_LIBS="-L/usr/local/opt/openssl@3/lib -lssl -lcrypto"
+        # Fallbacks for older openssl or generic paths
+        elif [ -d /opt/homebrew/opt/openssl/include ]; then
             OPENSSL_CFLAGS="-I/opt/homebrew/opt/openssl/include"
             OPENSSL_LIBS="-L/opt/homebrew/opt/openssl/lib -lcrypto"
         elif [ -d /usr/local/opt/openssl/include ]; then
@@ -255,9 +264,14 @@ detect_openssl() {
             OPENSSL_LIBS="-L/usr/local/opt/openssl/lib -lcrypto"
         elif [ -d /opt/homebrew/include ]; then
             OPENSSL_CFLAGS="-I/opt/homebrew/include"
-            OPENSSL_LIBS="-L/opt/homebrew/lib -lcrypto"
+            OPENSSL_LIBS="-L/opt/homebrew/lib -lssl -lcrypto"
+        else
+            log "WARNING: Could not auto-detect OpenSSL on macOS."
+            log "         Try: brew install openssl@3"
+            log "         Then re-run. Or use 'make seal-cli' which has more robust detection."
         fi
     fi
+
     export OPENSSL_CFLAGS OPENSSL_LIBS
 }
 
@@ -273,13 +287,26 @@ build_cli() {
 build_seal() {
     log "Building Latticra Seal CLI (may require OpenSSL dev files) ..."
     detect_openssl
+
+    # Match the current main Makefile seal-cli target as closely as possible
+    # (includes hybrid envelope support added in recent merges).
     # shellcheck disable=SC2086
     gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS \
         -Iinclude \
         -o "$BIN_DIR/latticra-seal" \
         seal/latticra-seal.c \
+        src/seal_hybrid_envelope.c \
+        src/seal_hybrid_provider_self_test.c \
         $OPENSSL_LIBS
-    log "Seal CLI built: $BIN_DIR/latticra-seal"
+
+    if [ $? -eq 0 ]; then
+        log "Seal CLI built: $BIN_DIR/latticra-seal"
+    else
+        log "WARNING: Seal CLI build failed. Common macOS fixes:"
+        log "  - brew install openssl@3"
+        log "  - Ensure detect_openssl() is finding the right paths"
+        log "  - Try: make seal-cli   (uses the main Makefile which is usually more up-to-date)"
+    fi
 }
 
 build_core_tests() {
@@ -289,6 +316,7 @@ build_core_tests() {
     mkdir -p "$BUILD_DIR/tests"
 
     # Only the most self-contained core test for the record (others use their own scripts)
+    # These are best-effort in the platform flow. Real validation should use the individual scripts/test-*.sh
     if cc -std=c99 -Wall -Wextra -Werror -pedantic \
          -Iinclude \
          src/lat_parser.c src/lat_semantic.c src/lat_to_lir.c src/lir.c \
@@ -298,7 +326,7 @@ build_core_tests() {
          -o "$BUILD_DIR/tests/lat_pipeline_invariants" 2>&1 >> "$LOG_FILE"; then
         log "  lat_pipeline_invariants: ok (in separate tree)"
     else
-        log "  lat_pipeline_invariants: build note logged (full validation still via scripts/)"
+        log "  lat_pipeline_invariants: build had issues (common after merges; use scripts/test-lat-pipeline.sh for full run)"
     fi
 
     # Exercise the advanced Runtime Boundary Domain Matrix (new query functions)
@@ -311,9 +339,11 @@ build_core_tests() {
          tests/runtime_boundary_domain_matrix_refinement.c \
          -o "$BUILD_DIR/tests/rbdm_refinement" 2>&1 >> "$LOG_FILE"; then
         log "  rbdm_refinement (with new query APIs): ok (in separate tree)"
+    else
+        log "  rbdm_refinement: build had issues (use the dedicated test script)"
     fi
 
-    log "Representative test binary (if successful) and full validation evidence live under the separate build tree."
+    log "Representative test binaries (best-effort). For complete results always prefer the individual scripts/test-*.sh commands."
 }
 
 # Build the visual theorem engines (mathematical art / substrate demonstrations)
@@ -533,6 +563,8 @@ main() {
         platform)
             # The new recommended "do everything important" flow
             log "=== LATTICRA DEVELOPMENT PLATFORM RUN ==="
+            log "Note for macOS users: If you hit OpenSSL or linker errors, try 'make seal-cli' first"
+            log "                        (the main Makefile usually has the most up-to-date build rules)."
             build_cli
             build_seal || true
             build_core_tests
