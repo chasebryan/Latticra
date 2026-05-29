@@ -347,12 +347,17 @@ build_effect_enabled_tools() {
         -o "$OBJ_DIR/effect_command.o" 2>&1 | tee -a "$LOG_FILE"
 
     # Build a small standalone effect runner for experimentation
-    # (links the new guarded command execution)
+    gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
+        -c src/substrate/effect/effect_runner_main.c \
+        -o "$OBJ_DIR/effect_runner_main.o" 2>&1 | tee -a "$LOG_FILE"
+
     if gcc -Wall -Wextra -O2 -std=c11 $OPENSSL_CFLAGS -Iinclude \
         "$OBJ_DIR/effect_dispatcher.o" \
         "$OBJ_DIR/effect_command.o" \
+        "$OBJ_DIR/effect_runner_main.o" \
         -o "$BIN_DIR/latticra-effect-runner" 2>&1 | tee -a "$LOG_FILE"; then
         log "  Built experimental effect runner: $BIN_DIR/latticra-effect-runner"
+        log "    (Very limited allowlist: echo, true, false, date, uname)"
     else
         log "  WARNING: Failed to link experimental effect runner"
     fi
