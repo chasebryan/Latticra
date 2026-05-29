@@ -42,6 +42,8 @@ The Model-2 prediction failure analysis and Model-3 Worthiness Gate now turn tha
 
 The Model-3 topological amplification pre-registration now locks that branch/coalescence amplification law before target loading and then verifies dynamic-range capacity afterward. It authorizes a prediction-only runner, but it still keeps mass recovery, Higgs checkmate, and simulation proof closed.
 
+The Model-3 prediction runner now executes that authorized prediction split. It emits topological amplification predictions before target loading and then rejects the first deterministic Model-3 law against the guarded table, keeping the next step focused on rejection analysis and amplification-law refinement.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

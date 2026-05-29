@@ -31,6 +31,7 @@ Latest Latticra identity-replay Model-2 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-2 prediction failure analysis note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -1539,10 +1540,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-3 target-blind topological amplification pre-registration.
 ```
 
-Computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance Model-3 prediction-only topological amplification runner.
+```
+
+Computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-3 rejection analysis and amplification-law refinement.
 ```
 
 Follow-on proof lanes:
@@ -1558,7 +1565,7 @@ Latticra substrate impedance mass-ratio derivation.
 
 1. Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 2. Guarded Model-1 effect demonstration evidence boundary.
-3. Identity-replay impedance Model-3 prediction-only topological amplification runner.
+3. Identity-replay impedance Model-3 rejection analysis and amplification-law refinement.
 4. Authority status announcement only if public messaging changes.
 5. C++ authority expansion contract only if new authority behavior is proposed.
 6. Nucleus task execution refinement only after the next language representation review and a separate effect contract.

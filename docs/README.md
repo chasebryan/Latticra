@@ -62,6 +62,7 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | [Model-2 Prediction Failure Analysis](LATTICRA_IDENTITY_REPLAY_MODEL2_PREDICTION_FAILURE_ANALYSIS.md) | Guarded failure analysis deriving the target-blind topological amplification property required before Model-3 |
 | [Model-3 Worthiness Gate](LATTICRA_IDENTITY_REPLAY_MODEL3_WORTHINESS_GATE.md) | Guarded pre-Model-3 admission gate that authorizes pre-registration only, not prediction or promotion |
 | [Model-3 Topological Amplification Pre-Registration](LATTICRA_IDENTITY_REPLAY_MODEL3_TOPOLOGICAL_AMPLIFICATION_PREREGISTRATION.md) | Guarded target-blind Model-3 pre-registration and range-capacity gate authorizing a prediction-only runner |
+| [Model-3 Prediction Runner](LATTICRA_IDENTITY_REPLAY_MODEL3_PREDICTION_RUNNER.md) | Guarded topological amplification prediction runner whose first deterministic law is rejected by the target table |
 | [Foundation Index](FOUNDATION_INDEX.md) | Exhaustive architecture, implementation, guard, status, and evidence index |
 | [Academic presentation](../build/presentation/latticra-academic/video/latticra-academic-presentation.mp4) | Colorado Technical University Latticra Substrate theorem presentation |
 | [Reference Manual](latticra-reference-manual/README.md) | Generated v0.1.0 book assembled from the current documentation corpus |

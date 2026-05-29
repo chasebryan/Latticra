@@ -133,6 +133,8 @@ Model-3 topological amplification is not falsified by dynamic-range capacity and
 
 This is not checkmate. It is an admission pass for the next executable candidate.
 
+The authorized Model-3 Prediction Runner has now been executed. Its first deterministic law is rejected by the guarded target table, so this pre-registration remains a capacity pass rather than a mass-ratio recovery.
+
 ## Invocation
 
 Pre-register before target loading:
@@ -169,6 +171,12 @@ latticra_identity_replay_model3_topological_amplification_preregistration: ok
 
 ```text
 Identity-replay impedance Model-3 prediction-only topological amplification runner.
+```
+
+Completed follow-on:
+
+```text
+Model-3 Prediction Runner
 ```
 
 ## Non-Claims

@@ -33,6 +33,7 @@ Latest Latticra identity-replay Model-2 prediction runner note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-2 prediction failure analysis note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-3 topological amplification pre-registration note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-3 prediction runner note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3076,6 +3077,8 @@ The identity-replay Model-3 worthiness gate now authorizes only pre-registration
 
 The identity-replay Model-3 topological amplification pre-registration now locks a target-blind branch/coalescence amplification law before target loading and then separately verifies dynamic-range capacity after the receipt exists. It records `model3_topological_max_ratio_bound_before_target_load=181807037485056`, `target_ratio_within_model3_topological_capacity=1`, `model3_prediction_runner_authorized_after_capacity_gate=1`, `mass_ratio_predictions_emitted=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay Model-3 prediction runner now emits topological amplification predictions before target loading, validates the receipt before evaluation, and rejects the first deterministic Model-3 prediction law against the guarded target table. It records `prediction_dynamic_range=61685.116071428571428571428571428571428571428571428571428571428571428571428571427`, `target_dynamic_range=337691.49623497269417`, `candidate_survives_target_table=0`, `model3_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3166,10 +3169,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-3 target-blind topological amplification pre-registration.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance Model-3 prediction-only topological amplification runner.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-3 rejection analysis and amplification-law refinement.
 ```
 
 Follow-on proof lanes:

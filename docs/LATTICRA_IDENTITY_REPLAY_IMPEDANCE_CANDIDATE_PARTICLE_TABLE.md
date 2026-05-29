@@ -182,6 +182,8 @@ The Model-2 Prediction Failure Analysis now records the failure shape and gates 
 
 The Model-3 Topological Amplification Pre-Registration now passes a dynamic-range capacity gate after the pre-registration receipt exists, while leaving target-ratio recovery unevaluated.
 
+The Model-3 Prediction Runner uses this table only after its prediction receipt exists. The first deterministic topological amplification law fails the guarded target comparison: `candidate_survives_target_table=0`, `model3_prediction_law_rejected=1`, `failure_record_if_any_target_breaks=I_mu,I_tau,I_W,I_Z,I_H,I_top`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 ## Public Statement
 
 The strongest legitimate public statement for this table is:

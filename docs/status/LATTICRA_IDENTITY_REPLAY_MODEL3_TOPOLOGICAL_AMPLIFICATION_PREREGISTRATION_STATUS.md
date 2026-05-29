@@ -76,6 +76,8 @@ The careful public meaning is:
 Model-3 topological amplification passes the dynamic-range admission gate and may proceed to a prediction-only runner. It has not recovered mass ratios or defeated Higgs.
 ```
 
+The follow-on Model-3 Prediction Runner has now executed and rejected the first deterministic topological amplification prediction law against the guarded target table.
+
 ## Guard Validation
 
 This status record is guarded by:

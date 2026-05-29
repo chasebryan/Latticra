@@ -255,6 +255,8 @@ The current Model-2 Prediction Failure Analysis and Model-3 Worthiness Gate make
 
 The current Model-3 Topological Amplification Pre-Registration satisfies the dynamic-range admission gate and authorizes a prediction-only runner, but it still does not claim mass recovery, Higgs checkmate, or simulation proof.
 
+The Model-3 Prediction Runner executes that authorized target-blind topological amplification law as a prediction-only receipt before target loading, then evaluates the receipt against the guarded table afterward. The first deterministic Model-3 prediction law is rejected: it improves dynamic range over Model-2 but still records `prediction_dynamic_range_meets_target_range=0`, `candidate_survives_target_table=0`, `model3_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
+
 ## Validation
 
 This proof object is guarded by:
