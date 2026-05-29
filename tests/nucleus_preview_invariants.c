@@ -219,7 +219,7 @@ static int null_preview_is_rejected(void) {
 }
 
 static int report_rejects_small_buffers(void) {
-    latticra_nucleus_preview_t preview;
+    latticra_nucleus_preview_t preview = {0};
     char small[8];
 
     EXPECT_TRUE(

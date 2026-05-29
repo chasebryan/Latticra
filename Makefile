@@ -2012,13 +2012,51 @@ seal-demo: seal-cli
 seal-docs:
 	sh scripts/test-latticra-seal-docs.sh
 
-.PHONY: latticra-academic-presentation-preview latticra-academic-presentation latticra-academic-presentation-test
+# Isolated build-separate/ platform targets (delegated to scripts/build-separate.sh)
+# These exist so `make build-separate` and `make build-separate-platform` etc. work
+# as documented, instead of Make reporting "Nothing to be done" due to the
+# build-separate/ directory existing with no rule.
+.PHONY: build-separate build-separate-platform build-separate-full-validate build-separate-clean
 
-latticra-academic-presentation-preview:
-	sh ./scripts/render-latticra-academic-presentation.sh preview
+build-separate:
+	sh ./scripts/build-separate.sh all
 
-latticra-academic-presentation:
-	sh ./scripts/render-latticra-academic-presentation.sh render
+build-separate-platform:
+	sh ./scripts/build-separate.sh platform
 
-latticra-academic-presentation-test:
-	sh ./scripts/test-latticra-academic-presentation.sh
+.PHONY: build-separate-demo
+build-separate-demo:
+	sh ./scripts/build-separate.sh demo
+
+# Quick focused demo (binaries + effect runner + key reports, no heavy validation)
+.PHONY: build-separate-demo-quick
+build-separate-demo-quick:
+	@echo "Running focused demo (best for macOS presentations)..."
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh demo
+
+# Effect-enabled builds (experimental - Phase 1+)
+# Usage: make build-separate-platform-effect BUILD_PROFILE=effect-enabled
+.PHONY: build-separate-platform-effect
+build-separate-platform-effect:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh platform
+
+.PHONY: build-separate-effect-tools
+build-separate-effect-tools:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh build_effect_enabled_tools 2>/dev/null || true
+
+# Quick way to build just the experimental guarded execution runner
+.PHONY: build-separate-effect-runner
+build-separate-effect-runner:
+	BUILD_PROFILE=effect-enabled sh ./scripts/build-separate.sh build_effect_enabled_tools 2>/dev/null || true
+	@echo "Experimental effect runner (if built): build-separate/bin/latticra-effect-runner"
+
+build-separate-full-validate:
+	sh ./scripts/build-separate.sh full-validate
+
+build-separate-clean:
+	sh ./scripts/build-separate.sh clean
+
+# Catch-all for other subcommands supported by the script (e.g. build-separate-cli,
+# build-separate-q-seal, build-separate-dashboard, build-separate-prepare-release-candidate, etc.)
+build-separate-%:
+	sh ./scripts/build-separate.sh $*

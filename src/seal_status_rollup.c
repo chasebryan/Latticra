@@ -40,6 +40,11 @@ static void rollup_init(latticra_seal_status_rollup_t *rollup) {
     rollup->network_performed = 0u;
     rollup->error = LATTICRA_SEAL_STATUS_ROLLUP_INVALID_INPUT;
     copy_literal(rollup->status, sizeof(rollup->status), "invalid-input");
+
+    /* Q-Seal / Post-Quantum planned posture (no-effect report surface) */
+    rollup->q_seal_post_quantum_profile_planned = 1u;
+    rollup->post_quantum_signature_support_planned = 1u;
+    rollup->post_quantum_key_establishment_planned = 1u;
 }
 
 latticra_status_t latticra_seal_status_rollup_from_handoff(
@@ -84,6 +89,12 @@ latticra_status_t latticra_seal_status_rollup_from_handoff(
     copy_literal(out->rollup_state, sizeof(out->rollup_state), "metadata-only");
     out->error = LATTICRA_SEAL_STATUS_ROLLUP_OK;
     copy_literal(out->status, sizeof(out->status), "status-rollup-metadata");
+
+    /* Q-Seal / Post-Quantum planned posture (elevated importance) */
+    out->q_seal_post_quantum_profile_planned = 1u;
+    out->post_quantum_signature_support_planned = 1u;
+    out->post_quantum_key_establishment_planned = 1u;
+
     return LATTICRA_STATUS_OK;
 }
 
@@ -141,7 +152,10 @@ latticra_status_t latticra_seal_status_rollup_report(
         "network_performed=%u\n"
         "rollup_state=%s\n"
         "error=%s\n"
-        "status=%s\n",
+        "status=%s\n"
+        "q_seal_post_quantum_profile_planned=%u\n"
+        "post_quantum_signature_support_planned=%u\n"
+        "post_quantum_key_establishment_planned=%u\n",
         rollup->rollup_profile,
         rollup->report_present,
         rollup->measurement_present,
@@ -165,7 +179,10 @@ latticra_status_t latticra_seal_status_rollup_report(
         rollup->network_performed,
         rollup->rollup_state,
         latticra_seal_status_rollup_error_label(rollup->error),
-        rollup->status);
+        rollup->status,
+        rollup->q_seal_post_quantum_profile_planned,
+        rollup->post_quantum_signature_support_planned,
+        rollup->post_quantum_key_establishment_planned);
 
     if (written < 0 || (size_t)written >= buffer_len) {
         if (buffer_len > 0u) {

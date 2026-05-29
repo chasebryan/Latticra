@@ -8,6 +8,7 @@ Scope: public-facing status language after the completed report-only Seal runtim
 Latticra Seal has reached an important report-only milestone.
 
 The project now has an operator-visible evidence path for a report-only runtime gate and a completed core case evidence set covering:
+operator-visible evidence report surface
 
 This is an operator-visible evidence report surface, not runtime enforcement.
 

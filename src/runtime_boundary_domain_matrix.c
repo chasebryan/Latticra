@@ -16,23 +16,6 @@ const char *latticra_runtime_boundary_domain_matrix_cell_label(
     }
 }
 
-static int known_domain(latticra_runtime_boundary_domain_t domain) {
-    return domain != LATTICRA_RUNTIME_BOUNDARY_DOMAIN_UNKNOWN;
-}
-
-static int operational_domain(latticra_runtime_boundary_domain_t domain) {
-    return domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_FILESYSTEM ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_NETWORK ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_PROCESS ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_DEVICE ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_EXTERNAL_CALL ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_PERSISTENCE;
-}
-
-static int declarative_domain(latticra_runtime_boundary_domain_t domain) {
-    return domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_MEMORY ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_CLOCK ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_RANDOMNESS ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_HOST ||
-           domain == LATTICRA_RUNTIME_BOUNDARY_DOMAIN_SCHEDULER;
-}
+/* Note: domain classification helpers (known_domain etc.) removed from this slice.
+   They were unused in current no-effect report paths. Re-add with call sites
+   when the full runtime boundary domain matrix evaluator is implemented. */
