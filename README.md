@@ -352,9 +352,11 @@ make seal-cli                    # most reliable way to get a working Seal binar
 make build-separate-platform     # now skips the fragile partial test compilations
 ```
 
-The representative test builds that used to produce scary linker errors have been removed from the main platform flow (they were always best-effort and frequently broke after merges). 
+The representative test builds that used to produce scary linker errors have been removed from the main platform flow (they were always best-effort and frequently broke after merges).
 
-For complete test results, use the individual scripts directly:
+`make build-separate-platform` is now designed to succeed even if the full validation reports many "Issues" (this is normal on macOS, as a large number of guards are Fedora-specific or have non-standard success output).
+
+For complete, high-signal test results, use the individual scripts directly:
 ```sh
 sh scripts/test-lat-pipeline.sh
 sh scripts/test-runtime-boundary.sh
