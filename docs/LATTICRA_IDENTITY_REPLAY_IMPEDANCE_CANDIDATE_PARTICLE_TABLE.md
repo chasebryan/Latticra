@@ -178,6 +178,8 @@ If the ledger cannot do this without smuggling the measured masses into the subs
 
 The Model-2 Prediction Runner now applies that boundary to a hierarchical replay law: the prediction receipt is emitted before target loading, and the target-table evaluator rejects the first deterministic Model-2 prediction vector.
 
+The Model-2 Prediction Failure Analysis now records the failure shape and gates Model-3 behind target-blind topological amplification rather than target-ratio fitting.
+
 ## Public Statement
 
 The strongest legitimate public statement for this table is:

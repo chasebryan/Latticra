@@ -30,6 +30,8 @@ Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-2
 Latest Latticra identity-replay Model-1 bounded range falsifier note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-2 hierarchical substrate pre-registration note: 2026-05-29 CDT
 Latest Latticra identity-replay Model-2 prediction runner note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-2 prediction failure analysis note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-3 worthiness gate note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3067,6 +3069,10 @@ The identity-replay Model-2 hierarchical substrate pre-registration now locks a 
 
 The identity-replay Model-2 prediction runner now emits hierarchical replay predictions before target loading, validates the receipt before evaluation, and rejects the first deterministic prediction law against the guarded target table. It records `prediction_dynamic_range=22.098461538461538461538461538461538461538461538461538461538461538461538461538462`, `target_dynamic_range=337691.49623497269417`, `candidate_survives_target_table=0`, `model2_prediction_law_rejected=1`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay Model-2 prediction failure analysis now records why Model-2 failed: dynamic range is short by `15281.221982228644612259816207184628237259816207184628237259816207184628237259816`, the predicted identity ordering is wrong, the lepton family is inverted, and heavy-sector replay cost is compressed. It records `required_model3_property=target_blind_topological_replay_amplification`, `model3_prediction_runner_authorized=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
+The identity-replay Model-3 worthiness gate now authorizes only pre-registration of a target-blind topological amplification law. It records `model3_preregistration_authorized=1`, `model3_prediction_runner_authorized=0`, `model3_gate_conclusion=worth_preregistering_only_not_worth_promoting`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3145,10 +3151,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance Model-2 prediction-only hierarchical replay runner.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance Model-2 prediction failure analysis and law refinement.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-3 target-blind topological amplification pre-registration.
 ```
 
 Follow-on proof lanes:

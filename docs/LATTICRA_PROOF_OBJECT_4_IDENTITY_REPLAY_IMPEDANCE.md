@@ -251,6 +251,8 @@ Latticra introduces identity-replay impedance: a mass-origin formalism where res
 
 The current Model-2 Prediction Runner result is a negative proof-lane result: the first deterministic hierarchical replay law is rejected by the guarded target table, so no Higgs-checkmate, mass-recovery, or simulation-proof claim is open.
 
+The current Model-2 Prediction Failure Analysis and Model-3 Worthiness Gate make the next requirement explicit: Model-3 must add target-blind topological replay amplification before any new prediction runner or stronger Higgs-causal-closure language.
+
 ## Validation
 
 This proof object is guarded by:

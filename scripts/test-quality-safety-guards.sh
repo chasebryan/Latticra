@@ -1385,6 +1385,8 @@ require_contains "latticra-identity-replay-model2-hierarchical-substrate-preregi
 require_contains "sh ./scripts/test-latticra-identity-replay-model2-hierarchical-substrate-preregistration.sh" "Makefile"
 require_contains "latticra-identity-replay-model2-prediction-runner:" "Makefile"
 require_contains "sh ./scripts/test-latticra-identity-replay-model2-prediction-runner.sh" "Makefile"
+require_contains "latticra-identity-replay-model2-prediction-failure-analysis:" "Makefile"
+require_contains "sh ./scripts/test-latticra-identity-replay-model2-prediction-failure-analysis.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-interface:" "Makefile"
 require_contains "sh ./scripts/test-macos-reset-uninstall-live-runner-interface-contract.sh" "Makefile"
 require_contains "macos-reset-uninstall-live-runner-noop-prototype:" "Makefile"

@@ -38,6 +38,8 @@ The Model-2 hierarchical substrate pre-registration now supplies that necessary 
 
 The Model-2 prediction runner now closes the next stricter test: it emits hierarchical replay predictions before target loading and rejects the first deterministic prediction law against the guarded target table. This is a useful negative result for the proof lane, not a Higgs defeat or simulation proof.
 
+The Model-2 prediction failure analysis and Model-3 Worthiness Gate now turn that failure into a stricter admission rule. Model-3 is only worth pre-registering if it introduces target-blind topological replay amplification that fixes the dynamic-range deficit, identity-ordering failure, lepton-family inversion, and heavy-sector compression before any new target comparison.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
