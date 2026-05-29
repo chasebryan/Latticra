@@ -23,6 +23,9 @@ source_cutoff_date=2025-01-15
 mass_target_snapshot_date=2026-05-29
 measured_mass_ratio_targets_present=1
 candidate_identity_classes_named=1
+cms_2026_w_mass_watch_note_present=1
+cms_2026_measurement_inside_current_target_cutoff=0
+current_table_target_mutated_by_cms_2026_measurement=0
 ledger_computation_performed=0
 identity_replay_impedance_values_computed=0
 mass_ratio_recovery_claimed=0
@@ -46,6 +49,7 @@ Higgs_candidate_identity=I_H
 top_candidate_identity=I_top
 tau_over_muon_target=16.81769184497825257592
 W_over_Z_target=0.88135719612229679344
+cms_2026_w_over_current_Z_ratio=0.88125849892529718823
 Higgs_over_Z_target=1.37298767381673027153
 top_over_Higgs_target=1.37827476038338658147
 ```

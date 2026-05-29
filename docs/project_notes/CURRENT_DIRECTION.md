@@ -24,6 +24,7 @@ Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-0
 Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -698,10 +699,16 @@ The next proof-lane review should move from closed execution to external evidenc
 Identity-replay impedance L5 blinded-holdout oracle evidence review.
 ```
 
-The next proof-lane review should move from evidence review to independent reproduction:
+The next proof-lane build should move from evidence review to dynamic replay:
 
 ```text
-Identity-replay impedance L6 independent holdout reproduction gate.
+Identity-replay impedance Model-1 dynamic substrate runner.
+```
+
+The next proof-lane refinement should keep the dynamic replay split and improve the substrate law:
+
+```text
+Identity-replay impedance Model-1 substrate-law refinement gate.
 ```
 
 Follow-on proof lanes remain:

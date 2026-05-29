@@ -49,6 +49,8 @@ do
   require_contains 'mass_target_snapshot_date=2026-05-29' "$file"
   require_contains 'measured_mass_ratio_targets_present=1' "$file"
   require_contains 'candidate_identity_classes_named=1' "$file"
+  require_contains 'cms_2026_measurement_inside_current_target_cutoff=0' "$file"
+  require_contains 'current_table_target_mutated_by_cms_2026_measurement=0' "$file"
   require_contains 'ledger_computation_performed=0' "$file"
   require_contains 'identity_replay_impedance_values_computed=0' "$file"
   require_contains 'mass_ratio_recovery_claimed=0' "$file"
@@ -61,7 +63,7 @@ do
   require_contains 'latticra_identity_replay_impedance_candidate_particle_table: ok' "$file"
 done
 
-for section in '## External Source Anchors' '## Anti-Smuggling Rule' '## Candidate Identity Targets' '## Cross-Ratio Targets' '## What A Later Runner Must Emit' '## Falsifier Conditions' '## Higgs Boundary' '## Next Recommended Lane' '## Non-Claims'
+for section in '## External Source Anchors' '## Post-Cutoff Measurement Watch Note' '## Anti-Smuggling Rule' '## Candidate Identity Targets' '## Cross-Ratio Targets' '## What A Later Runner Must Emit' '## Falsifier Conditions' '## Higgs Boundary' '## Next Recommended Lane' '## Non-Claims'
 do
   require_contains "$section" "$doc"
 done
@@ -71,6 +73,11 @@ for pattern in \
   'pdg_lepton_summary_url=https://pdg.lbl.gov/2025/tables/rpp2025-sum-leptons.pdf' \
   'pdg_gauge_higgs_summary_url=https://pdg.lbl.gov/2025/tables/rpp2025-sum-gauge-higgs-bosons.pdf' \
   'pdg_quark_summary_url=https://pdg.lbl.gov/2025/tables/rpp2025-sum-quarks.pdf' \
+  'cms_2026_w_mass_mev=80360.2' \
+  'cms_2026_w_mass_uncertainty_mev=9.9' \
+  'cms_2026_w_over_current_Z_ratio=0.88125849892529718823' \
+  'cms_w_mass_public_note=https://cms.cern/news/cms-delivers-best-precision-measurement-w-boson-mass-lhc' \
+  'nature_w_mass_publication=https://www.nature.com/articles/s41586-026-10168-5' \
   'If the measured masses are used to tune the ledger after target inspection, the candidate fails this table.' \
   '| electron | `I_e` | `0.51099895000` | `1` | `Z_L(I_e)=uncomputed` | anchor target for ratio-only comparison |' \
   '| muon | `I_mu` | `105.6583755` | `206.76828298766563023` | `Z_L(I_mu)=uncomputed` | `Z_L(I_mu)/Z_L(I_e)` |' \
@@ -83,6 +90,7 @@ for pattern in \
   'W_over_Z_target=0.88135719612229679344' \
   'Higgs_over_Z_target=1.37298767381673027153' \
   'top_over_Higgs_target=1.37827476038338658147' \
+  'Model-1 Dynamic Substrate Runner.' \
   'ratio_fit_requires_measured_mass_insertion' \
   'free_parameter_count_exceeds_observable_compression' \
   'mass_ratio_recovery_mismatch_exceeds_epsilon_after_model_fixed' \

@@ -30,6 +30,8 @@ The L4 blinded-holdout execution gate now defines the L2 prediction execution ru
 
 The L5 blinded-holdout oracle evidence-review gate now separates execution from evidence legitimacy. It requires source reference, cutoff date, reviewer attestation, and non-synthetic provenance before any future holdout packet can move toward independent reproduction.
 
+The Model-1 dynamic replay substrate runner now makes the next proof step computational instead of rhetorical: it generates identity patterns from a finite substrate, computes `kappa` traces before target loading, emits a prediction receipt, and lets a separate evaluator reject the current candidate against the measured table while preserving the Higgs-as-effective-physics boundary.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)

@@ -58,6 +58,27 @@ PDG 2025 update cites S. Navas et al. (Particle Data Group), Phys. Rev. D 110, 0
 The PDG listings and summary-table cutoff date is Jan. 15, 2025.
 ```
 
+## Post-Cutoff Measurement Watch Note
+
+A later CMS/Nature publication reports a W-boson mass measurement of `80360.2 +/- 9.9 MeV`. That value implies:
+
+```text
+cms_2026_w_mass_mev=80360.2
+cms_2026_w_mass_uncertainty_mev=9.9
+cms_2026_w_over_current_Z_ratio=0.88125849892529718823
+cms_2026_measurement_inside_current_target_cutoff=0
+current_table_target_mutated_by_cms_2026_measurement=0
+```
+
+This table does not incorporate that value because the guarded target snapshot is the PDG 2025 summary-table surface with cutoff date `2025-01-15`. A future table version may update the W target only through a new target snapshot, source note, guard update, and receipt boundary.
+
+External watch sources:
+
+```text
+cms_w_mass_public_note=https://cms.cern/news/cms-delivers-best-precision-measurement-w-boson-mass-lhc
+nature_w_mass_publication=https://www.nature.com/articles/s41586-026-10168-5
+```
+
 ## Anti-Smuggling Rule
 
 A later Latticra runner is not allowed to insert the measured mass values into `kappa`, `R`, `Q`, or the substrate update rule.
@@ -223,6 +244,12 @@ The next evidence-review artifact is:
 
 ```text
 L5 Blinded-Holdout Oracle Evidence Review.
+```
+
+The next dynamic replay artifact is:
+
+```text
+Model-1 Dynamic Substrate Runner.
 ```
 
 ## Non-Claims

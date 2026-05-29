@@ -139,7 +139,15 @@ latticra_identity_replay_impedance_l5_blinded_holdout_oracle_evidence_review: ok
 ## Next Recommended Lane
 
 ```text
-Identity-replay impedance L6 independent holdout reproduction gate.
+Identity-replay impedance Model-1 dynamic substrate runner.
+```
+
+The next real engineering slice is Model-1 dynamic replay with a prediction/evaluation split, because Latticra must compute `kappa` from substrate dynamics before target comparison instead of adding another language-only gate.
+
+The guarded handoff is:
+
+```text
+Model-1 Dynamic Substrate Runner.
 ```
 
 ## Non-Claims

@@ -103,7 +103,7 @@ for pattern in \
   'python3 tools/latticra_identity_replay_l5_oracle_evidence_review.py' \
   'python3 tools/latticra_identity_replay_l5_oracle_evidence_review.py --oracle path/to/oracle.json' \
   'This is a stronger checkpoint than L4 because it separates execution success from evidence legitimacy.' \
-  'Identity-replay impedance L6 independent holdout reproduction gate.'
+  'Identity-replay impedance Model-1 dynamic substrate runner.'
 do
   require_contains "$pattern" "$doc"
 done
@@ -215,9 +215,9 @@ require_contains 'Latest Latticra identity-replay impedance L5 evidence review n
 require_contains 'Identity-replay impedance L5 blinded-holdout oracle evidence review.' "$current_status"
 require_contains 'Identity-replay impedance L5 blinded-holdout oracle evidence review.' "$current_direction"
 require_contains 'Identity-replay impedance L5 blinded-holdout oracle evidence review.' "$upcoming_work"
-require_contains 'Identity-replay impedance L6 independent holdout reproduction gate.' "$current_status"
-require_contains 'Identity-replay impedance L6 independent holdout reproduction gate.' "$current_direction"
-require_contains 'Identity-replay impedance L6 independent holdout reproduction gate.' "$upcoming_work"
+require_contains 'Identity-replay impedance Model-1 dynamic substrate runner.' "$current_status"
+require_contains 'Identity-replay impedance Model-1 dynamic substrate runner.' "$current_direction"
+require_contains 'Identity-replay impedance Model-1 dynamic substrate runner.' "$upcoming_work"
 require_contains 'latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review:' "$makefile"
 require_contains 'sh ./scripts/test-latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review.sh' "$makefile"
 require_contains 'latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review:' "$quality_guard"

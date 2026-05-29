@@ -26,6 +26,7 @@ Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-0
 Latest Latticra identity-replay impedance L3 holdout intake note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L4 execution gate note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L5 evidence review note: 2026-05-29 CDT
+Latest Latticra identity-replay Model-1 dynamic substrate runner note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -3055,6 +3056,8 @@ The identity-replay impedance L4 blinded-holdout execution gate now binds to the
 
 The identity-replay impedance L5 blinded-holdout oracle evidence-review gate now binds to the L4 execution receipt, rejects synthetic fixture evidence as external proof, and records `oracle_evidence_packet_received=0`, `evidence_review_performed=0`, `evidence_externality_review_passed=0`, `candidate_promoted=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay Model-1 dynamic substrate runner now defines a finite local substrate, computes counterfactual repair-cost traces before loading measured targets, emits a prediction receipt, evaluates the receipt against the guarded target table only afterward, preserves photon/gluon zero-rest-mass controls, and records `candidate_survives_target_table=0`, `mass_ratio_recovery_claimed=0`, and `higgs_checkmate_claimed=0`.
+
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
 
 ```text
@@ -3103,10 +3106,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance L5 blinded-holdout oracle evidence review.
 ```
 
+Completed computational-proof follow-up:
+
+```text
+Identity-replay impedance Model-1 dynamic substrate runner.
+```
+
 Parallel computational-proof follow-up:
 
 ```text
-Identity-replay impedance L6 independent holdout reproduction gate.
+Identity-replay impedance Model-1 substrate-law refinement gate.
 ```
 
 Follow-on proof lanes:

@@ -84,7 +84,13 @@ latticra_identity_replay_impedance_l5_blinded_holdout_oracle_evidence_review: ok
 ## Next Recommended Lane
 
 ```text
-Identity-replay impedance L6 independent holdout reproduction gate.
+Identity-replay impedance Model-1 dynamic substrate runner.
+```
+
+Guarded handoff:
+
+```text
+Model-1 Dynamic Substrate Runner.
 ```
 
 ## Non-Claims

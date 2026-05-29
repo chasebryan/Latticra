@@ -315,6 +315,14 @@ The next evidence-review artifact is:
 L5 Blinded-Holdout Oracle Evidence Review.
 ```
 
+The first dynamic replay artifact is:
+
+```text
+Model-1 Dynamic Substrate Runner.
+```
+
+Model-1 computes counterfactual repair costs from a finite local substrate, emits a prediction receipt before target loading, and then lets a separate evaluator reject or score the candidate against the guarded particle table.
+
 ## Non-Claims
 
 This proof object is not a claim that the Higgs boson was not observed, not a denial of CERN/ATLAS/CMS data, not a completed replacement for the Standard Model, not empirical proof that our universe is simulated, not proof that our measured universe has been fitted by a Latticra candidate, not physics measurement, not experimental evidence, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.
