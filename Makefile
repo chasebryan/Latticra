@@ -2024,6 +2024,10 @@ build-separate:
 build-separate-platform:
 	sh ./scripts/build-separate.sh platform
 
+.PHONY: build-separate-demo
+build-separate-demo:
+	sh ./scripts/build-separate.sh demo
+
 build-separate-full-validate:
 	sh ./scripts/build-separate.sh full-validate
 

@@ -503,8 +503,9 @@ clean() {
 }
 
 usage() {
-    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|q-seal|platform]"
+    echo "Usage: $0 [cli|seal|tests|visual|all|clean|smoke|validate|full-validate|prepare-release-candidate|health-report|dashboard|q-seal|platform|demo]"
     echo "  platform   - The main command. Runs the complete modern Latticra development flow."
+    echo "  demo       - Platform + short demo videos (great for presentations)."
     echo "  q-seal     - Generate dedicated Q-Seal (post-quantum) posture report."
     echo "  dashboard  - Generate a human-friendly project dashboard."
     exit 1
@@ -516,6 +517,21 @@ main() {
         seal)  build_seal ;;
         tests) build_core_tests ;;
         visual) build_visual_engines ;;
+        demo)
+            # Nice demo flow for presentations / visitors
+            log "=== LATTICRA DEMO MODE ==="
+            platform
+            log ""
+            log "Rendering short demo videos (30 seconds each)..."
+            if command -v ffmpeg >/dev/null 2>&1; then
+                sh scripts/render-visual-theorem-engines.sh substrate 30
+                sh scripts/render-visual-theorem-engines.sh theorem 30
+                log "Demo videos rendered into build-separate/visual-engines/"
+            else
+                log "ffmpeg not found — skipping video rendering."
+                log "Install with: brew install ffmpeg"
+            fi
+            ;;
         all)
             build_cli
             build_seal || log "WARNING: Seal build skipped or failed (OpenSSL may be missing)"
