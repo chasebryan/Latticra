@@ -163,6 +163,14 @@ L1 Constrained Substrate Search.
 
 L1 performs target-guided search over a small candidate family, reports overfit risk, and blocks promotion unless target-table and leave-one-out checks survive.
 
+The next receipt-bound gate is:
+
+```text
+L2 Pre-Registered Substrate Law With Blinded Holdout.
+```
+
+L2 prevents the next proof step from reusing known target values as if they were hidden validation evidence.
+
 ## Non-Claims
 
 This runner is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

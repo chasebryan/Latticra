@@ -22,6 +22,7 @@ Latest Latticra proof object 4 identity-replay impedance note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance candidate particle table note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L0 mass-ratio runner note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L1 constrained substrate search note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-05-29 CDT
 Latest current estimate refresh note: 2026-05-24 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
@@ -759,6 +760,8 @@ The identity-replay impedance toy substrate L0 mass-ratio runner now executes a 
 
 The identity-replay impedance L1 constrained substrate search now executes deterministic target-guided search over a small integer-weight identity-feature impedance family, emits a receipt hash, reports `overfit_risk_flag=1`, performs leave-one-out review, and keeps `candidate_survives_target_table=0`, `candidate_survives_leave_one_out=0`, and `higgs_checkmate_claimed=0`.
 
+The identity-replay impedance L2 pre-registration gate now locks a candidate law receipt and external blinded-holdout protocol while keeping `blinded_holdout_oracle_present=0`, `holdout_evaluation_performed=0`, `candidate_promoted=0`, and `higgs_checkmate_claimed=0`.
+
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
 ```
@@ -781,10 +784,16 @@ Completed computational-proof follow-up:
 Identity-replay impedance L1 constrained substrate search.
 ```
 
-Parallel computational-proof follow-up:
+Completed computational-proof follow-up:
 
 ```text
 Identity-replay impedance L2 pre-registered substrate law with blinded holdout.
+```
+
+Parallel computational-proof follow-up:
+
+```text
+Identity-replay impedance L3 external blinded-holdout intake.
 ```
 
 Follow-on proof lanes:

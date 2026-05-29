@@ -20,6 +20,7 @@ Latest Latticra proof object 4 identity-replay impedance note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance candidate particle table note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L0 mass-ratio runner note: 2026-05-29 CDT
 Latest Latticra identity-replay impedance L1 constrained substrate search note: 2026-05-29 CDT
+Latest Latticra identity-replay impedance L2 pre-registered holdout note: 2026-05-29 CDT
 Latest current estimate table source alignment note: 2026-05-28 CDT
 Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
@@ -652,7 +653,7 @@ The computational math and physics evaluation now places math review before phys
 
 The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
 
-The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, and the L1 constrained search. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
+The proof-object lane now has guarded records for emergent particle mass, Higgs counterplay, Higgs causal closure no-go, identity-replay impedance, the candidate-particle target table, the L0 executable falsifier runner, the L1 constrained search, and the L2 pre-registration gate. Proof Object 4 is the original Latticra center of gravity: mass as replay-stable projected identity cost, with Higgs treated as effective physics that must pass a coupling-shadow test.
 
 ```text
 Identity-replay impedance candidate particle table.
@@ -674,6 +675,12 @@ The next proof-lane search should move from target-guided fitting to pre-registr
 
 ```text
 Identity-replay impedance L2 pre-registered substrate law with blinded holdout.
+```
+
+The next proof-lane search should move from pre-registration to external intake:
+
+```text
+Identity-replay impedance L3 external blinded-holdout intake.
 ```
 
 Follow-on proof lanes remain:

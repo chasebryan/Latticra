@@ -149,6 +149,14 @@ latticra_identity_replay_impedance_l1_constrained_substrate_search: ok
 Identity-replay impedance L2 pre-registered substrate law with blinded holdout.
 ```
 
+The guarded handoff is:
+
+```text
+L2 Pre-Registered Substrate Law With Blinded Holdout.
+```
+
+L2 must lock a candidate law by receipt before any future hidden target is opened, and it must keep `higgs_checkmate_claimed=0` until an external blinded holdout survives.
+
 ## Non-Claims
 
 This search is not a Latticra mass recovery, not a Standard Model replacement, not a denial of CERN/ATLAS/CMS data, not a denial of the Higgs boson, not a proof that reality is simulated, not physics measurement, not experimental evidence, not a completed particle spectrum derivation, not final checkmate against Higgs, not Model-1 execution, not runtime execution, not effect execution, not production readiness, not operating-system completeness, and not public promotion of a final scientific conclusion.

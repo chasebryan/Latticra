@@ -22,6 +22,8 @@ The L0 mass-ratio runner now makes the target surface executable: it computes to
 
 The L1 constrained substrate search adds target-guided search with receipts, overfit signaling, and leave-one-out review. It strengthens the proof pipeline by showing exactly why the current candidate cannot be promoted: target-table and holdout survival remain closed.
 
+The L2 pre-registration gate now locks a candidate law receipt and an external blinded-holdout protocol before any future holdout can be opened. It strengthens the Higgs counterplay lane by making proof promotion depend on independent evidence rather than already-known target values.
+
 ## Downloads
 
 - [PDF edition](the-latticra-system-substrate.pdf)
