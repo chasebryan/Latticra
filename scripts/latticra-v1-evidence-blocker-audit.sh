@@ -1,0 +1,428 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -eu
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  latticra-v1-evidence-blocker-audit.sh
+
+Reports the current no-effect decomposition of the evidence blockers that keep
+the v1.0.0 release readiness gate closed. The audit reads existing status
+records only. It does not build artifacts, generate SBOMs, run VMs, invoke
+package managers, accept evidence, or mutate the host.
+USAGE
+}
+
+fail() {
+  printf 'latticra v1 evidence blocker audit: %s\n' "$1" >&2
+  exit "${2:-1}"
+}
+
+status_value() {
+  key="$1"
+  file="$2"
+  value="$(awk -F= -v key="$key" '$1 == key { print substr($0, length(key) + 2); exit }' "$file")"
+  [ -n "$value" ] || fail "missing status value in $file: $key" 65
+  printf '%s\n' "$value"
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      fail "unknown argument: $1" 64
+      ;;
+  esac
+done
+
+CANDIDATE_STATUS='docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_STATUS.md'
+ARTIFACT_STATUS='docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+SBOM_STATUS='docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+TRANSCRIPT_STATUS='docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+LIFECYCLE_STATUS='docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+RECOVERY_STATUS='docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+MULTI_VM_STATUS='docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
+
+RELEASE_ARTIFACT_PROMOTION_GATE_PASSED="$(status_value release_artifact_promotion_gate_passed "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_PRESENT="$(status_value release_artifact_present "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_BUILT_FROM_TAG="$(status_value release_artifact_built_from_tag "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_REPRODUCIBLE="$(status_value release_artifact_reproducible "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_SHA256_RECORDED="$(status_value release_artifact_sha256_recorded "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_SIGNATURE_PRESENT="$(status_value release_artifact_signature_present "$CANDIDATE_STATUS")"
+RELEASE_ARTIFACT_SIGNATURE_VERIFIED="$(status_value release_artifact_signature_verified "$CANDIDATE_STATUS")"
+RELEASE_PUBLIC_KEY_DOCUMENTED="$(status_value release_public_key_documented "$CANDIDATE_STATUS")"
+SIGNATURE_VERIFICATION_DOCUMENTED="$(status_value signature_verification_documented "$CANDIDATE_STATUS")"
+ARTIFACT_INTEGRITY_REVIEWED="$(status_value artifact_integrity_reviewed "$CANDIDATE_STATUS")"
+
+RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_COMPLETE="$(status_value release_artifact_evidence_template_complete "$ARTIFACT_STATUS")"
+RELEASE_ARTIFACT_CANDIDATE_VALID="$(status_value release_artifact_candidate_valid "$ARTIFACT_STATUS")"
+RELEASE_ARTIFACT_CHECKSUM_FILE_PRESENT="$(status_value release_artifact_checksum_file_present "$ARTIFACT_STATUS")"
+RELEASE_ARTIFACT_SHA256_MATCHES="$(status_value release_artifact_sha256_matches "$ARTIFACT_STATUS")"
+RELEASE_ARTIFACT_SIGNATURE_FILE_PRESENT="$(status_value release_artifact_signature_file_present "$ARTIFACT_STATUS")"
+RELEASE_PUBLIC_KEY_FILE_PRESENT="$(status_value release_public_key_file_present "$ARTIFACT_STATUS")"
+SIGNATURE_VERIFICATION_TRANSCRIPT_PRESENT="$(status_value signature_verification_transcript_present "$ARTIFACT_STATUS")"
+REPRODUCIBILITY_TRANSCRIPT_PRESENT="$(status_value reproducibility_transcript_present "$ARTIFACT_STATUS")"
+ARTIFACT_INTEGRITY_REVIEW_PRESENT="$(status_value artifact_integrity_review_present "$ARTIFACT_STATUS")"
+RELEASE_ARTIFACT_EVIDENCE_ACCEPTED="$(status_value release_artifact_evidence_accepted_by_intake_validator "$ARTIFACT_STATUS")"
+
+SBOM_EVIDENCE_TEMPLATE_COMPLETE="$(status_value sbom_evidence_template_complete "$SBOM_STATUS")"
+SBOM_EVIDENCE_CANDIDATE_VALID="$(status_value sbom_evidence_candidate_valid "$SBOM_STATUS")"
+SBOM_ARTIFACT_FILE_PRESENT="$(status_value sbom_artifact_file_present "$SBOM_STATUS")"
+SBOM_ARTIFACT_SHA256_RECORDED="$(status_value sbom_artifact_sha256_recorded "$SBOM_STATUS")"
+SBOM_DEPENDENCY_REVIEW_PRESENT="$(status_value sbom_dependency_review_present "$SBOM_STATUS")"
+SBOM_VULNERABILITY_REVIEW_PRESENT="$(status_value sbom_vulnerability_review_present "$SBOM_STATUS")"
+SBOM_LICENSE_REVIEW_PRESENT="$(status_value sbom_license_review_present "$SBOM_STATUS")"
+SBOM_REVIEW_PRESENT="$(status_value sbom_review_present "$SBOM_STATUS")"
+SBOM_EVIDENCE_ACCEPTED="$(status_value sbom_evidence_accepted_by_intake_validator "$SBOM_STATUS")"
+INSTALLER_SBOM_RECORDED="$(status_value installer_sbom_recorded "$SBOM_STATUS")"
+
+TRANSCRIPT_EVIDENCE_TEMPLATE_COMPLETE="$(status_value transcript_evidence_template_complete "$TRANSCRIPT_STATUS")"
+TRANSCRIPT_EVIDENCE_CANDIDATE_VALID="$(status_value transcript_evidence_candidate_valid "$TRANSCRIPT_STATUS")"
+INSTALL_TRANSCRIPT_FILE_PRESENT="$(status_value install_transcript_file_present "$TRANSCRIPT_STATUS")"
+UNINSTALL_TRANSCRIPT_FILE_PRESENT="$(status_value uninstall_transcript_file_present "$TRANSCRIPT_STATUS")"
+POST_REMOVAL_ABSENCE_TRANSCRIPT_FILE_PRESENT="$(status_value post_removal_absence_transcript_file_present "$TRANSCRIPT_STATUS")"
+INSTALL_TRANSCRIPT_SHA256_RECORDED="$(status_value install_transcript_sha256_recorded "$TRANSCRIPT_STATUS")"
+UNINSTALL_TRANSCRIPT_SHA256_RECORDED="$(status_value uninstall_transcript_sha256_recorded "$TRANSCRIPT_STATUS")"
+POST_REMOVAL_ABSENCE_TRANSCRIPT_SHA256_RECORDED="$(status_value post_removal_absence_transcript_sha256_recorded "$TRANSCRIPT_STATUS")"
+INSTALL_TRANSCRIPT_REVIEW_PRESENT="$(status_value install_transcript_review_present "$TRANSCRIPT_STATUS")"
+UNINSTALL_TRANSCRIPT_REVIEW_PRESENT="$(status_value uninstall_transcript_review_present "$TRANSCRIPT_STATUS")"
+POST_REMOVAL_ABSENCE_REVIEW_PRESENT="$(status_value post_removal_absence_review_present "$TRANSCRIPT_STATUS")"
+TRANSCRIPT_EVIDENCE_ACCEPTED="$(status_value transcript_evidence_accepted_by_intake_validator "$TRANSCRIPT_STATUS")"
+INSTALLER_INSTALL_TRANSCRIPT_RECORDED="$(status_value installer_install_transcript_recorded "$TRANSCRIPT_STATUS")"
+INSTALLER_UNINSTALL_TRANSCRIPT_RECORDED="$(status_value installer_uninstall_transcript_recorded "$TRANSCRIPT_STATUS")"
+INSTALLER_POST_REMOVAL_ABSENCE_VERIFIED="$(status_value installer_post_removal_absence_verified "$TRANSCRIPT_STATUS")"
+
+LIFECYCLE_EVIDENCE_CANDIDATE_VALID="$(status_value lifecycle_evidence_candidate_valid "$LIFECYCLE_STATUS")"
+UPGRADE_TRANSCRIPT_FILE_PRESENT="$(status_value upgrade_transcript_file_present "$LIFECYCLE_STATUS")"
+ROLLBACK_TRANSCRIPT_FILE_PRESENT="$(status_value rollback_transcript_file_present "$LIFECYCLE_STATUS")"
+REINSTALL_TRANSCRIPT_FILE_PRESENT="$(status_value reinstall_transcript_file_present "$LIFECYCLE_STATUS")"
+UPGRADE_TRANSCRIPT_SHA256_RECORDED="$(status_value upgrade_transcript_sha256_recorded "$LIFECYCLE_STATUS")"
+ROLLBACK_TRANSCRIPT_SHA256_RECORDED="$(status_value rollback_transcript_sha256_recorded "$LIFECYCLE_STATUS")"
+REINSTALL_TRANSCRIPT_SHA256_RECORDED="$(status_value reinstall_transcript_sha256_recorded "$LIFECYCLE_STATUS")"
+UPGRADE_TRANSCRIPT_REVIEW_PRESENT="$(status_value upgrade_transcript_review_present "$LIFECYCLE_STATUS")"
+ROLLBACK_TRANSCRIPT_REVIEW_PRESENT="$(status_value rollback_transcript_review_present "$LIFECYCLE_STATUS")"
+REINSTALL_TRANSCRIPT_REVIEW_PRESENT="$(status_value reinstall_transcript_review_present "$LIFECYCLE_STATUS")"
+LIFECYCLE_EVIDENCE_ACCEPTED="$(status_value lifecycle_evidence_accepted_by_intake_validator "$LIFECYCLE_STATUS")"
+INSTALLER_UPGRADE_PATH_VALIDATED="$(status_value installer_upgrade_path_validated "$LIFECYCLE_STATUS")"
+INSTALLER_ROLLBACK_PATH_VALIDATED="$(status_value installer_rollback_path_validated "$LIFECYCLE_STATUS")"
+INSTALLER_DOWNGRADE_OR_ROLLBACK_PATH_VALIDATED="$(status_value installer_downgrade_or_rollback_path_validated "$LIFECYCLE_STATUS")"
+INSTALLER_REINSTALL_IDEMPOTENCE_VALIDATED="$(status_value installer_reinstall_idempotence_validated "$LIFECYCLE_STATUS")"
+
+RECOVERY_EVIDENCE_CANDIDATE_VALID="$(status_value recovery_evidence_candidate_valid "$RECOVERY_STATUS")"
+RECOVERY_RUNBOOK_FILE_PRESENT="$(status_value recovery_runbook_file_present "$RECOVERY_STATUS")"
+FAILURE_MODE_REGISTER_FILE_PRESENT="$(status_value failure_mode_register_file_present "$RECOVERY_STATUS")"
+RECOVERY_DRILL_TRANSCRIPT_FILE_PRESENT="$(status_value recovery_drill_transcript_file_present "$RECOVERY_STATUS")"
+ROLLBACK_DRILL_TRANSCRIPT_FILE_PRESENT="$(status_value rollback_drill_transcript_file_present "$RECOVERY_STATUS")"
+OPERATOR_RECOVERY_RECEIPT_FILE_PRESENT="$(status_value operator_recovery_receipt_file_present "$RECOVERY_STATUS")"
+RECOVERY_RUNBOOK_SHA256_RECORDED="$(status_value recovery_runbook_sha256_recorded "$RECOVERY_STATUS")"
+FAILURE_MODE_REGISTER_SHA256_RECORDED="$(status_value failure_mode_register_sha256_recorded "$RECOVERY_STATUS")"
+RECOVERY_DRILL_TRANSCRIPT_SHA256_RECORDED="$(status_value recovery_drill_transcript_sha256_recorded "$RECOVERY_STATUS")"
+ROLLBACK_DRILL_TRANSCRIPT_SHA256_RECORDED="$(status_value rollback_drill_transcript_sha256_recorded "$RECOVERY_STATUS")"
+OPERATOR_RECOVERY_RECEIPT_SHA256_RECORDED="$(status_value operator_recovery_receipt_sha256_recorded "$RECOVERY_STATUS")"
+RECOVERY_RUNBOOK_REVIEW_PRESENT="$(status_value recovery_runbook_review_present "$RECOVERY_STATUS")"
+FAILURE_MODE_REGISTER_REVIEW_PRESENT="$(status_value failure_mode_register_review_present "$RECOVERY_STATUS")"
+RECOVERY_DRILL_REVIEW_PRESENT="$(status_value recovery_drill_review_present "$RECOVERY_STATUS")"
+ROLLBACK_DRILL_REVIEW_PRESENT="$(status_value rollback_drill_review_present "$RECOVERY_STATUS")"
+OPERATOR_RECOVERY_RECEIPT_REVIEW_PRESENT="$(status_value operator_recovery_receipt_review_present "$RECOVERY_STATUS")"
+RECOVERY_EVIDENCE_ACCEPTED="$(status_value recovery_evidence_accepted_by_intake_validator "$RECOVERY_STATUS")"
+INSTALLER_FAILURE_MODE_DOCUMENTED="$(status_value installer_failure_mode_documented "$RECOVERY_STATUS")"
+INSTALLER_RECOVERY_RUNBOOK_PRESENT="$(status_value installer_recovery_runbook_present "$RECOVERY_STATUS")"
+INSTALLER_RECOVERY_RUNBOOK_REVIEWED="$(status_value installer_recovery_runbook_reviewed "$RECOVERY_STATUS")"
+INSTALLER_RECOVERY_DRILL_VALIDATED="$(status_value installer_recovery_drill_validated "$RECOVERY_STATUS")"
+INSTALLER_ROLLBACK_DRILL_VALIDATED="$(status_value installer_rollback_drill_validated "$RECOVERY_STATUS")"
+INSTALLER_FAILURE_MODE_EVIDENCE_RECORDED="$(status_value installer_failure_mode_evidence_recorded "$RECOVERY_STATUS")"
+
+MULTI_VM_EVIDENCE_CANDIDATE_VALID="$(status_value multi_vm_evidence_candidate_valid "$MULTI_VM_STATUS")"
+FRESH_VM_VALIDATION_FILE_PRESENT="$(status_value fresh_vm_validation_file_present "$MULTI_VM_STATUS")"
+REPEAT_VM_VALIDATION_FILE_PRESENT="$(status_value repeat_vm_validation_file_present "$MULTI_VM_STATUS")"
+EXISTING_INSTALL_VALIDATION_FILE_PRESENT="$(status_value existing_install_validation_file_present "$MULTI_VM_STATUS")"
+REMOVE_REINSTALL_VALIDATION_FILE_PRESENT="$(status_value remove_reinstall_validation_file_present "$MULTI_VM_STATUS")"
+UNSUPPORTED_TARGET_VALIDATION_FILE_PRESENT="$(status_value unsupported_target_validation_file_present "$MULTI_VM_STATUS")"
+NON_ROOT_CLI_VALIDATION_FILE_PRESENT="$(status_value non_root_cli_validation_file_present "$MULTI_VM_STATUS")"
+ROOT_BOUNDARY_VALIDATION_FILE_PRESENT="$(status_value root_boundary_validation_file_present "$MULTI_VM_STATUS")"
+CHECKSUM_VERIFICATION_FILE_PRESENT="$(status_value checksum_verification_file_present "$MULTI_VM_STATUS")"
+PACKAGE_SIGNATURE_VERIFICATION_FILE_PRESENT="$(status_value package_signature_verification_file_present "$MULTI_VM_STATUS")"
+FRESH_VM_VALIDATION_REVIEW_PRESENT="$(status_value fresh_vm_validation_review_present "$MULTI_VM_STATUS")"
+REPEAT_VM_VALIDATION_REVIEW_PRESENT="$(status_value repeat_vm_validation_review_present "$MULTI_VM_STATUS")"
+EXISTING_INSTALL_VALIDATION_REVIEW_PRESENT="$(status_value existing_install_validation_review_present "$MULTI_VM_STATUS")"
+REMOVE_REINSTALL_VALIDATION_REVIEW_PRESENT="$(status_value remove_reinstall_validation_review_present "$MULTI_VM_STATUS")"
+UNSUPPORTED_TARGET_VALIDATION_REVIEW_PRESENT="$(status_value unsupported_target_validation_review_present "$MULTI_VM_STATUS")"
+NON_ROOT_CLI_VALIDATION_REVIEW_PRESENT="$(status_value non_root_cli_validation_review_present "$MULTI_VM_STATUS")"
+ROOT_BOUNDARY_VALIDATION_REVIEW_PRESENT="$(status_value root_boundary_validation_review_present "$MULTI_VM_STATUS")"
+CHECKSUM_VERIFICATION_REVIEW_PRESENT="$(status_value checksum_verification_review_present "$MULTI_VM_STATUS")"
+PACKAGE_SIGNATURE_VERIFICATION_REVIEW_PRESENT="$(status_value package_signature_verification_review_present "$MULTI_VM_STATUS")"
+MULTI_VM_EVIDENCE_ACCEPTED="$(status_value multi_vm_evidence_accepted_by_intake_validator "$MULTI_VM_STATUS")"
+INSTALLER_MULTI_VM_VALIDATION_COMPLETED="$(status_value installer_multi_vm_validation_completed "$MULTI_VM_STATUS")"
+INSTALLER_FRESH_VM_VALIDATION_COMPLETED="$(status_value installer_fresh_vm_validation_completed "$MULTI_VM_STATUS")"
+INSTALLER_REPEAT_VM_VALIDATION_COMPLETED="$(status_value installer_repeat_vm_validation_completed "$MULTI_VM_STATUS")"
+INSTALLER_EXISTING_INSTALL_VALIDATION_COMPLETED="$(status_value installer_existing_install_validation_completed "$MULTI_VM_STATUS")"
+INSTALLER_NON_ROOT_CLI_VALIDATION_COMPLETED="$(status_value installer_non_root_cli_validation_completed "$MULTI_VM_STATUS")"
+INSTALLER_ROOT_BOUNDARY_VALIDATION_COMPLETED="$(status_value installer_root_boundary_validation_completed "$MULTI_VM_STATUS")"
+
+DETAIL_BLOCKER_COUNT=0
+DETAIL_BLOCKERS='none'
+add_detail_blocker() {
+  blocker="$1"
+  if [ "$DETAIL_BLOCKERS" = "none" ]; then
+    DETAIL_BLOCKERS="$blocker"
+  else
+    DETAIL_BLOCKERS="$DETAIL_BLOCKERS,$blocker"
+  fi
+  DETAIL_BLOCKER_COUNT=$((DETAIL_BLOCKER_COUNT + 1))
+}
+
+check_one() {
+  value="$1"
+  blocker="$2"
+  [ "$value" = "1" ] || add_detail_blocker "$blocker"
+}
+
+check_one "$RELEASE_ARTIFACT_PROMOTION_GATE_PASSED" 'release_artifact_promotion_gate_closed'
+check_one "$RELEASE_ARTIFACT_PRESENT" 'release_artifact_missing'
+check_one "$RELEASE_ARTIFACT_BUILT_FROM_TAG" 'release_artifact_not_built_from_tag'
+check_one "$RELEASE_ARTIFACT_REPRODUCIBLE" 'release_artifact_not_reproducible'
+check_one "$RELEASE_ARTIFACT_SHA256_RECORDED" 'release_artifact_sha256_missing'
+check_one "$RELEASE_ARTIFACT_SIGNATURE_PRESENT" 'release_artifact_signature_missing'
+check_one "$RELEASE_ARTIFACT_SIGNATURE_VERIFIED" 'release_artifact_signature_not_verified'
+check_one "$RELEASE_PUBLIC_KEY_DOCUMENTED" 'release_public_key_not_documented'
+check_one "$SIGNATURE_VERIFICATION_DOCUMENTED" 'signature_verification_not_documented'
+check_one "$ARTIFACT_INTEGRITY_REVIEWED" 'artifact_integrity_review_missing'
+check_one "$RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_COMPLETE" 'release_artifact_evidence_template_incomplete'
+check_one "$RELEASE_ARTIFACT_CANDIDATE_VALID" 'release_artifact_evidence_candidate_invalid'
+check_one "$RELEASE_ARTIFACT_CHECKSUM_FILE_PRESENT" 'release_artifact_checksum_file_missing'
+check_one "$RELEASE_ARTIFACT_SHA256_MATCHES" 'release_artifact_sha256_unmatched'
+check_one "$RELEASE_ARTIFACT_SIGNATURE_FILE_PRESENT" 'release_artifact_signature_file_missing'
+check_one "$RELEASE_PUBLIC_KEY_FILE_PRESENT" 'release_public_key_file_missing'
+check_one "$SIGNATURE_VERIFICATION_TRANSCRIPT_PRESENT" 'signature_verification_transcript_missing'
+check_one "$REPRODUCIBILITY_TRANSCRIPT_PRESENT" 'reproducibility_transcript_missing'
+check_one "$ARTIFACT_INTEGRITY_REVIEW_PRESENT" 'artifact_integrity_review_file_missing'
+check_one "$RELEASE_ARTIFACT_EVIDENCE_ACCEPTED" 'release_artifact_evidence_not_accepted'
+
+check_one "$SBOM_EVIDENCE_TEMPLATE_COMPLETE" 'sbom_evidence_template_incomplete'
+check_one "$SBOM_EVIDENCE_CANDIDATE_VALID" 'sbom_evidence_candidate_invalid'
+check_one "$SBOM_ARTIFACT_FILE_PRESENT" 'sbom_artifact_file_missing'
+check_one "$SBOM_ARTIFACT_SHA256_RECORDED" 'sbom_artifact_sha256_missing'
+check_one "$SBOM_DEPENDENCY_REVIEW_PRESENT" 'sbom_dependency_review_missing'
+check_one "$SBOM_VULNERABILITY_REVIEW_PRESENT" 'sbom_vulnerability_review_missing'
+check_one "$SBOM_LICENSE_REVIEW_PRESENT" 'sbom_license_review_missing'
+check_one "$SBOM_REVIEW_PRESENT" 'sbom_final_review_missing'
+check_one "$SBOM_EVIDENCE_ACCEPTED" 'sbom_evidence_not_accepted'
+check_one "$INSTALLER_SBOM_RECORDED" 'installer_sbom_not_recorded'
+
+check_one "$TRANSCRIPT_EVIDENCE_TEMPLATE_COMPLETE" 'transcript_evidence_template_incomplete'
+check_one "$TRANSCRIPT_EVIDENCE_CANDIDATE_VALID" 'transcript_evidence_candidate_invalid'
+check_one "$INSTALL_TRANSCRIPT_FILE_PRESENT" 'install_transcript_file_missing'
+check_one "$UNINSTALL_TRANSCRIPT_FILE_PRESENT" 'uninstall_transcript_file_missing'
+check_one "$POST_REMOVAL_ABSENCE_TRANSCRIPT_FILE_PRESENT" 'post_removal_absence_transcript_file_missing'
+check_one "$INSTALL_TRANSCRIPT_SHA256_RECORDED" 'install_transcript_sha256_missing'
+check_one "$UNINSTALL_TRANSCRIPT_SHA256_RECORDED" 'uninstall_transcript_sha256_missing'
+check_one "$POST_REMOVAL_ABSENCE_TRANSCRIPT_SHA256_RECORDED" 'post_removal_absence_transcript_sha256_missing'
+check_one "$INSTALL_TRANSCRIPT_REVIEW_PRESENT" 'install_transcript_review_missing'
+check_one "$UNINSTALL_TRANSCRIPT_REVIEW_PRESENT" 'uninstall_transcript_review_missing'
+check_one "$POST_REMOVAL_ABSENCE_REVIEW_PRESENT" 'post_removal_absence_review_missing'
+check_one "$TRANSCRIPT_EVIDENCE_ACCEPTED" 'transcript_evidence_not_accepted'
+check_one "$INSTALLER_INSTALL_TRANSCRIPT_RECORDED" 'installer_install_transcript_not_recorded'
+check_one "$INSTALLER_UNINSTALL_TRANSCRIPT_RECORDED" 'installer_uninstall_transcript_not_recorded'
+check_one "$INSTALLER_POST_REMOVAL_ABSENCE_VERIFIED" 'installer_post_removal_absence_not_verified'
+
+check_one "$LIFECYCLE_EVIDENCE_CANDIDATE_VALID" 'lifecycle_evidence_candidate_invalid'
+check_one "$UPGRADE_TRANSCRIPT_FILE_PRESENT" 'upgrade_transcript_file_missing'
+check_one "$ROLLBACK_TRANSCRIPT_FILE_PRESENT" 'rollback_transcript_file_missing'
+check_one "$REINSTALL_TRANSCRIPT_FILE_PRESENT" 'reinstall_transcript_file_missing'
+check_one "$UPGRADE_TRANSCRIPT_SHA256_RECORDED" 'upgrade_transcript_sha256_missing'
+check_one "$ROLLBACK_TRANSCRIPT_SHA256_RECORDED" 'rollback_transcript_sha256_missing'
+check_one "$REINSTALL_TRANSCRIPT_SHA256_RECORDED" 'reinstall_transcript_sha256_missing'
+check_one "$UPGRADE_TRANSCRIPT_REVIEW_PRESENT" 'upgrade_transcript_review_missing'
+check_one "$ROLLBACK_TRANSCRIPT_REVIEW_PRESENT" 'rollback_transcript_review_missing'
+check_one "$REINSTALL_TRANSCRIPT_REVIEW_PRESENT" 'reinstall_transcript_review_missing'
+check_one "$LIFECYCLE_EVIDENCE_ACCEPTED" 'lifecycle_evidence_not_accepted'
+check_one "$INSTALLER_UPGRADE_PATH_VALIDATED" 'installer_upgrade_path_not_validated'
+check_one "$INSTALLER_ROLLBACK_PATH_VALIDATED" 'installer_rollback_path_not_validated'
+check_one "$INSTALLER_DOWNGRADE_OR_ROLLBACK_PATH_VALIDATED" 'installer_downgrade_or_rollback_path_not_validated'
+check_one "$INSTALLER_REINSTALL_IDEMPOTENCE_VALIDATED" 'installer_reinstall_idempotence_not_validated'
+
+check_one "$RECOVERY_EVIDENCE_CANDIDATE_VALID" 'recovery_evidence_candidate_invalid'
+check_one "$RECOVERY_RUNBOOK_FILE_PRESENT" 'recovery_runbook_file_missing'
+check_one "$FAILURE_MODE_REGISTER_FILE_PRESENT" 'failure_mode_register_file_missing'
+check_one "$RECOVERY_DRILL_TRANSCRIPT_FILE_PRESENT" 'recovery_drill_transcript_file_missing'
+check_one "$ROLLBACK_DRILL_TRANSCRIPT_FILE_PRESENT" 'rollback_drill_transcript_file_missing'
+check_one "$OPERATOR_RECOVERY_RECEIPT_FILE_PRESENT" 'operator_recovery_receipt_file_missing'
+check_one "$RECOVERY_RUNBOOK_SHA256_RECORDED" 'recovery_runbook_sha256_missing'
+check_one "$FAILURE_MODE_REGISTER_SHA256_RECORDED" 'failure_mode_register_sha256_missing'
+check_one "$RECOVERY_DRILL_TRANSCRIPT_SHA256_RECORDED" 'recovery_drill_transcript_sha256_missing'
+check_one "$ROLLBACK_DRILL_TRANSCRIPT_SHA256_RECORDED" 'rollback_drill_transcript_sha256_missing'
+check_one "$OPERATOR_RECOVERY_RECEIPT_SHA256_RECORDED" 'operator_recovery_receipt_sha256_missing'
+check_one "$RECOVERY_RUNBOOK_REVIEW_PRESENT" 'recovery_runbook_review_missing'
+check_one "$FAILURE_MODE_REGISTER_REVIEW_PRESENT" 'failure_mode_register_review_missing'
+check_one "$RECOVERY_DRILL_REVIEW_PRESENT" 'recovery_drill_review_missing'
+check_one "$ROLLBACK_DRILL_REVIEW_PRESENT" 'rollback_drill_review_missing'
+check_one "$OPERATOR_RECOVERY_RECEIPT_REVIEW_PRESENT" 'operator_recovery_receipt_review_missing'
+check_one "$RECOVERY_EVIDENCE_ACCEPTED" 'recovery_evidence_not_accepted'
+check_one "$INSTALLER_FAILURE_MODE_DOCUMENTED" 'installer_failure_mode_not_documented'
+check_one "$INSTALLER_RECOVERY_RUNBOOK_PRESENT" 'installer_recovery_runbook_missing'
+check_one "$INSTALLER_RECOVERY_RUNBOOK_REVIEWED" 'installer_recovery_runbook_not_reviewed'
+check_one "$INSTALLER_RECOVERY_DRILL_VALIDATED" 'installer_recovery_drill_not_validated'
+check_one "$INSTALLER_ROLLBACK_DRILL_VALIDATED" 'installer_rollback_drill_not_validated'
+check_one "$INSTALLER_FAILURE_MODE_EVIDENCE_RECORDED" 'installer_failure_mode_evidence_not_recorded'
+
+check_one "$MULTI_VM_EVIDENCE_CANDIDATE_VALID" 'multi_vm_evidence_candidate_invalid'
+check_one "$FRESH_VM_VALIDATION_FILE_PRESENT" 'fresh_vm_validation_file_missing'
+check_one "$REPEAT_VM_VALIDATION_FILE_PRESENT" 'repeat_vm_validation_file_missing'
+check_one "$EXISTING_INSTALL_VALIDATION_FILE_PRESENT" 'existing_install_validation_file_missing'
+check_one "$REMOVE_REINSTALL_VALIDATION_FILE_PRESENT" 'remove_reinstall_validation_file_missing'
+check_one "$UNSUPPORTED_TARGET_VALIDATION_FILE_PRESENT" 'unsupported_target_validation_file_missing'
+check_one "$NON_ROOT_CLI_VALIDATION_FILE_PRESENT" 'non_root_cli_validation_file_missing'
+check_one "$ROOT_BOUNDARY_VALIDATION_FILE_PRESENT" 'root_boundary_validation_file_missing'
+check_one "$CHECKSUM_VERIFICATION_FILE_PRESENT" 'checksum_verification_file_missing'
+check_one "$PACKAGE_SIGNATURE_VERIFICATION_FILE_PRESENT" 'package_signature_verification_file_missing'
+check_one "$FRESH_VM_VALIDATION_REVIEW_PRESENT" 'fresh_vm_validation_review_missing'
+check_one "$REPEAT_VM_VALIDATION_REVIEW_PRESENT" 'repeat_vm_validation_review_missing'
+check_one "$EXISTING_INSTALL_VALIDATION_REVIEW_PRESENT" 'existing_install_validation_review_missing'
+check_one "$REMOVE_REINSTALL_VALIDATION_REVIEW_PRESENT" 'remove_reinstall_validation_review_missing'
+check_one "$UNSUPPORTED_TARGET_VALIDATION_REVIEW_PRESENT" 'unsupported_target_validation_review_missing'
+check_one "$NON_ROOT_CLI_VALIDATION_REVIEW_PRESENT" 'non_root_cli_validation_review_missing'
+check_one "$ROOT_BOUNDARY_VALIDATION_REVIEW_PRESENT" 'root_boundary_validation_review_missing'
+check_one "$CHECKSUM_VERIFICATION_REVIEW_PRESENT" 'checksum_verification_review_missing'
+check_one "$PACKAGE_SIGNATURE_VERIFICATION_REVIEW_PRESENT" 'package_signature_verification_review_missing'
+check_one "$MULTI_VM_EVIDENCE_ACCEPTED" 'multi_vm_evidence_not_accepted'
+check_one "$INSTALLER_MULTI_VM_VALIDATION_COMPLETED" 'installer_multi_vm_validation_not_completed'
+check_one "$INSTALLER_FRESH_VM_VALIDATION_COMPLETED" 'installer_fresh_vm_validation_not_completed'
+check_one "$INSTALLER_REPEAT_VM_VALIDATION_COMPLETED" 'installer_repeat_vm_validation_not_completed'
+check_one "$INSTALLER_EXISTING_INSTALL_VALIDATION_COMPLETED" 'installer_existing_install_validation_not_completed'
+check_one "$INSTALLER_NON_ROOT_CLI_VALIDATION_COMPLETED" 'installer_non_root_cli_validation_not_completed'
+check_one "$INSTALLER_ROOT_BOUNDARY_VALIDATION_COMPLETED" 'installer_root_boundary_validation_not_completed'
+
+PASSED=0
+if [ "$DETAIL_BLOCKER_COUNT" = "0" ]; then
+  PASSED=1
+fi
+
+cat <<REPORT
+LATTICRA V1 EVIDENCE BLOCKER AUDIT
+v1_evidence_blocker_audit_status=ok
+v1_evidence_blocker_audit_present=1
+v1_evidence_blocker_audit_mode=no-effect-evidence-blocker-decomposition
+v1_evidence_blocker_audit_passed=$PASSED
+v1_evidence_detail_blocker_count=$DETAIL_BLOCKER_COUNT
+v1_evidence_detail_blockers=$DETAIL_BLOCKERS
+release_artifact_promotion_gate_passed=$RELEASE_ARTIFACT_PROMOTION_GATE_PASSED
+release_artifact_present=$RELEASE_ARTIFACT_PRESENT
+release_artifact_built_from_tag=$RELEASE_ARTIFACT_BUILT_FROM_TAG
+release_artifact_reproducible=$RELEASE_ARTIFACT_REPRODUCIBLE
+release_artifact_sha256_recorded=$RELEASE_ARTIFACT_SHA256_RECORDED
+release_artifact_signature_present=$RELEASE_ARTIFACT_SIGNATURE_PRESENT
+release_artifact_signature_verified=$RELEASE_ARTIFACT_SIGNATURE_VERIFIED
+release_public_key_documented=$RELEASE_PUBLIC_KEY_DOCUMENTED
+signature_verification_documented=$SIGNATURE_VERIFICATION_DOCUMENTED
+artifact_integrity_reviewed=$ARTIFACT_INTEGRITY_REVIEWED
+release_artifact_evidence_template_complete=$RELEASE_ARTIFACT_EVIDENCE_TEMPLATE_COMPLETE
+release_artifact_candidate_valid=$RELEASE_ARTIFACT_CANDIDATE_VALID
+release_artifact_checksum_file_present=$RELEASE_ARTIFACT_CHECKSUM_FILE_PRESENT
+release_artifact_sha256_matches=$RELEASE_ARTIFACT_SHA256_MATCHES
+release_artifact_signature_file_present=$RELEASE_ARTIFACT_SIGNATURE_FILE_PRESENT
+release_public_key_file_present=$RELEASE_PUBLIC_KEY_FILE_PRESENT
+signature_verification_transcript_present=$SIGNATURE_VERIFICATION_TRANSCRIPT_PRESENT
+reproducibility_transcript_present=$REPRODUCIBILITY_TRANSCRIPT_PRESENT
+artifact_integrity_review_present=$ARTIFACT_INTEGRITY_REVIEW_PRESENT
+release_artifact_evidence_accepted_by_intake_validator=$RELEASE_ARTIFACT_EVIDENCE_ACCEPTED
+sbom_evidence_template_complete=$SBOM_EVIDENCE_TEMPLATE_COMPLETE
+sbom_evidence_candidate_valid=$SBOM_EVIDENCE_CANDIDATE_VALID
+sbom_artifact_file_present=$SBOM_ARTIFACT_FILE_PRESENT
+sbom_artifact_sha256_recorded=$SBOM_ARTIFACT_SHA256_RECORDED
+sbom_dependency_review_present=$SBOM_DEPENDENCY_REVIEW_PRESENT
+sbom_vulnerability_review_present=$SBOM_VULNERABILITY_REVIEW_PRESENT
+sbom_license_review_present=$SBOM_LICENSE_REVIEW_PRESENT
+sbom_review_present=$SBOM_REVIEW_PRESENT
+sbom_evidence_accepted_by_intake_validator=$SBOM_EVIDENCE_ACCEPTED
+installer_sbom_recorded=$INSTALLER_SBOM_RECORDED
+transcript_evidence_template_complete=$TRANSCRIPT_EVIDENCE_TEMPLATE_COMPLETE
+transcript_evidence_candidate_valid=$TRANSCRIPT_EVIDENCE_CANDIDATE_VALID
+install_transcript_file_present=$INSTALL_TRANSCRIPT_FILE_PRESENT
+uninstall_transcript_file_present=$UNINSTALL_TRANSCRIPT_FILE_PRESENT
+post_removal_absence_transcript_file_present=$POST_REMOVAL_ABSENCE_TRANSCRIPT_FILE_PRESENT
+install_transcript_sha256_recorded=$INSTALL_TRANSCRIPT_SHA256_RECORDED
+uninstall_transcript_sha256_recorded=$UNINSTALL_TRANSCRIPT_SHA256_RECORDED
+post_removal_absence_transcript_sha256_recorded=$POST_REMOVAL_ABSENCE_TRANSCRIPT_SHA256_RECORDED
+install_transcript_review_present=$INSTALL_TRANSCRIPT_REVIEW_PRESENT
+uninstall_transcript_review_present=$UNINSTALL_TRANSCRIPT_REVIEW_PRESENT
+post_removal_absence_review_present=$POST_REMOVAL_ABSENCE_REVIEW_PRESENT
+transcript_evidence_accepted_by_intake_validator=$TRANSCRIPT_EVIDENCE_ACCEPTED
+installer_install_transcript_recorded=$INSTALLER_INSTALL_TRANSCRIPT_RECORDED
+installer_uninstall_transcript_recorded=$INSTALLER_UNINSTALL_TRANSCRIPT_RECORDED
+installer_post_removal_absence_verified=$INSTALLER_POST_REMOVAL_ABSENCE_VERIFIED
+lifecycle_evidence_candidate_valid=$LIFECYCLE_EVIDENCE_CANDIDATE_VALID
+upgrade_transcript_file_present=$UPGRADE_TRANSCRIPT_FILE_PRESENT
+rollback_transcript_file_present=$ROLLBACK_TRANSCRIPT_FILE_PRESENT
+reinstall_transcript_file_present=$REINSTALL_TRANSCRIPT_FILE_PRESENT
+upgrade_transcript_sha256_recorded=$UPGRADE_TRANSCRIPT_SHA256_RECORDED
+rollback_transcript_sha256_recorded=$ROLLBACK_TRANSCRIPT_SHA256_RECORDED
+reinstall_transcript_sha256_recorded=$REINSTALL_TRANSCRIPT_SHA256_RECORDED
+upgrade_transcript_review_present=$UPGRADE_TRANSCRIPT_REVIEW_PRESENT
+rollback_transcript_review_present=$ROLLBACK_TRANSCRIPT_REVIEW_PRESENT
+reinstall_transcript_review_present=$REINSTALL_TRANSCRIPT_REVIEW_PRESENT
+lifecycle_evidence_accepted_by_intake_validator=$LIFECYCLE_EVIDENCE_ACCEPTED
+installer_upgrade_path_validated=$INSTALLER_UPGRADE_PATH_VALIDATED
+installer_rollback_path_validated=$INSTALLER_ROLLBACK_PATH_VALIDATED
+installer_downgrade_or_rollback_path_validated=$INSTALLER_DOWNGRADE_OR_ROLLBACK_PATH_VALIDATED
+installer_reinstall_idempotence_validated=$INSTALLER_REINSTALL_IDEMPOTENCE_VALIDATED
+recovery_evidence_candidate_valid=$RECOVERY_EVIDENCE_CANDIDATE_VALID
+recovery_runbook_file_present=$RECOVERY_RUNBOOK_FILE_PRESENT
+failure_mode_register_file_present=$FAILURE_MODE_REGISTER_FILE_PRESENT
+recovery_drill_transcript_file_present=$RECOVERY_DRILL_TRANSCRIPT_FILE_PRESENT
+rollback_drill_transcript_file_present=$ROLLBACK_DRILL_TRANSCRIPT_FILE_PRESENT
+operator_recovery_receipt_file_present=$OPERATOR_RECOVERY_RECEIPT_FILE_PRESENT
+recovery_runbook_review_present=$RECOVERY_RUNBOOK_REVIEW_PRESENT
+failure_mode_register_review_present=$FAILURE_MODE_REGISTER_REVIEW_PRESENT
+recovery_drill_review_present=$RECOVERY_DRILL_REVIEW_PRESENT
+rollback_drill_review_present=$ROLLBACK_DRILL_REVIEW_PRESENT
+operator_recovery_receipt_review_present=$OPERATOR_RECOVERY_RECEIPT_REVIEW_PRESENT
+recovery_evidence_accepted_by_intake_validator=$RECOVERY_EVIDENCE_ACCEPTED
+installer_failure_mode_documented=$INSTALLER_FAILURE_MODE_DOCUMENTED
+installer_recovery_runbook_present=$INSTALLER_RECOVERY_RUNBOOK_PRESENT
+installer_recovery_runbook_reviewed=$INSTALLER_RECOVERY_RUNBOOK_REVIEWED
+installer_recovery_drill_validated=$INSTALLER_RECOVERY_DRILL_VALIDATED
+installer_rollback_drill_validated=$INSTALLER_ROLLBACK_DRILL_VALIDATED
+installer_failure_mode_evidence_recorded=$INSTALLER_FAILURE_MODE_EVIDENCE_RECORDED
+multi_vm_evidence_candidate_valid=$MULTI_VM_EVIDENCE_CANDIDATE_VALID
+fresh_vm_validation_file_present=$FRESH_VM_VALIDATION_FILE_PRESENT
+repeat_vm_validation_file_present=$REPEAT_VM_VALIDATION_FILE_PRESENT
+existing_install_validation_file_present=$EXISTING_INSTALL_VALIDATION_FILE_PRESENT
+remove_reinstall_validation_file_present=$REMOVE_REINSTALL_VALIDATION_FILE_PRESENT
+unsupported_target_validation_file_present=$UNSUPPORTED_TARGET_VALIDATION_FILE_PRESENT
+non_root_cli_validation_file_present=$NON_ROOT_CLI_VALIDATION_FILE_PRESENT
+root_boundary_validation_file_present=$ROOT_BOUNDARY_VALIDATION_FILE_PRESENT
+checksum_verification_file_present=$CHECKSUM_VERIFICATION_FILE_PRESENT
+package_signature_verification_file_present=$PACKAGE_SIGNATURE_VERIFICATION_FILE_PRESENT
+fresh_vm_validation_review_present=$FRESH_VM_VALIDATION_REVIEW_PRESENT
+repeat_vm_validation_review_present=$REPEAT_VM_VALIDATION_REVIEW_PRESENT
+existing_install_validation_review_present=$EXISTING_INSTALL_VALIDATION_REVIEW_PRESENT
+remove_reinstall_validation_review_present=$REMOVE_REINSTALL_VALIDATION_REVIEW_PRESENT
+unsupported_target_validation_review_present=$UNSUPPORTED_TARGET_VALIDATION_REVIEW_PRESENT
+non_root_cli_validation_review_present=$NON_ROOT_CLI_VALIDATION_REVIEW_PRESENT
+root_boundary_validation_review_present=$ROOT_BOUNDARY_VALIDATION_REVIEW_PRESENT
+checksum_verification_review_present=$CHECKSUM_VERIFICATION_REVIEW_PRESENT
+package_signature_verification_review_present=$PACKAGE_SIGNATURE_VERIFICATION_REVIEW_PRESENT
+multi_vm_evidence_accepted_by_intake_validator=$MULTI_VM_EVIDENCE_ACCEPTED
+installer_multi_vm_validation_completed=$INSTALLER_MULTI_VM_VALIDATION_COMPLETED
+installer_fresh_vm_validation_completed=$INSTALLER_FRESH_VM_VALIDATION_COMPLETED
+installer_repeat_vm_validation_completed=$INSTALLER_REPEAT_VM_VALIDATION_COMPLETED
+installer_existing_install_validation_completed=$INSTALLER_EXISTING_INSTALL_VALIDATION_COMPLETED
+installer_non_root_cli_validation_completed=$INSTALLER_NON_ROOT_CLI_VALIDATION_COMPLETED
+installer_root_boundary_validation_completed=$INSTALLER_ROOT_BOUNDARY_VALIDATION_COMPLETED
+
+[non_effects]
+release_artifact_created=0
+source_archive_created=0
+sbom_generated=0
+vm_invocation_performed=0
+package_manager_invoked=0
+evidence_written=0
+evidence_accepted=0
+release_artifact_promotion_performed=0
+install_performed=0
+host_mutation_performed=0
+REPORT

@@ -14,6 +14,7 @@ Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
 Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
+Latest Latticra v1.0.0 evidence blocker audit note: 2026-06-12 CDT
 Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
