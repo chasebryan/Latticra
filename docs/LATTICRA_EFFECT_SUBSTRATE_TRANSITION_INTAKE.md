@@ -44,8 +44,12 @@ model1_import_review_satisfied=0
 separate_build_platform_review_required=1
 separate_build_platform_review_boundary_intake_satisfied=1
 separate_build_platform_review_boundary_reference=docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md
+guarded_model1_effect_demonstration_boundary_required=1
+guarded_model1_effect_demonstration_boundary_intake_satisfied=1
+guarded_model1_effect_demonstration_boundary_reference=docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_BOUNDARY.md
 guarded_model1_effect_demonstration_required=1
 guarded_model1_effect_demonstration_satisfied=0
+guarded_model1_effect_demonstration_evidence_accepted=0
 operator_demo_non_claim_review_required=1
 operator_usable_workflow_required=1
 operator_workflow_reference_required=1
@@ -70,7 +74,8 @@ Future intake should proceed in this order:
 4. separate-build platform integration review boundary - satisfied
 5. Model-1 bridge protocol contract - satisfied
 6. Model-1 import and mixed-build review boundary - satisfied
-7. guarded Model-1 effect demonstration evidence
+7. guarded Model-1 effect demonstration evidence boundary - satisfied
+8. guarded Model-1 effect demonstration evidence packet intake validator
 ```
 
 No later item should be treated as accepted just because an earlier item exists.
@@ -105,13 +110,19 @@ distribution_readiness_claim=0
 runtime_authority_granted=0
 ```
 
-## Next Recommended Slice
+## Completed Follow-On Boundary
 
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-That next slice should remain no-effect until it proves request contract, bridge request and response evidence, deny-by-default behavior, operator workflow, target evidence, redaction, and non-claim review without launching Model-1 or dispatching effects.
+## Next Recommended Slice
+
+```text
+Guarded Model-1 effect demonstration evidence packet intake validator.
+```
+
+That next slice should remain no-effect until it can reject incomplete, effect-performing, unredacted, or claim-promoting evidence packets without launching Model-1 or dispatching effects.
 
 ## Validation
 

@@ -12,6 +12,7 @@ Latest Latticra effect runner implementation review boundary note: 2026-05-29 CD
 Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
+Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -755,6 +756,8 @@ The Model-1 bridge protocol contract now satisfies the fifth transition-intake b
 
 The Model-1 import and mixed-build review boundary now satisfies the sixth transition-intake boundary by requiring import scope, source provenance, mixed-build layout, target identity, bridge-protocol compatibility, target evidence, and non-claim evidence while preserving denied Model-1 import acceptance, mixed-build promotion, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
 
+The guarded Model-1 effect demonstration evidence boundary now satisfies the no-effect demonstration evidence-boundary shape by requiring request contract, bridge request and response evidence, deny-by-default evidence, operator workflow, target evidence, redaction, and non-claim review before any evidence packet acceptance while preserving denied Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
+
 The computational proof foundation now records Latticra's science and computer-science framing for simulation-bound reality research while requiring proof objects, falsifiability, observer boundaries, physics constraint models, receipts, replay, and adversarial review before any scientific claim is promoted.
 
 The computational math and physics evaluation now records the proof-lane order: math review first, physics coupling second, substrate-engine visual demonstration preparation third, with `visual_demo_rendered=0` and scientific claim promotion still closed.
@@ -807,8 +810,16 @@ The identity-replay refined Model-3 pre-registration now locks the sector-resolv
 
 The Higgs challenge one-page verifier now gives outsiders a concise public entrypoint plus `make verify-higgs-chain`, a single command that runs the guarded Proof Object 2/3/4 through Model-3 rejection analysis and refined pre-registration. It records `single_command_reproduction_present=1`, `current_best_failure=Model-3 rejection analysis`, `refined_model3_preregistration_present=1`, `mass_ratio_recovery_claimed=0`, `higgs_checkmate_claimed=0`, and `simulation_proven=0`.
 
+Completed follow-on lane:
+
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
+```
+
+Next guarded Model-1 effect lane:
+
+```text
+Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
 Completed computational-proof follow-up:

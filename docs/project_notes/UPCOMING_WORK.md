@@ -10,6 +10,7 @@ Latest Latticra effect runner implementation review boundary note: 2026-05-29 CD
 Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
+Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -1439,6 +1440,8 @@ The effect allowlist and build-profile boundary now satisfies the second transit
 
 The Model-1 import and mixed-build review boundary now satisfies the sixth transition-intake boundary by requiring import scope, source provenance, mixed-build layout, target identity, bridge-protocol compatibility, target evidence, and non-claim evidence while preserving denied Model-1 import acceptance, mixed-build promotion, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
 
+The guarded Model-1 effect demonstration evidence boundary now satisfies the no-effect demonstration evidence-boundary shape by requiring request contract, bridge request and response evidence, deny-by-default evidence, operator workflow, target evidence, redaction, and non-claim review before any evidence packet acceptance while preserving denied Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority.
+
 The computational proof foundation now records Latticra's science and computer-science framing for simulation-bound reality research while preserving `simulation_proven=0`, `reality_simulation_claimed=0`, and `physics_bound_by_simulative_concepts_claimed=0`.
 
 The computational math and physics evaluation now records the proof-lane order: math review first, physics coupling second, substrate-engine visual demonstration preparation third.
@@ -1446,6 +1449,7 @@ The computational math and physics evaluation now records the proof-lane order: 
 The Speculum premise now names the clarifying mirror beside the simulacrum, preserving simulation-bound reality language as a bounded research premise while denying reality-simulation proof, physics measurement, metaphysical claim promotion, runtime execution, effect execution, and public certainty performance.
 
 Completed follow-on lane: Model-1 import and mixed-build review boundary.
+Completed follow-on lane: Guarded Model-1 effect demonstration evidence boundary.
 Completed computational-proof companion lane: Latticra Speculum premise.
 
 Purpose:
@@ -1457,7 +1461,7 @@ keep v0.3.0edge effect posture aligned while bounded local effects remain separa
 Effect-substrate transition intake follow-up:
 
 ```text
-Guarded Model-1 effect demonstration evidence boundary.
+Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
 Completed computational-proof follow-up:
@@ -1586,7 +1590,7 @@ Latticra substrate impedance mass-ratio derivation.
 ## Near-term queue
 
 1. Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
-2. Guarded Model-1 effect demonstration evidence boundary.
+2. Guarded Model-1 effect demonstration evidence packet intake validator.
 3. Identity-replay impedance refined Model-3 target-blind capacity gate.
 4. Authority status announcement only if public messaging changes.
 5. C++ authority expansion contract only if new authority behavior is proposed.

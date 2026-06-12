@@ -58,6 +58,8 @@ The [Model-1 bridge protocol contract](docs/LATTICRA_MODEL1_BRIDGE_PROTOCOL_CONT
 
 The [Model-1 import and mixed-build review boundary](docs/LATTICRA_MODEL1_IMPORT_MIXED_BUILD_REVIEW_BOUNDARY.md) satisfies the sixth transition-intake boundary by defining import scope, source provenance, mixed-build layout, target identity, bridge-protocol compatibility, target evidence, and non-claim evidence while keeping Model-1 import acceptance, mixed-build promotion, and effect dispatch closed.
 
+The [guarded Model-1 effect demonstration evidence boundary](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_BOUNDARY.md) satisfies the guarded demonstration evidence-boundary shape by defining request contract, bridge request and response evidence, deny-by-default evidence, operator workflow, target evidence, redaction, and non-claim review requirements while keeping Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority closed.
+
 The [computational proof foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) begins the explicit computer-science and science framing for investigating simulation-bound reality hypotheses through proof objects, falsifiability, observer boundaries, physics constraint modeling, receipts, replay, and adversarial review while keeping `simulation_proven=0`.
 
 The [computational math and physics evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) records the first proof-lane order: evaluate the math, couple reviewed math to physics-model fields, then prepare a substrate-engine visual demonstration while keeping visual evidence and scientific claims closed.
@@ -72,8 +74,8 @@ For `v0.4.0edge`, the README integration posture is:
 | --- | --- |
 | Current checkpoint | `v0.3.0edge` remains the current public edge checkpoint |
 | Next main edge line | `v0.4.0edge` is the next main edge line, not yet a tag or release claim |
-| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, separate-build platform review boundary, Model-1 bridge protocol contract, and Model-1 import/mixed-build review boundary |
-| Required before integration | guarded Model-1 effect demonstration evidence |
+| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, separate-build platform review boundary, Model-1 bridge protocol contract, Model-1 import/mixed-build review boundary, and guarded Model-1 effect demonstration evidence boundary |
+| Required before integration | accepted guarded Model-1 effect demonstration evidence packet and explicit operator non-claim review |
 | Still closed | Model-1 launch, effect dispatch, command execution, file mutation, artifact acceptance, mixed-build promotion, runtime authority, and production readiness |
 
 <details>

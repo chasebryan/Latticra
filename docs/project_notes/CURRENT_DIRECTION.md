@@ -10,6 +10,7 @@ Latest Latticra effect runner implementation review boundary note: 2026-05-29 CD
 Latest Latticra separate-build platform integration review boundary note: 2026-05-29 CDT
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
+Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -648,19 +649,25 @@ Latticra Seal signed receipt proof path implementation summarizes local verified
 
 Latticra Seal signed receipt proof path surface/status renders that deterministic verification-only proof summary while preserving no production proof, no trust-root loading, no revocation lookup, no signing, no effect execution, and no runtime authority.
 
-The current recommended review lane is:
+The completed transition-intake review lane is:
 
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
+```
+
+The current recommended review lane is:
+
+```text
+Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
 Completion estimate review should now treat bounded local effects as a capability-posture change, but it must not turn local effect visibility into a production-readiness claim.
 
 The current project rule is: Keep v0.3.0edge effect posture aligned while bounded local effects remain separated from root, network, USB, QEMU, package-manager, kernel, service, boot, and production-readiness authority.
 
-The current transition-intake rule is: future effect-runner, build-profile, and Model-1 bridge work must pass through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, Model-1 bridge contract, and Model-1 import/mixed-build review boundary before capability promotion.
+The current transition-intake rule is: future effect-runner, build-profile, and Model-1 bridge work must pass through an effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, Model-1 bridge contract, Model-1 import/mixed-build review boundary, and guarded demonstration evidence boundary before capability promotion.
 
-The first through sixth transition-intake boundaries are now satisfied by the no-effect effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, effect-runner implementation review boundary, separate-build platform integration review boundary, Model-1 bridge protocol contract, and Model-1 import and mixed-build review boundary. The allowlist boundary still requires `operator_usable_workflow_required=1`. The bridge protocol records `bridge_message_format_required=1`, `trace_correlation_required=1`, `authority_handoff_required=1`, and `target_evidence_fields_required=1`; the import/mixed-build boundary records `import_scope_review_required=1`, `mixed_build_layout_review_required=1`, and `bridge_protocol_compatibility_required=1` while keeping `model1_bridge_execution_performed=0`, `model1_process_launch_performed=0`, `model1_import_accepted=0`, `mixed_build_promotion_accepted=0`, and `runtime_authority_granted=0`. The next natural path is the guarded Model-1 effect demonstration evidence boundary, still without launching Model-1 or dispatching effects.
+The first through seventh transition-intake boundary shapes are now satisfied by the no-effect effect contract schema, evidence record contract, allowlist boundary, build-profile boundary, effect-runner implementation review boundary, separate-build platform integration review boundary, Model-1 bridge protocol contract, Model-1 import and mixed-build review boundary, and guarded Model-1 effect demonstration evidence boundary. The allowlist boundary still requires `operator_usable_workflow_required=1`. The bridge protocol records `bridge_message_format_required=1`, `trace_correlation_required=1`, `authority_handoff_required=1`, and `target_evidence_fields_required=1`; the import/mixed-build boundary records `import_scope_review_required=1`, `mixed_build_layout_review_required=1`, and `bridge_protocol_compatibility_required=1`; the guarded demonstration boundary records `request_contract_required=1`, `bridge_request_evidence_required=1`, `bridge_response_evidence_required=1`, `deny_by_default_evidence_required=1`, `redaction_review_required=1`, and `non_claim_review_required=1` while keeping `model1_bridge_execution_performed=0`, `model1_process_launch_performed=0`, `model1_import_accepted=0`, `mixed_build_promotion_accepted=0`, `guarded_model1_effect_demonstration_satisfied=0`, and `runtime_authority_granted=0`. The next natural path is the guarded Model-1 effect demonstration evidence packet intake validator, still without launching Model-1 or dispatching effects.
 
 The computational proof foundation now makes Latticra's scientific direction explicit: simulation-bound reality remains a research hypothesis, not a claim, and any future proof lane must expose proof objects, falsifier conditions, observer boundaries, physics constraint models, receipts, replay requirements, and adversarial review before promotion.
 

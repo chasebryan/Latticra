@@ -43,8 +43,12 @@ model1_import_review_satisfied=0
 separate_build_platform_review_required=1
 separate_build_platform_review_boundary_intake_satisfied=1
 separate_build_platform_review_boundary_reference=docs/LATTICRA_SEPARATE_BUILD_PLATFORM_INTEGRATION_REVIEW_BOUNDARY.md
+guarded_model1_effect_demonstration_boundary_required=1
+guarded_model1_effect_demonstration_boundary_intake_satisfied=1
+guarded_model1_effect_demonstration_boundary_reference=docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_BOUNDARY.md
 guarded_model1_effect_demonstration_required=1
 guarded_model1_effect_demonstration_satisfied=0
+guarded_model1_effect_demonstration_evidence_accepted=0
 operator_demo_non_claim_review_required=1
 operator_usable_workflow_required=1
 operator_workflow_reference_required=1
@@ -100,10 +104,16 @@ Expected output:
 latticra_effect_substrate_transition_intake: ok
 ```
 
-## Next Recommended Lane
+## Completed Follow-On Boundary
 
 ```text
 Guarded Model-1 effect demonstration evidence boundary.
+```
+
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
 ## Non-Claims

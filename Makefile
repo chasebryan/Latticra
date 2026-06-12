@@ -15,6 +15,7 @@
 .PHONY: latticra-separate-build-platform-integration-review-boundary
 .PHONY: latticra-model1-bridge-protocol-contract
 .PHONY: latticra-model1-import-mixed-build-review-boundary
+.PHONY: latticra-guarded-model1-effect-demonstration-evidence-boundary
 .PHONY: latticra-computational-proof-foundation
 .PHONY: latticra-computational-math-physics-evaluation
 .PHONY: latticra-speculum-premise
@@ -750,6 +751,7 @@ quality-status:
 	sh ./scripts/test-latticra-separate-build-platform-integration-review-boundary.sh
 	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
 	sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh
 	sh ./scripts/test-latticra-computational-proof-foundation.sh
 	sh ./scripts/test-latticra-computational-math-physics-evaluation.sh
 	sh ./scripts/test-latticra-speculum-premise.sh
@@ -801,6 +803,9 @@ latticra-model1-bridge-protocol-contract:
 
 latticra-model1-import-mixed-build-review-boundary:
 	sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh
+
+latticra-guarded-model1-effect-demonstration-evidence-boundary:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh
 
 latticra-computational-proof-foundation:
 	sh ./scripts/test-latticra-computational-proof-foundation.sh
