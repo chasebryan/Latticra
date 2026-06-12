@@ -91,10 +91,10 @@ require_contains 'Edge edition checkpoint: `v0.3.0edge`' README.md
 require_contains 'Next main edge line: `v0.4.0edge`' README.md
 require_contains 'It is not a production platform' README.md
 require_contains 'Production quality blocker ledger' README.md
-require_contains 'production_platform_claim_allowed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
-require_contains 'production_installer_ready=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
-require_contains 'production_cryptography_claimed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
-require_contains 'production_enforcement_claimed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'production_platform_claim_allowed=' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'production_installer_ready=' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'production_cryptography_claimed=' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'production_enforcement_claimed=' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_promotion_gate_passed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_present=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_signature_verified=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
@@ -105,11 +105,11 @@ require_contains 'transcript_evidence_intake_validator_present=1' docs/status/PR
 require_contains 'lifecycle_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 require_contains 'recovery_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 require_contains 'multi_vm_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
-require_contains 'fedora_production_readiness_evidence_complete=0' docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md
-require_contains 'production_nadia_ready=0' docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md
-require_contains 'runtime_crypto_ready=0' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'production_crypto_claim_allowed=0' latticra-q-seal/evidence/Q_SEAL_READINESS.md
-require_contains 'runtime_authority_granted=0' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'fedora_production_readiness_evidence_complete=' docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md
+require_contains 'production_nadia_ready=' docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md
+require_contains 'runtime_crypto_ready=' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'production_crypto_claim_allowed=' latticra-q-seal/evidence/Q_SEAL_READINESS.md
+require_contains 'runtime_authority_granted=' latticra-q-seal/evidence/Q_SEAL_READINESS.md
 
 GIT_AVAILABLE="$(tool_available git)"
 TRACKED_DIRTY_COUNT='unknown'
@@ -179,6 +179,24 @@ RECOVERY_EVIDENCE_CANDIDATE_VALID="$(status_value recovery_evidence_candidate_va
 RECOVERY_EVIDENCE_ACCEPTED="$(status_value recovery_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
 MULTI_VM_EVIDENCE_CANDIDATE_VALID="$(status_value multi_vm_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
 MULTI_VM_EVIDENCE_ACCEPTED="$(status_value multi_vm_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+PRODUCTION_PLATFORM_CLAIM_ALLOWED="$(status_value production_platform_claim_allowed docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md)"
+PRODUCTION_RELEASE_READY=0
+PRODUCTION_INSTALLER_READY="$(status_value production_installer_ready docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md)"
+PRODUCTION_AI_CLAIMED="$(status_value production_ai_claimed docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md)"
+PRODUCTION_CRYPTOGRAPHY_CLAIMED="$(status_value production_cryptography_claimed docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md)"
+PRODUCTION_ENFORCEMENT_CLAIMED="$(status_value production_enforcement_claimed docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md)"
+FEDORA_PRODUCTION_READINESS_EVIDENCE_COMPLETE="$(status_value fedora_production_readiness_evidence_complete docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+FEDORA_PRODUCTION_READINESS_PROMOTION_ALLOWED="$(status_value fedora_production_readiness_promotion_allowed docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+FEDORA_DISTRIBUTION_READY="$(status_value fedora_distribution_ready docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+FEDORA_APPROVAL_CLAIMED="$(status_value fedora_approval_claimed docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+DAILY_DRIVER_INSTALL_READY="$(status_value daily_driver_install_ready docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+IMMUTABLE_FEDORA_READY="$(status_value immutable_fedora_ready docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md)"
+PRODUCTION_NADIA_READY="$(status_value production_nadia_ready docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md)"
+NADIA_PUBLIC_RELEASE_ALLOWED="$(status_value public_release_allowed docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md)"
+Q_SEAL_READINESS_PROFILE_PRESENT="$(status_value q_seal_readiness_profile_present latticra-q-seal/evidence/Q_SEAL_READINESS.md)"
+Q_SEAL_RUNTIME_CRYPTO_READY="$(status_value runtime_crypto_ready latticra-q-seal/evidence/Q_SEAL_READINESS.md)"
+Q_SEAL_PRODUCTION_CRYPTO_CLAIM_ALLOWED="$(status_value production_crypto_claim_allowed latticra-q-seal/evidence/Q_SEAL_READINESS.md)"
+RUNTIME_AUTHORITY_GRANTED="$(status_value runtime_authority_granted latticra-q-seal/evidence/Q_SEAL_READINESS.md)"
 
 BLOCKER_COUNT=0
 BLOCKERS='none'
@@ -205,10 +223,14 @@ PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
 add_blocker 'current_edge_checkpoint_not_v1'
 PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
 add_blocker 'v040edge_not_current_release'
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'production_platform_claim_closed'
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'production_installer_not_ready'
+if [ "$PRODUCTION_PLATFORM_CLAIM_ALLOWED" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'production_platform_claim_closed'
+fi
+if [ "$PRODUCTION_INSTALLER_READY" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'production_installer_not_ready'
+fi
 EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
 add_blocker 'release_artifact_not_promoted'
 EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
@@ -239,14 +261,26 @@ if [ "$MULTI_VM_EVIDENCE_ACCEPTED" != "1" ]; then
   EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
   add_blocker 'multi_vm_evidence_not_accepted'
 fi
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'fedora_production_readiness_incomplete'
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'nadia_production_readiness_blocked'
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'q_seal_runtime_crypto_blocked'
-PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
-add_blocker 'runtime_authority_closed'
+if [ "$FEDORA_PRODUCTION_READINESS_EVIDENCE_COMPLETE" != "1" ] ||
+   [ "$FEDORA_PRODUCTION_READINESS_PROMOTION_ALLOWED" != "1" ] ||
+   [ "$FEDORA_DISTRIBUTION_READY" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'fedora_production_readiness_incomplete'
+fi
+if [ "$PRODUCTION_NADIA_READY" != "1" ] ||
+   [ "$NADIA_PUBLIC_RELEASE_ALLOWED" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'nadia_production_readiness_blocked'
+fi
+if [ "$Q_SEAL_RUNTIME_CRYPTO_READY" != "1" ] ||
+   [ "$Q_SEAL_PRODUCTION_CRYPTO_CLAIM_ALLOWED" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'q_seal_runtime_crypto_blocked'
+fi
+if [ "$RUNTIME_AUTHORITY_GRANTED" != "1" ]; then
+  PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
+  add_blocker 'runtime_authority_closed'
+fi
 
 if [ "$RPMBUILD_AVAILABLE" != "1" ]; then
   EXTERNAL_PREREQUISITE_BLOCKER_COUNT=$((EXTERNAL_PREREQUISITE_BLOCKER_COUNT + 1))
@@ -307,12 +341,12 @@ v1_tag_exists=$V1_TAG_EXISTS
 v1_tag_commit=$V1_TAG_COMMIT
 v1_release_candidate_declared=0
 v1_public_release_allowed=0
-production_platform_claim_allowed=0
-production_release_ready=0
-production_installer_ready=0
-production_ai_claimed=0
-production_cryptography_claimed=0
-production_enforcement_claimed=0
+production_platform_claim_allowed=$PRODUCTION_PLATFORM_CLAIM_ALLOWED
+production_release_ready=$PRODUCTION_RELEASE_READY
+production_installer_ready=$PRODUCTION_INSTALLER_READY
+production_ai_claimed=$PRODUCTION_AI_CLAIMED
+production_cryptography_claimed=$PRODUCTION_CRYPTOGRAPHY_CLAIMED
+production_enforcement_claimed=$PRODUCTION_ENFORCEMENT_CLAIMED
 release_artifact_candidate_preflight_present=1
 release_artifact_candidate_preflight_passed=$ARTIFACT_CANDIDATE_PREFLIGHT_PASSED
 release_artifact_candidate_inputs_satisfied=$ARTIFACT_CANDIDATE_INPUTS_SATISFIED
@@ -349,18 +383,18 @@ recovery_evidence_candidate_valid=$RECOVERY_EVIDENCE_CANDIDATE_VALID
 recovery_evidence_accepted_by_intake_validator=$RECOVERY_EVIDENCE_ACCEPTED
 multi_vm_evidence_candidate_valid=$MULTI_VM_EVIDENCE_CANDIDATE_VALID
 multi_vm_evidence_accepted_by_intake_validator=$MULTI_VM_EVIDENCE_ACCEPTED
-fedora_production_readiness_evidence_complete=0
-fedora_production_readiness_promotion_allowed=0
-fedora_distribution_ready=0
-fedora_approval_claimed=0
-daily_driver_install_ready=0
-immutable_fedora_ready=0
-production_nadia_ready=0
-nadia_public_release_allowed=0
-q_seal_readiness_profile_present=1
-q_seal_runtime_crypto_ready=0
-q_seal_production_crypto_claim_allowed=0
-runtime_authority_granted=0
+fedora_production_readiness_evidence_complete=$FEDORA_PRODUCTION_READINESS_EVIDENCE_COMPLETE
+fedora_production_readiness_promotion_allowed=$FEDORA_PRODUCTION_READINESS_PROMOTION_ALLOWED
+fedora_distribution_ready=$FEDORA_DISTRIBUTION_READY
+fedora_approval_claimed=$FEDORA_APPROVAL_CLAIMED
+daily_driver_install_ready=$DAILY_DRIVER_INSTALL_READY
+immutable_fedora_ready=$IMMUTABLE_FEDORA_READY
+production_nadia_ready=$PRODUCTION_NADIA_READY
+nadia_public_release_allowed=$NADIA_PUBLIC_RELEASE_ALLOWED
+q_seal_readiness_profile_present=$Q_SEAL_READINESS_PROFILE_PRESENT
+q_seal_runtime_crypto_ready=$Q_SEAL_RUNTIME_CRYPTO_READY
+q_seal_production_crypto_claim_allowed=$Q_SEAL_PRODUCTION_CRYPTO_CLAIM_ALLOWED
+runtime_authority_granted=$RUNTIME_AUTHORITY_GRANTED
 git_available=$GIT_AVAILABLE
 tracked_worktree_clean=$TRACKED_WORKTREE_CLEAN
 tracked_worktree_dirty_count=$TRACKED_DIRTY_COUNT

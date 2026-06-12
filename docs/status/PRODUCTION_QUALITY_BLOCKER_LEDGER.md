@@ -50,7 +50,7 @@ v1_release_workspace_resolvable_blocker_count=<observed>
 v1_release_release_decision_blocker_count=<observed>
 v1_release_external_prerequisite_blocker_count=<observed>
 v1_release_evidence_blocker_count=<observed>
-v1_release_product_completion_blocker_count=8
+v1_release_product_completion_blocker_count=<observed>
 v1_release_next_workspace_action=<observed>
 v1_tag_exists=0
 production_release_ready=0
@@ -82,15 +82,10 @@ release_artifact_signature_verified=0
 rpmbuild_available=<observed>
 rpm_available=<observed>
 release_signing_identity_reference_present=<observed>
-sbom_evidence_candidate_valid=0
-transcript_evidence_candidate_valid=0
-lifecycle_evidence_candidate_valid=0
-recovery_evidence_candidate_valid=0
-multi_vm_evidence_candidate_valid=0
-fedora_production_readiness_evidence_complete=0
-production_nadia_ready=0
-q_seal_runtime_crypto_ready=0
-runtime_authority_granted=0
+fedora_production_readiness_evidence_complete=<observed>
+production_nadia_ready=<observed>
+q_seal_runtime_crypto_ready=<observed>
+runtime_authority_granted=<observed>
 ```
 
 This closes the v1 release-readiness aggregation gap only. It does not create, sign, verify, publish, install, tag, push, accept evidence, grant runtime authority, or claim that Latticra is ready for v1.0.0.
