@@ -66,8 +66,8 @@ require_file scripts/test-security-validation-assessment-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: high-assurance security baseline checkpoint' "$doc"
-require_contains 'Source refresh date: 2026-05-26' "$doc"
-require_contains 'Date checked: 2026-05-26' "$doc"
+require_contains 'Source refresh date: 2026-06-12' "$doc"
+require_contains 'Date checked: 2026-06-12' "$doc"
 require_contains 'Authoritative Source Inventory' "$doc"
 require_contains 'NSA Zero Trust Implementation Guidelines, Primer, Discovery Phase, Phase One, and Phase Two' "$doc"
 require_contains 'NSA Advancing Zero Trust Maturity Throughout the User Pillar' "$doc"
@@ -77,7 +77,8 @@ require_contains 'CISA Secure by Design' "$doc"
 require_contains 'CISA/FBI Product Security Bad Practices' "$doc"
 require_contains 'NSA and CISA Red and Blue Teams Share Top Ten Cybersecurity Misconfigurations' "$doc"
 require_contains 'CISA/NSA/FBI secure-by-design and secure-by-default principles' "$doc"
-require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
+require_contains 'CISA Secure by Demand Guide' "$doc"
+require_contains 'CISA Cross-Sector Cybersecurity Performance Goals 2.0' "$doc"
 require_contains 'CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection' "$doc"
 require_contains 'CISA Logging Made Easy and CISA logging guidance' "$doc"
 require_contains 'CISA Zero Trust Maturity Model v2' "$doc"
@@ -124,13 +125,20 @@ require_contains 'NSA/CISA/NIST post-quantum guidance and NSA CNSA 2.0' "$doc"
 
 for field in \
   'high_assurance_security_baseline_present=1' \
-  'source_refresh_date=2026-05-26' \
+  'source_refresh_date=2026-06-12' \
+  'cisa_cpg_2_0_observed=1' \
+  'cisa_secure_by_demand_guide_observed=1' \
   'official_source_inventory_present=1' \
   'memory_safety_roadmap_required=1' \
   'memory_safety_roadmap_present=1' \
   'zero_trust_runtime_boundary_required=1' \
   'ssdf_secure_development_required=1' \
   'cpg_operational_baseline_required=1' \
+  'cpg_2_0_governance_alignment_required=1' \
+  'secure_by_demand_customer_assurance_review_required=1' \
+  'msp_risk_review_required_before_hosted_service=1' \
+  'incident_communication_procedure_required_before_hosted_service=1' \
+  'least_privilege_operational_goal_required=1' \
   'supply_chain_security_baseline_present=1' \
   'cyber_incident_reporting_response_baseline_present=1' \
   'vulnerability_management_release_gate_baseline_present=1' \
@@ -276,7 +284,9 @@ require_contains 'data_classification_protection_baseline_present=1' README.md
 require_contains 'ai_agentic_automation_security_baseline_present=1' README.md
 require_contains 'platform_boot_firmware_integrity_baseline_present=1' README.md
 require_contains 'security_validation_assessment_baseline_present=1' README.md
-require_contains 'source_refresh_date=2026-05-26' README.md
+require_contains 'source_refresh_date=2026-06-12' README.md
+require_contains 'cisa_cpg_2_0_observed=1' README.md
+require_contains 'cisa_secure_by_demand_guide_observed=1' README.md
 require_contains 'high_assurance_security_baseline_present=1' STATUS.md
 require_contains 'memory_safety_roadmap_present=1' STATUS.md
 require_contains 'supply_chain_security_baseline_present=1' STATUS.md
@@ -295,7 +305,7 @@ require_contains 'security_validation_assessment_baseline_present=1' STATUS.md
 require_contains 'security_validation_required_before_security_release_claim=1' STATUS.md
 require_contains 'High-assurance security baseline' docs/status/README.md
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE_STATUS.md' docs/status/README.md
-require_contains 'Latest high-assurance security baseline note: 2026-05-26 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'Latest high-assurance security baseline note: 2026-06-12 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'High-assurance baseline' docs/security.html
 require_contains 'HIGH_ASSURANCE_SECURITY_BASELINE.md' docs/security.html
 require_contains 'sh ./scripts/test-high-assurance-security-baseline.sh' Makefile

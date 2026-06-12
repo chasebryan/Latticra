@@ -2322,7 +2322,9 @@ defensive_threat_model_validation_present=1
 defensive_threat_model_validation_refinement_present=1
 high_assurance_security_baseline_present=1
 docs/DEFENSIVE_THREAT_MODEL_VALIDATION_REFINEMENT.md
-source_refresh_date=2026-05-26
+source_refresh_date=2026-06-12
+cisa_cpg_2_0_observed=1
+cisa_secure_by_demand_guide_observed=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1
 cyber_incident_reporting_response_baseline_present=1

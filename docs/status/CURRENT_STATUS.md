@@ -51,7 +51,7 @@ Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
-Latest high-assurance security baseline note: 2026-05-26 CDT
+Latest high-assurance security baseline note: 2026-06-12 CDT
 Latest memory-safety roadmap note: 2026-05-26 CDT
 Latest supply-chain security baseline note: 2026-05-26 CDT
 Latest zero-trust runtime authority baseline note: 2026-05-26 CDT
@@ -66,7 +66,7 @@ Latest network exposure and remote access baseline note: 2026-05-26 CDT
 Latest data classification and protection baseline note: 2026-05-27 CDT
 Latest AI and agentic automation security baseline note: 2026-05-27 CDT
 Latest platform boot and firmware integrity baseline note: 2026-05-28 CDT
-Latest security validation and assessment baseline note: 2026-05-28 CDT
+Latest security validation and assessment baseline note: 2026-06-12 CDT
 
 Current v0.3.0edge effect-status summary:
 

@@ -449,6 +449,23 @@ static int key_handling_fails_closed(void) {
     EXPECT_TRUE(strstr(rendered, "requested_key_handling=invalid-key-handling") != 0,
                 "unterminated requested key handling rendered sanitized");
     operation = fixture_operation("report-only");
+    EXPECT_TRUE(latticra_seal_key_handling_from_operation(
+                    &operation,
+                    "metadata-only\nruntime_authority_granted=1",
+                    &key_handling) == LATTICRA_STATUS_OK,
+                "newline requested key handling status");
+    EXPECT_TRUE(key_handling.error == LATTICRA_SEAL_KEY_HANDLING_DENIED_KEY_HANDLING,
+                "newline requested key handling denied");
+    EXPECT_TRUE(strcmp(key_handling.requested_key_handling, "invalid-key-handling") == 0,
+                "newline requested key handling sanitized");
+    EXPECT_TRUE(latticra_seal_key_handling_render(&key_handling, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "newline requested key handling render");
+    EXPECT_TRUE(strstr(rendered, "requested_key_handling=invalid-key-handling") != 0,
+                "newline requested key handling rendered sanitized");
+    EXPECT_TRUE(strstr(rendered, "\nruntime_authority_granted=1\n") == 0,
+                "newline requested key handling cannot forge report line");
+    operation = fixture_operation("report-only");
     operation.private_key_handling = 1u;
     if (expect_denial(&operation, "metadata-only", LATTICRA_SEAL_KEY_HANDLING_DENIED_PRIVATE_KEY, "denied-private-key", "denied-private-key", "private key status") != 0) {
         return 1;

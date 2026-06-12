@@ -143,7 +143,10 @@ for external in \
   'CISA/FBI Product Security Bad Practices' \
   'https://www.cisa.gov/resources-tools/resources/product-security-bad-practices' \
   'CISA Cross-Sector Cybersecurity Performance Goals' \
-  'https://www.cisa.gov/cybersecurity-performance-goals' \
+  'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' \
+  'CISA Cross-Sector Cybersecurity Performance Goals 2.0' \
+  'CISA Secure by Demand Guide' \
+  'https://www.cisa.gov/resources-tools/resources/secure-demand-guide' \
   'CISA Zero Trust Maturity Model' \
   'https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model' \
   'CISA Known Exploited Vulnerabilities Catalog' \
@@ -166,7 +169,7 @@ for external in \
   'https://csrc.nist.gov/pubs/sp/1800/35/final' \
   'FIPS 140-3' \
   'https://csrc.nist.gov/pubs/fips/140-3/final' \
-  'Date checked: 2026-05-26' \
+  'Date checked: 2026-06-12' \
   'manual source review' \
   'certification/compliance/protection'
 do
@@ -214,7 +217,7 @@ done
 for gap in \
   'defensive_threat_model_validation_refinement_present=1' \
   'external_source_refresh_checkpoint_present=1' \
-  'external_source_refresh_date=2026-05-26' \
+  'external_source_refresh_date=2026-06-12' \
   'manual_source_review_required=1' \
   'manual_source_review_completed_for_current_baseline=1' \
   'high_assurance_security_baseline_present=1' \

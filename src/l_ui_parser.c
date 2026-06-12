@@ -140,6 +140,28 @@ static int contains_slice(const char *source, size_t source_len, const char *nee
     return find_slice_index(source, source_len, needle, 0);
 }
 
+static int contains_slice_in_range(
+    const char *source,
+    size_t source_len,
+    size_t start,
+    size_t end,
+    const char *needle) {
+    size_t needle_len;
+    size_t index;
+
+    if (source == 0 || needle == 0 || start > source_len) return 0;
+    if (end > source_len) end = source_len;
+    if (end < start) return 0;
+    needle_len = strlen(needle);
+    if (needle_len == 0u) return 1;
+    if (end - start < needle_len) return 0;
+
+    for (index = start; index <= end - needle_len; index++) {
+        if (memcmp(source + index, needle, needle_len) == 0) return 1;
+    }
+    return 0;
+}
+
 static void card_body_span(
     const char *source,
     size_t source_len,
@@ -187,6 +209,66 @@ static int find_unbalanced_brace_span(
         return 1;
     }
     span_default(span);
+    return 0;
+}
+
+static int find_rail_body_range(
+    const char *source,
+    size_t source_len,
+    const char *rail_name,
+    size_t *body_start,
+    size_t *body_end,
+    latticra_l_ui_source_span_t *span) {
+    char needle[96];
+    size_t rail_index;
+    size_t cursor;
+    int depth = 0;
+    int in_string = 0;
+    int escaped = 0;
+
+    (void)snprintf(needle, sizeof(needle), "rail %s {", rail_name);
+    if (!find_slice_index(source, source_len, needle, &rail_index)) {
+        card_body_span(source, source_len, span);
+        return 0;
+    }
+
+    cursor = rail_index + strlen(needle) - 1u;
+    while (cursor < source_len) {
+        char ch = source[cursor];
+        if (escaped) {
+            escaped = 0;
+            cursor++;
+            continue;
+        }
+        if (ch == '\\') {
+            escaped = 1;
+            cursor++;
+            continue;
+        }
+        if (ch == '"') {
+            in_string = !in_string;
+            cursor++;
+            continue;
+        }
+        if (!in_string && ch == '{') {
+            if (depth == 0 && body_start != 0) *body_start = cursor + 1u;
+            depth++;
+        } else if (!in_string && ch == '}') {
+            if (depth == 0) {
+                span_for_range(source, source_len, cursor, cursor + 1u, span);
+                return 0;
+            }
+            depth--;
+            if (depth == 0) {
+                if (body_end != 0) *body_end = cursor;
+                span_default(span);
+                return 1;
+            }
+        }
+        cursor++;
+    }
+
+    span_for_range(source, source_len, rail_index, rail_index + strlen(needle), span);
     return 0;
 }
 
@@ -517,31 +599,84 @@ static latticra_l_ui_parse_error_t validate_required_rails_span(
     return LATTICRA_L_UI_PARSE_OK;
 }
 
-static latticra_l_ui_parse_error_t validate_required_bindings_span(
+static latticra_l_ui_parse_error_t validate_required_bindings_for_rail_span(
     const char *source,
     size_t source_len,
+    const char *rail_name,
+    const char *const *bindings,
+    size_t binding_count,
     latticra_l_ui_source_span_t *span) {
-    const char *bindings[] = {
-        "field origin bind state.origin", "field route bind state.route", "field axis bind state.axis",
-        "field path bind state.path", "field breadcrumb bind state.breadcrumb", "field trace bind state.trace",
-        "field health bind state.health", "field risk bind state.risk", "field lock bind state.lock",
-        "field dark_phase bind state.dark_phase", "field safe_portal bind state.safe_portal",
-        "field rollback bind state.rollback", "field host bind state.host_effect",
-        "field external bind state.external_effect", "field requested bind preview.requested_effect",
-        "field request bind preview.request", "field policy bind preview.policy", "field reason bind preview.reason",
-        "field executed bind preview.executed", "field mutation bind preview.mutation_allowed",
-        "field server bind preview.server_interaction_allowed", "field network bind preview.network_allowed",
-        "field recovery bind preview.recovery_allowed", "field hardware bind preview.hardware_allowed"
-    };
+    size_t body_start = 0u;
+    size_t body_end = 0u;
     size_t index;
-    for (index = 0u; index < sizeof(bindings) / sizeof(bindings[0]); index++) {
-        if (!contains_slice(source, source_len, bindings[index])) {
+
+    if (!find_rail_body_range(source, source_len, rail_name, &body_start, &body_end, span)) {
+        return LATTICRA_L_UI_PARSE_MISSING_RAIL;
+    }
+
+    for (index = 0u; index < binding_count; index++) {
+        if (!contains_slice_in_range(source, source_len, body_start, body_end, bindings[index])) {
             card_body_span(source, source_len, span);
             return LATTICRA_L_UI_PARSE_MISSING_REQUIRED_BINDING;
         }
     }
     span_default(span);
     return LATTICRA_L_UI_PARSE_OK;
+}
+
+static latticra_l_ui_parse_error_t validate_required_bindings_span(
+    const char *source,
+    size_t source_len,
+    latticra_l_ui_source_span_t *span) {
+    const char *state_bindings[] = {
+        "field origin bind state.origin", "field route bind state.route",
+        "field axis bind state.axis", "field path bind state.path"
+    };
+    const char *trace_bindings[] = {
+        "field breadcrumb bind state.breadcrumb", "field trace bind state.trace"
+    };
+    const char *safety_bindings[] = {
+        "field health bind state.health", "field risk bind state.risk",
+        "field lock bind state.lock", "field dark_phase bind state.dark_phase"
+    };
+    const char *gates_bindings[] = {
+        "field safe_portal bind state.safe_portal", "field rollback bind state.rollback"
+    };
+    const char *effects_bindings[] = {
+        "field host bind state.host_effect", "field external bind state.external_effect",
+        "field requested bind preview.requested_effect"
+    };
+    const char *policy_bindings[] = {
+        "field request bind preview.request", "field policy bind preview.policy",
+        "field reason bind preview.reason"
+    };
+    const char *execution_bindings[] = {
+        "field executed bind preview.executed", "field mutation bind preview.mutation_allowed",
+        "field server bind preview.server_interaction_allowed", "field network bind preview.network_allowed",
+        "field recovery bind preview.recovery_allowed", "field hardware bind preview.hardware_allowed"
+    };
+    latticra_l_ui_parse_error_t error;
+
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "state", state_bindings, sizeof(state_bindings) / sizeof(state_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "trace", trace_bindings, sizeof(trace_bindings) / sizeof(trace_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "safety", safety_bindings, sizeof(safety_bindings) / sizeof(safety_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "gates", gates_bindings, sizeof(gates_bindings) / sizeof(gates_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "effects", effects_bindings, sizeof(effects_bindings) / sizeof(effects_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    error = validate_required_bindings_for_rail_span(
+        source, source_len, "policy", policy_bindings, sizeof(policy_bindings) / sizeof(policy_bindings[0]), span);
+    if (error != LATTICRA_L_UI_PARSE_OK) return error;
+    return validate_required_bindings_for_rail_span(
+        source, source_len, "execution", execution_bindings, sizeof(execution_bindings) / sizeof(execution_bindings[0]), span);
 }
 
 const char *latticra_l_ui_parse_error_label(latticra_l_ui_parse_error_t error) {

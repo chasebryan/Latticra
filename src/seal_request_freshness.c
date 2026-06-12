@@ -10,6 +10,40 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static int report_string_valid(const char *value, size_t max_len) {
+    size_t i;
+
+    if (value == NULL) {
+        return 0;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            return i > 0u;
+        }
+        if (value[i] == '\n' || value[i] == '\r') {
+            return 0;
+        }
+    }
+    return 0;
+}
+
+static int freshness_report_strings_valid(
+    const latticra_seal_request_freshness_t *freshness) {
+    return report_string_valid(freshness->freshness_profile, LATTICRA_SEAL_REQUEST_FRESHNESS_PROFILE_MAX) &&
+           report_string_valid(freshness->request_id, LATTICRA_SEAL_REQUEST_FRESHNESS_ID_MAX) &&
+           report_string_valid(freshness->caller_id, LATTICRA_SEAL_REQUEST_FRESHNESS_ID_MAX) &&
+           report_string_valid(freshness->tool_id, LATTICRA_SEAL_REQUEST_FRESHNESS_ID_MAX) &&
+           report_string_valid(freshness->request_timestamp, LATTICRA_SEAL_REQUEST_FRESHNESS_TIME_MAX) &&
+           report_string_valid(freshness->request_expiration, LATTICRA_SEAL_REQUEST_FRESHNESS_TIME_MAX) &&
+           report_string_valid(freshness->nonce, LATTICRA_SEAL_REQUEST_FRESHNESS_ID_MAX) &&
+           report_string_valid(freshness->context_hash, LATTICRA_SEAL_REQUEST_FRESHNESS_HASH_MAX) &&
+           report_string_valid(freshness->parameter_hash, LATTICRA_SEAL_REQUEST_FRESHNESS_HASH_MAX) &&
+           report_string_valid(freshness->mode, LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX) &&
+           report_string_valid(freshness->decision, LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX) &&
+           report_string_valid(freshness->reason, LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX) &&
+           report_string_valid(freshness->status, LATTICRA_SEAL_REQUEST_FRESHNESS_STATE_MAX);
+}
+
 const char *latticra_seal_request_freshness_error_label(
     latticra_seal_request_freshness_error_t error) {
     switch (error) {
@@ -121,6 +155,13 @@ latticra_status_t latticra_seal_request_freshness_report(
     int written;
 
     if (freshness == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!freshness_report_strings_valid(freshness)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 

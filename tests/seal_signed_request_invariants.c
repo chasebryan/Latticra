@@ -11,6 +11,10 @@
         } \
     } while (0)
 
+static void set_string(char *destination, size_t destination_len, const char *source) {
+    (void)snprintf(destination, destination_len, "%s", source != 0 ? source : "");
+}
+
 static latticra_seal_request_freshness_t fixture_freshness(void) {
     latticra_seal_request_freshness_t freshness;
     memset(&freshness, 0, sizeof(freshness));
@@ -105,6 +109,7 @@ static int signed_request_fails_closed(void) {
     latticra_seal_request_freshness_t freshness = fixture_freshness();
     latticra_seal_signed_request_t signed_request;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_SIGNED_REQUEST_REPORT_MAX];
 
     EXPECT_TRUE(latticra_seal_signed_request_from_freshness(0, &signed_request) == LATTICRA_STATUS_OK, "null freshness status");
     EXPECT_TRUE(signed_request.error == LATTICRA_SEAL_SIGNED_REQUEST_INVALID_INPUT, "null freshness error");
@@ -118,6 +123,18 @@ static int signed_request_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_signed_request_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null signed request");
     EXPECT_TRUE(latticra_seal_signed_request_report(&signed_request, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    freshness = fixture_freshness();
+    EXPECT_TRUE(latticra_seal_signed_request_from_freshness(&freshness, &signed_request) == LATTICRA_STATUS_OK, "signed injection source");
+    set_string(signed_request.signed_request_id, sizeof(signed_request.signed_request_id), "req-1\nsignature_valid=1");
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signed_request_report(&signed_request, rendered, sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT, "newline signed request id rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "newline signed request id clears report");
+
+    memset(&signed_request, 'A', sizeof(signed_request));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_signed_request_report(&signed_request, rendered, sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT, "unterminated signed request rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated signed request clears report");
     return 0;
 }
 

@@ -78,6 +78,22 @@ static int runtime_boundary_copies_source_metadata(void) {
     return 0;
 }
 
+static int runtime_boundary_bounds_unterminated_runtime_id(void) {
+    latticra_runtime_boundary_authority_summary_t authority = authority_ok();
+    latticra_runtime_boundary_request_t request = base_request(&authority);
+    latticra_runtime_boundary_result_t result;
+    size_t copied_len;
+
+    memset(request.runtime_id, 'A', sizeof(request.runtime_id));
+    EXPECT_TRUE(latticra_runtime_boundary_classify(&request, &result) == LATTICRA_STATUS_OK, "unterminated runtime id classify");
+    copied_len = strlen(result.record.runtime_id);
+    EXPECT_TRUE(copied_len == sizeof(result.record.runtime_id) - 1u, "unterminated runtime id bounded");
+    EXPECT_TRUE(result.record.runtime_id[copied_len] == '\0', "unterminated runtime id terminated");
+    EXPECT_TRUE(result.no_effect == 1, "unterminated runtime id no-effect");
+    EXPECT_TRUE(result.execution_allowed == 0, "unterminated runtime id execution denied");
+    return 0;
+}
+
 static int runtime_boundary_requires_authority(void) {
     latticra_runtime_boundary_request_t request = base_request(0);
     latticra_runtime_boundary_result_t result;
@@ -255,6 +271,7 @@ static int runtime_boundary_null_arguments_are_rejected(void) {
 int main(void) {
     if (runtime_boundary_smoke_classifies_without_effects() != 0) return 1;
     if (runtime_boundary_copies_source_metadata() != 0) return 1;
+    if (runtime_boundary_bounds_unterminated_runtime_id() != 0) return 1;
     if (runtime_boundary_requires_authority() != 0) return 1;
     if (runtime_boundary_requires_authority_success() != 0) return 1;
     if (runtime_boundary_requires_no_effect_authority_flags() != 0) return 1;

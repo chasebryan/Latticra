@@ -1,7 +1,7 @@
 # Latticra Supply-Chain Security Baseline Status
 
 Status: status record for supply-chain security baseline
-Date: 2026-05-26
+Date: 2026-06-12
 
 ## Scope
 
@@ -62,7 +62,13 @@ ad_hoc_network_client_commands_forbidden_without_guard=1
 source_archive_fixture_tracked_unignored_source_view_required=1
 source_archive_fixture_symlink_refusal_required=1
 source_archive_fixture_reproducible_metadata_required=1
+sbom_present_for_production_release=0
+release_artifact_published=0
+release_signing_performed=0
+release_secret_access_granted=0
+release_write_token_granted=0
 release_publishing_authority_granted=0
+production_security_claim_allowed=0
 production_installer_claim_allowed=0
 production_update_claim_allowed=0
 compliance_claim_allowed=0

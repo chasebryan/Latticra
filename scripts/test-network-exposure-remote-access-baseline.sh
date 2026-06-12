@@ -61,7 +61,7 @@ require_contains 'https://media.defense.gov/2024/Mar/05/2003404587/-1/-1/0/CSI_Z
 require_contains 'https://media.defense.gov/2022/Jun/15/2003018261/-1/-1/0/CTR_NSA_NETWORK_INFRASTRUCTURE_SECURITY_GUIDE_20220615.PDF' "$doc"
 require_contains 'https://www.cisa.gov/resources-tools/resources/guide-securing-remote-access-software' "$doc"
 require_contains 'https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-025a' "$doc"
-require_contains 'https://www.cisa.gov/cybersecurity-performance-goals-cpgs' "$doc"
+require_contains 'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/41/r1/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/207/a/final' "$doc"
 require_contains 'https://csrc.nist.gov/Pubs/sp/800/53/r5/upd1/Final' "$doc"

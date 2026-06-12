@@ -111,7 +111,7 @@ standards alignment gap entry -> external ledger
 
 ## External standards alignment ledger
 
-Date checked: 2026-05-26
+Date checked: 2026-06-12
 
 | Source | Authoritative URL | Check status | Applicability | Current evidence | Missing evidence | Allowed claim | Forbidden claim | Review cadence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -122,7 +122,7 @@ Date checked: 2026-05-26
 | CISA Secure by Design Alert: Eliminating Buffer Overflow Vulnerabilities | https://www.cisa.gov/news-events/alerts/2025/02/12/cisa-and-fbi-warn-malicious-cyber-actors-using-buffer-overflow-vulnerabilities-compromise-software | official source reviewed | retained C/C++ hazard-class reduction and adversarial testing expectations | mapped source | hazard-class-by-hazard-class test/profile coverage | source tracked | elimination claim | monthly or before release |
 | CISA Secure by Design Alert: Eliminating OS Command Injection Vulnerabilities | https://www.cisa.gov/resources-tools/resources/secure-design-alert-eliminating-os-command-injection-vulnerabilities | official source reviewed | shell-boundary and command-construction exclusions | mapped source | command-boundary-by-command-boundary guard coverage | source tracked | command-injection immunity claim | monthly or before release |
 | CISA/FBI Product Security Bad Practices | https://www.cisa.gov/resources-tools/resources/product-security-bad-practices | official source reviewed | product-security exclusion list | mapped source | bad-practice-by-practice guard coverage | source tracked | CISA/FBI endorsement/compliance | monthly or before release |
-| CISA Cross-Sector Cybersecurity Performance Goals | https://www.cisa.gov/cybersecurity-performance-goals | official source reviewed | critical-infrastructure baseline vocabulary | mapped source | CPG-by-CPG maturity mapping | source tracked | CPG compliance/protection | monthly or before release |
+| CISA Cross-Sector Cybersecurity Performance Goals | https://www.cisa.gov/cross-sector-cybersecurity-performance-goals | official source reviewed; current CPG 2.0 page checked 2026-06-12 | critical-infrastructure baseline vocabulary | mapped source | CPG 2.0 governance, MSP-risk, least-privilege, incident-communication, and assessment-methodology mapping | source tracked | CPG compliance/protection | monthly or before release |
 | CISA Zero Trust Maturity Model | https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model | official source reviewed | zero-trust maturity vocabulary | mapped source | pillar-by-pillar implementation profile | source tracked | zero-trust certification | monthly or before release |
 | CISA Known Exploited Vulnerabilities Catalog | https://www.cisa.gov/resources-tools/resources/known-exploited-vulnerabilities-catalog | authoritative URL retained | vulnerability-awareness mapping | mapped source | KEV release-review process | source tracked | remediation guarantee | monthly or before release |
 | FBI Cyber | https://www.fbi.gov/investigate/cyber | fetched; 2026 threat/reporting content visible | threat environment awareness | mapped source | advisory-by-advisory mapping | source tracked | FBI endorsement/protection | monthly or before release |
@@ -150,6 +150,13 @@ Follow-on source review, 2026-05-28:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | NIST Summary Analysis of Responses to the RFI Regarding Security Considerations for AI Agents | https://www.nist.gov/publications/summary-analysis-responses-request-information-regarding-security-considerations-ai | official source reviewed | future AI-agent threat and mitigation vocabulary | mapped source | agent-security profile and evaluation-plan mapping | source tracked | NIST endorsement or AI-agent security assurance | monthly or before release |
 | NIST NCCoE concept paper on identity and authority of software agents | https://www.nist.gov/news-events/news/2026/02/new-concept-paper-identity-and-authority-software-agents | official source reviewed | future software-agent identity and authorization vocabulary for agentic and MCP-adjacent surfaces | mapped source | software-agent identity and authorization profile | source tracked | implementation completeness or authorization assurance | monthly or before release |
+
+Follow-on source review, 2026-06-12:
+
+| Source | Authoritative URL | Check status | Applicability | Current evidence | Missing evidence | Allowed claim | Forbidden claim | Review cadence |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CISA Cross-Sector Cybersecurity Performance Goals 2.0 | https://www.cisa.gov/cross-sector-cybersecurity-performance-goals | official CPG 2.0 page reviewed | governance, least-privilege, MSP-risk, incident-communication, and repeatable assessment vocabulary | mapped source | CPG 2.0 implementation profile and evidence packet | source tracked | CPG compliance/protection | monthly or before release |
+| CISA Secure by Demand Guide | https://www.cisa.gov/resources-tools/resources/secure-demand-guide | official source reviewed | procurement-facing customer-assurance questions, default-password/MFA posture, vulnerability-class roadmap, memory-safe transition, and Secure by Design progress evidence | mapped source | future customer-assurance evidence packet and progress-report decision | source tracked | CISA/FBI endorsement, secure-by-demand compliance, or product-security assurance | monthly or before release |
 
 ## Validation matrix
 
@@ -218,7 +225,7 @@ Current refinement posture:
 ```text
 defensive_threat_model_validation_refinement_present=1
 external_source_refresh_checkpoint_present=1
-external_source_refresh_date=2026-05-26
+external_source_refresh_date=2026-06-12
 manual_source_review_required=1
 manual_source_review_completed_for_current_baseline=1
 high_assurance_security_baseline_present=1

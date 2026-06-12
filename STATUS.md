@@ -51,13 +51,13 @@ Latest current estimate mathematical rebase note: 2026-05-28 CDT
 Latest completion estimate review README/status alignment note: 2026-05-25 CDT
 Latest completion estimate review after runtime-boundary abuse-case fixtures note: 2026-05-25 CDT
 Latest defensive threat model validation refinement note: 2026-05-25 CDT
-Latest high-assurance security baseline note: 2026-05-26 CDT
+Latest high-assurance security baseline note: 2026-06-12 CDT
 Latest memory-safety roadmap note: 2026-05-26 CDT
 Latest supply-chain security baseline note: 2026-05-26 CDT
 Latest zero-trust runtime authority baseline note: 2026-05-26 CDT
 Latest AI and agentic automation security baseline note: 2026-05-27 CDT
 Latest platform boot and firmware integrity baseline note: 2026-05-28 CDT
-Latest security validation and assessment baseline note: 2026-05-28 CDT
+Latest security validation and assessment baseline note: 2026-06-12 CDT
 Latest runtime boundary policy expansion after threat-model note: 2026-05-26 CDT
 Latest runtime boundary abuse-case fixture expansion note: 2026-05-25 CDT
 Latest runtime boundary Lat pipeline comment evidence note: 2026-05-25 CDT
@@ -2875,7 +2875,9 @@ defensive_threat_model_validation_refinement_present=1
 external_source_refresh_checkpoint_present=1
 manual_source_review_required=1
 high_assurance_security_baseline_present=1
-source_refresh_date=2026-05-26
+source_refresh_date=2026-06-12
+cisa_cpg_2_0_observed=1
+cisa_secure_by_demand_guide_observed=1
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 supply_chain_security_baseline_present=1

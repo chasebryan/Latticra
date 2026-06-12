@@ -449,10 +449,6 @@ fn find_installer_root() -> Option<PathBuf> {
 fn installer_root_candidates() -> Vec<PathBuf> {
     let mut candidates = Vec::new();
 
-    if let Ok(root) = std::env::var("LATTICRA_INSTALLER_ROOT") {
-        candidates.push(PathBuf::from(root));
-    }
-
     if let Ok(exe) = std::env::current_exe() {
         if let Some(dir) = exe.parent() {
             for ancestor in dir.ancestors().take(8) {
@@ -460,6 +456,10 @@ fn installer_root_candidates() -> Vec<PathBuf> {
                 candidates.push(ancestor.join("installer"));
             }
         }
+    }
+
+    if let Ok(root) = std::env::var("LATTICRA_INSTALLER_ROOT") {
+        candidates.push(PathBuf::from(root));
     }
 
     candidates
