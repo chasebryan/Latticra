@@ -13,6 +13,7 @@ Latest Latticra separate-build platform integration review boundary note: 2026-0
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
+Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -79,6 +80,36 @@ network_allowed=0
 usb_write_allowed=0
 qemu_run_allowed=0
 production_readiness_claim=0
+```
+
+Current v1.0.0 release-readiness summary:
+
+```text
+v1_release_readiness_gate_present=1
+v1_release_readiness_gate_passed=0
+v1_release_readiness_blocked=1
+v1_release_readiness_decision=blocked-existing-production-evidence-gates-open
+v1_release_required_gate_count=22
+v1_release_blocker_count=<observed>
+v1_release_workspace_resolvable_blocker_count=<observed>
+v1_release_external_prerequisite_blocker_count=<observed>
+v1_release_evidence_blocker_count=8
+v1_release_product_completion_blocker_count=8
+v1_release_next_workspace_action=<observed>
+v1_tag_exists=0
+production_release_ready=0
+release_artifact_promotion_gate_passed=0
+rpmbuild_available=0
+rpm_available=0
+release_signing_identity_reference_present=0
+sbom_evidence_candidate_valid=0
+transcript_evidence_candidate_valid=0
+lifecycle_evidence_candidate_valid=0
+recovery_evidence_candidate_valid=0
+multi_vm_evidence_candidate_valid=0
+production_nadia_ready=0
+q_seal_runtime_crypto_ready=0
+runtime_authority_granted=0
 ```
 
 Latest runtime boundary policy expansion after threat-model note: 2026-05-26 CDT

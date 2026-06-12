@@ -1,0 +1,71 @@
+# Latticra v1.0.0 Release Readiness Gate Status
+
+Status: v1.0.0 release readiness gate/status alignment
+Date: 2026-06-12
+Scope: current no-effect v1.0.0 release readiness aggregation gate.
+
+## Current status
+
+The v1.0.0 release readiness gate is present and currently blocked.
+
+It aggregates the existing release artifact, SBOM, transcript, lifecycle, recovery, multi-VM, Fedora, Nadia, Q-Seal, runtime-authority, and production-claim blockers into one no-effect report.
+
+It does not create artifacts, sign artifacts, generate SBOMs, accept evidence, install packages, publish releases, tag commits, push commits, or mutate a host.
+
+## Current classification
+
+```text
+v1_release_readiness_gate_present=1
+v1_release_readiness_gate_mode=no-effect-release-readiness-aggregation
+v1_release_readiness_gate_version=v1.0.0
+v1_release_readiness_gate_passed=0
+v1_release_readiness_blocked=1
+v1_release_readiness_decision=blocked-existing-production-evidence-gates-open
+v1_release_required_gate_count=22
+v1_release_satisfied_gate_count=<observed>
+v1_release_blocker_count=<observed>
+v1_release_workspace_resolvable_blocker_count=<observed>
+v1_release_release_decision_blocker_count=<observed>
+v1_release_external_prerequisite_blocker_count=<observed>
+v1_release_evidence_blocker_count=8
+v1_release_product_completion_blocker_count=8
+v1_release_next_workspace_action=<observed>
+v1_tag_exists=0
+production_release_ready=0
+production_installer_ready=0
+release_artifact_promotion_gate_passed=0
+release_artifact_present=0
+release_artifact_signature_verified=0
+rpmbuild_available=0
+rpm_available=0
+release_signing_identity_reference_present=0
+sbom_evidence_candidate_valid=0
+transcript_evidence_candidate_valid=0
+lifecycle_evidence_candidate_valid=0
+recovery_evidence_candidate_valid=0
+multi_vm_evidence_candidate_valid=0
+fedora_production_readiness_evidence_complete=0
+production_nadia_ready=0
+q_seal_runtime_crypto_ready=0
+runtime_authority_granted=0
+host_mutation_performed=0
+```
+
+## Validation
+
+Validated locally:
+
+```text
+sh scripts/test-latticra-v1-release-readiness-gate-contract.sh
+latticra_v1_release_readiness_gate_contract: ok
+```
+
+## Next recommended lane
+
+```text
+First clear any observed workspace-cleanliness blocker by reviewing and committing the current readiness gate work. Then close the external release inputs and accepted evidence blockers: approved v1 tag, RPM toolchain, signing identity reference, tagged artifact, checksum, signature, public key, verification transcript, reproducibility transcript, and review evidence.
+```
+
+## Non-claims
+
+This status record is not a v1.0.0 release, not a release candidate, not production readiness, not production installer readiness, not Fedora distribution readiness, not Nadia production readiness, not production cryptography, not runtime authority, and not permission to publish a release artifact.

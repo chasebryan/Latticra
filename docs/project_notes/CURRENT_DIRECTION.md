@@ -11,6 +11,7 @@ Latest Latticra separate-build platform integration review boundary note: 2026-0
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
+Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -242,6 +243,8 @@ constrained C/C++ foundation
 The current security-guidance posture is aligned across the high-assurance baseline, memory-safety roadmap, supply-chain baseline, zero-trust runtime authority baseline, and runtime-boundary policy expansion. Those records now carry explicit workload or service identity, operator identity, host or device integrity, command-boundary, update-integrity, and retained-C/C++ hazard-class expectations while preserving Latticra's no-compliance-claim and no-production-security-boundary posture.
 
 The current working edge checkpoint is `v0.3.0edge`: Latticra now recognizes bounded local operator effects in guarded adjacent lanes. That posture is visible through the no-effect `latticra --effect-status` report and does not open root authority, network authority, USB writes, QEMU runs, package-manager operations, kernel/service/boot authority, or production-readiness claims.
+
+The current `v1.0.0` release readiness posture is explicitly blocked by the no-effect v1 release readiness gate. The gate aggregates the existing production installer, release artifact, SBOM, transcript, lifecycle, recovery, multi-VM, Fedora, Nadia, Q-Seal, and runtime-authority blockers while preserving `v1_release_readiness_gate_passed=0`, `v1_release_readiness_blocked=1`, dynamic blocker classification counts, and `production_release_ready=0`.
 
 ## C/C++ foundation checkpoint
 

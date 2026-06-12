@@ -32,6 +32,47 @@ daily_driver_install_ready=0
 immutable_fedora_ready=0
 ```
 
+## v1.0.0 Release Readiness Gate
+
+The v1.0.0 release readiness gate is present as a no-effect aggregate decision over existing blocker records:
+
+```text
+v1_release_readiness_gate_present=1
+v1_release_readiness_gate_mode=no-effect-release-readiness-aggregation
+v1_release_readiness_gate_version=v1.0.0
+v1_release_readiness_gate_passed=0
+v1_release_readiness_blocked=1
+v1_release_readiness_decision=blocked-existing-production-evidence-gates-open
+v1_release_required_gate_count=22
+v1_release_satisfied_gate_count=<observed>
+v1_release_blocker_count=<observed>
+v1_release_workspace_resolvable_blocker_count=<observed>
+v1_release_release_decision_blocker_count=<observed>
+v1_release_external_prerequisite_blocker_count=<observed>
+v1_release_evidence_blocker_count=8
+v1_release_product_completion_blocker_count=8
+v1_release_next_workspace_action=<observed>
+v1_tag_exists=0
+production_release_ready=0
+release_artifact_promotion_gate_passed=0
+release_artifact_present=0
+release_artifact_signature_verified=0
+rpmbuild_available=0
+rpm_available=0
+release_signing_identity_reference_present=0
+sbom_evidence_candidate_valid=0
+transcript_evidence_candidate_valid=0
+lifecycle_evidence_candidate_valid=0
+recovery_evidence_candidate_valid=0
+multi_vm_evidence_candidate_valid=0
+fedora_production_readiness_evidence_complete=0
+production_nadia_ready=0
+q_seal_runtime_crypto_ready=0
+runtime_authority_granted=0
+```
+
+This closes the v1 release-readiness aggregation gap only. It does not create, sign, verify, publish, install, tag, push, accept evidence, grant runtime authority, or claim that Latticra is ready for v1.0.0.
+
 ## Installer Preflight Guard Evidence
 
 The production-installer preflight guard and preview renderer are now present as no-effect classifiers:

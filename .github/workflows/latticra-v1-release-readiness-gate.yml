@@ -1,0 +1,25 @@
+name: Latticra v1 Release Readiness Gate
+
+on:
+  push:
+    paths:
+      - 'docs/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md'
+      - 'docs/status/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_STATUS.md'
+      - 'scripts/latticra-v1-release-readiness-gate.sh'
+      - 'scripts/test-latticra-v1-release-readiness-gate-contract.sh'
+      - '.github/workflows/latticra-v1-release-readiness-gate.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  latticra-v1-release-readiness-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Latticra v1 release readiness gate guard
+        run: sh scripts/test-latticra-v1-release-readiness-gate-contract.sh

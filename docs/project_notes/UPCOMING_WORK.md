@@ -11,6 +11,7 @@ Latest Latticra separate-build platform integration review boundary note: 2026-0
 Latest Latticra Model-1 bridge protocol contract note: 2026-05-29 CDT
 Latest Latticra Model-1 import and mixed-build review boundary note: 2026-05-29 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence boundary note: 2026-06-12 CDT
+Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -169,6 +170,8 @@ Latest Seal signed receipt proof path surface/status note: 2026-05-28 CDT
 This note tracks the near-term work queue after the recent no-effect Lat, LIR, Nucleus, runtime-boundary, authority review, status, announcement-review, foundation-index, public-entry, project-notes, and Nucleus report-only announcement README alignment slices.
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
+
+The current v1.0.0 release readiness gate is present and blocked with dynamic blocker classification counts. The next release-readiness work should clear any observed local cleanliness blocker first, then close concrete external-input and evidence blockers in order, starting with accepted release-artifact evidence before any broader production or public-release claim.
 
 The security-guidance refresh slices are aligned across the baseline, roadmap, supply-chain, zero-trust, and runtime-boundary policy docs. Near-term follow-up should stay narrow: summary/status consistency only when wording drifts, and capability-bearing work only under separate guarded contracts.
 
