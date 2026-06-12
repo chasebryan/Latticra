@@ -391,6 +391,77 @@ canonical_existing_path() {
   printf '%s\n' "$resolved"
 }
 
+absolute_artifact_path() {
+  case "$1" in
+    /*) printf '%s\n' "$1" ;;
+    *) printf '%s/%s\n' "$(pwd -P)" "$1" ;;
+  esac
+}
+
+artifact_path_has_symlink_component() {
+  path="$1"
+  dir=$(dirname -- "$path")
+  current="/"
+  rest=${dir#/}
+
+  [ "$dir" != "/" ] || return 1
+
+  while [ -n "$rest" ]; do
+    part=${rest%%/*}
+    if [ "$rest" = "$part" ]; then
+      rest=""
+    else
+      rest=${rest#*/}
+    fi
+    [ -n "$part" ] || continue
+    if [ "$current" = "/" ]; then
+      current="/$part"
+    else
+      current="$current/$part"
+    fi
+    if [ -L "$current" ]; then
+      return 0
+    fi
+    if [ -e "$current" ] && [ ! -d "$current" ]; then
+      return 0
+    fi
+    if [ ! -e "$current" ]; then
+      return 1
+    fi
+  done
+
+  return 1
+}
+
+artifact_path_guard() {
+  artifact_label="$1"
+  artifact_path=$(canonical_existing_path "$(absolute_artifact_path "$2")")
+  home_real=$(canonical_existing_path "$HOME")
+  installer_real=$(canonical_existing_path "$INSTALLER_ROOT")
+  tmp_root=${TMPDIR:-/tmp}
+  tmp_root=${tmp_root%/}
+  tmp_real=$(canonical_existing_path "$tmp_root")
+
+  [ -n "$artifact_path" ] || fail "$artifact_label artifact path is empty" 73
+  case "$artifact_path" in
+    *"/../"*|*/..|../*|..)
+      fail "$artifact_label artifact path contains parent-directory traversal: $artifact_path" 73
+      ;;
+    /|/usr|/usr/*|/bin|/bin/*|/sbin|/sbin/*|/etc|/etc/*|/boot|/boot/*|/var|/var/lib|/var/lib/*|/System|/System/*|/Library|/Library/*)
+      fail "$artifact_label artifact path is outside the user-local artifact boundary: $artifact_path" 73
+      ;;
+  esac
+
+  case "$artifact_path" in
+    "$HOME"/*|"$home_real"/*|"$INSTALLER_ROOT"/*|"$installer_real"/*|"$tmp_root"/*|"$tmp_real"/*|/tmp/*|/private/tmp/*)
+      ;;
+    *)
+      fail "$artifact_label artifact path must stay under HOME, TMPDIR, /tmp, or the installer tree: $artifact_path" 73
+      ;;
+  esac
+
+}
+
 copy_if_exists() {
   src="$1"
   dest_dir="$2"
@@ -679,6 +750,8 @@ fi
 phase 3 "resolve and guard install prefix"
 
 safe_prefix_guard "$PREFIX"
+artifact_path_guard "installer plan" "$PLAN"
+artifact_path_guard "installer receipt directory" "$RECEIPT_DIR/latticra-installer-receipt-placeholder.txt"
 
 phase 4 "generate install plan"
 

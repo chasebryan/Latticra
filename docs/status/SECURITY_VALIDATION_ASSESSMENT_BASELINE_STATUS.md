@@ -1,7 +1,7 @@
 # Latticra Security Validation and Assessment Baseline Status
 
 Status: status record for security validation and assessment baseline
-Date: 2026-05-28
+Date: 2026-06-12
 
 ## Scope
 
@@ -17,6 +17,8 @@ security_validation_assessment_status_present=1
 security_validation_assessment_guard_present=1
 cisa_secure_by_design_validation_tracked=1
 cisa_cpg_third_party_validation_tracked=1
+cisa_cpg_2_0_validation_tracked=1
+cisa_secure_by_demand_validation_tracked=1
 cisa_fbi_product_security_bad_practices_tracked=1
 nsa_cisa_top_misconfigurations_tracked=1
 nist_sp_800_115_security_testing_tracked=1
@@ -50,12 +52,14 @@ red_team_exercise_executed=0
 third_party_assessment_performed=0
 certification_assessment_performed=0
 compliance_assessment_performed=0
+security_release_claim_allowed=0
 security_validation_claim_allowed=0
 third_party_validation_claim_allowed=0
 penetration_test_claim_allowed=0
 red_team_claim_allowed=0
 certification_claim_allowed=0
 compliance_claim_allowed=0
+high_assurance_assessment_claim_allowed=0
 production_protection_claim_allowed=0
 external_endorsement_claimed=0
 ```

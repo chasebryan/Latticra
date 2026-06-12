@@ -33,15 +33,33 @@ static size_t bounded_string_len(const char *value, size_t max_len, int *termina
 static int text_field_valid(const char *value, size_t max_len) {
     int terminated = 0;
     size_t len = bounded_string_len(value, max_len, &terminated);
+    size_t i;
 
-    return terminated == 1 && len > 0u;
+    if (terminated != 1 || len == 0u) {
+        return 0;
+    }
+    for (i = 0u; i < len; ++i) {
+        if (value[i] == '\n' || value[i] == '\r') {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 static int text_field_terminated(const char *value, size_t max_len) {
     int terminated = 0;
+    size_t len = bounded_string_len(value, max_len, &terminated);
+    size_t i;
 
-    (void)bounded_string_len(value, max_len, &terminated);
-    return terminated == 1;
+    if (terminated != 1) {
+        return 0;
+    }
+    for (i = 0u; i < len; ++i) {
+        if (value[i] == '\n' || value[i] == '\r') {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 static int bounded_string_is(const char *value, size_t max_len, const char *expected) {

@@ -508,7 +508,9 @@ static void seed_result(latticra_runtime_boundary_result_t *result) {
 
 static void copy_runtime_id(const latticra_runtime_boundary_request_t *request, latticra_runtime_boundary_result_t *result) {
     size_t n;
-    n = strlen(request->runtime_id);
+    for (n = 0u; n < sizeof(request->runtime_id); n++) {
+        if (request->runtime_id[n] == '\0') break;
+    }
     if (n >= sizeof(result->record.runtime_id)) n = sizeof(result->record.runtime_id) - 1u;
     memcpy(result->record.runtime_id, request->runtime_id, n);
     result->record.runtime_id[n] = '\0';

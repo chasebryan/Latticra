@@ -1,7 +1,7 @@
 # Latticra Security Validation and Assessment Baseline
 
 Status: security validation and assessment baseline
-Source refresh date: 2026-05-28
+Source refresh date: 2026-06-12
 Scope: security assessment scope, authorization boundary, rules of engagement, control objective mapping, safe test environment, test data handling, static analysis, dynamic testing, fuzzing, vulnerability scanning, penetration-test planning, red-team planning, findings ownership, remediation, retest, independent review, security assessment reporting, POA&M or exception handling, continuous monitoring, and public claim review before security-release, third-party validation, penetration-test, red-team, certification, compliance, production-protection, or high-assurance assessment claims.
 
 This baseline records validation and assessment requirements only. It does not conduct penetration testing, red teaming, vulnerability scanning, certification, accreditation, third-party assessment, production security validation, exploitation, evasion, offensive operations, or runtime authority.
@@ -13,7 +13,8 @@ Date checked: 2026-05-28
 | Source | Latticra use |
 | --- | --- |
 | CISA Secure by Design | security outcome ownership, transparency, vulnerability disclosure, secure defaults, and evidence-backed public claim vocabulary |
-| CISA Cross-Sector Cybersecurity Performance Goals | third-party validation, vulnerability management, logging, incident response, and governance baseline vocabulary |
+| CISA Cross-Sector Cybersecurity Performance Goals 2.0 | third-party validation, vulnerability management, logging, incident response, governance, MSP-risk, least-privilege, incident-communication, and repeatable assessment vocabulary |
+| CISA Secure by Demand Guide | procurement-facing security-assurance questions, customer-visible evidence, vulnerability-class roadmap, MFA/default-password, and memory-safe transition vocabulary |
 | CISA/FBI Product Security Bad Practices | product-security claim blockers, high-risk practice exclusions, unsafe default posture, and unsupported security claim vocabulary |
 | NSA and CISA Top Ten Cybersecurity Misconfigurations | configuration validation, visibility gaps, patch hygiene, privileged access, and common enterprise validation scope vocabulary |
 | NIST SP 800-115 Technical Guide to Information Security Testing and Assessment | rules of engagement, testing techniques, assessment planning, result analysis, mitigation strategy, and assessment reporting vocabulary |
@@ -26,7 +27,8 @@ Authoritative URLs:
 
 ```text
 https://www.cisa.gov/securebydesign
-https://www.cisa.gov/cybersecurity-performance-goals-cpgs
+https://www.cisa.gov/cross-sector-cybersecurity-performance-goals
+https://www.cisa.gov/resources-tools/resources/secure-demand-guide
 https://www.cisa.gov/news-events/alerts/2025/01/17/cisa-and-fbi-release-updated-guidance-product-security-bad-practices
 https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-278a
 https://csrc.nist.gov/pubs/sp/800/115/final
@@ -43,6 +45,8 @@ security_validation_assessment_baseline_present=1
 security_validation_assessment_guard_present=1
 cisa_secure_by_design_validation_tracked=1
 cisa_cpg_third_party_validation_tracked=1
+cisa_cpg_2_0_validation_tracked=1
+cisa_secure_by_demand_validation_tracked=1
 cisa_fbi_product_security_bad_practices_tracked=1
 nsa_cisa_top_misconfigurations_tracked=1
 nist_sp_800_115_security_testing_tracked=1

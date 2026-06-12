@@ -47,6 +47,80 @@ canonical_existing_path() {
   printf '%s\n' "$resolved"
 }
 
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+INSTALLER_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
+
+absolute_artifact_path() {
+  case "$1" in
+    /*) printf '%s\n' "$1" ;;
+    *) printf '%s/%s\n' "$(pwd -P)" "$1" ;;
+  esac
+}
+
+artifact_path_has_symlink_component() {
+  path="$1"
+  dir=$(dirname -- "$path")
+  current="/"
+  rest=${dir#/}
+
+  [ "$dir" != "/" ] || return 1
+
+  while [ -n "$rest" ]; do
+    part=${rest%%/*}
+    if [ "$rest" = "$part" ]; then
+      rest=""
+    else
+      rest=${rest#*/}
+    fi
+    [ -n "$part" ] || continue
+    if [ "$current" = "/" ]; then
+      current="/$part"
+    else
+      current="$current/$part"
+    fi
+    if [ -L "$current" ]; then
+      return 0
+    fi
+    if [ -e "$current" ] && [ ! -d "$current" ]; then
+      return 0
+    fi
+    if [ ! -e "$current" ]; then
+      return 1
+    fi
+  done
+
+  return 1
+}
+
+artifact_path_guard() {
+  artifact_label="$1"
+  artifact_path=$(canonical_existing_path "$(absolute_artifact_path "$2")")
+  home_real=$(canonical_existing_path "$HOME")
+  installer_real=$(canonical_existing_path "$INSTALLER_ROOT")
+  tmp_root=${TMPDIR:-/tmp}
+  tmp_root=${tmp_root%/}
+  tmp_real=$(canonical_existing_path "$tmp_root")
+
+  [ -n "$artifact_path" ] || fail "$artifact_label artifact path is empty"
+  case "$artifact_path" in
+    *"/../"*|*/..|../*|..)
+      fail "$artifact_label artifact path contains parent-directory traversal: $artifact_path"
+      ;;
+    /|/usr|/usr/*|/bin|/bin/*|/sbin|/sbin/*|/etc|/etc/*|/boot|/boot/*|/var|/var/lib|/var/lib/*|/System|/System/*|/Library|/Library/*)
+      fail "$artifact_label artifact path is outside the user-local artifact boundary: $artifact_path"
+      ;;
+  esac
+
+  case "$artifact_path" in
+    "$HOME"/*|"$home_real"/*|"$INSTALLER_ROOT"/*|"$installer_real"/*|"$tmp_root"/*|"$tmp_real"/*|/tmp/*|/private/tmp/*)
+      ;;
+    *)
+      fail "$artifact_label artifact path must stay under HOME, TMPDIR, /tmp, or the installer tree: $artifact_path"
+      ;;
+  esac
+
+}
+
 RECEIPT_BODY=""
 cleanup_receipt_body() {
   if [ -n "${RECEIPT_BODY:-}" ] && [ -f "$RECEIPT_BODY" ]; then
@@ -197,6 +271,8 @@ fi
 prefix_is_allowed_user_local "$PREFIX" &&
   prefix_is_allowed_user_local "$PREFIX_REAL" ||
   fail "refusing to reset unsafe prefix: $PREFIX"
+
+artifact_path_guard "reset receipt directory" "$RECEIPT_DIR/latticra-panel-$OPERATION-receipt-placeholder.txt"
 
 if [ "$WRITE_RECEIPT" = true ] && [ "$DRY_RUN" != true ]; then
   case "$RECEIPT_DIR" in

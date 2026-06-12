@@ -730,7 +730,7 @@ static latticra_status_t append_card_section(
         used,
         "name=%s\npurpose=%s\npurpose_len=%zu\npurpose_escaped=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\n",
         ast->card.name,
-        ast->card.purpose,
+        escaped_purpose,
         ast->card.purpose_len,
         escaped_purpose,
         ast->card.effect,
@@ -794,7 +794,7 @@ static latticra_status_t append_text_section(
     char escaped_text[LATTICRA_L_UI_AST_ESCAPED_TEXT_MAX];
     status = escape_report_bytes(text->value, text->value_len, escaped_text, sizeof(escaped_text));
     if (status != LATTICRA_STATUS_OK) return status;
-    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\nvalue_len=%zu\nvalue_escaped=%s\n", index, text->value, text->value_len, escaped_text);
+    status = append_text(buffer, buffer_len, used, "[text %zu]\nkind=text\nvalue=%s\nvalue_len=%zu\nvalue_escaped=%s\n", index, escaped_text, text->value_len, escaped_text);
     if (status != LATTICRA_STATUS_OK) return status;
     return append_span_fields(buffer, buffer_len, used, "", &text->span);
 }
@@ -806,16 +806,19 @@ latticra_status_t latticra_l_ui_ast_detailed_report(
     latticra_status_t status;
     size_t used = 0u;
     size_t index;
+    char escaped_purpose[LATTICRA_L_UI_AST_ESCAPED_PURPOSE_MAX];
     if (ast == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     if (ast->parse_result.error != LATTICRA_L_UI_PARSE_OK) return append_failed_parse_report(buffer, buffer_len, &used, ast);
 
+    status = escape_report_bytes(ast->card.purpose, ast->card.purpose_len, escaped_purpose, sizeof(escaped_purpose));
+    if (status != LATTICRA_STATUS_OK) return status;
     status = append_text(
         buffer,
         buffer_len,
         &used,
         "L-UI AST DETAILED REPORT\ncard=%s\npurpose=%s\neffect=%s\nboundary=%s\nrail_count=%zu\nfield_count=%zu\ntext_count=%zu\nno_effect=%d\nexecution_allowed=%d\nmutation_allowed=%d\nserver_allowed=%d\nnetwork_allowed=%d\nrecovery_allowed=%d\nhardware_allowed=%d\n",
         ast->card.name,
-        ast->card.purpose,
+        escaped_purpose,
         ast->card.effect,
         ast->card.boundary,
         ast->rail_count,

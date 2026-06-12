@@ -26,7 +26,7 @@ Authoritative URLs:
 https://csrc.nist.gov/pubs/sp/800/128/upd1/final
 https://csrc.nist.gov/pubs/sp/800/70/r5/final
 https://csrc.nist.gov/Pubs/sp/800/53/r5/upd1/Final
-https://www.cisa.gov/cybersecurity-performance-goals-cpgs
+https://www.cisa.gov/cross-sector-cybersecurity-performance-goals
 https://www.cisa.gov/resources-tools/resources/product-security-bad-practices
 https://www.cisa.gov/news-events/alerts/2025/01/17/cisa-and-fbi-release-updated-guidance-product-security-bad-practices
 https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3549369/nsa-and-cisa-advise-on-top-ten-cybersecurity-misconfigurations/

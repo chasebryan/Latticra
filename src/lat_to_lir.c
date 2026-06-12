@@ -1,14 +1,69 @@
 #include "latticra/lat_to_lir.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define LATTICRA_LAT_TO_LIR_ROOT_PARENT 0u
 #define LATTICRA_LAT_TO_LIR_MODULE_INDEX 0u
 #define LATTICRA_LAT_TO_LIR_FIRST_DECL_INDEX 1u
+#define LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX ((LATTICRA_LAT_NAME_MAX * 4u) + 1u)
+#define LATTICRA_LAT_TO_LIR_ESCAPED_VALUE_MAX ((LATTICRA_LAT_VALUE_MAX * 4u) + 1u)
 
 static void copy_text(char *destination, size_t destination_len, const char *source) {
     if (destination == 0 || destination_len == 0u) return;
     (void)snprintf(destination, destination_len, "%s", source == 0 ? "" : source);
+}
+
+static latticra_status_t escape_report_string(
+    const char *input,
+    char *output,
+    size_t output_len) {
+    static const char hex[] = "0123456789ABCDEF";
+    size_t input_index;
+    size_t output_index = 0u;
+
+    if (input == 0 || output == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (output_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+
+    for (input_index = 0u; input[input_index] != '\0'; input_index++) {
+        unsigned char byte = (unsigned char)input[input_index];
+        const char *short_escape = 0;
+        size_t needed;
+
+        if (byte == '\n') short_escape = "\\n";
+        else if (byte == '\r') short_escape = "\\r";
+        else if (byte == '\t') short_escape = "\\t";
+        else if (byte == '"') short_escape = "\\\"";
+        else if (byte == '\\') short_escape = "\\\\";
+
+        if (short_escape != 0) {
+            needed = strlen(short_escape);
+            if (output_index + needed >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            (void)memcpy(output + output_index, short_escape, needed);
+            output_index += needed;
+        } else if (byte >= 0x20u && byte <= 0x7Eu) {
+            if (output_index + 1u >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            output[output_index] = (char)byte;
+            output_index += 1u;
+        } else {
+            if (output_index + 4u >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            output[output_index++] = '\\';
+            output[output_index++] = 'x';
+            output[output_index++] = hex[(byte >> 4u) & 0x0Fu];
+            output[output_index++] = hex[byte & 0x0Fu];
+        }
+    }
+    output[output_index] = '\0';
+    return LATTICRA_STATUS_OK;
 }
 
 static void lat_span_default(latticra_lat_source_span_t *span) {
@@ -593,7 +648,23 @@ latticra_status_t latticra_lat_to_lir_report(
     char *buffer,
     size_t buffer_len) {
     int written;
+    char module_name_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX];
+    char first_declaration_name_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX];
+    char first_declaration_source_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX];
+    char first_clause_name_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX];
+    char first_clause_operator_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_NAME_MAX];
+    char first_clause_value_escaped[LATTICRA_LAT_TO_LIR_ESCAPED_VALUE_MAX];
     if (result == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+
+    if (escape_report_string(result->module_name, module_name_escaped, sizeof(module_name_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(result->first_declaration_name, first_declaration_name_escaped, sizeof(first_declaration_name_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(result->first_declaration_source, first_declaration_source_escaped, sizeof(first_declaration_source_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(result->first_clause_name, first_clause_name_escaped, sizeof(first_clause_name_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(result->first_clause_operator, first_clause_operator_escaped, sizeof(first_clause_operator_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(result->first_clause_value, first_clause_value_escaped, sizeof(first_clause_value_escaped)) != LATTICRA_STATUS_OK) {
+        if (buffer_len > 0u) buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
     written = snprintf(
         buffer,
         buffer_len,
@@ -636,15 +707,15 @@ latticra_status_t latticra_lat_to_lir_report(
         (int)result->status,
         latticra_lat_to_lir_error_label(result->error),
         latticra_lat_model_error_label(result->model_error),
-        result->module_name,
+        module_name_escaped,
         result->declaration_count,
         result->clause_count,
         result->model_declaration_count,
         result->model_clause_count,
         result->first_declaration_node_index,
         latticra_lat_declaration_kind_label(result->first_declaration_kind),
-        result->first_declaration_name,
-        result->first_declaration_source,
+        first_declaration_name_escaped,
+        first_declaration_source_escaped,
         result->first_declaration_parse_index,
         result->first_declaration_first_clause_index,
         result->first_declaration_clause_count,
@@ -653,9 +724,9 @@ latticra_status_t latticra_lat_to_lir_report(
         result->first_clause_node_index,
         latticra_lat_model_clause_role_label(result->first_clause_role),
         latticra_lat_effect_label(result->first_clause_effect),
-        result->first_clause_name,
-        result->first_clause_operator,
-        result->first_clause_value,
+        first_clause_name_escaped,
+        first_clause_operator_escaped,
+        first_clause_value_escaped,
         result->node_count,
         result->edge_count,
         result->no_effect,

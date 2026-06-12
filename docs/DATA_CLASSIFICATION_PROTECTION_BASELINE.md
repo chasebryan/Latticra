@@ -25,7 +25,7 @@ Authoritative URLs:
 
 ```text
 https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3735130/nsa-issues-guidance-for-maturing-data-security/
-https://www.cisa.gov/cybersecurity-performance-goals-cpgs
+https://www.cisa.gov/cross-sector-cybersecurity-performance-goals
 https://www.cisa.gov/stopransomware/ransomware-guide
 https://www.fbi.gov/scams-and-safety/common-scams-and-crimes/ransomware
 https://csrc.nist.gov/pubs/sp/800/60/v1/r1/final

@@ -1,7 +1,7 @@
 # Latticra High-Assurance Security Baseline
 
 Status: high-assurance security baseline checkpoint
-Source refresh date: 2026-05-26
+Source refresh date: 2026-06-12
 Scope: NSA, CISA, FBI, and NIST security guidance alignment for current Latticra source, documentation, tests, packaging lanes, and future infrastructure posture.
 
 This baseline allocates required security work for Latticra. It does not certify Latticra, accredit Latticra, make Latticra a production security boundary, or claim compliance with any external framework.
@@ -34,7 +34,7 @@ non-claims that remain closed
 
 ## Authoritative Source Inventory
 
-Date checked: 2026-05-26
+Date checked: 2026-06-12
 
 | Source | Current guidance used | Latticra allocation |
 | --- | --- | --- |
@@ -42,11 +42,12 @@ Date checked: 2026-05-26
 | NSA Advancing Zero Trust Maturity Throughout the User Pillar | ICAM capabilities are a core zero-trust maturity path for critical systems. | Require identity, credential, MFA, privileged-access, account-lifecycle, and identity-event evidence before hosted or privileged authority claims. |
 | CISA and NSA Identity and Access Management: Recommended Best Practices for Administrators | Administrators should inventory assets and identities, understand security gaps, deploy and inventory MFA, collect SSO context, and monitor privileged behavior. | Keep identity and access management as a gated baseline before remote access, hosted administration, privileged sessions, or account-management claims. |
 | NSA/CISA Memory Safe Languages CSI | Memory-safe language adoption should be considered, while existing code can be improved through interoperability and mitigations where migration is not practical. | Publish and guard a memory-safety roadmap for C/C++ substrate code; prefer memory-safe implementation for new high-risk infrastructure surfaces. |
-| CISA Secure by Design | Manufacturers should take ownership of customer security outcomes, practice transparency/accountability, and lead from the top. | Require evidence-bound public claims, vulnerability reporting, no hidden security costs, deterministic reports, and leadership-owned security gates. |
+| CISA Secure by Design | CISA, NSA, FBI, and international partners direct software manufacturers toward ownership of customer security outcomes, radical transparency/accountability, secure defaults, and leadership-owned security work. | Require evidence-bound public claims, vulnerability reporting, no hidden security costs, deterministic reports, secure-default evidence, and leadership-owned security gates. |
+| CISA Secure by Demand Guide | Software customers should ask manufacturers for security outcome evidence, Secure by Design progress, vulnerability-class elimination roadmaps, default-password/MFA posture, and memory-safe transition plans. | Treat procurement/customer-assurance evidence as a future gate: no customer-security, secure-default, MFA, default-credential, or memory-safe progress claim without a matching evidence packet. |
 | CISA/FBI Product Security Bad Practices | Avoid exceptionally risky practices, including absent memory-safety roadmaps, injection classes, known-insecure crypto, weak defaults, and unmanaged dependencies. | Guard against unsafe APIs, shell injection surfaces, default-secret patterns, unbounded buffers, path traversal, and production crypto claims without a module boundary. |
 | NSA and CISA Red and Blue Teams Share Top Ten Cybersecurity Misconfigurations | Common enterprise compromise paths include default configurations, poor patch/configuration hygiene, weak controls, and visibility gaps. | Require secure configuration and change-management evidence before host, infrastructure, hardening, or production configuration claims. |
 | CISA/NSA/FBI secure-by-design and secure-by-default principles | Secure products should ship with secure default baselines and should not shift avoidable hardening burden to customers. | Block secure-default and configuration-hardening claims until secure defaults, default-credential absence, checklist evidence, and exception ownership are recorded. |
-| CISA Cross-Sector Cybersecurity Performance Goals | Establish baseline practices for asset inventory, vulnerability management, logging, account security, incident response, recovery, and third-party validation. | Maintain source and dependency inventory, KEV-aware release checks, explicit logs/reports, incident plan, recovery contracts before mutation, and third-party review before security release. |
+| CISA Cross-Sector Cybersecurity Performance Goals 2.0 | Establish voluntary baseline practices with high-impact risk-reduction value; current 2.0 guidance aligns to NIST CSF 2.0 and adds stronger governance, managed-service-provider risk, least-privilege, and incident-communication expectations. | Maintain source and dependency inventory, KEV-aware release checks, explicit logs/reports, incident plan, recovery contracts before mutation, third-party review before security release, MSP-risk review before hosted-service claims, and incident-communication procedures before service claims. |
 | CISA/FBI/NSA international Best Practices for Event Logging and Threat Detection | Event logging supports continued operations and resilience through visibility, detection, and investigation across cloud, enterprise, mobile, and OT environments. | Require a security logging, monitoring, and detection baseline before hosted services, telemetry export, SIEM integration, or detection claims. |
 | CISA Logging Made Easy and CISA logging guidance | Centralized log management, user activity visibility, alerting, and regular review improve threat detection. | Require event-source inventory, log centralization/export planning, redaction, triage ownership, and incident handoff before monitoring claims. |
 | CISA Zero Trust Maturity Model v2 | Mature zero trust uses identity, devices, networks, applications/workloads, and data pillars with visibility, analytics, automation, orchestration, and governance. | Treat each Latticra request as a per-request policy decision; preserve deny-by-default behavior for network, host, recovery, boot, and tool authority. |
@@ -105,19 +106,32 @@ Follow-on source review performed: 2026-05-27
 - NSA's May 20, 2026 guidance on security design considerations for AI-driven automation leveraging MCP is now relevant to Latticra's future server, MCP, tool, and agentic automation surfaces. It reinforces explicit tool-boundary contracts, dynamic tool invocation caution, context-sharing limits, and distrust of implicit cross-service trust.
 - NSA and partners' April 30, 2026 guidance on careful adoption of agentic AI services reinforces that future agentic automation should be treated as a broader risk amplifier, not merely a wrapper around existing cybersecurity controls.
 
+Follow-on source review performed: 2026-06-12
+
+- CISA's Cross-Sector Cybersecurity Performance Goals 2.0 page is the current CPG source for this checkpoint; the older `cybersecurity-performance-goals-cpgs` resource path was not current during this review.
+- CPG 2.0 reinforces governance, cross-sector IT/OT consolidation, managed-service-provider risk, least-privilege, incident-communication procedures, and repeatable assessment methodology as required future evidence before hosted-service, infrastructure, release, or critical-infrastructure-adjacent claims.
+- CISA's Secure by Demand Guide adds customer-assurance questions that Latticra should treat as future evidence requirements: Secure by Design progress reporting, vulnerability-class elimination roadmaps, default-password removal, MFA posture, memory-safe language transition, and procurement-facing transparency.
+
 ## Required Allocations
 
 Current required allocation fields:
 
 ```text
 high_assurance_security_baseline_present=1
-source_refresh_date=2026-05-26
+source_refresh_date=2026-06-12
 official_source_inventory_present=1
+cisa_cpg_2_0_observed=1
+cisa_secure_by_demand_guide_observed=1
 memory_safety_roadmap_required=1
 memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
+cpg_2_0_governance_alignment_required=1
+secure_by_demand_customer_assurance_review_required=1
+msp_risk_review_required_before_hosted_service=1
+incident_communication_procedure_required_before_hosted_service=1
+least_privilege_operational_goal_required=1
 supply_chain_security_baseline_present=1
 cyber_incident_reporting_response_baseline_present=1
 vulnerability_management_release_gate_baseline_present=1

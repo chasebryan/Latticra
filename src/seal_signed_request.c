@@ -10,6 +10,36 @@ static void copy_literal(char *destination, size_t destination_len, const char *
     (void)snprintf(destination, destination_len, "%s", source != NULL ? source : "");
 }
 
+static int report_string_valid(const char *value, size_t max_len) {
+    size_t i;
+
+    if (value == NULL) {
+        return 0;
+    }
+    for (i = 0u; i < max_len; ++i) {
+        if (value[i] == '\0') {
+            return i > 0u;
+        }
+        if (value[i] == '\n' || value[i] == '\r') {
+            return 0;
+        }
+    }
+    return 0;
+}
+
+static int signed_request_report_strings_valid(
+    const latticra_seal_signed_request_t *signed_request) {
+    return report_string_valid(signed_request->signed_request_profile, LATTICRA_SEAL_SIGNED_REQUEST_PROFILE_MAX) &&
+           report_string_valid(signed_request->signed_request_id, LATTICRA_SEAL_SIGNED_REQUEST_ID_MAX) &&
+           report_string_valid(signed_request->signature_algorithm, LATTICRA_SEAL_SIGNED_REQUEST_ID_MAX) &&
+           report_string_valid(signed_request->signing_key_id, LATTICRA_SEAL_SIGNED_REQUEST_ID_MAX) &&
+           report_string_valid(signed_request->signature_hash, LATTICRA_SEAL_SIGNED_REQUEST_HASH_MAX) &&
+           report_string_valid(signed_request->mode, LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX) &&
+           report_string_valid(signed_request->decision, LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX) &&
+           report_string_valid(signed_request->reason, LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX) &&
+           report_string_valid(signed_request->status, LATTICRA_SEAL_SIGNED_REQUEST_STATE_MAX);
+}
+
 const char *latticra_seal_signed_request_error_label(
     latticra_seal_signed_request_error_t error) {
     switch (error) {
@@ -123,6 +153,13 @@ latticra_status_t latticra_seal_signed_request_report(
     int written;
 
     if (signed_request == NULL || buffer == NULL) {
+        return LATTICRA_STATUS_NULL_ARGUMENT;
+    }
+    if (buffer_len == 0u) {
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!signed_request_report_strings_valid(signed_request)) {
+        buffer[0] = '\0';
         return LATTICRA_STATUS_NULL_ARGUMENT;
     }
 
