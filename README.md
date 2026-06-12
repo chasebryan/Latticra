@@ -20,7 +20,7 @@ The Latticra motion overview presentation is available here:
 
 [Watch the Latticra motion overview presentation](build/presentation/latticra-motion/video/latticra-motion-presentation.mp4)
 
-This Piper-voiced motion presentation explains what Latticra is through sparse on-screen text and moving visual scenes: visible authority, request-to-record order, the substrate, reports, Seal/Q-Seal, Nucleus, language/import surfaces, Model-1, Phase1, Fyr, l2, l3, operator review, delivery evidence, research lanes, and non-claims.
+This Piper-voiced motion presentation explains what Latticra is through sparse on-screen text and moving visual scenes: visible authority, request-to-record order, the substrate, reports, Seal/Q-Seal, Nucleus, language/import surfaces, Model-1, precursor/import review surfaces, operator review, delivery evidence, research lanes, and non-claims.
 
 README route refreshed: 2026-05-29 CDT
 Default branch: `main`
