@@ -89,10 +89,16 @@ Expected output:
 latticra_guarded_model1_effect_demonstration_evidence_boundary: ok
 ```
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
+```
+
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration packet review receipt ledger.
 ```
 
 ## Non-Claims

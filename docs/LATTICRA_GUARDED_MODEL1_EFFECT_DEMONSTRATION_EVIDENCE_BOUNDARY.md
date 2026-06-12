@@ -145,13 +145,19 @@ guarded_model1_effect_demonstration_evidence_accepted=0
 
 No Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, artifact acceptance, mixed-build promotion, or runtime authority is accepted because this boundary exists.
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
-That lane should remain no-effect until it can reject incomplete, effect-performing, unredacted, or claim-promoting evidence packets without launching Model-1 or dispatching effects.
+That lane remains no-effect: it rejects incomplete, effect-performing, unredacted, or claim-promoting evidence packets without launching Model-1 or dispatching effects.
+
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration packet review receipt ledger.
+```
 
 ## Validation
 

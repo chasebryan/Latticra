@@ -1,0 +1,176 @@
+[meta]
+title = "Latticra: A System That Shows Its Authority"
+subtitle = "A motion-first professional overview with Piper voiceover"
+artifact_slug = "latticra-motion"
+target_seconds = 980
+audience = "technical founders, reviewers, systems engineers, security-minded operators, and advanced contributors"
+voice_style = "professional, calm, direct, varied, human, non-promotional"
+render_contract = "Use sparse on-screen text, moving visual proof objects, no overlapping labels, no production-readiness claims, and no repeated robotic phrasing."
+
+[[scenes]]
+id = "opening"
+visual = "horizon"
+duration = 70
+kicker = "OPENING"
+screen_title = "Latticra is about visible authority."
+screen_line = "Before a system acts, it should be able to explain why."
+footer = "Current posture: v0.3.0edge; not a production release."
+narration = """
+Latticra begins with a practical discomfort. Modern systems often do impressive work while hiding the authority that made the work possible. A file changes, a package installs, a process starts, a model calls a tool, or an operator receives a confident answer, and only afterward does everyone ask what actually happened. Latticra takes the opposite stance. It asks the system to show its hand before the action becomes real. What request is being made. Which identity is asking. Which capability is being claimed. Which boundary is being crossed. Which policy allows or denies the path. Which record will let another person replay the decision later. That is the center of the project. Latticra is not a single app and it is not trying to look finished before the work earns that. It is a systems architecture for making authority visible, local, inspectable, and difficult to smuggle past review.
+"""
+
+[[scenes]]
+id = "failure_mode"
+visual = "veils"
+duration = 70
+kicker = "PROBLEM"
+screen_title = "The failure is not always the action."
+screen_line = "The failure is often the missing explanation."
+footer = "Hidden authority turns ordinary automation into review debt."
+narration = """
+The easiest way to misunderstand Latticra is to treat it as a security slogan. The project is more specific than that. It is aimed at the gray area where useful software, local automation, research tooling, installers, agents, and operating-system shaped components all begin to share the same problem. They can affect the host, but their reasons are scattered. Intent may live in code. Context may hide in a README. The actual trigger may be a command line. The risk model may exist only in somebody's head, never reaching the audit trail. Latticra treats that scattered state as a design flaw. Not every action is dangerous, and not every denial is a victory. The problem is opacity. If a system cannot show the structure behind a proposed effect, then the reviewer is stuck trusting a mood instead of a record. Latticra is the attempt to turn that mood back into something concrete.
+"""
+
+[[scenes]]
+id = "first_rule"
+visual = "intake"
+duration = 70
+kicker = "RULE"
+screen_title = "Request first. Evidence next. Effect last."
+screen_line = "That order is the spine of the project."
+footer = "Effect execution remains closed unless a narrower record says otherwise."
+narration = """
+The operating rule is deliberately plain: request first, evidence next, effect last. A request has to be named before anyone is asked to trust it. A capability has to be classified before the system uses it. A boundary has to be visible before anything crosses it. A receipt has to exist before a reviewer is asked to accept the outcome. This is why so much of Latticra looks like contracts, status records, validators, report envelopes, bridge protocols, and denial paths. Those are not paperwork for paperwork's sake. They are the machinery that keeps the project honest while it grows. When the repo says that root authority is closed, network authority is closed, Model-1 launch is closed, or production readiness is not claimed, that language matters. It keeps the future powerful without letting the present pretend.
+"""
+
+[[scenes]]
+id = "substrate"
+visual = "strata"
+duration = 70
+kicker = "SUBSTRATE"
+screen_title = "The substrate is the place where authority becomes explicit."
+screen_line = "It gives every edge a name, a boundary, and a record."
+footer = "Substrate means review structure, not magical permission."
+narration = """
+The word substrate can sound abstract, so it helps to make it physical. In Latticra, the substrate is the layer where requests, identities, capabilities, policies, reports, receipts, and runtime boundaries are arranged so that they can be inspected together. It is not a secret engine that makes anything safe by existing. It is a way to stop treating authority as ambient. A local copy, a user-local install, a receipt write, an operator bundle, a future runtime handoff, and a proposed model bridge are different kinds of events. Latticra wants those differences to survive in the record. The substrate is where that survival happens. It is the shelf system for the facts a reviewer needs: not just what was requested, but what was refused, what remained closed, and what would have to be proven before the next gate opened.
+"""
+
+[[scenes]]
+id = "reporting"
+visual = "decision"
+duration = 70
+kicker = "RECORD"
+screen_title = "A denial is useful information."
+screen_line = "A report should show the boundary, not hide behind it."
+footer = "Reports and receipts are first-class outputs."
+narration = """
+Latticra pays attention to reports because reports are where the system becomes legible. A good report does not merely say pass or fail. It explains what was asked, which stage handled the request, what evidence was available, which boundary applied, and why the answer landed where it did. A denial is not a dead end in that model. It is evidence. It can show that a dangerous authority remained closed, that an input did not meet the contract, or that a future implementation still needs a narrower record. This is one reason the project can move forward without pretending to be a production platform. It can build the review surface before it builds the power surface. That is slower at the beginning, but it gives later work somewhere trustworthy to stand.
+"""
+
+[[scenes]]
+id = "seal"
+visual = "seal"
+duration = 70
+kicker = "SEAL"
+screen_title = "Seal turns decisions into receipt paths."
+screen_line = "The point is not ceremony. The point is replay."
+footer = "Seal and Q-Seal remain bounded by current crypto evidence."
+narration = """
+Seal is the part of Latticra that makes the receipt idea more concrete. It is concerned with the shape of signed requests, policy decisions, verification posture, capability gates, effect decisions, report envelopes, and future proof paths. The important phrase is not simply signed. The important phrase is replayable enough to review. A receipt should help someone understand the decision later without asking the system to perform the effect again. Q-Seal extends that posture toward cryptographic hardening and post-quantum preparation, but the current repo is careful about its claim. It does not pretend to be production cryptography just because the vocabulary is serious. The discipline is the product: separate the metadata that is present, the verification that is real, the authority that is still closed, and the evidence that would be required before promotion.
+"""
+
+[[scenes]]
+id = "nucleus"
+visual = "nucleus"
+duration = 70
+kicker = "NUCLEUS"
+screen_title = "Nucleus is a supervisor idea, not a shortcut around review."
+screen_line = "It coordinates tasks, policies, gates, and reports."
+footer = "Supervisor language stays bounded by current no-effect posture."
+narration = """
+Nucleus is the planned supervisor architecture inside the larger picture. Its purpose is not to bypass contracts. It is to coordinate them. A supervisor in Latticra has to know what task exists, which policy applies, what an effect gate says, how a report is shaped, and where the runtime boundary remains closed. The clean version of this idea is not a big central switch that can do everything. It is closer to a traffic controller with a recorder beside it. Work enters a queue. Each request is classified. A gate produces an allow, deny, or report-only posture. The trace follows the request instead of disappearing inside the implementation. That is why Nucleus belongs under Latticra instead of above it. The supervisor does not grant meaning to the substrate; the substrate constrains the supervisor.
+"""
+
+[[scenes]]
+id = "language"
+visual = "language"
+duration = 70
+kicker = "LANGUAGE"
+screen_title = "The language surface is where intent becomes inspectable."
+screen_line = "Lat, LIR, Fyr, l2, and l3 belong in one umbrella story."
+footer = "Import direction: named components with provenance and boundaries."
+narration = """
+The language work matters because authority is much easier to review when intent has structure. Lat and LIR already point in that direction inside Latticra: parsing, lowering, report metadata, node topology, edge endpoints, source spans, and no-effect evidence. Fyr, l2, and l3 widen the same idea from another angle. They should not live as loose siblings forever if the goal is a coherent platform. Under the Latticra umbrella, they can become named components with provenance, import contracts, and a clearer responsibility split. Fyr can become the language and automation surface for operators and Model-1 work. l2 and l3 can preserve their specialized lineage while joining the larger substrate story. The point is not to erase their history. The point is to make their role legible enough that the whole system can grow without becoming folklore.
+"""
+
+[[scenes]]
+id = "model_one"
+visual = "umbrella"
+duration = 70
+kicker = "MODEL-1"
+screen_title = "Model-1 should enter through a contract, not a side door."
+screen_line = "Phase1, Fyr, l2, and l3 need named boundaries."
+footer = "Bridge execution, import acceptance, and effect dispatch remain closed."
+narration = """
+Model-1 is where the umbrella idea becomes especially important. There is a Phase1 source history. There are sibling projects with their own identities. There is a bridge protocol contract. There is an import and mixed-build review boundary. There is a guarded demonstration evidence boundary. Those pieces should converge, but they should converge in the Latticra style: visibly, gradually, and with refusal paths left intact. A Model-1 bridge should not mean the project quietly starts launching model code or dispatching effects. It should mean the message format is known, trace correlation is understood, authority handoff is explicit, target evidence is named, and denial behavior is ordinary. That is how Latticra can absorb its own future without breaking the trust model that made the future worth building.
+"""
+
+[[scenes]]
+id = "operator"
+visual = "operator"
+duration = 70
+kicker = "OPERATOR"
+screen_title = "The operator should see the reason before the action."
+screen_line = "Useful systems do not need to be mysterious."
+footer = "The current surface favors reports, validators, and local evidence."
+narration = """
+From an operator's point of view, the ideal Latticra experience is not a wall of theory. It is a clear path through a decision. The operator asks for something. The system identifies the kind of request. It shows the capability posture. It names the boundary. It produces a report or a receipt. If the answer is no, the operator can see why. If the answer is allowed in a future lane, the record says what changed. That kind of experience is calmer than a black box and more useful than a warning banner. It gives a person enough context to make a serious decision without demanding that they read the entire repo each time. The best interface for Latticra will probably feel less like a control panel and more like a review room with good instruments.
+"""
+
+[[scenes]]
+id = "research"
+visual = "research"
+duration = 70
+kicker = "RESEARCH"
+screen_title = "The research lane can be ambitious because its claims are fenced."
+screen_line = "Proof objects are allowed to fail in public."
+footer = "Simulation-bound language remains a research premise, not a claim."
+narration = """
+The research side of Latticra is unusual and should stay unusual. It includes computational proof framing, identity-replay impedance, Higgs challenge work, Speculum, simulacrum language, and staged proof objects. That can sound grand if it is presented badly. The safer way to understand it is this: Latticra wants a place where ambitious substrate hypotheses can be expressed as bounded experiments. A proof object can be prepared, preregistered, challenged, falsified, visualized, and rejected without turning the rejection into embarrassment. In fact, rejection is part of the value. The public posture stays clear: simulation proven equals zero, production truth claims stay closed, and the work earns attention by making its assumptions visible. That is a healthy research culture for a project that wants to touch deep systems ideas without losing engineering discipline.
+"""
+
+[[scenes]]
+id = "delivery"
+visual = "delivery"
+duration = 70
+kicker = "DELIVERY"
+screen_title = "Release work is evidence intake, not celebration."
+screen_line = "A green local check is not the same as production readiness."
+footer = "Packaging, installer, SBOM, transcript, and VM evidence remain gated."
+narration = """
+Latticra is also careful about delivery. This matters because many projects blur the line between a local check and a release claim. Latticra keeps those separate. A validator may exist before an artifact is accepted. A staging directory may exist before a release is created. A signing identity reference may be required before signing is performed. SBOM, transcript, lifecycle, recovery, and multi-VM evidence can have intake paths without implying that the evidence already passes. This may feel conservative, but it protects the project from a common failure: confusing readiness scaffolding with readiness itself. The delivery lane says, here is the shape of the evidence we will need. It does not say, therefore we are ready. That distinction is one of Latticra's strongest habits.
+"""
+
+[[scenes]]
+id = "roadmap"
+visual = "roadmap"
+duration = 70
+kicker = "ROADMAP"
+screen_title = "The next real milestone is coherent integration."
+screen_line = "v0.4.0 edge should mean stronger evidence, not louder claims."
+footer = "Current checkpoint remains v0.3.0edge."
+narration = """
+The most useful next milestone is not a theatrical launch. It is coherent integration. Latticra already has many strong lanes: the effect contract schema, the allowlist and build-profile boundary, the effect runner review boundary, the separate-build platform boundary, the Model-1 bridge protocol, the import and mixed-build review boundary, and the guarded demonstration evidence boundary. The next step is to make those lanes feel like one system. That means Model-1, Phase1, Fyr, l2, and l3 should become understandable members of the same umbrella. It means an operator can follow the path from request to report without losing the thread. It means v0.4.0edge becomes a better evidence posture, not a louder announcement. The milestone should make the project easier to inspect.
+"""
+
+[[scenes]]
+id = "close"
+visual = "close"
+duration = 70
+kicker = "CLOSE"
+screen_title = "Latticra succeeds when authority stops being ambient."
+screen_line = "The future can be powerful because the present stays honest."
+footer = "Goal: explicit boundaries, reviewable records, and disciplined growth."
+narration = """
+So what is Latticra? It is a systems architecture for refusing hidden authority. It is a repo culture that treats status records, non-claims, receipts, contracts, and validators as real engineering work. It is a future runtime story that does not want to smuggle runtime power into the present. It is a place where language, reports, supervisors, receipts, packaging, and research can meet without pretending they are already finished. Most importantly, it is a way of building ambitious software without asking reviewers to take the ambition on faith. The project should become more capable over time. It should import its related work. It should produce stronger demonstrations. It should eventually make hard things feel practical. But every step should leave a trail. That is the promise: not that Latticra can already do everything, but that when it does something, the authority behind it can be seen.
+"""

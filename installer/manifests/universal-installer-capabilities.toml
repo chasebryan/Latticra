@@ -1,0 +1,61 @@
+[manifest]
+name = "latticra-universal-installer-capabilities"
+version = "1.0.0"
+production_installer_ready = false
+comprehensive_installer_ready = false
+network_required = false
+root_required = false
+install_performed = false
+host_mutation_performed = false
+next_lane = "universal-installer-host-package-selector"
+
+[host.linux]
+local_prefix_install_supported = true
+native_package_lane_present = true
+native_package_install_ready = false
+os_image_install_ready = false
+
+[host.macos]
+local_prefix_install_supported = true
+native_package_lane_present = true
+native_package_install_ready = false
+app_bundle_install_ready = false
+
+[host.freebsd]
+local_prefix_install_supported = true
+native_package_lane_present = true
+native_package_install_ready = false
+
+[host.openbsd]
+local_prefix_install_supported = true
+native_package_lane_present = true
+native_package_install_ready = false
+
+[host.windows_compat_shell]
+local_prefix_install_supported = false
+native_windows_supported = false
+windows_wsl_required = true
+
+[features]
+required_components = [
+  "latticra_console",
+  "lat_tooling",
+  "lir_contracts",
+  "seal_report_only",
+  "nadia_offline_ai",
+  "fedora_validation",
+  "docs_and_examples",
+  "developer_cli_helpers",
+]
+default_safe_components = [
+  "latticra_console",
+  "lat_tooling",
+  "lir_contracts",
+  "seal_report_only",
+  "docs_and_examples",
+  "developer_cli_helpers",
+]
+optional_default_disabled_components = [
+  "nadia_offline_ai",
+  "fedora_validation",
+]

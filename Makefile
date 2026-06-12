@@ -16,6 +16,12 @@
 .PHONY: latticra-model1-bridge-protocol-contract
 .PHONY: latticra-model1-import-mixed-build-review-boundary
 .PHONY: latticra-guarded-model1-effect-demonstration-evidence-boundary
+.PHONY: latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator
+.PHONY: latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger
+.PHONY: latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate
+.PHONY: latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist
+.PHONY: latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt
+.PHONY: latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate
 .PHONY: latticra-computational-proof-foundation
 .PHONY: latticra-computational-math-physics-evaluation
 .PHONY: latticra-speculum-premise
@@ -196,6 +202,7 @@
 .PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition
 .PHONY: latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review
 .PHONY: hybrid-license-posture
+.PHONY: latticra-universal-installer-preflight
 .PHONY: production-installer-preflight-guard-contract
 .PHONY: production-installer-plan-preview-contract
 .PHONY: production-installer-artifact-integrity-status-contract
@@ -396,6 +403,7 @@ quality-panel-installer:
 	sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout-audit-review-disposition-review.sh
 
 quality-installer-readiness:
+	sh ./scripts/test-latticra-universal-installer-preflight.sh
 	sh ./scripts/test-production-installer-readiness-contract.sh
 	sh ./scripts/test-local-installer-artifact-manifest-contract.sh
 	sh ./scripts/test-local-artifact-manifest-fixture.sh
@@ -752,6 +760,12 @@ quality-status:
 	sh ./scripts/test-latticra-model1-bridge-protocol-contract.sh
 	sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh
 	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh
 	sh ./scripts/test-latticra-computational-proof-foundation.sh
 	sh ./scripts/test-latticra-computational-math-physics-evaluation.sh
 	sh ./scripts/test-latticra-speculum-premise.sh
@@ -806,6 +820,24 @@ latticra-model1-import-mixed-build-review-boundary:
 
 latticra-guarded-model1-effect-demonstration-evidence-boundary:
 	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh
+
+latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator.sh
+
+latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger.sh
+
+latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate.sh
+
+latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist.sh
+
+latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh
+
+latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate:
+	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh
 
 latticra-computational-proof-foundation:
 	sh ./scripts/test-latticra-computational-proof-foundation.sh
@@ -887,6 +919,9 @@ latticra-higgs-chain-verifier:
 
 production-quality-blocker-ledger:
 	sh ./scripts/test-production-quality-blocker-ledger.sh
+
+latticra-universal-installer-preflight:
+	sh ./scripts/latticra-universal-installer-preflight.sh
 
 production-installer-preflight-guard-contract:
 	sh ./scripts/test-production-installer-preflight-guard-contract.sh
@@ -2199,3 +2234,14 @@ latticra-academic-presentation:
 
 latticra-academic-presentation-test:
 	sh ./scripts/test-latticra-academic-presentation.sh
+
+.PHONY: latticra-motion-presentation-preview latticra-motion-presentation latticra-motion-presentation-test
+
+latticra-motion-presentation-preview:
+	sh ./scripts/render-latticra-motion-presentation.sh preview
+
+latticra-motion-presentation:
+	sh ./scripts/render-latticra-motion-presentation.sh render
+
+latticra-motion-presentation-test:
+	sh ./scripts/test-latticra-motion-presentation.sh
