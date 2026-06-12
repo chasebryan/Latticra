@@ -33,6 +33,14 @@ v1_release_next_workspace_action=<observed>
 v1_tag_exists=0
 production_release_ready=0
 production_installer_ready=0
+release_artifact_candidate_preflight_present=1
+release_artifact_candidate_preflight_passed=<observed>
+release_artifact_candidate_blocker_count=<observed>
+release_artifact_candidate_blockers=<observed>
+release_artifact_candidate_tag=v1.0.0
+release_artifact_candidate_tag_exists=<observed>
+release_artifact_candidate_tag_blocked=<observed>
+release_artifact_candidate_signing_identity_reference_blocked=<observed>
 release_artifact_promotion_gate_passed=0
 release_artifact_present=0
 release_artifact_signature_verified=0
@@ -63,7 +71,7 @@ latticra_v1_release_readiness_gate_contract: ok
 ## Next recommended lane
 
 ```text
-First clear any observed workspace-cleanliness blocker by reviewing and committing the current readiness gate work. Then close the external release inputs and accepted evidence blockers: approved v1 tag, RPM toolchain, signing identity reference, tagged artifact, checksum, signature, public key, verification transcript, reproducibility transcript, and review evidence.
+The v1.0.0 gate now runs the release artifact candidate preflight against the requested v1 tag and reports the observed candidate blockers before any artifact build, signing, evidence acceptance, tag publication, or host mutation. The next release inputs remain the approved v1 tag, signing identity reference, tagged artifact, checksum, signature, public key, verification transcript, reproducibility transcript, and review evidence.
 ```
 
 ## Non-claims

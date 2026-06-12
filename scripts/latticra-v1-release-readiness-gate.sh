@@ -54,6 +54,12 @@ fingerprint_format_valid() {
   fi
 }
 
+output_value() {
+  key="$1"
+  output="$2"
+  printf '%s\n' "$output" | awk -F= -v key="$key" '$1 == key { print substr($0, length(key) + 2); exit }'
+}
+
 RELEASE_VERSION='v1.0.0'
 
 while [ "$#" -gt 0 ]; do
@@ -84,6 +90,7 @@ require_contains 'production_enforcement_claimed=0' docs/status/PRODUCTION_QUALI
 require_contains 'release_artifact_promotion_gate_passed=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_present=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_signature_verified=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'release_artifact_candidate_preflight_present=1' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
 require_contains 'sbom_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 require_contains 'transcript_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 require_contains 'lifecycle_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
@@ -133,6 +140,23 @@ case "$SIGNING_KEY_FINGERPRINT" in
     fi
     ;;
 esac
+
+ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT="$(
+  sh scripts/production-installer-release-artifact-candidate-preflight.sh \
+    --tag "$RELEASE_VERSION" \
+    --signing-key-fingerprint "$SIGNING_KEY_FINGERPRINT"
+)"
+ARTIFACT_CANDIDATE_PREFLIGHT_PRESENT="$(output_value release_artifact_candidate_preflight_present "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_PREFLIGHT_PASSED="$(output_value release_artifact_candidate_preflight_passed "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_INPUTS_SATISFIED="$(output_value release_artifact_candidate_inputs_satisfied "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_BLOCKER_COUNT="$(output_value release_artifact_candidate_blocker_count "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_BLOCKERS="$(output_value release_artifact_candidate_blockers "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_TAG="$(output_value release_artifact_candidate_tag "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_TAG_EXISTS="$(output_value release_artifact_candidate_tag_exists "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_TAG_BLOCKED="$(output_value release_artifact_candidate_tag_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_TOOLCHAIN_BLOCKED="$(output_value release_artifact_candidate_toolchain_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_TRACKED_WORKTREE_BLOCKED="$(output_value release_artifact_candidate_tracked_worktree_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
+ARTIFACT_CANDIDATE_SIGNING_IDENTITY_REFERENCE_BLOCKED="$(output_value release_artifact_candidate_signing_identity_reference_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
 
 BLOCKER_COUNT=0
 BLOCKERS='none'
@@ -254,7 +278,16 @@ production_ai_claimed=0
 production_cryptography_claimed=0
 production_enforcement_claimed=0
 release_artifact_candidate_preflight_present=1
-release_artifact_candidate_preflight_passed=0
+release_artifact_candidate_preflight_passed=$ARTIFACT_CANDIDATE_PREFLIGHT_PASSED
+release_artifact_candidate_inputs_satisfied=$ARTIFACT_CANDIDATE_INPUTS_SATISFIED
+release_artifact_candidate_blocker_count=$ARTIFACT_CANDIDATE_BLOCKER_COUNT
+release_artifact_candidate_blockers=$ARTIFACT_CANDIDATE_BLOCKERS
+release_artifact_candidate_tag=$ARTIFACT_CANDIDATE_TAG
+release_artifact_candidate_tag_exists=$ARTIFACT_CANDIDATE_TAG_EXISTS
+release_artifact_candidate_tag_blocked=$ARTIFACT_CANDIDATE_TAG_BLOCKED
+release_artifact_candidate_toolchain_blocked=$ARTIFACT_CANDIDATE_TOOLCHAIN_BLOCKED
+release_artifact_candidate_tracked_worktree_blocked=$ARTIFACT_CANDIDATE_TRACKED_WORKTREE_BLOCKED
+release_artifact_candidate_signing_identity_reference_blocked=$ARTIFACT_CANDIDATE_SIGNING_IDENTITY_REFERENCE_BLOCKED
 release_artifact_promotion_gate_present=1
 release_artifact_promotion_gate_passed=0
 release_artifact_present=0

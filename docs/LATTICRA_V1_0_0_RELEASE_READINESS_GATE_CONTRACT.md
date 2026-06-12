@@ -50,6 +50,17 @@ production_installer_ready=0
 production_ai_claimed=0
 production_cryptography_claimed=0
 production_enforcement_claimed=0
+release_artifact_candidate_preflight_present=1
+release_artifact_candidate_preflight_passed=<observed>
+release_artifact_candidate_inputs_satisfied=<observed>
+release_artifact_candidate_blocker_count=<observed>
+release_artifact_candidate_blockers=<observed>
+release_artifact_candidate_tag=v1.0.0
+release_artifact_candidate_tag_exists=<observed>
+release_artifact_candidate_tag_blocked=<observed>
+release_artifact_candidate_toolchain_blocked=<observed>
+release_artifact_candidate_tracked_worktree_blocked=<observed>
+release_artifact_candidate_signing_identity_reference_blocked=<observed>
 release_artifact_promotion_gate_passed=0
 release_artifact_present=0
 release_artifact_built_from_tag=0
@@ -96,6 +107,8 @@ README.md
 STATUS.md
 docs/status/CURRENT_STATUS.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
+scripts/production-installer-release-artifact-candidate-preflight.sh
 docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
