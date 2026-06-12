@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -eu
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
 BUNDLED_PY="$HOME/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3"
 CONFIG="$ROOT/presentations/latticra-motion/latticra_motion_presentation.toml"
 OUT="$ROOT/build/presentation/latticra-motion"
@@ -17,19 +17,57 @@ else
   PYTHON_BIN="${PYTHON:-python3}"
 fi
 
-PIPER_ARGS=()
+use_default_piper_bin=0
+use_default_piper_model=0
+use_default_piper_config=0
+
 if [ -z "${PIPER_BIN:-}" ] && [ -x "$DEFAULT_PIPER_BIN" ]; then
-  PIPER_ARGS+=(--piper-bin "$DEFAULT_PIPER_BIN")
+  use_default_piper_bin=1
 fi
 if [ -z "${PIPER_MODEL:-}" ] && [ -f "$DEFAULT_PIPER_MODEL" ]; then
-  PIPER_ARGS+=(--piper-model "$DEFAULT_PIPER_MODEL")
+  use_default_piper_model=1
   if [ -f "$DEFAULT_PIPER_CONFIG" ]; then
-    PIPER_ARGS+=(--piper-config "$DEFAULT_PIPER_CONFIG")
+    use_default_piper_config=1
   fi
 fi
 
-exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
-  --config "$CONFIG" \
-  --out "$OUT" \
-  "${PIPER_ARGS[@]}" \
-  "$@"
+if [ "$use_default_piper_bin" -eq 1 ] && [ "$use_default_piper_model" -eq 1 ] && [ "$use_default_piper_config" -eq 1 ]; then
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    --piper-bin "$DEFAULT_PIPER_BIN" \
+    --piper-model "$DEFAULT_PIPER_MODEL" \
+    --piper-config "$DEFAULT_PIPER_CONFIG" \
+    "$@"
+elif [ "$use_default_piper_bin" -eq 1 ] && [ "$use_default_piper_model" -eq 1 ]; then
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    --piper-bin "$DEFAULT_PIPER_BIN" \
+    --piper-model "$DEFAULT_PIPER_MODEL" \
+    "$@"
+elif [ "$use_default_piper_model" -eq 1 ] && [ "$use_default_piper_config" -eq 1 ]; then
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    --piper-model "$DEFAULT_PIPER_MODEL" \
+    --piper-config "$DEFAULT_PIPER_CONFIG" \
+    "$@"
+elif [ "$use_default_piper_bin" -eq 1 ]; then
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    --piper-bin "$DEFAULT_PIPER_BIN" \
+    "$@"
+elif [ "$use_default_piper_model" -eq 1 ]; then
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    --piper-model "$DEFAULT_PIPER_MODEL" \
+    "$@"
+else
+  exec "$PYTHON_BIN" "$ROOT/tools/render_latticra_motion_presentation.py" \
+    --config "$CONFIG" \
+    --out "$OUT" \
+    "$@"
+fi
