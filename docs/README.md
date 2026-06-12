@@ -34,6 +34,7 @@ Latticra keeps a large evidence trail on purpose: status records, contracts, imp
 | [Status](../STATUS.md) | Public status shortcut and estimate mirror |
 | [Current Status](status/CURRENT_STATUS.md) | Current progress, estimates, and next priorities |
 | [v1.0.0 Release Readiness Gate](LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md) | No-effect aggregate gate for current v1.0.0 blockers across release artifact, SBOM, transcript, lifecycle, recovery, multi-VM, Fedora, Nadia, Q-Seal, and runtime-authority records |
+| [v1.0.0 Product Completion Blocker Audit](LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_CONTRACT.md) | No-effect decomposition of product-completion blockers under the v1.0.0 gate across edge-line, installer, Fedora, Nadia, Q-Seal, and runtime-authority records |
 | [Effect Status Surface](status/LATTICRA_EFFECT_STATUS_SURFACE_STATUS.md) | v0.3.0edge working checkpoint record for bounded local operator effects and still-closed root, network, USB, QEMU, package-manager, and production-readiness authority |
 | [Effect Substrate Transition Intake](LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE.md) | No-effect intake contract for reviewing future effect-substrate, build-profile, and Model-1 bridge work before any capability promotion |
 | [Effect Contract Schema](LATTICRA_EFFECT_CONTRACT_SCHEMA.md) | No-effect schema for future effect contracts and effect evidence records before effect-runner, build-profile, or Model-1 bridge acceptance |

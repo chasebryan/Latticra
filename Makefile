@@ -216,6 +216,7 @@
 .PHONY: production-installer-recovery-evidence-intake-validator-contract
 .PHONY: production-installer-multi-vm-validation-status-contract
 .PHONY: production-installer-multi-vm-evidence-intake-validator-contract
+.PHONY: latticra-v1-product-completion-blocker-audit
 .PHONY: latticra-v1-release-readiness-gate
 
 OS_IMAGE_VERSION ?= local-candidate
@@ -423,6 +424,7 @@ quality-installer-readiness:
 	sh ./scripts/test-production-installer-recovery-evidence-intake-validator-contract.sh
 	sh ./scripts/test-production-installer-multi-vm-validation-status-contract.sh
 	sh ./scripts/test-production-installer-multi-vm-evidence-intake-validator-contract.sh
+	sh ./scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh
 	sh ./scripts/test-latticra-v1-release-readiness-gate-contract.sh
 	sh ./scripts/test-seabios-grub-compatibility-contract.sh
 	sh ./scripts/test-seabios-grub-boot-preview-evidence-contract.sh
@@ -781,6 +783,7 @@ quality-status:
 	sh ./scripts/test-latticra-higgs-chain-verifier.sh
 	sh ./scripts/test-latticra-effect-substrate-transition-intake.sh
 	sh ./scripts/test-production-quality-blocker-ledger.sh
+	sh ./scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh
 	sh ./scripts/test-latticra-v1-release-readiness-gate-contract.sh
 
 latticra-effect-status-surface:
@@ -954,7 +957,11 @@ production-installer-multi-vm-validation-status-contract:
 production-installer-multi-vm-evidence-intake-validator-contract:
 	sh ./scripts/test-production-installer-multi-vm-evidence-intake-validator-contract.sh
 
+latticra-v1-product-completion-blocker-audit:
+	sh ./scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh
+
 latticra-v1-release-readiness-gate:
+	sh ./scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh
 	sh ./scripts/test-latticra-v1-release-readiness-gate-contract.sh
 
 boot-compatibility:

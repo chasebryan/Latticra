@@ -38,9 +38,14 @@ docs_hub='docs/README.md'
 workflow='.github/workflows/latticra-v1-release-readiness-gate.yml'
 nadia_status='docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md'
 q_seal='latticra-q-seal/evidence/Q_SEAL_READINESS.md'
+product_audit='scripts/latticra-v1-product-completion-blocker-audit.sh'
+product_audit_test='scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh'
+product_audit_doc='docs/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_CONTRACT.md'
+product_audit_status='docs/status/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_STATUS.md'
 
 for file in "$doc" "$status" "$gate" "$test_script" "$ledger" "$status_index" \
-  "$docs_hub" "$workflow" "$nadia_status" "$q_seal" README.md STATUS.md \
+  "$docs_hub" "$workflow" "$nadia_status" "$q_seal" "$product_audit" \
+  "$product_audit_test" "$product_audit_doc" "$product_audit_status" README.md STATUS.md \
   docs/status/CURRENT_STATUS.md docs/project_notes/CURRENT_DIRECTION.md \
   docs/project_notes/UPCOMING_WORK.md Makefile
 do
@@ -49,6 +54,7 @@ done
 
 sh -n "$gate"
 sh -n "$test_script"
+sh -n "$product_audit"
 
 require_contains 'Status: no-effect v1.0.0 release readiness gate contract' "$doc"
 require_contains 'Evidence level: release-blocker aggregation only' "$doc"
@@ -70,6 +76,10 @@ require_contains 'v1_release_external_prerequisite_blocker_count=<observed>' "$d
 require_contains 'v1_release_evidence_blocker_count=<observed>' "$doc"
 require_contains 'v1_release_product_completion_blocker_count=<observed>' "$doc"
 require_contains 'v1_release_next_workspace_action=<observed>' "$doc"
+require_contains 'v1_product_completion_blocker_audit_present=1' "$doc"
+require_contains 'v1_product_completion_blocker_audit_passed=<observed>' "$doc"
+require_contains 'v1_product_completion_detail_blocker_count=<observed>' "$doc"
+require_contains 'v1_product_completion_detail_blockers=<observed>' "$doc"
 require_contains 'current_edge_checkpoint=v0.3.0edge' "$doc"
 require_contains 'next_main_edge_line=v0.4.0edge' "$doc"
 require_contains 'v1_tag=v1.0.0' "$doc"
@@ -114,6 +124,10 @@ require_contains 'v1_release_external_prerequisite_blocker_count=<observed>' "$s
 require_contains 'v1_release_evidence_blocker_count=<observed>' "$status"
 require_contains 'v1_release_product_completion_blocker_count=<observed>' "$status"
 require_contains 'v1_release_next_workspace_action=<observed>' "$status"
+require_contains 'v1_product_completion_blocker_audit_present=1' "$status"
+require_contains 'v1_product_completion_blocker_audit_passed=<observed>' "$status"
+require_contains 'v1_product_completion_detail_blocker_count=<observed>' "$status"
+require_contains 'v1_product_completion_detail_blockers=<observed>' "$status"
 require_contains 'v1_tag_exists=0' "$status"
 require_contains 'production_release_ready=0' "$status"
 require_contains 'release_artifact_candidate_preflight_present=1' "$status"
@@ -152,6 +166,11 @@ require_contains 'release_artifact_candidate_preflight_passed=$ARTIFACT_CANDIDAT
 require_contains 'release_artifact_candidate_blocker_count=$ARTIFACT_CANDIDATE_BLOCKER_COUNT' "$gate"
 require_contains 'release_artifact_candidate_tag=$ARTIFACT_CANDIDATE_TAG' "$gate"
 require_contains 'release_artifact_candidate_signing_identity_reference_blocked=$ARTIFACT_CANDIDATE_SIGNING_IDENTITY_REFERENCE_BLOCKED' "$gate"
+require_contains 'PRODUCT_BLOCKER_AUDIT_OUTPUT="$(' "$gate"
+require_contains 'scripts/latticra-v1-product-completion-blocker-audit.sh' "$gate"
+require_contains 'v1_product_completion_blocker_audit_present=$PRODUCT_BLOCKER_AUDIT_PRESENT' "$gate"
+require_contains 'v1_product_completion_detail_blocker_count=$PRODUCT_BLOCKER_DETAIL_COUNT' "$gate"
+require_contains 'v1_product_completion_detail_blockers=$PRODUCT_BLOCKER_DETAILS' "$gate"
 require_contains 'status_value()' "$gate"
 require_contains 'RELEASE_ARTIFACT_EVIDENCE_ACCEPTED="$(status_value release_artifact_evidence_accepted_by_intake_validator' "$gate"
 require_contains 'PRODUCTION_INSTALLER_READY="$(status_value production_installer_ready' "$gate"
@@ -185,6 +204,8 @@ require_contains 'v1_release_readiness_blocked=1' "$ledger"
 require_contains 'v1_release_blocker_count=<observed>' "$ledger"
 require_contains 'v1_release_workspace_resolvable_blocker_count=<observed>' "$ledger"
 require_contains 'v1_release_external_prerequisite_blocker_count=<observed>' "$ledger"
+require_contains 'v1_product_completion_blocker_audit_present=1' "$ledger"
+require_contains 'v1_product_completion_detail_blocker_count=<observed>' "$ledger"
 require_contains 'production_release_ready=0' "$ledger"
 require_contains 'release_artifact_candidate_preflight_present=1' "$ledger"
 require_contains 'release_artifact_candidate_blocker_count=<observed>' "$ledger"
@@ -197,26 +218,39 @@ require_contains 'multi_vm_evidence_accepted_by_intake_validator=<observed>' "$l
 require_contains 'dynamic blocker classification counts' README.md
 require_contains 'v1 tag-specific release artifact candidate preflight report' README.md
 require_contains 'dynamic evidence-status aggregation' README.md
+require_contains 'product-completion detail blocker audit' README.md
 require_contains 'docs/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md' README.md
 require_contains 'docs/status/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_STATUS.md' README.md
 require_contains 'v1_release_blocker_count=<observed>' docs/status/CURRENT_STATUS.md
 require_contains 'release_artifact_candidate_tag=v1.0.0' docs/status/CURRENT_STATUS.md
+require_contains 'v1_product_completion_detail_blocker_count=<observed>' docs/status/CURRENT_STATUS.md
 require_contains 'multi_vm_evidence_accepted_by_intake_validator=<observed>' docs/status/CURRENT_STATUS.md
 require_contains 'release artifact candidate preflight against the requested v1 tag' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'evidence status records dynamically' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'product-completion blocker audit' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'dynamic blocker classification counts' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'v1 tag-specific release artifact candidate preflight report' docs/project_notes/UPCOMING_WORK.md
 require_contains 'dynamic evidence-status aggregation' docs/project_notes/UPCOMING_WORK.md
+require_contains 'product-completion detail blocker audit' docs/project_notes/UPCOMING_WORK.md
 require_contains 'dynamic blocker classification counts' docs/project_notes/UPCOMING_WORK.md
 require_contains 'LATTICRA_V1_0_0_RELEASE_READINESS_GATE_STATUS.md' "$status_index"
+require_contains 'LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_STATUS.md' "$status_index"
 require_contains 'LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md' "$docs_hub"
+require_contains 'LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_CONTRACT.md' "$docs_hub"
 require_contains 'Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT' STATUS.md
+require_contains 'Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT' STATUS.md
 require_contains 'Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT' docs/project_notes/CURRENT_DIRECTION.md
+require_contains 'Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT' docs/project_notes/CURRENT_DIRECTION.md
 require_contains 'Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT' docs/project_notes/UPCOMING_WORK.md
+require_contains 'Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT' docs/project_notes/UPCOMING_WORK.md
 require_contains 'latticra-v1-release-readiness-gate:' Makefile
+require_contains 'latticra-v1-product-completion-blocker-audit:' Makefile
 require_contains 'sh ./scripts/test-latticra-v1-release-readiness-gate-contract.sh' Makefile
+require_contains 'sh ./scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh' Makefile
 require_contains 'scripts/test-latticra-v1-release-readiness-gate-contract.sh' "$workflow"
+require_contains 'scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh' "$workflow"
 
 output="$(sh "$gate" --version v1.0.0)"
 require_output_contains 'LATTICRA V1 RELEASE READINESS GATE' "$output"
@@ -242,6 +276,10 @@ require_output_contains 'v1_release_external_prerequisite_blocker_count=' "$outp
 require_output_contains 'v1_release_evidence_blocker_count=' "$output"
 require_output_contains 'v1_release_product_completion_blocker_count=' "$output"
 require_output_contains 'v1_release_next_workspace_action=' "$output"
+require_output_contains 'v1_product_completion_blocker_audit_present=1' "$output"
+require_output_contains 'v1_product_completion_blocker_audit_passed=0' "$output"
+require_output_contains 'v1_product_completion_detail_blocker_count=' "$output"
+require_output_contains 'v1_product_completion_detail_blockers=' "$output"
 require_output_contains 'v1_tag_exists=0' "$output"
 require_output_contains 'production_release_ready=0' "$output"
 require_output_contains 'release_artifact_candidate_preflight_present=1' "$output"

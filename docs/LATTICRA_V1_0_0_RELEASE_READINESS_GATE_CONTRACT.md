@@ -37,6 +37,10 @@ v1_release_external_prerequisite_blocker_count=<observed>
 v1_release_evidence_blocker_count=<observed>
 v1_release_product_completion_blocker_count=<observed>
 v1_release_next_workspace_action=<observed>
+v1_product_completion_blocker_audit_present=1
+v1_product_completion_blocker_audit_passed=<observed>
+v1_product_completion_detail_blocker_count=<observed>
+v1_product_completion_detail_blockers=<observed>
 current_edge_checkpoint=v0.3.0edge
 next_main_edge_line=v0.4.0edge
 v1_tag=v1.0.0
@@ -109,6 +113,9 @@ README.md
 STATUS.md
 docs/status/CURRENT_STATUS.md
 docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+docs/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_CONTRACT.md
+docs/status/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_STATUS.md
+scripts/latticra-v1-product-completion-blocker-audit.sh
 docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
 scripts/production-installer-release-artifact-candidate-preflight.sh
 docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
