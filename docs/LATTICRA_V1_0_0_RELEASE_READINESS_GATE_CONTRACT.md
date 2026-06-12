@@ -27,14 +27,14 @@ v1_release_readiness_gate_version=v1.0.0
 v1_release_readiness_gate_passed=0
 v1_release_readiness_blocked=1
 v1_release_readiness_decision=blocked-existing-production-evidence-gates-open
-v1_release_required_gate_count=22
+v1_release_required_gate_count=23
 v1_release_satisfied_gate_count=<observed>
 v1_release_blocker_count=<observed>
 v1_release_blockers=<observed>
 v1_release_workspace_resolvable_blocker_count=<observed>
 v1_release_release_decision_blocker_count=<observed>
 v1_release_external_prerequisite_blocker_count=<observed>
-v1_release_evidence_blocker_count=8
+v1_release_evidence_blocker_count=<observed>
 v1_release_product_completion_blocker_count=8
 v1_release_next_workspace_action=<observed>
 current_edge_checkpoint=v0.3.0edge
@@ -72,17 +72,19 @@ rpmbuild_available=<observed>
 rpm_available=<observed>
 release_signing_identity_reference_present=<observed>
 release_signing_identity_reference_format_valid=<observed>
-release_artifact_evidence_accepted=0
-sbom_evidence_candidate_valid=0
-sbom_evidence_accepted_by_intake_validator=0
-transcript_evidence_candidate_valid=0
-transcript_evidence_accepted_by_intake_validator=0
-lifecycle_evidence_candidate_valid=0
-lifecycle_evidence_accepted_by_intake_validator=0
-recovery_evidence_candidate_valid=0
-recovery_evidence_accepted_by_intake_validator=0
-multi_vm_evidence_candidate_valid=0
-multi_vm_evidence_accepted_by_intake_validator=0
+release_artifact_candidate_valid=<observed>
+release_artifact_evidence_accepted=<observed>
+release_artifact_evidence_accepted_by_intake_validator=<observed>
+sbom_evidence_candidate_valid=<observed>
+sbom_evidence_accepted_by_intake_validator=<observed>
+transcript_evidence_candidate_valid=<observed>
+transcript_evidence_accepted_by_intake_validator=<observed>
+lifecycle_evidence_candidate_valid=<observed>
+lifecycle_evidence_accepted_by_intake_validator=<observed>
+recovery_evidence_candidate_valid=<observed>
+recovery_evidence_accepted_by_intake_validator=<observed>
+multi_vm_evidence_candidate_valid=<observed>
+multi_vm_evidence_accepted_by_intake_validator=<observed>
 fedora_production_readiness_evidence_complete=0
 fedora_production_readiness_promotion_allowed=0
 fedora_distribution_ready=0
@@ -96,7 +98,7 @@ q_seal_production_crypto_claim_allowed=0
 runtime_authority_granted=0
 ```
 
-The current blocker vocabulary includes `v1_release_tag_missing_or_not_approved`, `rpmbuild_toolchain_missing`, `rpm_toolchain_missing`, `release_signing_identity_reference_missing_or_invalid`, `release_artifact_not_promoted`, `sbom_evidence_not_accepted`, `multi_vm_evidence_not_accepted`, `nadia_production_readiness_blocked`, and `q_seal_runtime_crypto_blocked`.
+The current blocker vocabulary includes `v1_release_tag_missing_or_not_approved`, `rpmbuild_toolchain_missing`, `rpm_toolchain_missing`, `release_signing_identity_reference_missing_or_invalid`, `release_artifact_not_promoted`, `release_artifact_evidence_not_accepted`, `sbom_evidence_not_accepted`, `multi_vm_evidence_not_accepted`, `nadia_production_readiness_blocked`, and `q_seal_runtime_crypto_blocked`.
 
 ## Required source records
 

@@ -171,7 +171,7 @@ This note tracks the near-term work queue after the recent no-effect Lat, LIR, N
 
 The project remains evidence-bound and report/classification oriented. The queue should continue to prefer small, reviewable, guarded slices over broad runtime behavior.
 
-The current v1.0.0 release readiness gate is present and blocked with dynamic blocker classification counts plus a v1 tag-specific release artifact candidate preflight report. The next release-readiness work should clear any observed local cleanliness blocker first, then close concrete external-input and evidence blockers in order, starting with the approved v1 tag, signing identity reference, and accepted release-artifact evidence before any broader production or public-release claim.
+The current v1.0.0 release readiness gate is present and blocked with dynamic blocker classification counts, a v1 tag-specific release artifact candidate preflight report, and dynamic evidence-status aggregation for release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence. The next release-readiness work should clear any observed local cleanliness blocker first, then close concrete external-input and evidence blockers in order, starting with the approved v1 tag, signing identity reference, and accepted release-artifact evidence before any broader production or public-release claim.
 
 The security-guidance refresh slices are aligned across the baseline, roadmap, supply-chain, zero-trust, and runtime-boundary policy docs. Near-term follow-up should stay narrow: summary/status consistency only when wording drifts, and capability-bearing work only under separate guarded contracts.
 

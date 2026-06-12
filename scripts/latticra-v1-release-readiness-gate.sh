@@ -60,6 +60,14 @@ output_value() {
   printf '%s\n' "$output" | awk -F= -v key="$key" '$1 == key { print substr($0, length(key) + 2); exit }'
 }
 
+status_value() {
+  key="$1"
+  file="$2"
+  value="$(awk -F= -v key="$key" '$1 == key { print substr($0, length(key) + 2); exit }' "$file")"
+  [ -n "$value" ] || fail "missing status value in $file: $key" 65
+  printf '%s\n' "$value"
+}
+
 RELEASE_VERSION='v1.0.0'
 
 while [ "$#" -gt 0 ]; do
@@ -91,11 +99,12 @@ require_contains 'release_artifact_promotion_gate_passed=0' docs/status/PRODUCTI
 require_contains 'release_artifact_present=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_signature_verified=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 require_contains 'release_artifact_candidate_preflight_present=1' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
-require_contains 'sbom_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
-require_contains 'transcript_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
-require_contains 'lifecycle_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
-require_contains 'recovery_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
-require_contains 'multi_vm_evidence_candidate_valid=0' docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'release_artifact_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'sbom_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'transcript_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'lifecycle_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'recovery_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
+require_contains 'multi_vm_evidence_intake_validator_present=1' docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md
 require_contains 'fedora_production_readiness_evidence_complete=0' docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_MATRIX_STATUS.md
 require_contains 'production_nadia_ready=0' docs/status/NADIA_PRODUCTION_READINESS_BLOCKER_STATUS.md
 require_contains 'runtime_crypto_ready=0' latticra-q-seal/evidence/Q_SEAL_READINESS.md
@@ -158,6 +167,19 @@ ARTIFACT_CANDIDATE_TOOLCHAIN_BLOCKED="$(output_value release_artifact_candidate_
 ARTIFACT_CANDIDATE_TRACKED_WORKTREE_BLOCKED="$(output_value release_artifact_candidate_tracked_worktree_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
 ARTIFACT_CANDIDATE_SIGNING_IDENTITY_REFERENCE_BLOCKED="$(output_value release_artifact_candidate_signing_identity_reference_blocked "$ARTIFACT_CANDIDATE_PREFLIGHT_OUTPUT")"
 
+RELEASE_ARTIFACT_CANDIDATE_VALID="$(status_value release_artifact_candidate_valid docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+RELEASE_ARTIFACT_EVIDENCE_ACCEPTED="$(status_value release_artifact_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+SBOM_EVIDENCE_CANDIDATE_VALID="$(status_value sbom_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+SBOM_EVIDENCE_ACCEPTED="$(status_value sbom_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+TRANSCRIPT_EVIDENCE_CANDIDATE_VALID="$(status_value transcript_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+TRANSCRIPT_EVIDENCE_ACCEPTED="$(status_value transcript_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+LIFECYCLE_EVIDENCE_CANDIDATE_VALID="$(status_value lifecycle_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+LIFECYCLE_EVIDENCE_ACCEPTED="$(status_value lifecycle_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_LIFECYCLE_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+RECOVERY_EVIDENCE_CANDIDATE_VALID="$(status_value recovery_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+RECOVERY_EVIDENCE_ACCEPTED="$(status_value recovery_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+MULTI_VM_EVIDENCE_CANDIDATE_VALID="$(status_value multi_vm_evidence_candidate_valid docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+MULTI_VM_EVIDENCE_ACCEPTED="$(status_value multi_vm_evidence_accepted_by_intake_validator docs/status/PRODUCTION_INSTALLER_MULTI_VM_EVIDENCE_INTAKE_VALIDATOR_STATUS.md)"
+
 BLOCKER_COUNT=0
 BLOCKERS='none'
 WORKSPACE_RESOLVABLE_BLOCKER_COUNT=0
@@ -193,16 +215,30 @@ EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
 add_blocker 'release_artifact_missing'
 EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
 add_blocker 'release_artifact_signature_not_verified'
-EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
-add_blocker 'sbom_evidence_not_accepted'
-EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
-add_blocker 'transcript_evidence_not_accepted'
-EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
-add_blocker 'lifecycle_evidence_not_accepted'
-EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
-add_blocker 'recovery_evidence_not_accepted'
-EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
-add_blocker 'multi_vm_evidence_not_accepted'
+if [ "$RELEASE_ARTIFACT_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'release_artifact_evidence_not_accepted'
+fi
+if [ "$SBOM_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'sbom_evidence_not_accepted'
+fi
+if [ "$TRANSCRIPT_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'transcript_evidence_not_accepted'
+fi
+if [ "$LIFECYCLE_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'lifecycle_evidence_not_accepted'
+fi
+if [ "$RECOVERY_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'recovery_evidence_not_accepted'
+fi
+if [ "$MULTI_VM_EVIDENCE_ACCEPTED" != "1" ]; then
+  EVIDENCE_BLOCKER_COUNT=$((EVIDENCE_BLOCKER_COUNT + 1))
+  add_blocker 'multi_vm_evidence_not_accepted'
+fi
 PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
 add_blocker 'fedora_production_readiness_incomplete'
 PRODUCT_COMPLETION_BLOCKER_COUNT=$((PRODUCT_COMPLETION_BLOCKER_COUNT + 1))
@@ -239,7 +275,7 @@ if [ "$WORKSPACE_RESOLVABLE_BLOCKER_COUNT" != "0" ]; then
   RELEASE_NEXT_WORKSPACE_ACTION='review-stage-commit-current-release-readiness-work'
 fi
 
-REQUIRED_GATE_COUNT=22
+REQUIRED_GATE_COUNT=23
 SATISFIED_GATE_COUNT=$((REQUIRED_GATE_COUNT - BLOCKER_COUNT))
 if [ "$SATISFIED_GATE_COUNT" -lt 0 ]; then
   SATISFIED_GATE_COUNT=0
@@ -300,17 +336,19 @@ rpmbuild_available=$RPMBUILD_AVAILABLE
 rpm_available=$RPM_AVAILABLE
 release_signing_identity_reference_present=$SIGNING_IDENTITY_REFERENCE_PRESENT
 release_signing_identity_reference_format_valid=$SIGNING_IDENTITY_REFERENCE_FORMAT_VALID
-release_artifact_evidence_accepted=0
-sbom_evidence_candidate_valid=0
-sbom_evidence_accepted_by_intake_validator=0
-transcript_evidence_candidate_valid=0
-transcript_evidence_accepted_by_intake_validator=0
-lifecycle_evidence_candidate_valid=0
-lifecycle_evidence_accepted_by_intake_validator=0
-recovery_evidence_candidate_valid=0
-recovery_evidence_accepted_by_intake_validator=0
-multi_vm_evidence_candidate_valid=0
-multi_vm_evidence_accepted_by_intake_validator=0
+release_artifact_candidate_valid=$RELEASE_ARTIFACT_CANDIDATE_VALID
+release_artifact_evidence_accepted=$RELEASE_ARTIFACT_EVIDENCE_ACCEPTED
+release_artifact_evidence_accepted_by_intake_validator=$RELEASE_ARTIFACT_EVIDENCE_ACCEPTED
+sbom_evidence_candidate_valid=$SBOM_EVIDENCE_CANDIDATE_VALID
+sbom_evidence_accepted_by_intake_validator=$SBOM_EVIDENCE_ACCEPTED
+transcript_evidence_candidate_valid=$TRANSCRIPT_EVIDENCE_CANDIDATE_VALID
+transcript_evidence_accepted_by_intake_validator=$TRANSCRIPT_EVIDENCE_ACCEPTED
+lifecycle_evidence_candidate_valid=$LIFECYCLE_EVIDENCE_CANDIDATE_VALID
+lifecycle_evidence_accepted_by_intake_validator=$LIFECYCLE_EVIDENCE_ACCEPTED
+recovery_evidence_candidate_valid=$RECOVERY_EVIDENCE_CANDIDATE_VALID
+recovery_evidence_accepted_by_intake_validator=$RECOVERY_EVIDENCE_ACCEPTED
+multi_vm_evidence_candidate_valid=$MULTI_VM_EVIDENCE_CANDIDATE_VALID
+multi_vm_evidence_accepted_by_intake_validator=$MULTI_VM_EVIDENCE_ACCEPTED
 fedora_production_readiness_evidence_complete=0
 fedora_production_readiness_promotion_allowed=0
 fedora_distribution_ready=0
