@@ -94,10 +94,16 @@ latticra_model1_import_mixed_build_review_boundary: ok
 Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
+```
+
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration packet review receipt ledger.
 ```
 
 ## Non-Claims

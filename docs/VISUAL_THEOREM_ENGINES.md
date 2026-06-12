@@ -123,6 +123,37 @@ extends any scene whose generated audio runs longer than its planned duration.
 That keeps the voiceover integral to the video instead of appended after the
 fact.
 
+## Latticra motion overview presentation
+
+The motion overview presentation uses a separate renderer from the academic
+theorem-board decks. It keeps on-screen text sparse, uses moving visual scenes,
+and lets the Piper narration carry the detailed explanation of the Latticra
+umbrella.
+
+Preview command:
+
+    scripts/render-latticra-motion-presentation.sh preview
+
+Preview output:
+
+    build/presentation/latticra-motion/preview/contact-sheet.png
+    build/presentation/latticra-motion/voiceover-script.txt
+    build/presentation/latticra-motion/voiceover-cues.srt
+    build/presentation/latticra-motion/preview-manifest.json
+
+The full motion-first script lives in:
+
+    presentations/latticra-motion/latticra_motion_presentation.toml
+
+The final render command is:
+
+    scripts/render-latticra-motion-presentation.sh render
+
+Final render output:
+
+    build/presentation/latticra-motion/render-manifest.json
+    build/presentation/latticra-motion/video/latticra-motion-presentation.mp4
+
 ## Requirements
 
 - gcc

@@ -110,10 +110,21 @@ latticra_effect_substrate_transition_intake: ok
 Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
+Guarded Model-1 effect demonstration packet review receipt ledger.
+Guarded Model-1 effect demonstration evidence review disposition gate.
+Guarded Model-1 effect demonstration operator non-claim review checklist.
+Guarded Model-1 effect demonstration operator non-claim review receipt.
+Guarded Model-1 effect demonstration evidence acceptance preflight denial gate.
+```
+
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration evidence acceptance denial receipt.
 ```
 
 ## Non-Claims

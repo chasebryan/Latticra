@@ -16,6 +16,12 @@ The Nucleus Supervisor Architecture academic presentation is available here:
 
 This presentation explains the Nucleus supervisor model, request lifecycle, effect gates, task reports, runtime boundary, update/server gates, and evidence recorder.
 
+The Latticra motion overview presentation is available here:
+
+[Watch the Latticra motion overview presentation](build/presentation/latticra-motion/video/latticra-motion-presentation.mp4)
+
+This Piper-voiced motion presentation explains what Latticra is through sparse on-screen text and moving visual scenes: visible authority, request-to-record order, the substrate, reports, Seal/Q-Seal, Nucleus, language/import surfaces, Model-1, Phase1, Fyr, l2, l3, operator review, delivery evidence, research lanes, and non-claims.
+
 README route refreshed: 2026-05-29 CDT
 Default branch: `main`
 Edge edition checkpoint: `v0.3.0edge`
@@ -60,6 +66,18 @@ The [Model-1 import and mixed-build review boundary](docs/LATTICRA_MODEL1_IMPORT
 
 The [guarded Model-1 effect demonstration evidence boundary](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_BOUNDARY.md) satisfies the guarded demonstration evidence-boundary shape by defining request contract, bridge request and response evidence, deny-by-default evidence, operator workflow, target evidence, redaction, and non-claim review requirements while keeping Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority closed.
 
+The [guarded Model-1 effect demonstration evidence packet intake validator](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_PACKET_INTAKE_VALIDATOR.md) statically checks future packet candidates and rejects incomplete, effect-performing, unredacted, or claim-promoting packets while keeping evidence acceptance, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
+The [guarded Model-1 effect demonstration packet review receipt ledger](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_PACKET_REVIEW_RECEIPT_LEDGER.md) prints digest-bound denied receipt entries for packet candidates that pass static intake validation while keeping evidence acceptance, receipt-file writing, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
+The [guarded Model-1 effect demonstration evidence review disposition gate](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_REVIEW_DISPOSITION_GATE.md) prints denied no-effect review dispositions for receipt-ledger-valid packet candidates while keeping evidence acceptance, disposition-file writing, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
+The [guarded Model-1 effect demonstration operator non-claim review checklist](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_OPERATOR_NON_CLAIM_REVIEW_CHECKLIST.md) prints the required no-effect non-claim review checklist for denied dispositions while keeping operator review completion, evidence acceptance, checklist-file writing, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
+The [guarded Model-1 effect demonstration operator non-claim review receipt](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_OPERATOR_NON_CLAIM_REVIEW_RECEIPT.md) prints a digest-bound no-effect receipt for the non-claim checklist while keeping operator review completion, evidence acceptance, receipt-file writing, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
+The [guarded Model-1 effect demonstration evidence acceptance preflight denial gate](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_ACCEPTANCE_PREFLIGHT_DENIAL_GATE.md) prints a no-effect evidence acceptance preflight denial for receipt-bound packet candidates while keeping evidence acceptance, acceptance-file writing, operator review completion, Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, production readiness, and runtime authority closed.
+
 The [computational proof foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) begins the explicit computer-science and science framing for investigating simulation-bound reality hypotheses through proof objects, falsifiability, observer boundaries, physics constraint modeling, receipts, replay, and adversarial review while keeping `simulation_proven=0`.
 
 The [computational math and physics evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) records the first proof-lane order: evaluate the math, couple reviewed math to physics-model fields, then prepare a substrate-engine visual demonstration while keeping visual evidence and scientific claims closed.
@@ -74,8 +92,8 @@ For `v0.4.0edge`, the README integration posture is:
 | --- | --- |
 | Current checkpoint | `v0.3.0edge` remains the current public edge checkpoint |
 | Next main edge line | `v0.4.0edge` is the next main edge line, not yet a tag or release claim |
-| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, separate-build platform review boundary, Model-1 bridge protocol contract, Model-1 import/mixed-build review boundary, and guarded Model-1 effect demonstration evidence boundary |
-| Required before integration | accepted guarded Model-1 effect demonstration evidence packet and explicit operator non-claim review |
+| Completed prerequisites | effect contract schema, evidence record contract, allowlist/build-profile boundary, effect-runner review boundary, separate-build platform review boundary, Model-1 bridge protocol contract, Model-1 import/mixed-build review boundary, guarded Model-1 effect demonstration evidence boundary, guarded Model-1 effect demonstration evidence packet intake validator, guarded Model-1 effect demonstration packet review receipt ledger, guarded Model-1 effect demonstration evidence review disposition gate, guarded Model-1 effect demonstration operator non-claim review checklist, guarded Model-1 effect demonstration operator non-claim review receipt, and guarded Model-1 effect demonstration evidence acceptance preflight denial gate |
+| Required before integration | accepted guarded Model-1 effect demonstration evidence packet plus explicit evidence acceptance denial receipt and accepted disposition evidence |
 | Still closed | Model-1 launch, effect dispatch, command execution, file mutation, artifact acceptance, mixed-build promotion, runtime authority, and production readiness |
 
 <details>

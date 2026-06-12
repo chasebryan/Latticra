@@ -75,7 +75,13 @@ Future intake should proceed in this order:
 5. Model-1 bridge protocol contract - satisfied
 6. Model-1 import and mixed-build review boundary - satisfied
 7. guarded Model-1 effect demonstration evidence boundary - satisfied
-8. guarded Model-1 effect demonstration evidence packet intake validator
+8. guarded Model-1 effect demonstration evidence packet intake validator - satisfied
+9. guarded Model-1 effect demonstration packet review receipt ledger - satisfied
+10. guarded Model-1 effect demonstration evidence review disposition gate - satisfied
+11. guarded Model-1 effect demonstration operator non-claim review checklist - satisfied
+12. guarded Model-1 effect demonstration operator non-claim review receipt - satisfied
+13. guarded Model-1 effect demonstration evidence acceptance preflight denial gate - satisfied
+14. guarded Model-1 effect demonstration evidence acceptance denial receipt
 ```
 
 No later item should be treated as accepted just because an earlier item exists.
@@ -116,13 +122,24 @@ runtime_authority_granted=0
 Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-## Next Recommended Slice
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
+Guarded Model-1 effect demonstration packet review receipt ledger.
+Guarded Model-1 effect demonstration evidence review disposition gate.
+Guarded Model-1 effect demonstration operator non-claim review checklist.
+Guarded Model-1 effect demonstration operator non-claim review receipt.
+Guarded Model-1 effect demonstration evidence acceptance preflight denial gate.
 ```
 
-That next slice should remain no-effect until it can reject incomplete, effect-performing, unredacted, or claim-promoting evidence packets without launching Model-1 or dispatching effects.
+## Next Recommended Slice
+
+```text
+Guarded Model-1 effect demonstration evidence acceptance denial receipt.
+```
+
+That next slice should remain no-effect until it can record a digest-bound denial receipt for evidence acceptance preflight output without accepting evidence, launching Model-1, or dispatching effects.
 
 ## Validation
 

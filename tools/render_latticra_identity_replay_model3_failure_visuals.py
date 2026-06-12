@@ -68,17 +68,29 @@ def write_svg(path: Path, content: str) -> None:
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
 
 
+def write_json(
+    path: Path, payload: dict[str, object], *, trailing_newline: bool = False
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    content = json.dumps(payload, indent=2, sort_keys=True)
+    if trailing_newline:
+        content += "\n"
+    tmp.write_text(content, encoding="utf-8")
+    tmp.replace(path)
+
+
 def load_receipts() -> tuple[dict[str, object], dict[str, object], dict[str, object]]:
     prediction = build_prediction_receipt()
     receipt_dir = Path("docs/assets/identity-replay-model3-failure")
     prediction_path = receipt_dir / "model3-failure-prediction.json"
     evaluation_path = receipt_dir / "model3-failure-evaluation.json"
     analysis_path = receipt_dir / "model3-failure-rejection-analysis.json"
-    prediction_path.write_text(json.dumps(prediction, indent=2, sort_keys=True), encoding="utf-8")
+    write_json(prediction_path, prediction)
     evaluation = build_evaluation_receipt(prediction_path, TARGETS)
-    evaluation_path.write_text(json.dumps(evaluation, indent=2, sort_keys=True), encoding="utf-8")
+    write_json(evaluation_path, evaluation)
     analysis = build_analysis(prediction_path, evaluation_path)
-    analysis_path.write_text(json.dumps(analysis, indent=2, sort_keys=True), encoding="utf-8")
+    write_json(analysis_path, analysis)
     return prediction, evaluation, analysis
 
 
@@ -284,7 +296,7 @@ def write_manifest(prediction: dict[str, object], evaluation: dict[str, object],
         "simulation_proven": 0,
         "scientific_claim_promoted": 0,
     }
-    (OUT / "render-manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    write_json(OUT / "render-manifest.json", manifest, trailing_newline=True)
     (OUT / "render-manifest.txt").write_text(
         "\n".join(f"{key}={value}" for key, value in manifest.items()) + "\n",
         encoding="utf-8",
