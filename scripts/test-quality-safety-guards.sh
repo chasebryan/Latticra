@@ -390,8 +390,18 @@ $long_job_ids"
   [ -z "$checkout_missing_persistence" ] ||
     fail "$workflow must set persist-credentials: false in every checkout step"
 
-  if grep -Eq '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow"; then
-    fail "$workflow must not request write-scoped token permissions"
+  write_permission_lines="$(grep -En '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow" || :)"
+  if [ -n "$write_permission_lines" ]; then
+    case "$workflow" in
+      .github/workflows/codeql.yml)
+        unexpected_write_permission_lines="$(printf '%s\n' "$write_permission_lines" | grep -Ev '^[0-9]+:[[:space:]]*security-events:[[:space:]]*write[[:space:]]*$' || :)"
+        [ -z "$unexpected_write_permission_lines" ] ||
+          fail "$workflow must restrict CodeQL write permission to security-events only"
+        ;;
+      *)
+        fail "$workflow must not request write-scoped token permissions"
+        ;;
+    esac
   fi
 
   if grep -Eq 'permissions:[[:space:]]*(write-all|read-all)([[:space:]]|$)|^[[:space:]]*(write-all|read-all)([[:space:]]|$)' "$workflow"; then
@@ -537,6 +547,11 @@ $long_job_ids"
     case "$action_ref" in
       actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 | \
         dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8)
+        ;;
+      github/codeql-action/init@411bbbe57033eedfc1a82d68c01345aa96c737d7 | \
+        github/codeql-action/analyze@411bbbe57033eedfc1a82d68c01345aa96c737d7)
+        [ "$workflow" = ".github/workflows/codeql.yml" ] ||
+          fail "$workflow must not use CodeQL actions outside the reviewed CodeQL workflow"
         ;;
       *)
         fail "$workflow uses an unapproved external action ref: $action_ref"
