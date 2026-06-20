@@ -59,7 +59,7 @@ Confirmed guard posture:
 ```text
 -fno-exceptions
 -fno-rtti
-C++20 standard policy documented and enforced through required -std=c++20 flag
+C++20 standard policy documented and enforced through required -std=c++20 flag, with legacy -std=c++2a compiler spelling allowed only as an equivalent fallback
 mandatory warning and no-RTTI/no-exception flags rejected if omitted
 negative missing-required-flag probes cover every required C/C++ flag fragment
 conflicting build flags rejected when they weaken required standard, exception, RTTI, or warning policy
