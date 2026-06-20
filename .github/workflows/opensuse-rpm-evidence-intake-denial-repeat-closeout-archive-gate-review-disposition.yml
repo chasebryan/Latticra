@@ -4,11 +4,17 @@ on:
   pull_request:
     paths:
       - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh"
+      - ".github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition.yml"
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md"
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md"
   push:
     branches:
       - main
     paths:
       - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh"
+      - ".github/workflows/opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition.yml"
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CONTRACT.md"
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md"
 
 permissions:
   contents: read
