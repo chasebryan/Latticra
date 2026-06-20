@@ -30,5 +30,14 @@ run_guard model3_prediction scripts/test-latticra-identity-replay-model3-predict
 run_guard model3_rejection_analysis scripts/test-latticra-identity-replay-model3-rejection-analysis.sh
 run_guard model3_failure_visual_suite scripts/test-latticra-identity-replay-model3-failure-visual-suite.sh
 run_guard refined_model3_preregistration scripts/test-latticra-identity-replay-model3-refined-preregistration.sh
+printf "verify_higgs_chain:sh-portable-paths-lib: start
+"
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+. "$ROOT/scripts/lib/latticra-portable-paths.sh" 2>/dev/null || { echo "lib fail" >&2; exit 1; }
+p=$(portable_path "$ROOT/README.md")
+[ "$p" = "README.md" ] || { echo "portable bad" >&2; exit 1; }
+printf "verify_higgs_chain:sh-portable-paths-lib: ok
+"
+
 
 printf 'latticra_higgs_chain_verifier: ok\n'
