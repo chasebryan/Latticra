@@ -9,7 +9,26 @@ export LC_ALL LANG
 
 runner="scripts/test-cpp-authority-layer.sh"
 default_cflags="-std=c99 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow"
-default_cxxflags="-std=c++20 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti"
+
+detect_default_cxx_standard_flag() {
+  for flag in -std=c++20 -std=c++2a
+  do
+    if printf 'int main(void) { return 0; }\n' |
+      c++ "$flag" -x c++ -fsyntax-only - >/dev/null 2>&1; then
+      printf '%s\n' "$flag"
+      return 0
+    fi
+  done
+
+  printf '%s\n' '-std=c++20'
+}
+
+default_cxx_standard_flag="$(detect_default_cxx_standard_flag)"
+case "$default_cxx_standard_flag" in
+  -std=c++20) alternate_cxx_standard_flag="-std=c++2a" ;;
+  *) alternate_cxx_standard_flag="-std=c++20" ;;
+esac
+default_cxxflags="$default_cxx_standard_flag -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti"
 
 tmpdir="$(mktemp -d "/tmp/cpp-authority-build-policy.XXXXXX")"
 trap 'rm -rf "$tmpdir"' EXIT INT HUP TERM
@@ -176,6 +195,10 @@ for required_runner_pattern in \
   '-c src/lir.c' \
   '-o "$lir_o"' \
   'c++ $CXXFLAGS' \
+  'detect_default_cxx_standard_flag()' \
+  '-std=c++2a' \
+  'missing required C++20 standard flag: -std=c++20 or -std=c++2a' \
+  'CXXFLAGS contains more than one C++ standard flag' \
   '-c src/cpp/authority.cpp' \
   '-o "$authority_o"' \
   'nm "$authority_o"' \
@@ -231,7 +254,7 @@ expect_runner_denies \
 
 expect_runner_denies \
   missing_cxx_standard_flag \
-  'CXXFLAGS missing required flag: -std=c++20' \
+  'CXXFLAGS missing required C++20 standard flag: -std=c++20 or -std=c++2a' \
   "CXXFLAGS=-Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti"
 
 expect_runner_denies \
@@ -278,6 +301,11 @@ expect_runner_denies \
   conflicting_cpp_standard \
   'CXXFLAGS conflicting C++ standard flag: -std=c++17' \
   "CXXFLAGS=$default_cxxflags -std=c++17"
+
+expect_runner_denies \
+  duplicate_cpp_standard \
+  "CXXFLAGS contains more than one C++ standard flag: $alternate_cxx_standard_flag" \
+  "CXXFLAGS=$default_cxxflags $alternate_cxx_standard_flag"
 
 expect_runner_denies \
   conflicting_cpp_exception_policy \
