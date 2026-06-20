@@ -42,3 +42,6 @@ def _self_test() -> int:
     return 0 if ok else 1
 if __name__ == "__main__":
     raise SystemExit(_self_test())
+
+# Note: this module provides the foundation for all portable receipt references in Latticra.
+# Updated post-push as part of continuous work.
