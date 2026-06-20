@@ -34,6 +34,8 @@ UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
 FIXTURE_RELATIVE='fixtures/latticra-panel/signed-updater-state.fixture.toml'
 FIXTURE="$ROOT/$FIXTURE_RELATIVE"
 
+. "$ROOT/scripts/lib/latticra-portable-paths.sh"
+
 if [ -f "$FIXTURE" ]; then
   STATE_FIXTURE_FILE_PRESENT=1
   CONTRACT_STATUS=ok
@@ -57,7 +59,7 @@ signed_updater_denial_transcript_present=1
 signed_updater_manifest_fixture_contract_present=1
 signed_updater_manifest_fixture_validation_present=1
 signed_updater_state_fixture_contract_present=1
-state_fixture_path=$FIXTURE_RELATIVE
+state_fixture_path=$(portable_path "$FIXTURE_RELATIVE")
 signed_updater_state_fixture_present=$STATE_FIXTURE_FILE_PRESENT
 signed_updater_state_fixture_file_present=$STATE_FIXTURE_FILE_PRESENT
 state_fixture_schema=latticra-panel-signed-updater-state-fixture-v0

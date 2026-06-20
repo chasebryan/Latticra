@@ -120,7 +120,7 @@ require_contains 'not signed update evidence' "$status"
 
 require_contains 'LATTICRA PANEL SIGNED UPDATER MANIFEST FIXTURE CONTRACT' "$script"
 require_contains 'signed_updater_manifest_fixture_contract_status=$CONTRACT_STATUS' "$script"
-require_contains 'manifest_fixture_path=$FIXTURE_RELATIVE' "$script"
+require_contains 'manifest_fixture_path=$(portable_path "$FIXTURE_RELATIVE")' "$script"
 require_contains 'signed_updater_manifest_fixture_contract_present=1' "$script"
 require_contains 'trusted_signed_manifest_present=0' "$script"
 require_contains 'signed_manifest_present=0' "$script"

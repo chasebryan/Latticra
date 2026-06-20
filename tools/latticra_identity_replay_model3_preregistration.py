@@ -5,12 +5,11 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from decimal import Decimal, getcontext
 from typing import Iterable
 
-from latticra_identity_replay_model1_evaluate import decimal_to_text
+from latticra_receipt_utils import canonical_receipt_hash, decimal_to_text
 from latticra_identity_replay_model2_preregistration import (
     SCALE_LEVELS,
     build_receipt as build_model2_pre_registration,
@@ -27,8 +26,7 @@ LAW_ID = "model3-target-blind-topological-replay-amplification"
 
 
 def receipt_hash(payload: dict[str, object]) -> str:
-    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return canonical_receipt_hash(payload)
 
 
 def amplification_multiplier() -> Decimal:
