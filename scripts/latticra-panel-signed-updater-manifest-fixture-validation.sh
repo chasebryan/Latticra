@@ -42,6 +42,8 @@ UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
 FIXTURE_RELATIVE='fixtures/latticra-panel/signed-updater-manifest.fixture.toml'
 FIXTURE="$ROOT/$FIXTURE_RELATIVE"
 
+. "$ROOT/scripts/lib/latticra-portable-paths.sh"
+
 if [ ! -f "$FIXTURE" ]; then
   printf 'latticra panel signed updater manifest fixture validation: missing fixture: %s\n' "$FIXTURE_RELATIVE" >&2
   exit 1
@@ -99,7 +101,7 @@ signed_updater_delivery_gate_state=closed
 signed_updater_denial_transcript_present=1
 signed_updater_manifest_fixture_contract_present=1
 signed_updater_manifest_fixture_validation_present=1
-manifest_fixture_path=$FIXTURE_RELATIVE
+manifest_fixture_path=$(portable_path "$FIXTURE_RELATIVE")
 signed_updater_manifest_fixture_present=1
 signed_updater_manifest_fixture_file_present=1
 signed_updater_manifest_fixture_validated=1

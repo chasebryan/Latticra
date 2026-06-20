@@ -245,6 +245,9 @@ static int proof_path_allows_verification_only_summary(void) {
     EXPECT_TRUE(strstr(rendered, "network_performed=0") != NULL, "render network");
     EXPECT_TRUE(strstr(rendered, "status=signed-receipt-proof-path-verification-only") != NULL,
                 "render status field");
+    proof_path.signer_invocation_profile[0] = '\0';
+    EXPECT_TRUE(latticra_seal_signed_receipt_proof_path_is_verification_only(&proof_path) == 0,
+                "empty proof path metadata rejected");
     return 0;
 }
 
