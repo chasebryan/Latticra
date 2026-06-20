@@ -524,9 +524,14 @@ for runner_build in \
   'LANG=C' \
   'umask 077' \
   ': "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow}"' \
-  ': "${CXXFLAGS:=-std=c++20 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti}"' \
+  'detect_default_cxx_standard_flag()' \
+  'for flag in -std=c++20 -std=c++2a' \
+  ': "${CXXFLAGS:=$default_cxx_standard_flag -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti}"' \
+  'require_cxx_standard_flag()' \
   'reject_unlisted_c_flag()' \
   'reject_unlisted_cxx_flag()' \
+  '-std=c++20|-std=c++2a' \
+  'CXXFLAGS contains more than one C++ standard flag' \
   'reject_linker_injection_flag()' \
   'reject_toolchain_escape_flag()' \
   'reject_set_environment_variable()' \
@@ -635,6 +640,8 @@ require_contains 'It should also reject `-Wno-*` flags that disable required war
 require_contains '`-Wconversion` or `-Wshadow`.' "$doc"
 require_contains 'The C++ standard version policy is constrained C++20, enforced through' "$doc"
 require_contains '`-std=c++20` in `CXXFLAGS`.' "$doc"
+require_contains 'Legacy compiler drivers that reject `-std=c++20` may use the equivalent' "$doc"
+require_contains '`-std=c++2a` spelling without weakening the C++20 policy.' "$doc"
 require_contains 'The warnings-as-errors policy is mandatory for both C substrate objects and' "$doc"
 require_contains 'C++ authority objects through `-Werror` in `CFLAGS` and `CXXFLAGS`.' "$doc"
 require_contains 'The runner should require the C++ authority header to wrap the C substrate' "$doc"

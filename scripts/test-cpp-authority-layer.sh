@@ -8,8 +8,23 @@ LANG=C
 export LC_ALL LANG
 umask 077
 
+detect_default_cxx_standard_flag() {
+  for flag in -std=c++20 -std=c++2a
+  do
+    if printf 'int main(void) { return 0; }\n' |
+      c++ "$flag" -x c++ -fsyntax-only - >/dev/null 2>&1; then
+      printf '%s\n' "$flag"
+      return 0
+    fi
+  done
+
+  printf '%s\n' '-std=c++20'
+}
+
+default_cxx_standard_flag="$(detect_default_cxx_standard_flag)"
+
 : "${CFLAGS:=-std=c99 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow}"
-: "${CXXFLAGS:=-std=c++20 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti}"
+: "${CXXFLAGS:=$default_cxx_standard_flag -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti}"
 
 require_flag() {
   flags="$1"
@@ -19,6 +34,16 @@ require_flag() {
     *" $required "*) ;;
     *)
       printf 'cpp authority layer: %s missing required flag: %s\n' "$label" "$required" >&2
+      exit 1
+      ;;
+  esac
+}
+
+require_cxx_standard_flag() {
+  case " $CXXFLAGS " in
+    *" -std=c++20 "*|*" -std=c++2a "*) ;;
+    *)
+      printf 'cpp authority layer: CXXFLAGS missing required C++20 standard flag: -std=c++20 or -std=c++2a\n' >&2
       exit 1
       ;;
   esac
@@ -127,7 +152,7 @@ reject_unlisted_c_flag() {
 reject_unlisted_cxx_flag() {
   flag="$1"
   case "$flag" in
-    -std=c++20|-Wall|-Wextra|-Werror|-pedantic|-Wconversion|-Wshadow|-fno-exceptions|-fno-rtti)
+    -std=c++20|-std=c++2a|-Wall|-Wextra|-Werror|-pedantic|-Wconversion|-Wshadow|-fno-exceptions|-fno-rtti)
       return 0
       ;;
   esac
@@ -159,6 +184,7 @@ reject_conflicting_c_flags() {
 }
 
 reject_conflicting_cxx_flags() {
+  cxx_standard_flags_seen=0
   for flag in $CXXFLAGS
   do
     reject_include_injection_flag "$flag" CXXFLAGS
@@ -166,11 +192,16 @@ reject_conflicting_cxx_flags() {
     reject_linker_injection_flag "$flag" CXXFLAGS
     reject_toolchain_escape_flag "$flag" CXXFLAGS
     case "$flag" in
-      -std=*)
-        if [ "$flag" != "-std=c++20" ]; then
-          printf 'cpp authority layer: CXXFLAGS conflicting C++ standard flag: %s\n' "$flag" >&2
+      -std=c++20|-std=c++2a)
+        cxx_standard_flags_seen=$((cxx_standard_flags_seen + 1))
+        if [ "$cxx_standard_flags_seen" -gt 1 ]; then
+          printf 'cpp authority layer: CXXFLAGS contains more than one C++ standard flag: %s\n' "$flag" >&2
           exit 1
         fi
+        ;;
+      -std=*)
+        printf 'cpp authority layer: CXXFLAGS conflicting C++ standard flag: %s\n' "$flag" >&2
+        exit 1
         ;;
       -fexceptions|-frtti)
         printf 'cpp authority layer: CXXFLAGS conflicts with no-exceptions/no-RTTI policy: %s\n' "$flag" >&2
@@ -190,7 +221,9 @@ do
   require_flag "$CFLAGS" "$flag" CFLAGS
 done
 
-for flag in -std=c++20 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti
+require_cxx_standard_flag
+
+for flag in -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow -fno-exceptions -fno-rtti
 do
   require_flag "$CXXFLAGS" "$flag" CXXFLAGS
 done
