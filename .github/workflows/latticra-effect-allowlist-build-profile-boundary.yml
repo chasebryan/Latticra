@@ -2,9 +2,13 @@ name: Latticra Effect Allowlist Build Profile Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-effect-allowlist-build-profile-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-effect-allowlist-build-profile-boundary.sh"
 
 permissions:
   contents: read

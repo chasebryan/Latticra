@@ -1,14 +1,16 @@
 name: Fedora Production Readiness Evidence Intake Validator
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR.md'
-      - 'docs/status/FEDORA_PRODUCTION_READINESS_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
-      - 'scripts/fedora-production-readiness-evidence-intake.sh'
-      - 'scripts/test-fedora-production-readiness-evidence-intake-validator.sh'
-      - '.github/workflows/fedora-production-readiness-evidence-intake-validator.yml'
   pull_request:
+    paths:
+      - "scripts/fedora-production-readiness-evidence-intake.sh"
+      - "scripts/test-fedora-production-readiness-evidence-intake-validator.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fedora-production-readiness-evidence-intake.sh"
+      - "scripts/test-fedora-production-readiness-evidence-intake-validator.sh"
 
 permissions:
   contents: read

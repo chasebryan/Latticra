@@ -2,9 +2,13 @@ name: Ubuntu Upload Signing Authority Evidence Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-upload-signing-authority-evidence-contract.sh"
 
 permissions:
   contents: read

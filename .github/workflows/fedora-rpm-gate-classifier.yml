@@ -2,9 +2,15 @@ name: Fedora RPM Gate Classifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpm-gate-classifier-docs.sh"
+      - "scripts/test-fedora-rpm-gate-classifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-rpm-gate-classifier-docs.sh"
+      - "scripts/test-fedora-rpm-gate-classifier.sh"
 
 permissions:
   contents: read

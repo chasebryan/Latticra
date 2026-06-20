@@ -2,9 +2,13 @@ name: Latticra Proof Object 3 Higgs Causal Closure No-Go
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-proof-object-3-higgs-causal-closure-no-go.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-proof-object-3-higgs-causal-closure-no-go.sh"
 
 permissions:
   contents: read

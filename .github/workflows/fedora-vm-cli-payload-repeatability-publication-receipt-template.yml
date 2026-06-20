@@ -1,14 +1,16 @@
 name: Fedora VM CLI Payload Repeatability Publication Receipt Template
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_TEMPLATE.md'
-      - 'docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_TEMPLATE_STATUS.md'
-      - 'scripts/fedora-vm-cli-payload-repeatability-publication-receipt-template.sh'
-      - 'scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh'
-      - '.github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-template.yml'
   pull_request:
+    paths:
+      - "scripts/fedora-vm-cli-payload-repeatability-publication-receipt-template.sh"
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fedora-vm-cli-payload-repeatability-publication-receipt-template.sh"
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-template.sh"
 
 permissions:
   contents: read

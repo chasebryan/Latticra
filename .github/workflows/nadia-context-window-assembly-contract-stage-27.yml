@@ -2,9 +2,13 @@ name: Nadia Context Window Assembly Contract Stage 27
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nadia-context-window-assembly-contract-stage-27.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nadia-context-window-assembly-contract-stage-27.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Lat Pipeline
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-pipeline.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-pipeline.sh"
 
 permissions:
   contents: read

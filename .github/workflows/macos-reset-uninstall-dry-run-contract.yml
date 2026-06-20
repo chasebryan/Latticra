@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Dry Run Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-dry-run-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-dry-run-contract.sh"
 
 permissions:
   contents: read

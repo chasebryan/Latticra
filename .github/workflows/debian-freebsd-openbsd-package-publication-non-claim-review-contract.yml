@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Publication Non Claim Review Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-publication-non-claim-review-contract.sh"
 
 permissions:
   contents: read

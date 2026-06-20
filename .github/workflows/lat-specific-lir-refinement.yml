@@ -2,9 +2,13 @@ name: Lat-Specific LIR Refinement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-specific-lir-refinement.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-specific-lir-refinement.sh"
 
 permissions:
   contents: read

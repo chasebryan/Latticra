@@ -2,9 +2,13 @@ name: Fedora Local RPM Gate Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-local-rpm-install-mutation-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-local-rpm-install-mutation-gate-contract.sh"
 
 permissions:
   contents: read

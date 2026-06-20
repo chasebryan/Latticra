@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Input Handoff Lane
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-input-handoff-lane.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Fedora Installroot RPM Mutation Lane Docs
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-installroot-rpm-mutation-lane-docs.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-installroot-rpm-mutation-lane-docs.sh"
 
 permissions:
   contents: read

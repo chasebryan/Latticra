@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Repeatability Evidence Status Review Validator
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-evidence-status-review-validator.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-evidence-status-review-validator.sh"
 
 permissions:
   contents: read

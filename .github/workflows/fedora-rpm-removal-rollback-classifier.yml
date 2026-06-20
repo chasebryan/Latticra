@@ -2,9 +2,15 @@ name: Fedora RPM Removal Rollback Classifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpm-removal-rollback-classifier-docs.sh"
+      - "scripts/test-fedora-rpm-removal-rollback-classifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-rpm-removal-rollback-classifier-docs.sh"
+      - "scripts/test-fedora-rpm-removal-rollback-classifier.sh"
 
 permissions:
   contents: read

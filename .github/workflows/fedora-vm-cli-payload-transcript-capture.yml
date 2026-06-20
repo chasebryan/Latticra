@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Transcript Capture
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-transcript-capture.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-transcript-capture.sh"
 
 permissions:
   contents: read

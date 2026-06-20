@@ -1,14 +1,16 @@
 name: Production Installer Transcript Evidence Template
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_TRANSCRIPT_EVIDENCE_TEMPLATE_STATUS.md'
-      - 'scripts/production-installer-transcript-evidence-template.sh'
-      - 'scripts/test-production-installer-transcript-evidence-template-contract.sh'
-      - '.github/workflows/production-installer-transcript-evidence-template.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-transcript-evidence-template.sh"
+      - "scripts/test-production-installer-transcript-evidence-template-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-transcript-evidence-template.sh"
+      - "scripts/test-production-installer-transcript-evidence-template-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Build Environment Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-build-environment-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-build-environment-contract.sh"
 
 permissions:
   contents: read

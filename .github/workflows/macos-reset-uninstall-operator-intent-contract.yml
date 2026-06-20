@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Operator Intent Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-operator-intent-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-operator-intent-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Validation Evidence
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-evidence-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-evidence-status.sh"
 
 permissions:
   contents: read

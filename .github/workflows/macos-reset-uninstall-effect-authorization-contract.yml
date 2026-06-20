@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Effect Authorization Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-effect-authorization-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-effect-authorization-contract.sh"
 
 permissions:
   contents: read

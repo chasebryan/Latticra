@@ -2,9 +2,15 @@ name: Kernel Scheduler
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-report-runner.sh"
+      - "scripts/test-kernel-scheduler.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-report-runner.sh"
+      - "scripts/test-kernel-scheduler.sh"
 
 permissions:
   contents: read

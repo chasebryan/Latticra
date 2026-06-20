@@ -2,9 +2,13 @@ name: Latticra Seal Runtime Handoff Report Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-runtime-handoff-report-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-runtime-handoff-report-status.sh"
 
 permissions:
   contents: read

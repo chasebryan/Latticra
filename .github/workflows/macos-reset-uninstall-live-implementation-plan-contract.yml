@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Live Implementation Plan Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-implementation-plan-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-implementation-plan-contract.sh"
 
 permissions:
   contents: read

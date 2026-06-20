@@ -2,9 +2,13 @@ name: Latticra Model1 Demo Review Receipt Ledger
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger.sh"
 
 permissions:
   contents: read

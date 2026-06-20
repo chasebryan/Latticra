@@ -2,9 +2,13 @@ name: Nadia Prompt Evaluation Result Release Receipt Review Disposition Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-contract-stage-37.sh"
 
 permissions:
   contents: read

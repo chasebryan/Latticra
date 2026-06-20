@@ -2,9 +2,13 @@ name: Latticra Seal Ed25519 Verify Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-ed25519-verify-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-ed25519-verify-status.sh"
 
 permissions:
   contents: read

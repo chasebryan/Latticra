@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-1 Dynamic Substrate Runner
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model1-dynamic-substrate-runner.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model1-dynamic-substrate-runner.sh"
 
 permissions:
   contents: read

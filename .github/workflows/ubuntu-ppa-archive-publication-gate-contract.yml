@@ -2,9 +2,13 @@ name: Ubuntu PPA Archive Publication Gate Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-ppa-archive-publication-gate-contract.sh"
 
 permissions:
   contents: read

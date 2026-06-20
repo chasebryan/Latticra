@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance L5 Evidence Review
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l5-blinded-holdout-oracle-evidence-review.sh"
 
 permissions:
   contents: read

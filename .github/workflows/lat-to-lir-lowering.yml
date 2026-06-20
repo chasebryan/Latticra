@@ -2,9 +2,13 @@ name: Lat-to-LIR Lowering
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-to-lir-lowering.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-to-lir-lowering.sh"
 
 permissions:
   contents: read

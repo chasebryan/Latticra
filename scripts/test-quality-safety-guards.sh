@@ -324,6 +324,34 @@ check_workflow() {
     fail "$workflow must run on pull_request"
   grep -Eq '^[[:space:]]*push:' "$workflow" ||
     fail "$workflow must run on push"
+  case "$workflow" in
+    .github/workflows/codeql.yml|.github/workflows/quality.yml|.github/workflows/quality-safety-guards.yml)
+      ;;
+    *)
+      trigger_path_count="$(awk '
+        /^  pull_request:[[:space:]]*$/ {
+          trigger = "pull_request"
+          next
+        }
+        /^  push:[[:space:]]*$/ {
+          trigger = "push"
+          next
+        }
+        /^  [A-Za-z0-9_-]+:[[:space:]]*$/ {
+          trigger = ""
+          next
+        }
+        trigger != "" && /^    paths:[[:space:]]*$/ {
+          seen[trigger] = 1
+        }
+        END {
+          print (seen["pull_request"] ? 1 : 0) + (seen["push"] ? 1 : 0)
+        }
+      ' "$workflow")"
+      [ "$trigger_path_count" -eq 2 ] ||
+        fail "$workflow must path-scope pull_request and push triggers to avoid repository-wide notification fan-out"
+      ;;
+  esac
   grep -q '^permissions:' "$workflow" ||
     fail "$workflow must declare explicit permissions"
   grep -q '^  contents: read' "$workflow" ||

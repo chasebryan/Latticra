@@ -2,9 +2,13 @@ name: Latticra Model-1 Import Mixed-Build Review Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-model1-import-mixed-build-review-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-model1-import-mixed-build-review-boundary.sh"
 
 permissions:
   contents: read

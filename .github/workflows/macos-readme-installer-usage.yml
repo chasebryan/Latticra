@@ -2,9 +2,13 @@ name: macOS README Installer Usage
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-readme-installer-usage.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-readme-installer-usage.sh"
 
 permissions:
   contents: read

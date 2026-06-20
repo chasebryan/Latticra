@@ -2,9 +2,13 @@ name: Latticra Seal Effect Decision Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-effect-decision-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-effect-decision-status.sh"
 
 permissions:
   contents: read

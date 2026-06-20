@@ -2,9 +2,13 @@ name: openSUSE Developer Workflow
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-developer-workflow.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-developer-workflow.sh"
 
 permissions:
   contents: read

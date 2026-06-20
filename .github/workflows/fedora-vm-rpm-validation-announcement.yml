@@ -2,9 +2,13 @@ name: Fedora VM RPM Validation Announcement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-rpm-validation-announcement.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-rpm-validation-announcement.sh"
 
 permissions:
   contents: read

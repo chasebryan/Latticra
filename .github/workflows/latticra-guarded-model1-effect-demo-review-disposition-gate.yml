@@ -2,9 +2,13 @@ name: Latticra Model1 Demo Review Disposition
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Runtime Boundary Abuse-Case Fixtures
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-runtime-boundary-abuse-case-fixtures.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-runtime-boundary-abuse-case-fixtures.sh"
 
 permissions:
   contents: read

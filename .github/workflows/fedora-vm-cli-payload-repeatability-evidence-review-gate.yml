@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Repeatability Evidence Review Gate
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-evidence-review-gate.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-evidence-review-gate.sh"
 
 permissions:
   contents: read

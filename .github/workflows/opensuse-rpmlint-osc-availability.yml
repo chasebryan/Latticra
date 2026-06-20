@@ -2,9 +2,13 @@ name: openSUSE rpmlint and osc Availability
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpmlint-osc-availability.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpmlint-osc-availability.sh"
 
 permissions:
   contents: read

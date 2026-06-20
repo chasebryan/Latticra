@@ -1,16 +1,14 @@
 name: openSUSE RPM Build Evidence Intake Denial Disposition Closeout Contract
 
 on:
-  push:
-    paths:
-      - 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md'
-      - 'scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh'
-      - '.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml'
   pull_request:
     paths:
-      - 'docs/OPENSUSE_RPM_BUILD_EVIDENCE_INTAKE_DENIAL_DISPOSITION_CLOSEOUT_CONTRACT.md'
-      - 'scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh'
-      - '.github/workflows/opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.yml'
+      - "scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-contract.sh"
 
 permissions:
   contents: read

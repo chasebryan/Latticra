@@ -2,9 +2,13 @@ name: macOS Codesigning and Notarization Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-codesigning-notarization-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-codesigning-notarization-plan.sh"
 
 permissions:
   contents: read

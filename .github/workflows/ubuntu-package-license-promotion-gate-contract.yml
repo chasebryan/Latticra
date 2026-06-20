@@ -2,9 +2,13 @@ name: Ubuntu Package License Promotion Gate Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-package-license-promotion-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-package-license-promotion-gate-contract.sh"
 
 permissions:
   contents: read

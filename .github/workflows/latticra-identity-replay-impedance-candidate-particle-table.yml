@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance Candidate Particle Table
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-candidate-particle-table.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-candidate-particle-table.sh"
 
 permissions:
   contents: read

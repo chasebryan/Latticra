@@ -2,9 +2,13 @@ name: Latticra Seal Key-Handling Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-key-handling-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-key-handling-status.sh"
 
 permissions:
   contents: read

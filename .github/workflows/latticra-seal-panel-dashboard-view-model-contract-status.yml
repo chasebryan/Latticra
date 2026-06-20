@@ -2,9 +2,13 @@ name: Latticra Seal Panel Dashboard View Model Contract Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-view-model-contract-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-view-model-contract-status.sh"
 
 permissions:
   contents: read
