@@ -2,9 +2,13 @@ name: Kernel Lifecycle Status Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-lifecycle-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-lifecycle-status-alignment.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Kernel scheduler tick
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-tick-report-runner.sh"
+      - "scripts/test-kernel-scheduler-tick.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-tick-report-runner.sh"
+      - "scripts/test-kernel-scheduler-tick.sh"
 
 permissions:
   contents: read

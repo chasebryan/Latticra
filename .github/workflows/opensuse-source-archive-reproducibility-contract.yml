@@ -2,9 +2,13 @@ name: openSUSE Source Archive Reproducibility Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-source-archive-reproducibility-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-source-archive-reproducibility-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Kernel runtime entry privilege level view
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-privilege-level-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-privilege-level-view.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-privilege-level-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-privilege-level-view.sh"
 
 permissions:
   contents: read

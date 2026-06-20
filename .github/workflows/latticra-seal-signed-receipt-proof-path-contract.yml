@@ -2,9 +2,13 @@ name: Latticra Seal Signed Receipt Proof Path Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-signed-receipt-proof-path-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-signed-receipt-proof-path-contract.sh"
 
 permissions:
   contents: read

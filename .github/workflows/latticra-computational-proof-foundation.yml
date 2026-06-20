@@ -2,9 +2,13 @@ name: Latticra Computational Proof Foundation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-computational-proof-foundation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-computational-proof-foundation.sh"
 
 permissions:
   contents: read

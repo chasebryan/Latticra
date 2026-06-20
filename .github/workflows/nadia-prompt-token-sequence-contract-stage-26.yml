@@ -2,9 +2,13 @@ name: Nadia Prompt Token Sequence Contract Stage 26
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nadia-prompt-token-sequence-contract-stage-26.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nadia-prompt-token-sequence-contract-stage-26.sh"
 
 permissions:
   contents: read

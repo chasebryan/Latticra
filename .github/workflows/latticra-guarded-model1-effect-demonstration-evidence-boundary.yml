@@ -2,9 +2,13 @@ name: Latticra Guarded Model1 Demo Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh"
 
 permissions:
   contents: read

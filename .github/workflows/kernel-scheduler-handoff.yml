@@ -2,9 +2,15 @@ name: Kernel scheduler handoff
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-handoff-report-runner.sh"
+      - "scripts/test-kernel-scheduler-handoff.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-handoff-report-runner.sh"
+      - "scripts/test-kernel-scheduler-handoff.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: openSUSE rpmlint Static Spec Lane
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpmlint-static-spec-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpmlint-static-spec-lane.sh"
 
 permissions:
   contents: read

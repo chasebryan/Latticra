@@ -2,9 +2,15 @@ name: Nucleus Task Report-Only Execution Refinement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nucleus-task-execution.sh"
+      - "scripts/test-nucleus-task-report-only-execution-refinement.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nucleus-task-execution.sh"
+      - "scripts/test-nucleus-task-report-only-execution-refinement.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Fedora Install Preflight Snapshot Capture
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-install-preflight-snapshot-capture-docs.sh"
+      - "scripts/test-fedora-install-preflight-snapshot-capture.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-install-preflight-snapshot-capture-docs.sh"
+      - "scripts/test-fedora-install-preflight-snapshot-capture.sh"
 
 permissions:
   contents: read

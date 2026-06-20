@@ -2,9 +2,13 @@ name: Lat-to-LIR Lowering Implementation Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-to-lir-lowering-implementation-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-to-lir-lowering-implementation-plan.sh"
 
 permissions:
   contents: read

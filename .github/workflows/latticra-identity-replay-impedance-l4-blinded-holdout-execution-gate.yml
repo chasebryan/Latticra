@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance L4 Execution Gate
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l4-blinded-holdout-execution-gate.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l4-blinded-holdout-execution-gate.sh"
 
 permissions:
   contents: read

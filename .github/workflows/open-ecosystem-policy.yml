@@ -2,9 +2,13 @@ name: Open Ecosystem Policy
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-open-ecosystem-policy.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-open-ecosystem-policy.sh"
 
 permissions:
   contents: read

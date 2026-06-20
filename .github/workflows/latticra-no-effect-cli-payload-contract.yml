@@ -2,9 +2,13 @@ name: Latticra No-Effect CLI Payload Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-no-effect-cli-payload-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-no-effect-cli-payload-contract.sh"
 
 permissions:
   contents: read

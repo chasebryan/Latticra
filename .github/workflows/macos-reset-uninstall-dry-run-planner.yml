@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Dry Run Planner
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-dry-run-planner.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-dry-run-planner.sh"
 
 permissions:
   contents: read

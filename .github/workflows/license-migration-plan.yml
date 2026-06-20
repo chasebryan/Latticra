@@ -2,9 +2,13 @@ name: License Migration Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-license-migration-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-license-migration-plan.sh"
 
 permissions:
   contents: read

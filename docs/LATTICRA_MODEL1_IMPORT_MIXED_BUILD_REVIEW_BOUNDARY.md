@@ -146,13 +146,19 @@ No Model-1 import, mixed build, artifact acceptance, bridge execution, runner ac
 Guarded Model-1 effect demonstration evidence boundary.
 ```
 
-## Next Recommended Lane
+## Completed Follow-On Lane
 
 ```text
 Guarded Model-1 effect demonstration evidence packet intake validator.
 ```
 
-That lane should remain no-effect until it can reject incomplete, effect-performing, unredacted, or claim-promoting evidence packets without launching Model-1 or dispatching effects.
+## Next Recommended Lane
+
+```text
+Guarded Model-1 effect demonstration packet review receipt ledger.
+```
+
+That lane should remain no-effect until it can record packet review decisions and reviewer receipts without accepting evidence, launching Model-1, or dispatching effects.
 
 ## Validation
 

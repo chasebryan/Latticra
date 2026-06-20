@@ -44,10 +44,11 @@ require_file scripts/test-high-assurance-security-baseline.sh
 require_file scripts/test-quality-safety-guards.sh
 
 require_contains 'Status: security validation and assessment baseline' "$doc"
-require_contains 'Source refresh date: 2026-05-28' "$doc"
+require_contains 'Source refresh date: 2026-06-12' "$doc"
 require_contains 'Authoritative Validation Sources' "$doc"
 require_contains 'CISA Secure by Design' "$doc"
-require_contains 'CISA Cross-Sector Cybersecurity Performance Goals' "$doc"
+require_contains 'CISA Cross-Sector Cybersecurity Performance Goals 2.0' "$doc"
+require_contains 'CISA Secure by Demand Guide' "$doc"
 require_contains 'CISA/FBI Product Security Bad Practices' "$doc"
 require_contains 'NSA and CISA Top Ten Cybersecurity Misconfigurations' "$doc"
 require_contains 'NIST SP 800-115 Technical Guide to Information Security Testing and Assessment' "$doc"
@@ -56,7 +57,8 @@ require_contains 'NIST SP 800-53A Rev. 5 Assessing Security and Privacy Controls
 require_contains 'NIST SP 800-53 Rev. 5 Assessment, Authorization, Risk Assessment, System Integrity, and System Acquisition controls' "$doc"
 require_contains 'NIST SP 800-218 SSDF v1.1' "$doc"
 require_contains 'https://www.cisa.gov/securebydesign' "$doc"
-require_contains 'https://www.cisa.gov/cybersecurity-performance-goals-cpgs' "$doc"
+require_contains 'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' "$doc"
+require_contains 'https://www.cisa.gov/resources-tools/resources/secure-demand-guide' "$doc"
 require_contains 'https://www.cisa.gov/news-events/alerts/2025/01/17/cisa-and-fbi-release-updated-guidance-product-security-bad-practices' "$doc"
 require_contains 'https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-278a' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/115/final' "$doc"
@@ -70,6 +72,8 @@ for field in \
   'security_validation_assessment_guard_present=1' \
   'cisa_secure_by_design_validation_tracked=1' \
   'cisa_cpg_third_party_validation_tracked=1' \
+  'cisa_cpg_2_0_validation_tracked=1' \
+  'cisa_secure_by_demand_validation_tracked=1' \
   'cisa_fbi_product_security_bad_practices_tracked=1' \
   'nsa_cisa_top_misconfigurations_tracked=1' \
   'nist_sp_800_115_security_testing_tracked=1' \
@@ -160,6 +164,7 @@ for closed in \
   'production_protection_claim_allowed=0'
 do
   require_contains "$closed" "$doc"
+  require_contains "$closed" "$status_doc"
 done
 
 for boundary_field in \
@@ -194,7 +199,7 @@ require_contains 'security_validation_assessment_baseline_present=1' README.md
 require_contains 'security_validation_assessment_baseline_present=1' STATUS.md
 require_contains 'SECURITY_VALIDATION_ASSESSMENT_BASELINE_STATUS.md' docs/status/README.md
 require_contains 'security_validation_assessment_baseline_present=1' docs/status/README.md
-require_contains 'Latest security validation and assessment baseline note: 2026-05-28 CDT' docs/status/CURRENT_STATUS.md
+require_contains 'Latest security validation and assessment baseline note: 2026-06-12 CDT' docs/status/CURRENT_STATUS.md
 require_contains 'SECURITY_VALIDATION_ASSESSMENT_BASELINE.md' docs/FOUNDATION_INDEX.md
 require_contains 'Security validation and assessment baseline' docs/security.html
 require_contains 'SECURITY_VALIDATION_ASSESSMENT_BASELINE.md' docs/security.html

@@ -3,14 +3,12 @@ name: Debian FreeBSD OpenBSD Evidence Chain Archive Gate
 on:
   pull_request:
     paths:
-      - 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_CONTRACT.md'
-      - 'scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.sh'
-      - '.github/workflows/debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.yml'
+      - "scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.sh"
   push:
+    branches:
+      - main
     paths:
-      - 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_CONTRACT.md'
-      - 'scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.sh'
-      - '.github/workflows/debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.yml'
+      - "scripts/test-debian-freebsd-openbsd-package-build-evidence-intake-denial-chain-archive-gate-contract.sh"
 
 permissions:
   contents: read

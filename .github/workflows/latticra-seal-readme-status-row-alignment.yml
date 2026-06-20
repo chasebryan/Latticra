@@ -2,9 +2,13 @@ name: Latticra Seal README Status Row Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-readme-status-row-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-readme-status-row-alignment.sh"
 
 permissions:
   contents: read

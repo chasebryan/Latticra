@@ -2,9 +2,13 @@ name: Fedora VM RPM Validation Lane Docs
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-lane-docs.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-lane-docs.sh"
 
 permissions:
   contents: read

@@ -324,6 +324,34 @@ check_workflow() {
     fail "$workflow must run on pull_request"
   grep -Eq '^[[:space:]]*push:' "$workflow" ||
     fail "$workflow must run on push"
+  case "$workflow" in
+    .github/workflows/codeql.yml|.github/workflows/quality.yml|.github/workflows/quality-safety-guards.yml)
+      ;;
+    *)
+      trigger_path_count="$(awk '
+        /^  pull_request:[[:space:]]*$/ {
+          trigger = "pull_request"
+          next
+        }
+        /^  push:[[:space:]]*$/ {
+          trigger = "push"
+          next
+        }
+        /^  [A-Za-z0-9_-]+:[[:space:]]*$/ {
+          trigger = ""
+          next
+        }
+        trigger != "" && /^    paths:[[:space:]]*$/ {
+          seen[trigger] = 1
+        }
+        END {
+          print (seen["pull_request"] ? 1 : 0) + (seen["push"] ? 1 : 0)
+        }
+      ' "$workflow")"
+      [ "$trigger_path_count" -eq 2 ] ||
+        fail "$workflow must path-scope pull_request and push triggers to avoid repository-wide notification fan-out"
+      ;;
+  esac
   grep -q '^permissions:' "$workflow" ||
     fail "$workflow must declare explicit permissions"
   grep -q '^  contents: read' "$workflow" ||
@@ -390,8 +418,18 @@ $long_job_ids"
   [ -z "$checkout_missing_persistence" ] ||
     fail "$workflow must set persist-credentials: false in every checkout step"
 
-  if grep -Eq '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow"; then
-    fail "$workflow must not request write-scoped token permissions"
+  write_permission_lines="$(grep -En '^[[:space:]]*[A-Za-z0-9_-]+:[[:space:]]*write([[:space:]]|$)' "$workflow" || :)"
+  if [ -n "$write_permission_lines" ]; then
+    case "$workflow" in
+      .github/workflows/codeql.yml)
+        unexpected_write_permission_lines="$(printf '%s\n' "$write_permission_lines" | grep -Ev '^[0-9]+:[[:space:]]*security-events:[[:space:]]*write[[:space:]]*$' || :)"
+        [ -z "$unexpected_write_permission_lines" ] ||
+          fail "$workflow must restrict CodeQL write permission to security-events only"
+        ;;
+      *)
+        fail "$workflow must not request write-scoped token permissions"
+        ;;
+    esac
   fi
 
   if grep -Eq 'permissions:[[:space:]]*(write-all|read-all)([[:space:]]|$)|^[[:space:]]*(write-all|read-all)([[:space:]]|$)' "$workflow"; then
@@ -537,6 +575,11 @@ $long_job_ids"
     case "$action_ref" in
       actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 | \
         dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8)
+        ;;
+      github/codeql-action/init@411bbbe57033eedfc1a82d68c01345aa96c737d7 | \
+        github/codeql-action/analyze@411bbbe57033eedfc1a82d68c01345aa96c737d7)
+        [ "$workflow" = ".github/workflows/codeql.yml" ] ||
+          fail "$workflow must not use CodeQL actions outside the reviewed CodeQL workflow"
         ;;
       *)
         fail "$workflow uses an unapproved external action ref: $action_ref"
@@ -1013,6 +1056,9 @@ require_contains "latticra-panel-signed-updater-state-transition-denial-disposit
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-review.sh" "Makefile"
 require_contains "latticra-panel-signed-updater-state-transition-denial-disposition-closeout:" "Makefile"
 require_contains "sh ./scripts/test-latticra-panel-signed-updater-state-transition-denial-disposition-closeout.sh" "Makefile"
+require_contains "latticra-universal-installer-preflight:" "Makefile"
+require_contains "sh ./scripts/latticra-universal-installer-preflight.sh" "Makefile"
+require_contains "sh ./scripts/test-latticra-universal-installer-preflight.sh" "Makefile"
 require_contains "sh ./scripts/test-production-installer-readiness-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-installer-artifact-manifest-contract.sh" "Makefile"
 require_contains "sh ./scripts/test-local-artifact-manifest-fixture.sh" "Makefile"
@@ -1351,6 +1397,18 @@ require_contains "latticra-model1-import-mixed-build-review-boundary:" "Makefile
 require_contains "sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh" "Makefile"
 require_contains "latticra-guarded-model1-effect-demonstration-evidence-boundary:" "Makefile"
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-packet-intake-validator.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-packet-review-receipt-ledger.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-review-disposition-gate.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-checklist.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh" "Makefile"
+require_contains "latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate:" "Makefile"
+require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh" "Makefile"
 require_contains "latticra-netplane-central-hub-intake:" "Makefile"
 require_contains "sh ./scripts/test-latticra-netplane-central-hub-intake.sh" "Makefile"
 require_contains "latticra-computational-proof-foundation:" "Makefile"
@@ -1625,6 +1683,8 @@ require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-d
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-observation-view-report-runner.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view.sh" "Makefile"
 require_contains "sh ./scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-closeout-archive-gate-observation-view-report-runner.sh" "Makefile"
+require_contains "latticra-motion-presentation-test:" "Makefile"
+require_contains "sh ./scripts/test-latticra-motion-presentation.sh" "Makefile"
 require_contains "quality-status:" "Makefile"
 require_contains "sh ./scripts/test-current-estimate-table-source-alignment.sh" "Makefile"
 require_contains "make quality" ".github/workflows/quality.yml"

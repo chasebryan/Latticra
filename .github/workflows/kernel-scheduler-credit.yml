@@ -2,9 +2,15 @@ name: Kernel scheduler credit
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-credit-report-runner.sh"
+      - "scripts/test-kernel-scheduler-credit.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-credit-report-runner.sh"
+      - "scripts/test-kernel-scheduler-credit.sh"
 
 permissions:
   contents: read

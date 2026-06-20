@@ -2,9 +2,13 @@ name: Fedora rpmlint Availability
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpmlint-availability.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-rpmlint-availability.sh"
 
 permissions:
   contents: read

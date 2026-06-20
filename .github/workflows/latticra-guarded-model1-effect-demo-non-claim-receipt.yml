@@ -1,0 +1,25 @@
+name: Latticra Model1 Demo Non Claim Receipt
+
+on:
+  pull_request:
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Latticra guarded Model-1 effect demonstration operator non-claim review receipt guard
+        run: sh scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh

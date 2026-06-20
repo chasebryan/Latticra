@@ -4,9 +4,64 @@
 #include <stdio.h>
 #include <string.h>
 
+#define LATTICRA_LAT_ESCAPED_NAME_MAX ((LATTICRA_LAT_NAME_MAX * 4u) + 1u)
+#define LATTICRA_LAT_ESCAPED_VALUE_MAX ((LATTICRA_LAT_VALUE_MAX * 4u) + 1u)
+
 static void copy_literal(char *destination, size_t destination_len, const char *source) {
     if (destination == 0 || destination_len == 0u) return;
     (void)snprintf(destination, destination_len, "%s", source == 0 ? "" : source);
+}
+
+static latticra_status_t escape_report_string(
+    const char *input,
+    char *output,
+    size_t output_len) {
+    static const char hex[] = "0123456789ABCDEF";
+    size_t input_index;
+    size_t output_index = 0u;
+
+    if (input == 0 || output == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
+    if (output_len == 0u) return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+
+    for (input_index = 0u; input[input_index] != '\0'; input_index++) {
+        unsigned char byte = (unsigned char)input[input_index];
+        const char *short_escape = 0;
+        size_t needed;
+
+        if (byte == '\n') short_escape = "\\n";
+        else if (byte == '\r') short_escape = "\\r";
+        else if (byte == '\t') short_escape = "\\t";
+        else if (byte == '"') short_escape = "\\\"";
+        else if (byte == '\\') short_escape = "\\\\";
+
+        if (short_escape != 0) {
+            needed = strlen(short_escape);
+            if (output_index + needed >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            (void)memcpy(output + output_index, short_escape, needed);
+            output_index += needed;
+        } else if (byte >= 0x20u && byte <= 0x7Eu) {
+            if (output_index + 1u >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            output[output_index] = (char)byte;
+            output_index += 1u;
+        } else {
+            if (output_index + 4u >= output_len) {
+                output[0] = '\0';
+                return LATTICRA_STATUS_BUFFER_TOO_SMALL;
+            }
+            output[output_index++] = '\\';
+            output[output_index++] = 'x';
+            output[output_index++] = hex[(byte >> 4u) & 0x0Fu];
+            output[output_index++] = hex[byte & 0x0Fu];
+        }
+    }
+    output[output_index] = '\0';
+    return LATTICRA_STATUS_OK;
 }
 
 static void span_default(latticra_lat_source_span_t *span) {
@@ -81,6 +136,7 @@ const char *latticra_lat_parse_error_label(latticra_lat_parse_error_t error) {
     case LATTICRA_LAT_PARSE_CAPACITY_EXCEEDED: return "capacity_exceeded";
     case LATTICRA_LAT_PARSE_FORBIDDEN_BEHAVIOR_MARKER: return "forbidden_behavior_marker";
     case LATTICRA_LAT_PARSE_UNSUPPORTED_BLOCK_COMMENT: return "unsupported_block_comment";
+    case LATTICRA_LAT_PARSE_TRAILING_CONTENT: return "trailing_content";
     case LATTICRA_LAT_PARSE_INTERNAL_ERROR:
     default: return "internal_error";
     }
@@ -660,6 +716,11 @@ latticra_status_t latticra_lat_parse_source(
         if (cursor_peek(&cursor) == '}') {
             cursor_advance(&cursor);
             span_finish(&result->module.span, &cursor);
+            skip_ws_and_comments(&cursor);
+            if (!cursor_at_end(&cursor)) {
+                set_error(result, LATTICRA_LAT_PARSE_TRAILING_CONTENT, &cursor);
+                return LATTICRA_STATUS_OK;
+            }
             result->span = result->module.span;
             result->comment_count = cursor.comment_count;
             result->first_comment_span = cursor.first_comment_span;
@@ -693,6 +754,13 @@ latticra_status_t latticra_lat_parse_report(
     const char *first_clause_operator;
     const char *first_clause_right;
     latticra_lat_effect_t first_clause_effect;
+    char module_name_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_declaration_name_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_declaration_source_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_clause_keyword_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_clause_left_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_clause_operator_escaped[LATTICRA_LAT_ESCAPED_NAME_MAX];
+    char first_clause_right_escaped[LATTICRA_LAT_ESCAPED_VALUE_MAX];
     if (result == 0 || buffer == 0) return LATTICRA_STATUS_NULL_ARGUMENT;
     first_declaration_index = (size_t)-1;
     first_declaration_kind = LATTICRA_LAT_DECLARATION_UNKNOWN;
@@ -723,6 +791,16 @@ latticra_status_t latticra_lat_parse_report(
         first_clause_operator = clause->operator_text;
         first_clause_right = clause->right;
         first_clause_effect = clause->effect;
+    }
+    if (escape_report_string(result->module.module_name, module_name_escaped, sizeof(module_name_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_declaration_name, first_declaration_name_escaped, sizeof(first_declaration_name_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_declaration_source, first_declaration_source_escaped, sizeof(first_declaration_source_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_clause_keyword, first_clause_keyword_escaped, sizeof(first_clause_keyword_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_clause_left, first_clause_left_escaped, sizeof(first_clause_left_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_clause_operator, first_clause_operator_escaped, sizeof(first_clause_operator_escaped)) != LATTICRA_STATUS_OK ||
+        escape_report_string(first_clause_right, first_clause_right_escaped, sizeof(first_clause_right_escaped)) != LATTICRA_STATUS_OK) {
+        if (buffer_len > 0u) buffer[0] = '\0';
+        return LATTICRA_STATUS_BUFFER_TOO_SMALL;
     }
     written = snprintf(
         buffer,
@@ -772,7 +850,7 @@ latticra_status_t latticra_lat_parse_report(
         "span_end_column=%zu\n",
         (int)result->status,
         latticra_lat_parse_error_label(result->error),
-        result->module.module_name,
+        module_name_escaped,
         result->declaration_count,
         result->module.state_count,
         result->module.policy_count,
@@ -789,15 +867,15 @@ latticra_status_t latticra_lat_parse_report(
         result->first_comment_span.end_column,
         first_declaration_index,
         latticra_lat_declaration_kind_label(first_declaration_kind),
-        first_declaration_name,
-        first_declaration_source,
+        first_declaration_name_escaped,
+        first_declaration_source_escaped,
         first_declaration_first_clause_index,
         first_declaration_clause_count,
         first_clause_index,
-        first_clause_keyword,
-        first_clause_left,
-        first_clause_operator,
-        first_clause_right,
+        first_clause_keyword_escaped,
+        first_clause_left_escaped,
+        first_clause_operator_escaped,
+        first_clause_right_escaped,
         latticra_lat_effect_label(first_clause_effect),
         result->no_effect,
         result->execution_allowed,

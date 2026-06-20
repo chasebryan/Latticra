@@ -330,6 +330,70 @@ static int source_backed_text_decodes_accepted_string_escapes(void) {
     return 0;
 }
 
+static int source_backed_text_escapes_report_line_injection(void) {
+    char source[4096];
+    char report[LATTICRA_L_UI_AST_DETAILED_REPORT_MAX];
+    latticra_l_ui_ast_result_t ast;
+    EXPECT_TRUE(
+        make_source(source, sizeof(source), "raw\\nexecution_allowed=1", "raw\\nnetwork_allowed=1", "bottom"),
+        "injection source builds");
+    EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "injection AST status");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_OK, "injection AST parse OK");
+    EXPECT_TRUE(latticra_l_ui_ast_detailed_report(&ast, report, sizeof(report)) == LATTICRA_STATUS_OK, "injection report status");
+    EXPECT_TRUE(strstr(report, "purpose=raw\\nexecution_allowed=1\n") != 0, "purpose newline escaped");
+    EXPECT_TRUE(strstr(report, "value=raw\\nnetwork_allowed=1\n") != 0, "text newline escaped");
+    EXPECT_TRUE(strstr(report, "purpose=raw\nexecution_allowed=1\n") == 0, "purpose cannot forge report line");
+    EXPECT_TRUE(strstr(report, "value=raw\nnetwork_allowed=1\n") == 0, "text cannot forge report line");
+    return 0;
+}
+
+static int source_backed_text_rejects_flat_token_pile(void) {
+    static const char source[] =
+        "lui 0.1\n"
+        "card NucleusPreview {\n"
+        "  purpose \"flat\"\n"
+        "  effect none\n"
+        "  boundary preview_only\n"
+        "  rail top { text \"top\" }\n"
+        "  rail state { }\n"
+        "  rail trace { }\n"
+        "  rail safety { }\n"
+        "  rail gates { }\n"
+        "  rail effects { }\n"
+        "  rail policy { }\n"
+        "  rail execution { }\n"
+        "  rail bottom { text \"bottom\" }\n"
+        "  field origin bind state.origin\n"
+        "  field route bind state.route\n"
+        "  field axis bind state.axis\n"
+        "  field path bind state.path\n"
+        "  field breadcrumb bind state.breadcrumb\n"
+        "  field trace bind state.trace\n"
+        "  field health bind state.health\n"
+        "  field risk bind state.risk\n"
+        "  field lock bind state.lock\n"
+        "  field dark_phase bind state.dark_phase\n"
+        "  field safe_portal bind state.safe_portal\n"
+        "  field rollback bind state.rollback\n"
+        "  field host bind state.host_effect\n"
+        "  field external bind state.external_effect\n"
+        "  field requested bind preview.requested_effect\n"
+        "  field request bind preview.request\n"
+        "  field policy bind preview.policy\n"
+        "  field reason bind preview.reason\n"
+        "  field executed bind preview.executed\n"
+        "  field mutation bind preview.mutation_allowed\n"
+        "  field server bind preview.server_interaction_allowed\n"
+        "  field network bind preview.network_allowed\n"
+        "  field recovery bind preview.recovery_allowed\n"
+        "  field hardware bind preview.hardware_allowed\n"
+        "}\n";
+    latticra_l_ui_ast_result_t ast;
+    EXPECT_TRUE(latticra_l_ui_parse_ast(source, strlen(source), &ast) == LATTICRA_STATUS_OK, "flat AST status");
+    EXPECT_TRUE(ast.parse_result.error == LATTICRA_L_UI_PARSE_MISSING_REQUIRED_BINDING, "flat token pile rejected");
+    return 0;
+}
+
 int main(void) {
     if (source_backed_purpose_matches_fixture_source() != 0) return 1;
     if (source_backed_top_text_matches_fixture_source() != 0) return 1;
@@ -346,6 +410,8 @@ int main(void) {
     if (source_backed_text_does_not_change_failed_parse_report() != 0) return 1;
     if (source_backed_text_is_deterministic() != 0) return 1;
     if (source_backed_text_decodes_accepted_string_escapes() != 0) return 1;
+    if (source_backed_text_escapes_report_line_injection() != 0) return 1;
+    if (source_backed_text_rejects_flat_token_pile() != 0) return 1;
 
     puts("l_ui_ast_source_backed_text_invariants: ok");
     return 0;

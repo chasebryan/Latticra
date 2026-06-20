@@ -11,6 +11,10 @@
         } \
     } while (0)
 
+static void set_string(char *destination, size_t destination_len, const char *source) {
+    (void)snprintf(destination, destination_len, "%s", source != 0 ? source : "");
+}
+
 static latticra_seal_parameter_schema_t fixture_schema(void) {
     latticra_seal_parameter_schema_t schema;
     memset(&schema, 0, sizeof(schema));
@@ -101,6 +105,7 @@ static int freshness_fails_closed(void) {
     latticra_seal_parameter_schema_t schema = fixture_schema();
     latticra_seal_request_freshness_t freshness;
     char tiny[1];
+    char rendered[LATTICRA_SEAL_REQUEST_FRESHNESS_REPORT_MAX];
 
     EXPECT_TRUE(latticra_seal_request_freshness_from_schema(0, &freshness) == LATTICRA_STATUS_OK, "null schema status");
     EXPECT_TRUE(freshness.error == LATTICRA_SEAL_REQUEST_FRESHNESS_INVALID_INPUT, "null schema error");
@@ -114,6 +119,17 @@ static int freshness_fails_closed(void) {
     EXPECT_TRUE(tiny[0] == '\0', "small buffer cleared");
     EXPECT_TRUE(latticra_seal_request_freshness_report(0, tiny, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null freshness");
     EXPECT_TRUE(latticra_seal_request_freshness_report(&freshness, 0, sizeof(tiny)) == LATTICRA_STATUS_NULL_ARGUMENT, "null buffer");
+
+    EXPECT_TRUE(latticra_seal_request_freshness_from_schema(&schema, &freshness) == LATTICRA_STATUS_OK, "freshness injection source");
+    set_string(freshness.request_id, sizeof(freshness.request_id), "req-1\nruntime_authority_granted=1");
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_request_freshness_report(&freshness, rendered, sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT, "newline request id rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "newline request id clears report");
+
+    memset(&freshness, 'A', sizeof(freshness));
+    memset(rendered, 'r', sizeof(rendered));
+    EXPECT_TRUE(latticra_seal_request_freshness_report(&freshness, rendered, sizeof(rendered)) == LATTICRA_STATUS_NULL_ARGUMENT, "unterminated freshness rejected");
+    EXPECT_TRUE(rendered[0] == '\0', "unterminated freshness clears report");
     return 0;
 }
 

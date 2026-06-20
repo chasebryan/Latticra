@@ -107,7 +107,7 @@ external_endorsement_claimed=0
 
 ## External-source refresh checkpoint
 
-Date checked: 2026-05-26
+Date checked: 2026-06-12
 
 The external-source posture remains source-tracking-only.
 
@@ -119,6 +119,8 @@ fbi_recent_cyber_alerts_observed=1
 cisa_secure_by_design_reference_verified=1
 cisa_fbi_product_security_bad_practices_reference_verified=1
 cisa_cpg_reference_verified=1
+cisa_cpg_2_0_reference_verified=1
+cisa_secure_by_demand_reference_verified=1
 cisa_zero_trust_maturity_model_reference_verified=1
 cisa_kev_reference_preserved=1
 nist_csf_2_reference_verified=1
@@ -137,13 +139,14 @@ protection_from_external_alignment=0
 
 Observed source posture:
 
-| Source | 2026-05-26 refinement posture | Allowed use | Forbidden use |
+| Source | 2026-06-12 refinement posture | Allowed use | Forbidden use |
 | --- | --- | --- | --- |
 | NSA Zero Trust Implementation Guidelines | 2026 Primer, Discovery Phase, Phase One, and Phase Two observed | zero-trust runtime-boundary planning | NSA endorsement, certification, or protection claim |
 | NSA/CISA Memory Safe Languages CSI | 2025 CSI observed | memory-safety roadmap and C/C++ mitigation input | memory-safety guarantee |
 | CISA Secure by Design | official source verified | secure-by-design vocabulary input | CISA compliance or product-security claim |
 | CISA/FBI Product Security Bad Practices | official source verified | bad-practice exclusion list | CISA/FBI endorsement or compliance claim |
-| CISA Cross-Sector Cybersecurity Performance Goals | official source verified | control-goal vocabulary input | CPG compliance claim |
+| CISA Cross-Sector Cybersecurity Performance Goals 2.0 | official source verified; current 2.0 page checked | governance, least-privilege, MSP-risk, incident-communication, and assessment vocabulary input | CPG compliance claim |
+| CISA Secure by Demand Guide | official source verified | procurement-facing customer-assurance question input | CISA endorsement, secure-by-demand compliance, or product-security assurance claim |
 | CISA Zero Trust Maturity Model | official source verified | zero-trust maturity vocabulary input | zero-trust certification claim |
 | CISA Known Exploited Vulnerabilities Catalog | authoritative URL retained | vulnerability-awareness input | remediation guarantee |
 | FBI Cyber | reachable; 2026 threat and reporting content visible | threat-environment awareness | FBI endorsement, protection claim, or incident-response capability claim |

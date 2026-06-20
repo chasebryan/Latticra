@@ -25,7 +25,7 @@ Authoritative URLs:
 ```text
 https://www.cisa.gov/stopransomware/ransomware-guide
 https://www.cisa.gov/resources-tools/resources/stopransomware-guide
-https://www.cisa.gov/cybersecurity-performance-goals-cpgs
+https://www.cisa.gov/cross-sector-cybersecurity-performance-goals
 https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final
 https://csrc.nist.gov/pubs/sp/800/184/final
 https://csrc.nist.gov/pubs/sp/800/160/v2/r1/final

@@ -2,9 +2,13 @@ name: Latticra Seal Signed Receipt Proof Path Surface Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-signed-receipt-proof-path-surface-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-signed-receipt-proof-path-surface-status.sh"
 
 permissions:
   contents: read

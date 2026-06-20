@@ -2,9 +2,13 @@ name: Runtime Boundary Refinement Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-runtime-boundary-refinement-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-runtime-boundary-refinement-plan.sh"
 
 permissions:
   contents: read

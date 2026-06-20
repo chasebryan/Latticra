@@ -2,9 +2,13 @@ name: Ubuntu PPA Evidence Closeout Archive Gate Review Disposition Closeout
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-ppa-archive-publication-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,17 @@ name: Defensive Threat Model
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-defensive-threat-model-contract.sh"
+      - "scripts/test-defensive-threat-model-implementation-plan.sh"
+      - "scripts/test-defensive-threat-model-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-defensive-threat-model-contract.sh"
+      - "scripts/test-defensive-threat-model-implementation-plan.sh"
+      - "scripts/test-defensive-threat-model-validation.sh"
 
 permissions:
   contents: read

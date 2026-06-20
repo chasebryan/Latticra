@@ -2,9 +2,13 @@ name: macOS Dry Run Writer Candidate Integration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-dry-run-writer-candidate-integration.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-dry-run-writer-candidate-integration.sh"
 
 permissions:
   contents: read

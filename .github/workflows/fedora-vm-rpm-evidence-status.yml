@@ -2,9 +2,13 @@ name: Fedora VM RPM Evidence Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-evidence-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-evidence-status.sh"
 
 permissions:
   contents: read

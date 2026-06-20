@@ -2,9 +2,13 @@ name: Latticra Proof Object 4 Identity-Replay Impedance
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-proof-object-4-identity-replay-impedance.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-proof-object-4-identity-replay-impedance.sh"
 
 permissions:
   contents: read

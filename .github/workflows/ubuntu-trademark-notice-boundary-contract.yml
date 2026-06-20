@@ -2,9 +2,13 @@ name: Ubuntu Trademark Notice Boundary Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-trademark-notice-boundary-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-trademark-notice-boundary-contract.sh"
 
 permissions:
   contents: read

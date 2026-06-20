@@ -2,9 +2,13 @@ name: Fedora Live Snapshot Adapter Status Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-live-snapshot-adapter-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-live-snapshot-adapter-status-alignment.sh"
 
 permissions:
   contents: read

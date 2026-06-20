@@ -2,9 +2,13 @@ name: Latticra Effect Status Surface
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-effect-status-surface.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-effect-status-surface.sh"
 
 permissions:
   contents: read

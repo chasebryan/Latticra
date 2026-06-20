@@ -2,9 +2,13 @@ name: Latticra Proof Object 2 Higgs Counterplay
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-proof-object-2-higgs-counterplay.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-proof-object-2-higgs-counterplay.sh"
 
 permissions:
   contents: read

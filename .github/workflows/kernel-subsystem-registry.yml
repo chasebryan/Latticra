@@ -2,9 +2,15 @@ name: Kernel Subsystem Registry
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-subsystem-registry-report-runner.sh"
+      - "scripts/test-kernel-subsystem-registry.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-subsystem-registry-report-runner.sh"
+      - "scripts/test-kernel-subsystem-registry.sh"
 
 permissions:
   contents: read

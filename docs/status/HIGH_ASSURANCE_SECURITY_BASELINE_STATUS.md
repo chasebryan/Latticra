@@ -1,7 +1,7 @@
 # Latticra High-Assurance Security Baseline Status
 
 Status: status record for high-assurance security baseline
-Date: 2026-05-26
+Date: 2026-06-12
 
 ## Scope
 
@@ -14,7 +14,7 @@ It does not implement runtime execution, effect execution, host behavior, networ
 ```text
 high_assurance_security_baseline_present=1
 high_assurance_security_baseline_status_present=1
-source_refresh_date=2026-05-26
+source_refresh_date=2026-06-12
 official_source_inventory_present=1
 nsa_zero_trust_guideline_observed=1
 nsa_zero_trust_user_pillar_observed=1
@@ -25,6 +25,8 @@ cisa_fbi_product_security_bad_practices_observed=1
 nsa_cisa_top_misconfigurations_observed=1
 cisa_nsa_fbi_secure_by_default_observed=1
 cisa_cpg_observed=1
+cisa_cpg_2_0_observed=1
+cisa_secure_by_demand_guide_observed=1
 cisa_fbi_nsa_event_logging_guidance_observed=1
 cisa_logging_made_easy_observed=1
 cisa_zero_trust_maturity_model_observed=1
@@ -65,6 +67,11 @@ memory_safety_roadmap_present=1
 zero_trust_runtime_boundary_required=1
 ssdf_secure_development_required=1
 cpg_operational_baseline_required=1
+cpg_2_0_governance_alignment_required=1
+secure_by_demand_customer_assurance_review_required=1
+msp_risk_review_required_before_hosted_service=1
+incident_communication_procedure_required_before_hosted_service=1
+least_privilege_operational_goal_required=1
 supply_chain_security_baseline_present=1
 cyber_incident_reporting_response_baseline_present=1
 vulnerability_management_release_gate_baseline_present=1

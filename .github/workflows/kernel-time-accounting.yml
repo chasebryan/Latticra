@@ -2,9 +2,15 @@ name: Kernel time accounting
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-time-accounting-report-runner.sh"
+      - "scripts/test-kernel-time-accounting.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-time-accounting-report-runner.sh"
+      - "scripts/test-kernel-time-accounting.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Repeatability Transcript Review Validator
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-transcript-review-validator.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-transcript-review-validator.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Kernel preemption
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-preemption-report-runner.sh"
+      - "scripts/test-kernel-preemption.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-preemption-report-runner.sh"
+      - "scripts/test-kernel-preemption.sh"
 
 permissions:
   contents: read

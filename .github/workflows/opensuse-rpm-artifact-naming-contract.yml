@@ -2,9 +2,13 @@ name: openSUSE RPM Artifact Naming Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpm-artifact-naming-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpm-artifact-naming-contract.sh"
 
 permissions:
   contents: read

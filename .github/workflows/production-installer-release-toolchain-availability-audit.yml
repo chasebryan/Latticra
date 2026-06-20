@@ -1,14 +1,16 @@
 name: Production Installer Release Toolchain Availability Audit
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_TOOLCHAIN_AVAILABILITY_AUDIT_STATUS.md'
-      - 'scripts/production-installer-release-toolchain-availability-audit.sh'
-      - 'scripts/test-production-installer-release-toolchain-availability-audit-contract.sh'
-      - '.github/workflows/production-installer-release-toolchain-availability-audit.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-release-toolchain-availability-audit.sh"
+      - "scripts/test-production-installer-release-toolchain-availability-audit-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-release-toolchain-availability-audit.sh"
+      - "scripts/test-production-installer-release-toolchain-availability-audit-contract.sh"
 
 permissions:
   contents: read

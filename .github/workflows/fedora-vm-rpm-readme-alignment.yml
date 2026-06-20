@@ -2,9 +2,13 @@ name: Fedora VM RPM README Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-disposable-vm-rpm-readme-alignment.sh"
 
 permissions:
   contents: read

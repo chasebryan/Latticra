@@ -2,9 +2,13 @@ name: Latticra Netplane Central Hub Intake
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-netplane-central-hub-intake.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-netplane-central-hub-intake.sh"
 
 permissions:
   contents: read

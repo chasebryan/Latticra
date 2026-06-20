@@ -56,7 +56,7 @@ require_contains 'https://www.cisa.gov/resources-tools/resources/best-practices-
 require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3880942/nsa-joins-allies-in-releasing-best-practices-for-event-logging/' "$doc"
 require_contains 'https://www.cisa.gov/resources-tools/services/logging-made-easy' "$doc"
 require_contains 'https://www.cisa.gov/use-logging-business-systems' "$doc"
-require_contains 'https://www.cisa.gov/cybersecurity-performance-goals-cpgs' "$doc"
+require_contains 'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/92/final' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/92/r1/ipd' "$doc"
 require_contains 'https://www.nist.gov/cyberframework/detect' "$doc"

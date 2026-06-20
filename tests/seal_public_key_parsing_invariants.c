@@ -437,6 +437,23 @@ static int public_key_parsing_fails_closed(void) {
     EXPECT_TRUE(strstr(rendered, "requested_public_key_parsing=invalid-public-key-parsing") != 0,
                 "unterminated requested public key parsing rendered sanitized");
     key_material = fixture_key_material("report-only");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_from_key_material(
+                    &key_material,
+                    "metadata-only\npublic_key_parsed=1",
+                    &public_key_parsing) == LATTICRA_STATUS_OK,
+                "newline requested public key parsing status");
+    EXPECT_TRUE(public_key_parsing.error == LATTICRA_SEAL_PUBLIC_KEY_PARSING_DENIED_PUBLIC_KEY_PARSING,
+                "newline requested public key parsing denied");
+    EXPECT_TRUE(strcmp(public_key_parsing.requested_public_key_parsing, "invalid-public-key-parsing") == 0,
+                "newline requested public key parsing sanitized");
+    EXPECT_TRUE(latticra_seal_public_key_parsing_render(&public_key_parsing, rendered, sizeof(rendered)) ==
+                    LATTICRA_STATUS_OK,
+                "newline requested public key parsing render");
+    EXPECT_TRUE(strstr(rendered, "requested_public_key_parsing=invalid-public-key-parsing") != 0,
+                "newline requested public key parsing rendered sanitized");
+    EXPECT_TRUE(strstr(rendered, "\npublic_key_parsed=1\n") == 0,
+                "newline requested public key parsing cannot forge report line");
+    key_material = fixture_key_material("report-only");
     key_material.public_key_parsed = 1u;
     if (expect_denial(&key_material, "metadata-only", LATTICRA_SEAL_PUBLIC_KEY_PARSING_DENIED_PUBLIC_KEY_PARSING, "denied-public-key-parsing", "denied-public-key-parsing", "public key parsed status") != 0) {
         return 1;

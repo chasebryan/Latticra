@@ -2,9 +2,13 @@ name: Fedora RPM Gate Status Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpm-gate-classifier-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-rpm-gate-classifier-status-alignment.sh"
 
 permissions:
   contents: read

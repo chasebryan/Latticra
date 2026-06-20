@@ -56,7 +56,7 @@ require_contains 'NIST SP 800-122 Guide to Protecting the Confidentiality of PII
 require_contains 'NIST Privacy Framework 1.0 and 1.1 draft' "$doc"
 require_contains 'NIST SP 800-53 Rev. 5 Media Protection, Privacy, Access Control, Audit, and System and Communications Protection controls' "$doc"
 require_contains 'https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3735130/nsa-issues-guidance-for-maturing-data-security/' "$doc"
-require_contains 'https://www.cisa.gov/cybersecurity-performance-goals-cpgs' "$doc"
+require_contains 'https://www.cisa.gov/cross-sector-cybersecurity-performance-goals' "$doc"
 require_contains 'https://www.cisa.gov/stopransomware/ransomware-guide' "$doc"
 require_contains 'https://www.fbi.gov/scams-and-safety/common-scams-and-crimes/ransomware' "$doc"
 require_contains 'https://csrc.nist.gov/pubs/sp/800/60/v1/r1/final' "$doc"

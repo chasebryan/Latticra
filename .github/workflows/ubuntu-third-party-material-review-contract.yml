@@ -2,9 +2,13 @@ name: Ubuntu Third-Party Material Review Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-third-party-material-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-third-party-material-review-contract.sh"
 
 permissions:
   contents: read

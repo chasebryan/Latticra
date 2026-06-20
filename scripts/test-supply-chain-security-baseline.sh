@@ -157,6 +157,7 @@ for closed in \
   'production_security_claim_allowed=0'
 do
   require_contains "$closed" "$doc"
+  require_contains "$closed" "$status_doc"
 done
 
 require_contains 'workflow must pin external action refs to a 40-character commit SHA' scripts/test-quality-safety-guards.sh

@@ -1,14 +1,16 @@
 name: Fedora Source Archive Acceptance Gate
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE.md'
-      - 'docs/status/FEDORA_SOURCE_ARCHIVE_ACCEPTANCE_GATE_STATUS.md'
-      - 'scripts/fedora-source-archive-acceptance-gate.sh'
-      - 'scripts/test-fedora-source-archive-acceptance-gate.sh'
-      - '.github/workflows/fedora-source-archive-acceptance-gate.yml'
   pull_request:
+    paths:
+      - "scripts/fedora-source-archive-acceptance-gate.sh"
+      - "scripts/test-fedora-source-archive-acceptance-gate.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fedora-source-archive-acceptance-gate.sh"
+      - "scripts/test-fedora-source-archive-acceptance-gate.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Debian Local Deb Static Validation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-local-deb-static-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-local-deb-static-validation.sh"
 
 permissions:
   contents: read

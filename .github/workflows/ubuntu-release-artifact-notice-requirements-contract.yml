@@ -2,9 +2,13 @@ name: Ubuntu Release Artifact Notice Requirements Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-release-artifact-notice-requirements-contract.sh"
 
 permissions:
   contents: read

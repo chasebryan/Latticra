@@ -162,10 +162,64 @@ static int clause_metadata_preserves_effect_operator_and_effect_label(void) {
     return 0;
 }
 
+static int lat_parser_rejects_trailing_content(void) {
+    static const char source[] =
+        "lat module Tight {\n"
+        "  state RootCell { origin = \"0/0\" }\n"
+        "}\n"
+        "lat module Extra { }\n";
+    latticra_lat_parse_result_t parse;
+
+    EXPECT_TRUE(latticra_lat_parse_source(source, strlen(source), &parse) == LATTICRA_STATUS_OK, "trailing parse call");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_TRAILING_CONTENT, "trailing content rejected");
+    EXPECT_STR_EQ(latticra_lat_parse_error_label(parse.error), "trailing_content", "trailing label");
+    return 0;
+}
+
+static int lat_reports_escape_clause_values(void) {
+    static const char source[] =
+        "lat module EscapedReport {\n"
+        "  state RootCell {\n"
+        "    origin = \"0/0\\nnetwork_allowed=1\"\n"
+        "    route = \"ROOT\"\n"
+        "    axis = \"ROOT\"\n"
+        "    path = \"/\"\n"
+        "    health = \"ok\"\n"
+        "    risk = \"low\"\n"
+        "    lock = \"open\"\n"
+        "    host_effect = none\n"
+        "    external_effect = none\n"
+        "  }\n"
+        "}\n";
+    latticra_lat_parse_result_t parse;
+    latticra_lat_semantic_result_t semantic;
+    latticra_lat_model_t model;
+    latticra_lir_module_t module;
+    latticra_lat_to_lir_result_t lowering;
+    char parse_report[LATTICRA_LAT_REPORT_MAX];
+    char lowering_report[LATTICRA_LAT_TO_LIR_REPORT_MAX];
+
+    EXPECT_TRUE(latticra_lat_parse_source(source, strlen(source), &parse) == LATTICRA_STATUS_OK, "escaped parse call");
+    EXPECT_TRUE(parse.error == LATTICRA_LAT_PARSE_OK, "escaped parse ok");
+    EXPECT_TRUE(latticra_lat_parse_report(&parse, parse_report, sizeof(parse_report)) == LATTICRA_STATUS_OK, "escaped parse report");
+    EXPECT_TRUE(strstr(parse_report, "first_clause_right=0/0\\nnetwork_allowed=1\n") != 0, "parse report escaped");
+    EXPECT_TRUE(strstr(parse_report, "first_clause_right=0/0\nnetwork_allowed=1\n") == 0, "parse report cannot forge line");
+
+    EXPECT_TRUE(latticra_lat_validate_module(&parse, &semantic) == LATTICRA_STATUS_OK, "escaped semantic status");
+    EXPECT_TRUE(latticra_lat_model_normalize_module(&parse, &semantic, &model) == LATTICRA_STATUS_OK, "escaped model status");
+    EXPECT_TRUE(latticra_lir_lower_lat_model(&model, &module, &lowering) == LATTICRA_STATUS_OK, "escaped lowering status");
+    EXPECT_TRUE(latticra_lat_to_lir_report(&lowering, lowering_report, sizeof(lowering_report)) == LATTICRA_STATUS_OK, "escaped lowering report");
+    EXPECT_TRUE(strstr(lowering_report, "first_clause_value=0/0\\nnetwork_allowed=1\n") != 0, "lowering report escaped");
+    EXPECT_TRUE(strstr(lowering_report, "first_clause_value=0/0\nnetwork_allowed=1\n") == 0, "lowering report cannot forge line");
+    return 0;
+}
+
 int main(void) {
     if (clause_metadata_preserves_field_operator() != 0) return 1;
     if (clause_metadata_preserves_requirement_operator() != 0) return 1;
     if (clause_metadata_preserves_effect_operator_and_effect_label() != 0) return 1;
+    if (lat_parser_rejects_trailing_content() != 0) return 1;
+    if (lat_reports_escape_clause_values() != 0) return 1;
 
     puts("lat_to_lir_clause_metadata_refinement: ok");
     return 0;

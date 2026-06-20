@@ -2,9 +2,13 @@ name: Latticra No-Effect CLI RPM Spec Update Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-no-effect-cli-rpm-spec-update-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-no-effect-cli-rpm-spec-update-status.sh"
 
 permissions:
   contents: read

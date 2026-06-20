@@ -2,9 +2,13 @@ name: Fedora RPM Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-local-binary-rpm-build-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-local-binary-rpm-build-plan.sh"
 
 permissions:
   contents: read

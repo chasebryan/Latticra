@@ -2,9 +2,15 @@ name: Kernel IPC Table
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-ipc-table-report-runner.sh"
+      - "scripts/test-kernel-ipc-table.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-ipc-table-report-runner.sh"
+      - "scripts/test-kernel-ipc-table.sh"
 
 permissions:
   contents: read

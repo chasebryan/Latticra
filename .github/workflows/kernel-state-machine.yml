@@ -2,9 +2,15 @@ name: Kernel State Machine
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-state-machine-report-runner.sh"
+      - "scripts/test-kernel-state-machine.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-state-machine-report-runner.sh"
+      - "scripts/test-kernel-state-machine.sh"
 
 permissions:
   contents: read

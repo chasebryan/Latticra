@@ -1,14 +1,16 @@
 name: Fedora Source Archive Accepted Evidence Acceptance Gate
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_ACCEPTANCE_GATE.md'
-      - 'docs/status/FEDORA_SOURCE_ARCHIVE_ACCEPTED_EVIDENCE_ACCEPTANCE_GATE_STATUS.md'
-      - 'scripts/fedora-source-archive-accepted-evidence-acceptance-gate.sh'
-      - 'scripts/test-fedora-source-archive-accepted-evidence-acceptance-gate.sh'
-      - '.github/workflows/fedora-source-archive-accepted-evidence-acceptance-gate.yml'
   pull_request:
+    paths:
+      - "scripts/fedora-source-archive-accepted-evidence-acceptance-gate.sh"
+      - "scripts/test-fedora-source-archive-accepted-evidence-acceptance-gate.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fedora-source-archive-accepted-evidence-acceptance-gate.sh"
+      - "scripts/test-fedora-source-archive-accepted-evidence-acceptance-gate.sh"
 
 permissions:
   contents: read

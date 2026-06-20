@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-3 Rejection Analysis
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-rejection-analysis.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-rejection-analysis.sh"
 
 permissions:
   contents: read
