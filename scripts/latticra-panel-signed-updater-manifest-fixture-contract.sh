@@ -32,7 +32,6 @@ ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 UNAME_S=$(uname -s 2>/dev/null || printf 'unknown')
 UNAME_M=$(uname -m 2>/dev/null || printf 'unknown')
 FIXTURE_RELATIVE='fixtures/latticra-panel/signed-updater-manifest.fixture.toml'
-manifest_fixture_path=$FIXTURE_RELATIVE
 FIXTURE="$ROOT/$FIXTURE_RELATIVE"
 
 if [ -f "$FIXTURE" ]; then
