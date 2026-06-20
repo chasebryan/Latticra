@@ -1,0 +1,140 @@
+{
+  "manifest_id": "latticra-netplane-kaiju-static-adapter-evidence-intake",
+  "manifest_version": 1,
+  "observed_at": "2026-06-19 CDT",
+  "central_hub_intake_reference": "docs/LATTICRA_NETPLANE_CENTRAL_HUB_INTAKE.md",
+  "source_lane": {
+    "lane": "kaiju",
+    "role": "binary-analysis-and-package-evidence-workbench",
+    "source_kind": "external-repo",
+    "github": "chasebryan/kaiju",
+    "local_checkout": "~/Documents/kaiju",
+    "local_branch": "main",
+    "local_revision": "93995843381d",
+    "source_dirty_state": "clean",
+    "workspace_package": {
+      "version": "0.1.0",
+      "edition": "2021",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/chasebryan/kaiju",
+      "rust_version": "1.76",
+      "crate_count": 11,
+      "example_count": 2
+    },
+    "local_inventory": {
+      "documentation_file_count": 12,
+      "fixture_file_count": 3,
+      "snapshot_file_count": 12,
+      "packaging_script_count": 1
+    },
+    "schema_markers": {
+      "project_snapshot_schema": "kaiju.project.v1",
+      "network_snapshot_schema": "kaiju.network.v1",
+      "network_probe_schema": "kaiju.network.probe.v1",
+      "package_schema": "kaiju.package.v1",
+      "annotations_schema": "kaiju.annotations.v1"
+    },
+    "evidence_references": [
+      {
+        "path": "Cargo.toml",
+        "evidence_role": "workspace-package-metadata",
+        "sha256": "sha256:b5828da29e21e98c8fb7afeaa41c26f87ef12c375d2295a46d785b39aa7d3631"
+      },
+      {
+        "path": "LICENSE",
+        "evidence_role": "license-boundary",
+        "sha256": "sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      {
+        "path": "docs/project-format.md",
+        "evidence_role": "project-and-package-schema-boundary",
+        "sha256": "sha256:f4ee0db26126f27a538afa479469051416b0ba3c93839bcb6d63223d108c8e0e"
+      },
+      {
+        "path": "docs/network-model.md",
+        "evidence_role": "offline-network-evidence-and-live-probe-boundary",
+        "sha256": "sha256:2d8bf9a773e30c4b4acb8592094a575905918a81600750ae6a856469a4c77519"
+      },
+      {
+        "path": "docs/threat-model.md",
+        "evidence_role": "defensive-parser-and-authority-boundary",
+        "sha256": "sha256:9b313526d979b0f671118bb17fc8ec6adb67d371c7d386340b619eda8cd1b16a"
+      },
+      {
+        "path": "tests/fixtures/README.md",
+        "evidence_role": "synthetic-fixture-boundary",
+        "sha256": "sha256:16c5d9a6a4d14c013827a2f18e23c099fe033379ecc514a7942ee1aa5cf48d35"
+      },
+      {
+        "path": "tests/fixtures/network-evidence.txt",
+        "evidence_role": "authorized-offline-network-evidence-fixture",
+        "sha256": "sha256:54d0f55de250d7704f583d3c930afec501357f0091eaa6a559be9c0b072f58b2"
+      },
+      {
+        "path": "tests/snapshots/raw-export.json",
+        "evidence_role": "deterministic-project-snapshot-fixture",
+        "sha256": "sha256:bd66c0b230dd32a730c99563d04ae6b1824e6d8e12eb3a40ee9db3d2aa5923bb"
+      }
+    ]
+  },
+  "adapter_boundary": {
+    "edge_checkpoint": "v0.3.0edge",
+    "adapter_intake_present": 1,
+    "static_adapter_evidence_intake": 1,
+    "deny_by_default": 1,
+    "source_import_performed": 0,
+    "artifact_copy_performed": 0,
+    "kaiju_command_executed": 0,
+    "kaiju_source_vendored": 0,
+    "kaiju_binary_ingested": 0,
+    "kaiju_package_accepted": 0,
+    "pcap_import_performed": 0,
+    "live_probe_performed": 0,
+    "port_scan_performed": 0,
+    "privileged_capture_performed": 0,
+    "network_performed": 0,
+    "host_mutation_performed": 0,
+    "file_mutation_performed": 0,
+    "runtime_authority_granted": 0,
+    "plugin_runtime_accepted": 0,
+    "mixed_build_promotion_accepted": 0,
+    "production_readiness_claim": 0
+  },
+  "accepted_evidence_shapes": [
+    "workspace-package-metadata-digest",
+    "license-boundary-digest",
+    "project-snapshot-schema-marker",
+    "package-schema-marker",
+    "offline-network-evidence-schema-marker",
+    "synthetic-fixture-digest",
+    "deterministic-snapshot-digest"
+  ],
+  "denied_evidence_shapes": [
+    "source-vendoring",
+    "build-output-copy",
+    "binary-ingestion",
+    "package-acceptance",
+    "pcap-import",
+    "live-tcp-probe",
+    "port-scan",
+    "privileged-capture",
+    "plugin-runtime",
+    "mixed-build-promotion",
+    "network-authority",
+    "runtime-authority"
+  ],
+  "required_follow_on_fields": [
+    "kaiju_evidence_file",
+    "kaiju_evidence_schema",
+    "kaiju_evidence_sha256",
+    "source_revision",
+    "source_dirty_state",
+    "license_posture",
+    "fixture_synthetic_or_authorized",
+    "redaction_required",
+    "runtime_authority_decision",
+    "network_authority_decision",
+    "review_decision"
+  ],
+  "next_recommended_lane": "kaiju-package-metadata-receipt-schema"
+}
