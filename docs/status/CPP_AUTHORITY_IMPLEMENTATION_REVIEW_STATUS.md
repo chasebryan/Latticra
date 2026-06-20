@@ -41,7 +41,7 @@ Current evidence:
 ```text
 narrow authority-path standard library subset
 test-only type_traits outside the authority path
-C++20 standard policy documented and enforced through required -std=c++20 flag
+C++20 standard policy documented and enforced through required -std=c++20 flag, with legacy -std=c++2a compiler spelling allowed only as an equivalent fallback
 mandatory no-exceptions and no-RTTI build flags
 negative missing-required-flag probes cover every required C/C++ flag fragment
 conflicting build flags rejected when they weaken required standard, exception, RTTI, or warning policy

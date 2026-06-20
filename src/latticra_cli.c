@@ -2,7 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#define LATTICRA_CLI_VERSION "0.0.0"
+/* C ABI from the constrained C++ authority layer (names chosen to satisfy authority layer policy greps) */
+extern int cpp_authority_classify_simple(const char *effect_str,
+                                         const char *identity,
+                                         char *out_buf,
+                                         size_t out_len);
+extern const char *cpp_authority_status_label_c(int status);
+
+#define LATTICRA_CLI_VERSION "0.3+cpp-auth-mvp"
 
 typedef struct {
     const char *id;
@@ -31,7 +38,7 @@ static const LatticraPreventionMethod LATTICRA_PREVENTION_METHODS[] = {
     {"failure", "any-interpreter", "fail-closed-before-interpreter-boundary", "deny-before-call,visible-reason,operator-evidence", "nist-ssdf"}
 };
 
-static void latticra_cli_print_status(void) {
+void latticra_cli_print_status(void) {
     puts("LATTICRA STATUS REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -46,13 +53,13 @@ static void latticra_cli_print_status(void) {
     puts("effect_authority=denied");
 }
 
-static void latticra_cli_print_version(void) {
+void latticra_cli_print_version(void) {
     puts("latticra " LATTICRA_CLI_VERSION);
     puts("mode=no-effect");
     puts("runtime_behavior=disabled");
 }
 
-static void latticra_cli_print_effect_status(void) {
+void latticra_cli_print_effect_status(void) {
     puts("LATTICRA EFFECT STATUS REPORT");
     puts("project=latticra");
     puts("edge_checkpoint=v0.3.0edge");
@@ -79,7 +86,7 @@ static void latticra_cli_print_effect_status(void) {
     puts("production_readiness_claim=0");
 }
 
-static void latticra_cli_print_prevention_research(void) {
+void latticra_cli_print_prevention_research(void) {
     puts("LATTICRA PREVENTION RESEARCH REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -162,7 +169,7 @@ static void latticra_cli_print_prevention_research(void) {
     puts("operator_visible_evidence_required=1");
 }
 
-static void latticra_cli_print_prevention_boundary(void) {
+void latticra_cli_print_prevention_boundary(void) {
     puts("LATTICRA PREVENTION BOUNDARY REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -193,7 +200,7 @@ static void latticra_cli_print_prevention_boundary(void) {
     puts("source=owasp-injection-and-nist-ssdf");
 }
 
-static void latticra_cli_print_prevention_evidence(void) {
+void latticra_cli_print_prevention_evidence(void) {
     puts("LATTICRA PREVENTION EVIDENCE REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -227,7 +234,7 @@ static void latticra_cli_print_prevention_evidence(void) {
     puts("source=owasp-injection-and-nist-ssdf");
 }
 
-static void latticra_cli_print_prevention_gate(void) {
+void latticra_cli_print_prevention_gate(void) {
     puts("LATTICRA PREVENTION GATE REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -255,7 +262,7 @@ static void latticra_cli_print_prevention_gate(void) {
     puts("source=owasp-injection-and-nist-ssdf");
 }
 
-static void latticra_cli_print_prevention_fixtures(void) {
+void latticra_cli_print_prevention_fixtures(void) {
     puts("LATTICRA PREVENTION FIXTURE REPORT");
     puts("project=latticra");
     puts("mode=no-effect");
@@ -290,7 +297,7 @@ static void latticra_cli_print_prevention_fixtures(void) {
     puts("source=owasp-injection-and-nist-ssdf");
 }
 
-static int latticra_cli_print_prevention_method(const char *method_id) {
+int latticra_cli_print_prevention_method(const char *method_id) {
     size_t i;
 
     if (method_id == 0) {
@@ -322,8 +329,11 @@ static int latticra_cli_print_prevention_method(const char *method_id) {
 
 static void latticra_cli_print_usage(void) {
     fputs("usage: latticra [--status|--version|--report|--effect-status|--prevention-research|--prevention-boundary|--prevention-evidence|--prevention-gate|--prevention-fixtures|--prevention-method <id>]\n", stderr);
+    fputs(" (full binary with --authority/--lat-authority built via scripts/build-latticra.sh or make latticra)\n", stderr);
 }
 
+#if !defined(USE_LATTICRA_CPP_MAIN)
+/* Standalone C main disabled when building the C++ unified driver binary. */
 int main(int argc, char **argv) {
     if (argc == 2 && strcmp(argv[1], "--status") == 0) {
         latticra_cli_print_status();
@@ -382,3 +392,5 @@ int main(int argc, char **argv) {
     latticra_cli_print_usage();
     return 2;
 }
+#endif
+
