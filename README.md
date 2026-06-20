@@ -62,7 +62,7 @@ Latticra Guard is a planned simplification route, not a finished app or protecti
 
 ## Current status at a glance
 
-The current public posture is tracked in [STATUS.md](STATUS.md), [docs/status/CURRENT_STATUS.md](docs/status/CURRENT_STATUS.md), and [docs/status/ANNOUNCEMENTS.md](docs/status/ANNOUNCEMENTS.md). The [Production quality blocker ledger](docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md) keeps the green local quality signal separate from production readiness claims. The production-installer release artifact staging directory, release worktree cleanliness audit with stdout-only dirty inventory, release toolchain availability audit, release signing identity reference, release artifact candidate preflight, release artifact evidence template, and release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence intake validators are present. The SBOM and transcript evidence templates are also present for future reviewed SBOM and dry-run transcript bundles. They can check future tagged artifact evidence bundles, but they do not create or sign release artifacts, clean or revert tracked files, write dirty-inventory evidence, install release tools, generate or attach an SBOM, accept evidence, pass promotion, record transcripts, validate lifecycle, recovery, or multi-VM behavior, or claim production readiness. Strategy and near-term direction live in [docs/strategy/README.md](docs/strategy/README.md), [docs/project_notes/README.md](docs/project_notes/README.md), [docs/project_notes/CURRENT_DIRECTION.md](docs/project_notes/CURRENT_DIRECTION.md), and [docs/project_notes/UPCOMING_WORK.md](docs/project_notes/UPCOMING_WORK.md).
+The current public posture is tracked in [STATUS.md](STATUS.md), [docs/status/CURRENT_STATUS.md](docs/status/CURRENT_STATUS.md), and [docs/status/ANNOUNCEMENTS.md](docs/status/ANNOUNCEMENTS.md). The [Production quality blocker ledger](docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md) keeps the green local quality signal separate from production readiness claims. The [v1.0.0 release readiness gate contract](docs/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md) and [status record](docs/status/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_STATUS.md) aggregate the current release blockers with `v1_release_readiness_gate_passed=0`, `v1_release_readiness_blocked=1`, dynamic blocker classification counts, a v1 tag-specific release artifact candidate preflight report, dynamic evidence-status aggregation, an evidence-blocker detail audit, a product-completion detail blocker audit, and `production_release_ready=0`. The production-installer release artifact staging directory, release worktree cleanliness audit with stdout-only dirty inventory, release toolchain availability audit, release signing identity reference, release artifact candidate preflight, release artifact evidence template, and release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence intake validators are present. The SBOM and transcript evidence templates are also present for future reviewed SBOM and dry-run transcript bundles. They can check future tagged artifact evidence bundles, but they do not create or sign release artifacts, clean or revert tracked files, write dirty-inventory evidence, install release tools, generate or attach an SBOM, accept evidence, pass promotion, record transcripts, validate lifecycle, recovery, or multi-VM behavior, or claim production readiness. Strategy and near-term direction live in [docs/strategy/README.md](docs/strategy/README.md), [docs/project_notes/README.md](docs/project_notes/README.md), [docs/project_notes/CURRENT_DIRECTION.md](docs/project_notes/CURRENT_DIRECTION.md), and [docs/project_notes/UPCOMING_WORK.md](docs/project_notes/UPCOMING_WORK.md).
 
 The [effect substrate transition intake](docs/LATTICRA_EFFECT_SUBSTRATE_TRANSITION_INTAKE.md) records the review order for future effect-runner, build-profile, and Model-1 bridge work before any capability promotion.
 
@@ -144,12 +144,12 @@ release_artifact_candidate_tracked_worktree_clean=0
 release_artifact_candidate_tracked_dirty_count=<observed>
 release_toolchain_availability_audit_present=1
 release_toolchain_availability_audit_mode=no-effect-command-visibility-report
-release_toolchain_availability_audit_passed=0
-release_toolchain_ready=0
-rpmbuild_available=0
-rpm_available=0
-release_artifact_build_tool_available=0
-release_artifact_query_tool_available=0
+release_toolchain_availability_audit_passed=<observed>
+release_toolchain_ready=<observed>
+rpmbuild_available=<observed>
+rpm_available=<observed>
+release_artifact_build_tool_available=<observed>
+release_artifact_query_tool_available=<observed>
 release_signing_identity_reference_validator_present=1
 release_signing_identity_reference_valid=0
 release_signing_identity_reference_fingerprint_format_valid=0

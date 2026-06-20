@@ -10,7 +10,7 @@ import json
 from decimal import Decimal, getcontext
 from typing import Iterable
 
-from latticra_identity_replay_model1_evaluate import decimal_to_text
+from latticra_receipt_utils import decimal_to_text
 from latticra_identity_replay_model1_substrate import (
     EPSILON_IDENTITY_TOLERANCE,
     MAX_CELL_ABS,
