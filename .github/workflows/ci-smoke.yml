@@ -37,5 +37,5 @@ jobs:
       - name: Run seal check
         run: ./build/latticra-seal check
 
-      - name: Run hybrid-provider self-test
-        run: ./build/latticra-seal hybrid-provider-self-test
+      - name: Run hybrid envelope self-check
+        run: ./build/latticra-seal hybrid

@@ -3,11 +3,13 @@ name: openSUSE RPM Evidence Repeat Gate Disposition
 on:
   pull_request:
     paths:
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md"
       - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh"
   push:
     branches:
       - main
     paths:
+      - "docs/OPENSUSE_RPM_EVIDENCE_INTAKE_DENIAL_REPEAT_CLOSEOUT_ARCHIVE_GATE_REVIEW_CONTRACT.md"
       - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-review-disposition-contract.sh"
 
 permissions:
