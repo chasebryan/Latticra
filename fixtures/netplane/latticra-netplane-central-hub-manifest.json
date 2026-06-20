@@ -1,0 +1,195 @@
+{
+  "manifest_id": "latticra-netplane-central-hub-intake",
+  "manifest_version": 1,
+  "observed_at": "2026-06-19 CDT",
+  "hub_repository": {
+    "github": "chasebryan/Latticra",
+    "github_default_branch": "main",
+    "github_pushed_at": "2026-06-12T20:09:26Z",
+    "local_branch": "codex/v1-release-readiness-gate",
+    "local_revision": "850b94685bf4"
+  },
+  "boundary": {
+    "edge_checkpoint": "v0.3.0edge",
+    "netplane_defined": 1,
+    "central_hub_declared": 1,
+    "deny_by_default": 1,
+    "source_import_performed": 0,
+    "artifact_copy_performed": 0,
+    "mixed_build_promotion_accepted": 0,
+    "effect_execution_performed": 0,
+    "command_execution_performed": 0,
+    "file_mutation_performed": 0,
+    "network_performed": 0,
+    "runtime_authority_granted": 0,
+    "production_readiness_claim": 0,
+    "warlock_index_separate_channel": 1
+  },
+  "active_lanes": [
+    {
+      "lane": "kaiju",
+      "role": "binary-analysis-and-package-evidence-workbench",
+      "source_kind": "external-repo",
+      "github": "chasebryan/kaiju",
+      "github_pushed_at": "2026-06-20T00:58:00Z",
+      "local_checkout": "~/Documents/kaiju",
+      "local_branch": "main",
+      "local_revision": "93995843381d",
+      "license_posture": "Apache-2.0 observed in workspace manifest",
+      "import_decision": "not-imported",
+      "integration_decision": "static-adapter-intake-required",
+      "notes": [
+        "Treat Kaiju as the first Latticra-adjacent adapter lane.",
+        "Read-only binary/package evidence may map into Netplane receipts before any source import.",
+        "Live capture, privileged probing, source vendoring, and plugin runtime remain closed."
+      ]
+    },
+    {
+      "lane": "l2",
+      "role": "focused-latticra-substrate-prototype",
+      "source_kind": "external-repo",
+      "github": "veilriven-design/l2",
+      "github_pushed_at": "2026-06-03T06:44:44Z",
+      "local_checkout": "~/Documents/l2",
+      "local_branch": "main",
+      "local_revision": "e592e0fa0c1e",
+      "license_posture": "BSD-2-Clause observed in README",
+      "import_decision": "not-imported",
+      "integration_decision": "substrate-boundary-review-required",
+      "notes": [
+        "l2 remains an experimental host prototype and not a high-assurance production boundary.",
+        "Any l2 bridge must be reviewed as a denied-by-default substrate boundary."
+      ]
+    },
+    {
+      "lane": "l3",
+      "role": "ada-first-high-assurance-substrate-direction",
+      "source_kind": "external-repo",
+      "github": "chasebryan/l3",
+      "github_pushed_at": "2026-06-12T04:56:44Z",
+      "local_checkout": "~/Documents/l3",
+      "local_branch": "main",
+      "local_revision": "1e502f07abf6",
+      "license_posture": "GPL-2.0-only observed in README",
+      "import_decision": "not-imported",
+      "integration_decision": "license-and-assurance-review-required",
+      "notes": [
+        "l3 is successor-direction substrate work, not a copy of l2.",
+        "GPL-2.0-only source must not be copied into Latticra without explicit license review."
+      ]
+    },
+    {
+      "lane": "l4",
+      "role": "internal-blinded-holdout-execution-gate-lane",
+      "source_kind": "internal-latticra-lane",
+      "github": "chasebryan/Latticra",
+      "local_reference": "docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_L4_BLINDED_HOLDOUT_EXECUTION_GATE.md",
+      "tool_reference": "tools/latticra_identity_replay_l4_execution_gate.py",
+      "import_decision": "not-imported",
+      "integration_decision": "already-internal-guarded-lane",
+      "notes": [
+        "No separate l4 checkout was observed.",
+        "The active L4 meaning is the existing Latticra blinded-holdout execution gate."
+      ]
+    },
+    {
+      "lane": "fyr",
+      "role": "systems-language-source-lane",
+      "source_kind": "external-repo",
+      "github": "chasebryan/fyr",
+      "github_pushed_at": "2026-06-07T06:25:20Z",
+      "local_checkout": "not-present-as-fyr",
+      "local_checkout_observation": "~/Documents/fyr currently points to chasebryan/rainbow.git",
+      "import_decision": "not-imported",
+      "integration_decision": "local-provenance-refresh-required",
+      "notes": [
+        "The public Fyr repo exists, but the current local path named fyr is Rainbow.",
+        "Do not merge Fyr code into Latticra until the Fyr source checkout is refreshed and reviewed."
+      ]
+    },
+    {
+      "lane": "rainbow",
+      "role": "language-bootstrap-toolchain-lane",
+      "source_kind": "external-repo",
+      "github": "chasebryan/rainbow",
+      "github_pushed_at": "2026-06-19T03:14:23Z",
+      "local_checkout": "~/Documents/fyr",
+      "local_branch": "main",
+      "local_revision": "1c63e02b58e5",
+      "license_posture": "MIT OR Apache-2.0 observed in workspace manifest",
+      "import_decision": "not-imported",
+      "integration_decision": "language-surface-review-required",
+      "notes": [
+        "Rainbow is locally present under the path named fyr.",
+        "Treat Rainbow as a separate language lane from Fyr until provenance is cleaned up."
+      ]
+    },
+    {
+      "lane": "netplane",
+      "role": "latticra-central-hub-routing-and-provenance-plane",
+      "source_kind": "internal-latticra-lane",
+      "github": "chasebryan/Latticra",
+      "local_reference": "docs/LATTICRA_NETPLANE_CENTRAL_HUB_INTAKE.md",
+      "tool_reference": "tools/latticra_netplane_inventory.py",
+      "import_decision": "not-imported",
+      "integration_decision": "central-hub-intake-defined",
+      "notes": [
+        "Netplane records sibling-system provenance and intended integration routes.",
+        "It does not grant network authority or import source."
+      ]
+    }
+  ],
+  "separate_channels": [
+    {
+      "lane": "warlock-index",
+      "github": "chasebryan/warlock-index",
+      "github_pushed_at": "2026-06-20T00:43:12Z",
+      "decision": "separate-channel",
+      "notes": [
+        "WARLOCK-INDEX remains its own channel and is not imported into Latticra Netplane."
+      ]
+    }
+  ],
+  "deferred_candidate_sources": [
+    {
+      "github": "veilriven-design/ingress-osint",
+      "role": "high-integrity-osint-ingress",
+      "decision": "deferred-netplane-adjacency-review"
+    },
+    {
+      "github": "veilriven-design/i2",
+      "role": "passive-network-analysis",
+      "decision": "deferred-netplane-adjacency-review"
+    },
+    {
+      "github": "veilriven-design/netvis",
+      "role": "terminal-network-visualizer",
+      "decision": "deferred-netplane-adjacency-review"
+    },
+    {
+      "github": "chasebryan/sigil",
+      "role": "local-first-cryptography-workbench",
+      "decision": "deferred-evidence-plane-review"
+    },
+    {
+      "github": "chasebryan/pmgs",
+      "role": "receive-only-satellite-ground-station-suite",
+      "decision": "deferred-sensor-evidence-review"
+    },
+    {
+      "github": "chasebryan/rf-commons",
+      "role": "open-radio-workbench",
+      "decision": "deferred-sensor-evidence-review"
+    },
+    {
+      "github": "chasebryan/case-grid",
+      "role": "evidence-centered-case-intelligence",
+      "decision": "deferred-evidence-plane-review"
+    },
+    {
+      "github": "chasebryan/civic-signal",
+      "role": "open-source-intelligence-dashboard",
+      "decision": "deferred-public-signal-review"
+    }
+  ]
+}

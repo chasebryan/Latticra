@@ -1381,6 +1381,8 @@ require_contains "latticra-guarded-model1-effect-demonstration-operator-non-clai
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh" "Makefile"
 require_contains "latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate:" "Makefile"
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh" "Makefile"
+require_contains "latticra-netplane-central-hub-intake:" "Makefile"
+require_contains "sh ./scripts/test-latticra-netplane-central-hub-intake.sh" "Makefile"
 require_contains "latticra-computational-proof-foundation:" "Makefile"
 require_contains "sh ./scripts/test-latticra-computational-proof-foundation.sh" "Makefile"
 require_contains "latticra-computational-math-physics-evaluation:" "Makefile"
