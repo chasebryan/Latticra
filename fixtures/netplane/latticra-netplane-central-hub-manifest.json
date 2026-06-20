@@ -116,7 +116,7 @@
       "local_checkout": "~/Documents/fyr",
       "local_branch": "main",
       "local_revision": "1c63e02b58e5",
-      "license_posture": "MIT OR Apache-2.0 observed in workspace manifest",
+      "license_posture": "dual permissive Rust workspace license expression observed in workspace manifest",
       "import_decision": "not-imported",
       "integration_decision": "language-surface-review-required",
       "notes": [

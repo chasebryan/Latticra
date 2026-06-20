@@ -1,0 +1,53 @@
+name: Latticra Netplane Kaiju Static Adapter Evidence Intake
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/latticra-netplane-kaiju-static-adapter-evidence-intake.yml"
+      - "Makefile"
+      - "README.md"
+      - "STATUS.md"
+      - "docs/README.md"
+      - "docs/LATTICRA_NETPLANE_KAIJU_STATIC_ADAPTER_EVIDENCE_INTAKE.md"
+      - "docs/project_notes/CURRENT_DIRECTION.md"
+      - "docs/project_notes/UPCOMING_WORK.md"
+      - "docs/status/CURRENT_STATUS.md"
+      - "docs/status/LATTICRA_NETPLANE_KAIJU_STATIC_ADAPTER_EVIDENCE_INTAKE_STATUS.md"
+      - "docs/status/README.md"
+      - "fixtures/netplane/latticra-netplane-kaiju-static-adapter-evidence-manifest.json"
+      - "scripts/test-latticra-netplane-kaiju-static-adapter-evidence-intake.sh"
+      - "scripts/test-quality-safety-guards.sh"
+      - "tools/latticra_netplane_kaiju_static_adapter_inventory.py"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/latticra-netplane-kaiju-static-adapter-evidence-intake.yml"
+      - "Makefile"
+      - "README.md"
+      - "STATUS.md"
+      - "docs/README.md"
+      - "docs/LATTICRA_NETPLANE_KAIJU_STATIC_ADAPTER_EVIDENCE_INTAKE.md"
+      - "docs/project_notes/CURRENT_DIRECTION.md"
+      - "docs/project_notes/UPCOMING_WORK.md"
+      - "docs/status/CURRENT_STATUS.md"
+      - "docs/status/LATTICRA_NETPLANE_KAIJU_STATIC_ADAPTER_EVIDENCE_INTAKE_STATUS.md"
+      - "docs/status/README.md"
+      - "fixtures/netplane/latticra-netplane-kaiju-static-adapter-evidence-manifest.json"
+      - "scripts/test-latticra-netplane-kaiju-static-adapter-evidence-intake.sh"
+      - "scripts/test-quality-safety-guards.sh"
+      - "tools/latticra_netplane_kaiju_static_adapter_inventory.py"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Latticra Netplane Kaiju static adapter evidence intake guard
+        run: sh scripts/test-latticra-netplane-kaiju-static-adapter-evidence-intake.sh
