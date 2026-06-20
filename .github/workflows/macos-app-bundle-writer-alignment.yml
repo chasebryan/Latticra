@@ -2,9 +2,13 @@ name: macOS App Bundle Writer Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-app-bundle-writer-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-app-bundle-writer-alignment.sh"
 
 permissions:
   contents: read

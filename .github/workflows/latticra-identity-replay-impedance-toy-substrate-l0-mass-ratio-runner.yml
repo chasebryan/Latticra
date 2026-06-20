@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance Toy Substrate L0 Mass-Ratio Runner
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-toy-substrate-l0-mass-ratio-runner.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-toy-substrate-l0-mass-ratio-runner.sh"
 
 permissions:
   contents: read

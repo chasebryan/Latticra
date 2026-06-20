@@ -2,9 +2,15 @@ name: Kernel State
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-state-report-runner.sh"
+      - "scripts/test-kernel-state.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-state-report-runner.sh"
+      - "scripts/test-kernel-state.sh"
 
 permissions:
   contents: read

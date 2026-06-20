@@ -2,9 +2,15 @@ name: Kernel context switch
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-context-switch-report-runner.sh"
+      - "scripts/test-kernel-context-switch.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-context-switch-report-runner.sh"
+      - "scripts/test-kernel-context-switch.sh"
 
 permissions:
   contents: read

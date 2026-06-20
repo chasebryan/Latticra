@@ -2,9 +2,13 @@ name: Ubuntu Local Deb Build Transcript Acceptance Gate Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-local-deb-build-transcript-acceptance-gate-contract.sh"
 
 permissions:
   contents: read

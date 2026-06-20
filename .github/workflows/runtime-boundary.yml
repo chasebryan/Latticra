@@ -2,9 +2,13 @@ name: Runtime Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-runtime-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-runtime-boundary.sh"
 
 permissions:
   contents: read

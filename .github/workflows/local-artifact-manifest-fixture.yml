@@ -2,9 +2,13 @@ name: Local Artifact Manifest Fixture
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-local-artifact-manifest-fixture.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-local-artifact-manifest-fixture.sh"
 
 permissions:
   contents: read

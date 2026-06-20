@@ -1,8 +1,16 @@
 name: Kernel runtime entry syscall exit view
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-exit-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-exit-view.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-exit-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-exit-view.sh"
 
 permissions:
   contents: read

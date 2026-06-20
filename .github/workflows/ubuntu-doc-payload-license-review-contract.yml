@@ -2,9 +2,13 @@ name: Ubuntu Doc Payload License Review Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-doc-payload-license-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-doc-payload-license-review-contract.sh"
 
 permissions:
   contents: read

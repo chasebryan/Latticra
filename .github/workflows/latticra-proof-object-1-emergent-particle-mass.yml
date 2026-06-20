@@ -2,9 +2,13 @@ name: Latticra Proof Object 1 Emergent Particle Mass
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-proof-object-1-emergent-particle-mass.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-proof-object-1-emergent-particle-mass.sh"
 
 permissions:
   contents: read

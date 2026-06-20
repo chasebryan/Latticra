@@ -1,14 +1,16 @@
 name: Production Installer Release Artifact Candidate Preflight
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_STATUS.md'
-      - 'scripts/production-installer-release-artifact-candidate-preflight.sh'
-      - 'scripts/test-production-installer-release-artifact-candidate-preflight-contract.sh'
-      - '.github/workflows/production-installer-release-artifact-candidate-preflight.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-release-artifact-candidate-preflight.sh"
+      - "scripts/test-production-installer-release-artifact-candidate-preflight-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-release-artifact-candidate-preflight.sh"
+      - "scripts/test-production-installer-release-artifact-candidate-preflight-contract.sh"
 
 permissions:
   contents: read

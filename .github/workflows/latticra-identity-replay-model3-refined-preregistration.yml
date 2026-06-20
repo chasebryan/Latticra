@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-3 Refined Pre-Registration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-refined-preregistration.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-refined-preregistration.sh"
 
 permissions:
   contents: read

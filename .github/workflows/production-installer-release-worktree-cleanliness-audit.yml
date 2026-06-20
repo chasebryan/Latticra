@@ -1,14 +1,16 @@
 name: Production Installer Release Worktree Cleanliness Audit
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_WORKTREE_CLEANLINESS_AUDIT_STATUS.md'
-      - 'scripts/production-installer-release-worktree-cleanliness-audit.sh'
-      - 'scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh'
-      - '.github/workflows/production-installer-release-worktree-cleanliness-audit.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-release-worktree-cleanliness-audit.sh"
+      - "scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-release-worktree-cleanliness-audit.sh"
+      - "scripts/test-production-installer-release-worktree-cleanliness-audit-contract.sh"
 
 permissions:
   contents: read

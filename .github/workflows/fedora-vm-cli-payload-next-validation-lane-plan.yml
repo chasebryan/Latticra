@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Next Validation Lane Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-next-validation-lane-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-next-validation-lane-plan.sh"
 
 permissions:
   contents: read

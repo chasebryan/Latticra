@@ -1,14 +1,16 @@
 name: Production Installer SBOM Evidence Template
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_SBOM_EVIDENCE_TEMPLATE_STATUS.md'
-      - 'scripts/production-installer-sbom-evidence-template.sh'
-      - 'scripts/test-production-installer-sbom-evidence-template-contract.sh'
-      - '.github/workflows/production-installer-sbom-evidence-template.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-sbom-evidence-template.sh"
+      - "scripts/test-production-installer-sbom-evidence-template-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-sbom-evidence-template.sh"
+      - "scripts/test-production-installer-sbom-evidence-template-contract.sh"
 
 permissions:
   contents: read

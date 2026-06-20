@@ -2,9 +2,13 @@ name: Ubuntu PPA Evidence Closeout Archive Gate Follow-On
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-follow-on-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-ppa-evidence-intake-denial-closeout-archive-gate-follow-on-contract.sh"
 
 permissions:
   contents: read

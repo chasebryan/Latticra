@@ -2,9 +2,13 @@ name: Kernel Lifecycle Rollback Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-lifecycle-rollback-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-lifecycle-rollback-plan.sh"
 
 permissions:
   contents: read

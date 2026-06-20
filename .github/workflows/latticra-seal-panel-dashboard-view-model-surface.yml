@@ -2,9 +2,13 @@ name: Latticra Seal Panel Dashboard View Model Surface
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-view-model-surface.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-view-model-surface.sh"
 
 permissions:
   contents: read

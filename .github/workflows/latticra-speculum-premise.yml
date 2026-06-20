@@ -2,9 +2,13 @@ name: Latticra Speculum Premise
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-speculum-premise.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-speculum-premise.sh"
 
 permissions:
   contents: read

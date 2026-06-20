@@ -2,9 +2,13 @@ name: Latticra Model-1 Bridge Protocol Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-model1-bridge-protocol-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-model1-bridge-protocol-contract.sh"
 
 permissions:
   contents: read

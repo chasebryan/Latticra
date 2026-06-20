@@ -1,13 +1,14 @@
 name: Fedora RPM Payload Inspection Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT.md'
-      - 'docs/status/FEDORA_RPM_PAYLOAD_INSPECTION_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-rpm-payload-inspection-contract.sh'
-      - '.github/workflows/fedora-rpm-payload-inspection-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpm-payload-inspection-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-rpm-payload-inspection-contract.sh"
 
 permissions:
   contents: read

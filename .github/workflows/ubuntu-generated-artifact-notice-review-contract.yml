@@ -2,9 +2,13 @@ name: Ubuntu Generated-Artifact Notice Review Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-generated-artifact-notice-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-generated-artifact-notice-review-contract.sh"
 
 permissions:
   contents: read

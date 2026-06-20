@@ -1,8 +1,14 @@
 name: macos-reset-uninstall-closeout-audit5-review-closeout-audit-review
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-closeout-audit5-review-closeout-audit-review.sh"
 
 permissions:
   contents: read

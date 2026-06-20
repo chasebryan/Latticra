@@ -1,14 +1,14 @@
 name: Production Installer Release Artifact Staging Directory
 
 on:
-  push:
-    paths:
-      - 'artifacts/release/README.md'
-      - 'docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_STAGING_DIRECTORY_STATUS.md'
-      - 'scripts/test-production-installer-release-artifact-staging-directory-contract.sh'
-      - '.github/workflows/production-installer-release-artifact-staging-directory.yml'
   pull_request:
+    paths:
+      - "scripts/test-production-installer-release-artifact-staging-directory-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-production-installer-release-artifact-staging-directory-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Latticra Computational Math Physics Evaluation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-computational-math-physics-evaluation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-computational-math-physics-evaluation.sh"
 
 permissions:
   contents: read

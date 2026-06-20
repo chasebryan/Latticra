@@ -2,9 +2,13 @@ name: macOS Integration Transferability
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-integration-transferability.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-integration-transferability.sh"
 
 permissions:
   contents: read

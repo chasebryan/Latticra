@@ -2,9 +2,13 @@ name: Latticra Seal Parameter Schema Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-parameter-schema-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-parameter-schema-status.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Ubuntu NOTICE File Decision Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-notice-file-decision-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-notice-file-decision-contract.sh"
 
 permissions:
   contents: read

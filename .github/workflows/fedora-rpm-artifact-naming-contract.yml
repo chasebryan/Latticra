@@ -1,13 +1,14 @@
 name: Fedora RPM Artifact Naming Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_RPM_ARTIFACT_NAMING_CONTRACT.md'
-      - 'docs/status/FEDORA_RPM_ARTIFACT_NAMING_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-rpm-artifact-naming-contract.sh'
-      - '.github/workflows/fedora-rpm-artifact-naming-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpm-artifact-naming-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-rpm-artifact-naming-contract.sh"
 
 permissions:
   contents: read

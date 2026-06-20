@@ -2,9 +2,15 @@ name: Kernel interrupt table
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-interrupt-table-report-runner.sh"
+      - "scripts/test-kernel-interrupt-table.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-interrupt-table-report-runner.sh"
+      - "scripts/test-kernel-interrupt-table.sh"
 
 permissions:
   contents: read

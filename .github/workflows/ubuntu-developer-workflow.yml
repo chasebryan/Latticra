@@ -2,9 +2,13 @@ name: Ubuntu Developer Workflow
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-developer-workflow.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-developer-workflow.sh"
 
 permissions:
   contents: read

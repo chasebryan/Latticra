@@ -2,9 +2,15 @@ name: Kernel runtime entry syscall gate view
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-gate-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-gate-view.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-gate-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-gate-view.sh"
 
 permissions:
   contents: read

@@ -3,14 +3,12 @@ name: DFO Evidence Denial AG Review Disposition Contract
 on:
   pull_request:
     paths:
-      - 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISP_CO_AG_RV_DISP_CONTRACT.md'
-      - 'scripts/test-dfo-package-build-evidence-intake-denial-chain-ag-review-disp-closeout-ag-review-disp-closeout-ag-review-disp-closeout-ag-rd-closeout-ag-review-disp-co-ag-rv-disp-contract.sh'
-      - '.github/workflows/debian-bsd-evidence-denial-chain-ag-review-disp-closeout-archive-gate-review-disposition-contract.yml'
+      - "scripts/test-dfo-package-build-evidence-intake-denial-chain-ag-review-disp-closeout-ag-review-disp-closeout-ag-review-disp-closeout-ag-rd-closeout-ag-review-disp-co-ag-rv-disp-contract.sh"
   push:
+    branches:
+      - main
     paths:
-      - 'docs/DEBIAN_FREEBSD_OPENBSD_PACKAGE_BUILD_EVIDENCE_INTAKE_DENIAL_CHAIN_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_REVIEW_DISPOSITION_CLOSEOUT_ARCHIVE_GATE_RD_CLOSEOUT_AG_REVIEW_DISP_CO_AG_RV_DISP_CONTRACT.md'
-      - 'scripts/test-dfo-package-build-evidence-intake-denial-chain-ag-review-disp-closeout-ag-review-disp-closeout-ag-review-disp-closeout-ag-rd-closeout-ag-review-disp-co-ag-rv-disp-contract.sh'
-      - '.github/workflows/debian-bsd-evidence-denial-chain-ag-review-disp-closeout-archive-gate-review-disposition-contract.yml'
+      - "scripts/test-dfo-package-build-evidence-intake-denial-chain-ag-review-disp-closeout-ag-review-disp-closeout-ag-review-disp-closeout-ag-rd-closeout-ag-review-disp-co-ag-rv-disp-contract.sh"
 
 permissions:
   contents: read

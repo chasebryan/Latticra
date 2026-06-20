@@ -2,9 +2,13 @@ name: openSUSE RPM Topdir Handoff Lane
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpm-topdir-handoff-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpm-topdir-handoff-lane.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Kernel scheduler selection
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-selection-report-runner.sh"
+      - "scripts/test-kernel-scheduler-selection.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-selection-report-runner.sh"
+      - "scripts/test-kernel-scheduler-selection.sh"
 
 permissions:
   contents: read

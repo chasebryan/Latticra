@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Artifact Naming Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-artifact-naming-contract.sh"
 
 permissions:
   contents: read

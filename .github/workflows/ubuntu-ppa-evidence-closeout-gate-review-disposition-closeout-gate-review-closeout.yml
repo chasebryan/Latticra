@@ -2,9 +2,13 @@ name: Ubuntu PPA Evidence Closeout Gate Review Disposition Closeout Archive Gate
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-ppa-evidence-closeout-gate-review-disposition-closeout-gate-review-closeout.sh"
 
 permissions:
   contents: read

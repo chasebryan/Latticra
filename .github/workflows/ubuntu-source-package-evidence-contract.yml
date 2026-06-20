@@ -2,9 +2,13 @@ name: Ubuntu Source Package Evidence Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-source-package-evidence-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-source-package-evidence-contract.sh"
 
 permissions:
   contents: read

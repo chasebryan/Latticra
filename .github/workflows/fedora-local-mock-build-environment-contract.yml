@@ -1,13 +1,14 @@
 name: Fedora Local Mock Build Environment Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT.md'
-      - 'docs/status/FEDORA_LOCAL_MOCK_BUILD_ENVIRONMENT_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-local-mock-build-environment-contract.sh'
-      - '.github/workflows/fedora-local-mock-build-environment-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-local-mock-build-environment-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-local-mock-build-environment-contract.sh"
 
 permissions:
   contents: read

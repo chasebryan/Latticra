@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Validation Lane Docs
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-lane-docs.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-lane-docs.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Latticra No-Effect CLI Packaging Contract Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-no-effect-cli-packaging-contract-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-no-effect-cli-packaging-contract-alignment.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Validation Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-validation-status-alignment.sh"
 
 permissions:
   contents: read

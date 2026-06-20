@@ -1,8 +1,14 @@
 name: macos-reset-uninstall-closeout-audit-review-disposition-closeout-audit
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-closeout-audit-review-disposition-closeout-audit-review-disposition-closeout-audit-contract.sh"
 
 permissions:
   contents: read

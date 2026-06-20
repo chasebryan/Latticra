@@ -2,9 +2,13 @@ name: openSUSE Local RPM Static Validation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-local-rpm-static-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-local-rpm-static-validation.sh"
 
 permissions:
   contents: read

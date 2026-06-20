@@ -2,9 +2,15 @@ name: Lat Pipeline Diagnostic Integration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-pipeline-diagnostic-integration-refinement.sh"
+      - "scripts/test-lat-pipeline.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-pipeline-diagnostic-integration-refinement.sh"
+      - "scripts/test-lat-pipeline.sh"
 
 permissions:
   contents: read

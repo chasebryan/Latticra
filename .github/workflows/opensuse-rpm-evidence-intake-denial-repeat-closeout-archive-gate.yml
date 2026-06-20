@@ -2,9 +2,13 @@ name: openSUSE RPM Evidence Repeat Archive Gate
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpm-evidence-intake-denial-repeat-closeout-archive-gate-contract.sh"
 
 permissions:
   contents: read

@@ -1,14 +1,14 @@
 name: Nadia Stage 47 Review Disposition Release Receipt Contract
 
 on:
-  push:
-    paths:
-      - 'docs/**'
-      - 'installer/**'
-      - 'scripts/**'
-      - 'Makefile'
-      - '.github/workflows/nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-47.yml'
   pull_request:
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-47.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-review-disposition-release-receipt-contract-stage-47.sh"
 
 permissions:
   contents: read

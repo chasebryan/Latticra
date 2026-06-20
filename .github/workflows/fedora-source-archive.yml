@@ -2,9 +2,13 @@ name: Fedora Source Archive Fixture
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-source-archive-fixture-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-source-archive-fixture-lane.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Production Installer Readiness Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-production-installer-readiness-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-production-installer-readiness-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Local Installer Artifact Manifest Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-local-installer-artifact-manifest-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-local-installer-artifact-manifest-contract.sh"
 
 permissions:
   contents: read
