@@ -1351,6 +1351,8 @@ require_contains "latticra-model1-import-mixed-build-review-boundary:" "Makefile
 require_contains "sh ./scripts/test-latticra-model1-import-mixed-build-review-boundary.sh" "Makefile"
 require_contains "latticra-guarded-model1-effect-demonstration-evidence-boundary:" "Makefile"
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-boundary.sh" "Makefile"
+require_contains "latticra-netplane-central-hub-intake:" "Makefile"
+require_contains "sh ./scripts/test-latticra-netplane-central-hub-intake.sh" "Makefile"
 require_contains "latticra-computational-proof-foundation:" "Makefile"
 require_contains "sh ./scripts/test-latticra-computational-proof-foundation.sh" "Makefile"
 require_contains "latticra-computational-math-physics-evaluation:" "Makefile"

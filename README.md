@@ -60,6 +60,8 @@ The [Model-1 import and mixed-build review boundary](docs/LATTICRA_MODEL1_IMPORT
 
 The [guarded Model-1 effect demonstration evidence boundary](docs/LATTICRA_GUARDED_MODEL1_EFFECT_DEMONSTRATION_EVIDENCE_BOUNDARY.md) satisfies the guarded demonstration evidence-boundary shape by defining request contract, bridge request and response evidence, deny-by-default evidence, operator workflow, target evidence, redaction, and non-claim review requirements while keeping Model-1 launch, bridge execution, effect dispatch, command execution, file mutation, and runtime authority closed.
 
+The [Netplane central hub intake](docs/LATTICRA_NETPLANE_CENTRAL_HUB_INTAKE.md) records Kaiju, l2, l3, L4, Fyr, Rainbow, and Netplane as Latticra-adjacent integration lanes while keeping WARLOCK-INDEX as a separate channel and preserving zero source import, artifact copy, command execution, file mutation, network behavior, runtime authority, or production-readiness claims.
+
 The [computational proof foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) begins the explicit computer-science and science framing for investigating simulation-bound reality hypotheses through proof objects, falsifiability, observer boundaries, physics constraint modeling, receipts, replay, and adversarial review while keeping `simulation_proven=0`.
 
 The [computational math and physics evaluation](docs/LATTICRA_COMPUTATIONAL_MATH_PHYSICS_EVALUATION.md) records the first proof-lane order: evaluate the math, couple reviewed math to physics-model fields, then prepare a substrate-engine visual demonstration while keeping visual evidence and scientific claims closed.
