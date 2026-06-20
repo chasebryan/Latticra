@@ -24,6 +24,7 @@
 .PHONY: latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate
 .PHONY: latticra-netplane-central-hub-intake
 .PHONY: latticra-netplane-kaiju-static-adapter-evidence-intake
+.PHONY: latticra-product-organization-simplification
 .PHONY: latticra-computational-proof-foundation
 .PHONY: latticra-computational-math-physics-evaluation
 .PHONY: latticra-speculum-premise
@@ -770,6 +771,7 @@ quality-status:
 	sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh
 	sh ./scripts/test-latticra-netplane-central-hub-intake.sh
 	sh ./scripts/test-latticra-netplane-kaiju-static-adapter-evidence-intake.sh
+	sh ./scripts/test-latticra-product-organization-simplification.sh
 	sh ./scripts/test-latticra-computational-proof-foundation.sh
 	sh ./scripts/test-latticra-computational-math-physics-evaluation.sh
 	sh ./scripts/test-latticra-speculum-premise.sh
@@ -848,6 +850,9 @@ latticra-netplane-central-hub-intake:
 
 latticra-netplane-kaiju-static-adapter-evidence-intake:
 	sh ./scripts/test-latticra-netplane-kaiju-static-adapter-evidence-intake.sh
+
+latticra-product-organization-simplification:
+	sh ./scripts/test-latticra-product-organization-simplification.sh
 
 latticra-computational-proof-foundation:
 	sh ./scripts/test-latticra-computational-proof-foundation.sh

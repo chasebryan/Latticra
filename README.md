@@ -46,6 +46,20 @@ Latticra is an early-stage systems substrate. It is built around a simple rule: 
 
 It is not a production platform, certified security product, hardened sandbox, root installer, network authority, operating-system replacement, Fedora-approved package, Ubuntu archive-ready package, Debian archive-ready package, FreeBSD official port, OpenBSD official port, or openSUSE official package.
 
+## Product routes
+
+The [Product organization simplification plan](docs/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_PLAN.md) is the current reader-facing route map. It keeps the existing guarded file layout in place while making the product shape easier to follow.
+
+| Route | User meaning |
+| --- | --- |
+| Latticra Guard | Future simplified user-facing edition for install, baseline status, updates, reset/uninstall, and local evidence visibility |
+| Latticra Core | Canonical evidence substrate, Seal/Q-Seal, Nucleus, runtime boundary, installer, reports, receipts, docs, and guards |
+| Latticra Netplane | Adapter and provenance plane for Kaiju, l2, l3, L4, fyr, Rainbow, and future adjacent systems |
+| Latticra Research | Proof objects, substrate models, Higgs challenge, simulation-bound reality hypotheses, and visual theorem lanes |
+| WARLOCK-INDEX | Separate corpus and channel, not imported into Latticra as source, build output, or runtime authority |
+
+Latticra Guard is a planned simplification route, not a finished app or protection claim. The next recommended lane is `latticra-guard-simplified-installer-intake`, which should define what a user installs, what local authority is requested, what receipts are written, what status is shown, and what it does not claim before implementation proceeds.
+
 ## Current status at a glance
 
 The current public posture is tracked in [STATUS.md](STATUS.md), [docs/status/CURRENT_STATUS.md](docs/status/CURRENT_STATUS.md), and [docs/status/ANNOUNCEMENTS.md](docs/status/ANNOUNCEMENTS.md). The [Production quality blocker ledger](docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md) keeps the green local quality signal separate from production readiness claims. The production-installer release artifact staging directory, release worktree cleanliness audit with stdout-only dirty inventory, release toolchain availability audit, release signing identity reference, release artifact candidate preflight, release artifact evidence template, and release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence intake validators are present. The SBOM and transcript evidence templates are also present for future reviewed SBOM and dry-run transcript bundles. They can check future tagged artifact evidence bundles, but they do not create or sign release artifacts, clean or revert tracked files, write dirty-inventory evidence, install release tools, generate or attach an SBOM, accept evidence, pass promotion, record transcripts, validate lifecycle, recovery, or multi-VM behavior, or claim production readiness. Strategy and near-term direction live in [docs/strategy/README.md](docs/strategy/README.md), [docs/project_notes/README.md](docs/project_notes/README.md), [docs/project_notes/CURRENT_DIRECTION.md](docs/project_notes/CURRENT_DIRECTION.md), and [docs/project_notes/UPCOMING_WORK.md](docs/project_notes/UPCOMING_WORK.md).
@@ -81,6 +95,8 @@ The [guarded Model-1 effect demonstration evidence acceptance preflight denial g
 The [Netplane central hub intake](docs/LATTICRA_NETPLANE_CENTRAL_HUB_INTAKE.md) records Kaiju, l2, l3, L4, fyr, Rainbow, and Netplane as Latticra-adjacent integration lanes while keeping WARLOCK-INDEX as a separate channel and preserving zero source import, artifact copy, command execution, file mutation, network behavior, runtime authority, or production-readiness claims.
 
 The [Kaiju static adapter evidence intake](docs/LATTICRA_NETPLANE_KAIJU_STATIC_ADAPTER_EVIDENCE_INTAKE.md) records Kaiju workspace metadata, schema markers, fixture hashes, and denied live/runtime behavior as the first Netplane follow-on lane while preserving zero source import, artifact copy, Kaiju command execution, pcap import, live probing, scanning, plugin runtime, network behavior, runtime authority, or production-readiness claims.
+
+The [product organization simplification plan](docs/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_PLAN.md) names Latticra Guard, Latticra Core, Latticra Netplane, Latticra Research, and WARLOCK-INDEX as the current public routes while preserving zero physical reorganization, source import, artifact copy, sibling repository mutation, network behavior, runtime authority, cybersecurity certification, set-and-forget security, or production-readiness claims.
 
 The [computational proof foundation](docs/LATTICRA_COMPUTATIONAL_PROOF_FOUNDATION.md) begins the explicit computer-science and science framing for investigating simulation-bound reality hypotheses through proof objects, falsifiability, observer boundaries, physics constraint modeling, receipts, replay, and adversarial review while keeping `simulation_proven=0`.
 
