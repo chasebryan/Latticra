@@ -439,7 +439,6 @@ latticra_status_t latticra_kernel_state_machine_step(
     }
 
 #define transition_request (*transition_request_storage)
-    memset(&transition_request, 0, sizeof(transition_request));
     transition_request.memory_map_request = request->memory_map_request;
     transition_request.process_table_request = request->process_table_request;
     transition_request.syscall_table_request = request->syscall_table_request;
