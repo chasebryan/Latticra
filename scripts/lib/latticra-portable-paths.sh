@@ -1,36 +1,23 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Shared portable path helper for Latticra evidence reports, ledgers, and receipts.
-portable_path() {
+# Portable path helper for receipt references and model1 tests.
+# Provides path normalization independent of checkout location.
+
+REPO_ROOT="${REPO_ROOT:-$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)}"
+
+path_reference() {
   p="$1"
-  if [ -n "${ROOT:-}" ] && [ -d "$ROOT" ]; then
-    _root="$ROOT"
+  if [ -z "$p" ]; then echo ""; return; fi
+  case "$p" in
+    /*) candidate="$p" ;;
+    *) candidate="$REPO_ROOT/$p" ;;
+  esac
+  if [ -e "$candidate" ]; then
+    (cd "$REPO_ROOT" && realpath --relative-to=. "$candidate" 2>/dev/null || echo "$p")
   else
-    _script_dir="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
-    _root="$_script_dir"
-    while [ ! -f "$_root/README.md" ] && [ "$_root" != "/" ]; do
-      _root="$(dirname "$_root")"
-    done
+    echo "$p"
   fi
-  python3 - "$p" "$_root" <<'PY'
-import sys
-import os
-from pathlib import Path
-p = Path(sys.argv[1])
-root = Path(sys.argv[2])
-try:
-  if p.is_absolute():
-    cand = p
-  else:
-    cand = (root / p).resolve()
-  r_cand = cand.resolve()
-  r_root = root.resolve()
-  rel = os.path.relpath(str(r_cand), str(r_root))
-  print(rel)
-except Exception:
-  try:
-    print(p.as_posix())
-  except Exception:
-    print(str(p))
-PY
 }
+
+# Export for sourcing scripts
+export REPO_ROOT
