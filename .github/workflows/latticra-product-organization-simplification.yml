@@ -1,0 +1,49 @@
+name: Latticra Product Organization Simplification
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/latticra-product-organization-simplification.yml"
+      - "Makefile"
+      - "README.md"
+      - "STATUS.md"
+      - "docs/README.md"
+      - "docs/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_PLAN.md"
+      - "docs/project_notes/CURRENT_DIRECTION.md"
+      - "docs/project_notes/UPCOMING_WORK.md"
+      - "docs/status/CURRENT_STATUS.md"
+      - "docs/status/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_STATUS.md"
+      - "docs/status/README.md"
+      - "scripts/test-latticra-product-organization-simplification.sh"
+      - "scripts/test-quality-safety-guards.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/latticra-product-organization-simplification.yml"
+      - "Makefile"
+      - "README.md"
+      - "STATUS.md"
+      - "docs/README.md"
+      - "docs/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_PLAN.md"
+      - "docs/project_notes/CURRENT_DIRECTION.md"
+      - "docs/project_notes/UPCOMING_WORK.md"
+      - "docs/status/CURRENT_STATUS.md"
+      - "docs/status/LATTICRA_PRODUCT_ORGANIZATION_SIMPLIFICATION_STATUS.md"
+      - "docs/status/README.md"
+      - "scripts/test-latticra-product-organization-simplification.sh"
+      - "scripts/test-quality-safety-guards.sh"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - name: Run Latticra product organization simplification guard
+        run: sh scripts/test-latticra-product-organization-simplification.sh
