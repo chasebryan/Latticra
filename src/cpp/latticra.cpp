@@ -22,6 +22,10 @@
 #include <ctime>
 #include <string_view>
 
+#include <cerrno>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 extern "C" {
 void latticra_cli_print_status(void);
 void latticra_cli_print_version(void);
@@ -86,7 +90,12 @@ int run_authority_decision(const char *effect_c, const char *identity_c) {
     std::puts("--- end report ---");
 
     /* Write receipt - the visible user-local effect */
-    std::system("mkdir -p artifacts/receipts 2>/dev/null || true");
+    errno = 0;
+    (void)::mkdir("artifacts", 0755);
+    if (errno != 0 && errno != EEXIST) { /* best effort */ }
+    errno = 0;
+    (void)::mkdir("artifacts/receipts", 0755);
+    if (errno != 0 && errno != EEXIST) { /* best effort */ }
     std::time_t now = std::time(nullptr);
     char path[256];
     std::snprintf(path, sizeof(path), "artifacts/receipts/authority-decision-%.*s.txt",
@@ -168,7 +177,12 @@ int run_lat_authority(const char *path, const char *eff_str) {
     std::puts(b.data());
 
     /* also emit receipt for this path (local visible effect) */
-    std::system("mkdir -p artifacts/receipts 2>/dev/null || true");
+    errno = 0;
+    (void)::mkdir("artifacts", 0755);
+    if (errno != 0 && errno != EEXIST) { /* best effort */ }
+    errno = 0;
+    (void)::mkdir("artifacts/receipts", 0755);
+    if (errno != 0 && errno != EEXIST) { /* best effort */ }
     char rpath[256];
     /* derive simple tag from path+effect */
     const char *base = std::strrchr(path, '/'); base = base ? base+1 : path;
