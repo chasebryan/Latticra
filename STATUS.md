@@ -20,9 +20,8 @@ Latest Latticra guarded Model-1 effect demonstration operator non-claim review c
 Latest Latticra guarded Model-1 effect demonstration operator non-claim review receipt note: 2026-06-12 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence acceptance preflight denial gate note: 2026-06-12 CDT
 Latest Latticra Netplane central hub intake note: 2026-06-19 CDT
-Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
-Latest Latticra v1.0.0 evidence blocker audit note: 2026-06-12 CDT
-Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT
+Latest Latticra Netplane Kaiju static adapter evidence intake note: 2026-06-19 CDT
+Latest Latticra product organization simplification note: 2026-06-19 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT

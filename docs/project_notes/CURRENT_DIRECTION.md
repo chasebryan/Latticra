@@ -18,9 +18,8 @@ Latest Latticra guarded Model-1 effect demonstration operator non-claim review c
 Latest Latticra guarded Model-1 effect demonstration operator non-claim review receipt note: 2026-06-12 CDT
 Latest Latticra guarded Model-1 effect demonstration evidence acceptance preflight denial gate note: 2026-06-12 CDT
 Latest Latticra Netplane central hub intake note: 2026-06-19 CDT
-Latest Latticra v1.0.0 release readiness gate note: 2026-06-12 CDT
-Latest Latticra v1.0.0 evidence blocker audit note: 2026-06-12 CDT
-Latest Latticra v1.0.0 product blocker audit note: 2026-06-12 CDT
+Latest Latticra Netplane Kaiju static adapter evidence intake note: 2026-06-19 CDT
+Latest Latticra product organization simplification note: 2026-06-19 CDT
 Latest Latticra computational proof foundation note: 2026-05-29 CDT
 Latest Latticra computational math and physics evaluation note: 2026-05-29 CDT
 Latest Latticra Speculum premise note: 2026-05-29 CDT
@@ -252,8 +251,6 @@ constrained C/C++ foundation
 The current security-guidance posture is aligned across the high-assurance baseline, memory-safety roadmap, supply-chain baseline, zero-trust runtime authority baseline, and runtime-boundary policy expansion. Those records now carry explicit workload or service identity, operator identity, host or device integrity, command-boundary, update-integrity, and retained-C/C++ hazard-class expectations while preserving Latticra's no-compliance-claim and no-production-security-boundary posture.
 
 The current working edge checkpoint is `v0.3.0edge`: Latticra now recognizes bounded local operator effects in guarded adjacent lanes. That posture is visible through the no-effect `latticra --effect-status` report and does not open root authority, network authority, USB writes, QEMU runs, package-manager operations, kernel/service/boot authority, or production-readiness claims.
-
-The current `v1.0.0` release readiness posture is explicitly blocked by the no-effect v1 release readiness gate. The gate aggregates the existing production installer, release artifact, SBOM, transcript, lifecycle, recovery, multi-VM, Fedora, Nadia, Q-Seal, and runtime-authority blockers while preserving `v1_release_readiness_gate_passed=0`, `v1_release_readiness_blocked=1`, dynamic blocker classification counts, and `production_release_ready=0`. It now runs the release artifact candidate preflight against the requested v1 tag, reads the release artifact, SBOM, transcript, lifecycle, recovery, and multi-VM evidence status records dynamically, and consumes the evidence-blocker audit and product-completion blocker audit. The release report exposes the observed candidate blocker count, tag availability, toolchain state, tracked worktree state, signing identity reference state, candidate evidence validity, evidence acceptance, evidence detail blocker count, and product-completion detail blocker count before any artifact build, signing claim, evidence-acceptance claim, or product-readiness claim.
 
 ## C/C++ foundation checkpoint
 
