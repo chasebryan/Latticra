@@ -379,6 +379,8 @@ It also rejects `-Wno-*` flags that disable required warnings such as
 `-Wconversion` or `-Wshadow`.
 The C++ standard version policy is constrained C++20, enforced through
 `-std=c++20` in `CXXFLAGS`.
+Legacy compiler drivers that reject `-std=c++20` may use the equivalent
+`-std=c++2a` spelling without weakening the C++20 policy.
 The warnings-as-errors policy is mandatory for both C substrate objects and
 C++ authority objects through `-Werror` in `CFLAGS` and `CXXFLAGS`.
 It requires the C++ authority header to wrap the C substrate includes with
