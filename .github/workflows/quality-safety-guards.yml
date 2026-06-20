@@ -2,6 +2,10 @@ name: Quality Safety Guards
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-quality-safety-guards.sh"
+      - ".github/workflows/quality*.yml"
+      - "Makefile"
   push:
     branches:
       - main
