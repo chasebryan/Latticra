@@ -46,6 +46,12 @@ case "$#" in
 esac
 
 ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+# Use shared portable path helper for receipt reference portability
+. "${ROOT}/scripts/lib/latticra-portable-paths.sh" || {
+  printf 'ERROR: missing portable paths helper' >&2
+  exit 1
+}
+
 CHECKLIST="$ROOT/scripts/latticra-guarded-model1-effect-demo-operator-non-claim-review-checklist.sh"
 
 sha256_file() {
@@ -149,7 +155,7 @@ operator_non_claim_review_checklist_status_reference=docs/status/LATTICRA_GUARDE
 operator_non_claim_review_checklist_script=scripts/latticra-guarded-model1-effect-demo-operator-non-claim-review-checklist.sh
 operator_non_claim_review_receipt_script=scripts/latticra-guarded-model1-effect-demo-operator-non-claim-review-receipt.sh
 operator_non_claim_review_receipt_guard_script=scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh
-candidate_packet_path=$PACKET
+candidate_packet_path=$(portable_path "$PACKET")
 candidate_packet_sha256_recorded=$packet_sha256_recorded
 candidate_packet_sha256=$packet_sha256
 operator_non_claim_review_checklist_output_valid=$checklist_output_valid

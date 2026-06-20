@@ -115,7 +115,7 @@
   "mass_ratio_recovery_claimed": 0,
   "measured_masses_used_in_kappa": 0,
   "measured_masses_used_in_law": 0,
-  "model3_evaluation_receipt_hash": "sha256:2f37bd49c8f66154df1ef19a08ab4bc8e5b41ccbeff54ffea01476a34d2430ab",
+  "model3_evaluation_receipt_hash": "sha256:c7814db0bd2ec8c667dcdbe985db09fd86f1414cd10c32c44a07a94093bce89b",
   "model3_evaluation_receipt_hash_generated": 1,
   "model3_pre_registration_receipt_hash": "sha256:c0955d5ba59a43ab381d0b33e54c9fd78dd7e803d91523e5d5119d183611a278",
   "model3_prediction_conclusion": "rejected_by_target_table",
@@ -192,7 +192,7 @@
   },
   "target_ratios_used_in_law": 0,
   "target_table_loaded": 1,
-  "target_table_reference": "/Users/chasebryan/Documents/Latticra/docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md",
+  "target_table_reference": "/home/ckbryan/Latticra/docs/LATTICRA_IDENTITY_REPLAY_IMPEDANCE_CANDIDATE_PARTICLE_TABLE.md",
   "topological_amplification_improved_range_but_failed_targets": 1,
   "topological_amplification_trace_emitted": 1
 }
