@@ -10,7 +10,7 @@ import json
 from decimal import Decimal, getcontext
 from typing import Iterable
 
-from latticra_identity_replay_model1_evaluate import decimal_to_text
+from latticra_receipt_utils import decimal_to_text
 from latticra_identity_replay_model2_preregistration import (
     SCALE_LEVELS,
     build_receipt as build_model2_pre_registration,

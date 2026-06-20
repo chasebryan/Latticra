@@ -11,10 +11,10 @@ from decimal import Decimal, getcontext
 from pathlib import Path
 from typing import Iterable
 
+from latticra_receipt_utils import decimal_to_text, path_reference
 from latticra_identity_replay_model1_evaluate import (
     EPSILON_RELATIVE,
     compare_predictions,
-    decimal_to_text,
     parse_target_table,
 )
 
