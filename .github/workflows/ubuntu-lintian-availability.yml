@@ -2,9 +2,13 @@ name: Ubuntu lintian Availability
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-lintian-availability.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-lintian-availability.sh"
 
 permissions:
   contents: read

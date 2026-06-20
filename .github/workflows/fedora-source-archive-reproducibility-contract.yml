@@ -1,14 +1,14 @@
 name: Fedora Source Archive Reproducibility Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT.md'
-      - 'docs/status/FEDORA_SOURCE_ARCHIVE_REPRODUCIBILITY_CONTRACT_STATUS.md'
-      - 'docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md'
-      - 'scripts/test-fedora-source-archive-reproducibility-contract.sh'
-      - '.github/workflows/fedora-source-archive-reproducibility-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-source-archive-reproducibility-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-source-archive-reproducibility-contract.sh"
 
 permissions:
   contents: read

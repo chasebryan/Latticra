@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Live Runner Acceptance Denial Disposition Review Con
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-acceptance-denial-disposition-review-contract.sh"
 
 permissions:
   contents: read

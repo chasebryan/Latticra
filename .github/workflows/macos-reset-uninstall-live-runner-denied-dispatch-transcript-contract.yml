@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Live Runner Denied Dispatch Transcript Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-runner-denied-dispatch-transcript-contract.sh"
 
 permissions:
   contents: read

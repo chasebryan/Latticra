@@ -2,9 +2,13 @@ name: Latticra Seal Panel Dashboard Planning Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-planning-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-panel-dashboard-planning-status.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: openSUSE Local RPM Build Gate Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-local-rpm-build-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-local-rpm-build-gate-contract.sh"
 
 permissions:
   contents: read

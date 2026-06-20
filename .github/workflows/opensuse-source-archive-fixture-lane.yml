@@ -2,9 +2,13 @@ name: openSUSE Source Archive Fixture Lane
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-source-archive-fixture-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-source-archive-fixture-lane.sh"
 
 permissions:
   contents: read

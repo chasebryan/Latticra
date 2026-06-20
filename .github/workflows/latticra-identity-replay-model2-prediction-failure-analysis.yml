@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-2 Prediction Failure Analysis
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model2-prediction-failure-analysis.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model2-prediction-failure-analysis.sh"
 
 permissions:
   contents: read

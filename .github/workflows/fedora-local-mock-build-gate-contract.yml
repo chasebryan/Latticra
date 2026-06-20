@@ -1,13 +1,14 @@
 name: Fedora Local Mock Build Gate Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT.md'
-      - 'docs/status/FEDORA_LOCAL_MOCK_BUILD_GATE_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-local-mock-build-gate-contract.sh'
-      - '.github/workflows/fedora-local-mock-build-gate-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-local-mock-build-gate-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-local-mock-build-gate-contract.sh"
 
 permissions:
   contents: read

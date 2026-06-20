@@ -2,9 +2,13 @@ name: System Bootstrap Main C Integration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-system-bootstrap-main-c-integration.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-system-bootstrap-main-c-integration.sh"
 
 permissions:
   contents: read

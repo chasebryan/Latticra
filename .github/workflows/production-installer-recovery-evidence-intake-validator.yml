@@ -1,14 +1,16 @@
 name: Production Installer Recovery Evidence Intake Validator
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RECOVERY_EVIDENCE_INTAKE_VALIDATOR_STATUS.md'
-      - 'scripts/production-installer-recovery-evidence-intake.sh'
-      - 'scripts/test-production-installer-recovery-evidence-intake-validator-contract.sh'
-      - '.github/workflows/production-installer-recovery-evidence-intake-validator.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-recovery-evidence-intake.sh"
+      - "scripts/test-production-installer-recovery-evidence-intake-validator-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-recovery-evidence-intake.sh"
+      - "scripts/test-production-installer-recovery-evidence-intake-validator-contract.sh"
 
 permissions:
   contents: read

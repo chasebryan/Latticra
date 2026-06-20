@@ -1,8 +1,16 @@
 name: Kernel runtime entry process return observation view
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-process-return-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-process-return-observation-view.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-process-return-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-process-return-observation-view.sh"
 
 permissions:
   contents: read

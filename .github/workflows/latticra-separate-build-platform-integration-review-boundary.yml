@@ -2,9 +2,13 @@ name: Latticra Separate Build Platform Integration Review Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-separate-build-platform-integration-review-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-separate-build-platform-integration-review-boundary.sh"
 
 permissions:
   contents: read

@@ -1,16 +1,14 @@
 name: openSUSE RPM Validation Promotion Blocker Matrix Contract
 
 on:
-  push:
-    paths:
-      - 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
-      - 'scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh'
-      - '.github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml'
   pull_request:
     paths:
-      - 'docs/OPENSUSE_RPM_VALIDATION_PROMOTION_BLOCKER_MATRIX_CONTRACT.md'
-      - 'scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh'
-      - '.github/workflows/opensuse-rpm-validation-promotion-blocker-matrix-contract.yml'
+      - "scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-opensuse-rpm-validation-promotion-blocker-matrix-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Fedora Live Snapshot Adapter
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-live-snapshot-adapter-docs.sh"
+      - "scripts/test-fedora-live-snapshot-adapter.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-live-snapshot-adapter-docs.sh"
+      - "scripts/test-fedora-live-snapshot-adapter.sh"
 
 permissions:
   contents: read

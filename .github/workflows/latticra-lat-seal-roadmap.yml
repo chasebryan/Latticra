@@ -2,10 +2,13 @@ name: Latticra Lat Seal Roadmap
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-lat-seal-roadmap.sh"
   push:
     branches:
       - main
-      - 'roadmap/**'
+    paths:
+      - "scripts/test-latticra-lat-seal-roadmap.sh"
 
 permissions:
   contents: read

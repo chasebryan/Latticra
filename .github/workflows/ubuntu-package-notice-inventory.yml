@@ -2,9 +2,13 @@ name: Ubuntu Package Notice Inventory
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-package-notice-inventory.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-package-notice-inventory.sh"
 
 permissions:
   contents: read

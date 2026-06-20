@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-2 Hierarchical Substrate Pre-Registration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model2-hierarchical-substrate-preregistration.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model2-hierarchical-substrate-preregistration.sh"
 
 permissions:
   contents: read

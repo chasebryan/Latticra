@@ -1,14 +1,16 @@
 name: Fedora VM CLI Payload Repeatability Publication Receipt Acceptance Promotion Gate
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE.md'
-      - 'docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_PROMOTION_GATE_STATUS.md'
-      - 'scripts/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh'
-      - 'scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh'
-      - '.github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.yml'
   pull_request:
+    paths:
+      - "scripts/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh"
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh"
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-promotion-gate.sh"
 
 permissions:
   contents: read

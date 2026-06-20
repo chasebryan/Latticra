@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance L1 Constrained Substrate Search
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l1-constrained-substrate-search.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l1-constrained-substrate-search.sh"
 
 permissions:
   contents: read

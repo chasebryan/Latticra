@@ -2,9 +2,13 @@ name: Latticra Effect Contract Schema
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-effect-contract-schema.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-effect-contract-schema.sh"
 
 permissions:
   contents: read

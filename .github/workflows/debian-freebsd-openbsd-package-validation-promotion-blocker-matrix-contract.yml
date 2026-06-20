@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Validation Promotion Blocker Matrix Contrac
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-validation-promotion-blocker-matrix-contract.sh"
 
 permissions:
   contents: read

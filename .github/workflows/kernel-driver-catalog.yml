@@ -2,9 +2,15 @@ name: Kernel driver catalog
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-driver-catalog-report-runner.sh"
+      - "scripts/test-kernel-driver-catalog.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-driver-catalog-report-runner.sh"
+      - "scripts/test-kernel-driver-catalog.sh"
 
 permissions:
   contents: read

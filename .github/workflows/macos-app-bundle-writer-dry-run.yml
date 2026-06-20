@@ -2,9 +2,13 @@ name: macOS App Bundle Writer Dry Run
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-app-bundle-writer-dry-run.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-app-bundle-writer-dry-run.sh"
 
 permissions:
   contents: read

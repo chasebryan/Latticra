@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-1 Bounded Range Falsifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model1-bounded-range-falsifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model1-bounded-range-falsifier.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Nadia Prompt Evaluation Result Disposition Contract Stage 33
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nadia-prompt-evaluation-result-disposition-contract-stage-33.sh"
 
 permissions:
   contents: read

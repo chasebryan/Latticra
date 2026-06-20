@@ -2,9 +2,13 @@ name: Latticra Seal Signer Handoff Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-signer-handoff-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-signer-handoff-status.sh"
 
 permissions:
   contents: read

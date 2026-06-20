@@ -2,9 +2,15 @@ name: Kernel runtime entry address space view
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-address-space-view.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-address-space-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-address-space-view.sh"
 
 permissions:
   contents: read

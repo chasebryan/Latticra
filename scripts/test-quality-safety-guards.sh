@@ -324,6 +324,34 @@ check_workflow() {
     fail "$workflow must run on pull_request"
   grep -Eq '^[[:space:]]*push:' "$workflow" ||
     fail "$workflow must run on push"
+  case "$workflow" in
+    .github/workflows/codeql.yml|.github/workflows/quality.yml|.github/workflows/quality-safety-guards.yml)
+      ;;
+    *)
+      trigger_path_count="$(awk '
+        /^  pull_request:[[:space:]]*$/ {
+          trigger = "pull_request"
+          next
+        }
+        /^  push:[[:space:]]*$/ {
+          trigger = "push"
+          next
+        }
+        /^  [A-Za-z0-9_-]+:[[:space:]]*$/ {
+          trigger = ""
+          next
+        }
+        trigger != "" && /^    paths:[[:space:]]*$/ {
+          seen[trigger] = 1
+        }
+        END {
+          print (seen["pull_request"] ? 1 : 0) + (seen["push"] ? 1 : 0)
+        }
+      ' "$workflow")"
+      [ "$trigger_path_count" -eq 2 ] ||
+        fail "$workflow must path-scope pull_request and push triggers to avoid repository-wide notification fan-out"
+      ;;
+  esac
   grep -q '^permissions:' "$workflow" ||
     fail "$workflow must declare explicit permissions"
   grep -q '^  contents: read' "$workflow" ||
@@ -1381,6 +1409,8 @@ require_contains "latticra-guarded-model1-effect-demonstration-operator-non-clai
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-operator-non-claim-review-receipt.sh" "Makefile"
 require_contains "latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate:" "Makefile"
 require_contains "sh ./scripts/test-latticra-guarded-model1-effect-demonstration-evidence-acceptance-preflight-denial-gate.sh" "Makefile"
+require_contains "latticra-netplane-central-hub-intake:" "Makefile"
+require_contains "sh ./scripts/test-latticra-netplane-central-hub-intake.sh" "Makefile"
 require_contains "latticra-computational-proof-foundation:" "Makefile"
 require_contains "sh ./scripts/test-latticra-computational-proof-foundation.sh" "Makefile"
 require_contains "latticra-computational-math-physics-evaluation:" "Makefile"

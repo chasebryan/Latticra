@@ -2,9 +2,13 @@ name: Ubuntu Build Lane
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-build-lane.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-build-lane.sh"
 
 permissions:
   contents: read

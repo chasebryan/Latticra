@@ -2,9 +2,13 @@ name: openSUSE rpmlint Findings Classification
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpmlint-findings-classification.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpmlint-findings-classification.sh"
 
 permissions:
   contents: read

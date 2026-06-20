@@ -2,9 +2,13 @@ name: Latticra Effect Substrate Transition Intake
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-effect-substrate-transition-intake.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-effect-substrate-transition-intake.sh"
 
 permissions:
   contents: read

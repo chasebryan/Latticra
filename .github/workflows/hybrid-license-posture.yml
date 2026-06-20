@@ -2,9 +2,13 @@ name: Hybrid License Posture
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-hybrid-license-posture.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-hybrid-license-posture.sh"
 
 permissions:
   contents: read

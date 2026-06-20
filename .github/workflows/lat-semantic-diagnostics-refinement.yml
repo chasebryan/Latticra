@@ -2,9 +2,15 @@ name: Lat Semantic Diagnostics Refinement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-semantic-diagnostics-refinement.sh"
+      - "scripts/test-lat-semantic-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-semantic-diagnostics-refinement.sh"
+      - "scripts/test-lat-semantic-validation.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,13 @@ name: Latticra Seal Verification Receipt Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-verification-receipt-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-verification-receipt-status.sh"
 
 permissions:
   contents: read

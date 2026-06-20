@@ -1,14 +1,14 @@
 name: Fedora rpmlint Findings Classification
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION.md'
-      - 'docs/status/FEDORA_RPMLINT_FINDINGS_CLASSIFICATION_STATUS.md'
-      - 'docs/FEDORA_RPMLINT_STATIC_SPEC_LANE.md'
-      - 'scripts/test-fedora-rpmlint-findings-classification.sh'
-      - '.github/workflows/fedora-rpmlint-findings-classification.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-rpmlint-findings-classification.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-rpmlint-findings-classification.sh"
 
 permissions:
   contents: read

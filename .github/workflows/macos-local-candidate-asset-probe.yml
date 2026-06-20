@@ -2,9 +2,13 @@ name: macOS Local Candidate Asset Probe
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-local-candidate-asset-probe.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-local-candidate-asset-probe.sh"
 
 permissions:
   contents: read

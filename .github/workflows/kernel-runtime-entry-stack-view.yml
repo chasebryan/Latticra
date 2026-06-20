@@ -2,9 +2,15 @@ name: Kernel runtime entry stack view
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-stack-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-stack-view.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-stack-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-stack-view.sh"
 
 permissions:
   contents: read

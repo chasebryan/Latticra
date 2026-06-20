@@ -1,14 +1,16 @@
 name: Production Installer Release Signing Identity Reference
 
 on:
-  push:
-    paths:
-      - 'docs/PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_CONTRACT.md'
-      - 'docs/status/PRODUCTION_INSTALLER_RELEASE_SIGNING_IDENTITY_REFERENCE_STATUS.md'
-      - 'scripts/production-installer-release-signing-identity-reference.sh'
-      - 'scripts/test-production-installer-release-signing-identity-reference-contract.sh'
-      - '.github/workflows/production-installer-release-signing-identity-reference.yml'
   pull_request:
+    paths:
+      - "scripts/production-installer-release-signing-identity-reference.sh"
+      - "scripts/test-production-installer-release-signing-identity-reference-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/production-installer-release-signing-identity-reference.sh"
+      - "scripts/test-production-installer-release-signing-identity-reference-contract.sh"
 
 permissions:
   contents: read

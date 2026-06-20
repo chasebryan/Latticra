@@ -2,9 +2,15 @@ name: Fedora Manual Host RC Decision Classifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-manual-host-rc-decision-classifier-docs.sh"
+      - "scripts/test-fedora-manual-host-rc-decision-classifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-manual-host-rc-decision-classifier-docs.sh"
+      - "scripts/test-fedora-manual-host-rc-decision-classifier.sh"
 
 permissions:
   contents: read

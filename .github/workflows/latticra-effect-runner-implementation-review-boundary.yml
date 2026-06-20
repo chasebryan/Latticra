@@ -2,9 +2,13 @@ name: Latticra Effect Runner Implementation Review Boundary
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-effect-runner-implementation-review-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-effect-runner-implementation-review-boundary.sh"
 
 permissions:
   contents: read

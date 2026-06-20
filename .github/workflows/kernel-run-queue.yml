@@ -2,9 +2,15 @@ name: Kernel run queue
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-run-queue-report-runner.sh"
+      - "scripts/test-kernel-run-queue.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-run-queue-report-runner.sh"
+      - "scripts/test-kernel-run-queue.sh"
 
 permissions:
   contents: read

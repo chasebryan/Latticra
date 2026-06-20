@@ -2,9 +2,15 @@ name: Kernel runtime entry syscall dispatch view
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-dispatch-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-dispatch-view.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-syscall-dispatch-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-syscall-dispatch-view.sh"
 
 permissions:
   contents: read

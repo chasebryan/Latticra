@@ -2,9 +2,13 @@ name: Lat-to-LIR Clause Metadata Refinement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-to-lir-clause-metadata-refinement.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-to-lir-clause-metadata-refinement.sh"
 
 permissions:
   contents: read

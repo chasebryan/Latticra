@@ -2,9 +2,15 @@ name: Lat Pipeline Diagnostic Main Test Audit
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh"
+      - "scripts/test-lat-pipeline.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-pipeline-diagnostic-main-test-integration-audit.sh"
+      - "scripts/test-lat-pipeline.sh"
 
 permissions:
   contents: read

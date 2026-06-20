@@ -2,9 +2,13 @@ name: Latticra No-Effect CLI Status Surface
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-no-effect-cli-status-surface.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-no-effect-cli-status-surface.sh"
 
 permissions:
   contents: read

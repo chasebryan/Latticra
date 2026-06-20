@@ -1,8 +1,16 @@
 name: Kernel runtime entry recovery audit review disposition review closeout observation view
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-observation-view.sh"
 
 permissions:
   contents: read
