@@ -262,6 +262,13 @@ BOOT_SEED_TIMEOUT ?= 20
 
 quality: quality-worktree quality-safety-guards quality-defensive-threat-model quality-security-standards seal-policy-denials quality-rust-installer quality-panel-installer quality-installer-readiness quality-packaging-static quality-nadia quality-c-foundation quality-macos quality-status
 
+# Convenience: builds the C++/C latticra binary exercising the authority layer and receipt emission (MVP)
+latticra:
+	./scripts/build-latticra.sh
+
+latticra-authority-mvp-test:
+	sh ./scripts/test-latticra-authority-mvp.sh
+
 quality-worktree: quality-worktree-stability
 	git diff --check
 
@@ -605,6 +612,7 @@ quality-c-foundation:
 	sh ./scripts/test-latticra-console-foundation.sh
 	sh ./scripts/test-cpp-authority-layer.sh
 	sh ./scripts/test-cpp-authority-layer-build-policy.sh
+	sh ./scripts/test-latticra-authority-mvp.sh
 	sh ./scripts/test-nucleus-task-execution.sh
 	sh ./scripts/test-kernel-timer-source.sh
 	sh ./scripts/test-kernel-timer-source-report-runner.sh
