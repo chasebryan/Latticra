@@ -142,7 +142,7 @@ output="$(sh "$disposition_script" --packet "$valid_fixture")"
 require_output_contains "$output" 'LATTICRA GUARDED MODEL1 EFFECT DEMONSTRATION EVIDENCE REVIEW DISPOSITION GATE'
 require_output_contains "$output" 'evidence_review_disposition_gate_status=ok'
 require_output_contains "$output" "candidate_packet_path=fixtures/latticra-model1-demo-evidence/valid-denied.packet"
-case "$output" in *candidate_packet_path=/ * ) fail "candidate_packet_path must be portable relative" ;; esac
+case "$output" in *candidate_packet_path=/* ) fail "candidate_packet_path must be portable relative" ;; esac
 require_output_contains "$output" 'candidate_packet_path=fixtures/latticra-model1-demo-evidence/valid-denied.packet'
 case "$output" in *'candidate_packet_path=/'* ) fail 'candidate_packet_path must be portable relative' ;; esac
 require_output_contains "$output" 'latticra_guarded_model1_effect_demo_evidence_review_disposition_gate_present=1'
