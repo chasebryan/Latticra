@@ -17,6 +17,20 @@ on:
       - 'scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh'
       - '.github/workflows/latticra-v1-release-readiness-gate.yml'
   pull_request:
+    paths:
+      - 'docs/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_CONTRACT.md'
+      - 'docs/status/LATTICRA_V1_0_0_RELEASE_READINESS_GATE_STATUS.md'
+      - 'docs/LATTICRA_V1_0_0_EVIDENCE_BLOCKER_AUDIT_CONTRACT.md'
+      - 'docs/status/LATTICRA_V1_0_0_EVIDENCE_BLOCKER_AUDIT_STATUS.md'
+      - 'docs/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_CONTRACT.md'
+      - 'docs/status/LATTICRA_V1_0_0_PRODUCT_COMPLETION_BLOCKER_AUDIT_STATUS.md'
+      - 'scripts/latticra-v1-release-readiness-gate.sh'
+      - 'scripts/test-latticra-v1-release-readiness-gate-contract.sh'
+      - 'scripts/latticra-v1-evidence-blocker-audit.sh'
+      - 'scripts/test-latticra-v1-evidence-blocker-audit-contract.sh'
+      - 'scripts/latticra-v1-product-completion-blocker-audit.sh'
+      - 'scripts/test-latticra-v1-product-completion-blocker-audit-contract.sh'
+      - '.github/workflows/latticra-v1-release-readiness-gate.yml'
 
 permissions:
   contents: read
