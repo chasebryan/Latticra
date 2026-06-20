@@ -147,7 +147,7 @@ require_contains 'not update-state evidence' "$status"
 
 require_contains 'LATTICRA PANEL SIGNED UPDATER STATE FIXTURE CONTRACT' "$script"
 require_contains 'signed_updater_state_fixture_contract_status=$CONTRACT_STATUS' "$script"
-require_contains 'state_fixture_path=$FIXTURE_RELATIVE' "$script"
+require_contains 'state_fixture_path=$(portable_path "$FIXTURE_RELATIVE")' "$script"
 require_contains 'signed_updater_state_fixture_contract_present=1' "$script"
 require_contains 'state_catalog_present=1' "$script"
 require_contains 'current_update_state=blocked' "$script"
