@@ -296,13 +296,20 @@ if [ "$SIGNING_IDENTITY_REFERENCE_PRESENT" != "1" ] ||
   add_blocker 'signing_identity_reference_missing_or_invalid'
 fi
 
+RELEASE_ARTIFACT_PROMOTION_GATE_PASSED=0
+RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_PASSED=0
+if [ "$RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED" = "1" ] &&
+   [ "$RELEASE_ARTIFACT_PROMOTION_GATE_PASSED" = "1" ]; then
+  RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_PASSED=1
+fi
+
 cat <<REPORT
 LATTICRA PRODUCTION INSTALLER RELEASE ARTIFACT CANDIDATE PREFLIGHT
 preflight_status=ok
 release_artifact_candidate_preflight_present=1
 release_artifact_candidate_preflight_mode=no-effect-build-signing-readiness
 release_artifact_candidate_preflight_no_effect=1
-release_artifact_candidate_preflight_passed=$RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED
+release_artifact_candidate_preflight_passed=$RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_PASSED
 release_artifact_candidate_inputs_satisfied=$RELEASE_ARTIFACT_CANDIDATE_INPUTS_SATISFIED
 release_artifact_candidate_blocker_count=$BLOCKER_COUNT
 release_artifact_candidate_blockers=$BLOCKERS
