@@ -2,9 +2,15 @@ name: Runtime Boundary Refinement Implementation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-runtime-boundary-refinement-implementation.sh"
+      - "scripts/test-runtime-boundary.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-runtime-boundary-refinement-implementation.sh"
+      - "scripts/test-runtime-boundary.sh"
 
 permissions:
   contents: read

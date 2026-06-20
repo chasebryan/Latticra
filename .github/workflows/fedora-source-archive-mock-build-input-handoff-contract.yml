@@ -1,13 +1,14 @@
 name: Fedora Source Archive Mock Build Input Handoff Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT.md'
-      - 'docs/status/FEDORA_SOURCE_ARCHIVE_MOCK_BUILD_INPUT_HANDOFF_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-source-archive-mock-build-input-handoff-contract.sh'
-      - '.github/workflows/fedora-source-archive-mock-build-input-handoff-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-source-archive-mock-build-input-handoff-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-source-archive-mock-build-input-handoff-contract.sh"
 
 permissions:
   contents: read

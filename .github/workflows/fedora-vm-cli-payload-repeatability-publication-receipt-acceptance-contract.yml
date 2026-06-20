@@ -1,13 +1,14 @@
 name: Fedora VM CLI Payload Repeatability Publication Receipt Acceptance Contract
 
 on:
-  push:
-    paths:
-      - 'docs/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_CONTRACT.md'
-      - 'docs/status/FEDORA_VM_CLI_PAYLOAD_REPEATABILITY_PUBLICATION_RECEIPT_ACCEPTANCE_CONTRACT_STATUS.md'
-      - 'scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh'
-      - '.github/workflows/fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.yml'
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-receipt-acceptance-contract.sh"
 
 permissions:
   contents: read

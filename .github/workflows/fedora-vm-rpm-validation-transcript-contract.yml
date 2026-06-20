@@ -2,9 +2,13 @@ name: Fedora VM RPM Validation Transcript Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-transcript-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-disposable-vm-local-rpm-validation-transcript-contract.sh"
 
 permissions:
   contents: read

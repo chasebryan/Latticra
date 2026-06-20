@@ -3,34 +3,16 @@ name: Supply Chain Security Baseline
 on:
   pull_request:
     paths:
-      - "SECURITY.md"
-      - "Makefile"
-      - "docs/SUPPLY_CHAIN_SECURITY_BASELINE.md"
-      - "docs/FOUNDATION_INDEX.md"
-      - "docs/security.html"
-      - "docs/status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"
-      - "docs/status/README.md"
-      - "docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md"
-      - "scripts/test-supply-chain-security-baseline.sh"
-      - "scripts/test-quality-safety-guards.sh"
       - "scripts/test-fedora-source-archive-fixture-lane.sh"
-      - ".github/workflows/supply-chain-security-baseline.yml"
+      - "scripts/test-quality-safety-guards.sh"
+      - "scripts/test-supply-chain-security-baseline.sh"
   push:
     branches:
       - main
     paths:
-      - "SECURITY.md"
-      - "Makefile"
-      - "docs/SUPPLY_CHAIN_SECURITY_BASELINE.md"
-      - "docs/FOUNDATION_INDEX.md"
-      - "docs/security.html"
-      - "docs/status/SUPPLY_CHAIN_SECURITY_BASELINE_STATUS.md"
-      - "docs/status/README.md"
-      - "docs/FEDORA_SOURCE_ARCHIVE_FIXTURE_LANE.md"
-      - "scripts/test-supply-chain-security-baseline.sh"
-      - "scripts/test-quality-safety-guards.sh"
       - "scripts/test-fedora-source-archive-fixture-lane.sh"
-      - ".github/workflows/supply-chain-security-baseline.yml"
+      - "scripts/test-quality-safety-guards.sh"
+      - "scripts/test-supply-chain-security-baseline.sh"
 
 permissions:
   contents: read

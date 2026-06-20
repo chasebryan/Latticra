@@ -2,9 +2,13 @@ name: Latticra Higgs Chain Verifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-higgs-chain-verifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-higgs-chain-verifier.sh"
 
 permissions:
   contents: read

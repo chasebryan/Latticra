@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance L3 Holdout Intake
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l3-external-blinded-holdout-intake.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l3-external-blinded-holdout-intake.sh"
 
 permissions:
   contents: read

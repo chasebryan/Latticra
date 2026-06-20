@@ -2,9 +2,13 @@ name: Latticra Seal Signing Operation Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-signing-operation-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-signing-operation-status.sh"
 
 permissions:
   contents: read

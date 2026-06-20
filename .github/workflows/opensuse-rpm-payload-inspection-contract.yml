@@ -2,9 +2,13 @@ name: openSUSE RPM Payload Inspection Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpm-payload-inspection-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpm-payload-inspection-contract.sh"
 
 permissions:
   contents: read

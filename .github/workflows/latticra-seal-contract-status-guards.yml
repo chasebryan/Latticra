@@ -2,9 +2,23 @@ name: Latticra Seal Contract Status Guards
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-capability-metadata-implementation-plan.sh"
+      - "scripts/test-latticra-seal-core-blocked-cases-status.sh"
+      - "scripts/test-latticra-seal-replayed-request-case-contract.sh"
+      - "scripts/test-latticra-seal-signature-implementation-contract.sh"
+      - "scripts/test-latticra-seal-signed-manifest-contract.sh"
+      - "scripts/test-latticra-seal-unsigned-request-case-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-capability-metadata-implementation-plan.sh"
+      - "scripts/test-latticra-seal-core-blocked-cases-status.sh"
+      - "scripts/test-latticra-seal-replayed-request-case-contract.sh"
+      - "scripts/test-latticra-seal-signature-implementation-contract.sh"
+      - "scripts/test-latticra-seal-signed-manifest-contract.sh"
+      - "scripts/test-latticra-seal-unsigned-request-case-contract.sh"
 
 permissions:
   contents: read

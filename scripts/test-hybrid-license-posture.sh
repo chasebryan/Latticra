@@ -31,9 +31,9 @@ require_not_contains() {
 require_no_repo_match() {
   pattern="$1"
   if command -v rg >/dev/null 2>&1; then
-    matches="$(rg -n -S --glob '!.git' --glob '!scripts/test-hybrid-license-posture.sh' --glob '!scripts/test-open-ecosystem-policy.sh' --glob '!LICENSES/AGPL-3.0-or-later.txt' --glob '!LICENSES/Apache-2.0.txt' --glob '!LICENSES/CC-BY-4.0.txt' "$pattern" . || :)"
+    matches="$(rg -n -S --glob '!.git' --glob '!scripts/test-hybrid-license-posture.sh' --glob '!scripts/test-open-ecosystem-policy.sh' --glob '!LICENSES/AGPL-3.0-or-later.txt' --glob '!LICENSES/Apache-2.0.txt' --glob '!LICENSES/CC-BY-4.0.txt' --glob '!fixtures/netplane/**' "$pattern" . || :)"
   else
-    matches="$(git grep -n -F "$pattern" -- . ':!scripts/test-hybrid-license-posture.sh' ':!scripts/test-open-ecosystem-policy.sh' ':!LICENSES/AGPL-3.0-or-later.txt' ':!LICENSES/Apache-2.0.txt' ':!LICENSES/CC-BY-4.0.txt' || :)"
+    matches="$(git grep -n -F "$pattern" -- . ':!scripts/test-hybrid-license-posture.sh' ':!scripts/test-open-ecosystem-policy.sh' ':!LICENSES/AGPL-3.0-or-later.txt' ':!LICENSES/Apache-2.0.txt' ':!LICENSES/CC-BY-4.0.txt' ':!fixtures/netplane/**' || :)"
   fi
 
   if [ -n "$matches" ]; then

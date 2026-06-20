@@ -2,9 +2,13 @@ name: Debian FreeBSD OpenBSD Package Payload Inspection Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-debian-freebsd-openbsd-package-payload-inspection-contract.sh"
 
 permissions:
   contents: read

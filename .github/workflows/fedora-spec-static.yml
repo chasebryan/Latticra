@@ -2,9 +2,13 @@ name: Fedora Spec Static
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-spec-static.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-spec-static.sh"
 
 permissions:
   contents: read

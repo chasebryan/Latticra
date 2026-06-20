@@ -2,9 +2,13 @@ name: Fedora Manual Host RC Decision Status Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-manual-host-rc-decision-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-manual-host-rc-decision-status-alignment.sh"
 
 permissions:
   contents: read

@@ -1,8 +1,16 @@
 name: Kernel Runtime Entry Recovery Archive Gate Review Disposition Observation View
 
 on:
-  push:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-recovery-audit-review-disposition-review-closeout-archive-gate-review-disposition-observation-view.sh"
 
 permissions:
   contents: read

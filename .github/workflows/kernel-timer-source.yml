@@ -2,9 +2,15 @@ name: Kernel timer source
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-timer-source-report-runner.sh"
+      - "scripts/test-kernel-timer-source.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-timer-source-report-runner.sh"
+      - "scripts/test-kernel-timer-source.sh"
 
 permissions:
   contents: read

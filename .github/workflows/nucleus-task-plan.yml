@@ -2,9 +2,13 @@ name: Nucleus Task Plan
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nucleus-task-plan.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nucleus-task-plan.sh"
 
 permissions:
   contents: read

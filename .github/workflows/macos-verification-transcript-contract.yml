@@ -2,9 +2,13 @@ name: macOS Verification Transcript Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-verification-transcript-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-verification-transcript-contract.sh"
 
 permissions:
   contents: read

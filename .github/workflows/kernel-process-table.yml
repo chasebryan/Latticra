@@ -2,9 +2,15 @@ name: Kernel Process Table
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-process-table-report-runner.sh"
+      - "scripts/test-kernel-process-table.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-process-table-report-runner.sh"
+      - "scripts/test-kernel-process-table.sh"
 
 permissions:
   contents: read

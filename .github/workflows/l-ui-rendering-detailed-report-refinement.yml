@@ -2,9 +2,15 @@ name: L-UI Rendering Detailed Report Refinement
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-l-ui-rendering-detailed-report-refinement.sh"
+      - "scripts/test-l-ui-rendering.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-l-ui-rendering-detailed-report-refinement.sh"
+      - "scripts/test-l-ui-rendering.sh"
 
 permissions:
   contents: read

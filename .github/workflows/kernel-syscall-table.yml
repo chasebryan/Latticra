@@ -2,9 +2,15 @@ name: Kernel Syscall Table
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-syscall-table-report-runner.sh"
+      - "scripts/test-kernel-syscall-table.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-syscall-table-report-runner.sh"
+      - "scripts/test-kernel-syscall-table.sh"
 
 permissions:
   contents: read

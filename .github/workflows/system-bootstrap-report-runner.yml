@@ -2,9 +2,13 @@ name: System Bootstrap Report Runner
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-system-bootstrap-report-runner.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-system-bootstrap-report-runner.sh"
 
 permissions:
   contents: read

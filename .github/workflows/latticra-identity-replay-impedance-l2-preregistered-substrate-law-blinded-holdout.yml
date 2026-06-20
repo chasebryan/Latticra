@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Impedance L2 Preregistered Holdout
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l2-preregistered-substrate-law-blinded-holdout.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-impedance-l2-preregistered-substrate-law-blinded-holdout.sh"
 
 permissions:
   contents: read

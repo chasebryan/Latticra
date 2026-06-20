@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Live Execution Preflight Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-execution-preflight-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-execution-preflight-contract.sh"
 
 permissions:
   contents: read

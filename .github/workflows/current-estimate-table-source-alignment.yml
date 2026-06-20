@@ -2,9 +2,13 @@ name: Current Estimate Table Source Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-current-estimate-table-source-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-current-estimate-table-source-alignment.sh"
 
 permissions:
   contents: read

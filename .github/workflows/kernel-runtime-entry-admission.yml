@@ -2,9 +2,15 @@ name: Kernel runtime entry admission
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-runtime-entry-admission-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-admission.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-runtime-entry-admission-report-runner.sh"
+      - "scripts/test-kernel-runtime-entry-admission.sh"
 
 permissions:
   contents: read

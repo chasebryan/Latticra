@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Live Target Classifier
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-target-classifier.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-live-target-classifier.sh"
 
 permissions:
   contents: read

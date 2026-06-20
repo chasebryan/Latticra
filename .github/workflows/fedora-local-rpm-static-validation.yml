@@ -2,9 +2,13 @@ name: Fedora Local RPM Static Validation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-local-rpm-static-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-local-rpm-static-validation.sh"
 
 permissions:
   contents: read

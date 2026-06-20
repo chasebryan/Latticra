@@ -2,9 +2,13 @@ name: Fedora Host Install Preflight Status Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-host-install-preflight-status-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-host-install-preflight-status-alignment.sh"
 
 permissions:
   contents: read

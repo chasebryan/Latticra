@@ -2,9 +2,15 @@ name: Kernel scheduler run entry
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-kernel-scheduler-run-entry-report-runner.sh"
+      - "scripts/test-kernel-scheduler-run-entry.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-kernel-scheduler-run-entry-report-runner.sh"
+      - "scripts/test-kernel-scheduler-run-entry.sh"
 
 permissions:
   contents: read

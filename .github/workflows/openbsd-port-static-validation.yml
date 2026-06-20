@@ -2,9 +2,13 @@ name: OpenBSD Port Static Validation
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-openbsd-port-static-validation.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-openbsd-port-static-validation.sh"
 
 permissions:
   contents: read

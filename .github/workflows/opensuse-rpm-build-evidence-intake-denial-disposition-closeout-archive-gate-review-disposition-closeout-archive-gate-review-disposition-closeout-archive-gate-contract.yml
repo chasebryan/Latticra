@@ -2,9 +2,13 @@ name: openSUSE RPM Evidence Review Closeout Archive Gate
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-opensuse-rpm-build-evidence-intake-denial-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-review-disposition-closeout-archive-gate-contract.sh"
 
 permissions:
   contents: read

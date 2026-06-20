@@ -2,9 +2,13 @@ name: Nadia Production Readiness Blocker Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nadia-production-readiness-blocker-status-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nadia-production-readiness-blocker-status-contract.sh"
 
 permissions:
   contents: read

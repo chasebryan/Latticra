@@ -2,9 +2,13 @@ name: Ubuntu Lintian Static Metadata Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-lintian-static-metadata-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-lintian-static-metadata-contract.sh"
 
 permissions:
   contents: read

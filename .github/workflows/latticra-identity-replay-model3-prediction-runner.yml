@@ -2,9 +2,13 @@ name: Latticra Identity-Replay Model-3 Prediction Runner
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-prediction-runner.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-identity-replay-model3-prediction-runner.sh"
 
 permissions:
   contents: read

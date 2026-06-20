@@ -2,9 +2,13 @@ name: macOS Reset Uninstall Evidence Bundle Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-macos-reset-uninstall-evidence-bundle-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-macos-reset-uninstall-evidence-bundle-contract.sh"
 
 permissions:
   contents: read

@@ -2,9 +2,15 @@ name: Nucleus Task No-Effect Report Alignment
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-nucleus-task-execution.sh"
+      - "scripts/test-nucleus-task-no-effect-report-alignment.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-nucleus-task-execution.sh"
+      - "scripts/test-nucleus-task-no-effect-report-alignment.sh"
 
 permissions:
   contents: read

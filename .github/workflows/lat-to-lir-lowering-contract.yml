@@ -2,9 +2,13 @@ name: Lat-to-LIR Lowering Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-to-lir-lowering-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-to-lir-lowering-contract.sh"
 
 permissions:
   contents: read

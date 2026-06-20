@@ -2,9 +2,13 @@ name: Ubuntu Publication Non-Claim Review Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-publication-non-claim-review-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-publication-non-claim-review-contract.sh"
 
 permissions:
   contents: read

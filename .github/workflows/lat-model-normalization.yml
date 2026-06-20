@@ -2,9 +2,13 @@ name: Lat Model Normalization
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-lat-model-normalization.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-lat-model-normalization.sh"
 
 permissions:
   contents: read

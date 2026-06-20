@@ -2,9 +2,13 @@ name: Fedora VM CLI Payload Repeatability Publication Review Template
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-fedora-vm-cli-payload-repeatability-publication-review-template.sh"
 
 permissions:
   contents: read

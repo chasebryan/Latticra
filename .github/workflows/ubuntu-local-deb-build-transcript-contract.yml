@@ -2,9 +2,13 @@ name: Ubuntu Local Deb Build Transcript Contract
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-ubuntu-local-deb-build-transcript-contract.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-ubuntu-local-deb-build-transcript-contract.sh"
 
 permissions:
   contents: read

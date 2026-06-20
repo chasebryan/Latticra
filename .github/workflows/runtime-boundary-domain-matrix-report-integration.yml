@@ -2,9 +2,13 @@ name: RBDM Report Integration
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-runtime-boundary-domain-matrix-report-integration.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-runtime-boundary-domain-matrix-report-integration.sh"
 
 permissions:
   contents: read

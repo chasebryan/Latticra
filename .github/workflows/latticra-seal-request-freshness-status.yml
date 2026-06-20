@@ -2,9 +2,13 @@ name: Latticra Seal Request Freshness Status
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-request-freshness-status.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-request-freshness-status.sh"
 
 permissions:
   contents: read

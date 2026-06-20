@@ -2,9 +2,13 @@ name: Latticra Seal Local Capability Registry Schema Surface
 
 on:
   pull_request:
+    paths:
+      - "scripts/test-latticra-seal-local-capability-registry-schema-surface.sh"
   push:
     branches:
       - main
+    paths:
+      - "scripts/test-latticra-seal-local-capability-registry-schema-surface.sh"
 
 permissions:
   contents: read
