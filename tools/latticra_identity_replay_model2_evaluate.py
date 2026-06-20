@@ -5,16 +5,17 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from decimal import Decimal, getcontext
 from pathlib import Path
 from typing import Iterable
 
-from latticra_receipt_utils import decimal_to_text, path_reference
+from latticra_receipt_utils import canonical_receipt_hash, decimal_to_text, path_reference, receipt_hash as make_receipt_hash
+
 from latticra_identity_replay_model1_evaluate import (
     EPSILON_RELATIVE,
     compare_predictions,
+    decimal_to_text,
     parse_target_table,
 )
 
@@ -23,16 +24,17 @@ getcontext().prec = 80
 
 
 def receipt_hash(payload: dict[str, object]) -> str:
-    canonical_payload = dict(payload)
-    canonical_payload.pop("model2_prediction_receipt_hash", None)
-    canonical_payload.pop("model2_prediction_receipt_hash_generated", None)
-    canonical = json.dumps(canonical_payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return make_receipt_hash(
+        payload,
+        exclude_keys=(
+            "model2_prediction_receipt_hash",
+            "model2_prediction_receipt_hash_generated",
+        ),
+    )
 
 
 def evaluation_hash(payload: dict[str, object]) -> str:
-    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return canonical_receipt_hash(payload)
 
 
 def load_prediction(path: Path) -> dict[str, object]:
