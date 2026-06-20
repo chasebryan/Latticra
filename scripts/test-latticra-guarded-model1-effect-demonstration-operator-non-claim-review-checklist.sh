@@ -147,6 +147,8 @@ expected_sha="$(sha256_file "$valid_fixture")"
 output="$(sh "$checklist_script" --packet "$valid_fixture")"
 require_output_contains "$output" 'LATTICRA GUARDED MODEL1 EFFECT DEMONSTRATION OPERATOR NON CLAIM REVIEW CHECKLIST'
 require_output_contains "$output" 'operator_non_claim_review_checklist_status=ok'
+require_output_contains "$output" "candidate_packet_path=fixtures/latticra-model1-demo-evidence/valid-denied.packet"
+case "$output" in *candidate_packet_path=/* ) fail "candidate_packet_path must be portable relative" ;; esac
 require_output_contains "$output" 'candidate_packet_path=fixtures/latticra-model1-demo-evidence/valid-denied.packet'
 case "$output" in *'candidate_packet_path=/'* ) fail 'candidate_packet_path must be portable relative' ;; esac
 require_output_contains "$output" 'latticra_guarded_model1_effect_demo_operator_non_claim_review_checklist_present=1'
