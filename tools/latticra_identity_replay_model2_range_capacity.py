@@ -5,29 +5,26 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from decimal import Decimal, getcontext
 from pathlib import Path
 from typing import Iterable
 
-from latticra_identity_replay_model1_evaluate import decimal_to_text, parse_target_table
+from latticra_receipt_utils import canonical_receipt_hash, decimal_to_text, path_reference
+from latticra_identity_replay_model1_evaluate import parse_target_table
 
 
 getcontext().prec = 80
 
 
 def receipt_hash(payload: dict[str, object]) -> str:
-    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return canonical_receipt_hash(payload)
 
 
 def pre_registration_hash(payload: dict[str, object]) -> str:
-    canonical_payload = dict(payload)
-    canonical_payload.pop("model2_pre_registration_receipt_hash", None)
-    canonical_payload.pop("model2_pre_registration_receipt_hash_generated", None)
-    canonical = json.dumps(canonical_payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return canonical_receipt_hash(  # exclude the hash fields for stable computation
+        {k: v for k, v in payload.items() if k not in ("model2_pre_registration_receipt_hash", "model2_pre_registration_receipt_hash_generated")}
+    )
 
 
 def load_pre_registration(path: Path) -> dict[str, object]:
