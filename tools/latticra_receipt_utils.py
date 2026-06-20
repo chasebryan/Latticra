@@ -74,6 +74,7 @@ def file_sha256(path: Path | str) -> str:
 
 def _self_test() -> int:
     from pathlib import Path as _P
+
     r1 = path_reference("README.md")
     r2 = path_reference(_P("tools/latticra_receipt_utils.py"))
     r3 = path_reference("/tmp/not-in-repo-xyz")
