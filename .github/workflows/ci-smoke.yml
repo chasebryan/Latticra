@@ -1,0 +1,41 @@
+name: CI Smoke
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/ci-smoke.yml"
+      - "Makefile"
+      - "include/**"
+      - "seal/**"
+      - "src/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ci-smoke.yml"
+      - "Makefile"
+      - "include/**"
+      - "seal/**"
+      - "src/**"
+
+permissions:
+  contents: read
+
+jobs:
+  seal-smoke:
+    name: Seal Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Build
+        run: make seal-cli
+
+      - name: Run seal check
+        run: ./build/latticra-seal check
+
+      - name: Run hybrid envelope self-check
+        run: ./build/latticra-seal hybrid
