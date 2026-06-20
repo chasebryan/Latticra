@@ -5,13 +5,12 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from decimal import Decimal, getcontext
 from pathlib import Path
 from typing import Iterable
 
-from latticra_identity_replay_model1_evaluate import decimal_to_text
+from latticra_receipt_utils import canonical_receipt_hash, decimal_to_text, path_reference
 from latticra_identity_replay_model3_preregistration import (
     build_receipt as build_model3_pre_registration,
 )
@@ -32,11 +31,9 @@ PARAMETER_COUNT = 6
 
 
 def receipt_hash(payload: dict[str, object]) -> str:
-    canonical_payload = dict(payload)
-    canonical_payload.pop("refined_model3_pre_registration_receipt_hash", None)
-    canonical_payload.pop("refined_model3_pre_registration_receipt_hash_generated", None)
-    canonical = json.dumps(canonical_payload, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return canonical_receipt_hash(
+        {k: v for k, v in payload.items() if k not in ("refined_model3_pre_registration_receipt_hash", "refined_model3_pre_registration_receipt_hash_generated")}
+    )
 
 
 def load_gate(path: Path) -> dict[str, object]:
