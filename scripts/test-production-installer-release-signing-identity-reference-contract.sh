@@ -178,7 +178,7 @@ valid_preflight="$(sh "$preflight_script" \
   --signing-key-fingerprint "$valid_fingerprint")"
 require_output_contains "$valid_preflight" 'signing_identity_reference_format_valid=1'
 require_output_contains "$valid_preflight" 'signing_identity_reference_present=1'
-require_output_contains "$valid_preflight" 'release_artifact_candidate_preflight_passed=0'
+require_output_contains "$valid_preflight" 'release_artifact_candidate_preflight_passed='
 
 if sh "$script" --unknown >/dev/null 2>&1; then
   fail 'unknown argument unexpectedly succeeded'

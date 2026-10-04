@@ -32,6 +32,72 @@ daily_driver_install_ready=0
 immutable_fedora_ready=0
 ```
 
+## v1.0.0 Release Readiness Gate
+
+The v1.0.0 release readiness gate is present as a no-effect aggregate decision over existing blocker records:
+
+```text
+v1_release_readiness_gate_present=1
+v1_release_readiness_gate_mode=no-effect-release-readiness-aggregation
+v1_release_readiness_gate_version=v1.0.0
+v1_release_readiness_gate_passed=0
+v1_release_readiness_blocked=1
+v1_release_readiness_decision=blocked-existing-production-evidence-gates-open
+v1_release_required_gate_count=23
+v1_release_satisfied_gate_count=<observed>
+v1_release_blocker_count=<observed>
+v1_release_workspace_resolvable_blocker_count=<observed>
+v1_release_release_decision_blocker_count=<observed>
+v1_release_external_prerequisite_blocker_count=<observed>
+v1_release_evidence_blocker_count=<observed>
+v1_release_product_completion_blocker_count=<observed>
+v1_release_next_workspace_action=<observed>
+v1_evidence_blocker_audit_present=1
+v1_evidence_blocker_audit_passed=<observed>
+v1_evidence_detail_blocker_count=<observed>
+v1_evidence_detail_blockers=<observed>
+v1_product_completion_blocker_audit_present=1
+v1_product_completion_blocker_audit_passed=<observed>
+v1_product_completion_detail_blocker_count=<observed>
+v1_product_completion_detail_blockers=<observed>
+v1_tag_exists=0
+production_release_ready=0
+release_artifact_candidate_preflight_present=1
+release_artifact_candidate_preflight_passed=<observed>
+release_artifact_candidate_blocker_count=<observed>
+release_artifact_candidate_blockers=<observed>
+release_artifact_candidate_tag=v1.0.0
+release_artifact_candidate_tag_exists=<observed>
+release_artifact_candidate_tag_blocked=<observed>
+release_artifact_candidate_toolchain_blocked=<observed>
+release_artifact_candidate_tracked_worktree_blocked=<observed>
+release_artifact_candidate_signing_identity_reference_blocked=<observed>
+release_artifact_candidate_valid=<observed>
+release_artifact_evidence_accepted_by_intake_validator=<observed>
+sbom_evidence_candidate_valid=<observed>
+sbom_evidence_accepted_by_intake_validator=<observed>
+transcript_evidence_candidate_valid=<observed>
+transcript_evidence_accepted_by_intake_validator=<observed>
+lifecycle_evidence_candidate_valid=<observed>
+lifecycle_evidence_accepted_by_intake_validator=<observed>
+recovery_evidence_candidate_valid=<observed>
+recovery_evidence_accepted_by_intake_validator=<observed>
+multi_vm_evidence_candidate_valid=<observed>
+multi_vm_evidence_accepted_by_intake_validator=<observed>
+release_artifact_promotion_gate_passed=0
+release_artifact_present=0
+release_artifact_signature_verified=0
+rpmbuild_available=<observed>
+rpm_available=<observed>
+release_signing_identity_reference_present=<observed>
+fedora_production_readiness_evidence_complete=<observed>
+production_nadia_ready=<observed>
+q_seal_runtime_crypto_ready=<observed>
+runtime_authority_granted=<observed>
+```
+
+This closes the v1 release-readiness aggregation gap only. It does not create, sign, verify, publish, install, tag, push, accept evidence, grant runtime authority, or claim that Latticra is ready for v1.0.0.
+
 ## Installer Preflight Guard Evidence
 
 The production-installer preflight guard and preview renderer are now present as no-effect classifiers:
@@ -178,15 +244,15 @@ The release toolchain availability audit is present as a no-effect command-visib
 release_toolchain_availability_audit_present=1
 release_toolchain_availability_audit_mode=no-effect-command-visibility-report
 release_toolchain_required_for_release_candidate=1
-release_toolchain_availability_audit_passed=0
-release_toolchain_ready=0
+release_toolchain_availability_audit_passed=<observed>
+release_toolchain_ready=<observed>
 git_available=<observed>
 tar_available=<observed>
 gzip_available=<observed>
-rpmbuild_available=0
-release_artifact_build_tool_available=0
-rpm_available=0
-release_artifact_query_tool_available=0
+rpmbuild_available=<observed>
+release_artifact_build_tool_available=<observed>
+rpm_available=<observed>
+release_artifact_query_tool_available=<observed>
 gpg_available=<observed>
 sha256_tool_available=<observed>
 release_artifact_candidate_inputs_satisfied=0
@@ -233,9 +299,9 @@ release_worktree_tracked_worktree_clean=0
 release_worktree_tracked_dirty_count=<observed>
 release_toolchain_availability_audit_present=1
 release_toolchain_required_for_release_candidate=1
-release_toolchain_ready=0
-release_artifact_build_tool_available=0
-release_artifact_query_tool_available=0
+release_toolchain_ready=<observed>
+release_artifact_build_tool_available=<observed>
+release_artifact_query_tool_available=<observed>
 release_artifact_signing_identity_reference_present=0
 release_artifact_signing_identity_reference_format_valid=0
 release_artifact_created=0

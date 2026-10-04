@@ -80,12 +80,12 @@ done
 
 require_contains 'production_installer_ready=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 require_contains 'release_artifact_candidate_preflight_present=1' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
-require_contains 'release_artifact_build_tool_available=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
-require_contains 'release_artifact_query_tool_available=0' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
+require_contains 'release_artifact_build_tool_available=<observed>' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
+require_contains 'release_artifact_query_tool_available=<observed>' docs/PRODUCTION_INSTALLER_READINESS_CONTRACT.md
 require_contains 'rpmbuild_available=1' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
 require_contains 'rpm_available=1' docs/PRODUCTION_INSTALLER_RELEASE_ARTIFACT_CANDIDATE_PREFLIGHT_CONTRACT.md
-require_contains 'release_artifact_build_tool_available=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
-require_contains 'release_artifact_query_tool_available=0' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'release_artifact_build_tool_available=<observed>' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
+require_contains 'release_artifact_query_tool_available=<observed>' docs/status/PRODUCTION_QUALITY_BLOCKER_LEDGER.md
 
 GIT_AVAILABLE="$(tool_available git)"
 TAR_AVAILABLE="$(tool_available tar)"
