@@ -38,10 +38,7 @@ static int text_field_valid(const char *value, size_t max_len) {
 }
 
 static int text_field_terminated(const char *value, size_t max_len) {
-    int terminated = 0;
-
-    (void)bounded_string_len(value, max_len, &terminated);
-    return terminated == 1;
+    return text_field_valid(value, max_len);
 }
 
 static int bounded_string_is(const char *value, size_t max_len, const char *expected) {
